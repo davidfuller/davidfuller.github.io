@@ -49,6 +49,21 @@ async function applyFilter(excel){
   await lockColumns(excel);
 }
 
+async function removeFilter(excel){
+  const sheet = excel.workbook.worksheets.getActiveWorksheet();
+  sheet.autoFilter.load('enabled')
+  await excel.sync()
+  if (sheet.autoFilter.enabled){
+    console.log("Autofilter enabled")
+    sheet.autoFilter.remove();
+    await excel.sync();
+  } else {
+    console.log("Autofilter not enabled")
+  }
+  
+  await lockColumns(excel);  
+}
+
 async function getDataRange(excel){
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
   const myLastRow = sheet.getUsedRange().getLastRow();
