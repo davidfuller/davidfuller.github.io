@@ -97,11 +97,14 @@ async function findNextScene(excel){
   const myIndex = range.values.findIndex(a => a[0] == (currentValue + 1));
   console.log(myIndex + startRow);
   console.log(startColumn);
-  const myTarget = sheet.getRangeByIndexes(myIndex + startRow, startColumn, 1, 1);
-  
-  await excel.sync();
-  myTarget.select();
-  await excel.sync();
+  if (myIndex == -1){
+    alert('This is the final scene')
+  } else {
+    const myTarget = sheet.getRangeByIndexes(myIndex + startRow, startColumn, 1, 1);
+    await excel.sync();
+    myTarget.select();
+    await excel.sync();
+  }
 }
 
 async function getDataRange(excel){
