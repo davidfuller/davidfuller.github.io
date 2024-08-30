@@ -35,3 +35,29 @@ async function unlock(excel){
     console.log("Now not locked");
   }
 }
+
+async function applyFilter(excel){
+  /*Jade.listing:{"name":"Apply filter","description":"Applies empty filter to sheet"}*/
+  await unlock(excel);
+  const sheet = excel.workbook.worksheets.getActiveWorksheet();
+  const myRange = await getDataRange(excel);
+  sheet.autoFilter.apply(myRange, 0, { criterion1: "*", filterOn: Excel.FilterOn.custom});
+  sheet.autoFilter.clearCriteria();
+  await excel.sync();
+  
+  await lockColumns(excel);
+}
+
+async function getDataRange(excel){
+  const sheet = excel.workbook.worksheets.getActiveWorksheet();
+  const myLastRow = sheet.getUsedRange().getLastRow();
+  const myLastColumn = sheet.getUsedRange().getLastColumn();
+  myLastRow.load("rowindex");
+  myLastColumn.load("columnindex")
+  await excel.sync();
+  
+  const range = sheet.getRangeByIndexes(1,0, myLastRow.rowIndex, myLastColumn.columnIndex + 1);
+  await excel.sync();
+  
+  return range
+}
