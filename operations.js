@@ -87,7 +87,12 @@ async function findScene(excel, offset){
   await excel.sync()
   const startRow = activeCell.rowIndex;
   const startColumn = activeCell.columnIndex
-  const range = sheet.getRangeByIndexes(startRow, sceneColumn, endRow.rowIndex - startRow, 1);
+  let range;
+  if (offset < 0){
+    range = sheet.getRangeByIndexes(2, sceneColumn, startRow, 1);
+  } else {
+    range = sheet.getRangeByIndexes(startRow, sceneColumn, endRow.rowIndex - startRow, 1);
+  }
   await excel.sync();
   
   range.load("values");
