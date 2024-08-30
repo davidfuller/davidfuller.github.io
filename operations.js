@@ -75,7 +75,7 @@ async function removeFilter(excel){
   await lockColumns(excel);  
 }
 
-async function findNextScene(excel){
+async function findScene(excel, offset){
   
   const sceneColumn = myColumns.find(x => x.columnName == "Scene").columnNo;
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
@@ -94,11 +94,13 @@ async function findNextScene(excel){
   await excel.sync();
   
   const currentValue = range.values[0][0];
-  const myIndex = range.values.findIndex(a => a[0] == (currentValue + 1));
+  const myIndex = range.values.findIndex(a => a[0] == (currentValue + offset));
   console.log(myIndex + startRow);
   console.log(startColumn);
   if (myIndex == -1){
-    alert('This is the final scene')
+    if (offset == 1){
+      alert('This is the final scene')
+    }
   } else {
     const myTarget = sheet.getRangeByIndexes(myIndex + startRow, startColumn, 1, 1);
     await excel.sync();
@@ -106,6 +108,7 @@ async function findNextScene(excel){
     await excel.sync();
   }
 }
+
 
 async function getDataRange(excel){
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
