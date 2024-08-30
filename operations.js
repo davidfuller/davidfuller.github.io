@@ -1,5 +1,6 @@
 function auto_exec(){
-  console.log('Operations loaded')
+  console.log('Operations loaded');
+  console.log(jade_modules)
 }
 const columnsToLock = "A:Y"
 
