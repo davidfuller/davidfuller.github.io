@@ -99,7 +99,14 @@ async function findScene(excel, offset){
   await excel.sync();
   
   console.log(range.values);
-  const currentValue = range.values[0][0];
+  let currentValue;
+  if (offset < 0){
+    currentValue = range.values[0][range.values.length-1];
+  } else {
+    currentValue = range.values[0][0];
+  }
+   
+  console.log(currentValue);
   const myIndex = range.values.findIndex(a => a[0] == (currentValue + offset));
   console.log(myIndex + startRow);
   console.log(startColumn);
