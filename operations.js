@@ -101,7 +101,7 @@ async function findScene(excel, offset){
   console.log(range.values);
   let currentValue;
   if (offset < 0){
-    currentValue = range.values[0][range.values.length-1];
+    currentValue = range.values[range.values.length-1][0];
   } else {
     currentValue = range.values[0][0];
   }
