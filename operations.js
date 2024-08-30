@@ -3,6 +3,17 @@ function auto_exec(){
   console.log(jade_modules)
 }
 const columnsToLock = "A:Y"
+const myColumns = 
+  [
+    {
+      columnName: "Scene",
+      columnNo: 83
+    },
+    {
+      columnName: "Line",
+      columnNo: 84
+    }
+  ];
 
 async function lockColumns(excel){
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
@@ -62,6 +73,35 @@ async function removeFilter(excel){
   }
   
   await lockColumns(excel);  
+}
+
+async function findNextScene(excel){
+  
+  const sceneColumn = myColumns.find(x => x.columnName == "Scene").columnNo;
+  const sheet = excel.workbook.worksheets.getActiveWorksheet();
+  const activeCell = excel.workbook.getActiveCell();
+  activeCell.load("rowIndex");
+  activeCell.load(("columnIndex"))
+  const endRow = sheet.getUsedRange().getLastRow();
+  endRow.load("rowindex");
+  await excel.sync()
+  const startRow = activeCell.rowIndex;
+  const startColumn = activeCell.columnIndex
+  const range = sheet.getRangeByIndexes(startRow, sceneColumn, endRow.rowIndex - startRow, 1);
+  await excel.sync();
+  
+  range.load("values");
+  await excel.sync();
+  
+  const currentValue = range.values[0][0];
+  const myIndex = range.values.findIndex(a => a[0] == (currentValue + 1));
+  console.log(myIndex + startRow);
+  console.log(startColumn);
+  const myTarget = sheet.getRangeByIndexes(myIndex + startRow, startColumn, 1, 1);
+  
+  await excel.sync();
+  myTarget.select();
+  await excel.sync();
 }
 
 async function getDataRange(excel){
