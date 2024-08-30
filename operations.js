@@ -89,7 +89,7 @@ async function findScene(excel, offset){
   const startColumn = activeCell.columnIndex
   let range;
   if (offset < 0){
-    range = sheet.getRangeByIndexes(2, sceneColumn, startRow, 1);
+    range = sheet.getRangeByIndexes(2, sceneColumn, startRow - 1, 1);
   } else {
     range = sheet.getRangeByIndexes(startRow, sceneColumn, endRow.rowIndex - startRow, 1);
   }
