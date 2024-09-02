@@ -3,8 +3,8 @@ async function mainCSS(){
   css.push(`body {
               background-color: #ffc901;
               color: #d34c01;
-            }`);
-  css.push(`button {
+            }
+            button {
               margin-left: 50px;
               margin-bottom: 5px;
               margin-top: 5px;
