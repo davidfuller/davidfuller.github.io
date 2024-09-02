@@ -146,3 +146,10 @@ async function getDataRange(excel){
   
   return range
 }
+
+async function getTargetSceneNumber(){
+  await Excel.run(async function(excel){
+    const textValue = await Jade.tag("scene");
+    console.log(textValue.value);
+  })  
+}
