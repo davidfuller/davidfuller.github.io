@@ -15,23 +15,25 @@ const myColumns =
     }
   ];
 
-async function lockColumns(excel){
-  const sheet = excel.workbook.worksheets.getActiveWorksheet();
-  var range = sheet.getRange(columnsToLock);
-  
-  sheet.protection.load('protected');
-  await excel.sync();
-  
-  console.log(sheet.protection.protected);
-  if (!sheet.protection.protected){
-    console.log("Not locked");
-    range.format.protection.locked = true;
-    sheet.protection.protect({ selectionMode: "Normal", allowAutoFilter: true });
+async function lockColumns(){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    var range = sheet.getRange(columnsToLock);
+    
+    sheet.protection.load('protected');
     await excel.sync();
-    console.log("Now locked");
-  } else {
-    console.log("Locked");
-  }   
+    
+    console.log(sheet.protection.protected);
+    if (!sheet.protection.protected){
+      console.log("Not locked");
+      range.format.protection.locked = true;
+      sheet.protection.protect({ selectionMode: "Normal", allowAutoFilter: true });
+      await excel.sync();
+      console.log("Now locked");
+    } else {
+      console.log("Locked");
+    }
+  })   
 }
 
 async function unlock(excel){
