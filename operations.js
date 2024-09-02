@@ -121,6 +121,45 @@ async function findScene(offset){
   })
 }
 
+async function findSceneNo(sceneNo){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load("rowIndex");
+    activeCell.load(("columnIndex"))
+    await excel.sync()
+    const startRow = activeCell.rowIndex;
+    const startColumn = activeCell.columnIndex
+    let range = await getSceneRange(excel);
+    range.load("values");
+    await excel.sync();
+    console.log("Scene range");
+    console.log(range.values);
+    
+    console.log("Start Row");
+    console.log(startRow);
+
+    const myIndex = range.values.findIndex(a => a[0] == (sceneNo));
+
+    console.log("Found Index");
+    console.log(myIndex);
+    
+    if (myIndex == -1){
+      if (offset == 1){
+        alert('This is the final scene')
+      }
+    } else {
+      const myTarget = sheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
+      await excel.sync();
+      myTarget.select();
+      await excel.sync();
+    }
+  })
+}
+
+
+
+
 async function getSceneRange(excel){
   const sceneColumn = myColumns.find(x => x.columnName == "Scene").columnNo;
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
@@ -131,7 +170,6 @@ async function getSceneRange(excel){
   await excel.sync();
   return range;
 }
-
 
 async function getDataRange(excel){
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
@@ -148,15 +186,12 @@ async function getDataRange(excel){
 }
 
 async function getTargetSceneNumber(){
-  await Excel.run(async function(excel){
-    const textValue = tag("scene").value;
-    const sceneNumber = parseInt(textValue);
-    if (sceneNumber != NaN){
-      console.log(sceneNumber);
-    }  else {
-      alert("Please enter a number")
-    }
-
-    
-  })  
+  const textValue = tag("scene").value;
+  const sceneNumber = parseInt(textValue);
+  if (sceneNumber != NaN){
+    console.log(sceneNumber);
+    await findSceneNo(sceneNumber);
+  }  else {
+    alert("Please enter a number")
+  }  
 }
