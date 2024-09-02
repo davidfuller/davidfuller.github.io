@@ -15,6 +15,13 @@ const myColumns =
     }
   ];
 
+const sceneInput = tag("scene");
+sceneInput.onkeydown = function(event){
+  if(event.key === 'Enter'){
+    alert(sceneInput.value)
+  }
+}
+
 async function lockColumns(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
@@ -211,8 +218,9 @@ async function getSceneMaxAndMin(){
     await excel.sync();
     max.load("values")
     await excel.sync();
-    console.log(min.values);
-    console.log(max.values);
-    return {min: min.values, max: max.values}
-  })
+    console.log(min.values[0][0]);
+    console.log(max.values[0][0]);
+    return {min: min.values[0][0], max: max.values[0][0]}
+  }
+)
 }
