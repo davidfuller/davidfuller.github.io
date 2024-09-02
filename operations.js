@@ -83,7 +83,6 @@ async function removeFilter(){
 
 async function findScene(offset){
   await Excel.run(async function(excel){
-    const sceneColumn = myColumns.find(x => x.columnName == "Scene").columnNo;
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load("rowIndex");
@@ -94,15 +93,21 @@ async function findScene(offset){
     let range = await getSceneRange(excel);
     range.load("values");
     await excel.sync();
-    console.log ("Scene range");
+    console.log("Scene range");
     console.log(range.values);
     
+    console.log("Start Row");
+    console.log(startRow);
+
     let currentValue = range.values[startRow - 2][0];
+    console.log("Current Value");
     console.log(currentValue);
     
     const myIndex = range.values.findIndex(a => a[0] == (currentValue + offset));
+
+    console.log("Found Index");
     console.log(myIndex);
-    console.log(startColumn);
+    
     if (myIndex == -1){
       if (offset == 1){
         alert('This is the final scene')
