@@ -204,10 +204,10 @@ async function getSceneMaxAndMin(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const min = sheet.getRange("minScene");
-    min.load("value")
+    min.load("values")
     const max = sheet.getRange("maxScene");
-    max.load("value")
+    max.load("values")
     await excel.sync();
-    return {min: min.value, max: max.value}
+    return {min: min.values, max: max.values}
   })
 }
