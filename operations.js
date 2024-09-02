@@ -15,12 +15,15 @@ const myColumns =
     }
   ];
 
+  /*
 const sceneInput = tag("scene");
 sceneInput.onkeydown = function(event){
   if(event.key === 'Enter'){
     alert(sceneInput.value)
   }
 }
+*/
+
 
 async function lockColumns(){
   await Excel.run(async function(excel){
