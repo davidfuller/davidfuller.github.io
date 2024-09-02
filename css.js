@@ -16,6 +16,10 @@ async function mainCSS(){
               color: #fef3df;
               font-size: 18px;
               cursor: pointer;
+            }
+            h1 {
+              margin-left: 80px;
+              font-family: "Aptos Narrow";
             }`;
   Jade.set_css(css);
 
