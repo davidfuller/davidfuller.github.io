@@ -1,6 +1,5 @@
 async function mainCSS(){
-  const css = []
-  css.push(`body {
+  const css =`body {
               background-color: #ffc901;
               color: #d34c01;
             }
@@ -17,25 +16,7 @@ async function mainCSS(){
               color: #fef3df;
               font-size: 18px;
               cursor: pointer;
-            }`);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-  css.push(``);
-
-  css.join(' ')
+            }`;
   Jade.set_css(css);
 
 }
