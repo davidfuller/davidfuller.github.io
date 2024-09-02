@@ -139,6 +139,10 @@ async function findSceneNo(sceneNo){
     console.log("Start Row");
     console.log(startRow);
 
+    const minAndMax = await getSceneMaxAndMin();
+    console.log("Min and Max");
+    console.log(minAndMax);
+
     const myIndex = range.values.findIndex(a => a[0] == (sceneNo));
 
     console.log("Found Index");
@@ -194,4 +198,16 @@ async function getTargetSceneNumber(){
   }  else {
     alert("Please enter a number")
   }  
+}
+
+async function getSceneMaxAndMin(){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    const min = sheet.getRange("minScene");
+    min.load("value")
+    const max = sheet.getRange("maxScene");
+    max.load("value")
+    await excel.sync();
+    return {min: min.value, max: max.value}
+  })
 }
