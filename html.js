@@ -3,7 +3,7 @@ async function mainHTML(){
                 <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
                 <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button>
                 <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button>
-                <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Previous Sheet</button>`;
+                <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Previous scene</button>`;
 
   Jade.open_canvas("Script Controller", html, true);
 }
