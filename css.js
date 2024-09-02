@@ -21,6 +21,9 @@ async function mainCSS(){
             h1 {
               margin-left: 30px;
               font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
+            }
+            label {
+              margin-left: 30px;
             }`;
   Jade.set_css(css);
 
