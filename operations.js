@@ -149,7 +149,14 @@ async function getDataRange(excel){
 
 async function getTargetSceneNumber(){
   await Excel.run(async function(excel){
-    var textValue = tag("scene").value;
-    console.log(textValue);
+    const textValue = tag("scene").value;
+    const sceneNumber = parseInt(textValue);
+    if (sceneNumber != NaN){
+      console.log(sceneNumber);
+    }  else {
+      alert("Please enter a number")
+    }
+
+    
   })  
 }
