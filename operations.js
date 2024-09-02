@@ -113,7 +113,7 @@ async function findScene(offset){
         alert('This is the final scene')
       }
     } else {
-      const myTarget = sheet.getRangeByIndexes(myIndex, startColumn, 1, 1);
+      const myTarget = sheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
       await excel.sync();
       myTarget.select();
       await excel.sync();
