@@ -19,7 +19,7 @@ async function mainCSS(){
             }
             h1 {
               margin-left: 80px;
-              font-family: "Aptos Narrow";
+              font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
             }`;
   Jade.set_css(css);
 
