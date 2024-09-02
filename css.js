@@ -2,9 +2,10 @@ async function mainCSS(){
   const css =`body {
               background-color: #ffc901;
               color: #d34c01;
+              font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
             }
             button {
-              margin-left: 50px;
+              margin-left: 30px;
               margin-bottom: 5px;
               margin-top: 5px;
               padding-left: 15px;
@@ -18,7 +19,7 @@ async function mainCSS(){
               cursor: pointer;
             }
             h1 {
-              margin-left: 80px;
+              margin-left: 30px;
               font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
             }`;
   Jade.set_css(css);
