@@ -88,45 +88,43 @@ async function findScene(offset){
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load("rowIndex");
     activeCell.load(("columnIndex"))
-    const endRow = sheet.getUsedRange().getLastRow();
-    endRow.load("rowindex");
     await excel.sync()
     const startRow = activeCell.rowIndex;
     const startColumn = activeCell.columnIndex
-    let range;
-    if (offset < 0){
-      range = sheet.getRangeByIndexes(2, sceneColumn, startRow - 1, 1);
-    } else {
-      range = sheet.getRangeByIndexes(startRow, sceneColumn, endRow.rowIndex - startRow, 1);
-    }
-    await excel.sync();
-    
+    let range = await getSceneRange(excel);
     range.load("values");
     await excel.sync();
-    
+    console.log ("Scene range");
     console.log(range.values);
-    let currentValue;
-    if (offset < 0){
-      currentValue = range.values[range.values.length-1][0];
-    } else {
-      currentValue = range.values[0][0];
-    }
     
+    let currentValue = range.values[startRow - 2][0];
     console.log(currentValue);
+    
     const myIndex = range.values.findIndex(a => a[0] == (currentValue + offset));
-    console.log(myIndex + startRow);
+    console.log(myIndex);
     console.log(startColumn);
     if (myIndex == -1){
       if (offset == 1){
         alert('This is the final scene')
       }
     } else {
-      const myTarget = sheet.getRangeByIndexes(myIndex + startRow, startColumn, 1, 1);
+      const myTarget = sheet.getRangeByIndexes(myIndex, startColumn, 1, 1);
       await excel.sync();
       myTarget.select();
       await excel.sync();
     }
   })
+}
+
+async function getSceneRange(excel){
+  const sceneColumn = myColumns.find(x => x.columnName == "Scene").columnNo;
+  const sheet = excel.workbook.worksheets.getActiveWorksheet();
+  const endRow = sheet.getUsedRange().getLastRow();
+  endRow.load("rowindex");
+  await excel.sync();
+  range = sheet.getRangeByIndexes(2, sceneColumn, endRow.rowIndex, 1);
+  await excel.sync();
+  return range;
 }
 
 
