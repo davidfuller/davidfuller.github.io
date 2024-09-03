@@ -7,6 +7,11 @@
   <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
   <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button><br/>
 </div>
+<div id="filterButtons" >
+  <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
+  <button id='btnRemoveFilter' onclick="jade_modules.operations.removeFilter()">Remove Filter</button><br/>
+</div>
+
 <div id="jump">
   <label for="scene">Jump to scene</label>
   <input type="text" id="scene" name="scene">

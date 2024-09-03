@@ -27,7 +27,7 @@ async function mainCSS(){
                       margin-left: 30px;
                     }
                       
-                    #firstButtons {
+                    #firstButtons, #filterButtons {
                       margin-left: 30px;
                       margin-top: 10px;
                       width: 370px;
