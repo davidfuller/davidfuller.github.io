@@ -60,7 +60,7 @@ async function mainCSS(){
                       height: fit-content;
                       margin-left: 30px;
                     }
-                    #btnFillUS{
+                    #btnFillUS, #btnFillWalla {
                       width: fit-content;
                       height: fit-content;
                       margin-left: 5px;

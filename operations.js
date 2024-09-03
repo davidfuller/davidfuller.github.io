@@ -36,6 +36,18 @@ const myColumns =
     {
       columnName: "US Engineer",
       columnNo: 28
+    },
+    {
+      columnName: "Walla Date Recorded",
+      columnNo: 44
+    },
+    {
+      columnName: "Walla Studio",
+      columnNo: 45
+    },
+    {
+      columnName: "Walla Engineer",
+      columnNo: 46
     }
   ];
 
@@ -300,6 +312,10 @@ async function fill(country){
       dateColumn = myColumns.find(x => x.columnName == "US Date Recorded").columnNo;
       studioColumn = myColumns.find(x => x.columnName == "US Studio").columnNo;
       engineerColumn = myColumns.find(x => x.columnName == "US Engineer").columnNo;
+    } else if ( country == 'Walla'){
+      dateColumn = myColumns.find(x => x.columnName == "Walla Date Recorded").columnNo;
+      studioColumn = myColumns.find(x => x.columnName == "Walla Studio").columnNo;
+      engineerColumn = myColumns.find(x => x.columnName == "Walla Engineer").columnNo;
     }
     
     const activeCell = excel.workbook.getActiveCell();
