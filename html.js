@@ -17,11 +17,13 @@ async function mainHTML(){
                   <input type="text" id="scene" name="scene">
                   <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
                 </div>
-                <label for="studio">Studio</label>
-                <input type="text" id="studio" name="studio">
-                <label for="engineer">Engineer</label>
-                <input type="text" id="engineer" name="engineer">
-                <button id='btnFillUK' onclick="jade_modules.operations.fillUK()">Date Studio Engineer UK</button><br/>
+                <div id="dateStudioEngineer"></div>
+                  <label for="studio">Studio</label>
+                  <input type="text" id="studio" name="studio">
+                  <label for="engineer">Engineer</label>
+                  <input type="text" id="engineer" name="engineer">
+                  <button id='btnFillUK' onclick="jade_modules.operations.fillUK()">Fill UK</button><br/>
+                </div>
                 `;
 
   Jade.open_canvas("Script Controller", html, true);
