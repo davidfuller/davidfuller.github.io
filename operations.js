@@ -153,15 +153,21 @@ async function findSceneNo(sceneNo){
     console.log("Min and Max");
     console.log(minAndMax);
 
+    if (sceneNo > minAndMax.max){
+      sceneNo = minAndMax.max;
+    }
+
+    if (sceneNo < minAndMax.min){
+      sceneNo = minAndMax.min
+    }
+
     const myIndex = range.values.findIndex(a => a[0] == (sceneNo));
 
     console.log("Found Index");
     console.log(myIndex);
     
     if (myIndex == -1){
-      if (offset == 1){
-        alert('This is the final scene')
-      }
+      alert('This is the final scene')
     } else {
       const myTarget = sheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
       await excel.sync();
