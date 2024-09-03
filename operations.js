@@ -227,6 +227,7 @@ async function getTargetSceneNumber(){
 }
 
 async function getSceneMaxAndMin(){
+  let result = {};
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const min = sheet.getRange("minScene");
@@ -239,11 +240,10 @@ async function getSceneMaxAndMin(){
     await excel.sync();
     console.log(min.values[0][0]);
     console.log(max.values[0][0]);
-    let result = {};
+    
     result.min = min.values[0][0];
     result.max = max.values[0][0];
     console.log(result);
-    return result;
-  }
-)
+  })
+  return result;
 }
