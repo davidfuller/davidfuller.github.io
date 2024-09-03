@@ -113,7 +113,7 @@ async function findScene(offset){
     console.log("Current Value");
     console.log(currentValue);
 
-    const myIndex = -1;
+    let myIndex = -1;
 
     if (currentValue + offset > 0){
       myIndex = range.values.findIndex(a => a[0] == (currentValue + offset));
