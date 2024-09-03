@@ -23,7 +23,7 @@ const myColumns =
     },
     {
       columnName: "UK Engineer",
-      columnNo: 24
+      columnNo: 23
     }
   ];
 
