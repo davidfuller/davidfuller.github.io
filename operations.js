@@ -296,7 +296,7 @@ async function fillUK(){
     console.log(studioRange);
     dateRange.values = [[dateInFormat()]];
     studioRange.values = [[studioText]];
-    engineerRange.values =[[engineerText]];
+    engineerRange.values = [[engineerText]];
     await excel.sync();
     await lockColumns();
   })
