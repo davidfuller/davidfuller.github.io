@@ -126,7 +126,7 @@ async function findScene(offset){
       if (offset == 1){
         alert('This is the final scene')
       } else if (offset == -1){
-        alert('This is the first scene')
+        await firstScene();
       }
     } else {
       const myTarget = sheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
