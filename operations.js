@@ -284,7 +284,7 @@ async function getSceneMaxAndMin(){
   return result;
 }
 
-async function fillUK(country){
+async function fill(country){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const studioText = tag("studio").value;
@@ -296,7 +296,7 @@ async function fillUK(country){
       dateColumn = myColumns.find(x => x.columnName == "UK Date Recorded").columnNo;
       studioColumn = myColumns.find(x => x.columnName == "UK Studio").columnNo;
       engineerColumn = myColumns.find(x => x.columnName == "UK Engineer").columnNo;
-    } else if ( country == US){
+    } else if ( country == 'US'){
       dateColumn = myColumns.find(x => x.columnName == "US Date Recorded").columnNo;
       studioColumn = myColumns.find(x => x.columnName == "US Studio").columnNo;
       engineerColumn = myColumns.find(x => x.columnName == "US Engineer").columnNo;
