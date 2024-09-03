@@ -8,7 +8,13 @@ async function mainHTML(){
                 <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button><br/>
                 <label for="scene">Jump to scene</label>
                 <input type="text" id="scene" name="scene">
-                <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>`;
+                <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
+                <label for="studio">Studio</label>
+                <input type="text" id="studio" name="studio">
+                <label for="engineer">Engineer</label>
+                <input type="text" id="engineer" name="engineer">
+                <button id='btnFillUK' onclick="jade_modules.operations.fillUK()">Date Studio Engineer UK</button><br/>
+                `;
 
   Jade.open_canvas("Script Controller", html, true);
 }

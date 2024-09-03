@@ -12,6 +12,18 @@ const myColumns =
     {
       columnName: "Line",
       columnNo: 78
+    },
+    {
+      columnName: "UK Date Recorded",
+      columnNo: 13
+    },
+    {
+      columnName: "UK Studio",
+      columnNo: 14
+    },
+    {
+      columnName: "UK Engineer",
+      columnNo: 15
     }
   ];
 
@@ -258,4 +270,21 @@ async function getSceneMaxAndMin(){
     console.log(result);
   })
   return result;
+}
+
+async function fillUK(){
+  await Excel.run(async function(excel){
+    const studioText = tag("studio").value;
+    const engineerText = tag("engineer").value;
+    const dateColumn = myColumns.find(x => x.columnName == "UK Date Recorded").columnNo;
+    const studioColumn = myColumns.find(x => x.columnName == "UK Studio").columnNo;
+    const engineerColumn = myColumns.find(x => x.columnName == "UK Studio").columnNo;
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load("rowIndex");
+    await excel.sync()
+    const myRow = activeCell.rowIndex;    
+    const studioRange = sheet.getRangeByIndexes(myRow, studioColumn, 1, 1);
+    studioRange.values = [[studioText]];
+    await excel.sync()
+  })
 }
