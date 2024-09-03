@@ -60,6 +60,10 @@ async function mainCSS(){
                       background-color: #ffc901;
                       color: #d34c01;
                       font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
+                      border-width: 1px;
+                      border-radius: 5px;
+                      border-color: #d34c01;
+                      border-style: solid;
                     }`;
   Jade.set_css(css);
 
