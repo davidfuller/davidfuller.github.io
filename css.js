@@ -53,6 +53,13 @@ async function mainCSS(){
                       width: fit-content;
                       height: fit-content;
                       margin-left: 5px;
+                    }
+                      
+                    #scene {
+                      width: 50px;
+                      background-color: #ffc901;
+                      color: #d34c01;
+                      font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
                     }`;
   Jade.set_css(css);
 
