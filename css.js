@@ -10,12 +10,13 @@ async function mainCSS(){
               margin-top: 5px;
               padding-left: 15px;
               padding-right: 15px;
-              height: 40px;
+              height: 36px;
               border: none;
+              width: 150px;
               border-radius: 7px;
               background-color: #d34c01;
               color: #fef3df;
-              font-size: 18px;
+              font-size: 16px;
               cursor: pointer;
             }
             h1 {
