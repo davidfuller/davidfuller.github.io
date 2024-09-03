@@ -317,5 +317,5 @@ function dateInFormat(){
     myDay = myDay.toString();
   }
 
-	return nowDate.getFullYear().toString() + myMonth + myDay; 
+	return nowDate.getFullYear().toString().substring(2) + myMonth + myDay; 
 }
