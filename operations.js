@@ -279,13 +279,19 @@ async function fillUK(){
     const engineerText = tag("engineer").value;
     const dateColumn = myColumns.find(x => x.columnName == "UK Date Recorded").columnNo;
     const studioColumn = myColumns.find(x => x.columnName == "UK Studio").columnNo;
+    console.log("Studio Column");
+    console.log(studioColumn);
     const engineerColumn = myColumns.find(x => x.columnName == "UK Studio").columnNo;
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load("rowIndex");
-    await excel.sync()
+    await excel.sync();
     const myRow = activeCell.rowIndex;    
+    console.log("Row Index");
+    console.log(myRow);
     const studioRange = sheet.getRangeByIndexes(myRow, studioColumn, 1, 1);
+    await excel.sync();
+    console.log(studioRange);
     studioRange.values = [["Temp"]];
-    await excel.sync()
+    await excel.sync();
   })
 }
