@@ -25,9 +25,10 @@ async function mainCSS(){
                     }
                     label {
                       margin-left: 30px;
+                      font-size: 16px;
                     }
                       
-                    #firstButtons, #filterButtons {
+                    #firstButtons, #filterButtons, #dateStudioEngineer {
                       margin-left: 30px;
                       margin-top: 10px;
                       width: 370px;
@@ -49,7 +50,7 @@ async function mainCSS(){
                       border-style: solid;
                     }
 
-                    #btnGo {
+                    #btnGo, #btnFillUK {
                       width: fit-content;
                       height: fit-content;
                       margin-left: 5px;
@@ -64,7 +65,20 @@ async function mainCSS(){
                       border-radius: 5px;
                       border-color: #d34c01;
                       border-style: solid;
-                    }`;
+                    }
+                      
+                    #studio, #engineer {
+                      width: 100px;
+                      background-color: #ffc901;
+                      color: #d34c01;
+                      font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
+                      border-width: 1px;
+                      border-radius: 5px;
+                      border-color: #d34c01;
+                      border-style: solid;
+                    }
+                    
+                    `;
   Jade.set_css(css);
 
 }
