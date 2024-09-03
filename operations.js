@@ -171,7 +171,23 @@ async function findSceneNo(sceneNo){
   })
 }
 
+async function firstScene(){
+  await Excel.run(async function(excel){
+    const minAndMax = await getSceneMaxAndMin();
+    console.log("Min and Max");
+    console.log(minAndMax);
+    await findSceneNo(minAndMax.min);
+  })
+}
 
+async function lastScene(){
+  await Excel.run(async function(excel){
+    const minAndMax = await getSceneMaxAndMin();
+    console.log("Min and Max");
+    console.log(minAndMax);
+    await findSceneNo(minAndMax.max);
+  })
+}
 
 
 async function getSceneRange(excel){
