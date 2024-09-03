@@ -4,7 +4,7 @@ async function mainHTML(){
                 <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
                 <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First scene</button>
                 <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
-                <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Previous scene</button>
+                <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
                 <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button><br/>
                 <label for="scene">Jump to scene</label>
                 <input type="text" id="scene" name="scene">
