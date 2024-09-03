@@ -60,6 +60,12 @@ async function mainCSS(){
                       height: fit-content;
                       margin-left: 30px;
                     }
+                    #btnFillUS{
+                      width: fit-content;
+                      height: fit-content;
+                      margin-left: 5px;
+                      
+                    }
                     #scene {
                       width: 50px;
                       background-color: #ffc901;
