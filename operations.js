@@ -15,15 +15,15 @@ const myColumns =
     },
     {
       columnName: "UK Date Recorded",
-      columnNo: 13
+      columnNo: 21
     },
     {
       columnName: "UK Studio",
-      columnNo: 14
+      columnNo: 22
     },
     {
       columnName: "UK Engineer",
-      columnNo: 15
+      columnNo: 24
     }
   ];
 
@@ -290,8 +290,10 @@ async function fillUK(){
     console.log(myRow);
     const studioRange = sheet.getRangeByIndexes(myRow, studioColumn, 1, 1);
     await excel.sync();
+    await unlock();
     console.log(studioRange);
     studioRange.values = [["Temp"]];
     await excel.sync();
+    await lockColumns();
   })
 }
