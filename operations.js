@@ -292,7 +292,7 @@ async function fillUK(){
     await excel.sync();
     await unlock();
     console.log(studioRange);
-    studioRange.values = [["Temp"]];
+    studioRange.values = [[studioText]];
     await excel.sync();
     await lockColumns();
   })
