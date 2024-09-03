@@ -285,7 +285,7 @@ async function fillUK(){
     await excel.sync()
     const myRow = activeCell.rowIndex;    
     const studioRange = sheet.getRangeByIndexes(myRow, studioColumn, 1, 1);
-    studioRange.values = [[studioText]];
+    studioRange.values = [["Temp"]];
     await excel.sync()
   })
 }
