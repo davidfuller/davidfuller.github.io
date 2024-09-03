@@ -288,12 +288,21 @@ async function fillUK(){
     const myRow = activeCell.rowIndex;    
     console.log("Row Index");
     console.log(myRow);
+    const dateRange = sheet.getRangeByIndexes(myRow, dateColumn, 1, 1);
     const studioRange = sheet.getRangeByIndexes(myRow, studioColumn, 1, 1);
+    const engineerRange = sheet.getRangeByIndexes(myRow, engineerColumn, 1, 1);
     await excel.sync();
     await unlock();
     console.log(studioRange);
+    dateRange.values = [[dateInFormat()]];
     studioRange.values = [[studioText]];
+    engineerRange.values =[[engineerText]];
     await excel.sync();
     await lockColumns();
   })
+}
+
+function dateInFormat(){
+	var nowDate = new Date(); 
+	return nowDate.getFullYear()+(nowDate.getMonth()+1)+ nowDate.getDate(); 
 }
