@@ -281,7 +281,7 @@ async function fillUK(){
     const studioColumn = myColumns.find(x => x.columnName == "UK Studio").columnNo;
     console.log("Studio Column");
     console.log(studioColumn);
-    const engineerColumn = myColumns.find(x => x.columnName == "UK Studio").columnNo;
+    const engineerColumn = myColumns.find(x => x.columnName == "UK Engineer").columnNo;
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load("rowIndex");
     await excel.sync();
@@ -304,5 +304,18 @@ async function fillUK(){
 
 function dateInFormat(){
 	var nowDate = new Date(); 
-	return nowDate.getFullYear()+(nowDate.getMonth()+1)+ nowDate.getDate(); 
+  let myMonth = (nowDate.getMonth()+1)
+  if (myMonth < 10){
+    myMonth = "0" + myMonth;
+  } else {
+    myMonth = myMonth.toString();
+  }
+  let myDay = nowDate.getDate();
+  if (myDay < 10){
+    myDay = "0" + myDay;
+  } else {
+    myDay = myDay.toString();
+  }
+
+	return nowDate.getFullYear().toString + myMonth + myDay; 
 }
