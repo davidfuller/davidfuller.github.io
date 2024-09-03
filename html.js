@@ -17,7 +17,7 @@ async function mainHTML(){
                   <input type="text" id="scene" name="scene">
                   <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
                 </div>
-                <div id="dateStudioEngineer"></div>
+                <div id="dateStudioEngineer">
                   <label for="studio">Studio</label>
                   <input type="text" id="studio" name="studio">
                   <label for="engineer">Engineer</label>
