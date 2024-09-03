@@ -31,11 +31,11 @@ const myColumns =
     },
     {
       columnName: "US Studio",
-      columnNo: 26
+      columnNo: 27
     },
     {
       columnName: "US Engineer",
-      columnNo: 26
+      columnNo: 28
     }
   ];
 
