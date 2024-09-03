@@ -24,6 +24,18 @@ const myColumns =
     {
       columnName: "UK Engineer",
       columnNo: 23
+    },
+    {
+      columnName: "US Date Recorded",
+      columnNo: 26
+    },
+    {
+      columnName: "US Studio",
+      columnNo: 26
+    },
+    {
+      columnName: "US Engineer",
+      columnNo: 26
     }
   ];
 
@@ -272,16 +284,24 @@ async function getSceneMaxAndMin(){
   return result;
 }
 
-async function fillUK(){
+async function fillUK(country){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const studioText = tag("studio").value;
     const engineerText = tag("engineer").value;
-    const dateColumn = myColumns.find(x => x.columnName == "UK Date Recorded").columnNo;
-    const studioColumn = myColumns.find(x => x.columnName == "UK Studio").columnNo;
-    console.log("Studio Column");
-    console.log(studioColumn);
-    const engineerColumn = myColumns.find(x => x.columnName == "UK Engineer").columnNo;
+    let dateColumn;
+    let studioColumn;
+    let engineerColumn;
+    if (country == 'UK'){
+      dateColumn = myColumns.find(x => x.columnName == "UK Date Recorded").columnNo;
+      studioColumn = myColumns.find(x => x.columnName == "UK Studio").columnNo;
+      engineerColumn = myColumns.find(x => x.columnName == "UK Engineer").columnNo;
+    } else if ( country == US){
+      dateColumn = myColumns.find(x => x.columnName == "US Date Recorded").columnNo;
+      studioColumn = myColumns.find(x => x.columnName == "US Studio").columnNo;
+      engineerColumn = myColumns.find(x => x.columnName == "US Engineer").columnNo;
+    }
+    
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load("rowIndex");
     await excel.sync();
@@ -299,6 +319,8 @@ async function fillUK(){
     engineerRange.values = [[engineerText]];
     await excel.sync();
     await lockColumns();
+    dateRange.select();
+    await excel.sync();
   })
 }
 

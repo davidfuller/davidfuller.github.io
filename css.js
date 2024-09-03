@@ -50,13 +50,17 @@ async function mainCSS(){
                       border-style: solid;
                     }
 
-                    #btnGo, #btnFillUK {
+                    #btnGo {
                       width: fit-content;
                       height: fit-content;
                       margin-left: 5px;
                     }
-                      
-                    #scene{
+                    #btnFillUK {
+                      width: fit-content;
+                      height: fit-content;
+                      margin-left: 30px;
+                    }
+                    #scene {
                       width: 50px;
                       background-color: #ffc901;
                       color: #d34c01;
@@ -66,9 +70,9 @@ async function mainCSS(){
                       border-color: #d34c01;
                       border-style: solid;
                     }
-                      
+
                     #studio, #engineer {
-                      width: 100px;
+                      width: 150px;
                       background-color: #ffc901;
                       color: #d34c01;
                       font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;

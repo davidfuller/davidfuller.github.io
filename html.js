@@ -19,9 +19,9 @@ async function mainHTML(){
                 </div>
                 <div id="dateStudioEngineer">
                   <label for="studio">Studio</label>
-                  <input type="text" id="studio" name="studio">
+                  <input type="text" id="studio" name="studio"><br/>
                   <label for="engineer">Engineer</label>
-                  <input type="text" id="engineer" name="engineer">
+                  <input type="text" id="engineer" name="engineer"><br/>
                   <button id='btnFillUK' onclick="jade_modules.operations.fillUK()">Fill UK</button><br/>
                 </div>
                 `;
