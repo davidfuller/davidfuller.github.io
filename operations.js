@@ -167,7 +167,7 @@ async function findSceneNo(sceneNo){
     console.log(myIndex);
     
     if (myIndex == -1){
-      alert('This is the final scene')
+      alert('Invalid Scene Number');
     } else {
       const myTarget = sheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
       await excel.sync();
