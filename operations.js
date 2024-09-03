@@ -274,6 +274,7 @@ async function getSceneMaxAndMin(){
 
 async function fillUK(){
   await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const studioText = tag("studio").value;
     const engineerText = tag("engineer").value;
     const dateColumn = myColumns.find(x => x.columnName == "UK Date Recorded").columnNo;
