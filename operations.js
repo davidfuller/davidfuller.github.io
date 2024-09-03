@@ -239,7 +239,11 @@ async function getSceneMaxAndMin(){
     await excel.sync();
     console.log(min.values[0][0]);
     console.log(max.values[0][0]);
-    return {min: min.values[0][0], max: max.values[0][0]}
+    let result = {};
+    result.min = min.values[0][0];
+    result.max = max.values[0][0];
+    console.log(result);
+    return result;
   }
 )
 }
