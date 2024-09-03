@@ -7,11 +7,11 @@ const myColumns =
   [
     {
       columnName: "Scene",
-      columnNo: 83
+      columnNo: 78
     },
     {
       columnName: "Line",
-      columnNo: 84
+      columnNo: 79
     }
   ];
 
