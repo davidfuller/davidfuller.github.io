@@ -1,11 +1,13 @@
 async function mainHTML(){
   const html = `<h1>MuVi2 Script Controller</h1>
-                <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
-                <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
-                <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First scene</button>
-                <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
-                <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
-                <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button><br/>
+                <div id="firstButtons">
+                  <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
+                  <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
+                  <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First scene</button>
+                  <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
+                  <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
+                  <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button><br/>
+                </div>
                 <label for="scene">Jump to scene</label>
                 <input type="text" id="scene" name="scene">
                 <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
