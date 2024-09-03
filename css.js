@@ -55,7 +55,7 @@ async function mainCSS(){
                       margin-left: 5px;
                     }
                       
-                    #scene {
+                    #scene{
                       width: 50px;
                       background-color: #ffc901;
                       color: #d34c01;
