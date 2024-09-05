@@ -360,6 +360,7 @@ function dateInFormat(){
 async function getDataFromSheet(sheetName, rangeName){
   await Excel.run(async function(excel){
     let sheet = excel.workbook.worksheets.getItem("Settings");
+    sheet.activate();
     excel.sync();
     sheet.load('name');
     excel.sync();
