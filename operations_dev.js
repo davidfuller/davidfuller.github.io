@@ -362,13 +362,13 @@ async function getDataFromSheet(sheetName, rangeName){
     let sheet = excel.workbook.worksheets.getItem("Settings");
     sheet.activate();
     excel.sync();
-    sheet.load('name');
+    sheet.load("name");
     excel.sync();
     console.log("Sheet name is");
     console.log(sheet.name);
     const range = sheet.getRange(rangeName);
     excel.sync();
-    range.load('values');
+    range.load("values");
     excel.sync();
     console.log(range.values);
   })
