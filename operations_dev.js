@@ -363,6 +363,6 @@ async function getDataFromSheet(sheetName, rangeName){
     const range = sheet.getRange(rangeName);
     range.load('values');
     excel.sync();
-    consol.log(range.values);
+    console.log(range.values);
   })
 }
