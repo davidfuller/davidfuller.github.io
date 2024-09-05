@@ -368,7 +368,7 @@ async function getDataFromSheet(sheetName, rangeName){
     let result = [];
     for (let i = 0; i < range.values.length; i++){
       if (range.values[i][0] != ""){
-        result.push(range.value[i][0]);
+        result.push(range.values[i][0]);
       }
     }
     console.log(result); 
