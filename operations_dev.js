@@ -2,6 +2,7 @@ async function auto_exec(){
   console.log('Operations loaded');
   console.log(jade_modules)
   await getDataFromSheet('Settings','studioChoice');
+  console.log("I'm here")
 }
 const columnsToLock = "A:Y"
 const myColumns = 
