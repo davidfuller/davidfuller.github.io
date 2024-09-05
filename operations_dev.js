@@ -364,4 +364,5 @@ async function getDataFromSheet(sheetName, rangeName){
     range.load('values');
     excel.sync();
     consol.log(range.values);
+  })
 }
