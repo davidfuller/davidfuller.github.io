@@ -357,3 +357,11 @@ function dateInFormat(){
 
 	return nowDate.getFullYear().toString().substring(2) + myMonth + myDay; 
 }
+async function getDataFromSheet(sheetName, rangeName){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(sheetName);
+    const range = sheet.getRange(rangeName);
+    range.load('values');
+    excel.sync();
+    consol.log(range.values);
+}
