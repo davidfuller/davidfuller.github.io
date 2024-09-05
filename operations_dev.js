@@ -1,15 +1,9 @@
 async function auto_exec(){
   console.log('Operations loaded');
   console.log(jade_modules)
-  await getDataFromSheet('Settings','studioChoice');
+  await getDataFromSheet('Settings','studioChoice','studio-select');
   console.log("I'm here")
 }
-
-document.onreadystatechange = function() {
-  if (document.readyState === "complete") {
-    console.log("Page is loaded completely!");
-  }
-};
 
 const columnsToLock = "A:Y"
 const myColumns = 
@@ -366,7 +360,7 @@ function dateInFormat(){
 
 	return nowDate.getFullYear().toString().substring(2) + myMonth + myDay; 
 }
-async function getDataFromSheet(sheetName, rangeName){
+async function getDataFromSheet(sheetName, rangeName, selectTag){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(sheetName);
     const range = sheet.getRange(rangeName);
@@ -381,7 +375,7 @@ async function getDataFromSheet(sheetName, rangeName){
       }
     }
     console.log(result); 
-    var studioSelect = tag('studio-select');
+    var studioSelect = tag(selectTag);
 
     for (let i = 0; i < result.length; i++){
       studioSelect.add(new Option(result[i], result[i]));
