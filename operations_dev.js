@@ -1,4 +1,4 @@
-function auto_exec(){
+async function auto_exec(){
   console.log('Operations loaded');
   console.log(jade_modules)
   await getDataFromSheet('Settings','studioChoice');
