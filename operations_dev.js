@@ -302,7 +302,7 @@ async function getSceneMaxAndMin(){
 async function fill(country){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    const studioText = tag("studio").value;
+    const studioText = tag("studio-select").value;
     const engineerText = tag("engineer").value;
     let dateColumn;
     let studioColumn;
