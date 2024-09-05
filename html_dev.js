@@ -20,21 +20,15 @@ async function mainHTML(){
                   <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
                 </div>
                 <div id="dateStudioEngineer">
-                  <label for="studio">Studio</label>
-                  <input type="text" id="studio" name="studio"><br/>
+                  <label for="studio-select">Studio</label>
+                  <select id="studio-select"><option value="">Please select</option></select>
+                  <br/>
                   <label for="engineer">Engineer</label>
                   <input type="text" id="engineer" name="engineer"><br/>
                   <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
                   <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
                   <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
                 </div>
-                <select id="studio-select"><option value="">Please select</option></select><br/>
-                <select>
-                  <option value="Audible Studio One">Audible Studio One</option>
-                  <option value="Audible Studio Two">Audible Studio Two</option>
-                  <option value="Audible Studio Three">Audible Studio Three</option>
-                  <option value="Audible Studio Four">Audible Studio Four</option>
-                </select>
                 `;
 
   Jade.open_canvas("Script Controller", html, true);
