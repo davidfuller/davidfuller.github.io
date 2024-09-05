@@ -359,14 +359,8 @@ function dateInFormat(){
 }
 async function getDataFromSheet(sheetName, rangeName){
   await Excel.run(async function(excel){
-    let sheet = excel.workbook.worksheets.getItem("Settings");
-    await excel.sync();
-    sheet.load("name");
-    await excel.sync();
-    console.log("Sheet name is");
-    console.log(sheet.name);
+    const sheet = excel.workbook.worksheets.getItem(sheetName);
     const range = sheet.getRange(rangeName);
-    await excel.sync();
     range.load("values");
     await excel.sync();
     console.log(range.values);
