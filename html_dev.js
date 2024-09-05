@@ -1,5 +1,6 @@
 async function mainHTML(){
   const html = `<h1>MuVi2 Script Controller</h1>
+                <h2>Development edition</h2>
                 <div id="firstButtons">
                   <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
                   <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
