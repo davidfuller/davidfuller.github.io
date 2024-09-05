@@ -4,6 +4,13 @@ async function auto_exec(){
   await getDataFromSheet('Settings','studioChoice');
   console.log("I'm here")
 }
+
+document.onreadystatechange = function() {
+  if (document.readyState === "complete") {
+    console.log("Page is loaded completely!");
+  }
+};
+
 const columnsToLock = "A:Y"
 const myColumns = 
   [
