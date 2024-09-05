@@ -361,6 +361,7 @@ async function getDataFromSheet(sheetName, rangeName){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(sheetName);
     const range = sheet.getRange(rangeName);
+    excel.sync();
     range.load('values');
     excel.sync();
     console.log(range.values);
