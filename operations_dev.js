@@ -364,7 +364,7 @@ async function getDataFromSheet(sheetName, rangeName){
     range.load("values");
     await excel.sync();
     console.log(range.values);
-    console.log(range.values[0].length)
+    console.log(range.values.length)
     //for (let i = 0; i < range.values.length; i++){}
       
     
