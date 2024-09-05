@@ -27,6 +27,12 @@ async function mainHTML(){
                   <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
                   <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
                 </div>
+                <select>
+                  <option value="Audible Studio One">Audible Studio One</option>
+                  <option value="Audible Studio Two">Audible Studio Two</option>
+                  <option value="Audible Studio Three">Audible Studio Three</option>
+                  <option value="Audible Studio Four">Audible Studio Four</option>
+                </select>
                 `;
 
   Jade.open_canvas("Script Controller", html, true);
