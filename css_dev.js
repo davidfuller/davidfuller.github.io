@@ -77,7 +77,7 @@ async function mainCSS(){
                       border-style: solid;
                     }
 
-                    #studio, #engineer {
+                    #studio, #engineer, #studio-select {
                       width: 150px;
                       background-color: #ffc901;
                       color: #d34c01;
