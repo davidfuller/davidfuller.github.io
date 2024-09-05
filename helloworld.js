@@ -1,35 +1,47 @@
-//This is loaded manually into the sheet
-function auto_exec(){
-  Jade.load_js("https://davidfuller.github.io/operations.js", "operations");
-  Jade.open_automations();
+async function auto_exec(){
+  await Jade.load_js("https://davidfuller.github.io/operations.js", "operations");
+  await Jade.load_js("https://davidfuller.github.io/html.js", "html");
+  await Jade.load_js("https://davidfuller.github.io/css.js", "css");
+  await jade_modules.css.mainCSS();
+  await jade_modules.html.mainHTML();
+}
+
+async function openUI(excel){
+  /*Jade.listing:{"name":"Open UI","description":"Opens the user interface"}*/
+  await jade_modules.css.mainCSS();
+  await jade_modules.html.mainHTML();
 }
 
 async function lockColumns(excel){
   /*Jade.listing:{"name":"Lock columns","description":"This locks columns"}*/
-  await jade_modules.operations.lockColumns(excel);
+  await jade_modules.operations.lockColumns();
 }
 
 async function unlock(excel){
   /*Jade.listing:{"name":"Unprotect sheet","description":"This unlocks sheet"}*/
-  await jade_modules.operations.unlock(excel);
+  await jade_modules.operations.unlock();
 }
 
 async function applyFilter(excel){
   /*Jade.listing:{"name":"Apply filter","description":"Applies empty filter to sheet"}*/
-  await jade_modules.operations.applyFilter(excel);
+  await jade_modules.operations.applyFilter();
 }
 
 async function removeFilter(excel){
   /*Jade.listing:{"name": "Remove filter","description":"Removes filter from sheet"}*/
-  await jade_modules.operations.removeFilter(excel);
+  await jade_modules.operations.removeFilter();
 }
 
 async function findNextScene(excel){
   /*Jade.listing:{"name": "Find Next Scene","description":"Finds the start of the next scene"}*/
-  await jade_modules.operations.findScene(excel, 1);
+  await jade_modules.operations.findScene(1);
 }
 
 async function findPreviousScene(excel){
   /*Jade.listing:{"name": "Find Previous Scene","description":"Finds the start of the previous scene"}*/
-  await jade_modules.operations.findScene(excel, -1);
+  await jade_modules.operations.findScene(-1);
+}
+
+function test(){
+  alert('test');
 }
