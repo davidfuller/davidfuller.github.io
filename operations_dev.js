@@ -372,5 +372,11 @@ async function getDataFromSheet(sheetName, rangeName){
       }
     }
     console.log(result); 
+    var studioSelect = tag('studio-select');
+
+    for (let i = 0; i < result.length; i++){
+      studioSelect.add(new Option(result[i], result[i]));
+    }
+      
   })
 }
