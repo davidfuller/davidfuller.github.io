@@ -19,7 +19,7 @@ async function mainCSS(){
                       font-size: 16px;
                       cursor: pointer;
                     }
-                    h1 {
+                    h1, h2{
                       margin-left: 30px;
                       font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
                     }
