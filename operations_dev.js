@@ -2,6 +2,7 @@ async function auto_exec(){
   console.log('Operations loaded');
   console.log(jade_modules)
   await getDataFromSheet('Settings','studioChoice','studio-select');
+  await getDataFromSheet('Settings','engineerChoice','engineer-select');
   console.log("I'm here")
 }
 
