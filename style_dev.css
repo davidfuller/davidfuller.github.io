@@ -77,7 +77,7 @@ label {
   border-style: solid;
 }
 
-#studio, #engineer, #studio-select {
+#studio, #engineer, #studio-select, #engineer-select {
   width: 150px;
   background-color: #ffc901;
   color: #d34c01;
