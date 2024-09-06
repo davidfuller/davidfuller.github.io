@@ -93,7 +93,7 @@ async function mainCSS(){
                       }
                       
                       .float-child {
-                          width: 50%;
+                          width: 30%;
                           float: left;
                           padding: 1px;
                           border: 2px solid red;
