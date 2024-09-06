@@ -20,12 +20,16 @@ async function mainHTML(){
                   <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
                 </div>
                   <div id="dateStudioEngineer">
-                    <label for="studio-select">Studio</label>
-                    <select id="studio-select"><option value="">Please select</option></select>
-                    <br/>
-                    <label for="engineer-select">Engineer</label>
-                    <select id="engineer-select"><option value="">Please select</option></select>
-                    <br/>
+                    <div class="float-container">
+                      <div class="float-child">
+                        <label for="studio-select">Studio</label><br/>
+                        <label for="engineer-select">Engineer</label><br/>
+                      </div>
+                      <div class="float-child">
+                        <select id="studio-select"><option value="">Please select</option></select><br/>
+                        <select id="engineer-select"><option value="">Please select</option></select><br/>
+                      </div>
+                    </div>
                     <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
                     <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
                     <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
