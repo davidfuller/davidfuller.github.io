@@ -30,10 +30,14 @@ async function mainHTML(){
                         <select id="engineer-select"><option value="">Please select</option></select><br/>
                       </div>
                     </div><br/>
-                    <div id="fillButton">
-                       <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
-                       <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
-                       <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
+                    <div class="float-container">
+                      <div class="float-child">
+                        <div id="fillButton">
+                           <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
+                           <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
+                           <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 `;
