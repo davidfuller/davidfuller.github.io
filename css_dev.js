@@ -88,7 +88,6 @@ async function mainCSS(){
                       border-style: solid;
                     }
                     .float-container {
-                          border: 3px solid #fff;
                           padding: 1px;
                       }
                       
@@ -96,7 +95,6 @@ async function mainCSS(){
                           width: 30%;
                           float: left;
                           padding: 1px;
-                          border: 2px solid red;
                       }  
                     
                     `;
