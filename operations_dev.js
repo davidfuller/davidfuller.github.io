@@ -303,7 +303,7 @@ async function fill(country){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const studioText = tag("studio-select").value;
-    const engineerText = tag("engineer").value;
+    const engineerText = tag("engineer-select").value;
     let dateColumn;
     let studioColumn;
     let engineerColumn;
