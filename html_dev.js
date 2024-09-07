@@ -38,6 +38,10 @@ async function mainHTML(){
                   </div>
                 `;
 
-  Jade.open_canvas("Script Controller", html, true);
+  await Jade.open_canvas("Script Controller", html, true);
+  await jade_modules.operations.getDataFromSheet('Settings','studioChoice','studio-select');
+  await jade_modules.operations.getDataFromSheet('Settings','engineerChoice','engineer-select');
+  console.log("I'm here data loaded");
 }
 
+ 
