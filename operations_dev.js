@@ -400,6 +400,7 @@ async function getColumnData(sheetName, rangeName){
         temp.name = range.values[i][0];
         temp.number = range.values[i][1];
         temp.column = range.values[i][2];
+        temp.index = range.values[i][3];
         result.push(temp);
       }
     }
