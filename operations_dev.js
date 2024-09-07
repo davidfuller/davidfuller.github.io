@@ -247,14 +247,8 @@ async function lastScene(){
   })
 }
 
-
-<<<<<<< HEAD
-async function getSceneRange(){
-  const sceneColumn = findColumnIndex("Scene");
-=======
 async function getSceneRange(excel){
-  const sceneColumn = mySheetColumns.find((col) => col.name === "Scene").index;
->>>>>>> 216f2b8098beff924465204e55ed0ee610fb6930
+  const sceneColumn = findColumnIndex("Scene");
   console.log("Scene Colum");
   console.log(sceneColumn);
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
