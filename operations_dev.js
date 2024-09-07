@@ -318,7 +318,7 @@ async function fill(country){
     if (country == 'UK'){
       dateColumn = findColumnIndex("UK Date Recorded");
       studioColumn = findColumnIndex("UK Studio");
-      engineerColumn = findColumnIndex("UK Engineer";
+      engineerColumn = findColumnIndex("UK Engineer");
     } else if ( country == 'US'){
       dateColumn = findColumnIndex("US Date Recorded");
       studioColumn = findColumnIndex("US Studio");

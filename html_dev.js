@@ -41,9 +41,8 @@ async function mainHTML(){
   await Jade.open_canvas("Script Controller", html, true);
   await jade_modules.operations.getDataFromSheet('Settings','studioChoice','studio-select');
   await jade_modules.operations.getDataFromSheet('Settings','engineerChoice','engineer-select');
-  jade_public.myColumns = await jade_modules.operations.getColumnData('Settings', 'columnData');
+  await jade_modules.operations.getColumnData('Settings', 'columnData');
   console.log("I'm here data loaded");
-  console.log(jade_public.myColumns);
 }
 
  
