@@ -87,16 +87,20 @@ async function mainCSS(){
                       border-color: #d34c01;
                       border-style: solid;
                     }
-                    .float-container {
-                          padding: 1px;
-                      }
-                      
-                      .float-child {
-                          width: 30%;
-                          float: left;
-                          padding: 1px;
-                      }  
+                    .row {
+                      display: flex;
+                    }
                     
+                    .column {
+                      padding: 10px;
+                    }
+                    
+                    #column1 {
+                      flex: 10%
+                    }
+                    #column2 {
+                      flex: 10%
+                    }
                     `;
   Jade.set_css(css);
 
