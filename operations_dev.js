@@ -2,7 +2,12 @@ async function auto_exec(){
   console.log('Operations loaded');
   console.log(jade_modules)
 }
+let mySheetColumns;
 
+async function getMySheetColumns(){
+  console.log(mySheetColumns);
+  return mySheetColumns
+}
 const columnsToLock = "A:Y"
 const myColumns = 
   [
@@ -399,6 +404,7 @@ async function getColumnData(sheetName, rangeName){
       }
     }
     console.log(result);
+    mySheetColumns = result;
     return result;
   })
 }
