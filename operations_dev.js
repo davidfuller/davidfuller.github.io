@@ -12,7 +12,17 @@ async function getMySheetColumns(){
 function findColumnIndex(name){
   return mySheetColumns.find((col) => col.name === name).index;
 }
-const columnsToLock = "A:Y"
+const columnsToLock = "A:Y";
+const testRange = "A:B, D:E";
+
+async function test(){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    const range = sheet.getRanges(testRange);
+    range.select();
+    await excel.sync();
+  })
+}
 const myColumns = 
   [
     {
