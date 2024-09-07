@@ -20,8 +20,7 @@ async function test(){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const range = sheet.getRanges(testRange);
     await excel.sync();
-    range.select();
-    await excel.sync();
+    console.log(range);
   })
 }
 const myColumns = 
