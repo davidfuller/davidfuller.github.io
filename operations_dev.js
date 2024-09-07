@@ -388,5 +388,17 @@ async function getColumnData(sheetName, rangeName){
     range.load("values");
     await excel.sync();
     console.log(range.values);
+    let result = [];
+    for (let i = 0; i < range.values.length; i++){
+      if (range.values[i][0] != ""){
+        let temp = {};
+        temp.name = range.values[i][0];
+        temp.number = range.values[i][1];
+        temp.column = range.values[i][2];
+        result.push(temp);
+      }
+    }
+    console.log(result);
+    return result;
   })
 }
