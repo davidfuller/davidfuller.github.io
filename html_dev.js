@@ -23,14 +23,13 @@ async function mainHTML(){
                     <div class="row">
                       <div class="column" id="column-one">
                         <label for="studio-select">Studio</label><br/>
-                        <label for="engineer-select">Engineer</label><br/>
+                        <label for="engineer-select">Engineer</label>
                       </div>
                       <div class="column" id="column-two">
                         <select id="studio-select"><option value="">Please select</option></select><br/>
-                        <select id="engineer-select"><option value="">Please select</option></select><br/>
+                        <select id="engineer-select"><option value="">Please select</option></select>
                       </div>
                     </div>
-                    <br/>
                     <div id="fillButton">
                       <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
                       <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
