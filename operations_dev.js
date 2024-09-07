@@ -22,7 +22,7 @@ async function test(){
     range.load('address');
     await excel.sync();
     console.log(range.address);
-    console.log(range.areas.count);
+    console.log(range.areas.length);
   })
 }
 const myColumns = 
