@@ -399,6 +399,6 @@ async function getColumnData(sheetName, rangeName){
       }
     }
     console.log(result);
-    window.myColumns = result;
+    return result;
   })
 }
