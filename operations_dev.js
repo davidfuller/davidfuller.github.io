@@ -346,6 +346,8 @@ async function fill(country){
     engineerRange.values = [[engineerText]];
     await excel.sync();
     await lockColumns();
+    engineerRange.select();
+    await excel.sync();
     dateRange.select();
     await excel.sync();
   })
