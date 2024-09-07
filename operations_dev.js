@@ -244,8 +244,10 @@ async function lastScene(){
 }
 
 
-async function getSceneRange(excel){
-  const sceneColumn = myColumns.find(x => x.columnName == "Scene").columnNo;
+async function getSceneRange(){
+  const sceneColumn = mySheetColumns.find((col) => col.name === "Scene").index;
+  console.log("Scene Colum");
+  console.log(sceneColumn);
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
   const endRow = sheet.getUsedRange().getLastRow();
   endRow.load("rowindex");
