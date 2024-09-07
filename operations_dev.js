@@ -8,6 +8,10 @@ async function getMySheetColumns(){
   console.log(mySheetColumns);
   return mySheetColumns
 }
+
+function findColumnIndex(name){
+  return mySheetColumns.find((col) => col.name === name).index;
+}
 const columnsToLock = "A:Y"
 const myColumns = 
   [
@@ -245,7 +249,7 @@ async function lastScene(){
 
 
 async function getSceneRange(){
-  const sceneColumn = mySheetColumns.find((col) => col.name === "Scene").index;
+  const sceneColumn = findColumnIndex("Scene");
   console.log("Scene Colum");
   console.log(sceneColumn);
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
