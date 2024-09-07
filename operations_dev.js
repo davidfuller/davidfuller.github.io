@@ -19,6 +19,7 @@ async function test(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const range = sheet.getRanges(testRange);
+    await excel.sync();
     range.select();
     await excel.sync();
   })
