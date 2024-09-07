@@ -87,14 +87,18 @@ label {
   border-color: #d34c01;
   border-style: solid;
 }
-.float-container {
-    border: 3px solid #fff;
-    padding: 1px;
+.row {
+  display: flex;
 }
 
-.float-child {
-    width: 50%;
-    float: left;
-    padding: 1px;
-    border: 2px solid red;
-}  
+.column {
+  padding: 10px;
+}
+
+#column1 {
+  flex: 10%
+}
+#column2 {
+  flex: 10%
+}
+
