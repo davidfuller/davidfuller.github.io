@@ -96,10 +96,10 @@ async function mainCSS(){
                     }
                     
                     #column1 {
-                      flex: 10%
+                      flex: 30%
                     }
                     #column2 {
-                      flex: 10%
+                      flex: 60%
                     }
                     `;
   Jade.set_css(css);
