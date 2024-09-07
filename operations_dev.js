@@ -316,17 +316,17 @@ async function fill(country){
     let studioColumn;
     let engineerColumn;
     if (country == 'UK'){
-      dateColumn = myColumns.find(x => x.columnName == "UK Date Recorded").columnNo;
-      studioColumn = myColumns.find(x => x.columnName == "UK Studio").columnNo;
-      engineerColumn = myColumns.find(x => x.columnName == "UK Engineer").columnNo;
+      dateColumn = findColumnIndex("UK Date Recorded");
+      studioColumn = findColumnIndex("UK Studio");
+      engineerColumn = findColumnIndex("UK Engineer";
     } else if ( country == 'US'){
-      dateColumn = myColumns.find(x => x.columnName == "US Date Recorded").columnNo;
-      studioColumn = myColumns.find(x => x.columnName == "US Studio").columnNo;
-      engineerColumn = myColumns.find(x => x.columnName == "US Engineer").columnNo;
+      dateColumn = findColumnIndex("US Date Recorded");
+      studioColumn = findColumnIndex("US Studio");
+      engineerColumn = findColumnIndex("US Engineer");
     } else if ( country == 'Walla'){
-      dateColumn = myColumns.find(x => x.columnName == "Walla Date Recorded").columnNo;
-      studioColumn = myColumns.find(x => x.columnName == "Walla Studio").columnNo;
-      engineerColumn = myColumns.find(x => x.columnName == "Walla Engineer").columnNo;
+      dateColumn = findColumnIndex("Walla Date Recorded");
+      studioColumn = findColumnIndex("Walla Studio");
+      engineerColumn = findColumnIndex("Walla Engineer");
     }
     
     const activeCell = excel.workbook.getActiveCell();
