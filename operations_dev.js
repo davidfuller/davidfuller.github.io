@@ -19,8 +19,9 @@ async function test(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const range = sheet.getRanges(testRange);
+    range.load('address');
     await excel.sync();
-    console.log(range);
+    console.log(range.address);
   })
 }
 const myColumns = 
