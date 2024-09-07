@@ -381,3 +381,12 @@ async function getDataFromSheet(sheetName, rangeName, selectTag){
       
   })
 }
+async function getColumnData(sheetName, rangeName){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(sheetName);
+    const range = sheet.getRange(rangeName);
+    range.load("values");
+    await excel.sync();
+    console.log(range.values);
+  })
+}
