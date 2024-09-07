@@ -20,13 +20,15 @@ async function mainHTML(){
                   <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
                 </div>
                   <div id="dateStudioEngineer">
-                    <div id="column-one">
-                      <label for="studio-select">Studio</label><br/>
-                      <label for="engineer-select">Engineer</label><br/>
-                    </div>
-                    <div id="colum-two">
-                      <select id="studio-select"><option value="">Please select</option></select><br/>
-                      <select id="engineer-select"><option value="">Please select</option></select><br/>
+                    <div class="row">
+                      <div class="column" id="column-one">
+                        <label for="studio-select">Studio</label><br/>
+                        <label for="engineer-select">Engineer</label><br/>
+                      </div>
+                      <div class="column" id="column-two">
+                        <select id="studio-select"><option value="">Please select</option></select><br/>
+                        <select id="engineer-select"><option value="">Please select</option></select><br/>
+                      </div>
                     </div>
                     <br/>
                     <div id="fillButton">
