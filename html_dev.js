@@ -43,6 +43,7 @@ async function mainHTML(){
   await jade_modules.operations.getDataFromSheet('Settings','engineerChoice','engineer-select');
   jade_public.myColumns = await jade_modules.operations.getColumnData('Settings', 'columnData');
   console.log("I'm here data loaded");
+  console.log(jade_public.myColumns);
 }
 
  
