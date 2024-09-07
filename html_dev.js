@@ -20,24 +20,19 @@ async function mainHTML(){
                   <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
                 </div>
                   <div id="dateStudioEngineer">
-                    <div class="float-container">
-                      <div class="float-child">
-                        <label for="studio-select">Studio</label><br/>
-                        <label for="engineer-select">Engineer</label><br/>
-                      </div>
-                      <div class="float-child">
-                        <select id="studio-select"><option value="">Please select</option></select><br/>
-                        <select id="engineer-select"><option value="">Please select</option></select><br/>
-                      </div>
-                    </div><br/>
-                    <div class="float-container">
-                      <div class="float-child">
-                        <div id="fillButton">
-                           <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
-                           <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
-                           <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
-                        </div>
-                      </div>
+                    <div id="column-one">
+                      <label for="studio-select">Studio</label><br/>
+                      <label for="engineer-select">Engineer</label><br/>
+                    </div>
+                    <div id="colum-two">
+                      <select id="studio-select"><option value="">Please select</option></select><br/>
+                      <select id="engineer-select"><option value="">Please select</option></select><br/>
+                    </div>
+                    <br/>
+                    <div id="fillButton">
+                      <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
+                      <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
+                      <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
                     </div>
                   </div>
                 `;
