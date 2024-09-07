@@ -399,6 +399,6 @@ async function getColumnData(sheetName, rangeName){
       }
     }
     console.log(result);
-    return result;
+    jade_public.myColumns = result;
   })
 }
