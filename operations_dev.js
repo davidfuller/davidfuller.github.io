@@ -244,7 +244,7 @@ async function lastScene(){
 }
 
 
-async function getSceneRange(){
+async function getSceneRange(excel){
   const sceneColumn = mySheetColumns.find((col) => col.name === "Scene").index;
   console.log("Scene Colum");
   console.log(sceneColumn);
