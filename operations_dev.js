@@ -12,6 +12,12 @@ async function getMySheetColumns(){
 function findColumnIndex(name){
   return mySheetColumns.find((col) => col.name === name).index;
 }
+
+function findColumnLetter(name){
+  return mySheetColumns.find((col) => col.name === name).column;
+}
+
+
 const columnsToLock = "A:Y";
 const testRange = "A:B, D:E";
 
@@ -428,3 +434,12 @@ async function getColumnData(sheetName, rangeName){
     return result;
   })
 }
+
+async function theFormulas(){
+  const columnNameFirst = "Position -";
+  const columnNameLast = "Scene word count calc";
+  const myRange = findColumnLetter(columnNameFirst) + "3:" + findColumnLetter(columnNameLast) + "4";
+  console.log(myRange);
+}
+  
+  
