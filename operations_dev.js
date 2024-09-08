@@ -443,7 +443,10 @@ async function theFormulas(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const range = sheet.getRange(myRange);
-    })
+    range.load("formula");
+    await excel.sync();
+    console.log(range.formula);
+  })
 }
   
   
