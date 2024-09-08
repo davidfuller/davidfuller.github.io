@@ -454,7 +454,13 @@ async function theFormulas(){
       columnName: "Position ]",
       formulaFirst: '=IF(C3="",0,FIND("]",C3))',
       formulaRest: '=IF(C4="",0,FIND("]",C4))'
+    },
+    {
+      columnName: "End Line",
+      formulaFirst: 0,
+      formulaRest: "=IF(BV4=0,BW3,VALUE(MID(C4,BT4+1,BV4-BT4-1)))"
     }
+    
     
   ]
   const firstRow = "3";
