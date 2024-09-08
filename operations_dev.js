@@ -438,15 +438,87 @@ async function getColumnData(sheetName, rangeName){
 async function theFormulas(){
   const columnNameFirst = "Position -";
   const columnNameLast = "Scene word count calc";
-  const myRange = findColumnLetter(columnNameFirst) + "3:" + findColumnLetter(columnNameLast) + "4";
-  console.log(myRange);
-  await Excel.run(async function(excel){
+  const myFormulas = ['=IF(C4="",0,FIND("-",C4))' ];
+  const columnFormulae = [
+    {
+      columnName: "Position -",
+      formulaFirst: '=IF(C3="",0,FIND("-",C3))',
+      formulaRest: '=IF(C4="",0,FIND("-",C4))'
+    }
+  ]
+  const firstRow = "3";
+  const firstRestRow = "4";
+  const lastRow = "9999";
+  await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    const range = sheet.getRange(myRange);
-    range.load("formulas");
-    await excel.sync();
-    console.log(range.formulas);
+    for (let columnFormula of columnFormulae){
+      const columnLetter = findColumnLetter(columnFormula.columnName);
+      const myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow ;
+      console.log(myRange);
+      const range = sheet.getRange(myRange);
+      range.formulas = columnFormula.formulaRest;
+      await excel.sync();
+      console.log(range.formula);
+    }
   })
 }
   
-  
+  /* ​
+  0: Array(10) [ '=IF(C3="",0,FIND("-",C3))', 0, '=IF(C3="",0,FIND("]",C3))', … ]
+  ​​
+  0: '=IF(C3="",0,FIND("-",C3))'
+  ​​
+  1: 0
+  ​​
+  2: '=IF(C3="",0,FIND("]",C3))'
+  ​​
+  3: 0
+  ​​
+  4: "=AND(F3>=BU3, F3<=BW3)"
+  ​​
+  5: 0
+  ​​
+  6: 1
+  ​​
+  7: 0
+  ​​
+  8: 0
+  ​​
+  9: 0
+  ​​
+  length: 10
+  ​​
+  <prototype>: Array []
+  ​
+  1: Array(10) [ '=IF(C4="",0,FIND("-",C4))', "=IF(BT4=0,BU3,VALUE(MID(C4,2,BT4-2)))", '=IF(C4="",0,FIND("]",C4))', … ]
+  ​​
+  0: '=IF(C4="",0,FIND("-",C4))'
+  ​​
+  1: "=IF(BT4=0,BU3,VALUE(MID(C4,2,BT4-2)))"
+  ​​
+  2: '=IF(C4="",0,FIND("]",C4))'
+  ​​
+  3: "=IF(BV4=0,BW3,VALUE(MID(C4,BT4+1,BV4-BT4-1)))"
+  ​​
+  4: "=AND(F4>=BU4, F4<=BW4)"
+  ​​
+  5: '= LEN(TRIM(J4)) - LEN(SUBSTITUTE(J4, " ", "")) + 1'
+  ​​
+  6: '=IF(D4="",BZ3,VALUE(D4))'
+  ​​
+  7: "=F4"
+  ​​
+  8: "=IF(BZ4=BZ3,CB3+BY4,BY4)"
+  ​​
+  9: "=VLOOKUP(BW4,CA4:CB99999,2,FALSE)"
+  ​​
+  length: 10
+  ​​
+  <prototype>: Array []
+  ​
+  length: 2
+  ​
+  <prototype>: Array []
+  index.html:448:13
+  ]
+  */ 
