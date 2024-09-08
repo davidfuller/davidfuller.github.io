@@ -443,9 +443,9 @@ async function theFormulas(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const range = sheet.getRange(myRange);
-    range.load("formula");
+    range.load("formulas");
     await excel.sync();
-    console.log(range.formula);
+    console.log(range.formulas);
   })
 }
   
