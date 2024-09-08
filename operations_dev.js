@@ -458,7 +458,7 @@ async function theFormulas(){
       const range = sheet.getRange(myRange);
       range.formulas = columnFormula.formulaRest;
       await excel.sync();
-      console.log(range.formula);
+      console.log(range.formulas);
     }
   })
 }
