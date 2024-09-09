@@ -439,7 +439,9 @@ async function theFormulas(){
   const columnNameFirst = "Position -";
   const columnNameLast = "Scene word count calc";
   const myFormulas = ['=IF(C4="",0,FIND("-",C4))' ];
+  const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const UKScriptColumn = findColumnLetter("UK script");
+  const positionMinusColumn = findColumnLetter("Position -");
   const numberColumn = findColumnLetter("Number");
   const startLineColumn = findColumnLetter("Start Line");
   const endLineColumn = findColumnLetter("End Line");
@@ -447,23 +449,23 @@ async function theFormulas(){
   const columnFormulae = [
     {
       columnName: "Position -",
-      formulaFirst: '=IF(C3="",0,FIND("-",C3))',
-      formulaRest: '=IF(C4="",0,FIND("-",C4))'
+      formulaFirst: '=IF(' + sceneLineNumberRangeColumn + '3="",0,FIND("-",' + sceneLineNumberRangeColumn + '3))',
+      formulaRest: '=IF(' + sceneLineNumberRangeColumn + '4="",0,FIND("-",' + sceneLineNumberRangeColumn + '4))'
     },
     {
       columnName: "Start Line",
       formulaFirst: 0,
-      formulaRest: "=IF(BT4=0,BU3,VALUE(MID(C4,2,BT4-2)))"
+      formulaRest: "=IF(" + positionMinusColumn + "4=0," + startLineColumn + "3,VALUE(MID(" + sceneLineNumberRangeColumn + "4,2," + positionMinusColumn + "4-2)))"
     },
     {
       columnName: "Position ]",
-      formulaFirst: '=IF(C3="",0,FIND("]",C3))',
-      formulaRest: '=IF(C4="",0,FIND("]",C4))'
+      formulaFirst: '=IF(' + sceneLineNumberRangeColumn + '3="",0,FIND("]",' + sceneLineNumberRangeColumn + '3))',
+      formulaRest: '=IF(' + sceneLineNumberRangeColumn + '4="",0,FIND("]",' + sceneLineNumberRangeColumn + '4))'
     },
     {
       columnName: "End Line",
       formulaFirst: 0,
-      formulaRest: "=IF(" + positionEndSqaureBracketColumn + "4=0,BW3,VALUE(MID(C4,BT4+1," + positionEndSqaureBracketColumn + "4-BT4-1)))"
+      formulaRest: "=IF(" + positionEndSqaureBracketColumn + "4=0," + endLineColumn + "3,VALUE(MID(" + sceneLineNumberRangeColumn + "4," + positionMinusColumn + "4+1," + positionEndSqaureBracketColumn + "4-" + positionMinusColumn + "4-1)))"
     },
     {
       columnName: "Valid Line Number",
