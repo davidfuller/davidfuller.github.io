@@ -441,13 +441,13 @@ async function theFormulas(){
   const myFormulas = ['=IF(C4="",0,FIND("-",C4))' ];
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
-  const UKScriptColumn = findColumnLetter("UK script");
-  const positionMinusColumn = findColumnLetter("Position -");
+  const UKScriptColumn = findColumnLetter("UK script"); //J
+  const positionMinusColumn = findColumnLetter("Position -"); //BT
   const numberColumn = findColumnLetter("Number"); //F
-  const startLineColumn = findColumnLetter("Start Line");
-  const endLineColumn = findColumnLetter("End Line");
+  const startLineColumn = findColumnLetter("Start Line"); //BU
+  const endLineColumn = findColumnLetter("End Line"); //BW
   const sceneColumn = findColumnLetter("Scene"); //BZ
-  const positionEndSqaureBracketColumn = findColumnLetter("Position ]");
+  const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
   const columnFormulae = [
     {
       columnName: "Position -",
