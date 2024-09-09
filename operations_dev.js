@@ -463,7 +463,7 @@ async function theFormulas(){
     {
       columnName: "End Line",
       formulaFirst: 0,
-      formulaRest: "=IF(BV4=0,BW3,VALUE(MID(C4,BT4+1,BV4-BT4-1)))"
+      formulaRest: "=IF(" + positionEndSqaureBracketColumn + "4=0,BW3,VALUE(MID(C4,BT4+1," + positionEndSqaureBracketColumn + "4-BT4-1)))"
     },
     {
       columnName: "Valid Line Number",
