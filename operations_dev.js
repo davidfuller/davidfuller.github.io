@@ -440,6 +440,7 @@ async function theFormulas(){
   const columnNameLast = "Scene word count calc";
   const myFormulas = ['=IF(C4="",0,FIND("-",C4))' ];
   const UKScriptColumn = findColumnLetter("UK script");
+  const numberColumn = findColumnLetter("Number");
   const columnFormulae = [
     {
       columnName: "Position -",
@@ -463,8 +464,8 @@ async function theFormulas(){
     },
     {
       columnName: "Valid Line Number",
-      formulaFirst:  "=AND(F3>=BU3, F3<=BW3)",
-      formulaRest: "=AND(F4>=BU4, F4<=BW4)"
+      formulaFirst:  "=AND(" + numberColumn + "3>=BU3, " + numberColumn + "3<=BW3)",
+      formulaRest: "=AND(" + numberColumn + "4>=BU4, " + numberColumn + "4<=BW4)"
     },
     {
       columnName: "Line Word Count",
