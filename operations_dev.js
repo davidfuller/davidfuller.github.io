@@ -443,6 +443,7 @@ async function theFormulas(){
   const numberColumn = findColumnLetter("Number");
   const startLineColumn = findColumnLetter("Start Line");
   const endLineColumn = findColumnLetter("End Line");
+  const positionEndSqaureBracketColumn = findColumnLetter("Position ]");
   const columnFormulae = [
     {
       columnName: "Position -",
