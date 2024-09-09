@@ -477,7 +477,7 @@ async function theFormulas(){
     {
       columnName: "Line Word Count",
       formulaFirst:  0,
-      formulaRest: '= LEN(TRIM(' + UKScriptColumn + '4)) - LEN(SUBSTITUTE(' + UKScriptColumn + '4, " ", "")) + 1'
+      formulaRest: '=LEN(TRIM(' + UKScriptColumn + '4)) - LEN(SUBSTITUTE(' + UKScriptColumn + '4, " ", "")) + 1'
     },
     {
       columnName: "Scene",
@@ -500,6 +500,7 @@ async function theFormulas(){
       const myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow ;
       console.log(myRange);
       const range = sheet.getRange(myRange);
+	  console.log(columnFormula.formulaRest);
       range.formulas = columnFormula.formulaRest;
       await excel.sync();
       console.log(range.formulas);
