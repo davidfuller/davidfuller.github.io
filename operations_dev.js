@@ -443,7 +443,7 @@ async function theFormulas(){
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
   const UKScriptColumn = findColumnLetter("UK script");
   const positionMinusColumn = findColumnLetter("Position -");
-  const numberColumn = findColumnLetter("Number");
+  const numberColumn = findColumnLetter("Number"); //F
   const startLineColumn = findColumnLetter("Start Line");
   const endLineColumn = findColumnLetter("End Line");
   const sceneColumn = findColumnLetter("Scene"); //BZ
@@ -483,9 +483,12 @@ async function theFormulas(){
       columnName: "Scene",
       formulaFirst:  1,
       formulaRest: '=IF(' + sceneNumberColumn + '4="",' +sceneColumn + '3,VALUE(' + sceneNumberColumn + '4))'
-    }
-    
-    
+    },
+    {
+      columnName: "Line",
+      formulaFirst:  0,
+      formulaRest: "=" + numberColumn + "4"
+    } 
   ]
   const firstRow = "3";
   const firstRestRow = "4";
