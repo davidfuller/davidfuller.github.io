@@ -500,7 +500,7 @@ async function theFormulas(){
       const myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow ;
       console.log(myRange);
       const range = sheet.getRange(myRange);
-	  console.log(columnFormula.formulaRest);
+	    console.log(columnFormula.formulaRest);
       range.formulas = columnFormula.formulaRest;
       await excel.sync();
       console.log(range.formulas);
