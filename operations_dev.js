@@ -449,7 +449,11 @@ async function theFormulas(){
   const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
   const sceneColumn = findColumnLetter("Scene"); //BZ
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
+  const lineColumn = findColumnLetter("Line"); // CA
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
+  const firstRow = "3";
+  const firstRestRow = "4";
+  const lastRow = "9999";
   const columnFormulae = [
     {
       columnName: "Position -",
@@ -495,11 +499,14 @@ async function theFormulas(){
 	    columnName: "Word count to this line",
       formulaFirst:  0,
       formulaRest: "=IF(" + sceneColumn + "4=" + sceneColumn + "3," + wordCountToThisLineColumn + "3+" + lineWordCountColumn + "4," + lineWordCountColumn + "4)"
+  	},
+	  {
+	    columnName: "Scene word count calc",
+      formulaFirst:  0,
+      formulaRest: "=VLOOKUP(" + endLineColumn + "4," + lineColumn + "4:" + wordCountToThisLineColumn + lastRow + ",2,FALSE)"
   	}
   ]
-  const firstRow = "3";
-  const firstRestRow = "4";
-  const lastRow = "9999";
+  
   await unlock();
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
