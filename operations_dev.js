@@ -440,11 +440,13 @@ async function theFormulas(){
   const columnNameLast = "Scene word count calc";
   const myFormulas = ['=IF(C4="",0,FIND("-",C4))' ];
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
+  const sceneNumberColumn = findColumnLetter("Scene Number"); //D
   const UKScriptColumn = findColumnLetter("UK script");
   const positionMinusColumn = findColumnLetter("Position -");
   const numberColumn = findColumnLetter("Number");
   const startLineColumn = findColumnLetter("Start Line");
   const endLineColumn = findColumnLetter("End Line");
+  const sceneColumn = findColumnLetter("Scene"); //BZ
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]");
   const columnFormulae = [
     {
@@ -476,6 +478,11 @@ async function theFormulas(){
       columnName: "Line Word Count",
       formulaFirst:  0,
       formulaRest: '= LEN(TRIM(' + UKScriptColumn + '4)) - LEN(SUBSTITUTE(' + UKScriptColumn + '4, " ", "")) + 1'
+    },
+    {
+      columnName: "Scene",
+      formulaFirst:  1,
+      formulaRest: '=IF(' + sceneNumberColumn + '4="",' +sceneColumn + '3,VALUE(' + sceneNumberColumn + '4))'
     }
     
     
