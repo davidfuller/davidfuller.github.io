@@ -442,6 +442,7 @@ async function theFormulas(){
   const UKScriptColumn = findColumnLetter("UK script");
   const numberColumn = findColumnLetter("Number");
   const startLineColumn = findColumnLetter("Start Line");
+  const endLineColumn = findColumnLetter("End Line");
   const columnFormulae = [
     {
       columnName: "Position -",
@@ -465,8 +466,8 @@ async function theFormulas(){
     },
     {
       columnName: "Valid Line Number",
-      formulaFirst:  "=AND(" + numberColumn + "3>=" + startLineColumn + "3, " + numberColumn + "3<=BW3)",
-      formulaRest: "=AND(" + numberColumn + "4>=" + startLineColumn + "4, " + numberColumn + "4<=BW4)"
+      formulaFirst:  "=AND(" + numberColumn + "3>=" + startLineColumn + "3, " + numberColumn + "3<=" + endLineColumn + "3)",
+      formulaRest: "=AND(" + numberColumn + "4>=" + startLineColumn + "4, " + numberColumn + "4<=" + endLineColumn + "4)"
     },
     {
       columnName: "Line Word Count",
@@ -552,3 +553,29 @@ async function theFormulas(){
   index.html:448:13
   ]
   */ 
+  /*
+Scene Line Number Range	3	C	2
+Scene Number	4	D	3
+Cue	5	E	4
+Number	6	F	5
+UK script	10	J	9
+UK Date Recorded	22	V	21
+UK Studio	23	W	22
+UK Engineer	24	X	23
+US Date Recorded	27	AA	26
+US Studio	28	AB	27
+US Engineer	29	AC	28
+Walla Date Recorded	45	AS	44
+Walla Studio	46	AT	45
+Walla Engineer	47	AU	46
+Position -	72	BT	71
+Start Line	73	BU	72
+Position ]	74	BV	73
+End Line	75	BW	74
+Valid Line Number	76	BX	75
+Line Word Count	77	BY	76
+Scene	78	BZ	77
+Line	79	CA	78
+Word count to this line	80	CB	79
+Scene word count calc	81	CC	80
+*/
