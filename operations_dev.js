@@ -441,6 +441,7 @@ async function theFormulas(){
   const myFormulas = ['=IF(C4="",0,FIND("-",C4))' ];
   const UKScriptColumn = findColumnLetter("UK script");
   const numberColumn = findColumnLetter("Number");
+  const startLineColumn = findColumnLetter("Start Line");
   const columnFormulae = [
     {
       columnName: "Position -",
@@ -464,8 +465,8 @@ async function theFormulas(){
     },
     {
       columnName: "Valid Line Number",
-      formulaFirst:  "=AND(" + numberColumn + "3>=BU3, " + numberColumn + "3<=BW3)",
-      formulaRest: "=AND(" + numberColumn + "4>=BU4, " + numberColumn + "4<=BW4)"
+      formulaFirst:  "=AND(" + numberColumn + "3>=" + startLineColumn + "3, " + numberColumn + "3<=BW3)",
+      formulaRest: "=AND(" + numberColumn + "4>=" + startLineColumn + "4, " + numberColumn + "4<=BW4)"
     },
     {
       columnName: "Line Word Count",
