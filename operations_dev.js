@@ -446,8 +446,10 @@ async function theFormulas(){
   const numberColumn = findColumnLetter("Number"); //F
   const startLineColumn = findColumnLetter("Start Line"); //BU
   const endLineColumn = findColumnLetter("End Line"); //BW
+  const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
   const sceneColumn = findColumnLetter("Scene"); //BZ
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
+  const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
   const columnFormulae = [
     {
       columnName: "Position -",
@@ -488,11 +490,17 @@ async function theFormulas(){
       columnName: "Line",
       formulaFirst:  0,
       formulaRest: "=" + numberColumn + "4"
-    } 
+    },
+	  {
+	    columnName: "Word count to this line",
+      formulaFirst:  0,
+      formulaRest: "=IF(" + sceneColumn + "4=" + sceneColumn + "3," + wordCountToThisLineColumn + "3+" + lineWordCountColumn + "4," + lineWordCountColumn + "4)"
+  	}
   ]
   const firstRow = "3";
   const firstRestRow = "4";
   const lastRow = "9999";
+  await unlock();
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     for (let columnFormula of columnFormulae){
@@ -500,12 +508,13 @@ async function theFormulas(){
       const myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow ;
       console.log(myRange);
       const range = sheet.getRange(myRange);
-	  console.log(columnFormula.formulaRest);
+      console.log(columnFormula.formulaRest);
       range.formulas = columnFormula.formulaRest;
       await excel.sync();
       console.log(range.formulas);
     }
   })
+  await lockColumns();
 }
   
   /* ​
