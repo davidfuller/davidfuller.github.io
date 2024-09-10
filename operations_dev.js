@@ -477,33 +477,33 @@ async function theFormulas(){
     },
     {
       columnName: "Valid Line Number",
-      formulaFirst:  "=AND(" + numberColumn + "3>=" + startLineColumn + "3, " + numberColumn + "3<=" + endLineColumn + "3)",
-      formulaRest: "=AND(" + numberColumn + "4>=" + startLineColumn + "4, " + numberColumn + "4<=" + endLineColumn + "4)"
+      formulaFirst:  "=AND(" + numberColumn + firstRow + ">=" + startLineColumn + firstRow + ", " + numberColumn + firstRow + "<=" + endLineColumn + firstRow + ")",
+      formulaRest: "=AND(" + numberColumn + firstRestRow + ">=" + startLineColumn + firstRestRow + ", " + numberColumn + firstRestRow + "<=" + endLineColumn + firstRestRow + ")"
     },
     {
       columnName: "Line Word Count",
       formulaFirst:  0,
-      formulaRest: '=LEN(TRIM(' + UKScriptColumn + '4)) - LEN(SUBSTITUTE(' + UKScriptColumn + '4, " ", "")) + 1'
+      formulaRest: '=LEN(TRIM(' + UKScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + UKScriptColumn + firstRestRow + ', " ", "")) + 1'
     },
     {
       columnName: "Scene",
       formulaFirst:  1,
-      formulaRest: '=IF(' + sceneNumberColumn + '4="",' +sceneColumn + '3,VALUE(' + sceneNumberColumn + '4))'
+      formulaRest: '=IF(' + sceneNumberColumn + firstRestRow + '="",' +sceneColumn + firstRow + ',VALUE(' + sceneNumberColumn + firstRestRow + '))'
     },
     {
       columnName: "Line",
       formulaFirst:  0,
-      formulaRest: "=" + numberColumn + "4"
+      formulaRest: "=" + numberColumn + firstRestRow + ""
     },
 	  {
 	    columnName: "Word count to this line",
       formulaFirst:  0,
-      formulaRest: "=IF(" + sceneColumn + "4=" + sceneColumn + "3," + wordCountToThisLineColumn + "3+" + lineWordCountColumn + "4," + lineWordCountColumn + "4)"
+      formulaRest: "=IF(" + sceneColumn + firstRestRow + "=" + sceneColumn + firstRow + "," + wordCountToThisLineColumn + firstRow + "+" + lineWordCountColumn + firstRestRow + "," + lineWordCountColumn + firstRestRow + ")"
   	},
 	  {
 	    columnName: "Scene word count calc",
       formulaFirst:  0,
-      formulaRest: "=VLOOKUP(" + endLineColumn + "4," + lineColumn + "4:" + wordCountToThisLineColumn + lastRow + ",2,FALSE)"
+      formulaRest: "=VLOOKUP(" + endLineColumn + firstRestRow + "," + lineColumn + firstRestRow + ":" + wordCountToThisLineColumn + lastRow + ",2,FALSE)"
   	}
   ]
   
