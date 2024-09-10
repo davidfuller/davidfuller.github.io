@@ -526,6 +526,16 @@ async function theFormulas(){
   })
   await lockColumns();
 }
+async function insertRow(){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    const activeCell = excel.workbook.getActiveCell();
+    const myRow = activeCell.getEntireRow();
+    myRow.load('address');
+    await excel.sync();
+    console.log(myRow.address);
+  })
+}
   
   /* ​
   0: Array(10) [ '=IF(C3="",0,FIND("-",C3))', 0, '=IF(C3="",0,FIND("]",C3))', … ]
