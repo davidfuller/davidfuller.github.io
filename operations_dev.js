@@ -513,12 +513,15 @@ async function theFormulas(){
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
       const myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow ;
-      console.log(myRange);
+      const myTopRow = columnLetter + firstRow;
+      console.log(myRange + "  " + myTopRow);
       const range = sheet.getRange(myRange);
-      console.log(columnFormula.formulaRest);
+      const topRowRange = sheet.getRange(myTopRow);
+      console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
       range.formulas = columnFormula.formulaRest;
+      topRowRange.formulas = columnFormula.formulaFirst;
       await excel.sync();
-      console.log(range.formulas);
+      console.log(range.formulas + "   " + topRowRange.formulas);
     }
   })
   await lockColumns();
