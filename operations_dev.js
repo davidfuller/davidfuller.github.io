@@ -569,7 +569,7 @@ async function deleteRow(){
     await excel.sync();
     console.log(myRow.address);
     await unlock();
-   // myRow.delete("Up");
+    myRow.delete("Up");
     myRow.load('address');
     await excel.sync();
     console.log(myRow.address);
