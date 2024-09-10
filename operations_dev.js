@@ -540,10 +540,14 @@ async function insertRow(){
     myLastColumn.load("columnindex")
     await excel.sync();
   
-    const myRow = sheet.getRangeByIndexes(activeCell.rowIndex,0, 1, myLastColumn.columnIndex);
+    const myRow = sheet.getRangeByIndexes(activeCell.rowIndex+1,0, 1, myLastColumn.columnIndex+1);
     myRow.load('address');
     await excel.sync();
     console.log(myRow.address);
+    const newRow = myRow.insert("Down");
+    newRow.load('address')
+    await excel.sync();
+    console.log(newRow.address);
   
   })
 }
