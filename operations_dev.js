@@ -530,7 +530,7 @@ async function insertRow(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const activeCell = excel.workbook.getActiveCell();
-    const myRow = activeCell.getEntireRow();
+    const myRow = activeCell.getExtendedRange("Right");
     myRow.load('address');
     await excel.sync();
     console.log(myRow.address);
