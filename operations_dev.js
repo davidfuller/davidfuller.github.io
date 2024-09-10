@@ -463,17 +463,17 @@ async function theFormulas(){
     {
       columnName: "Start Line",
       formulaFirst: 0,
-      formulaRest: "=IF(" + positionMinusColumn + "4=0," + startLineColumn + "3,VALUE(MID(" + sceneLineNumberRangeColumn + "4,2," + positionMinusColumn + "4-2)))"
+      formulaRest: "=IF(" + positionMinusColumn + firstRestRow + "=0," + startLineColumn + firstRow + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRestRow + ",2," + positionMinusColumn + firstRestRow + "-2)))"
     },
     {
       columnName: "Position ]",
-      formulaFirst: '=IF(' + sceneLineNumberRangeColumn + '3="",0,FIND("]",' + sceneLineNumberRangeColumn + '3))',
-      formulaRest: '=IF(' + sceneLineNumberRangeColumn + '4="",0,FIND("]",' + sceneLineNumberRangeColumn + '4))'
+      formulaFirst: '=IF(' + sceneLineNumberRangeColumn + firstRow + '="",0,FIND("]",' + sceneLineNumberRangeColumn + firstRow + '))',
+      formulaRest: '=IF(' + sceneLineNumberRangeColumn + firstRestRow + '="",0,FIND("]",' + sceneLineNumberRangeColumn + firstRestRow + '))'
     },
     {
       columnName: "End Line",
       formulaFirst: 0,
-      formulaRest: "=IF(" + positionEndSqaureBracketColumn + "4=0," + endLineColumn + "3,VALUE(MID(" + sceneLineNumberRangeColumn + "4," + positionMinusColumn + "4+1," + positionEndSqaureBracketColumn + "4-" + positionMinusColumn + "4-1)))"
+      formulaRest: "=IF(" + positionEndSqaureBracketColumn + firstRestRow + "=0," + endLineColumn + firtRow + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRestRow + "," + positionMinusColumn + firstRestRow + "+1," + positionEndSqaureBracketColumn + firstRestRow + "-" + positionMinusColumn + firstRestRow + "-1)))"
     },
     {
       columnName: "Valid Line Number",
