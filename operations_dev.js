@@ -457,8 +457,8 @@ async function theFormulas(){
   const columnFormulae = [
     {
       columnName: "Position -",
-      formulaFirst: '=IF(' + sceneLineNumberRangeColumn + '3="",0,FIND("-",' + sceneLineNumberRangeColumn + '3))',
-      formulaRest: '=IF(' + sceneLineNumberRangeColumn + '4="",0,FIND("-",' + sceneLineNumberRangeColumn + '4))'
+      formulaFirst: '=IF(' + sceneLineNumberRangeColumn + firstRow + '="",0,FIND("-",' + sceneLineNumberRangeColumn + firstRow + '))',
+      formulaRest: '=IF(' + sceneLineNumberRangeColumn + firstRestRow + '="",0,FIND("-",' + sceneLineNumberRangeColumn + firstRestRow + '))'
     },
     {
       columnName: "Start Line",
