@@ -545,6 +545,7 @@ async function insertRow(){
     await excel.sync();
     console.log(myRow.address);
     const newRow = myRow.insert("Down");
+    await excel.sync();
     newRow.load('address')
     await excel.sync();
     console.log(newRow.address);
