@@ -540,17 +540,19 @@ async function insertRow(){
     myLastColumn.load("columnindex")
     await excel.sync();
   
-    const myRow = sheet.getRangeByIndexes(activeCell.rowIndex+1,0, 1, myLastColumn.columnIndex+1);
+    const myRow = sheet.getRangeByIndexes(activeCell.rowIndex,0, 1, myLastColumn.columnIndex+1);
     myRow.load('address');
     await excel.sync();
     console.log(myRow.address);
     await unlock();
     const newRow = myRow.insert("Down");
-    newRow.load('address')
+    newRow.load('address');
+    myRoad.load('address');
     await excel.sync();
     console.log(myRow.address);
     console.log(newRow.address);
     newRow.copyFrom(myRow, "All");
+    await excel.sync();
   
   })
 }
