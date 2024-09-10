@@ -8,7 +8,8 @@ async function mainHTML(){
                   <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
                   <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
                   <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button><br/>
-                  <button id='btnTest' onclick="jade_modules.operations.insertRow()">Test</button>
+                  <button id='btnInsertRow' onclick="jade_modules.operations.insertRow()">Insert</button>
+                  <button id='btnDeleteRow' onclick="jade_modules.operations.deleteRow()">Delete</button>
                   <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button><br/>
                 </div>
                 <div id="filterButtons" >

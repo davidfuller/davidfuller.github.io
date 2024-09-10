@@ -556,6 +556,31 @@ async function insertRow(){
   
   })
 }
+async function deleteRow(){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex');
+    const dataRange = await getDataRange(excel);
+    dataRange.load('address');
+    await excel.sync();
+    console.log(dataRange.address);
+    console.log(activeCell.rowIndex);
+    const myLastColumn = dataRange.getLastColumn();
+    myLastColumn.load("columnindex")
+    await excel.sync();
+  
+    const myRow = sheet.getRangeByIndexes(activeCell.rowIndex,0, 1, myLastColumn.columnIndex+1);
+    myRow.load('address');
+    await excel.sync();
+    console.log(myRow.address);
+    await unlock();
+    myRow.delete("Up");
+    myRow.load('address');
+    await excel.sync();
+    console.log(myRow.address);
+  })
+}
   
   /* ​
   0: Array(10) [ '=IF(C3="",0,FIND("-",C3))', 0, '=IF(C3="",0,FIND("]",C3))', … ]
