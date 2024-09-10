@@ -544,11 +544,11 @@ async function insertRow(){
     myRow.load('address');
     await excel.sync();
     console.log(myRow.address);
-    const newRow = myRow.insert("Down");
+    myRow.insert("Down");
     await excel.sync();
-    newRow.load('address')
+    myRow.load('address')
     await excel.sync();
-    console.log(newRow.address);
+    console.log(myRow.address);
   
   })
 }
