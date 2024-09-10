@@ -507,7 +507,7 @@ async function theFormulas(){
   	}
   ]
   
-  await unlock();
+  
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     for (let columnFormula of columnFormulae){
@@ -544,11 +544,13 @@ async function insertRow(){
     myRow.load('address');
     await excel.sync();
     console.log(myRow.address);
-    myRow.insert("Down");
-    await excel.sync();
-    myRow.load('address')
+    await unlock();
+    const newRow = myRow.insert("Down");
+    newRow.load('address')
     await excel.sync();
     console.log(myRow.address);
+    console.log(newRow.address);
+    newRow.copyFrom(myRow, "All");
   
   })
 }
