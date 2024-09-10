@@ -530,10 +530,21 @@ async function insertRow(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const activeCell = excel.workbook.getActiveCell();
-    const myRow = activeCell.getExtendedRange("Right");
+    activeCell.load('rowIndex');
+    const dataRange = getDataRange(excel);
+    dataRange.load('address');
+    await excel.sync();
+    console.log(dataRange.address);
+    console.log(activeCell.rowIndex);
+    const myLastColumn = sheet.dataRange.getLastColumn();
+    myLastColumn.load("columnindex")
+    await excel.sync();
+  
+    const myRow = sheet.getRangeByIndexes(activeCell.rowIndex,0, 1, myLastColumn.columnIndex);
     myRow.load('address');
     await excel.sync();
     console.log(myRow.address);
+  
   })
 }
   
