@@ -507,7 +507,7 @@ async function theFormulas(){
   	}
   ]
   
-  
+  await unlock();
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     for (let columnFormula of columnFormulae){
