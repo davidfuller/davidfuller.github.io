@@ -536,7 +536,7 @@ async function insertRow(){
     await excel.sync();
     console.log(dataRange.address);
     console.log(activeCell.rowIndex);
-    const myLastColumn = sheet.dataRange.getLastColumn();
+    const myLastColumn = dataRange.getLastColumn();
     myLastColumn.load("columnindex")
     await excel.sync();
   
