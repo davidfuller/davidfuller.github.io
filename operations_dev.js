@@ -531,7 +531,7 @@ async function insertRow(){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex');
-    const dataRange = getDataRange(excel);
+    const dataRange = await getDataRange(excel);
     dataRange.load('address');
     await excel.sync();
     console.log(dataRange.address);
