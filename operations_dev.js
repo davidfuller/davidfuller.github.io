@@ -503,7 +503,7 @@ async function theFormulas(){
 	  {
 	    columnName: "Scene word count calc",
       formulaFirst:  0,
-      formulaRest: "=VLOOKUP(" + endLineColumn + firstRestRow + "," + lineColumn + firstRestRow + ":" + wordCountToThisLineColumn + lastRow + ",2,FALSE)"
+      formulaRest: "=VLOOKUP(" + endLineColumn + firstRestRow + "," + "$" + lineColumn + "$" + firstRestRow + ":$" + wordCountToThisLineColumn + "$" + lastRow + ",2,FALSE)"
   	}
   ]
   
@@ -661,3 +661,8 @@ Line	79	CA	78
 Word count to this line	80	CB	79
 Scene word count calc	81	CC	80
 */
+
+
+/*
+Delete row 13
+Rebuild BU12, BU13, BW12, BW13, BZ12, BZ13, CB12, CB13, 
