@@ -3,6 +3,8 @@ async function auto_exec(){
   console.log(jade_modules)
 }
 let mySheetColumns;
+const firstDataRow = 3;
+const lastDataRow = 9999;
 
 async function getMySheetColumns(){
   console.log(mySheetColumns);
@@ -450,9 +452,9 @@ async function theFormulas(){
   const lineColumn = findColumnLetter("Line"); // CA
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
   const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CC
-  const firstRow = "3";
+  const firstRow = "" + firstDataRow;
   const firstRestRow = "4";
-  const lastRow = "9999";
+  const lastRow = "" + lastDataRow;
   const columnFormulae = [
     {
       columnName: "Scene Word Count", //A
@@ -637,6 +639,7 @@ async function insertTake(country){
   if (country == "UK"){
     noOfTakesIndex = findColumnIndex("UK No of takes");
   }
+  const numberColumn = findColumnColumn("Number");
   await unlock();
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
@@ -654,6 +657,11 @@ async function insertTake(country){
     console.log(newValue);
     currentNoTakesCell.values = newValue;
     await excel.sync();
+    let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
+    numberData.load('values');
+    await excel.sync();
+    console.log(numberData.values);
+
   })
   await lockColumns();
 
