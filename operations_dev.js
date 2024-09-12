@@ -646,8 +646,14 @@ async function insertTake(country){
     await excel.sync();
     console.log(currentNoTakesCell.address + ": " + currentNoTakesCell.values);
     let newValue = parseInt(currentNoTakesCell.values)
+    if (newValue == Nan){
+      newValue = 1;
+    } else {
+      newValue += 1;
+    }
     console.log(newValue);
-
+    currentNoTakesCell.values = newValue;
+    await excel.sync();
   })
   await lockColumns();
 
