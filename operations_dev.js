@@ -558,6 +558,7 @@ async function insertRow(){
     newRow.copyFrom(myRow, "All");
     await excel.sync();
     await correctFormulas(activeCell.rowIndex + 1);
+    return activeCell.rowIndex;
   })
 }
 async function deleteRow(){
@@ -626,7 +627,34 @@ async function correctFormulas(firstRow){
   })
   await lockColumns();
 }
+
+async function insertTake(country){
+  const currentRowIndex = await insertRow();
+  let noOfTakesIndex;
+  if (country == "UK"){
+    noOfTakesIndex = findColumnIndex("UK No of takes");
+  }
   
+  await Excel.run(async function(excel){
+    const currentNoTakesCell = sheet.getRangeByIndexes(currentRowIndex, noOfTakesIndex, 1, 1);
+    currentNoTakesCell.load('address')
+    currentNoTakesCell.load('values')
+    await excel.sync();
+    console.log(currentNoTakesCell.address + ": " + currentNoTakesCell.values);
+  })
+
+
+
+  // insert a row
+  // if current row take = "" then make it 1
+  // new row take = current row take + 1
+  // 
+  // new row date auto fill
+  // new row studio and engineer clear
+  // new row other countries clear
+  // update num takes in all rows.
+}
+
   /* ​
   0: Array(10) [ '=IF(C3="",0,FIND("-",C3))', 0, '=IF(C3="",0,FIND("]",C3))', … ]
   ​​
@@ -718,3 +746,4 @@ Scene word count calc	81	CC	80
 Delete row 13
 Rebuild BU12, BU13, BW12, BW13, BZ12, BZ13, CB12, CB13, 
 */
+
