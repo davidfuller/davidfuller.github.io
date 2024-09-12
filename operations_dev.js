@@ -607,7 +607,7 @@ async function correctFormulas(firstRow){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
-      const myRange = columnLetter + (firstRow - 1) + ":" + columnLetter + firstRow ;
+      const myRange = columnLetter + firstRow + ":" + columnLetter + (firstRow +1) ;
       console.log("Range to replace: " + myRange);
       const range = sheet.getRange(myRange);
       console.log("Formula: " + columnFormula.formulaRest);
