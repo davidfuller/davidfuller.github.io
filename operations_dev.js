@@ -636,6 +636,7 @@ async function insertTake(country){
   }
   
   await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const currentNoTakesCell = sheet.getRangeByIndexes(currentRowIndex, noOfTakesIndex, 1, 1);
     currentNoTakesCell.load('address')
     currentNoTakesCell.load('values')
