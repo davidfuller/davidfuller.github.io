@@ -645,9 +645,9 @@ async function insertTake(country){
     currentNoTakesCell.load('values')
     await excel.sync();
     console.log(currentNoTakesCell.address + ": " + currentNoTakesCell.values);
-    let newValue = parseInt(activeCell.values)
+    let newValue = parseInt(currentNoTakesCell.values)
     console.log(newValue);
-    
+
   })
   await lockColumns();
 
