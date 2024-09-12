@@ -639,7 +639,7 @@ async function insertTake(country){
   if (country == "UK"){
     noOfTakesIndex = findColumnIndex("UK No of takes");
   }
-  const numberColumn = findColumnColumn("Number");
+  const numberColumn = findColumnLetter("Number");
   await unlock();
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
