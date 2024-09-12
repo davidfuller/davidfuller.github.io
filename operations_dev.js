@@ -436,19 +436,16 @@ async function getColumnData(sheetName, rangeName){
 }
 
 async function theFormulas(){
-  const columnNameFirst = "Position -";
-  const columnNameLast = "Scene word count calc";
-  const myFormulas = ['=IF(C4="",0,FIND("-",C4))' ];
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
+  const numberColumn = findColumnLetter("Number"); //F
   const UKScriptColumn = findColumnLetter("UK script"); //J
   const positionMinusColumn = findColumnLetter("Position -"); //BT
-  const numberColumn = findColumnLetter("Number"); //F
   const startLineColumn = findColumnLetter("Start Line"); //BU
+  const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
   const endLineColumn = findColumnLetter("End Line"); //BW
   const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
   const sceneColumn = findColumnLetter("Scene"); //BZ
-  const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
   const lineColumn = findColumnLetter("Line"); // CA
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
   const firstRow = "3";
@@ -574,6 +571,71 @@ async function deleteRow(){
     await excel.sync();
     console.log(myRow.address);
   })
+}
+async function correctFormulas(firstRow){
+  const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
+  const sceneNumberColumn = findColumnLetter("Scene Number"); //D
+  const numberColumn = findColumnLetter("Number"); //F
+  const UKScriptColumn = findColumnLetter("UK script"); //J
+  const positionMinusColumn = findColumnLetter("Position -"); //BT
+  const startLineColumn = findColumnLetter("Start Line"); //BU
+  const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
+  const endLineColumn = findColumnLetter("End Line"); //BW
+  const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
+  const sceneColumn = findColumnLetter("Scene"); //BZ
+  const lineColumn = findColumnLetter("Line"); // CA
+  const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
+  const firstRestRow = "4";
+  const lastRow = "9999";
+  const columnFormulae = [
+    {
+      columnName: "Start Line",
+      formulaRest: "=IF(" + positionMinusColumn + firstRow + "=0," + startLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + ",2," + positionMinusColumn + firstRow + "-2)))"
+    },
+    {
+      columnName: "End Line",
+      formulaRest: "=IF(" + positionEndSqaureBracketColumn + firstRow + "=0," + endLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + "," + positionMinusColumn + firstRow + "+1," + positionEndSqaureBracketColumn + firstRow + "-" + positionMinusColumn + firstRow + "-1)))"
+    },
+    {
+      columnName: "Scene",
+      formulaFirst:  1,
+      formulaRest: '=IF(' + sceneNumberColumn + firstRestRow + '="",' +sceneColumn + firstRow + ',VALUE(' + sceneNumberColumn + firstRestRow + '))'
+    },
+    {
+      columnName: "Line",
+      formulaFirst:  0,
+      formulaRest: "=" + numberColumn + firstRestRow + ""
+    },
+	  {
+	    columnName: "Word count to this line",
+      formulaFirst:  0,
+      formulaRest: "=IF(" + sceneColumn + firstRestRow + "=" + sceneColumn + firstRow + "," + wordCountToThisLineColumn + firstRow + "+" + lineWordCountColumn + firstRestRow + "," + lineWordCountColumn + firstRestRow + ")"
+  	},
+	  {
+	    columnName: "Scene word count calc",
+      formulaFirst:  0,
+      formulaRest: "=VLOOKUP(" + endLineColumn + firstRestRow + "," + "$" + lineColumn + "$" + firstRestRow + ":$" + wordCountToThisLineColumn + "$" + lastRow + ",2,FALSE)"
+  	}
+  ]
+  
+  await unlock();
+  await Excel.run(async function(excel){ 
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    for (let columnFormula of columnFormulae){
+      const columnLetter = findColumnLetter(columnFormula.columnName);
+      const myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow ;
+      const myTopRow = columnLetter + firstRow;
+      console.log(myRange + "  " + myTopRow);
+      const range = sheet.getRange(myRange);
+      const topRowRange = sheet.getRange(myTopRow);
+      console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
+      range.formulas = columnFormula.formulaRest;
+      topRowRange.formulas = columnFormula.formulaFirst;
+      await excel.sync();
+      console.log(range.formulas + "   " + topRowRange.formulas);
+    }
+  })
+  await lockColumns();
 }
   
   /* ​
