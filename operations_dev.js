@@ -630,6 +630,7 @@ async function correctFormulas(firstRow){
 
 async function insertTake(country){
   const currentRowIndex = await insertRow();
+  console.log(currentRowIndex);
   let noOfTakesIndex;
   if (country == "UK"){
     noOfTakesIndex = findColumnIndex("UK No of takes");
