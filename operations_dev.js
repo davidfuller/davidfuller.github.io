@@ -646,7 +646,7 @@ async function insertTake(country){
     await excel.sync();
     console.log(currentNoTakesCell.address + ": " + currentNoTakesCell.values);
     let newValue = parseInt(currentNoTakesCell.values)
-    if (newValue == Nan){
+    if (newValue == NaN){
       newValue = 1;
     } else {
       newValue += 1;
