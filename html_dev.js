@@ -1,45 +1,46 @@
 async function mainHTML(){
-  const html = `<h1>MuVi2 Script Controller</h1>
-                <h2>Development edition</h2>
-                <div id="firstButtons">
-                  <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
-                  <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
-                  <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First scene</button>
-                  <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
-                  <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
-                  <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button><br/>
-                  <button id='btnInsertRow' onclick="jade_modules.operations.insertRow()">Insert</button>
-                  <button id='btnDeleteRow' onclick="jade_modules.operations.deleteRow()">Delete</button>
-                  <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button><br/>
-                  <button id='btnTest' onclick="jade_modules.operations.correctFormulas(12)">Test</button><br/>
-                </div>
-                <div id="filterButtons" >
-                  <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
-                  <button id='btnRemoveFilter' onclick="jade_modules.operations.removeFilter()">Remove Filter</button><br/>
-                </div>
-                <div id="jump">
-                  <label for="scene">Jump to scene</label>
-                  <input type="text" id="scene" name="scene">
-                  <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
-                </div>
-                  <div id="dateStudioEngineer">
-                    <div class="row">
-                      <div class="column" id="column-one">
-                        <label for="studio-select">Studio</label><br/>
-                        <label for="engineer-select">Engineer</label>
-                      </div>
-                      <div class="column" id="column-two">
-                        <select id="studio-select"><option value="">Please select</option></select><br/>
-                        <select id="engineer-select"><option value="">Please select</option></select>
-                      </div>
-                    </div>
-                    <div id="fillButton">
-                      <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
-                      <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
-                      <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
-                    </div>
-                  </div>
-                `;
+  const html = `
+<h1>MuVi2 Script Controller</h1>
+<h2>Development edition</h2>
+<div id="firstButtons">
+  <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
+  <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
+  <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First scene</button>
+  <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
+  <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
+  <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button><br/>
+  <button id='btnInsertRow' onclick="jade_modules.operations.insertRow()">Insert</button>
+  <button id='btnDeleteRow' onclick="jade_modules.operations.deleteRow()">Delete</button><br/>
+  <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
+  <button id='btnTest' onclick="jade_modules.operations.correctFormulas(13)">Test</button><br/>
+</div>
+<div id="filterButtons" >
+  <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
+  <button id='btnRemoveFilter' onclick="jade_modules.operations.removeFilter()">Remove Filter</button><br/>
+</div>
+<div id="jump">
+  <label for="scene">Jump to scene</label>
+  <input type="text" id="scene" name="scene">
+  <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
+</div>
+<div id="dateStudioEngineer">
+  <div class="row">
+    <div class="column" id="column-one">
+      <label for="studio-select">Studio</label><br/>
+      <label for="engineer-select">Engineer</label>
+    </div>
+    <div class="column" id="column-two">
+      <select id="studio-select"><option value="">Please select</option></select><br/>
+      <select id="engineer-select"><option value="">Please select</option></select>
+    </div>
+  </div>
+  <div id="fillButton">
+    <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
+    <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
+    <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
+  </div>
+</div>
+  `;
 
   await Jade.open_canvas("Script Controller", html, true);
   await jade_modules.operations.getDataFromSheet('Settings','studioChoice','studio-select');
