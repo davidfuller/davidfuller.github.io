@@ -550,7 +550,7 @@ async function insertRow(){
     console.log(newRow.address);
     newRow.copyFrom(myRow, "All");
     await excel.sync();
-  
+    await correctFormulas(activeCell.rowIndex + 1);
   })
 }
 async function deleteRow(){
@@ -570,6 +570,7 @@ async function deleteRow(){
     myRow.load('address');
     await excel.sync();
     console.log(myRow.address);
+    await correctFormulas(activeCell.rowIndex);
   })
 }
 async function correctFormulas(firstRow){
