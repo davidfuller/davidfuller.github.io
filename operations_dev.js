@@ -531,9 +531,10 @@ async function theFormulas(){
   await lockColumns();
 }
 async function insertRow(){
+  let activeCell
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    const activeCell = excel.workbook.getActiveCell();
+    activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex');
     const dataRange = await getDataRange(excel);
     dataRange.load('address');
@@ -558,8 +559,9 @@ async function insertRow(){
     newRow.copyFrom(myRow, "All");
     await excel.sync();
     await correctFormulas(activeCell.rowIndex + 1);
-    return activeCell.rowIndex;
+    
   })
+  return activeCell.rowIndex;
 }
 async function deleteRow(){
   await Excel.run(async function(excel){
