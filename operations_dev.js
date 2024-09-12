@@ -436,6 +436,7 @@ async function getColumnData(sheetName, rangeName){
 }
 
 async function theFormulas(){
+  const sceneLineCountColumn = findColumnLetter("Scene Line Count") //B
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
   const numberColumn = findColumnLetter("Number"); //F
@@ -448,10 +449,16 @@ async function theFormulas(){
   const sceneColumn = findColumnLetter("Scene"); //BZ
   const lineColumn = findColumnLetter("Line"); // CA
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
+  const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CC
   const firstRow = "3";
   const firstRestRow = "4";
   const lastRow = "9999";
   const columnFormulae = [
+    {
+      columnName: "Scene Word Count", //A
+      formulaFirst: '=""',
+      formulaRest: '=IF(' + sceneLineCountColumn + firstRestRow + '<>"",' + sceneWordCountCalcColumn + firstRestRow + ',"")'
+    },
     {
       columnName: "Position -",
       formulaFirst: '=IF(' + sceneLineNumberRangeColumn + firstRow + '="",0,FIND("-",' + sceneLineNumberRangeColumn + firstRow + '))',
