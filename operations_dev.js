@@ -637,11 +637,12 @@ async function correctFormulas(firstRow){
   await lockColumns();
 }
 
-async function insertTake(country){
+async function insertTake(country, includeMarkUp, includeStudio, includeEngineer){
   const currentRowIndex = await insertRow();
+  const doDate = true;
   console.log(currentRowIndex);
   await unlock();
-  await doTakesAndNumTakes(currentRowIndex, country)
+  await doTakesAndNumTakes(currentRowIndex, country, doDate, includeMarkUp, includeStudio, includeEngineer);
   await lockColumns();
 
 
@@ -659,12 +660,13 @@ async function insertTake(country){
 function zeroElement(value){
   return value[0];
 }
-async function doTakesAndNumTakes(currentRowIndex, country){
+async function doTakesAndNumTakes(currentRowIndex, country, doDate, includeMarkUp, includeStudio, includeEngineer){
   const numberColumn = findColumnLetter("Number");
   const numberIndex = findColumnIndex("Number")
   let noOfTakesIndex;
   if (country == "UK"){
     noOfTakesIndex = findColumnIndex("UK No of takes");
+    dateRecordedIndex = findColumnIndex("UK Date Recorded")
   }
   await unlock();
   await Excel.run(async function(excel){ 
@@ -703,6 +705,16 @@ async function doTakesAndNumTakes(currentRowIndex, country){
       console.log(newValues)
       numTakesRange.values = newValues;
       await excel.sync();
+      if (myIndecies.length > 1){
+        if (doDate){
+          let dateRange = sheet.getRangeByIndexes(firstIndex + myIndecies.length - 1, 1, 1);
+          dateRange.values = dateInFormat();
+  
+        }
+      }
+      await excel.sync();
+      
+
     }
   })
   await lockColumns();
