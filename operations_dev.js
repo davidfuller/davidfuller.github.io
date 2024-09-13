@@ -670,7 +670,7 @@ async function insertTake(country){
     console.log(myData)
     console.log("Target value");
     console.log(currentNumberCell.values)
-    const myIndex = myData.filter(a => a == currentNumberCell.values).map(x => myData.indexOf(x));
+    const myIndex = myData.map((x, i) => [x, i]).filter(([x, i]) => x == currentNumberCell.values).map(([x, i]) => i);
     console.log("Found Index");
     console.log(myIndex);
   })
@@ -691,7 +691,6 @@ async function insertTake(country){
 function zeroElement(value){
   return value[0];
 }
-
   /* ​
   0: Array(10) [ '=IF(C3="",0,FIND("-",C3))', 0, '=IF(C3="",0,FIND("]",C3))', … ]
   ​​
