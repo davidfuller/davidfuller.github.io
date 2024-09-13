@@ -491,7 +491,7 @@ async function theFormulas(){
     {
       columnName: "Line Word Count",
       formulaFirst:  0,
-      formulaRest1: '=IF(' + ukNoOfTakesColumn + firstRestRow + '<>' + ukTakeNoColumn + firstRestRow + 'LEN(TRIM(' + UKScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + UKScriptColumn + firstRestRow + ', " ", "")) + 1'
+      formulaRest: '=IF(' + ukNoOfTakesColumn + firstRestRow + '<>' + ukTakeNoColumn + firstRestRow + 'LEN(TRIM(' + UKScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + UKScriptColumn + firstRestRow + ', " ", "")) + 1'
     },
     {
       columnName: "Scene",
