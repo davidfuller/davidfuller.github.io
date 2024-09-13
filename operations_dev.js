@@ -665,7 +665,7 @@ async function insertTake(country){
     await excel.sync();
     console.log(numberData.values);
     console.log(currentNumberCell.values)
-    const myIndex = numberData.values.findIndex(a => a[0] == currentNumberCell.values);
+    const myIndex = numberData.values.filter(a => a[0] == currentNumberCell.values).map(x => numberData.values[0].indexOf(x));
     console.log("Found Index");
     console.log(myIndex);
   })
