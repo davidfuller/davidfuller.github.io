@@ -687,8 +687,8 @@ async function doTakesAndNumTakes(currentRowIndex, country){
       await excel.sync();
       console.log("Target address: " + numTakesRange.address)
       let newValues = [];
-      if (myIndecies.length = 1){
-        newValues = [myIndecies.length, 1];
+      if (myIndecies.length == 1){
+        newValues = [1, 1];
       } else {
         for (i = 0; i < myIndecies.length; i++){
           newValues.push([myIndecies.length, i + 1]);
