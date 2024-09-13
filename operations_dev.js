@@ -689,7 +689,7 @@ async function doTakesAndNumTakes(currentRowIndex, country){
       console.log("Target address: " + numTakesRange.address)
       let newValues = [];
       if (myIndecies.length == 1){
-        newValues = [1, 1];
+        newValues = [[1], [1]];
       } else {
         for (i = 0; i < myIndecies.length; i++){
           newValues.push([myIndecies.length, i + 1]);
