@@ -570,6 +570,7 @@ async function deleteRow(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const activeCell = excel.workbook.getActiveCell();
+    const selectCell = activeCell.getOffsetRange(-1, 0);
     activeCell.load('rowIndex');
     await excel.sync();
     console.log(activeCell.rowIndex);
@@ -585,7 +586,7 @@ async function deleteRow(){
     console.log(myRow.address);
     await correctFormulas(activeCell.rowIndex);
     await doTakesAndNumTakes(activeCell.rowIndex - 1, 'UK');
-    activeCell.getOffsetRange(-1,0).select();
+    selectCell.select();
     await excel.sync();
   })
 }
