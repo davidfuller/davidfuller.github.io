@@ -677,7 +677,7 @@ async function insertTake(country){
       let firstIndex = myIndecies[0] + firstDataRow - 1
       console.log("First Index: " + firstIndex )
       let numTakesRange = sheet.getRangeByIndexes(firstIndex, noOfTakesIndex, 1, myIndecies.length)
-      numTakesRange.values = myIndecies.length;
+      numTakesRange.values = Array(myIndecies.length).fill(myIndecies.length);
       excel.sync();
     }
   })
