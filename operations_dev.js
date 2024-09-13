@@ -583,7 +583,7 @@ async function deleteRow(){
     await excel.sync();
     console.log(myRow.address);
     await correctFormulas(activeCell.rowIndex);
-    await doTakesAndNumTakes(activeCell.rowIndex, 'UK');
+    await doTakesAndNumTakes(activeCell.rowIndex - 1, 'UK');
   })
 }
 async function correctFormulas(firstRow){
