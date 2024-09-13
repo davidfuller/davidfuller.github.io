@@ -644,43 +644,10 @@ async function insertTake(country){
   await unlock();
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    const currentNoTakesCell = sheet.getRangeByIndexes(currentRowIndex, noOfTakesIndex, 1, 1);
-    currentNoTakesCell.load('address')
-    currentNoTakesCell.load('values')
-    await excel.sync();
-    console.log(currentNoTakesCell.address + ": " + currentNoTakesCell.values);
     let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex,1,1)
-    let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
-    numberData.load('values');
     currentNumberCell.load('values')
     await excel.sync();
-    let myData = numberData.values.map(zeroElement);
-    console.log("Raw values");
-    console.log(numberData.values);
-    console.log("Mapped values");
-    console.log(myData)
-    console.log("Target value");
-    console.log(currentNumberCell.values)
-    const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == currentNumberCell.values).map(([x, i]) => i);
-    console.log("Found Index");
-    console.log(myIndecies);
-    if (myIndecies.length > 0){
-      let firstIndex = myIndecies[0] + firstDataRow - 1
-      console.log("First Index: " + firstIndex )
-      let numTakesRange = sheet.getRangeByIndexes(firstIndex, noOfTakesIndex, myIndecies.length, 2)
-      numTakesRange.load('address');
-      await excel.sync();
-      console.log("Target address: " + numTakesRange.address)
-      let newValues = [];
-      for (i = 0; i < myIndecies.length; i++){
-        newValues.push([myIndecies.length, i + 1]);
-      }
-      console.log("New values");
-      console.log(newValues)
-      numTakesRange.values = newValues;
-      await excel.sync();
-      //Added comment
-    }
+    await doTakesAndNumTakes(excel, currentNumberCell.values, noOfTakesIndex)
   })
   await lockColumns();
 
@@ -699,6 +666,38 @@ async function insertTake(country){
 function zeroElement(value){
   return value[0];
 }
+async function doTakesAndNumTakes(excel, targetValue, noOfTakesIndex){
+  const numberColumn = findColumnLetter("Number");
+  const sheet = excel.workbook.worksheets.getActiveWorksheet();
+  let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
+  numberData.load('values');
+  await excel.sync();
+  let myData = numberData.values.map(x => x[0]);
+  console.log("Raw values");
+  console.log(numberData.values);
+  console.log("Mapped values");
+  console.log(myData)
+  const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i);
+  console.log("Found Index");
+  console.log(myIndecies);
+  if (myIndecies.length > 0){
+    let firstIndex = myIndecies[0] + firstDataRow - 1
+    console.log("First Index: " + firstIndex )
+    let numTakesRange = sheet.getRangeByIndexes(firstIndex, noOfTakesIndex, myIndecies.length, 2)
+    numTakesRange.load('address');
+    await excel.sync();
+    console.log("Target address: " + numTakesRange.address)
+    let newValues = [];
+    for (i = 0; i < myIndecies.length; i++){
+      newValues.push([myIndecies.length, i + 1]);
+    }
+    console.log("New values");
+    console.log(newValues)
+    numTakesRange.values = newValues;
+    await excel.sync();
+  }
+}
+
   /* ​
   0: Array(10) [ '=IF(C3="",0,FIND("-",C3))', 0, '=IF(C3="",0,FIND("]",C3))', … ]
   ​​
