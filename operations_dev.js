@@ -443,6 +443,8 @@ async function theFormulas(){
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
   const numberColumn = findColumnLetter("Number"); //F
   const UKScriptColumn = findColumnLetter("UK script"); //J
+  const ukNoOfTakesColumn = findColumnLetter("UK No of takes"); //T
+  const ukTakeNoColumn = findColumnLetter("UK Take No"); //U
   const positionMinusColumn = findColumnLetter("Position -"); //BT
   const startLineColumn = findColumnLetter("Start Line"); //BU
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
@@ -489,7 +491,7 @@ async function theFormulas(){
     {
       columnName: "Line Word Count",
       formulaFirst:  0,
-      formulaRest: '=LEN(TRIM(' + UKScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + UKScriptColumn + firstRestRow + ', " ", "")) + 1'
+      formulaRest1: '=IF(' + ukNoOfTakesColumn + firstRestRow + '<>' + ukTakeNoColumn + firstRestRow + 'LEN(TRIM(' + UKScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + UKScriptColumn + firstRestRow + ', " ", "")) + 1'
     },
     {
       columnName: "Scene",
@@ -826,6 +828,7 @@ async function hideRows(visibleType, country){
   4: "=AND(F4>=BU4, F4<=BW4)"
   ​​
   5: '= LEN(TRIM(J4)) - LEN(SUBSTITUTE(J4, " ", "")) + 1'
+  =IF(T12<>U12,0,LEN(TRIM(J12)) - LEN(SUBSTITUTE(J12, " ", "")) + 1)
   ​​
   6: '=IF(D4="",BZ3,VALUE(D4))'
   ​​
