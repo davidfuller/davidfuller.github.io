@@ -663,7 +663,7 @@ async function insertTake(country){
     numberData.load('values');
     currentNumberCell.load('values')
     await excel.sync();
-    let myData = numberData.values.map(x => numberData.values[0]);
+    let myData = numberData.values.map(zeroElement);
     console.log("Raw values");
     console.log(numberData.values);
     console.log("Mapped values");
@@ -686,6 +686,10 @@ async function insertTake(country){
   // new row studio and engineer clear
   // new row other countries clear
   // update num takes in all rows.
+}
+
+function zeroElement(value){
+  return value[0];
 }
 
   /* ​
