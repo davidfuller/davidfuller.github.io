@@ -12,7 +12,7 @@ async function mainHTML(){
   <button id='btnInsertRow' onclick="jade_modules.operations.insertRow()">Insert</button>
   <button id='btnDeleteRow' onclick="jade_modules.operations.deleteRow()">Delete</button><br/>
   <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
-  <button id='btnTest' onclick="jade_modules.operations.insertTake('UK', true, true, true)">Test</button><br/>
+  <button id='btnTest' onclick="jade_modules.operations.insertTake('UK', true, false, true, true)">Test</button><br/>
 </div>
 <div id="filterButtons" >
   <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>

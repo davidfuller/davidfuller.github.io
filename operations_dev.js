@@ -585,7 +585,7 @@ async function deleteRow(){
     await excel.sync();
     console.log(myRow.address);
     await correctFormulas(activeCell.rowIndex);
-    await doTakesAndNumTakes(activeCell.rowIndex - 1, 'UK');
+    await doTakesAndNumTakes(activeCell.rowIndex - 1, 'UK', false, false, false, false);
     selectCell.select();
     await excel.sync();
   })
@@ -637,12 +637,12 @@ async function correctFormulas(firstRow){
   await lockColumns();
 }
 
-async function insertTake(country, includeMarkUp, includeStudio, includeEngineer){
+async function insertTake(country, doAdditional, includeMarkUp, includeStudio, includeEngineer){
   const currentRowIndex = await insertRow();
   const doDate = true;
   console.log(currentRowIndex);
   await unlock();
-  await doTakesAndNumTakes(currentRowIndex, country, doDate, includeMarkUp, includeStudio, includeEngineer);
+  await doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional, includeMarkUp, includeStudio, includeEngineer);
   await lockColumns();
 
 
@@ -660,7 +660,7 @@ async function insertTake(country, includeMarkUp, includeStudio, includeEngineer
 function zeroElement(value){
   return value[0];
 }
-async function doTakesAndNumTakes(currentRowIndex, country, doDate, includeMarkUp, includeStudio, includeEngineer){
+async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional, includeMarkUp, includeStudio, includeEngineer){
   const numberColumn = findColumnLetter("Number");
   const numberIndex = findColumnIndex("Number")
   let noOfTakesIndex;
@@ -705,10 +705,10 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, includeMarkU
       console.log(newValues)
       numTakesRange.values = newValues;
       await excel.sync();
-      if (myIndecies.length > 1){
+      if ((myIndecies.length > 1) && (doAdditional)){
         if (doDate){
           let dateRange = sheet.getRangeByIndexes(firstIndex + myIndecies.length - 1, 1, 1);
-          dateRange.values = dateInFormat();
+          dateRange.values = [dateInFormat()];
   
         }
       }
