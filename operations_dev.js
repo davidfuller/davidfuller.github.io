@@ -666,8 +666,9 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
   let noOfTakesIndex;
   if (country == "UK"){
     noOfTakesIndex = findColumnIndex("UK No of takes");
-    dateRecordedIndex = findColumnIndex("UK Date Recorded")
-    markUpIndex = findColumnIndex("UK Broadcast Assistant Markup")
+    dateRecordedIndex = findColumnIndex("UK Date Recorded");
+    markUpIndex = findColumnIndex("UK Broadcast Assistant Markup");
+    studioIndex = findColumnIndex("UK Studio");
   }
   await unlock();
   await Excel.run(async function(excel){ 
@@ -722,6 +723,10 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
         if (!includeMarkUp){
           let markUpRange = sheet.getRangeByIndexes(rowIndex, markUpIndex, 1, 1);
           markUpRange.clear("Contents");
+        }
+        if (!includeStudio){
+          let studioRange = sheet.getRangeByIndexes(rowIndex, studioIndex, 1, 1);
+          studioRange.clear("Contents");
         }
       }
       await excel.sync();
