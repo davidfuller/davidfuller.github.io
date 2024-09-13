@@ -637,7 +637,7 @@ async function insertTake(country){
   const currentRowIndex = await insertRow();
   console.log(currentRowIndex);
   await unlock();
-  await doTakesAndNumTakes(excel, currentRowIndex, country)
+  await doTakesAndNumTakes(currentRowIndex, country)
   await lockColumns();
 
 
