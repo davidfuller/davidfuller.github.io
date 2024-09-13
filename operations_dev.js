@@ -669,13 +669,13 @@ async function doTakesAndNumTakes(currentRowIndex, country){
     let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
     numberData.load('values');
     await excel.sync();
-    let targetValue = currentNumberCell.value
+    let targetValue = currentNumberCell.values
+    console.log("Target Value:" + targetValue);
     let myData = numberData.values.map(x => x[0]);
     console.log("Raw values");
     console.log(numberData.values);
     console.log("Mapped values");
     console.log(myData)
-    console.log("Target Value:" + targetValue);
     const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i);
     console.log("Found Index");
     console.log(myIndecies);
