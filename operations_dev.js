@@ -708,7 +708,9 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
       if ((myIndecies.length > 1) && (doAdditional)){
         if (doDate){
           console.log('doDate');
-          let dateRange = sheet.getRangeByIndexes(firstIndex + myIndecies.length - 1, 1, 1);
+          let dateRowIndex = firstIndex + myIndecies.length - 1
+          console.log("Date rwo index: " + dateRowIndex);
+          let dateRange = sheet.getRangeByIndexes(dateRowIndex, dateRecordedIndex, 1, 1);
           dateRange.load('address');
           await excel.sync();
           console.log("Date range address: " + dateRange.address);
