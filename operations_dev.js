@@ -748,12 +748,19 @@ async function hideRows(visibleType, country){
             console.log(myRange.values[i][1]);
             let hideRange = sheet.getRangeByIndexes(i + firstDataRow - 1, 0, 1, 1);
             hideRange.load('address');
+            hideRange.rowHidden = true;
             await excel.sync();
             console.log(hideRange.address);
           }
         }
       }
-
+    }
+    if (visibleType == 'all'){
+      let hideRange = sheet.getRangeByIndexes(firstDataRow - 1, lastDataRow - 1, 1, 1);
+      hideRange.load('address');
+      hideRange.rowHidden = false;
+      await excel.sync();
+      console.log(hideRange.address);
     }
   })
   await lockColumns();
