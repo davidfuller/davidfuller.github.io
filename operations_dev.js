@@ -679,6 +679,7 @@ async function insertTake(country){
       console.log(newValues)
       numTakesRange.values = newValues;
       await excel.sync();
+      //Added comment
     }
   })
   await lockColumns();
