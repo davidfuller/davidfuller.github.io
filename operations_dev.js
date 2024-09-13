@@ -738,6 +738,8 @@ async function hideRows(visibleType, country){
     myRange.load('values')
     await excel.sync();
     console.log(myRange.values)
+    console.log(myRange.values.length)
+    console.log(myRange.values[0].length)
     if (visibleType == 'last'){
 
     }
