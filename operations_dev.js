@@ -707,14 +707,17 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
       await excel.sync();
       if ((myIndecies.length > 1) && (doAdditional)){
         if (doDate){
+          console.log('doDate');
           let dateRange = sheet.getRangeByIndexes(firstIndex + myIndecies.length - 1, 1, 1);
-          dateRange.values = [dateInFormat()];
-  
+          dateRange.load('address');
+          await excel.sync();
+          console.log("Date range address: " + dateRange.address);
+          let theDate = dateInFormat();
+          console.log("Date: " + theDate)
+          dateRange.values = [theDate];
         }
       }
       await excel.sync();
-      
-
     }
   })
   await lockColumns();
