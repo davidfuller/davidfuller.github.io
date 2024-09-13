@@ -657,13 +657,14 @@ function zeroElement(value){
 }
 async function doTakesAndNumTakes(currentRowIndex, country){
   const numberColumn = findColumnLetter("Number");
+  const numberIndex = findColumnIndex("Number")
   let noOfTakesIndex;
   if (country == "UK"){
     noOfTakesIndex = findColumnIndex("UK No of takes");
   }
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex,1,1)
+    let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
     currentNumberCell.load('values')
     let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
     numberData.load('values');
