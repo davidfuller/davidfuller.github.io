@@ -663,9 +663,14 @@ async function insertTake(country){
     numberData.load('values');
     currentNumberCell.load('values')
     await excel.sync();
+    let myData = numberData.values.map(x => numberData.values[0]);
+    console.log("Raw values");
     console.log(numberData.values);
+    console.log("Mapped values");
+    console.log(myData)
+    console.log("Target value");
     console.log(currentNumberCell.values)
-    const myIndex = numberData.values.filter(a => a[0] == currentNumberCell.values).map(x => numberData.values[0].indexOf(x));
+    const myIndex = myData.filter(a => a == currentNumberCell.values).map(x => myData.indexOf(x));
     console.log("Found Index");
     console.log(myIndex);
   })
