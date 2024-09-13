@@ -640,6 +640,7 @@ async function insertTake(country){
     noOfTakesIndex = findColumnIndex("UK No of takes");
   }
   const numberColumn = findColumnLetter("Number");
+  const numberIndex = findColumnIndex("Number");
   await unlock();
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
@@ -657,11 +658,16 @@ async function insertTake(country){
     console.log(newValue);
     currentNoTakesCell.values = newValue;
     await excel.sync();
+    let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex,1,1)
     let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
     numberData.load('values');
+    currentNumberCell.load('values')
     await excel.sync();
     console.log(numberData.values);
-
+    console.log(currentNumberCell.values)
+    const myIndex = numberData.values.findIndex(a => a[0] == currentNumberCell.values);
+    console.log("Found Index");
+    console.log(myIndex);
   })
   await lockColumns();
 
