@@ -725,8 +725,12 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
           markUpRange.clear("Contents");
         }
         if (!includeStudio){
+          console.log('Studio');
           let studioRange = sheet.getRangeByIndexes(rowIndex, studioIndex, 1, 1);
           studioRange.clear("Contents");
+          studioRange.load('address');
+          await excel.sync();
+          console.log("Studio range address: " + studioRange.address);
         }
       }
       await excel.sync();
