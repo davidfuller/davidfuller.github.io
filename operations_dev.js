@@ -662,6 +662,7 @@ async function doTakesAndNumTakes(currentRowIndex, country){
   if (country == "UK"){
     noOfTakesIndex = findColumnIndex("UK No of takes");
   }
+  await unlock();
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
@@ -700,6 +701,7 @@ async function doTakesAndNumTakes(currentRowIndex, country){
       await excel.sync();
     }
   })
+  await lockColumns();
 }
 
   /* ​
