@@ -667,6 +667,7 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
   if (country == "UK"){
     noOfTakesIndex = findColumnIndex("UK No of takes");
     dateRecordedIndex = findColumnIndex("UK Date Recorded")
+    markUpIndex = findColumnIndex("UK Broadcast Assistant Markup")
   }
   await unlock();
   await Excel.run(async function(excel){ 
@@ -706,17 +707,21 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
       numTakesRange.values = newValues;
       await excel.sync();
       if ((myIndecies.length > 1) && (doAdditional)){
+        let rowIndex = firstIndex + myIndecies.length - 1;
+        console.log("Row index: " + rowIndex);
         if (doDate){
           console.log('doDate');
-          let dateRowIndex = firstIndex + myIndecies.length - 1
-          console.log("Date rwo index: " + dateRowIndex);
-          let dateRange = sheet.getRangeByIndexes(dateRowIndex, dateRecordedIndex, 1, 1);
+          let dateRange = sheet.getRangeByIndexes(rowIndex, dateRecordedIndex, 1, 1);
           dateRange.load('address');
           await excel.sync();
           console.log("Date range address: " + dateRange.address);
           let theDate = dateInFormat();
           console.log("Date: " + theDate)
           dateRange.values = theDate;
+        }
+        if (!includeMarkUp){
+          let markUpRange = sheet.getRangeByIndexes(rowIndex, markUpIndex, 1, 1);
+          markUpRange.clear("Contents");
         }
       }
       await excel.sync();
