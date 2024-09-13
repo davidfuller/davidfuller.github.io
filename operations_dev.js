@@ -669,13 +669,13 @@ async function insertTake(country){
       console.log("First Index: " + firstIndex )
       let numTakesRange = sheet.getRangeByIndexes(firstIndex, noOfTakesIndex, 1, myIndecies.length)
       numTakesRange.load('address');
-      excel.sync();
+      await excel.sync();
       console.log("Target address: " + numTakesRange.address)
       let newValues = Array(myIndecies.length).fill(myIndecies.length)
       console.log("New values");
       console.log(newValues)
       numTakesRange.values = newValues;
-      excel.sync();
+      await excel.sync();
     }
   })
   await lockColumns();
