@@ -673,7 +673,7 @@ async function insertTake(country){
       console.log("Target address: " + numTakesRange.address)
       let newValues = [];
       for (i = 0; i < myIndecies.length; i++){
-        newValues.push([myIndecies.length], [i + 1]);
+        newValues.push([[myIndecies.length], [i + 1]]);
       }
       console.log("New values");
       console.log(newValues)
