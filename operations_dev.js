@@ -672,7 +672,7 @@ async function insertTake(country){
       await excel.sync();
       console.log("Target address: " + numTakesRange.address)
       let newValues = [];
-      for (i = 0; i < myIndecies.length){
+      for (i = 0; i < myIndecies.length; i++){
         newValues.push([myIndecies.length], [i + 1]);
       }
       console.log("New values");
