@@ -583,6 +583,7 @@ async function deleteRow(){
     await excel.sync();
     console.log(myRow.address);
     await correctFormulas(activeCell.rowIndex);
+    await doTakesAndNumTakes(activeCell.rowIndex, 'UK');
   })
 }
 async function correctFormulas(firstRow){
@@ -635,20 +636,8 @@ async function correctFormulas(firstRow){
 async function insertTake(country){
   const currentRowIndex = await insertRow();
   console.log(currentRowIndex);
-  let noOfTakesIndex;
-  if (country == "UK"){
-    noOfTakesIndex = findColumnIndex("UK No of takes");
-  }
-  const numberColumn = findColumnLetter("Number");
-  const numberIndex = findColumnIndex("Number");
   await unlock();
-  await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex,1,1)
-    currentNumberCell.load('values')
-    await excel.sync();
-    await doTakesAndNumTakes(excel, currentNumberCell.values, noOfTakesIndex)
-  })
+  await doTakesAndNumTakes(excel, currentRowIndex, country)
   await lockColumns();
 
 
@@ -666,36 +655,45 @@ async function insertTake(country){
 function zeroElement(value){
   return value[0];
 }
-async function doTakesAndNumTakes(excel, targetValue, noOfTakesIndex){
+async function doTakesAndNumTakes(currentRowIndex, country){
   const numberColumn = findColumnLetter("Number");
-  const sheet = excel.workbook.worksheets.getActiveWorksheet();
-  let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
-  numberData.load('values');
-  await excel.sync();
-  let myData = numberData.values.map(x => x[0]);
-  console.log("Raw values");
-  console.log(numberData.values);
-  console.log("Mapped values");
-  console.log(myData)
-  const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i);
-  console.log("Found Index");
-  console.log(myIndecies);
-  if (myIndecies.length > 0){
-    let firstIndex = myIndecies[0] + firstDataRow - 1
-    console.log("First Index: " + firstIndex )
-    let numTakesRange = sheet.getRangeByIndexes(firstIndex, noOfTakesIndex, myIndecies.length, 2)
-    numTakesRange.load('address');
-    await excel.sync();
-    console.log("Target address: " + numTakesRange.address)
-    let newValues = [];
-    for (i = 0; i < myIndecies.length; i++){
-      newValues.push([myIndecies.length, i + 1]);
-    }
-    console.log("New values");
-    console.log(newValues)
-    numTakesRange.values = newValues;
-    await excel.sync();
+  let noOfTakesIndex;
+  if (country == "UK"){
+    noOfTakesIndex = findColumnIndex("UK No of takes");
   }
+  await Excel.run(async function(excel){ 
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex,1,1)
+    currentNumberCell.load('values')
+    let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
+    numberData.load('values');
+    await excel.sync();
+    let targetValue = currentNumberCell.value
+    let myData = numberData.values.map(x => x[0]);
+    console.log("Raw values");
+    console.log(numberData.values);
+    console.log("Mapped values");
+    console.log(myData)
+    const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i);
+    console.log("Found Index");
+    console.log(myIndecies);
+    if (myIndecies.length > 0){
+      let firstIndex = myIndecies[0] + firstDataRow - 1
+      console.log("First Index: " + firstIndex )
+      let numTakesRange = sheet.getRangeByIndexes(firstIndex, noOfTakesIndex, myIndecies.length, 2)
+      numTakesRange.load('address');
+      await excel.sync();
+      console.log("Target address: " + numTakesRange.address)
+      let newValues = [];
+      for (i = 0; i < myIndecies.length; i++){
+        newValues.push([myIndecies.length, i + 1]);
+      }
+      console.log("New values");
+      console.log(newValues)
+      numTakesRange.values = newValues;
+      await excel.sync();
+    }
+  })
 }
 
   /* ​
