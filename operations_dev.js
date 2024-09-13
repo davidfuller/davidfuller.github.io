@@ -669,6 +669,7 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
     dateRecordedIndex = findColumnIndex("UK Date Recorded");
     markUpIndex = findColumnIndex("UK Broadcast Assistant Markup");
     studioIndex = findColumnIndex("UK Studio");
+    engineerIndex = findColumnIndex("UK Engineer")
   }
   await unlock();
   await Excel.run(async function(excel){ 
@@ -711,13 +712,8 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
         let rowIndex = firstIndex + myIndecies.length - 1;
         console.log("Row index: " + rowIndex);
         if (doDate){
-          console.log('doDate');
           let dateRange = sheet.getRangeByIndexes(rowIndex, dateRecordedIndex, 1, 1);
-          dateRange.load('address');
-          await excel.sync();
-          console.log("Date range address: " + dateRange.address);
           let theDate = dateInFormat();
-          console.log("Date: " + theDate)
           dateRange.values = theDate;
         }
         if (!includeMarkUp){
@@ -728,9 +724,10 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
           console.log('Studio');
           let studioRange = sheet.getRangeByIndexes(rowIndex, studioIndex, 1, 1);
           studioRange.clear("Contents");
-          studioRange.load('address');
-          await excel.sync();
-          console.log("Studio range address: " + studioRange.address);
+        }
+        if(!includeEngineer){
+          let engineerRange = sheet.getRangeByIndexes(rowIndex, engineerIndex, 1, 1);
+          engineerRange.clear("Contents");
         }
       }
       await excel.sync();
