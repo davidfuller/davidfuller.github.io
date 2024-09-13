@@ -561,7 +561,8 @@ async function insertRow(){
     newRow.copyFrom(myRow, "All");
     await excel.sync();
     await correctFormulas(activeCell.rowIndex + 1);
-    
+    activeCell.getOffsetRange(1,0).select();
+    await excel.sync();
   })
   return activeCell.rowIndex;
 }
