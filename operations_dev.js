@@ -716,7 +716,7 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
           console.log("Date range address: " + dateRange.address);
           let theDate = dateInFormat();
           console.log("Date: " + theDate)
-          dateRange.values = [theDate];
+          dateRange.values = theDate;
         }
       }
       await excel.sync();
