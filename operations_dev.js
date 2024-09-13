@@ -675,6 +675,7 @@ async function doTakesAndNumTakes(currentRowIndex, country){
     console.log(numberData.values);
     console.log("Mapped values");
     console.log(myData)
+    console.log("Target Value:" + targetValue);
     const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i);
     console.log("Found Index");
     console.log(myIndecies);
