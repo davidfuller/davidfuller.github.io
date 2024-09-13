@@ -644,17 +644,6 @@ async function insertTake(country, doAdditional, includeMarkUp, includeStudio, i
   await unlock();
   await doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional, includeMarkUp, includeStudio, includeEngineer);
   await lockColumns();
-
-
-
-  // insert a row
-  // if current row take = "" then make it 1
-  // new row take = current row take + 1
-  // 
-  // new row date auto fill
-  // new row studio and engineer clear
-  // new row other countries clear
-  // update num takes in all rows.
 }
 
 function zeroElement(value){
@@ -735,6 +724,29 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
   })
   await lockColumns();
 }
+async function hideRows(visibleType, country){
+  let noOfTakesColumn;
+  let takeNumberColumn;
+  if (country == "UK"){
+    noOfTakesColumn = findColumnLetter("UK No of takes");
+    takeNumberColumn = findColumnLetter("UK Take No")
+  }
+  await unlock();
+  await Excel.run(async function(excel){ 
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    let myRange = sheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
+    myRange.load('values')
+    await excel.sync();
+    console.log(myRange.values)
+    if (visibleType == 'last'){
+
+    }
+  })
+  await lockColumns();
+}
+
+
+
 
   /* ​
   0: Array(10) [ '=IF(C3="",0,FIND("-",C3))', 0, '=IF(C3="",0,FIND("]",C3))', … ]
