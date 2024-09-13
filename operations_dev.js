@@ -649,15 +649,6 @@ async function insertTake(country){
     currentNoTakesCell.load('values')
     await excel.sync();
     console.log(currentNoTakesCell.address + ": " + currentNoTakesCell.values);
-    let newValue = parseInt(currentNoTakesCell.values)
-    if (isNaN(newValue)){
-      newValue = 1;
-    } else {
-      newValue += 1;
-    }
-    console.log(newValue);
-    currentNoTakesCell.values = newValue;
-    await excel.sync();
     let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex,1,1)
     let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
     numberData.load('values');
@@ -677,7 +668,13 @@ async function insertTake(country){
       let firstIndex = myIndecies[0] + firstDataRow - 1
       console.log("First Index: " + firstIndex )
       let numTakesRange = sheet.getRangeByIndexes(firstIndex, noOfTakesIndex, 1, myIndecies.length)
-      numTakesRange.values = Array(myIndecies.length).fill(myIndecies.length);
+      numTakesRange.load('Address');
+      excel.sync();
+      console.log("Target address: " + numTakesRange.address)
+      let newValues = Array(myIndecies.length).fill(myIndecies.length)
+      console.log("New values");
+      console.log(newValues)
+      numTakesRange.values = newValues;
       excel.sync();
     }
   })
