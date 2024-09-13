@@ -741,6 +741,16 @@ async function hideRows(visibleType, country){
     console.log(myRange.values.length)
     console.log(myRange.values[0].length)
     if (visibleType == 'last'){
+      for (i = 0; i < myRange.values.length; i++){
+        if (myRange.values[i][0] != ""){
+          if (myRange.values[i][0] != myRange.values[1]){
+            let hideRange = sheet.getRangeByIndexes(i + firstDataRow, 0, 1, 1);
+            hideRange.load('address');
+            await excel.sync();
+            console.log(hideRange.address);
+          }
+        }
+      }
 
     }
   })
