@@ -670,9 +670,16 @@ async function insertTake(country){
     console.log(myData)
     console.log("Target value");
     console.log(currentNumberCell.values)
-    const myIndex = myData.map((x, i) => [x, i]).filter(([x, i]) => x == currentNumberCell.values).map(([x, i]) => i);
+    const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == currentNumberCell.values).map(([x, i]) => i);
     console.log("Found Index");
-    console.log(myIndex);
+    console.log(myIndecies);
+    if (myIndecies.length > 0){
+      let firstIndex = myIndecies[0] + firstDataRow - 1
+      console.log("First Index: " + firstIndex )
+      let numTakesRange = sheet.getRangeByIndexes(firstIndex, noOfTakesIndex, 1, myIndecies.length)
+      numTakesRange.values = myIndecies.length;
+      excel.sync();
+    }
   })
   await lockColumns();
 
