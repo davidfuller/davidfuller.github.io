@@ -489,7 +489,7 @@ async function theFormulas(){
       formulaRest: "=AND(" + numberColumn + firstRestRow + ">=" + startLineColumn + firstRestRow + ", " + numberColumn + firstRestRow + "<=" + endLineColumn + firstRestRow + ")"
     },
     {
-      columnName: "Line Word Count",
+      columnName: "Line Word Count", //BY
       formulaFirst:  0,
       formulaRest: '=IF(' + ukNoOfTakesColumn + firstRestRow + '<>' + ukTakeNoColumn + firstRestRow + ', 0, LEN(TRIM(' + UKScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + UKScriptColumn + firstRestRow + ', " ", "")) + 1)'
     },
