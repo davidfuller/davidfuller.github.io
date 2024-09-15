@@ -678,6 +678,7 @@ async function correctFormulas(firstRow){
   4: "=AND(F4>=BU4, F4<=BW4)"
   ​​
   5: '= LEN(TRIM(J4)) - LEN(SUBSTITUTE(J4, " ", "")) + 1'
+  =IF(NOT(OR(U4="",U4=1)), 0, LEN(TRIM(J4)) - LEN(SUBSTITUTE(J4, " ", "")) + 1)
   ​​
   6: '=IF(D4="",BZ3,VALUE(D4))'
   ​​
