@@ -3,6 +3,8 @@ async function auto_exec(){
   console.log(jade_modules)
 }
 let mySheetColumns;
+const firstDataRow = 3;
+const lastDataRow = 9999;
 
 async function getMySheetColumns(){
   console.log(mySheetColumns);
@@ -436,10 +438,13 @@ async function getColumnData(sheetName, rangeName){
 }
 
 async function theFormulas(){
+  const sceneLineCountColumn = findColumnLetter("Scene Line Count") //B
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
   const numberColumn = findColumnLetter("Number"); //F
   const UKScriptColumn = findColumnLetter("UK script"); //J
+  const ukNoOfTakesColumn = findColumnLetter("UK No of takes"); //T
+  const ukTakeNoColumn = findColumnLetter("UK Take No"); //U
   const positionMinusColumn = findColumnLetter("Position -"); //BT
   const startLineColumn = findColumnLetter("Start Line"); //BU
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
@@ -448,10 +453,16 @@ async function theFormulas(){
   const sceneColumn = findColumnLetter("Scene"); //BZ
   const lineColumn = findColumnLetter("Line"); // CA
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
-  const firstRow = "3";
+  const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CC
+  const firstRow = "" + firstDataRow;
   const firstRestRow = "4";
-  const lastRow = "9999";
+  const lastRow = "" + lastDataRow;
   const columnFormulae = [
+    {
+      columnName: "Scene Word Count", //A
+      formulaFirst: '=""',
+      formulaRest: '=IF(' + sceneLineCountColumn + firstRestRow + '<>"",' + sceneWordCountCalcColumn + firstRestRow + ',"")'
+    },
     {
       columnName: "Position -",
       formulaFirst: '=IF(' + sceneLineNumberRangeColumn + firstRow + '="",0,FIND("-",' + sceneLineNumberRangeColumn + firstRow + '))',
@@ -478,9 +489,9 @@ async function theFormulas(){
       formulaRest: "=AND(" + numberColumn + firstRestRow + ">=" + startLineColumn + firstRestRow + ", " + numberColumn + firstRestRow + "<=" + endLineColumn + firstRestRow + ")"
     },
     {
-      columnName: "Line Word Count",
+      columnName: "Line Word Count", //BY
       formulaFirst:  0,
-      formulaRest: '=LEN(TRIM(' + UKScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + UKScriptColumn + firstRestRow + ', " ", "")) + 1'
+      formulaRest: '=IF(' + ukNoOfTakesColumn + firstRestRow + '<>' + ukTakeNoColumn + firstRestRow + ', 0, LEN(TRIM(' + UKScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + UKScriptColumn + firstRestRow + ', " ", "")) + 1)'
     },
     {
       columnName: "Scene",
@@ -524,9 +535,10 @@ async function theFormulas(){
   await lockColumns();
 }
 async function insertRow(){
+  let activeCell
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    const activeCell = excel.workbook.getActiveCell();
+    activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex');
     const dataRange = await getDataRange(excel);
     dataRange.load('address');
@@ -550,13 +562,17 @@ async function insertRow(){
     console.log(newRow.address);
     newRow.copyFrom(myRow, "All");
     await excel.sync();
-  
+    await correctFormulas(activeCell.rowIndex + 1);
+    activeCell.select();
+    await excel.sync();
   })
+  return activeCell.rowIndex;
 }
 async function deleteRow(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const activeCell = excel.workbook.getActiveCell();
+    const selectCell = activeCell.getOffsetRange(-1, 0);
     activeCell.load('rowIndex');
     await excel.sync();
     console.log(activeCell.rowIndex);
@@ -570,51 +586,39 @@ async function deleteRow(){
     myRow.load('address');
     await excel.sync();
     console.log(myRow.address);
+    await correctFormulas(activeCell.rowIndex);
+    await doTakesAndNumTakes(activeCell.rowIndex - 1, 'UK', false, false, false, false);
+    selectCell.select();
+    await excel.sync();
   })
 }
 async function correctFormulas(firstRow){
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
-  const numberColumn = findColumnLetter("Number"); //F
-  const UKScriptColumn = findColumnLetter("UK script"); //J
   const positionMinusColumn = findColumnLetter("Position -"); //BT
   const startLineColumn = findColumnLetter("Start Line"); //BU
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
   const endLineColumn = findColumnLetter("End Line"); //BW
   const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
   const sceneColumn = findColumnLetter("Scene"); //BZ
-  const lineColumn = findColumnLetter("Line"); // CA
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
-  const firstRestRow = "4";
-  const lastRow = "9999";
+  
   const columnFormulae = [
     {
-      columnName: "Start Line",
+      columnName: "Start Line", //BU
       formulaRest: "=IF(" + positionMinusColumn + firstRow + "=0," + startLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + ",2," + positionMinusColumn + firstRow + "-2)))"
     },
     {
-      columnName: "End Line",
+      columnName: "End Line", //BW
       formulaRest: "=IF(" + positionEndSqaureBracketColumn + firstRow + "=0," + endLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + "," + positionMinusColumn + firstRow + "+1," + positionEndSqaureBracketColumn + firstRow + "-" + positionMinusColumn + firstRow + "-1)))"
     },
     {
-      columnName: "Scene",
-      formulaFirst:  1,
-      formulaRest: '=IF(' + sceneNumberColumn + firstRestRow + '="",' +sceneColumn + firstRow + ',VALUE(' + sceneNumberColumn + firstRestRow + '))'
+      columnName: "Scene", //BZ
+      formulaRest: '=IF(' + sceneNumberColumn + firstRow + '="",' +sceneColumn + (firstRow - 1) + ',VALUE(' + sceneNumberColumn + firstRow + '))'
     },
     {
-      columnName: "Line",
-      formulaFirst:  0,
-      formulaRest: "=" + numberColumn + firstRestRow + ""
-    },
-	  {
-	    columnName: "Word count to this line",
-      formulaFirst:  0,
-      formulaRest: "=IF(" + sceneColumn + firstRestRow + "=" + sceneColumn + firstRow + "," + wordCountToThisLineColumn + firstRow + "+" + lineWordCountColumn + firstRestRow + "," + lineWordCountColumn + firstRestRow + ")"
-  	},
-	  {
-	    columnName: "Scene word count calc",
-      formulaFirst:  0,
-      formulaRest: "=VLOOKUP(" + endLineColumn + firstRestRow + "," + "$" + lineColumn + "$" + firstRestRow + ":$" + wordCountToThisLineColumn + "$" + lastRow + ",2,FALSE)"
+	    columnName: "Word count to this line", //CB
+      formulaRest: "=IF(" + sceneColumn + firstRow + "=" + sceneColumn + (firstRow - 1) + "," + wordCountToThisLineColumn + (firstRow -1) + "+" + lineWordCountColumn + firstRow + "," + lineWordCountColumn + firstRow + ")"
   	}
   ]
   
@@ -623,21 +627,167 @@ async function correctFormulas(firstRow){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
-      const myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow ;
-      const myTopRow = columnLetter + firstRow;
-      console.log(myRange + "  " + myTopRow);
+      const myRange = columnLetter + firstRow + ":" + columnLetter + (firstRow +1) ;
+      console.log("Range to replace: " + myRange);
       const range = sheet.getRange(myRange);
-      const topRowRange = sheet.getRange(myTopRow);
-      console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
+      console.log("Formula: " + columnFormula.formulaRest);
       range.formulas = columnFormula.formulaRest;
-      topRowRange.formulas = columnFormula.formulaFirst;
       await excel.sync();
-      console.log(range.formulas + "   " + topRowRange.formulas);
+      console.log("Formula after sync: " + range.formulas);
     }
   })
   await lockColumns();
 }
-  
+
+async function insertTake(country, doAdditional, includeMarkUp, includeStudio, includeEngineer){
+  const currentRowIndex = await insertRow();
+  const doDate = true;
+  console.log(currentRowIndex);
+  await unlock();
+  await doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional, includeMarkUp, includeStudio, includeEngineer);
+  await lockColumns();
+}
+
+function zeroElement(value){
+  return value[0];
+}
+async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional, includeMarkUp, includeStudio, includeEngineer){
+  const numberColumn = findColumnLetter("Number");
+  const numberIndex = findColumnIndex("Number")
+  let noOfTakesIndex;
+  if (country == "UK"){
+    noOfTakesIndex = findColumnIndex("UK No of takes");
+    dateRecordedIndex = findColumnIndex("UK Date Recorded");
+    markUpIndex = findColumnIndex("UK Broadcast Assistant Markup");
+    studioIndex = findColumnIndex("UK Studio");
+    engineerIndex = findColumnIndex("UK Engineer")
+  }
+  await unlock();
+  await Excel.run(async function(excel){ 
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
+    currentNumberCell.load('values')
+    let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
+    numberData.load('values');
+    await excel.sync();
+    let targetValue = currentNumberCell.values
+    console.log("Target Value:" + targetValue);
+    let myData = numberData.values.map(x => x[0]);
+    console.log("Raw values");
+    console.log(numberData.values);
+    console.log("Mapped values");
+    console.log(myData)
+    const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i);
+    console.log("Found Index");
+    console.log(myIndecies);
+    if (myIndecies.length > 0){
+      let firstIndex = myIndecies[0] + firstDataRow - 1
+      console.log("First Index: " + firstIndex )
+      let numTakesRange = sheet.getRangeByIndexes(firstIndex, noOfTakesIndex, myIndecies.length, 2)
+      numTakesRange.load('address');
+      await excel.sync();
+      console.log("Target address: " + numTakesRange.address)
+      let newValues = [];
+      if (myIndecies.length == 1){
+        newValues = [[1, 1]];
+      } else {
+        for (i = 0; i < myIndecies.length; i++){
+          newValues.push([myIndecies.length, i + 1]);
+        }
+      }
+      console.log("New values");
+      console.log(newValues)
+      numTakesRange.values = newValues;
+      await excel.sync();
+      if ((myIndecies.length > 1) && (doAdditional)){
+        let rowIndex = firstIndex + myIndecies.length - 1;
+        console.log("Row index: " + rowIndex);
+        if (doDate){
+          let dateRange = sheet.getRangeByIndexes(rowIndex, dateRecordedIndex, 1, 1);
+          let theDate = dateInFormat();
+          dateRange.values = theDate;
+        }
+        if (!includeMarkUp){
+          let markUpRange = sheet.getRangeByIndexes(rowIndex, markUpIndex, 1, 1);
+          markUpRange.clear("Contents");
+        }
+        if (!includeStudio){
+          console.log('Studio');
+          let studioRange = sheet.getRangeByIndexes(rowIndex, studioIndex, 1, 1);
+          studioRange.clear("Contents");
+        }
+        if(!includeEngineer){
+          let engineerRange = sheet.getRangeByIndexes(rowIndex, engineerIndex, 1, 1);
+          engineerRange.clear("Contents");
+        }
+      }
+      await excel.sync();
+    }
+  })
+  await lockColumns();
+}
+async function hideRows(visibleType, country){
+  let noOfTakesColumn;
+  let takeNumberColumn;
+  if (country == "UK"){
+    noOfTakesColumn = findColumnLetter("UK No of takes");
+    takeNumberColumn = findColumnLetter("UK Take No")
+  }
+  await unlock();
+  await Excel.run(async function(excel){ 
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    let myRange = sheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
+    myRange.load('values')
+    await excel.sync();
+    console.log(myRange.values)
+    console.log(myRange.values.length)
+    console.log(myRange.values[0].length)
+
+    //First unhide all
+    let hideRange = sheet.getRangeByIndexes(firstDataRow - 1, 0, lastDataRow - 2, 1);
+    hideRange.load('address');
+    hideRange.rowHidden = false;
+    await excel.sync();
+    console.log(hideRange.address);
+
+    if (visibleType == 'last'){
+      for (i = 0; i < myRange.values.length; i++){
+        if (myRange.values[i][0] != ""){
+          if (myRange.values[i][0] != myRange.values[i][1]){
+            console.log(myRange.values[i][0]);
+            console.log(myRange.values[i][1]);
+            let hideRange = sheet.getRangeByIndexes(i + firstDataRow - 1, 0, 1, 1);
+            hideRange.load('address');
+            hideRange.rowHidden = true;
+            await excel.sync();
+            console.log(hideRange.address);
+          }
+        }
+      }
+    }
+    
+    if (visibleType == 'first'){
+      for (i = 0; i < myRange.values.length; i++){
+        if (myRange.values[i][0] != ""){
+          if (myRange.values[i][1] != 1){
+            console.log(myRange.values[i][0]);
+            console.log(myRange.values[i][1]);
+            let hideRange = sheet.getRangeByIndexes(i + firstDataRow - 1, 0, 1, 1);
+            hideRange.load('address');
+            hideRange.rowHidden = true;
+            await excel.sync();
+            console.log(hideRange.address);
+          }
+        }
+      }
+    }
+  })
+  await lockColumns();
+}
+
+
+
+
   /* ​
   0: Array(10) [ '=IF(C3="",0,FIND("-",C3))', 0, '=IF(C3="",0,FIND("]",C3))', … ]
   ​​
@@ -730,3 +880,4 @@ Scene word count calc	81	CC	80
 Delete row 13
 Rebuild BU12, BU13, BW12, BW13, BZ12, BZ13, CB12, CB13, 
 */
+
