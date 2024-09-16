@@ -658,6 +658,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     let lineDetails =  await findDetailsForThisLine();
+    console.log(lineDetails);
     let noOfTakesIndex;
     let ukTakeNoIndex;
     let dateRecordedIndex;
@@ -712,6 +713,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
 
 async function findDetailsForThisLine(){
   await unlock();
+  let result = {};
   const totalTakesIndex = findColumnIndex('Total Takes');
   const ukTakesIndex = findColumnIndex('UK No of takes');
   const usTakesIndex = findColumnIndex('US No of takes');
@@ -737,7 +739,6 @@ async function findDetailsForThisLine(){
     wallaTakesCell.load('values');
 
     await excel.sync();
-    let result = {};
     result.totalTakes = cleanTakes(totalTakesCell.values);
     result.ukTakes = cleanTakes(ukTakesCell.values);
     result.usTakes = cleanTakes(usTakesCell.values);
@@ -746,8 +747,6 @@ async function findDetailsForThisLine(){
 
     console.log('Result');
     console.log(result);
-    return result;
-
   })
   /*
   Find total number of takes.
@@ -759,7 +758,7 @@ async function findDetailsForThisLine(){
     If not add a row.  
 
   */
-
+  return result;
 
 }
 function cleanTakes(values){
