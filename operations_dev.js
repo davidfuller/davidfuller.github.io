@@ -791,7 +791,18 @@ async function hideRows(visibleType, country){
   await lockColumns();
 }
 
-
+async function showHideColumns(columnType){
+  const sheetName = "Settings"
+  const rangeName = "columnHide"
+  await unlock();
+  await Excel.run(async function(excel){ 
+    const sheet = excel.workbook.worksheets.getItem(sheetName);
+    const range = sheet.getRange(rangeName);
+    range.load('values');
+    await excel.sync();
+    console.log(range.values);
+  })  
+}
 
 
   /* ​

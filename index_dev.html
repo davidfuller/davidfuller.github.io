@@ -17,6 +17,11 @@
   <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">First Takes</button>
   <button id='btnShowLast' onclick="jade_modules.operations.hideRows('last', 'UK')">Last Takes</button>
 </div>
+<div id="showColumns">
+  <div id="columnMessage">Showing all columns</div>
+  <button id='btnShowAll' onclick="jade_modules.operations.showHideColumns('all')">All Columns</button>
+  <button id='btnShowUK' onclick="jade_modules.operations.showHideColumns('UK Script')">UK Script</button>
+</div>
 <div id="filterButtons" >
   <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
   <button id='btnRemoveFilter' onclick="jade_modules.operations.removeFilter()">Remove Filter</button><br/>
