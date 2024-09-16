@@ -23,6 +23,7 @@ async function mainHTML(){
   <div id="columnMessage">Showing all columns</div>
   <button id='btnShowAll' onclick="jade_modules.operations.showHideColumns('all')">All Columns</button>
   <button id='btnShowUK' onclick="jade_modules.operations.showHideColumns('UK Script')">UK Script</button>
+  <button id='btnShowUS' onclick="jade_modules.operations.showHideColumns('US Script')">UK Script</button>
 </div>
 <div id="filterButtons" >
   <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>

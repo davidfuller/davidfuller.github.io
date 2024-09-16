@@ -823,6 +823,20 @@ async function showHideColumns(columnType){
         await excel.sync();  
       }
     }
+    if (columnType = 'US Script'){
+      let usIndex = range.values.findIndex(x => x[0] == 'US Script');
+      console.log(usIndex);
+      let hideUSColumns = range.values[usIndex][2].split(",")
+      console.log(hideUSColumns);
+      for (let hide of hideUSColumns){
+        let hideUSColumnsRange = dataSheet.getRange(hide);
+        hideUSColumnsRange.load('address');
+        await excel.sync();
+        console.log(hideUSColumnsRange.address);
+        hideUSColumnsRange.columnHidden = true;
+        await excel.sync();  
+      }
+    }
   })  
 }
 
