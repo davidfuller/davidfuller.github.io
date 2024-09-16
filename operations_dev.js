@@ -707,10 +707,10 @@ async function findDetailsForThisLine(){
 }
 function cleanTakes(values){
   let temp = parseInt(values);
-  if (temp != NaN){
-      return temp;
-    } else {
+  if (isNaN(temp)){
       return 0;
+    } else {
+      return temp;
     }
 }
 
