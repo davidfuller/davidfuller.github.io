@@ -664,6 +664,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
     let markUpIndex;
     let studioIndex;
     let engineerIndex;
+    let newLine;
     let newLineIndex;
     if (country == 'UK'){
       noOfTakesIndex = findColumnIndex("UK No of takes");
@@ -675,7 +676,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
       if (lineDetails.totalTakes == lineDetails.ukTakes){
         //add a line
       } else {
-        let newLine = lineDetails.ukTakes + 1
+        newLine = lineDetails.ukTakes + 1
         newLineIndex = lineDetails.indicies[newLine - 1];
       }
       let ukTakeNoRange = sheet.getRangeByIndexes(newLineIndex, ukTakeNoIndex, 1, 1)
