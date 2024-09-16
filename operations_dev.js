@@ -809,6 +809,10 @@ async function showHideColumns(columnType){
     const unhideColumnsRange = dataSheet.getRange(unhideColumns);
     unhideColumnsRange.columnHidden = false;
     await excel.sync();
+    if (columnType == 'UK Script'){
+      let ukIndex = range.values.findIndex(x => x[0] == 'UK Script');
+      console.log(ukIndex);
+    }
   })  
 }
 
