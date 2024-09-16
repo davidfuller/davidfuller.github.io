@@ -812,14 +812,16 @@ async function showHideColumns(columnType){
     if (columnType == 'UK Script'){
       let ukIndex = range.values.findIndex(x => x[0] == 'UK Script');
       console.log(ukIndex);
-      let hideUKColumns = range.values[ukIndex][2]
-      console.log(hideUKColumns.split(","));
-      let hideUKColumnsRange = dataSheet.getRange(hideUKColumns);
-      hideUKColumnsRange.load('address');
-      await excel.sync();
-      console.log(hideUKColumnsRange.address);
-      hideUKColumnsRange.columnHidden = true;
-      await excel.sync();
+      let hideUKColumns = range.values[ukIndex][2].split(",")
+      console.log(hideUKColumns);
+      for (let hide of hideUKColumns){
+        let hideUKColumnsRange = dataSheet.getRange(hide);
+        hideUKColumnsRange.load('address');
+        await excel.sync();
+        console.log(hideUKColumnsRange.address);
+        hideUKColumnsRange.columnHidden = true;
+        await excel.sync();  
+      }
     }
   })  
 }
