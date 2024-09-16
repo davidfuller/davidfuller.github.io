@@ -654,6 +654,57 @@ function zeroElement(value){
   return value[0];
 }
 
+async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, includeEngineer){
+  await Excel.run(async function(excel){ 
+    const lineDetails = findDetailsForThisLine();
+    let noOfTakesIndex;
+    let ukTakeNoIndex;
+    let dateRecordedIndex;
+    let markUpIndex;
+    let studioIndex;
+    let engineerIndex;
+    let newLineIndex;
+    if (country == 'UK'){
+      noOfTakesIndex = findColumnIndex("UK No of takes");
+      ukTakeNoIndex = findColumnIndex('UK Take No')
+      dateRecordedIndex = findColumnIndex("UK Date Recorded");
+      markUpIndex = findColumnIndex("UK Broadcast Assistant Markup");
+      studioIndex = findColumnIndex("UK Studio");
+      engineerIndex = findColumnIndex("UK Engineer")
+      if (lineDetails.totalTakes == lineDetails.ukTakes){
+        //add a line
+      } else {
+        let newLine = lineDetails.ukTakes + 1
+        newLineIndex = lineDetails.indicies[newLine - 1];
+      }
+      let ukTakeNoRange = sheet.getRangeByIndexes(newLineIndex, ukTakeNoIndex, 1, 1)
+      ukTakeNoIndex.values = newLine;
+      lineDetails.ukTakes = newLine;
+      if (doDate){
+        let dateRange = sheet.getRangeByIndexes(newLineIndex, dateRecordedIndex, 1, 1);
+        let theDate = dateInFormat();
+        dateRange.values = theDate;
+      }
+      if (!includeMarkUp){
+        let markUpRange = sheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
+        markUpRange.clear("Contents");
+      }
+      if (!includeStudio){
+        console.log('Studio');
+        let studioRange = sheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
+        studioRange.clear("Contents");
+      }
+      if(!includeEngineer){
+        let engineerRange = sheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
+        engineerRange.clear("Contents");
+      }
+    }
+    await excel.sync();
+  })
+
+}
+
+
 async function findDetailsForThisLine(){
   await unlock();
   const totalTakesIndex = findColumnIndex('Total Takes');
@@ -686,6 +737,7 @@ async function findDetailsForThisLine(){
     result.ukTakes = cleanTakes(ukTakesCell.values);
     result.usTakes = cleanTakes(usTakesCell.values);
     result.wallaTakes = cleanTakes(wallaTakesCell.values);
+    result.indicies = myIndecies;
 
     console.log('Result');
     console.log(result);
