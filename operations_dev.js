@@ -823,7 +823,7 @@ async function showHideColumns(columnType){
         await excel.sync();  
       }
     }
-    if (columnType = 'US Script'){
+    if (columnType == 'US Script'){
       let usIndex = range.values.findIndex(x => x[0] == 'US Script');
       console.log(usIndex);
       let hideUSColumns = range.values[usIndex][2].split(",")
