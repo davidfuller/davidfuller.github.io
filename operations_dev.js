@@ -656,6 +656,7 @@ function zeroElement(value){
 
 async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, includeEngineer){
   await Excel.run(async function(excel){ 
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const lineDetails = findDetailsForThisLine();
     let noOfTakesIndex;
     let ukTakeNoIndex;
@@ -678,7 +679,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
         newLineIndex = lineDetails.indicies[newLine - 1];
       }
       let ukTakeNoRange = sheet.getRangeByIndexes(newLineIndex, ukTakeNoIndex, 1, 1)
-      ukTakeNoIndex.values = newLine;
+      ukTakeNoRange.values = newLine;
       lineDetails.ukTakes = newLine;
       if (doDate){
         let dateRange = sheet.getRangeByIndexes(newLineIndex, dateRecordedIndex, 1, 1);
