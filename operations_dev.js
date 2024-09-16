@@ -657,7 +657,7 @@ function zeroElement(value){
 async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, includeEngineer){
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    const lineDetails = findDetailsForThisLine();
+    const lineDetails =  await findDetailsForThisLine();
     let noOfTakesIndex;
     let ukTakeNoIndex;
     let dateRecordedIndex;
