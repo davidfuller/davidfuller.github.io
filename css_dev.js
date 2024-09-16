@@ -115,7 +115,7 @@ label {
   margin-left: 30px;
 }
 
-#btnUnhideAll {
+#btnUnhideAll, #btnShowLast, #btnShowFirst {
   margin-left: 30px;
   margin-bottom: 5px;
   margin-top: 5px;
@@ -123,7 +123,7 @@ label {
   padding-right: 15px;
   height: 24px;
   border: none;
-  width: 100px;
+  width: fit-content;
   border-radius: 4px;
   background-color: #d34c01;
   color: #fef3df;
