@@ -35,7 +35,7 @@ label {
   font-size: 16px;
 }
   
-#firstButtons, #filterButtons, #dateStudioEngineer, #showtakes {
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes {
   margin-left: 30px;
   margin-top: 10px;
   width: 370px;
