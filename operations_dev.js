@@ -737,6 +737,7 @@ async function hideRows(visibleType, country){
   }
   await unlock();
   await Excel.run(async function(excel){ 
+    let myMessage = tag('takeMessage')
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     let myRange = sheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
     myRange.load('values')
@@ -751,6 +752,7 @@ async function hideRows(visibleType, country){
     hideRange.rowHidden = false;
     await excel.sync();
     console.log(hideRange.address);
+    myMessage.innerText = "Showing all takes"
 
     if (visibleType == 'last'){
       for (i = 0; i < myRange.values.length; i++){
@@ -766,6 +768,7 @@ async function hideRows(visibleType, country){
           }
         }
       }
+      myMessage.innerText = "Showing last takes"
     }
     
     if (visibleType == 'first'){
@@ -782,6 +785,7 @@ async function hideRows(visibleType, country){
           }
         }
       }
+      myMessage.innerText = "Showing first takes"
     }
   })
   await lockColumns();
