@@ -656,6 +656,10 @@ function zeroElement(value){
 
 async function findDetailsForThisLine(){
   await unlock();
+  const totalTakesIndex = findColumnIndex('Total Takes');
+  const ukTakesIndex = findColumnIndex('UK No of takes');
+  const usTakesIndex = findColumnIndex('US No of takes');
+  const wallaTakesIndex = findColumnIndex('Walla No Of takes');
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const activeCell = excel.workbook.getActiveCell();
@@ -665,6 +669,28 @@ async function findDetailsForThisLine(){
     let myIndecies = await getAllLinesWithThisNumber(excel, currentRowIndex);
     console.log("myIndecies");
     console.log(myIndecies);
+
+    const totalTakesCell = sheet.getRangeByIndexes(myIndecies[0], totalTakesIndex, 1, 1);
+    const ukTakesCell = sheet.getRangeByIndexes(myIndecies[0], ukTakesIndex, 1, 1);
+    const usTakesCell = sheet.getRangeByIndexes(myIndecies[0], usTakesIndex, 1, 1);
+    const wallaTakesCell = sheet.getRangeByIndexes(myIndecies[0], wallaTakesIndex, 1, 1);
+
+    totalTakesCell.load('values');
+    ukTakesCell.load('values');
+    usTakesCell.load('values');
+    wallaTakesCell.load('values');
+
+    await excel.sync();
+    let result = {};
+    result.totalTakes = cleanTakes(totalTakesCell.values);
+    result.ukTakes = cleanTakes(usTakesCell.values);
+    result.usTakes = cleanTakes(usTakesCell.values);
+    result.wallaTakes = cleanTakes(wallaTakesCell.values);
+
+    console.log('Result');
+    console.log(result);
+    return result;
+
   })
   /*
   Find total number of takes.
@@ -678,6 +704,14 @@ async function findDetailsForThisLine(){
   */
 
 
+}
+function cleanTakes(values){
+  let temp = parseInt(values);
+  if (temp != NaN){
+      return temp;
+    } else {
+      return 0;
+    }
 }
 
 async function getAllLinesWithThisNumber(excel, currentRowIndex){
@@ -697,7 +731,7 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
   console.log(numberData.values);
   console.log("Mapped values");
   console.log(myData)
-  const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i + 2);
+  const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i + firstDataRow - 1);
   console.log("Found Index");
   console.log(myIndecies);
   return myIndecies;
