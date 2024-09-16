@@ -111,8 +111,8 @@ label {
 }
 
 #takeMessage {
-  font-size: 16px;
-  margin-left: 30px;
+  font-size: 14px;
+  margin-left: 10px;
 }
 
 #btnUnhideAll, #btnShowLast, #btnShowFirst {
