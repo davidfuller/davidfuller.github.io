@@ -13,7 +13,7 @@ async function mainHTML(){
   <button id='btnDeleteRow' onclick="jade_modules.operations.deleteRow()">Delete</button><br/>
   <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
 </div>
-<div id="showTakes"></div>
+<div id="showTakes">
   <div id="takeMessage">Showing all takes</div>
   <button id='btnTest' onclick="jade_modules.operations.hideRows('last', 'UK')">Show Last Take</button><br/>
   <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">Show All Takes</button>
