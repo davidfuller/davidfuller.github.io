@@ -837,6 +837,20 @@ async function showHideColumns(columnType){
         await excel.sync();  
       }
     }
+    if (columnType == 'Walla Script'){
+      let wallaIndex = range.values.findIndex(x => x[0] == 'Walla Script');
+      console.log(wallaIndex);
+      let hideWallaColumns = range.values[wallaIndex][2].split(",")
+      console.log(hideWallaColumns);
+      for (let hide of hideWallaColumns){
+        let hideWallaColumnsRange = dataSheet.getRange(hide);
+        hideWallaColumnsRange.load('address');
+        await excel.sync();
+        console.log(hideWallaColumnsRange.address);
+        hideWallaColumnsRange.columnHidden = true;
+        await excel.sync();  
+      }
+    }
   })  
 }
 
