@@ -684,6 +684,7 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
   //returns an array of indexes
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
   const numberIndex = findColumnIndex("Number");
+  const numberColumn = findColumnLetter("Number");
   let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
   currentNumberCell.load('values');
   let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
