@@ -682,6 +682,8 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
       let ukTakeNoRange = sheet.getRangeByIndexes(newLineIndex, ukTakeNoIndex, 1, 1)
       ukTakeNoRange.values = newLine;
       lineDetails.ukTakes = newLine;
+      console.log("New Line");
+      console.log(newLine);
       if (doDate){
         let dateRange = sheet.getRangeByIndexes(newLineIndex, dateRecordedIndex, 1, 1);
         let theDate = dateInFormat();
@@ -700,8 +702,9 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
         let engineerRange = sheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
         engineerRange.clear("Contents");
       }
+      await excel.sync();
     }
-    await excel.sync();
+    
   })
 
 }
