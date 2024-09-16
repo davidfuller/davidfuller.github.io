@@ -109,6 +109,11 @@ label {
 #column2 {
   flex: 60%
 }
+
+#takeMessage {
+  font-size: 16px;
+  margin-left: 30px;
+}
                     `;
   Jade.set_css(css);
 
