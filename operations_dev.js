@@ -796,8 +796,8 @@ async function showHideColumns(columnType){
   const rangeName = "columnHide"
   await unlock();
   await Excel.run(async function(excel){ 
-    const sheet = excel.workbook.worksheets.getItem(sheetName);
-    const range = sheet.getRange(rangeName);
+    const settingsSheet = excel.workbook.worksheets.getItem(sheetName);
+    const range = settingsSheet.getRange(rangeName);
     range.load('values');
     await excel.sync();
     console.log(range.values);
@@ -805,6 +805,10 @@ async function showHideColumns(columnType){
     console.log(allIndex);
     let unhideColumns = range.values[allIndex][1]
     console.log(unhideColumns);
+    const dataSheet = excel.workbook.getActiveWorksheet();
+    const unhideColumnsRange = dataSheet.getRange(unhideColumns);
+    unhideColumnsRange.columnHidden = false;
+    await excel.sync();
   })  
 }
 
