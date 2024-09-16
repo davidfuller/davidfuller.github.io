@@ -444,7 +444,9 @@ async function theFormulas(){
   const numberColumn = findColumnLetter("Number"); //F
   const UKScriptColumn = findColumnLetter("UK script"); //J
   const ukNoOfTakesColumn = findColumnLetter("UK No of takes"); //T
-  const ukTakeNoColumn = findColumnLetter("UK Take No"); //U
+  const ukTakeNoColumn = findColumnLetter("UK Take No"); //V
+  console.log("uKTakeNoColumn");
+  console.log(ukTakeNoColumn);
   const positionMinusColumn = findColumnLetter("Position -"); //BT
   const startLineColumn = findColumnLetter("Start Line"); //BU
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
