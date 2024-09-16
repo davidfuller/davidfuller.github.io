@@ -812,6 +812,10 @@ async function showHideColumns(columnType){
     if (columnType == 'UK Script'){
       let ukIndex = range.values.findIndex(x => x[0] == 'UK Script');
       console.log(ukIndex);
+      let hideUKColumns = range.values[ukIndex][2]
+      console.log(hideUKColumns);
+      const hideUKColumnsRange = dataSheet.getRange(hideUKColumns);
+      hideUKColumnsRange.columnHidden = true;
     }
   })  
 }
