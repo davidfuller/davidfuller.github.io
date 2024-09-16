@@ -813,7 +813,7 @@ async function showHideColumns(columnType){
       let ukIndex = range.values.findIndex(x => x[0] == 'UK Script');
       console.log(ukIndex);
       let hideUKColumns = range.values[ukIndex][2]
-      console.log(hideUKColumns);
+      console.log(hideUKColumns.split(","));
       let hideUKColumnsRange = dataSheet.getRange(hideUKColumns);
       hideUKColumnsRange.load('address');
       await excel.sync();
