@@ -35,7 +35,7 @@ label {
   font-size: 16px;
 }
   
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes {
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns {
   margin-left: 30px;
   margin-top: 10px;
   width: 370px;
@@ -110,12 +110,12 @@ label {
   flex: 60%
 }
 
-#takeMessage {
+#takeMessage, #columnMessage {
   font-size: 14px;
   margin-left: 10px;
 }
 
-#btnUnhideAll, #btnShowLast, #btnShowFirst {
+#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowAll, #btnShowUK {
   margin-left: 10px;
   margin-bottom: 5px;
   margin-top: 5px;
