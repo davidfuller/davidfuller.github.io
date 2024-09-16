@@ -653,6 +653,55 @@ async function insertTake(country, doAdditional, includeMarkUp, includeStudio, i
 function zeroElement(value){
   return value[0];
 }
+
+async function findDetailsForThisLine(){
+  await unlock();
+  await Excel.run(async function(excel){ 
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex')
+    await excel.sync();
+    const currentRowIndex = activeCell.rowIndex
+    let myIndecies = await getAllLinesWithThisNumber(excel, currentRowIndex);
+    console.log("myIndecies");
+    console.log(myIndecies);
+  })
+  /*
+  Find total number of takes.
+  If 0/blank - use this line
+    Make No of takes 1, total number of takes 1, takeNo = 1, Other coutries take N/A
+  if 1 or more...
+    Find number of takes for each country.
+    If the country has a N/A use the lowest one
+    If not add a row.  
+
+  */
+
+
+}
+
+async function getAllLinesWithThisNumber(excel, currentRowIndex){
+  //returns an array of indexes
+  const sheet = excel.workbook.worksheets.getActiveWorksheet();
+  const numberIndex = findColumnIndex("Number");
+  let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
+  currentNumberCell.load('values');
+  let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
+  numberData.load('values');
+  await excel.sync();
+  let targetValue = currentNumberCell.values
+  console.log("Target Value:" + targetValue);
+  let myData = numberData.values.map(x => x[0]);
+  console.log("Raw values");
+  console.log(numberData.values);
+  console.log("Mapped values");
+  console.log(myData)
+  const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i);
+  console.log("Found Index");
+  console.log(myIndecies);
+  return myIndecies;
+}
+
 async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional, includeMarkUp, includeStudio, includeEngineer){
   const numberColumn = findColumnLetter("Number");
   const numberIndex = findColumnIndex("Number")

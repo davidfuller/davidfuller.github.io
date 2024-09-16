@@ -12,6 +12,7 @@ async function mainHTML(){
   <button id='btnInsertRow' onclick="jade_modules.operations.insertTake('UK', true, false, false, false)">Insert Take</button>
   <button id='btnDeleteRow' onclick="jade_modules.operations.deleteRow()">Delete</button><br/>
   <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
+  <button id="btnTest" onclick="jade_modules.operations.findDetailsForThisLine()">Test</button>
 </div>
 <div id="showTakes">
   <div id="takeMessage">Showing all takes</div>
