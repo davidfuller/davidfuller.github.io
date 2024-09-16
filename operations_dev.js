@@ -683,7 +683,7 @@ async function findDetailsForThisLine(){
     await excel.sync();
     let result = {};
     result.totalTakes = cleanTakes(totalTakesCell.values);
-    result.ukTakes = cleanTakes(usTakesCell.values);
+    result.ukTakes = cleanTakes(ukTakesCell.values);
     result.usTakes = cleanTakes(usTakesCell.values);
     result.wallaTakes = cleanTakes(wallaTakesCell.values);
 
