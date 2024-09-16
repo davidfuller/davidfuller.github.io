@@ -803,7 +803,7 @@ async function showHideColumns(columnType){
     console.log(range.values);
     let allIndex = range.values.findIndex(x => x[0] == 'All');
     console.log(allIndex);
-    let unhideColumns = range[values][allIndex][1]
+    let unhideColumns = range.values[allIndex][1]
     console.log(unhideColumns);
   })  
 }
