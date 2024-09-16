@@ -705,7 +705,11 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
       }
       await excel.sync();
     }
-    
+
+    console.log("Line Details")
+    console.log(lineDetails);
+    doTheTidyUp(country, lineDetails)
+        
   })
 
 }
@@ -792,6 +796,29 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
   console.log(myIndecies);
   return myIndecies;
 }
+
+async function doTheTidyUp(country, lineDetails){
+  const totalTakesIndex = findColumnIndex('Total Takes');
+  const ukTakesIndex = findColumnIndex('UK No of takes');
+  const usTakesIndex = findColumnIndex('US No of takes');
+  const wallaTakesIndex = findColumnIndex('Walla No Of takes');
+  await Excel.run(async function(excel){ 
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    for (let index of lineDetails.indicies){
+      let totalTakesRange = sheet.getRangeByIndexes(index, totalTakesIndex, 1, 1)
+      totalTakesRange.values = lineDetails.totalTakes;
+      let ukTakesRange = sheet.getRangeByIndexes(index, ukTakesIndex, 1, 1)
+      ukTakesRange.values = lineDetails.ukTakes;
+
+    }
+    await excel.sync();
+
+  })
+
+}
+
+
+
 
 async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional, includeMarkUp, includeStudio, includeEngineer){
   const numberColumn = findColumnLetter("Number");
