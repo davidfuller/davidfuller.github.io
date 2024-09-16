@@ -15,9 +15,9 @@ async function mainHTML(){
 </div>
 <div id="showTakes">
   <div id="takeMessage">Showing all takes</div>
-  <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">Show All Takes</button>
-  <button id='btnShowLast' onclick="jade_modules.operations.hideRows('last', 'UK')">Show Last Take</button>
-  <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">Show First Take</button><br/>
+  <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">All Takes</button>
+  <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">First Takes</button>
+  <button id='btnShowLast' onclick="jade_modules.operations.hideRows('last', 'UK')">Last Takes</button>
 </div>
 <div id="filterButtons" >
   <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
