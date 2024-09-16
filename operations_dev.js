@@ -805,7 +805,7 @@ async function showHideColumns(columnType){
     console.log(allIndex);
     let unhideColumns = range.values[allIndex][1]
     console.log(unhideColumns);
-    const dataSheet = excel.workbook.getActiveWorksheet();
+    const dataSheet = excel.workbook.worksheets.getActiveWorksheet();
     const unhideColumnsRange = dataSheet.getRange(unhideColumns);
     unhideColumnsRange.columnHidden = false;
     await excel.sync();
