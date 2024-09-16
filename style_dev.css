@@ -113,3 +113,18 @@ label {
   margin-left: 30px;
 }
 
+#btnUnhideAll {
+  margin-left: 30px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 24px;
+  border: none;
+  width: 100px;
+  border-radius: 4px;
+  background-color: #d34c01;
+  color: #fef3df;
+  font-size: 12px;
+  cursor: pointer;
+}
