@@ -697,7 +697,7 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
   console.log(numberData.values);
   console.log("Mapped values");
   console.log(myData)
-  const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i);
+  const myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i + 2);
   console.log("Found Index");
   console.log(myIndecies);
   return myIndecies;
