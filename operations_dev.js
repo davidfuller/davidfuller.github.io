@@ -801,7 +801,7 @@ async function showHideColumns(columnType){
     range.load('values');
     await excel.sync();
     console.log(range.values);
-    let allIndex = range.values.findIndex(c => x == 'All');
+    let allIndex = range.values.findIndex(x => x[0] == 'All');
     console.log(allIndex);
   })  
 }
