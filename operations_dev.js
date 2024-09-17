@@ -7,6 +7,7 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex; 
 let mySheetColumns;
+let scriptSheet
 
 function auto_exec(){
 }
@@ -31,29 +32,35 @@ async function getColumnData(sheetName, rangeName){
     console.log(result);
     mySheetColumns = result;
 
-    sceneIndex = findColumnIndex('Scene')
-    numberIndex = findColumnIndex("Number");
-    totalTakesIndex = findColumnIndex('Total Takes');
-
-    ukTakesIndex = findColumnIndex('UK No of takes');
-    ukTakeNoIndex = findColumnIndex('UK Take No')
-    ukDateIndex = findColumnIndex("UK Date Recorded");
-    ukStudioIndex = findColumnIndex("UK Studio");
-    ukEngineerIndex = findColumnIndex("UK Engineer");
-    ukMarkUpIndex = findColumnIndex("UK Broadcast Assistant Markup");
-
-    usTakesIndex = findColumnIndex('US No of takes');
-    usTakeNoIndex = findColumnIndex('US Take No');
-    usDateIndex = findColumnIndex("US Date Recorded");
-    usStudioIndex = findColumnIndex("US Studio");
-    usEngineerIndex = findColumnIndex("US Engineer");
- 
-    wallaTakesIndex = findColumnIndex('Walla No Of takes');
-    wallaTakeNoIndex = findColumnIndex('Walla Take No');
-    wallaDateIndex = findColumnIndex("Walla Date Recorded");
-    wallaStudioIndex = findColumnIndex("Walla Studio");
-    wallaEngineerIndex = findColumnIndex("Walla Engineer");
   })
+}
+
+async function initialiseVariables(){
+  sceneIndex = findColumnIndex('Scene')
+  numberIndex = findColumnIndex("Number");
+  totalTakesIndex = findColumnIndex('Total Takes');
+
+  ukTakesIndex = findColumnIndex('UK No of takes');
+  ukTakeNoIndex = findColumnIndex('UK Take No')
+  ukDateIndex = findColumnIndex("UK Date Recorded");
+  ukStudioIndex = findColumnIndex("UK Studio");
+  ukEngineerIndex = findColumnIndex("UK Engineer");
+  ukMarkUpIndex = findColumnIndex("UK Broadcast Assistant Markup");
+
+  usTakesIndex = findColumnIndex('US No of takes');
+  usTakeNoIndex = findColumnIndex('US Take No');
+  usDateIndex = findColumnIndex("US Date Recorded");
+  usStudioIndex = findColumnIndex("US Studio");
+  usEngineerIndex = findColumnIndex("US Engineer");
+
+  wallaTakesIndex = findColumnIndex('Walla No Of takes');
+  wallaTakeNoIndex = findColumnIndex('Walla Take No');
+  wallaDateIndex = findColumnIndex("Walla Date Recorded");
+  wallaStudioIndex = findColumnIndex("Walla Studio");
+  wallaEngineerIndex = findColumnIndex("Walla Engineer");
+  await Excel.run(async function(excel){
+    scriptSheet = excel.workbook.worksheets.getItem(sheetName);
+  });
 }
 
 async function getMySheetColumns(){
@@ -74,17 +81,16 @@ function findColumnLetter(name){
 
 async function lockColumns(){
   await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    var range = sheet.getRange(columnsToLock);
+    var range = scriptSheet.getRange(columnsToLock);
     
-    sheet.protection.load('protected');
+    scriptSheet.protection.load('protected');
     await excel.sync();
     
-    console.log(sheet.protection.protected);
-    if (!sheet.protection.protected){
+    console.log(scriptSheet.protection.protected);
+    if (!scriptSheet.protection.protected){
       console.log("Not locked");
       range.format.protection.locked = true;
-      sheet.protection.protect({ selectionMode: "Normal", allowAutoFilter: true });
+      scriptSheet.protection.protect({ selectionMode: "Normal", allowAutoFilter: true });
       await excel.sync();
       console.log("Now locked");
     } else {
