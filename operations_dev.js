@@ -800,16 +800,44 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
 async function doTheTidyUp(country, lineDetails){
   const totalTakesIndex = findColumnIndex('Total Takes');
   const ukTakesIndex = findColumnIndex('UK No of takes');
+  const ukTakeNoIndex = findColumnIndex('UK Take No');
   const usTakesIndex = findColumnIndex('US No of takes');
+  const usTakeNoIndex = findColumnIndex('US Take No');
   const wallaTakesIndex = findColumnIndex('Walla No Of takes');
+  const wallaTakeNoIndex = findColumnIndex('Walla Take No');
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    let item =0;
     for (let index of lineDetails.indicies){
+      item += 1;
       let totalTakesRange = sheet.getRangeByIndexes(index, totalTakesIndex, 1, 1)
       totalTakesRange.values = lineDetails.totalTakes;
-      let ukTakesRange = sheet.getRangeByIndexes(index, ukTakesIndex, 1, 1)
+      let ukTakesRange = sheet.getRangeByIndexes(index, ukTakesIndex, 1, 1);
+      let ukTakeNoRange = sheet.getRangeByIndexes(index, ukTakeNoIndex, 1, 1);
       ukTakesRange.values = lineDetails.ukTakes;
+      if (item > lineDetails.ukTakes){
+        ukTakeNoRange.values = 'N/A';
+      } else {
+        ukTakeNoRange.values = item;
+      }
+      
+      let usTakesRange = sheet.getRangeByIndexes(index, usTakesIndex, 1, 1);
+      let usTakeNoRange = sheet.getRangeByIndexes(index, usTakeNoIndex, 1, 1);
+      usTakesRange.values = lineDetails.usTakes;
+      if (item > lineDetails.usTakes){
+        usTakeNoRange.values = 'N/A';
+      } else {
+        usTakeNoRange.values = item;
+      }
 
+      let wallaTakesRange = sheet.getRangeByIndexes(index, wallaTakesIndex, 1, 1);
+      let wallaTakeNoRange = sheet.getRangeByIndexes(index, wallaTakeNoIndex, 1, 1);
+      wallaTakesRange.values = lineDetails.wallaTakes;
+      if (item > lineDetails.wallaTakes){
+        wallaTakeNoRange.values = 'N/A';
+      } else {
+        wallaTakeNoRange.values = item;
+      }
     }
     await excel.sync();
 
