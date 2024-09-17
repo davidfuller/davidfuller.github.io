@@ -574,6 +574,7 @@ async function insertRow(){
 async function insertRowV2(currentRowIndex, country){
   await unlock();
   await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const dataRange = await getDataRange(excel);
     const myLastColumn = dataRange.getLastColumn();
     myLastColumn.load("columnindex")
