@@ -1,14 +1,9 @@
 let totalTakesIndex;
 let ukTakesIndex;
 
-async function auto_exec(){
-  console.log('Operations loaded');
-  console.log(jade_modules)
-
-  totalTakesIndex = findColumnIndex('Total Takes');
-  ukTakesIndex = findColumnIndex('UK No of takes');
-  console.log(totalTakesIndex);
+function auto_exec(){
 }
+
 let mySheetColumns;
 const firstDataRow = 3;
 const lastDataRow = 9999;
@@ -440,7 +435,10 @@ async function getColumnData(sheetName, rangeName){
     }
     console.log(result);
     mySheetColumns = result;
-    return result;
+
+    totalTakesIndex = findColumnIndex('Total Takes');
+    ukTakesIndex = findColumnIndex('UK No of takes');
+ 
   })
 }
 
@@ -880,8 +878,6 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
 }
 
 async function doTheTidyUp(country, lineDetails){
-  const totalTakesIndex = findColumnIndex('Total Takes');
-  const ukTakesIndex = findColumnIndex('UK No of takes');
   const ukTakeNoIndex = findColumnIndex('UK Take No');
   const usTakesIndex = findColumnIndex('US No of takes');
   const usTakeNoIndex = findColumnIndex('US Take No');
