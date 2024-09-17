@@ -7,7 +7,7 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex; 
 let mySheetColumns;
-let scriptSheet
+let scriptSheet;
 
 function auto_exec(){
 }
@@ -59,7 +59,8 @@ async function initialiseVariables(){
   wallaStudioIndex = findColumnIndex("Walla Studio");
   wallaEngineerIndex = findColumnIndex("Walla Engineer");
   await Excel.run(async function(excel){
-    scriptSheet = excel.workbook.worksheets.getItem(sheetName);
+    scriptSheet = excel.workbook.worksheets.getItem('Script');
+    await excel.sync();
   });
 }
 
