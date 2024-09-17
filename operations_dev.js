@@ -676,6 +676,8 @@ function zeroElement(value){
 async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, includeEngineer){
   await unlock()
   await Excel.run(async function(excel){ 
+    const activeCell = excel.workbook.getActiveCell();
+    const selectCell = activeCell.getOffsetRange(-1, 0);let
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     let lineDetails =  await findDetailsForThisLine();
     console.log(lineDetails);
@@ -733,6 +735,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
         engineerRange.clear("Contents");
       }
       await unlock();
+      selectCell.select();
       await excel.sync();
     }
 
