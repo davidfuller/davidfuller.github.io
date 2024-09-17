@@ -1,6 +1,13 @@
+const totalTakesIndex;
+const ukTakesIndex;
+
 async function auto_exec(){
   console.log('Operations loaded');
   console.log(jade_modules)
+
+  totalTakesIndex = findColumnIndex('Total Takes');
+  ukTakesIndex = findColumnIndex('UK No of takes');
+  console.log(totalTakesIndex);
 }
 let mySheetColumns;
 const firstDataRow = 3;
@@ -751,8 +758,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
 async function findDetailsForThisLine(){
   await unlock();
   let result = {};
-  const totalTakesIndex = findColumnIndex('Total Takes');
-  const ukTakesIndex = findColumnIndex('UK No of takes');
+  
   const usTakesIndex = findColumnIndex('US No of takes');
   const wallaTakesIndex = findColumnIndex('Walla No Of takes');
   await Excel.run(async function(excel){ 
@@ -781,6 +787,7 @@ async function findDetailsForThisLine(){
     result.usTakes = cleanTakes(usTakesCell.values);
     result.wallaTakes = cleanTakes(wallaTakesCell.values);
     result.indicies = myIndecies;
+    result.currentRowIndex = currentRowIndex;
 
     console.log('Result');
     console.log(result);
@@ -805,6 +812,49 @@ function cleanTakes(values){
     } else {
       return temp;
     }
+}
+
+async function removeTake(country){
+  await unlock()
+  await Excel.run(async function(excel){
+    // get the lineDetails
+    let lineDetails =  await findDetailsForThisLine();
+    console.log(lineDetails);
+    let foundTake = 0;
+    if (country == 'UK'){
+      for (let i = 0; i < lineDetails.indicies.length; i++){
+        if (lineDetails.indecies[i] == currentRowIndex){
+          foundTake = i + 1
+        }
+        if (foundTake > 0){
+          // Is this the last take for this country...
+          if (foundTake == lineDetails.ukTakes){
+            // Yes => is it on the final totaltakes
+            if (lineDetails.ukTakes == lineDetails.totalTakes){
+              //Yes - Are there any other countries on this take
+              if ((lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes)){
+                //Yes - just clear the relevant cells and adjust that countries numbers.
+                let clearRange =
+              }
+
+            }
+          }
+        }
+      }
+    }
+  
+    
+      
+        
+        //No - Delete the row and update the total and country numbers
+      //No - just clear the relevant cells and adjust that countries numbers.
+    // No - so here we need to
+          // 1. remove the one to be deleted.
+          // 2. move the one below up
+          // 3. if we now have a totally empty row - delete it
+          // 4. Adjust the details
+  })
+  await lockColumns()
 }
 
 async function getAllLinesWithThisNumber(excel, currentRowIndex){
