@@ -1,3 +1,5 @@
+function auto_exec(){
+}
 async function mainCSS(){
   const css =`
 body {

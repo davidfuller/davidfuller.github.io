@@ -1,3 +1,5 @@
+function auto_exec(){
+}
 async function mainHTML(){
   const html = `
 <h1>MuVi2 Script Controller</h1>
