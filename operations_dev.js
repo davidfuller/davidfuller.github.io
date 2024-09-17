@@ -101,14 +101,13 @@ async function lockColumns(){
 
 async function unlock(){
   await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    sheet.protection.load('protected');
+    scriptSheet.protection.load('protected');
     await excel.sync();
-    if (!sheet.protection.protected){
+    if (!scriptSheet.protection.protected){
       console.log("Already unlocked");
     } else {
       console.log("Currently locked");
-      sheet.protection.unprotect("")
+      scriptSheet.protection.unprotect("")
       await excel.sync();
       console.log("Now not locked");
     }
@@ -119,10 +118,9 @@ async function applyFilter(){
   /*Jade.listing:{"name":"Apply filter","description":"Applies empty filter to sheet"}*/
   await Excel.run(async function(excel){
     await unlock();
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const myRange = await getDataRange(excel);
-    sheet.autoFilter.apply(myRange, 0, { criterion1: "*", filterOn: Excel.FilterOn.custom});
-    sheet.autoFilter.clearCriteria();
+    scriptSheet.autoFilter.apply(myRange, 0, { criterion1: "*", filterOn: Excel.FilterOn.custom});
+    scriptSheet.autoFilter.clearCriteria();
     await excel.sync();
     await lockColumns();
   })
@@ -130,12 +128,11 @@ async function applyFilter(){
 
 async function removeFilter(){
   await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    sheet.autoFilter.load('enabled')
+    scriptSheet.autoFilter.load('enabled')
     await excel.sync()
-    if (sheet.autoFilter.enabled){
+    if (scriptSheet.autoFilter.enabled){
       console.log("Autofilter enabled")
-      sheet.autoFilter.remove();
+      scriptSheet.autoFilter.remove();
       await excel.sync();
     } else {
       console.log("Autofilter not enabled")
