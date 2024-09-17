@@ -677,7 +677,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
   await unlock()
   await Excel.run(async function(excel){ 
     const activeCell = excel.workbook.getActiveCell();
-    const selectCell = activeCell.getOffsetRange(-1, 0);let
+    const selectCell = activeCell.getOffsetRange(-1, 0);
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     let lineDetails =  await findDetailsForThisLine();
     console.log(lineDetails);
