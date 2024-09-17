@@ -132,5 +132,5 @@ label {
 }
                     `;
   Jade.set_css(css);
-
+  console.log('CSS done')
 }
