@@ -83,9 +83,9 @@ function findColumnLetter(name){
 
 async function lockColumns(){
   await Excel.run(async function(excel){
-    var range = scriptSheet.getRange(columnsToLock);
-    
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.protection.load('protected');
+    let range = scriptSheet.getRange(columnsToLock);
     await excel.sync();
     
     console.log(scriptSheet.protection.protected);
