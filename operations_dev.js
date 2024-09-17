@@ -1,5 +1,6 @@
 const firstDataRow = 3;
 const lastDataRow = 9999;
+const scriptSheetName = 'Script'
 const columnsToLock = "A:Y";
 
 let sceneIndex, numberIndex;
@@ -59,7 +60,7 @@ async function initialiseVariables(){
   wallaStudioIndex = findColumnIndex("Walla Studio");
   wallaEngineerIndex = findColumnIndex("Walla Engineer");
   await Excel.run(async function(excel){
-    scriptSheet = excel.workbook.worksheets.getItem('Script');
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     await excel.sync();
   });
 }
@@ -102,6 +103,7 @@ async function lockColumns(){
 
 async function unlock(){
   await Excel.run(async function(excel){
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.protection.load('protected');
     await excel.sync();
     if (!scriptSheet.protection.protected){
