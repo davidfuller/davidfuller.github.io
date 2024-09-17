@@ -674,6 +674,7 @@ function zeroElement(value){
 }
 
 async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, includeEngineer){
+  await unlock()
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     let lineDetails =  await findDetailsForThisLine();
@@ -738,7 +739,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
     doTheTidyUp(country, lineDetails)
         
   })
-
+  await lockColumns();
 }
 
 
