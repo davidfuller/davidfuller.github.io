@@ -1,15 +1,62 @@
-let totalTakesIndex;
-let ukTakesIndex;
+const firstDataRow = 3;
+const lastDataRow = 9999;
+const columnsToLock = "A:Y";
+
+let sceneIndex, numberIndex;
+let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
+let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex;
+let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex; 
+let mySheetColumns;
 
 function auto_exec(){
 }
+async function getColumnData(sheetName, rangeName){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(sheetName);
+    const range = sheet.getRange(rangeName);
+    range.load("values");
+    await excel.sync();
+    console.log(range.values);
+    let result = [];
+    for (let i = 0; i < range.values.length; i++){
+      if (range.values[i][0] != ""){
+        let temp = {};
+        temp.name = range.values[i][0];
+        temp.number = range.values[i][1];
+        temp.column = range.values[i][2];
+        temp.index = range.values[i][3];
+        result.push(temp);
+      }
+    }
+    console.log(result);
+    mySheetColumns = result;
 
-let mySheetColumns;
-const firstDataRow = 3;
-const lastDataRow = 9999;
+    sceneIndex = findColumnIndex('Scene')
+    numberIndex = findColumnIndex("Number");
+    totalTakesIndex = findColumnIndex('Total Takes');
+
+    ukTakesIndex = findColumnIndex('UK No of takes');
+    ukTakeNoIndex = findColumnIndex('UK Take No')
+    ukDateIndex = findColumnIndex("UK Date Recorded");
+    ukStudioIndex = findColumnIndex("UK Studio");
+    ukEngineerIndex = findColumnIndex("UK Engineer");
+    ukMarkUpIndex = findColumnIndex("UK Broadcast Assistant Markup");
+
+    usTakesIndex = findColumnIndex('US No of takes');
+    usTakeNoIndex = findColumnIndex('US Take No');
+    usDateIndex = findColumnIndex("US Date Recorded");
+    usStudioIndex = findColumnIndex("US Studio");
+    usEngineerIndex = findColumnIndex("US Engineer");
+ 
+    wallaTakesIndex = findColumnIndex('Walla No Of takes');
+    wallaTakeNoIndex = findColumnIndex('Walla Take No');
+    wallaDateIndex = findColumnIndex("Walla Date Recorded");
+    wallaStudioIndex = findColumnIndex("Walla Studio");
+    wallaEngineerIndex = findColumnIndex("Walla Engineer");
+  })
+}
 
 async function getMySheetColumns(){
-  console.log(mySheetColumns);
   return mySheetColumns
 }
 
@@ -22,75 +69,7 @@ function findColumnLetter(name){
 }
 
 
-const columnsToLock = "A:Y";
-const testRange = "A:B, D:E";
 
-async function test(){
-  await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    const range = sheet.getRanges(testRange);
-    range.load('address');
-    await excel.sync();
-    console.log(range.address);
-    console.log(range.areas.length);
-  })
-}
-const myColumns = 
-  [
-    {
-      columnName: "Scene",
-      columnNo: 77
-    },
-    {
-      columnName: "Line",
-      columnNo: 78
-    },
-    {
-      columnName: "UK Date Recorded",
-      columnNo: 21
-    },
-    {
-      columnName: "UK Studio",
-      columnNo: 22
-    },
-    {
-      columnName: "UK Engineer",
-      columnNo: 23
-    },
-    {
-      columnName: "US Date Recorded",
-      columnNo: 26
-    },
-    {
-      columnName: "US Studio",
-      columnNo: 27
-    },
-    {
-      columnName: "US Engineer",
-      columnNo: 28
-    },
-    {
-      columnName: "Walla Date Recorded",
-      columnNo: 44
-    },
-    {
-      columnName: "Walla Studio",
-      columnNo: 45
-    },
-    {
-      columnName: "Walla Engineer",
-      columnNo: 46
-    }
-  ];
-
-  /*
-const sceneInput = tag("scene");
-sceneInput.onkeydown = function(event){
-  if(event.key === 'Enter'){
-    alert(sceneInput.value)
-  }
-}
-*/
 
 
 async function lockColumns(){
@@ -270,14 +249,13 @@ async function lastScene(){
 }
 
 async function getSceneRange(excel){
-  const sceneColumn = findColumnIndex("Scene");
   console.log("Scene Colum");
   console.log(sceneColumn);
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
   const endRow = sheet.getUsedRange().getLastRow();
   endRow.load("rowindex");
   await excel.sync();
-  range = sheet.getRangeByIndexes(2, sceneColumn, endRow.rowIndex, 1);
+  range = sheet.getRangeByIndexes(2, sceneIndex, endRow.rowIndex, 1);
   await excel.sync();
   return range;
 }
@@ -334,21 +312,19 @@ async function fill(country){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const studioText = tag("studio-select").value;
     const engineerText = tag("engineer-select").value;
-    let dateColumn;
-    let studioColumn;
-    let engineerColumn;
+    let dateIndex, studioIndex, engineerIndex;
     if (country == 'UK'){
-      dateColumn = findColumnIndex("UK Date Recorded");
-      studioColumn = findColumnIndex("UK Studio");
-      engineerColumn = findColumnIndex("UK Engineer");
+      dateIndex = ukDateIndex;
+      studioIndex = ukStudioIndex;
+      engineerIndex = ukEngineerIndex;
     } else if ( country == 'US'){
-      dateColumn = findColumnIndex("US Date Recorded");
-      studioColumn = findColumnIndex("US Studio");
-      engineerColumn = findColumnIndex("US Engineer");
+      dateIndex = usDateIndex;
+      studioIndex = usStudioIndex;
+      engineerIndex = usEngineerIndex;
     } else if ( country == 'Walla'){
-      dateColumn = findColumnIndex("Walla Date Recorded");
-      studioColumn = findColumnIndex("Walla Studio");
-      engineerColumn = findColumnIndex("Walla Engineer");
+      dateIndex = wallaDateIndex;
+      studioIndex = wallaStudioIndex;
+      engineerIndex = wallaEngineerIndex;
     }
     
     const activeCell = excel.workbook.getActiveCell();
@@ -357,9 +333,9 @@ async function fill(country){
     const myRow = activeCell.rowIndex;    
     console.log("Row Index");
     console.log(myRow);
-    const dateRange = sheet.getRangeByIndexes(myRow, dateColumn, 1, 1);
-    const studioRange = sheet.getRangeByIndexes(myRow, studioColumn, 1, 1);
-    const engineerRange = sheet.getRangeByIndexes(myRow, engineerColumn, 1, 1);
+    const dateRange = sheet.getRangeByIndexes(myRow, dateIndex, 1, 1);
+    const studioRange = sheet.getRangeByIndexes(myRow, studioIndex, 1, 1);
+    const engineerRange = sheet.getRangeByIndexes(myRow, engineerIndex, 1, 1);
     await excel.sync();
     await unlock();
     console.log(studioRange);
@@ -413,32 +389,6 @@ async function getDataFromSheet(sheetName, rangeName, selectTag){
       studioSelect.add(new Option(result[i], result[i]));
     }
       
-  })
-}
-async function getColumnData(sheetName, rangeName){
-  await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getItem(sheetName);
-    const range = sheet.getRange(rangeName);
-    range.load("values");
-    await excel.sync();
-    console.log(range.values);
-    let result = [];
-    for (let i = 0; i < range.values.length; i++){
-      if (range.values[i][0] != ""){
-        let temp = {};
-        temp.name = range.values[i][0];
-        temp.number = range.values[i][1];
-        temp.column = range.values[i][2];
-        temp.index = range.values[i][3];
-        result.push(temp);
-      }
-    }
-    console.log(result);
-    mySheetColumns = result;
-
-    totalTakesIndex = findColumnIndex('Total Takes');
-    ukTakesIndex = findColumnIndex('UK No of takes');
- 
   })
 }
 
@@ -686,21 +636,15 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     let lineDetails =  await findDetailsForThisLine();
     console.log(lineDetails);
-    let noOfTakesIndex;
-    let ukTakeNoIndex;
-    let dateRecordedIndex;
-    let markUpIndex;
-    let studioIndex;
-    let engineerIndex;
+    let takeNoIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex;
     let newLine;
     let newLineIndex;
     if (country == 'UK'){
-      noOfTakesIndex = findColumnIndex("UK No of takes");
-      ukTakeNoIndex = findColumnIndex('UK Take No')
-      dateRecordedIndex = findColumnIndex("UK Date Recorded");
-      markUpIndex = findColumnIndex("UK Broadcast Assistant Markup");
-      studioIndex = findColumnIndex("UK Studio");
-      engineerIndex = findColumnIndex("UK Engineer")
+      takeNoIndex = ukTakeNoIndex;
+      dateRecordedIndex = ukDateIndex;
+      markUpIndex = ukMarkUpIndex;
+      studioIndex = ukStudioIndex;
+      engineerIndex = ukEngineerIndex;
       if (lineDetails.totalTakes == lineDetails.ukTakes){
         let currentRowIndex = lineDetails.indicies[lineDetails.ukTakes - 1];
         console.log('Current Row Index');
@@ -716,7 +660,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
         newLine = lineDetails.ukTakes + 1
         newLineIndex = lineDetails.indicies[newLine - 1];
       }
-      let ukTakeNoRange = sheet.getRangeByIndexes(newLineIndex, ukTakeNoIndex, 1, 1)
+      let ukTakeNoRange = sheet.getRangeByIndexes(newLineIndex, takeNoIndex, 1, 1)
       ukTakeNoRange.values = newLine;
       lineDetails.ukTakes = newLine;
       console.log("New Line");
@@ -757,8 +701,6 @@ async function findDetailsForThisLine(){
   await unlock();
   let result = {};
   
-  const usTakesIndex = findColumnIndex('US No of takes');
-  const wallaTakesIndex = findColumnIndex('Walla No Of takes');
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const activeCell = excel.workbook.getActiveCell();
@@ -857,7 +799,6 @@ async function removeTake(country){
 async function getAllLinesWithThisNumber(excel, currentRowIndex){
   //returns an array of indexes
   const sheet = excel.workbook.worksheets.getActiveWorksheet();
-  const numberIndex = findColumnIndex("Number");
   const numberColumn = findColumnLetter("Number");
   let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
   currentNumberCell.load('values');
@@ -878,11 +819,6 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
 }
 
 async function doTheTidyUp(country, lineDetails){
-  const ukTakeNoIndex = findColumnIndex('UK Take No');
-  const usTakesIndex = findColumnIndex('US No of takes');
-  const usTakeNoIndex = findColumnIndex('US Take No');
-  const wallaTakesIndex = findColumnIndex('Walla No Of takes');
-  const wallaTakeNoIndex = findColumnIndex('Walla Take No');
   await Excel.run(async function(excel){ 
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
     let item =0;
@@ -924,18 +860,16 @@ async function doTheTidyUp(country, lineDetails){
 }
 
 
-
-
 async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional, includeMarkUp, includeStudio, includeEngineer){
   const numberColumn = findColumnLetter("Number");
-  const numberIndex = findColumnIndex("Number")
-  let noOfTakesIndex;
+  let noOfTakesIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex;
+
   if (country == "UK"){
-    noOfTakesIndex = findColumnIndex("UK No of takes");
-    dateRecordedIndex = findColumnIndex("UK Date Recorded");
-    markUpIndex = findColumnIndex("UK Broadcast Assistant Markup");
-    studioIndex = findColumnIndex("UK Studio");
-    engineerIndex = findColumnIndex("UK Engineer")
+    noOfTakesIndex = ukTakesIndex;
+    dateRecordedIndex = ukDateIndex
+    markUpIndex = ukMarkUpIndex;
+    studioIndex = ukStudioIndex;
+    engineerIndex = ukEngineerIndex;
   }
   await unlock();
   await Excel.run(async function(excel){ 
