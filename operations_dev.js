@@ -731,6 +731,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
         let engineerRange = sheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
         engineerRange.clear("Contents");
       }
+      await unlock();
       await excel.sync();
     }
 
