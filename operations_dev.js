@@ -1,5 +1,5 @@
-const totalTakesIndex;
-const ukTakesIndex;
+let totalTakesIndex;
+let ukTakesIndex;
 
 async function auto_exec(){
   console.log('Operations loaded');
@@ -834,9 +834,8 @@ async function removeTake(country){
               //Yes - Are there any other countries on this take
               if ((lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes)){
                 //Yes - just clear the relevant cells and adjust that countries numbers.
-                let clearRange =
+                let clearRange = ""
               }
-
             }
           }
         }
