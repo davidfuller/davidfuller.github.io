@@ -702,6 +702,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
         newLine = lineDetails.ukTakes + 1;
         newLineIndex = currentRowIndex + 1;
         lineDetails.indicies.push(newLineIndex);
+        lineDetails.totalTakes += 1;
         console.log('Added row');
         console.log(lineDetails);
       } else {
