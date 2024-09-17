@@ -122,6 +122,7 @@ async function applyFilter(){
   await Excel.run(async function(excel){
     await unlock();
     const myRange = await getDataRange(excel);
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.autoFilter.apply(myRange, 0, { criterion1: "*", filterOn: Excel.FilterOn.custom});
     scriptSheet.autoFilter.clearCriteria();
     await excel.sync();
@@ -131,6 +132,7 @@ async function applyFilter(){
 
 async function removeFilter(){
   await Excel.run(async function(excel){
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.autoFilter.load('enabled')
     await excel.sync()
     if (scriptSheet.autoFilter.enabled){
