@@ -148,7 +148,7 @@ async function removeFilter(){
 
 async function findScene(offset){
   await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load("rowIndex");
     activeCell.load(("columnIndex"))
@@ -184,7 +184,7 @@ async function findScene(offset){
         await firstScene();
       }
     } else {
-      const myTarget = sheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
+      const myTarget = scriptSheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
       await excel.sync();
       myTarget.select();
       await excel.sync();
@@ -194,7 +194,7 @@ async function findScene(offset){
 
 async function findSceneNo(sceneNo){
   await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load("rowIndex");
     activeCell.load(("columnIndex"))
@@ -230,7 +230,7 @@ async function findSceneNo(sceneNo){
     if (myIndex == -1){
       alert('Invalid Scene Number');
     } else {
-      const myTarget = sheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
+      const myTarget = scriptSheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
       await excel.sync();
       myTarget.select();
       await excel.sync();
@@ -259,24 +259,24 @@ async function lastScene(){
 async function getSceneRange(excel){
   console.log("Scene Colum");
   console.log(sceneColumn);
-  const sheet = excel.workbook.worksheets.getActiveWorksheet();
-  const endRow = sheet.getUsedRange().getLastRow();
+  scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  const endRow = scriptSheet.getUsedRange().getLastRow();
   endRow.load("rowindex");
   await excel.sync();
-  range = sheet.getRangeByIndexes(2, sceneIndex, endRow.rowIndex, 1);
+  range = scriptSheet.getRangeByIndexes(2, sceneIndex, endRow.rowIndex, 1);
   await excel.sync();
   return range;
 }
 
 async function getDataRange(excel){
-  const sheet = excel.workbook.worksheets.getActiveWorksheet();
-  const myLastRow = sheet.getUsedRange().getLastRow();
-  const myLastColumn = sheet.getUsedRange().getLastColumn();
+  scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  const myLastRow = scriptSheet.getUsedRange().getLastRow();
+  const myLastColumn = scriptSheet.getUsedRange().getLastColumn();
   myLastRow.load("rowindex");
   myLastColumn.load("columnindex")
   await excel.sync();
   
-  const range = sheet.getRangeByIndexes(1,0, myLastRow.rowIndex, myLastColumn.columnIndex + 1);
+  const range = scriptSheet.getRangeByIndexes(1,0, myLastRow.rowIndex, myLastColumn.columnIndex + 1);
   await excel.sync();
   
   return range
@@ -296,12 +296,12 @@ async function getTargetSceneNumber(){
 async function getSceneMaxAndMin(){
   let result = {};
   await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    const min = sheet.getRange("minScene");
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const min = scriptSheet.getRange("minScene");
     await excel.sync();
     min.load("values");
     await excel.sync();
-    const max = sheet.getRange("maxScene");
+    const max = scriptSheet.getRange("maxScene");
     await excel.sync();
     max.load("values")
     await excel.sync();
@@ -317,7 +317,7 @@ async function getSceneMaxAndMin(){
 
 async function fill(country){
   await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const studioText = tag("studio-select").value;
     const engineerText = tag("engineer-select").value;
     let dateIndex, studioIndex, engineerIndex;
@@ -341,9 +341,9 @@ async function fill(country){
     const myRow = activeCell.rowIndex;    
     console.log("Row Index");
     console.log(myRow);
-    const dateRange = sheet.getRangeByIndexes(myRow, dateIndex, 1, 1);
-    const studioRange = sheet.getRangeByIndexes(myRow, studioIndex, 1, 1);
-    const engineerRange = sheet.getRangeByIndexes(myRow, engineerIndex, 1, 1);
+    const dateRange = scriptSheet.getRangeByIndexes(myRow, dateIndex, 1, 1);
+    const studioRange = scriptSheet.getRangeByIndexes(myRow, studioIndex, 1, 1);
+    const engineerRange = scriptSheet.getRangeByIndexes(myRow, engineerIndex, 1, 1);
     await excel.sync();
     await unlock();
     console.log(studioRange);
@@ -482,14 +482,14 @@ async function theFormulas(){
   
   await unlock();
   await Excel.run(async function(excel){ 
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
       const myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow ;
       const myTopRow = columnLetter + firstRow;
       console.log(myRange + "  " + myTopRow);
-      const range = sheet.getRange(myRange);
-      const topRowRange = sheet.getRange(myTopRow);
+      const range = scriptSheet.getRange(myRange);
+      const topRowRange = scriptSheet.getRange(myTopRow);
       console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
       range.formulas = columnFormula.formulaRest;
       topRowRange.formulas = columnFormula.formulaFirst;
@@ -502,7 +502,7 @@ async function theFormulas(){
 async function insertRow(){
   let activeCell
   await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex');
     const dataRange = await getDataRange(excel);
@@ -514,7 +514,7 @@ async function insertRow(){
     myLastColumn.load("columnindex")
     await excel.sync();
   
-    const myRow = sheet.getRangeByIndexes(activeCell.rowIndex,0, 1, myLastColumn.columnIndex+1);
+    const myRow = scriptSheet.getRangeByIndexes(activeCell.rowIndex,0, 1, myLastColumn.columnIndex+1);
     myRow.load('address');
     await excel.sync();
     console.log(myRow.address);
@@ -537,12 +537,12 @@ async function insertRow(){
 async function insertRowV2(currentRowIndex, country){
   await unlock();
   await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const dataRange = await getDataRange(excel);
     const myLastColumn = dataRange.getLastColumn();
     myLastColumn.load("columnindex")
     await excel.sync();
-    const myRow = sheet.getRangeByIndexes(currentRowIndex, 0, 1, myLastColumn.columnIndex+1);
+    const myRow = scriptSheet.getRangeByIndexes(currentRowIndex, 0, 1, myLastColumn.columnIndex+1);
     const newRow = myRow.insert("Down");
     await excel.sync();
     newRow.copyFrom(myRow, "All");
@@ -554,7 +554,6 @@ async function insertRowV2(currentRowIndex, country){
 
 async function deleteRow(){
   await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
     const activeCell = excel.workbook.getActiveCell();
     const selectCell = activeCell.getOffsetRange(-1, 0);
     activeCell.load('rowIndex');
@@ -608,12 +607,12 @@ async function correctFormulas(firstRow){
   
   await unlock();
   await Excel.run(async function(excel){ 
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
       const myRange = columnLetter + firstRow + ":" + columnLetter + (firstRow +1) ;
       console.log("Range to replace: " + myRange);
-      const range = sheet.getRange(myRange);
+      const range = scriptSheet.getRange(myRange);
       console.log("Formula: " + columnFormula.formulaRest);
       range.formulas = columnFormula.formulaRest;
       await excel.sync();
@@ -641,7 +640,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
   await Excel.run(async function(excel){ 
     const activeCell = excel.workbook.getActiveCell();
     const selectCell = activeCell.getOffsetRange(1, 0);
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let lineDetails =  await findDetailsForThisLine();
     console.log(lineDetails);
     let takeNoIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex;
@@ -668,27 +667,27 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
         newLine = lineDetails.ukTakes + 1
         newLineIndex = lineDetails.indicies[newLine - 1];
       }
-      let ukTakeNoRange = sheet.getRangeByIndexes(newLineIndex, takeNoIndex, 1, 1)
+      let ukTakeNoRange = scriptSheet.getRangeByIndexes(newLineIndex, takeNoIndex, 1, 1)
       ukTakeNoRange.values = newLine;
       lineDetails.ukTakes = newLine;
       console.log("New Line");
       console.log(newLine);
       if (doDate){
-        let dateRange = sheet.getRangeByIndexes(newLineIndex, dateRecordedIndex, 1, 1);
+        let dateRange = scriptSheet.getRangeByIndexes(newLineIndex, dateRecordedIndex, 1, 1);
         let theDate = dateInFormat();
         dateRange.values = theDate;
       }
       if (!includeMarkUp){
-        let markUpRange = sheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
+        let markUpRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
         markUpRange.clear("Contents");
       }
       if (!includeStudio){
         console.log('Studio');
-        let studioRange = sheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
+        let studioRange = scriptSheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
         studioRange.clear("Contents");
       }
       if(!includeEngineer){
-        let engineerRange = sheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
+        let engineerRange = scriptSheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
         engineerRange.clear("Contents");
       }
       await unlock();
@@ -710,7 +709,7 @@ async function findDetailsForThisLine(){
   let result = {};
   
   await Excel.run(async function(excel){ 
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex')
     await excel.sync();
@@ -719,10 +718,10 @@ async function findDetailsForThisLine(){
     console.log("myIndecies");
     console.log(myIndecies);
 
-    const totalTakesCell = sheet.getRangeByIndexes(myIndecies[0], totalTakesIndex, 1, 1);
-    const ukTakesCell = sheet.getRangeByIndexes(myIndecies[0], ukTakesIndex, 1, 1);
-    const usTakesCell = sheet.getRangeByIndexes(myIndecies[0], usTakesIndex, 1, 1);
-    const wallaTakesCell = sheet.getRangeByIndexes(myIndecies[0], wallaTakesIndex, 1, 1);
+    const totalTakesCell = scriptSheet.getRangeByIndexes(myIndecies[0], totalTakesIndex, 1, 1);
+    const ukTakesCell = scriptSheet.getRangeByIndexes(myIndecies[0], ukTakesIndex, 1, 1);
+    const usTakesCell = scriptSheet.getRangeByIndexes(myIndecies[0], usTakesIndex, 1, 1);
+    const wallaTakesCell = scriptSheet.getRangeByIndexes(myIndecies[0], wallaTakesIndex, 1, 1);
 
     totalTakesCell.load('values');
     ukTakesCell.load('values');
@@ -806,11 +805,11 @@ async function removeTake(country){
 
 async function getAllLinesWithThisNumber(excel, currentRowIndex){
   //returns an array of indexes
-  const sheet = excel.workbook.worksheets.getActiveWorksheet();
+  scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
   const numberColumn = findColumnLetter("Number");
-  let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
+  let currentNumberCell = scriptSheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
   currentNumberCell.load('values');
-  let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
+  let numberData = scriptSheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
   numberData.load('values');
   await excel.sync();
   let targetValue = currentNumberCell.values
