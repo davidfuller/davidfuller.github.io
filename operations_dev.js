@@ -570,6 +570,24 @@ async function insertRow(){
   })
   return activeCell.rowIndex;
 }
+
+async function insertRowV2(currentRowIndex, country){
+  await unlock();
+  await Excel.run(async function(excel){
+    const dataRange = await getDataRange(excel);
+    const myLastColumn = dataRange.getLastColumn();
+    myLastColumn.load("columnindex")
+    await excel.sync();
+    const myRow = sheet.getRangeByIndexes(currentRowIndex, 0, 1, myLastColumn.columnIndex+1);
+    const newRow = myRow.insert("Down");
+    await excel.sync();
+    newRow.copyFrom(myRow, "All");
+    await excel.sync();
+    await correctFormulas(currentRowIndex + 1);
+  })
+  await lockColumns();
+}
+
 async function deleteRow(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getActiveWorksheet();
@@ -675,7 +693,15 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
       studioIndex = findColumnIndex("UK Studio");
       engineerIndex = findColumnIndex("UK Engineer")
       if (lineDetails.totalTakes == lineDetails.ukTakes){
-        //add a line
+        let currentRowIndex = lineDetails.indicies[lineDetails.ukTakes - 1];
+        console.log('Current Row Index');
+        console.log(currentRowIndex);
+        await insertRowV2(currentRowIndex, country)
+        newLine = lineDetails.ukTakes + 1;
+        newLineIndex = currentRowIndex + 1;
+        lineDetails.indicies.push(newLineIndex);
+        console.log('Added row');
+        console.log(lineDetails);
       } else {
         newLine = lineDetails.ukTakes + 1
         newLineIndex = lineDetails.indicies[newLine - 1];
