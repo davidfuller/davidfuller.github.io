@@ -257,8 +257,6 @@ async function lastScene(){
 }
 
 async function getSceneRange(excel){
-  console.log("Scene Colum");
-  console.log(sceneColumn);
   scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
   const endRow = scriptSheet.getUsedRange().getLastRow();
   endRow.load("rowindex");
