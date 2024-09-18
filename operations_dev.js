@@ -853,11 +853,17 @@ async function removeTake(country){
           console.log('ukMarkUpIndex', ukMarkUpIndex);
           console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex + 1));
           scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-          let currentRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
-          let nextRowRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex + 1, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
-          currentRange.copyFrom(nextRowRange, "All");
-          await excel.sync();
-          nextRowRange.clear("Contents");
+          let firstItem  = lineDetails.currentRowIndex;
+          let lastItem = lineDetails.indicies[lineDetails.ukTakes - 1];
+          console.log('First/Last item', firstItem, lastItem);
+          for (let item = firstItem; item < lastItem; item++){
+            let currentRange = scriptSheet.getRangeByIndexes(item, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
+            let nextRowRange = scriptSheet.getRangeByIndexes(item + 1, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
+            currentRange.copyFrom(nextRowRange, "All");
+            await excel.sync();
+          }
+          let lastRowRange = scriptSheet.getRangeByIndexes(lastItem, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
+          lastRowRange.clear("Contents");
           await excel.sync();
           lineDetails.ukTakes -= 1;
         }
