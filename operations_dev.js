@@ -230,6 +230,7 @@ async function findSceneNo(sceneNo){
     if (myIndex == -1){
       alert('Invalid Scene Number');
     } else {
+      scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       const myTarget = scriptSheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
       await excel.sync();
       myTarget.select();
