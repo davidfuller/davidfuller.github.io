@@ -778,6 +778,7 @@ async function removeTake(country){
           // Is this the last take for this country...
           console.log('Found take: ', foundTake);
           if (foundTake == lineDetails.ukTakes){
+            console.log('Found take is UK final take')
             // Yes => is it on the final totaltakes
             if (lineDetails.ukTakes == lineDetails.totalTakes){
               //Yes - Are there any other countries on this take
@@ -835,8 +836,10 @@ async function removeTake(country){
               clearRange.clear("Contents");
               lineDetails.ukTakes = lineDetails.ukTakes - 1;
               await excel.sync();
+              console.log('Done the sync');
             } 
           } else {
+            console.log('Found NOT take is UK final take')
             // UK is not the final one of UK and so....
             // No - so here we need to
               // 1. remove the one to be deleted.
