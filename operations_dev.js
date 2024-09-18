@@ -783,13 +783,16 @@ async function removeTake(country){
                 //Yes - just clear the relevant cells and adjust that countries numbers.
                 console.log("UK on the final take, but another one also");
                 let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex));
-                clearRange.clear("Contents");
                 clearRange.load('address');
-                let takeNoRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukTakeNoIndex, 1, 1);
-                takeNoRange.values = "NA"
-                lineDetails.ukTakes = lineDetails.ukTakes - 1;
                 await excel.sync();
                 console.log("Clear range: ", clearRange.address)
+                
+                clearRange.clear("Contents");
+                let takeNoRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukTakeNoIndex, 1, 1);
+                takeNoRange.values = "N/A"
+                lineDetails.ukTakes = lineDetails.ukTakes - 1;
+                await excel.sync();
+                
               } else {
                 //No - Delete the row and update the total and country numbers
               }
