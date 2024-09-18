@@ -32,7 +32,6 @@ async function getColumnData(sheetName, rangeName){
     }
     console.log(result);
     mySheetColumns = result;
-
   })
 }
 
@@ -903,8 +902,13 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
   //returns an array of indexes
   scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
   const numberColumn = findColumnLetter("Number");
+  console.log('Current Row Index: ', currentRowIndex);
+  console.log('numberIndex:', numberIndex)
   let currentNumberCell = scriptSheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
   currentNumberCell.load('values');
+  currentNumberCell.load('address')
+  await excel.sync();
+  console.log('currentNumberCell address: ', currentNumberCell.address);
   let numberData = scriptSheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
   numberData.load('values');
   await excel.sync();
