@@ -638,7 +638,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
     const activeCell = excel.workbook.getActiveCell();
     const selectCell = activeCell.getOffsetRange(1, 0);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let lineDetails =  await findDetailsForThisLine();
+    let lineDetails =  await findDetailsForThisLine(country);
     console.log(lineDetails);
     let takeNoIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex;
     let newLine;
@@ -702,7 +702,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
 }
 
 
-async function findDetailsForThisLine(){
+async function findDetailsForThisLine(country){
   await unlock();
   let result = {};
   
@@ -728,7 +728,14 @@ async function findDetailsForThisLine(){
 
     await excel.sync();
     result.totalTakes = cleanTakes(totalTakesCell.values);
+    if (result.totalTakes == 0){ 
+      result.totalTakes = 1
+    }
+    
     result.ukTakes = cleanTakes(ukTakesCell.values);
+    if ((country == 'UK') && (result.ukTakes == 0){
+      result.ukTakes = 1;
+    }
     result.usTakes = cleanTakes(usTakesCell.values);
     result.wallaTakes = cleanTakes(wallaTakesCell.values);
     result.indicies = myIndecies;
@@ -765,7 +772,7 @@ async function removeTake(country){
     // get the lineDetails
     const activeCell = excel.workbook.getActiveCell();
     const selectCell = activeCell.getOffsetRange(-1, 0);
-    let lineDetails =  await findDetailsForThisLine();
+    let lineDetails =  await findDetailsForThisLine(country);
     console.log(lineDetails);
     let foundTake = 0;
     if (country == 'UK'){
