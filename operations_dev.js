@@ -766,6 +766,8 @@ async function removeTake(country){
   await unlock()
   await Excel.run(async function(excel){
     // get the lineDetails
+    const activeCell = excel.workbook.getActiveCell();
+    const selectCell = activeCell.getOffsetRange(-1, 0);
     let lineDetails =  await findDetailsForThisLine();
     console.log(lineDetails);
     let foundTake = 0;
@@ -809,6 +811,7 @@ async function removeTake(country){
                 console.log("Delete range address: ", deleteRange.address);
                 await unlock();
                 deleteRange.delete("Up");
+                selectCell.select();
                 await excel.sync();
                 await correctFormulas(lineDetails.currentRowIndex);
                 lineDetails.totalTakes = lineDetails.totalTakes - 1;
