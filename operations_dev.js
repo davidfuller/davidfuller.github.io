@@ -866,6 +866,25 @@ async function removeTake(country){
           lastRowRange.clear("Contents");
           await excel.sync();
           lineDetails.ukTakes -= 1;
+
+          if (!((lineDetails.totalTakes == lineDetails.ukTakes) || (lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes))){
+            // if we get here then we need to delete a row because we now have an empty row.
+            console.log('We now have to delete a row')
+            scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+            let lastItem = lineDetails.indicies[lineDetails.indicies.length - 1]
+            let deleteRange = scriptSheet.getRangeByIndexes(lastItem, 0, 1, 1).getEntireRow();
+            deleteRange.load('address');
+            await excel.sync();
+            console.log("Delete range address: ", deleteRange.address);
+            await unlock();
+            deleteRange.delete("Up");
+            selectCell.select();
+            await excel.sync();
+            await correctFormulas(lineDetails.currentRowIndex);
+            lineDetails.totalTakes = lineDetails.totalTakes - 1;
+            lineDetails.currentRowIndex -= 1;
+            lineDetails.indicies.pop();
+          }
         }
       } else {
         console.log('Take not found')
