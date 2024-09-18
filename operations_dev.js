@@ -782,6 +782,9 @@ async function removeTake(country){
               if ((lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes)){
                 //Yes - just clear the relevant cells and adjust that countries numbers.
                 console.log("UK on the final take, but another one also");
+                console.log('currentRowIndex: ', currentRowIndex);
+                console.log('ukMarkUpIndex', ukMarkUpIndex);
+                console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex));
                 let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex));
                 clearRange.load('address');
                 await excel.sync();
