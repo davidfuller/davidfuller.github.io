@@ -835,7 +835,28 @@ async function removeTake(country){
               clearRange.clear("Contents");
               lineDetails.ukTakes = lineDetails.ukTakes - 1;
               await excel.sync();
-            }
+            } 
+          } else {
+            // UK is not the final one of UK and so....
+            // No - so here we need to
+              // 1. remove the one to be deleted.
+              // 2. move the one below up
+              // 3. if we now have a totally empty row - delete it
+              // 4. Adjust the details
+              // UK is not the final total take, but we are deleting the final UK take
+              //No - just clear the relevant cells and adjust that countries numbers.
+            console.log("UK is not the final UK take");
+            console.log('currentRowIndex: ', lineDetails.currentRowIndex);
+            console.log('ukMarkUpIndex', ukMarkUpIndex);
+            console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex + 1));
+            scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+            let currentRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
+            let nextRowRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex + 1, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
+            currentRange.copyFrom(nextRowRange, "All");
+            await excel.sync();
+            nextRowRange.clear("Contents");
+            await excel.sync();
+            lineDetails.ukTakes -= 1;
           }
         } else {
           console.log('Take not found')
@@ -847,12 +868,8 @@ async function removeTake(country){
       
         
         
-      //No - just clear the relevant cells and adjust that countries numbers.
-    // No - so here we need to
-          // 1. remove the one to be deleted.
-          // 2. move the one below up
-          // 3. if we now have a totally empty row - delete it
-          // 4. Adjust the details
+      
+    
     console.log("Line Details")
     console.log(lineDetails);
     await unlock();
