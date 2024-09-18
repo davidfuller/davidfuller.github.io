@@ -811,6 +811,8 @@ async function removeTake(country){
                 deleteRange.delete("Up");
                 await excel.sync();
                 await correctFormulas(lineDetails.rowIndex);
+                lineDetails.totalTakes = lineDetails.totalTakes - 1;
+                lineDetails.ukTakes = lineDetails.ukTakes - 1;
               }
             }
           }
