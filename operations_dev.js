@@ -737,14 +737,7 @@ async function findDetailsForThisLine(country){
 
     await excel.sync();
     result.totalTakes = cleanTakes(totalTakesCell.values);
-    if (result.totalTakes == 0){ 
-      result.totalTakes = 1
-    }
-    
     result.ukTakes = cleanTakes(ukTakesCell.values);
-    if ((country == 'UK') && (result.ukTakes == 0)){
-      result.ukTakes = 1;
-    }
     result.usTakes = cleanTakes(usTakesCell.values);
     result.wallaTakes = cleanTakes(wallaTakesCell.values);
     result.indicies = myIndecies;
