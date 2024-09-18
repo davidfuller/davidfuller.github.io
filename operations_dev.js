@@ -776,6 +776,7 @@ async function removeTake(country){
         }
         if (foundTake > 0){
           // Is this the last take for this country...
+          console.log('Found take: ', foundTake);
           if (foundTake == lineDetails.ukTakes){
             // Yes => is it on the final totaltakes
             if (lineDetails.ukTakes == lineDetails.totalTakes){
@@ -833,6 +834,8 @@ async function removeTake(country){
               await excel.sync();
             }
           }
+        } else {
+          console.log('Take not found')
         }
       }
     }
