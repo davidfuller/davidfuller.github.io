@@ -672,6 +672,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
       lineDetails.ukTakes = newLine;
       console.log("New Line");
       console.log(newLine);
+      scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       if (doDate){
         let dateRange = scriptSheet.getRangeByIndexes(newLineIndex, dateRecordedIndex, 1, 1);
         let theDate = dateInFormat();
