@@ -810,7 +810,7 @@ async function removeTake(country){
                 await unlock();
                 deleteRange.delete("Up");
                 await excel.sync();
-                await correctFormulas(lineDetails.rowIndex);
+                await correctFormulas(lineDetails.currentRowIndex);
                 lineDetails.totalTakes = lineDetails.totalTakes - 1;
                 lineDetails.ukTakes = lineDetails.ukTakes - 1;
               }
