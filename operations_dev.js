@@ -785,9 +785,9 @@ async function removeTake(country){
                 console.log("UK on the final take, but another one also");
                 console.log('currentRowIndex: ', lineDetails.currentRowIndex);
                 console.log('ukMarkUpIndex', ukMarkUpIndex);
-                console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex));
+                console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex + 1));
                 scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-                let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex));
+                let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
                 
                 clearRange.load('address');
                 await excel.sync();
@@ -817,6 +817,20 @@ async function removeTake(country){
                 lineDetails.currentRowIndex -= 1;
                 lineDetails.indicies.pop();
               }
+            } else {
+              //No - just clear the relevant cells and adjust that countries numbers.
+              console.log("UK NOT on the final take");
+              console.log('currentRowIndex: ', lineDetails.currentRowIndex);
+              console.log('ukMarkUpIndex', ukMarkUpIndex);
+              console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex + 1));
+              scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+              let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
+              clearRange.load('address');
+              await excel.sync();
+              console.log("Clear range: ", clearRange.address)
+              clearRange.clear("Contents");
+              lineDetails.ukTakes = lineDetails.ukTakes - 1;
+              await excel.sync();
             }
           }
         }
