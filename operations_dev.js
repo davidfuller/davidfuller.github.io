@@ -649,7 +649,16 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
       markUpIndex = ukMarkUpIndex;
       studioIndex = ukStudioIndex;
       engineerIndex = ukEngineerIndex;
-      if (lineDetails.totalTakes == lineDetails.ukTakes){
+      if (lineDetails.totalTakes == 0){
+        let currentRowIndex = lineDetails.indicies[0];
+        console.log('Current Row Index');
+        console.log(currentRowIndex);
+        newLine = lineDetails.ukTakes + 1;
+        newLineIndex = currentRowIndex;
+        lineDetails.totalTakes = 1;
+        console.log('Added row');
+        console.log(lineDetails);
+      } else if (lineDetails.totalTakes == lineDetails.ukTakes){
         let currentRowIndex = lineDetails.indicies[lineDetails.ukTakes - 1];
         console.log('Current Row Index');
         console.log(currentRowIndex);
