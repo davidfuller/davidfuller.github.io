@@ -232,7 +232,6 @@ async function findSceneNo(sceneNo){
     } else {
       scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       const myTarget = scriptSheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
-      await excel.sync();
       myTarget.select();
       await excel.sync();
     }
