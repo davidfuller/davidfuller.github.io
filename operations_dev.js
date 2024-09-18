@@ -813,6 +813,7 @@ async function removeTake(country){
                 await correctFormulas(lineDetails.currentRowIndex);
                 lineDetails.totalTakes = lineDetails.totalTakes - 1;
                 lineDetails.ukTakes = lineDetails.ukTakes - 1;
+                lineDetails.currentRowIndex -= 1;
               }
             }
           }
