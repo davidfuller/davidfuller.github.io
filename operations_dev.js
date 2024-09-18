@@ -827,14 +827,14 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
 
 async function doTheTidyUp(country, lineDetails){
   await Excel.run(async function(excel){ 
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let item =0;
     for (let index of lineDetails.indicies){
       item += 1;
-      let totalTakesRange = sheet.getRangeByIndexes(index, totalTakesIndex, 1, 1)
+      let totalTakesRange = scriptSheet.getRangeByIndexes(index, totalTakesIndex, 1, 1)
       totalTakesRange.values = lineDetails.totalTakes;
-      let ukTakesRange = sheet.getRangeByIndexes(index, ukTakesIndex, 1, 1);
-      let ukTakeNoRange = sheet.getRangeByIndexes(index, ukTakeNoIndex, 1, 1);
+      let ukTakesRange = scriptSheet.getRangeByIndexes(index, ukTakesIndex, 1, 1);
+      let ukTakeNoRange = scriptSheet.getRangeByIndexes(index, ukTakeNoIndex, 1, 1);
       ukTakesRange.values = lineDetails.ukTakes;
       if (item > lineDetails.ukTakes){
         ukTakeNoRange.values = 'N/A';
@@ -842,8 +842,8 @@ async function doTheTidyUp(country, lineDetails){
         ukTakeNoRange.values = item;
       }
       
-      let usTakesRange = sheet.getRangeByIndexes(index, usTakesIndex, 1, 1);
-      let usTakeNoRange = sheet.getRangeByIndexes(index, usTakeNoIndex, 1, 1);
+      let usTakesRange = scriptSheet.getRangeByIndexes(index, usTakesIndex, 1, 1);
+      let usTakeNoRange = scriptSheet.getRangeByIndexes(index, usTakeNoIndex, 1, 1);
       usTakesRange.values = lineDetails.usTakes;
       if (item > lineDetails.usTakes){
         usTakeNoRange.values = 'N/A';
@@ -851,8 +851,8 @@ async function doTheTidyUp(country, lineDetails){
         usTakeNoRange.values = item;
       }
 
-      let wallaTakesRange = sheet.getRangeByIndexes(index, wallaTakesIndex, 1, 1);
-      let wallaTakeNoRange = sheet.getRangeByIndexes(index, wallaTakeNoIndex, 1, 1);
+      let wallaTakesRange = scriptSheet.getRangeByIndexes(index, wallaTakesIndex, 1, 1);
+      let wallaTakeNoRange = scriptSheet.getRangeByIndexes(index, wallaTakeNoIndex, 1, 1);
       wallaTakesRange.values = lineDetails.wallaTakes;
       if (item > lineDetails.wallaTakes){
         wallaTakeNoRange.values = 'N/A';
@@ -880,10 +880,10 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
   }
   await unlock();
   await Excel.run(async function(excel){ 
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    let currentNumberCell = sheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let currentNumberCell = scriptSheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
     currentNumberCell.load('values')
-    let numberData = sheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
+    let numberData = scriptSheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
     numberData.load('values');
     await excel.sync();
     let targetValue = currentNumberCell.values
@@ -899,7 +899,7 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
     if (myIndecies.length > 0){
       let firstIndex = myIndecies[0] + firstDataRow - 1
       console.log("First Index: " + firstIndex )
-      let numTakesRange = sheet.getRangeByIndexes(firstIndex, noOfTakesIndex, myIndecies.length, 2)
+      let numTakesRange = scriptSheet.getRangeByIndexes(firstIndex, noOfTakesIndex, myIndecies.length, 2)
       numTakesRange.load('address');
       await excel.sync();
       console.log("Target address: " + numTakesRange.address)
@@ -919,21 +919,21 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
         let rowIndex = firstIndex + myIndecies.length - 1;
         console.log("Row index: " + rowIndex);
         if (doDate){
-          let dateRange = sheet.getRangeByIndexes(rowIndex, dateRecordedIndex, 1, 1);
+          let dateRange = scriptSheet.getRangeByIndexes(rowIndex, dateRecordedIndex, 1, 1);
           let theDate = dateInFormat();
           dateRange.values = theDate;
         }
         if (!includeMarkUp){
-          let markUpRange = sheet.getRangeByIndexes(rowIndex, markUpIndex, 1, 1);
+          let markUpRange = scriptSheet.getRangeByIndexes(rowIndex, markUpIndex, 1, 1);
           markUpRange.clear("Contents");
         }
         if (!includeStudio){
           console.log('Studio');
-          let studioRange = sheet.getRangeByIndexes(rowIndex, studioIndex, 1, 1);
+          let studioRange = scriptSheet.getRangeByIndexes(rowIndex, studioIndex, 1, 1);
           studioRange.clear("Contents");
         }
         if(!includeEngineer){
-          let engineerRange = sheet.getRangeByIndexes(rowIndex, engineerIndex, 1, 1);
+          let engineerRange = scriptSheet.getRangeByIndexes(rowIndex, engineerIndex, 1, 1);
           engineerRange.clear("Contents");
         }
       }
@@ -952,8 +952,8 @@ async function hideRows(visibleType, country){
   await unlock();
   await Excel.run(async function(excel){ 
     let myMessage = tag('takeMessage')
-    const sheet = excel.workbook.worksheets.getActiveWorksheet();
-    let myRange = sheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let myRange = scriptSheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
     myRange.load('values')
     await excel.sync();
     console.log(myRange.values)
@@ -961,7 +961,7 @@ async function hideRows(visibleType, country){
     console.log(myRange.values[0].length)
 
     //First unhide all
-    let hideRange = sheet.getRangeByIndexes(firstDataRow - 1, 0, lastDataRow - 2, 1);
+    let hideRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, 0, lastDataRow - 2, 1);
     hideRange.load('address');
     hideRange.rowHidden = false;
     await excel.sync();
@@ -974,7 +974,7 @@ async function hideRows(visibleType, country){
           if (myRange.values[i][0] != myRange.values[i][1]){
             console.log(myRange.values[i][0]);
             console.log(myRange.values[i][1]);
-            let hideRange = sheet.getRangeByIndexes(i + firstDataRow - 1, 0, 1, 1);
+            let hideRange = scriptSheet.getRangeByIndexes(i + firstDataRow - 1, 0, 1, 1);
             hideRange.load('address');
             hideRange.rowHidden = true;
             await excel.sync();
@@ -991,7 +991,7 @@ async function hideRows(visibleType, country){
           if (myRange.values[i][1] != 1){
             console.log(myRange.values[i][0]);
             console.log(myRange.values[i][1]);
-            let hideRange = sheet.getRangeByIndexes(i + firstDataRow - 1, 0, 1, 1);
+            let hideRange = scriptSheet.getRangeByIndexes(i + firstDataRow - 1, 0, 1, 1);
             hideRange.load('address');
             hideRange.rowHidden = true;
             await excel.sync();
@@ -1019,8 +1019,8 @@ async function showHideColumns(columnType){
     console.log(allIndex);
     let unhideColumns = range.values[allIndex][1]
     console.log(unhideColumns);
-    const dataSheet = excel.workbook.worksheets.getActiveWorksheet();
-    const unhideColumnsRange = dataSheet.getRange(unhideColumns);
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const unhideColumnsRange = scriptSheet.getRange(unhideColumns);
     unhideColumnsRange.columnHidden = false;
     await excel.sync();
     if (columnType == 'UK Script'){
@@ -1029,7 +1029,7 @@ async function showHideColumns(columnType){
       let hideUKColumns = range.values[ukIndex][2].split(",")
       console.log(hideUKColumns);
       for (let hide of hideUKColumns){
-        let hideUKColumnsRange = dataSheet.getRange(hide);
+        let hideUKColumnsRange = scriptSheet.getRange(hide);
         hideUKColumnsRange.load('address');
         await excel.sync();
         console.log(hideUKColumnsRange.address);
@@ -1043,7 +1043,7 @@ async function showHideColumns(columnType){
       let hideUSColumns = range.values[usIndex][2].split(",")
       console.log(hideUSColumns);
       for (let hide of hideUSColumns){
-        let hideUSColumnsRange = dataSheet.getRange(hide);
+        let hideUSColumnsRange = scriptSheet.getRange(hide);
         hideUSColumnsRange.load('address');
         await excel.sync();
         console.log(hideUSColumnsRange.address);
@@ -1057,7 +1057,7 @@ async function showHideColumns(columnType){
       let hideWallaColumns = range.values[wallaIndex][2].split(",")
       console.log(hideWallaColumns);
       for (let hide of hideWallaColumns){
-        let hideWallaColumnsRange = dataSheet.getRange(hide);
+        let hideWallaColumnsRange = scriptSheet.getRange(hide);
         hideWallaColumnsRange.load('address');
         await excel.sync();
         console.log(hideWallaColumnsRange.address);
