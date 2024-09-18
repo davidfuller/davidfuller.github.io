@@ -832,6 +832,7 @@ async function removeTake(country){
           // 4. Adjust the details
     console.log("Line Details")
     console.log(lineDetails);
+    await unlock();
     await doTheTidyUp(country, lineDetails)
   })
   
