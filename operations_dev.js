@@ -840,7 +840,6 @@ async function removeTake(country){
             console.log('Done the sync');
           } 
         } else {
-          console.log('Found NOT take is UK final take')
           // UK is not the final one of UK and so....
           // No - so here we need to
             // 1. remove the one to be deleted.
@@ -850,7 +849,6 @@ async function removeTake(country){
             // UK is not the final total take, but we are deleting the final UK take
             //No - just clear the relevant cells and adjust that countries numbers.
           console.log("UK is not the final UK take");
-          /*
           console.log('currentRowIndex: ', lineDetails.currentRowIndex);
           console.log('ukMarkUpIndex', ukMarkUpIndex);
           console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex + 1));
@@ -862,7 +860,6 @@ async function removeTake(country){
           nextRowRange.clear("Contents");
           await excel.sync();
           lineDetails.ukTakes -= 1;
-          */
         }
       } else {
         console.log('Take not found')
