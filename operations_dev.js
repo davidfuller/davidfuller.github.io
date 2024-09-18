@@ -733,7 +733,7 @@ async function findDetailsForThisLine(country){
     }
     
     result.ukTakes = cleanTakes(ukTakesCell.values);
-    if ((country == 'UK') && (result.ukTakes == 0){
+    if ((country == 'UK') && (result.ukTakes == 0)){
       result.ukTakes = 1;
     }
     result.usTakes = cleanTakes(usTakesCell.values);
