@@ -814,6 +814,7 @@ async function removeTake(country){
                 lineDetails.totalTakes = lineDetails.totalTakes - 1;
                 lineDetails.ukTakes = lineDetails.ukTakes - 1;
                 lineDetails.currentRowIndex -= 1;
+                lineDetails.indicies.pop();
               }
             }
           }
