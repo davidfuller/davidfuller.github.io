@@ -786,6 +786,7 @@ async function removeTake(country){
                 console.log('ukMarkUpIndex', ukMarkUpIndex);
                 console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex));
                 let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex));
+                console.log(clearRange);
                 clearRange.load('address');
                 await excel.sync();
                 console.log("Clear range: ", clearRange.address)
