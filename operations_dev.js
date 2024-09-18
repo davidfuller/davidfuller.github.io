@@ -788,7 +788,7 @@ async function removeTake(country){
                 console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex));
                 scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
                 let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex));
-                console.log(clearRange);
+                
                 clearRange.load('address');
                 await excel.sync();
                 console.log("Clear range: ", clearRange.address)
@@ -798,9 +798,19 @@ async function removeTake(country){
                 takeNoRange.values = "N/A"
                 lineDetails.ukTakes = lineDetails.ukTakes - 1;
                 await excel.sync();
-                
               } else {
                 //No - Delete the row and update the total and country numbers
+                console.log("UK on the final take and its the only one.");
+                console.log('currentRowIndex: ', lineDetails.currentRowIndex);
+                scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+                let deleteRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, 0, 1, 1).getEntireRow();
+                deleteRange.load('address');
+                await excel.sync();
+                console.log("Delete range address: ", deleteRange.address);
+                await unlock();
+                deleteRange.delete("Up");
+                await excel.sync();
+                await correctFormulas(lineDetails.rowIndex);
               }
             }
           }
