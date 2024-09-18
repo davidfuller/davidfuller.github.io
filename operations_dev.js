@@ -782,6 +782,7 @@ async function removeTake(country){
             if (lineDetails.ukTakes == lineDetails.totalTakes){
               //Yes - Are there any other countries on this take
               if ((lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes)){
+                // UK is on final take as is another country
                 //Yes - just clear the relevant cells and adjust that countries numbers.
                 console.log("UK on the final take, but another one also");
                 console.log('currentRowIndex: ', lineDetails.currentRowIndex);
@@ -800,6 +801,7 @@ async function removeTake(country){
                 lineDetails.ukTakes = lineDetails.ukTakes - 1;
                 await excel.sync();
               } else {
+                // UK is on final take and it's the only one
                 //No - Delete the row and update the total and country numbers
                 console.log("UK on the final take and its the only one.");
                 console.log('currentRowIndex: ', lineDetails.currentRowIndex);
@@ -819,8 +821,9 @@ async function removeTake(country){
                 lineDetails.indicies.pop();
               }
             } else {
+              // UK is not the final total take, but we are deleting the final UK take
               //No - just clear the relevant cells and adjust that countries numbers.
-              console.log("UK NOT on the final take");
+              console.log("UK is not the final total take, but we are deleting the final UK take");
               console.log('currentRowIndex: ', lineDetails.currentRowIndex);
               console.log('ukMarkUpIndex', ukMarkUpIndex);
               console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex + 1));
