@@ -832,7 +832,7 @@ async function removeTake(country){
           // 4. Adjust the details
     console.log("Line Details")
     console.log(lineDetails);
-    doTheTidyUp(country, lineDetails)
+    await doTheTidyUp(country, lineDetails)
   })
   
   await lockColumns()
@@ -863,7 +863,7 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
 async function doTheTidyUp(country, lineDetails){
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let item =0;
+    let item = 0;
     for (let index of lineDetails.indicies){
       item += 1;
       let totalTakesRange = scriptSheet.getRangeByIndexes(index, totalTakesIndex, 1, 1)
