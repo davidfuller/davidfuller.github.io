@@ -636,7 +636,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
   await unlock()
   await Excel.run(async function(excel){ 
     const activeCell = excel.workbook.getActiveCell();
-    const selectCell = activeCell.getOffsetRange(1, 0);
+    let selectCell = activeCell.getOffsetRange(1, 0);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let lineDetails =  await findDetailsForThisLine(country);
     console.log(lineDetails);
@@ -658,6 +658,7 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
         lineDetails.totalTakes = 1;
         console.log('Added row');
         console.log(lineDetails);
+        selectCell = activeCell.getOffsetRange(0, 0);
       } else if (lineDetails.totalTakes == lineDetails.ukTakes){
         let currentRowIndex = lineDetails.indicies[lineDetails.ukTakes - 1];
         console.log('Current Row Index');
