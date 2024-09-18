@@ -781,7 +781,15 @@ async function removeTake(country){
               //Yes - Are there any other countries on this take
               if ((lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes)){
                 //Yes - just clear the relevant cells and adjust that countries numbers.
-                let clearRange = ""
+                console.log("UK on the final take, but another one also");
+                let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex));
+                clearRange.clear("Contents");
+                let takeNoRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukTakeNoIndex, 1, 1);
+                takeNoRange.values = "NA"
+                lineDetails.ukTakes = lineDetails.ukTakes - 1;
+                await excel.sync();
+              } else {
+                //No - Delete the row and update the total and country numbers
               }
             }
           }
@@ -792,14 +800,18 @@ async function removeTake(country){
     
       
         
-        //No - Delete the row and update the total and country numbers
+        
       //No - just clear the relevant cells and adjust that countries numbers.
     // No - so here we need to
           // 1. remove the one to be deleted.
           // 2. move the one below up
           // 3. if we now have a totally empty row - delete it
           // 4. Adjust the details
+    console.log("Line Details")
+    console.log(lineDetails);
+    doTheTidyUp(country, lineDetails)
   })
+  
   await lockColumns()
 }
 
