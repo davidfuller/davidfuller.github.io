@@ -770,7 +770,7 @@ async function removeTake(country){
     let foundTake = 0;
     if (country == 'UK'){
       for (let i = 0; i < lineDetails.indicies.length; i++){
-        if (lineDetails.indecies[i] == currentRowIndex){
+        if (lineDetails.indicies[i] == currentRowIndex){
           foundTake = i + 1
         }
         if (foundTake > 0){
