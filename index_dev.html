@@ -33,7 +33,10 @@
 </div>
 <div id="dateStudioEngineer">
   <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true, false, false, false)">Add Take UK</button>
-  <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button><br/>
+  <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button>
+  <input type='checkbox' id='chkAboveDetails' name='chkAboveDetails' value='doAbove'>
+  <label for='chkAboveDetails'>Use details from above row</label><br/>
+  <button id="btnTest" onclick="jade_modules.operations.testCheckbox()">Test</button>
   <div class="row">
     <div class="column" id="column-one">
       <label for="studio-select">Studio</label><br/>
