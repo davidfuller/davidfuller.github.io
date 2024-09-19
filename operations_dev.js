@@ -787,37 +787,115 @@ async function removeTake(country){
       if (foundTake > 0){
         // Is this the last take for this country...
         console.log('Found take: ', foundTake);
-        if (foundTake == lineDetails.ukTakes){
+        if (lineDetails.totalTakes == 1){
+          console.log('Only 1 total takes, which we cannot delete, so we clear the relevant area')
+          console.log('currentRowIndex: ', lineDetails.currentRowIndex);
+          scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+          let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
+          clearRange.load('address');
+          await excel.sync();
+          console.log("Clear range: ", clearRange.address)
+          clearRange.clear("Contents");
+          let takeNoRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukTakeNoIndex, 1, 1);
+          takeNoRange.values = "N/A"
+          lineDetails.ukTakes = lineDetails.ukTakes - 1;
+          await excel.sync();
+        } else {
+          if (foundTake == lineDetails.ukTakes){
           console.log('Found take is UK final take')
           // Yes => is it on the final totaltakes
-          if (lineDetails.ukTakes == lineDetails.totalTakes){
-            //Yes - Are there any other countries on this take
-            if ((lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes)){
-              // UK is on final take as is another country
-              //Yes - just clear the relevant cells and adjust that countries numbers.
-              console.log("UK on the final take, but another one also");
+            if (lineDetails.ukTakes == lineDetails.totalTakes){
+              //Yes - Are there any other countries on this take
+              if ((lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes)){
+                // UK is on final take as is another country
+                //Yes - just clear the relevant cells and adjust that countries numbers.
+                console.log("UK on the final take, but another one also");
+                console.log('currentRowIndex: ', lineDetails.currentRowIndex);
+                console.log('ukMarkUpIndex', ukMarkUpIndex);
+                console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex + 1));
+                scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+                let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
+                
+                clearRange.load('address');
+                await excel.sync();
+                console.log("Clear range: ", clearRange.address)
+                
+                clearRange.clear("Contents");
+                let takeNoRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukTakeNoIndex, 1, 1);
+                takeNoRange.values = "N/A"
+                lineDetails.ukTakes = lineDetails.ukTakes - 1;
+                await excel.sync();
+              } else {
+                // UK is on final take and it's the only one
+                //No - Delete the row and update the total and country numbers
+                console.log("UK on the final take and its the only one.");
+                console.log('currentRowIndex: ', lineDetails.currentRowIndex);
+                scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+                let deleteRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, 0, 1, 1).getEntireRow();
+                deleteRange.load('address');
+                await excel.sync();
+                console.log("Delete range address: ", deleteRange.address);
+                await unlock();
+                deleteRange.delete("Up");
+                selectCell.select();
+                await excel.sync();
+                await correctFormulas(lineDetails.currentRowIndex);
+                lineDetails.totalTakes = lineDetails.totalTakes - 1;
+                lineDetails.ukTakes = lineDetails.ukTakes - 1;
+                lineDetails.currentRowIndex -= 1;
+                lineDetails.indicies.pop();
+              }
+            } else {
+              // UK is not the final total take, but we are deleting the final UK take
+              //No - just clear the relevant cells and adjust that countries numbers.
+              console.log("UK is not the final total take, but we are deleting the final UK take");
               console.log('currentRowIndex: ', lineDetails.currentRowIndex);
               console.log('ukMarkUpIndex', ukMarkUpIndex);
               console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex + 1));
               scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
               let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
-              
               clearRange.load('address');
               await excel.sync();
               console.log("Clear range: ", clearRange.address)
-              
               clearRange.clear("Contents");
-              let takeNoRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukTakeNoIndex, 1, 1);
-              takeNoRange.values = "N/A"
               lineDetails.ukTakes = lineDetails.ukTakes - 1;
               await excel.sync();
-            } else {
-              // UK is on final take and it's the only one
-              //No - Delete the row and update the total and country numbers
-              console.log("UK on the final take and its the only one.");
-              console.log('currentRowIndex: ', lineDetails.currentRowIndex);
+              console.log('Done the sync');
+            } 
+          } else {
+            // UK is not the final one of UK and so....
+            // No - so here we need to
+              // 1. remove the one to be deleted.
+              // 2. move the one below up
+              // 3. if we now have a totally empty row - delete it
+              // 4. Adjust the details
+              // UK is not the final total take, but we are deleting the final UK take
+              //No - just clear the relevant cells and adjust that countries numbers.
+            console.log("UK is not the final UK take");
+            console.log('currentRowIndex: ', lineDetails.currentRowIndex);
+            console.log('ukMarkUpIndex', ukMarkUpIndex);
+            console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex + 1));
+            scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+            let firstItem  = lineDetails.currentRowIndex;
+            let lastItem = lineDetails.indicies[lineDetails.ukTakes - 1];
+            console.log('First/Last item', firstItem, lastItem);
+            for (let item = firstItem; item < lastItem; item++){
+              let currentRange = scriptSheet.getRangeByIndexes(item, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
+              let nextRowRange = scriptSheet.getRangeByIndexes(item + 1, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
+              currentRange.copyFrom(nextRowRange, "All");
+              await excel.sync();
+            }
+            let lastRowRange = scriptSheet.getRangeByIndexes(lastItem, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
+            lastRowRange.clear("Contents");
+            await excel.sync();
+            lineDetails.ukTakes -= 1;
+
+            if (!((lineDetails.totalTakes == lineDetails.ukTakes) || (lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes))){
+              // if we get here then we need to delete a row because we now have an empty row.
+              console.log('We now have to delete a row')
               scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-              let deleteRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, 0, 1, 1).getEntireRow();
+              let lastItem = lineDetails.indicies[lineDetails.indicies.length - 1]
+              let deleteRange = scriptSheet.getRangeByIndexes(lastItem, 0, 1, 1).getEntireRow();
               deleteRange.load('address');
               await excel.sync();
               console.log("Delete range address: ", deleteRange.address);
@@ -827,72 +905,9 @@ async function removeTake(country){
               await excel.sync();
               await correctFormulas(lineDetails.currentRowIndex);
               lineDetails.totalTakes = lineDetails.totalTakes - 1;
-              lineDetails.ukTakes = lineDetails.ukTakes - 1;
               lineDetails.currentRowIndex -= 1;
               lineDetails.indicies.pop();
             }
-          } else {
-            // UK is not the final total take, but we are deleting the final UK take
-            //No - just clear the relevant cells and adjust that countries numbers.
-            console.log("UK is not the final total take, but we are deleting the final UK take");
-            console.log('currentRowIndex: ', lineDetails.currentRowIndex);
-            console.log('ukMarkUpIndex', ukMarkUpIndex);
-            console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex + 1));
-            scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-            let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
-            clearRange.load('address');
-            await excel.sync();
-            console.log("Clear range: ", clearRange.address)
-            clearRange.clear("Contents");
-            lineDetails.ukTakes = lineDetails.ukTakes - 1;
-            await excel.sync();
-            console.log('Done the sync');
-          } 
-        } else {
-          // UK is not the final one of UK and so....
-          // No - so here we need to
-            // 1. remove the one to be deleted.
-            // 2. move the one below up
-            // 3. if we now have a totally empty row - delete it
-            // 4. Adjust the details
-            // UK is not the final total take, but we are deleting the final UK take
-            //No - just clear the relevant cells and adjust that countries numbers.
-          console.log("UK is not the final UK take");
-          console.log('currentRowIndex: ', lineDetails.currentRowIndex);
-          console.log('ukMarkUpIndex', ukMarkUpIndex);
-          console.log('Diff: ', (ukEngineerIndex - ukMarkUpIndex + 1));
-          scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-          let firstItem  = lineDetails.currentRowIndex;
-          let lastItem = lineDetails.indicies[lineDetails.ukTakes - 1];
-          console.log('First/Last item', firstItem, lastItem);
-          for (let item = firstItem; item < lastItem; item++){
-            let currentRange = scriptSheet.getRangeByIndexes(item, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
-            let nextRowRange = scriptSheet.getRangeByIndexes(item + 1, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
-            currentRange.copyFrom(nextRowRange, "All");
-            await excel.sync();
-          }
-          let lastRowRange = scriptSheet.getRangeByIndexes(lastItem, ukMarkUpIndex, 1, (ukEngineerIndex - ukMarkUpIndex + 1));
-          lastRowRange.clear("Contents");
-          await excel.sync();
-          lineDetails.ukTakes -= 1;
-
-          if (!((lineDetails.totalTakes == lineDetails.ukTakes) || (lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes))){
-            // if we get here then we need to delete a row because we now have an empty row.
-            console.log('We now have to delete a row')
-            scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-            let lastItem = lineDetails.indicies[lineDetails.indicies.length - 1]
-            let deleteRange = scriptSheet.getRangeByIndexes(lastItem, 0, 1, 1).getEntireRow();
-            deleteRange.load('address');
-            await excel.sync();
-            console.log("Delete range address: ", deleteRange.address);
-            await unlock();
-            deleteRange.delete("Up");
-            selectCell.select();
-            await excel.sync();
-            await correctFormulas(lineDetails.currentRowIndex);
-            lineDetails.totalTakes = lineDetails.totalTakes - 1;
-            lineDetails.currentRowIndex -= 1;
-            lineDetails.indicies.pop();
           }
         }
       } else {
