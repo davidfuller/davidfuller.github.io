@@ -7,11 +7,7 @@
   <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
   <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
   <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button><br/>
-  <button id='btnInsertRow' onclick="jade_modules.operations.insertTake('UK', true, false, false, false)">Insert Take</button>
-  <button id='btnDeleteRow' onclick="jade_modules.operations.deleteRow()">Delete</button><br/>
   <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
-  <button id="btnTest" onclick="jade_modules.operations.addTakeDetails('UK', true, false, false, false)">Test</button><br/>
-  <button id="btnTest" onclick="jade_modules.operations.removeTake('UK')">Test Remove</button>
 </div>
 <div id="showTakes">
   <div id="takeMessage">Showing all takes</div>
@@ -36,6 +32,8 @@
   <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
 </div>
 <div id="dateStudioEngineer">
+  <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true, false, false, false)">Add Take UK</button>
+  <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button><br/>
   <div class="row">
     <div class="column" id="column-one">
       <label for="studio-select">Studio</label><br/>

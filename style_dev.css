@@ -61,16 +61,35 @@ label {
   margin-left: 5px;
 }
 #btnFillUK {
-  width: fit-content;
-  height: fit-content;
   margin-left: 30px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 24px;
+  border: none;
+  width: fit-content;
+  border-radius: 4px;
+  background-color: #d34c01;
+  color: #fef3df;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 #btnFillUS, #btnFillWalla{
-  width: fit-content;
-  height: fit-content;
   margin-left: 5px;
-
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 24px;
+  border: none;
+  width: fit-content;
+  border-radius: 4px;
+  background-color: #d34c01;
+  color: #fef3df;
+  font-size: 12px;
+  cursor: pointer;
 }
 #scene {
   width: 50px;
@@ -113,7 +132,7 @@ label {
   margin-left: 10px;
 }
 
-#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla {
+#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla, #btnAddTakeUK, #btnRemoveTakeUK {
   margin-left: 10px;
   margin-bottom: 5px;
   margin-top: 5px;
