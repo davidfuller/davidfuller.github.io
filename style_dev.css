@@ -102,6 +102,30 @@ label {
   border-style: solid;
 }
 
+#chkAboveDetails {
+  background-color: #ffc901;
+  color: #d34c01;
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: #d34c01;
+  border-style: solid;
+}
+
+#lblAboveDetails {
+  background-color: #ffc901;
+  color: #d34c01;
+  font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 24px;
+  border: none;
+  width: fit-content;
+  font-size: 12px;
+  cursor: pointer;
+}
 #studio, #engineer, #studio-select, #engineer-select {
   width: 150px;
   background-color: #ffc901;
