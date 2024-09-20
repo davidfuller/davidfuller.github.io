@@ -132,7 +132,7 @@ label {
   cursor: pointer;
 }
 */
-#studio, #engineer, #studio-select, #engineer-select {
+#studio, #engineer, #studio-select, #engineer-select, #markup {
   width: 150px;
   background-color: #ffc901;
   color: #d34c01;
@@ -141,6 +141,10 @@ label {
   border-radius: 5px;
   border-color: #d34c01;
   border-style: solid;
+}
+
+#markup {
+  width: 200px;
 }
 .row {
   display: flex;
