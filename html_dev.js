@@ -37,7 +37,7 @@ async function mainHTML(){
 </div>
 <div id="dateStudioEngineer">
   <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true, false, false, false)">Add Take UK</button>
-  <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button>
+  <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button><br/>
   <button id="btnAddTakeUS" onclick="jade_modules.operations.addTakeDetails('US', true)">Add Take US</button>
   <label class="container">Just date
     <input type='radio' id='radJustDate' checked="checked" name='radio'>
