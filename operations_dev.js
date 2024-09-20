@@ -5,7 +5,7 @@ const columnsToLock = "A:S";
 
 let sceneIndex, numberIndex;
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
-let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex;
+let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex; 
 let mySheetColumns;
 let scriptSheet;
@@ -52,6 +52,7 @@ async function initialiseVariables(){
   usDateIndex = findColumnIndex("US Date Recorded");
   usStudioIndex = findColumnIndex("US Studio");
   usEngineerIndex = findColumnIndex("US Engineer");
+  usMarkUpIndex = findColumnIndex("US Broadcast Assistant Markup");
 
   wallaTakesIndex = findColumnIndex('Walla No Of takes');
   wallaTakeNoIndex = findColumnIndex('Walla Take No');
@@ -531,7 +532,7 @@ async function insertRow(){
   return activeCell.rowIndex;
 }
 
-async function insertRowV2(currentRowIndex, country){
+async function insertRowV2(currentRowIndex){
   await unlock();
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -652,68 +653,78 @@ async function addTakeDetails(country, doDate){
       markUpIndex = ukMarkUpIndex;
       studioIndex = ukStudioIndex;
       engineerIndex = ukEngineerIndex;
-      if (lineDetails.totalTakes == 0){
-        let currentRowIndex = lineDetails.indicies[0];
-        console.log('Current Row Index');
-        console.log(currentRowIndex);
-        newLine = lineDetails.ukTakes + 1;
-        newLineIndex = currentRowIndex;
-        lineDetails.totalTakes = 1;
-        console.log('Added row');
-        console.log(lineDetails);
-        selectCell = activeCell.getOffsetRange(0, 0);
-      } else if (lineDetails.totalTakes == lineDetails.ukTakes){
-        let currentRowIndex = lineDetails.indicies[lineDetails.ukTakes - 1];
-        console.log('Current Row Index');
-        console.log(currentRowIndex);
-        await insertRowV2(currentRowIndex, country)
-        newLine = lineDetails.ukTakes + 1;
-        newLineIndex = currentRowIndex + 1;
-        lineDetails.indicies.push(newLineIndex);
-        lineDetails.totalTakes += 1;
-        console.log('Added row');
-        console.log(lineDetails);
-      } else {
-        newLine = lineDetails.ukTakes + 1
-        newLineIndex = lineDetails.indicies[newLine - 1];
-      }
-      let ukTakeNoRange = scriptSheet.getRangeByIndexes(newLineIndex, takeNoIndex, 1, 1)
-      ukTakeNoRange.values = newLine;
-      lineDetails.ukTakes = newLine;
-      console.log("New Line");
-      console.log(newLine);
-      scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-      if (doDate){
-        let dateRange = scriptSheet.getRangeByIndexes(newLineIndex, dateRecordedIndex, 1, 1);
-        let theDate = dateInFormat();
-        dateRange.values = theDate;
-      }
-      let markUpRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
-      let studioRange = scriptSheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
-      let engineerRange = scriptSheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
-      if ((myAction == 'justDate') || (myAction = 'detailsBelow')){
-        markUpRange.clear("Contents");
-        studioRange.clear("Contents");
-        engineerRange.clear("Contents");
-      }
-      if (myAction == 'detailsBelow'){
-        const studioText = tag("studio-select").value;
-        const engineerText = tag("engineer-select").value;
-        const markupText = tag("markup").value;
-
-        markUpRange.values = markupText;
-        studioRange.values = studioText;
-        engineerRange.values = engineerText;
-      }
-
-      await unlock();
-      selectCell.select();
-      await excel.sync();
+      newLine = lineDetails.ukTakes + 1;
+    } else if (country == US){
+      takeNoIndex = usTakeNoIndex;
+      dateRecordedIndex = usDateIndex;
+      markUpIndex = usMarkUpIndex;
+      studioIndex = usStudioIndex;
+      engineerIndex = usEngineerIndex;
+      newLine = lineDetails.usTakes + 1;
     }
+    if (lineDetails.totalTakes == 0){
+      let currentRowIndex = lineDetails.indicies[0];
+      console.log('Current Row Index');
+      console.log(currentRowIndex);
+      newLineIndex = currentRowIndex;
+      lineDetails.totalTakes = 1;
+      console.log('Added row');
+      console.log(lineDetails);
+      selectCell = activeCell.getOffsetRange(0, 0);
+    } else if (lineDetails.totalTakes == lineDetails.ukTakes){
+      let currentRowIndex = lineDetails.indicies[lineDetails.ukTakes - 1];
+      console.log('Current Row Index');
+      console.log(currentRowIndex);
+      await insertRowV2(currentRowIndex)
+      newLineIndex = currentRowIndex + 1;
+      lineDetails.indicies.push(newLineIndex);
+      lineDetails.totalTakes += 1;
+      console.log('Added row');
+      console.log(lineDetails);
+    } else {
+      newLineIndex = lineDetails.indicies[newLine - 1];
+    }
+    let takeNoRange = scriptSheet.getRangeByIndexes(newLineIndex, takeNoIndex, 1, 1)
+    takeNoRange.values = newLine;
+    if (country == 'UK'){
+      lineDetails.ukTakes = newLine;
+    } else if (country == 'US'){
+      lineDetails.usTakes = newLine;
+    }
+    console.log("New Line");
+    console.log(newLine);
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    if (doDate){
+      let dateRange = scriptSheet.getRangeByIndexes(newLineIndex, dateRecordedIndex, 1, 1);
+      let theDate = dateInFormat();
+      dateRange.values = theDate;
+    }
+    let markUpRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
+    let studioRange = scriptSheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
+    let engineerRange = scriptSheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
+    if ((myAction == 'justDate') || (myAction = 'detailsBelow')){
+      markUpRange.clear("Contents");
+      studioRange.clear("Contents");
+      engineerRange.clear("Contents");
+    }
+    if (myAction == 'detailsBelow'){
+      const studioText = tag("studio-select").value;
+      const engineerText = tag("engineer-select").value;
+      const markupText = tag("markup").value;
+
+      markUpRange.values = markupText;
+      studioRange.values = studioText;
+      engineerRange.values = engineerText;
+    }
+
+    await unlock();
+    selectCell.select();
+    await excel.sync();
+  
 
     console.log("Line Details")
     console.log(lineDetails);
-    doTheTidyUp(country, lineDetails)
+    doTheTidyUp(lineDetails)
         
   })
   await lockColumns();
@@ -925,7 +936,7 @@ async function removeTake(country){
     console.log("Line Details")
     console.log(lineDetails);
     await unlock();
-    await doTheTidyUp(country, lineDetails)
+    await doTheTidyUp(lineDetails)
   })
   
   await lockColumns()
@@ -958,7 +969,7 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
   return myIndecies;
 }
 
-async function doTheTidyUp(country, lineDetails){
+async function doTheTidyUp(lineDetails){
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let item = 0;
