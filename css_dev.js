@@ -162,12 +162,28 @@ label {
   margin-left: 10px;
 }
 
-#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla, #btnAddTakeUK, #btnRemoveTakeUK {
+#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla {
   margin-left: 10px;
   margin-bottom: 5px;
   margin-top: 5px;
   padding-left: 15px;
   padding-right: 15px;
+  height: 24px;
+  border: none;
+  width: fit-content;
+  border-radius: 4px;
+  background-color: #d34c01;
+  color: #fef3df;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+ #btnAddTakeUK, #btnRemoveTakeUK {
+  margin-left: 4px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
   height: 24px;
   border: none;
   width: fit-content;
@@ -183,10 +199,11 @@ label {
   display: block;
   position: relative;
   padding-left: 20px;
+  margin-left: 10px;
   margin-bottom: 0px;
   cursor: pointer;
   font-size: 15px;
-  left: 248px;
+  left: 216px;
   top: -26px;
   -webkit-user-select: none;
   -moz-user-select: none;
