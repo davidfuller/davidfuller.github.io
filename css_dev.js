@@ -229,9 +229,7 @@ label {
   width: 15px;
   background-color: #ffc901;
   border: #d34c01 ;
-  border-width: 2px;
-  border-radius: 5px;
-  border-style: solid;
+  border-radius: 50%;
 }
 
 /* On mouse-over, add a grey background color */
