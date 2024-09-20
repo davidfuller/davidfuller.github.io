@@ -702,7 +702,7 @@ async function addTakeDetails(country, doDate){
     let markUpRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
     let studioRange = scriptSheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
     let engineerRange = scriptSheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
-    if ((myAction == 'justDate') || (myAction = 'detailsBelow')){
+    if ((myAction == 'justDate') || (myAction == 'detailsBelow')){
       markUpRange.clear("Contents");
       studioRange.clear("Contents");
       engineerRange.clear("Contents");
