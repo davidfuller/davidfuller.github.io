@@ -644,7 +644,7 @@ async function addTakeDetails(country, doDate){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let lineDetails =  await findDetailsForThisLine(country);
     console.log(lineDetails);
-    let takeNoIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex;
+    let takeNoIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex, countryTakes;
     let newLine;
     let newLineIndex;
     if (country == 'UK'){
@@ -653,6 +653,7 @@ async function addTakeDetails(country, doDate){
       markUpIndex = ukMarkUpIndex;
       studioIndex = ukStudioIndex;
       engineerIndex = ukEngineerIndex;
+      countryTakes = lineDetails.ukTakes
       newLine = lineDetails.ukTakes + 1;
     } else if (country == 'US'){
       takeNoIndex = usTakeNoIndex;
@@ -661,6 +662,7 @@ async function addTakeDetails(country, doDate){
       markUpIndex = usMarkUpIndex;
       studioIndex = usStudioIndex;
       engineerIndex = usEngineerIndex;
+      countryTakes = lineDetails.usTakes
       newLine = lineDetails.usTakes + 1;
     }
     if (lineDetails.totalTakes == 0){
@@ -672,8 +674,8 @@ async function addTakeDetails(country, doDate){
       console.log('Added row');
       console.log(lineDetails);
       selectCell = activeCell.getOffsetRange(0, 0);
-    } else if (lineDetails.totalTakes == lineDetails.ukTakes){
-      let currentRowIndex = lineDetails.indicies[lineDetails.ukTakes - 1];
+    } else if (lineDetails.totalTakes == countryTakes){
+      let currentRowIndex = lineDetails.indicies[countryTakes - 1];
       console.log('Current Row Index');
       console.log(currentRowIndex);
       await insertRowV2(currentRowIndex)
@@ -684,6 +686,11 @@ async function addTakeDetails(country, doDate){
       console.log(lineDetails);
     } else {
       newLineIndex = lineDetails.indicies[newLine - 1];
+      //Need to copy from the row above
+      let newRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
+      let copyRange = scriptSheet.getRangeByIndexes(newLineIndex - 1, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
+      newRange.copyFrom(copyRange, "All");
+      await excel.sync();
     }
     let takeNoRange = scriptSheet.getRangeByIndexes(newLineIndex, takeNoIndex, 1, 1)
     takeNoRange.values = newLine;
