@@ -38,8 +38,10 @@ async function mainHTML(){
 <div id="dateStudioEngineer">
   <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true, false, false, false)">Add Take UK</button>
   <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button>
-  <input type='checkbox' id='chkAboveDetails' name='chkAboveDetails' value='doAbove'>
-  <label for='chkAboveDetails' id='lblAboveDetails'>Use details from above row</label><br/>
+  <label class="container" id='lblAboveDetails'>Use details from above row
+    <input type='checkbox' id='chkAboveDetails' name='chkAboveDetails' value='doAbove'>
+    <span class="checkmark"></span>
+  </label>
   <button id="btnTest" onclick="jade_modules.operations.testCheckbox()">Test</button>
   <div class="row">
     <div class="column" id="column-one">
