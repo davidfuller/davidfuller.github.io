@@ -182,7 +182,7 @@ label {
   cursor: pointer;
 }
 
- #btnAddTakeUK, #btnRemoveTakeUK {
+#btnAddTakeUK, #btnRemoveTakeUK, #btnAddTakeUS {
   margin-left: 4px;
   margin-bottom: 5px;
   margin-top: 5px;
