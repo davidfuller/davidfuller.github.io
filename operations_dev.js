@@ -687,6 +687,7 @@ async function addTakeDetails(country, doDate){
     } else {
       newLineIndex = lineDetails.indicies[newLine - 1];
       //Need to copy from the row above
+      console.log('New Line Index: ', newLineIndex);
       let newRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
       let copyRange = scriptSheet.getRangeByIndexes(newLineIndex - 1, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
       newRange.copyFrom(copyRange, "All");
