@@ -198,7 +198,7 @@ label {
 .container {
   display: block;
   position: relative;
-  padding-left: 20px;
+  padding-left: 23px;
   margin-left: 10px;
   margin-bottom: 0px;
   cursor: pointer;
@@ -223,20 +223,20 @@ label {
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  top: 1px;
+  top: 0px;
   left: 0;
   height: 15px;
   width: 15px;
-  background-color: #fef3df;
+  background-color: #ffc901;
   border: #d34c01 ;
   border-width: 2px;
-  border-radius: 2px;
+  border-radius: 5px;
   border-style: solid;
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #fbd284;
+  background-color: #d34c01;
 }
 
 /* When the checkbox is checked, add a blue background */
