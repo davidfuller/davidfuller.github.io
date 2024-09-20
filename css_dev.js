@@ -235,7 +235,7 @@ label {
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 0px;
+  left: 2px;
   top: 0px;
   width: 3px;
   height: 5px;
