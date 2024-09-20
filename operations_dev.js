@@ -634,8 +634,8 @@ function zeroElement(value){
 
 async function addTakeDetails(country, doDate){
   await unlock()
-  let doAbove = checkboxChecked('chkAboveDetails')
-  console.log('Do Above: ', doAbove);
+  let myAction = radioButtonChoice();
+  console.log('The action: ', myAction);
 
   await Excel.run(async function(excel){ 
     const activeCell = excel.workbook.getActiveCell();
@@ -688,7 +688,7 @@ async function addTakeDetails(country, doDate){
         let theDate = dateInFormat();
         dateRange.values = theDate;
       }
-      if (!doAbove){
+      if (myAction == 'justDate'){
         let markUpRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
         markUpRange.clear("Contents");
         let studioRange = scriptSheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
