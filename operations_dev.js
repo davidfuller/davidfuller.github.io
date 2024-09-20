@@ -654,7 +654,7 @@ async function addTakeDetails(country, doDate){
       studioIndex = ukStudioIndex;
       engineerIndex = ukEngineerIndex;
       newLine = lineDetails.ukTakes + 1;
-    } else if (country == US){
+    } else if (country == 'US'){
       takeNoIndex = usTakeNoIndex;
       dateRecordedIndex = usDateIndex;
       markUpIndex = usMarkUpIndex;
