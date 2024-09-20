@@ -700,10 +700,10 @@ async function addTakeDetails(country, doDate){
         const studioText = tag("studio-select").value;
         const engineerText = tag("engineer-select").value;
         const markupText = tag("markup").value;
-        
+
         markUpRange.values = markupText;
-        studioRange = studioText;
-        engineerRange = engineerText;
+        studioRange.values = studioText;
+        engineerRange.values = engineerText;
       }
 
       await unlock();
