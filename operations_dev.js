@@ -632,8 +632,11 @@ function zeroElement(value){
   return value[0];
 }
 
-async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, includeEngineer){
+async function addTakeDetails(country, doDate){
   await unlock()
+  let doAbove = checkboxChecked('chkAboveDetails')
+  console.log('Do Above: ', doAbove);
+
   await Excel.run(async function(excel){ 
     const activeCell = excel.workbook.getActiveCell();
     let selectCell = activeCell.getOffsetRange(1, 0);
@@ -685,16 +688,11 @@ async function addTakeDetails(country, doDate, includeMarkUp, includeStudio, inc
         let theDate = dateInFormat();
         dateRange.values = theDate;
       }
-      if (!includeMarkUp){
+      if (!doAbove){
         let markUpRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
         markUpRange.clear("Contents");
-      }
-      if (!includeStudio){
-        console.log('Studio');
         let studioRange = scriptSheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
         studioRange.clear("Contents");
-      }
-      if(!includeEngineer){
         let engineerRange = scriptSheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
         engineerRange.clear("Contents");
       }
@@ -1287,8 +1285,8 @@ Delete row 13
 Rebuild BU12, BU13, BW12, BW13, BZ12, BZ13, CB12, CB13, 
 */
 
-async function testCheckbox(){
-  let myCheck = tag('chkAboveDetails');
+function checkboxChecked(name){
+  let myCheck = tag(name);
   console.log(myCheck.checked);
-  console.log(myCheck.value);
+  return myCheck.checked;
 }
