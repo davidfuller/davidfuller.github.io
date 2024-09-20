@@ -238,7 +238,7 @@ label {
   left: 0px;
   top: 0px;
   width: 5px;
-  height: 10px;
+  height: 5px;
   border: solid white;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
