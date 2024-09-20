@@ -256,6 +256,7 @@ label {
   display: block;
 }
 
+
 /* Style the checkmark/indicator */
 .container .checkmark:after {
   left: 4px;
@@ -263,11 +264,9 @@ label {
   width: 3px;
   height: 6px;
   border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
+  border-radius: 50%;
 }
+
                     `;
   Jade.set_css(css);
   console.log('CSS done')

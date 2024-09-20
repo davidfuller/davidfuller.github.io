@@ -34,11 +34,19 @@
 <div id="dateStudioEngineer">
   <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true, false, false, false)">Add Take UK</button>
   <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button>
-  <label class="container" id='lblAboveDetails'>Details from above
-    <input type='checkbox' id='chkAboveDetails' name='chkAboveDetails' value='doAbove'>
+  <label class="container">Just date
+    <input type='radio' id='radJustDate' checked="checked" name='radio'>
     <span class="checkmark"></span>
   </label>
-  <button id="btnTest" onclick="jade_modules.operations.testCheckbox()">Test</button>
+  <label class="container">Details from above
+    <input type='radio' id='radAboveDetails' name='radio'>
+    <span class="checkmark"></span>
+  </label>
+  <label class="container">Details from below
+    <input type='radio' id='radBelowDetails' name='radio'>
+    <span class="checkmark"></span>
+  </label>
+  <button id="btnTest" onclick="jade_modules.operations.checkboxChecked('radJustDate')">Test</button>
   <div class="row">
     <div class="column" id="column-one">
       <label for="studio-select">Studio</label><br/>
