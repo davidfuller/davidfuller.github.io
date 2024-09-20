@@ -182,7 +182,7 @@ label {
 .container {
   display: block;
   position: relative;
-  padding-left: 5px;
+  padding-left: 15px;
   margin-bottom: 12px;
   cursor: pointer;
   font-size: 12px;
@@ -208,12 +208,12 @@ label {
   left: 0;
   height: 12px;
   width: 12px;
-  background-color: #d34c01;
+  background-color: #fef3df;
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #fef3df;
+  background-color: #fbd284;
 }
 
 /* When the checkbox is checked, add a blue background */
@@ -235,8 +235,8 @@ label {
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 9px;
-  top: 5px;
+  left: 0px;
+  top: 0px;
   width: 5px;
   height: 10px;
   border: solid white;
