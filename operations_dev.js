@@ -808,7 +808,7 @@ async function removeTake(country){
     if (country == 'UK'){
       markUpIndex = ukMarkUpIndex;
       console.log('Mark Up Index', markUpIndex);
-      engineerIndex = ukMarkUpIndex;
+      engineerIndex = ukEngineerIndex;
       console.log('Engineer Index', engineerIndex);
       takeNoIndex = ukTakeNoIndex;
       countryTakes = lineDetails.ukTakes;
