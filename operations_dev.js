@@ -1293,6 +1293,8 @@ function radioButtonChoice(){
   let justDate = tag('radJustDate');
   let detailsAbove = tag('radAboveDetails');
   let detailsBelow = tag('radBelowDetails');
+  const textValue = tag("markup").value;
+  console.log('Markup: ', textValue);
 
   if (justDate.checked){
     return 'justDate';

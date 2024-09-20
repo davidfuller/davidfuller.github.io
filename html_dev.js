@@ -53,10 +53,12 @@ async function mainHTML(){
   <button id="btnTest" onclick="jade_modules.operations.checkboxChecked('radJustDate')">Test</button>
   <div class="row">
     <div class="column" id="column-one">
+      <label for="markup">Markup</label>
       <label for="studio-select">Studio</label><br/>
       <label for="engineer-select">Engineer</label>
     </div>
     <div class="column" id="column-two">
+      <input type="text" id="markup" name="markup">
       <select id="studio-select"><option value="">Please select</option></select><br/>
       <select id="engineer-select"><option value="">Please select</option></select>
     </div>
