@@ -688,14 +688,24 @@ async function addTakeDetails(country, doDate){
         let theDate = dateInFormat();
         dateRange.values = theDate;
       }
-      if (myAction == 'justDate'){
-        let markUpRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
+      let markUpRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
+      let studioRange = scriptSheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
+      let engineerRange = scriptSheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
+      if ((myAction == 'justDate') || (myAction = 'detailsBelow')){
         markUpRange.clear("Contents");
-        let studioRange = scriptSheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
         studioRange.clear("Contents");
-        let engineerRange = scriptSheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
         engineerRange.clear("Contents");
       }
+      if (myAction == 'detailsBelow'){
+        const studioText = tag("studio-select").value;
+        const engineerText = tag("engineer-select").value;
+        const markupText = tag("markup").value;
+        
+        markUpRange.values = markupText;
+        studioRange = studioText;
+        engineerRange = engineerText;
+      }
+
       await unlock();
       selectCell.select();
       await excel.sync();
