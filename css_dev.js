@@ -225,13 +225,12 @@ label {
   position: absolute;
   top: 0px;
   left: 0;
-  height: 15px;
-  width: 15px;
+  height: 12px;
+  width: 12px;
   background-color: #ffc901;
   border: #d34c01 ;
-  border-width: 2px;
   border-radius: 50%;
-  border-style: solid;
+  border-width: 2px;
 }
 
 /* On mouse-over, add a grey background color */
@@ -256,15 +255,14 @@ label {
   display: block;
 }
 
-
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 4px;
-  top: 2px;
-  width: 3px;
+  left: 3px;
+  top: 3px;
+  width: 6px;
   height: 6px;
-  border: solid white;
   border-radius: 50%;
+  background: white;
 }
 
                     `;
