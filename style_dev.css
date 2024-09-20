@@ -178,10 +178,12 @@ label {
 .container {
   display: block;
   position: relative;
-  padding-left: 15px;
-  margin-bottom: 12px;
+  padding-left: 20px;
+  margin-bottom: 0px;
   cursor: pointer;
   font-size: 15px;
+  left: 248px;
+  top: -26px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -200,7 +202,7 @@ label {
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  top: 0;
+  top: 1px;
   left: 0;
   height: 15px;
   width: 15px;
