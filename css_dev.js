@@ -236,7 +236,7 @@ label {
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #d34c01;
+  background-color: #d34c017f;
 }
 
 /* When the checkbox is checked, add a blue background */
