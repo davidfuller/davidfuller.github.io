@@ -1286,7 +1286,21 @@ Rebuild BU12, BU13, BW12, BW13, BZ12, BZ13, CB12, CB13,
 */
 
 function checkboxChecked(name){
-  let myCheck = tag(name);
-  console.log(myCheck.checked);
-  return myCheck.checked;
+  console.log(radioButtonChoice());
+}
+
+function radioButtonChoice(){
+  let justDate = tag('radJustDate');
+  let detailsAbove = tag('radAboveDetails');
+  let detailsBelow = tag('radBelowDetails');
+
+  if (justDate.checked){
+    return 'justDate';
+  } else if (detailsAbove.checked){
+    return 'detailsAbove';
+  } else if (detailsBelow.checked){
+    return 'detailsBelow'
+  } else {
+    return NaN;
+  }
 }
