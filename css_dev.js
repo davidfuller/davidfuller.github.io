@@ -185,7 +185,7 @@ label {
   padding-left: 15px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 15px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -206,8 +206,8 @@ label {
   position: absolute;
   top: 0;
   left: 0;
-  height: 12px;
-  width: 12px;
+  height: 15px;
+  width: 15px;
   background-color: #fef3df;
 }
 
@@ -235,10 +235,10 @@ label {
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 2px;
-  top: 0px;
+  left: 4px;
+  top: 2px;
   width: 3px;
-  height: 5px;
+  height: 6px;
   border: solid white;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
