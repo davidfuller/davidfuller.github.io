@@ -657,6 +657,7 @@ async function addTakeDetails(country, doDate){
     } else if (country == 'US'){
       takeNoIndex = usTakeNoIndex;
       dateRecordedIndex = usDateIndex;
+      console.log('US Date Index', usDateIndex);
       markUpIndex = usMarkUpIndex;
       studioIndex = usStudioIndex;
       engineerIndex = usEngineerIndex;
@@ -697,6 +698,7 @@ async function addTakeDetails(country, doDate){
     if (doDate){
       let dateRange = scriptSheet.getRangeByIndexes(newLineIndex, dateRecordedIndex, 1, 1);
       let theDate = dateInFormat();
+      console.log('The Date:', theDate);
       dateRange.values = theDate;
     }
     let markUpRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
