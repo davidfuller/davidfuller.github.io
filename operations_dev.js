@@ -1,7 +1,7 @@
 const firstDataRow = 3;
 const lastDataRow = 9999;
 const scriptSheetName = 'Script'
-const columnsToLock = "A:Y";
+const columnsToLock = "A:S";
 
 let sceneIndex, numberIndex;
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
