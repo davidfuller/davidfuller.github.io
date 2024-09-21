@@ -821,6 +821,13 @@ async function removeTake(country){
       console.log('Engineer Index', engineerIndex);
       takeNoIndex = ukTakeNoIndex;
       countryTakes = lineDetails.ukTakes;
+    } else if (country == 'US'){
+      markUpIndex = usMarkUpIndex;
+      console.log('Mark Up Index', markUpIndex);
+      engineerIndex = usEngineerIndex;
+      console.log('Engineer Index', engineerIndex);
+      takeNoIndex = usTakeNoIndex;
+      countryTakes = lineDetails.usTakes;
     }
       
     if (foundTake > 0){
@@ -838,7 +845,9 @@ async function removeTake(country){
         let takeNoRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, takeNoIndex, 1, 1);
         takeNoRange.values = "N/A"
         if (country == 'UK'){
-          lineDetails.ukTakes = lineDetails.ukTakes - 1;
+          lineDetails.ukTakes -= 1;
+        } else if (country == 'US'){
+          lineDetails.usTakes -= 1;
         }
         await excel.sync();
       } else {
@@ -849,7 +858,9 @@ async function removeTake(country){
             //Yes - Are there any other countries on this take?
             let otherCountriesOnThisTake;
             if (country == 'UK'){
-              otherCountriesOnThisTake = (lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes)
+              otherCountriesOnThisTake = (lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes);
+            } else if (country == 'US'){
+              otherCountriesOnThisTake = (lineDetails.totalTakes == lineDetails.ukTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes);
             }
             if (otherCountriesOnThisTake){
               // test country is on final take as is another country
@@ -867,7 +878,9 @@ async function removeTake(country){
               let takeNoRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, takeNoIndex, 1, 1);
               takeNoRange.values = "N/A"
               if (country == 'UK'){
-                lineDetails.ukTakes = lineDetails.ukTakes - 1;
+                lineDetails.ukTakes -= 1;
+              } else if (country == 'US') {
+                lineDetails.usTakes -= 1;
               }
               await excel.sync();
             } else {
@@ -887,7 +900,9 @@ async function removeTake(country){
               await correctFormulas(lineDetails.currentRowIndex);
               lineDetails.totalTakes = lineDetails.totalTakes - 1;
               if (country == 'UK'){
-                lineDetails.ukTakes = lineDetails.ukTakes - 1;
+                lineDetails.ukTakes -= 1;
+              } else if (country == 'US') {
+                lineDetails.usTakes -= 1;
               }
               lineDetails.currentRowIndex -= 1;
               lineDetails.indicies.pop();
@@ -906,7 +921,9 @@ async function removeTake(country){
             console.log("Clear range: ", clearRange.address)
             clearRange.clear("Contents");
             if (country == 'UK'){
-              lineDetails.ukTakes = lineDetails.ukTakes - 1;
+              lineDetails.ukTakes -= 1;
+            } else if (country == 'US') {
+              lineDetails.usTakes -= 1;
             }
             await excel.sync();
           } 
@@ -925,8 +942,11 @@ async function removeTake(country){
           console.log('Diff: ', (engineerIndex - markUpIndex + 1));
           scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
           let firstItem  = lineDetails.currentRowIndex;
+          let lastItem;
           if (country == 'UK'){
-            let lastItem = lineDetails.indicies[lineDetails.ukTakes - 1];
+            lastItem = lineDetails.indicies[lineDetails.ukTakes - 1];
+          } else if (country = 'US') {
+            lastItem = lineDetails.indicies[lineDetails.usTakes - 1];
           }
           console.log('First/Last item', firstItem, lastItem);
           for (let item = firstItem; item < lastItem; item++){
@@ -940,8 +960,9 @@ async function removeTake(country){
           await excel.sync();
           if (country == 'UK'){
             lineDetails.ukTakes -= 1;
-          }
-
+          } else if (country == 'US') {
+            lineDetails.usTakes -= 1;
+          }          
           if (!((lineDetails.totalTakes == lineDetails.ukTakes) || (lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes))){
             // if we get here then we need to delete a row because we now have an empty row.
             console.log('We now have to delete a row')
