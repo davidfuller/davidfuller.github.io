@@ -182,8 +182,7 @@ label {
   cursor: pointer;
 }
 
-#btnAddTakeUK, #btnRemoveTakeUK, #btnAddTakeUS, #btnRemoveTakeUS {
-  margin-left: 4px;
+#btnAddTakeUK, #btnRemoveTakeUK, #btnAddTakeUS, #btnRemoveTakeUS, #btnAddTakeWalla, #btnRemoveTakeWalla {  margin-left: 4px;
   margin-bottom: 5px;
   margin-top: 5px;
   padding-left: 10px;
