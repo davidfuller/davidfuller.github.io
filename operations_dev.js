@@ -642,7 +642,7 @@ async function addTakeDetails(country, doDate){
     const activeCell = excel.workbook.getActiveCell();
     let selectCell = activeCell.getOffsetRange(1, 0);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let lineDetails =  await findDetailsForThisLine(country);
+    let lineDetails =  await findDetailsForThisLine();
     console.log(lineDetails);
     let takeNoIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex, countryTakes;
     let newLine;
@@ -664,6 +664,15 @@ async function addTakeDetails(country, doDate){
       engineerIndex = usEngineerIndex;
       countryTakes = lineDetails.usTakes
       newLine = lineDetails.usTakes + 1;
+    }else if (country == 'Walla'){
+      takeNoIndex = wallaTakeNoIndex;
+      dateRecordedIndex = wallaDateIndex;
+      console.log('Walla Date Index', wallaDateIndex);
+      markUpIndex = wallaMarkUpIndex;
+      studioIndex = wallaStudioIndex;
+      engineerIndex = wallaEngineerIndex;
+      countryTakes = lineDetails.wallaTakes
+      newLine = lineDetails.wallaTakes + 1;
     }
     if (lineDetails.totalTakes == 0){
       let currentRowIndex = lineDetails.indicies[0];
@@ -700,6 +709,8 @@ async function addTakeDetails(country, doDate){
       lineDetails.ukTakes = newLine;
     } else if (country == 'US'){
       lineDetails.usTakes = newLine;
+    } else if (country == 'Walla'){
+      lineDetails.wallaTakes = newLine;
     }
     console.log("New Line");
     console.log(newLine);
@@ -742,7 +753,7 @@ async function addTakeDetails(country, doDate){
 }
 
 
-async function findDetailsForThisLine(country){
+async function findDetailsForThisLine(){
   await unlock();
   let result = {};
   
@@ -806,7 +817,7 @@ async function removeTake(country){
     // get the lineDetails
     const activeCell = excel.workbook.getActiveCell();
     const selectCell = activeCell.getOffsetRange(-1, 0);
-    let lineDetails =  await findDetailsForThisLine(country);
+    let lineDetails =  await findDetailsForThisLine();
     console.log(lineDetails);
     let foundTake = 0;
     for (let i = 0; i < lineDetails.indicies.length; i++){
@@ -828,8 +839,14 @@ async function removeTake(country){
       console.log('Engineer Index', engineerIndex);
       takeNoIndex = usTakeNoIndex;
       countryTakes = lineDetails.usTakes;
-    }
-      
+    } else if (country == 'Walla'){
+      markUpIndex = wallaMarkUpIndex;
+      console.log('Mark Up Index', markUpIndex);
+      engineerIndex = wallaEngineerIndex;
+      console.log('Engineer Index', engineerIndex);
+      takeNoIndex = wallaTakeNoIndex;
+      countryTakes = lineDetails.wallaTakes;
+    }   
     if (foundTake > 0){
       // Is this the last take for this country...
       console.log('Found take: ', foundTake);
@@ -848,6 +865,8 @@ async function removeTake(country){
           lineDetails.ukTakes -= 1;
         } else if (country == 'US'){
           lineDetails.usTakes -= 1;
+        } else if (country == 'Walla'){
+          lineDetails.wallaTakes -= 1;
         }
         await excel.sync();
       } else {
@@ -861,6 +880,8 @@ async function removeTake(country){
               otherCountriesOnThisTake = (lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes);
             } else if (country == 'US'){
               otherCountriesOnThisTake = (lineDetails.totalTakes == lineDetails.ukTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes);
+            } else if (country == 'Walla'){
+              otherCountriesOnThisTake = (lineDetails.totalTakes == lineDetails.ukTakes) || (lineDetails.totalTakes == lineDetails.usTakes);
             }
             if (otherCountriesOnThisTake){
               // test country is on final take as is another country
@@ -881,6 +902,8 @@ async function removeTake(country){
                 lineDetails.ukTakes -= 1;
               } else if (country == 'US') {
                 lineDetails.usTakes -= 1;
+              } else if (country == 'Walla') {
+                lineDetails.wallaTakes -= 1;
               }
               await excel.sync();
             } else {
@@ -903,6 +926,8 @@ async function removeTake(country){
                 lineDetails.ukTakes -= 1;
               } else if (country == 'US') {
                 lineDetails.usTakes -= 1;
+              } else if (country == 'Walla') {
+                lineDetails.wallaTakes -= 1;
               }
               lineDetails.currentRowIndex -= 1;
               lineDetails.indicies.pop();
@@ -924,6 +949,8 @@ async function removeTake(country){
               lineDetails.ukTakes -= 1;
             } else if (country == 'US') {
               lineDetails.usTakes -= 1;
+            } else if (country == 'Walla') {
+              lineDetails.wallaTakes -= 1;
             }
             await excel.sync();
           } 
@@ -947,6 +974,8 @@ async function removeTake(country){
             lastItem = lineDetails.indicies[lineDetails.ukTakes - 1];
           } else if (country = 'US') {
             lastItem = lineDetails.indicies[lineDetails.usTakes - 1];
+          } else if (country = 'Walla') {
+            lastItem = lineDetails.indicies[lineDetails.wallaTakes - 1];
           }
           console.log('First/Last item', firstItem, lastItem);
           for (let item = firstItem; item < lastItem; item++){
@@ -962,7 +991,9 @@ async function removeTake(country){
             lineDetails.ukTakes -= 1;
           } else if (country == 'US') {
             lineDetails.usTakes -= 1;
-          }          
+          } else if (country == 'Walla') {
+            lineDetails.wallaTakes -= 1;
+          }        
           if (!((lineDetails.totalTakes == lineDetails.ukTakes) || (lineDetails.totalTakes == lineDetails.usTakes) || (lineDetails.totalTakes == lineDetails.wallaTakes))){
             // if we get here then we need to delete a row because we now have an empty row.
             console.log('We now have to delete a row')
