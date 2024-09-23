@@ -1239,6 +1239,8 @@ async function showHideColumns(columnType){
   const sheetName = "Settings"
   const rangeName = "columnHide"
   let columnMessage = tag('columnMessage')
+  let hideUnedited = tag('hideUnedited').checked;
+  console.log('Hide Unedited', hideUnedited);
   await unlock();
   await Excel.run(async function(excel){ 
     const settingsSheet = excel.workbook.worksheets.getItem(sheetName);
