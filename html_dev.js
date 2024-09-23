@@ -9,7 +9,7 @@ async function mainHTML(){
   <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
   <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
 </div>
-<div id="filterButtons">
+<div id="filterButtons" >
   <label class="section-label">Filtering</label><br/>
   <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
   <button id='btnRemoveFilter' onclick="jade_modules.operations.removeFilter()">Remove Filter</button><br/>
@@ -75,7 +75,7 @@ async function mainHTML(){
     <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
   </div>
 </div>
-<div id="'Admin">
+<div id="admin">
   <label class="section-label">Admin</label><br/>
   <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
 </div>

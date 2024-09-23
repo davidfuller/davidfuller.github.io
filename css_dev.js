@@ -38,11 +38,12 @@ label {
   font-size: 12px;
 }
 /* Section formatting */  
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump {
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin {
   margin-left: 25px;
   margin-top: 10px;
   width: 370px;
-  padding: 10px;
+  padding-left: 5ppx;
+  padding-top: 0px;
   border-width: 1px;
   border-radius: 5px;
   border-color: #d34c01;
@@ -69,7 +70,6 @@ label {
   font-size: 12px;
   cursor: pointer;
 }
-  
 #scene {
   width: 50px;
   background-color: #ffc901;
@@ -143,7 +143,6 @@ label {
 }
 
 .section-label {
-  margin-left: 5px;
   font-size: 14px;
   font-weight: bold;
 }
@@ -182,7 +181,7 @@ label {
 .container {
   display: block;
   position: relative;
-  padding-left: 23px;
+  padding-left: 10px;
   margin-left: 10px;
   margin-bottom: 0px;
   cursor: pointer;
@@ -207,10 +206,10 @@ label {
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  top: 0px;
-  left: 0;
-  height: 12px;
-  width: 12px;
+  top: 2px;
+  left: -4px;
+  height: 8px;
+  width: 8px;
   background-color: #ffc901;
   border: #d34c01 ;
   border-radius: 50%;
@@ -242,15 +241,14 @@ label {
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 3px;
-  top: 3px;
-  width: 6px;
-  height: 6px;
+  left: 2px;
+  top: 2px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background: white;
 }
-
-                    `;
+                   `;
   Jade.set_css(css);
   console.log('CSS done')
 }
