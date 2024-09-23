@@ -325,7 +325,7 @@ label {
 .container3 {
   display: block;
   position: relative;
-  padding-left: 10px;
+  padding-left: 18px;
   margin-left: 10px;
   margin-bottom: 0px;
   cursor: pointer;
@@ -348,11 +348,15 @@ label {
 /* Create a custom checkbox */
 .checkmark3 {
   position: absolute;
-  top: 2px;
-  left: -4px;
-  height: 8px;
-  width: 8px;
+  top: 1px;
+  left: 1px;
+  height: 12px;
+  width: 12px;
   background-color: #ffc901;
+  border: #d34c01 ;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
 }
 
 /* On mouse-over, add a grey background color */
@@ -379,9 +383,9 @@ label {
 
 /* Style the checkmark/indicator */
 .container3 .checkmark3:after {
-  left: 0px;
+  left: 3px;
   top: 0px;
-  width: 4px;
+  width: 2px;
   height: 6px;
   border: solid white;
   border-width: 0 3px 3px 0;
