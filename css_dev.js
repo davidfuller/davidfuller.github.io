@@ -348,13 +348,13 @@ label {
 /* Create a custom checkbox */
 .checkmark3 {
   position: absolute;
-  top: 1px;
+  top: 0px;
   left: 1px;
-  height: 12px;
-  width: 12px;
+  height: 10px;
+  width: 10px;
   background-color: #ffc901;
   border: #d34c01 ;
-  border-radius: 50%;
+  border-radius: 4px;
   border-width: 2px;
   border-style: solid;
 }
