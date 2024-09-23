@@ -91,6 +91,7 @@ async function mainHTML(){
   await jade_modules.operations.getDataFromSheet('Settings','engineerChoice','engineer-select');
   await jade_modules.operations.getColumnData('Settings', 'columnData');
   await jade_modules.operations.initialiseVariables();
+  await jade_modules.operations.showHideColumns('all');
   console.log("I'm here data loaded");
 }
 
