@@ -239,6 +239,53 @@ async function findSceneNo(sceneNo){
   })
 }
 
+async function findLineNo(lineNo){
+  await Excel.run(async function(excel){
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load("rowIndex");
+    activeCell.load(("columnIndex"))
+    await excel.sync()
+    const startRow = activeCell.rowIndex;
+    const startColumn = activeCell.columnIndex
+    let range = await getLineRange(excel);
+    range.load("values");
+    await excel.sync();
+    console.log("Line range");
+    console.log(range.values);
+    
+    console.log("Start Row");
+    console.log(startRow);
+
+    const minAndMax = await getLineNoMaxAndMin();
+    console.log("Min and Max");
+    console.log(minAndMax);
+
+    if (lineNo > minAndMax.max){
+      lineNo = minAndMax.max;
+    }
+
+    if (sceneNo < minAndMax.min){
+      lineNo = minAndMax.min
+    }
+
+    const myIndex = range.values.findIndex(a => a[0] == (lineNo));
+
+    console.log("Found Index");
+    console.log(myIndex);
+    
+    if (myIndex == -1){
+      alert('Invalid Line Number');
+    } else {
+      scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      const myTarget = scriptSheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
+      myTarget.select();
+      await excel.sync();
+    }
+  })
+}
+
+
 async function firstScene(){
   await Excel.run(async function(excel){
     const minAndMax = await getSceneMaxAndMin();
@@ -267,6 +314,16 @@ async function getSceneRange(excel){
   return range;
 }
 
+async function getLineRange(excel){
+  scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  const endRow = scriptSheet.getUsedRange().getLastRow();
+  endRow.load("rowindex");
+  await excel.sync();
+  range = scriptSheet.getRangeByIndexes(2, numberIndex, endRow.rowIndex, 1);
+  await excel.sync();
+  return range;
+}
+
 async function getDataRange(excel){
   scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
   const myLastRow = scriptSheet.getUsedRange().getLastRow();
@@ -291,6 +348,20 @@ async function getTargetSceneNumber(){
     alert("Please enter a number")
   }  
 }
+
+async function getTargetLineNo(){
+  const textValue = tag("lineNo").value;
+  const lineNumber = parseInt(textValue);
+  if (lineNumber != NaN){
+    console.log(lineNumber);
+    await findLineNo(lineNumber);
+  }  else {
+    alert("Please enter a number")
+  }  
+}
+
+
+
 
 async function getSceneMaxAndMin(){
   let result = {};
