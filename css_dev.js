@@ -38,9 +38,10 @@ label {
 }
   
 #firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns {
-  margin-left: 30px;
-  margin-top: 10px;
-  width: 370px;
+  margin-left: 5px;
+  margin-top: 5px;
+  width: fit-content;
+  height: fit-content;
   padding: 10px;
   border-width: 1px;
   border-radius: 5px;
