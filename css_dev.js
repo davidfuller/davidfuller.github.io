@@ -393,7 +393,7 @@ label {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-#min-and-max {
+#min-and-max, #min-and-max-lineNo {
   font-size: 13px;
 }
                    `;

@@ -40,7 +40,11 @@ async function mainHTML(){
   <label for="scene">Jump to scene</label>
   <input type="text" id="scene" name="scene">
   <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button>
-  <span id='min-and-max'></span><br/><br/>
+  <span id='min-and-max'></span><br/>
+  <label for="lineNo">Jump to line number (cue)</label>
+  <input type="text" id="lineNo" name="lineNo">
+  <button id='btnGoLine' onclick="jade_modules.operations.getTargetLineNo()">Go</button>
+  <span id='min-and-max-lineNo'></span><br/>
 </div>
 <div id="dateStudioEngineer">
   <label class="section-label">Add / remove takes</label><br/>
