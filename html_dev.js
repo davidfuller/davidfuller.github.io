@@ -46,15 +46,14 @@ async function mainHTML(){
     <input type='radio' id='radJustDate' checked="checked" name='radio'>
     <span class="checkmark"></span>
   </label>
-  <label class="container">Details from above
+  <label class="container">Details from row above
     <input type='radio' id='radAboveDetails' name='radio'>
     <span class="checkmark"></span>
   </label>
-  <label class="container">Details from below
+  <label class="container">Details from the input below
     <input type='radio' id='radBelowDetails' name='radio'>
     <span class="checkmark"></span>
   </label>
-  <button id="btnTest" onclick="jade_modules.operations.checkboxChecked('radJustDate')">Test</button>
   <div class="row">
     <div class="column" id="column-one">
       <label for="markup">Markup</label>

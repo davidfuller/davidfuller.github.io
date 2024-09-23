@@ -190,7 +190,7 @@ label {
   padding-right: 10px;
   height: 24px;
   border: none;
-  width: 100px;
+  width: 130px;
   border-radius: 4px;
   background-color: #d34c01;
   color: #fef3df;
@@ -214,7 +214,7 @@ label {
   -ms-user-select: none;
   user-select: none;
 }
-  
+
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;
