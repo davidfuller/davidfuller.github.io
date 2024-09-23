@@ -55,22 +55,7 @@ label {
   margin-left: 5px;
 }
 
-#btnFillUK {
-  margin-left: 30px;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border: none;
-  width: fit-content;
-  border-radius: 4px;
-  background-color: #d34c01;
-  color: #fef3df;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-#btnFillUS, #btnFillWalla{
+#btnFillUK, #btnFillUS, #btnFillWalla{
   margin-left: 5px;
   margin-bottom: 5px;
   margin-top: 5px;
@@ -84,6 +69,7 @@ label {
   font-size: 12px;
   cursor: pointer;
 }
+  
 #scene {
   width: 50px;
   background-color: #ffc901;
