@@ -156,6 +156,12 @@ label {
   margin-left: 10px;
 }
 
+.section-label {
+  margin-left: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 #btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla {
   margin-left: 10px;
   margin-bottom: 5px;

@@ -9,13 +9,13 @@ async function mainHTML(){
   <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
 </div>
 <div id="showTakes">
-  <label>Take selection: </label><span id="takeMessage">Showing all takes</span>
+  <label class="section-label">Take selection: </label><span id="takeMessage">Showing all takes</span><br/>
   <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">All Takes</button>
   <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">First Takes</button>
   <button id='btnShowLast' onclick="jade_modules.operations.hideRows('last', 'UK')">Last Takes</button>
 </div>
 <div id="showColumns">
-  <div id="columnMessage">Showing all columns</div>
+  <label class="section-label">Column selection:</label><span id="columnMessage">Showing all columns</span><br/>
   <button id='btnShowAll' onclick="jade_modules.operations.showHideColumns('all')">All Columns</button>
   <button id='btnShowUK' onclick="jade_modules.operations.showHideColumns('UK Script')">UK Script</button>
   <button id='btnShowUS' onclick="jade_modules.operations.showHideColumns('US Script')">US Script</button>
