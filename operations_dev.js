@@ -1297,8 +1297,8 @@ async function showHideColumns(columnType){
       }
     }
   })  
-  console.log(columnMessage.text, columnType);
-  columnMessage.text = 'Showing ' + columnType
+  console.log(columnMessage.innerText, columnType);
+  columnMessage.innerText = 'Showing ' + columnType
 }
 
 
