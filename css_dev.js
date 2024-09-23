@@ -325,10 +325,11 @@ label {
 .container3 {
   display: block;
   position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
+  padding-left: 10px;
+  margin-left: 10px;
+  margin-bottom: 0px;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 12px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
