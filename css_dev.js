@@ -36,20 +36,8 @@ label {
   margin-left: 5px;
   font-size: 12px;
 }
-  
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns {
-  margin-left: 5px;
-  margin-top: 5px;
-  width: fit-content;
-  height: fit-content;
-  padding: 10px;
-  border-width: 1px;
-  border-radius: 5px;
-  border-color: #d34c01;
-  border-style: solid;
-}
-
-#jump {
+/* Section formatting */  
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump {
   margin-left: 30px;
   margin-top: 10px;
   width: 370px;
