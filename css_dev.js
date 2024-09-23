@@ -379,10 +379,10 @@ label {
 
 /* Style the checkmark/indicator */
 .container3 .checkmark3:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
+  left: 0px;
+  top: 0px;
+  width: 4px;
+  height: 6px;
   border: solid white;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
