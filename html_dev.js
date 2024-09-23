@@ -9,7 +9,8 @@ async function mainHTML(){
   <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
 </div>
 <div id="showTakes">
-  <div id="takeMessage">Showing all takes</div>
+  <div id="showTakes">
+  Take selection: <span id="takeMessage">Showing all takes</span>
   <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">All Takes</button>
   <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">First Takes</button>
   <button id='btnShowLast' onclick="jade_modules.operations.hideRows('last', 'UK')">Last Takes</button>
