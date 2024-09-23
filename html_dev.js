@@ -39,7 +39,8 @@ async function mainHTML(){
   <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
   <label for="scene">Jump to scene</label>
   <input type="text" id="scene" name="scene">
-  <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
+  <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button>
+  <span id='min-and-max'></span><br/><br/>
 </div>
 <div id="dateStudioEngineer">
   <label class="section-label">Add / remove takes</label><br/>
@@ -92,6 +93,7 @@ async function mainHTML(){
   await jade_modules.operations.getColumnData('Settings', 'columnData');
   await jade_modules.operations.initialiseVariables();
   await jade_modules.operations.showHideColumns('all');
+  await jade_modules.operations.displayMinAndMax();
   console.log("I'm here data loaded");
 }
 

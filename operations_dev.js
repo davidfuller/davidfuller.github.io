@@ -1446,3 +1446,9 @@ function radioButtonChoice(){
     return NaN;
   }
 }
+
+async function displayMinAndMax(){
+  const minAndMax = await getSceneMaxAndMin();
+  let display = tag('min-and-max');
+  display.innerText = "(" + minAndMax.min + ".." + minAndMax.max + ")";
+}
