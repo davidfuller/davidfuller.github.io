@@ -404,6 +404,7 @@ async function theFormulas(){
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
   const numberColumn = findColumnLetter("Number"); //F
+  const stageDirectionWallaDescriptionColumn = findColumnLetter("Stage Direction/ Walla description") //I
   const UKScriptColumn = findColumnLetter("UK script"); //J
   const ukNoOfTakesColumn = findColumnLetter("UK No of takes"); //T
   const ukTakeNoColumn = findColumnLetter("UK Take No"); //V
@@ -418,6 +419,8 @@ async function theFormulas(){
   const lineColumn = findColumnLetter("Line"); // CA
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
   const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CC
+  const positionChapterColumn = findColumnLetter("Position Chapter"); //CD
+  const chapterColumn = findColumnLetter("Chapter"); //CE
   const firstRow = "" + firstDataRow;
   const firstRestRow = "4";
   const lastRow = "" + lastDataRow;
@@ -476,7 +479,17 @@ async function theFormulas(){
 	    columnName: "Scene word count calc",
       formulaFirst:  0,
       formulaRest: "=VLOOKUP(" + endLineColumn + firstRestRow + "," + "$" + lineColumn + "$" + firstRestRow + ":$" + wordCountToThisLineColumn + "$" + lastRow + ",2,FALSE)"
-  	}
+  	},
+    {
+      columnName: "Position Chapter", //CD
+      formulaFirst: '=IF(' + stageDirectionWallaDescriptionColumn + firstRow + '="","",IF(ISERROR(FIND("Chapter",' + stageDirectionWallaDescriptionColumn + firstRow + ')),"",FIND("Chapter",' + stageDirectionWallaDescriptionColumn + firstRow + ')))',
+      formulaRest: '=IF('+ stageDirectionWallaDescriptionColumn + firstRestRow + '="","",IF(ISERROR(FIND("Chapter",' + stageDirectionWallaDescriptionColumn + firstRestRow + ')),"",FIND("Chapter",' + stageDirectionWallaDescriptionColumn + firstRestRow + ')))'
+    },
+    {
+      columnName: "Chapter", //CE
+      formulaFirst: '=IF(' + positionChapterColumn + firstRow + '="","",MID(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '+7,99))',
+      formulaRest: '=IF(' + positionChapterColumn + firstRestRow + '="",' + chapterColumn + firstRow + ',MID(' + stageDirectionWallaDescriptionColumn + firstRestRow + ',' + positionChapterColumn + firstRestRow + '+7,99))'
+    }
   ]
   
   await unlock();
