@@ -1238,6 +1238,7 @@ async function hideRows(visibleType, country){
 async function showHideColumns(columnType){
   const sheetName = "Settings"
   const rangeName = "columnHide"
+  let columnMessage = tag('columnMessage')
   await unlock();
   await Excel.run(async function(excel){ 
     const settingsSheet = excel.workbook.worksheets.getItem(sheetName);
@@ -1296,6 +1297,7 @@ async function showHideColumns(columnType){
       }
     }
   })  
+  columnMessage.text = 'Showing ' + columnType
 }
 
 
