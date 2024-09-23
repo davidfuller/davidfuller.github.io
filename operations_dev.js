@@ -6,7 +6,7 @@ const columnsToLock = "A:S";
 let sceneIndex, numberIndex;
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
-let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex; 
+let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let mySheetColumns;
 let scriptSheet;
 
@@ -59,6 +59,7 @@ async function initialiseVariables(){
   wallaDateIndex = findColumnIndex("Walla Date Recorded");
   wallaStudioIndex = findColumnIndex("Walla Studio");
   wallaEngineerIndex = findColumnIndex("Walla Engineer");
+  wallaMarkUpIndex = findColumnIndex("Walla Broadcast Assistant Markup");
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     await excel.sync();
