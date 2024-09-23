@@ -24,10 +24,11 @@ button {
 }
 h1 {
   margin-left: 5px;
+  margin-bottom: 5px;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
 }
 h2 {
-  margin-left: 5px;
+  margin: 5px;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-weight: normal;
@@ -38,7 +39,7 @@ label {
 }
 /* Section formatting */  
 #firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump {
-  margin-left: 30px;
+  margin-left: 25px;
   margin-top: 10px;
   width: 370px;
   padding: 10px;

@@ -7,7 +7,6 @@ async function mainHTML(){
 <div id="firstButtons">
   <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
   <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
-  <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
 </div>
 <div id="showTakes">
   <div id="takeMessage">Showing all takes</div>
@@ -36,7 +35,7 @@ async function mainHTML(){
   <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
 </div>
 <div id="dateStudioEngineer">
-  <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true, false, false, false)">Add Take UK</button>
+  <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true)">Add Take UK</button>
   <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button><br/>
   <button id="btnAddTakeUS" onclick="jade_modules.operations.addTakeDetails('US', true)">Add Take US</button>
   <button id="btnRemoveTakeUS" onclick="jade_modules.operations.removeTake('US')">Remove Take US</button><br/>
@@ -70,6 +69,9 @@ async function mainHTML(){
     <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
     <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
     <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
+  </div>
+  <div id="'Admin">
+    <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
   </div>
 </div>
   `;
