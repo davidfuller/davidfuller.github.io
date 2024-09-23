@@ -46,9 +46,8 @@ label {
   border-style: solid;
 }
 
-#btnGo {
+#btnGo, #btnGoLine {
   width: fit-content;
-  height: fit-content;
   margin-left: 5px;
 }
 
@@ -66,7 +65,7 @@ label {
   font-size: 12px;
   cursor: pointer;
 }
-#scene {
+#scene, #lineNo {
   width: 50px;
   background-color: #ffc901;
   color: #d34c01;

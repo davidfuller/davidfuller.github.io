@@ -50,9 +50,8 @@ label {
   border-style: solid;
 }
 
-#btnGo {
+#btnGo, #btnGoLine {
   width: fit-content;
-  height: fit-content;
   margin-left: 5px;
 }
 
@@ -70,7 +69,7 @@ label {
   font-size: 12px;
   cursor: pointer;
 }
-#scene {
+#scene, #lineNo {
   width: 50px;
   background-color: #ffc901;
   color: #d34c01;
@@ -393,10 +392,11 @@ label {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
 #min-and-max, #min-and-max-lineNo {
   font-size: 13px;
 }
-                   `;
+                    `;
   Jade.set_css(css);
   console.log('CSS done')
 }
