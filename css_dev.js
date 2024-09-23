@@ -357,12 +357,12 @@ label {
 
 /* On mouse-over, add a grey background color */
 .container3:hover input ~ .checkmark3 {
-  background-color: #ccc;
+  background-color: #d34c017f;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container3 input:checked ~ .checkmark3 {
-  background-color: #2196F3;
+  background-color: #d34c01;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
