@@ -250,7 +250,7 @@ label {
 }
 /* *********CHECKBOX ******** */
 /* Customize the label (the container) */
-.container-checkbox {
+.container2 {
   display: block;
   position: relative;
   padding-left: 10px;
@@ -265,7 +265,7 @@ label {
 }
 
 /* Hide the browser's default checkbox */
-.container-checkbox input {
+.container2 input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -274,7 +274,7 @@ label {
 }
 
 /* Create a custom checkbox */
-.checkmark-checkbox {
+.checkmark2 {
   position: absolute;
   top: 2px;
   left: -4px;
@@ -288,29 +288,29 @@ label {
 }
 
 /* On mouse-over, add a grey background color */
-.container-checkbox:hover input ~ .checkmark-checkbox {
+.container2:hover input ~ .checkmark2 {
   background-color: #d34c017f;
 }
 
 /* When the checkbox is checked, add a blue background */
-.container-checkbox input:checked ~ .checkmark-checkbox {
+.container2 input:checked ~ .checkmark2 {
   background-color: #d34c01;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
-.checkmark-checkbox {
+.checkmark2 {
   content: "";
   position: absolute;
   display: none;
 }
 
 /* Show the checkmark when checked */
-.container-checkbox input:checked ~ .checkmark-checkbox:after {
+.container2 input:checked ~ .checkmark2:after {
   display: block;
 }
 
 /* Style the checkmark/indicator */
-.container-checkbox .checkmark-checkbox:after {
+.container2 .checkmark2:after {
   left: 2px;
   top: 2px;
   width: 4px;

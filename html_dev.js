@@ -26,9 +26,9 @@ async function mainHTML(){
   <button id='btnShowUK' onclick="jade_modules.operations.showHideColumns('UK Script')">UK Script</button>
   <button id='btnShowUS' onclick="jade_modules.operations.showHideColumns('US Script')">US Script</button>
   <button id='btnShowWalla' onclick="jade_modules.operations.showHideColumns('Walla Script')">Walla Script</button>
-  <label class="container-checkbox">Always hide UK Script Unedited
+  <label class="container2">Always hide UK Script Unedited
     <input type="checkbox" id="alwaysHide" checked="checked">
-    <span class="checkmark-checkbox"></span>
+    <span class="checkmark2"></span>
   </label>
 </div>
 <div id="jump">
