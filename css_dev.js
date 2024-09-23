@@ -13,7 +13,7 @@ button {
   margin-top: 5px;
   padding-left: 5px;
   padding-right: 5px;
-  height: 20px;
+  height: 24px;
   border: none;
   width: fit-content;
   border-radius: 5px;
@@ -61,7 +61,6 @@ label {
   margin-top: 5px;
   padding-left: 15px;
   padding-right: 15px;
-  height: 24px;
   border: none;
   width: fit-content;
   border-radius: 4px;
@@ -77,7 +76,6 @@ label {
   margin-top: 5px;
   padding-left: 15px;
   padding-right: 15px;
-  height: 24px;
   border: none;
   width: fit-content;
   border-radius: 4px;
@@ -164,7 +162,6 @@ label {
   margin-top: 5px;
   padding-left: 15px;
   padding-right: 15px;
-  height: 24px;
   border: none;
   width: fit-content;
   border-radius: 4px;
@@ -180,7 +177,6 @@ label {
   margin-top: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  height: 24px;
   border: none;
   width: 130px;
   border-radius: 4px;
@@ -198,7 +194,7 @@ label {
   margin-left: 10px;
   margin-bottom: 0px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 12px;
   /*left: 216px;
   top: -26px;*/
   -webkit-user-select: none;
