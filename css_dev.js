@@ -348,11 +348,11 @@ label {
 /* Create a custom checkbox */
 .checkmark3 {
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
+  top: 2px;
+  left: -4px;
+  height: 8px;
+  width: 8px;
+  background-color: #ffc901;
 }
 
 /* On mouse-over, add a grey background color */
