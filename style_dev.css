@@ -4,33 +4,33 @@ body {
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
 }
 button {
-  margin-left: 30px;
+  margin-left: 5px;
   margin-bottom: 5px;
   margin-top: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-  height: 36px;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 20px;
   border: none;
-  width: 150px;
-  border-radius: 7px;
+  width: fit-content;
+  border-radius: 5px;
   background-color: #d34c01;
   color: #fef3df;
-  font-size: 16px;
+  font-size: 12px;
   cursor: pointer;
 }
 h1 {
-  margin-left: 30px;
+  margin-left: 5px;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
 }
 h2 {
-  margin-left: 30px;
+  margin-left: 5px;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: normal;
 }
 label {
-  margin-left: 30px;
-  font-size: 16px;
+  margin-left: 5px;
+  font-size: 12px;
 }
   
 #firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns {
@@ -61,6 +61,7 @@ label {
   height: fit-content;
   margin-left: 5px;
 }
+
 #btnFillUK {
   margin-left: 30px;
   margin-bottom: 5px;
