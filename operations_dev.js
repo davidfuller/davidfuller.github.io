@@ -1298,6 +1298,21 @@ async function showHideColumns(columnType){
         await excel.sync();  
       }
     }
+
+    if (hideUnedited){
+      let uneditedIndex = range.values.findIndex(x => x[0] == 'Unedited Script');
+      console.log(uneditedIndex);
+      let hideUneditedColumns = range.values[uneditedIndex][2].split(",")
+      console.log(hideUneditedColumns);
+      for (let hide of hideUneditedColumns){
+        let hideUneditedColumnsRange = scriptSheet.getRange(hide);
+        hideUneditedColumnsRange.load('address');
+        await excel.sync();
+        console.log(hideUneditedColumnsRange.address);
+        hideUneditedColumnsRange.columnHidden = true;
+        await excel.sync();  
+      }
+    }
   })  
   console.log(columnMessage.innerText, columnType);
   columnMessage.innerText = 'Showing ' + columnType
