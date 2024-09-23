@@ -23,12 +23,12 @@ button {
   cursor: pointer;
 }
 h1 {
-  margin-left: 5px;
+  margin-left: 10px;
   margin-bottom: 5px;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
 }
 h2 {
-  margin: 5px;
+  margin: 10px;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-weight: normal;
@@ -39,10 +39,10 @@ label {
 }
 /* Section formatting */  
 #firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin {
-  margin-left: 25px;
+  margin-left: 15px;
   margin-top: 10px;
   width: 370px;
-  padding-left: 5ppx;
+  padding-left: 10px;
   padding-top: 0px;
   border-width: 1px;
   border-radius: 5px;
@@ -57,11 +57,11 @@ label {
 }
 
 #btnFillUK, #btnFillUS, #btnFillWalla{
-  margin-left: 5px;
+  margin-left: 10px;
   margin-bottom: 5px;
   margin-top: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
   border: none;
   width: fit-content;
   border-radius: 4px;
@@ -151,8 +151,8 @@ label {
   margin-left: 10px;
   margin-bottom: 5px;
   margin-top: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
   border: none;
   width: fit-content;
   border-radius: 4px;
