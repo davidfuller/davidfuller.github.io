@@ -182,14 +182,15 @@ label {
   cursor: pointer;
 }
 
-#btnAddTakeUK, #btnRemoveTakeUK, #btnAddTakeUS, #btnRemoveTakeUS, #btnAddTakeWalla, #btnRemoveTakeWalla {  margin-left: 4px;
+ #btnAddTakeUK, #btnRemoveTakeUK, #btnAddTakeUS, #btnRemoveTakeUS, #btnAddTakeWalla, #btnRemoveTakeWalla {
+  margin-left: 4px;
   margin-bottom: 5px;
   margin-top: 5px;
   padding-left: 10px;
   padding-right: 10px;
   height: 24px;
   border: none;
-  width: fit-content;
+  width: 100px;
   border-radius: 4px;
   background-color: #d34c01;
   color: #fef3df;
@@ -206,14 +207,14 @@ label {
   margin-bottom: 0px;
   cursor: pointer;
   font-size: 15px;
-  left: 216px;
-  top: -26px;
+  /*left: 216px;
+  top: -26px;*/
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-
+  
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;

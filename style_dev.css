@@ -187,7 +187,7 @@ label {
   padding-right: 10px;
   height: 24px;
   border: none;
-  width: fit-content;
+  width: 100px;
   border-radius: 4px;
   background-color: #d34c01;
   color: #fef3df;
@@ -204,8 +204,8 @@ label {
   margin-bottom: 0px;
   cursor: pointer;
   font-size: 15px;
-  left: 216px;
-  top: -26px;
+  /*left: 216px;
+  top: -26px;*/
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
