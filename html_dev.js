@@ -29,7 +29,7 @@ async function mainHTML(){
   <label class="container3">Always hide UK Script Unedited
     <input type="checkbox" checked="checked">
     <span class="checkmark3"></span>
-  </label><br/>
+  </label>
 </div>
 <div id="jump">
   <label class="section-label">Jump to scene</label><br/>

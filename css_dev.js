@@ -327,7 +327,7 @@ label {
   position: relative;
   padding-left: 18px;
   margin-left: 10px;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
   cursor: pointer;
   font-size: 12px;
   -webkit-user-select: none;
