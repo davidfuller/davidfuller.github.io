@@ -5,8 +5,14 @@ async function mainHTML(){
 <h1>MuVi2 Script Controller</h1>
 <h2>Development edition</h2>
 <div id="firstButtons">
+  <label class="section-label">Lock / Unlock</label>
   <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
   <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
+</div>
+<div id="filterButtons" ></div>
+  <label class="section-label">Filtering</label>
+  <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
+  <button id='btnRemoveFilter' onclick="jade_modules.operations.removeFilter()">Remove Filter</button><br/>
 </div>
 <div id="showTakes">
   <label class="section-label">Take selection: </label><span id="takeMessage">Showing all takes</span><br/>
@@ -21,11 +27,8 @@ async function mainHTML(){
   <button id='btnShowUS' onclick="jade_modules.operations.showHideColumns('US Script')">US Script</button>
   <button id='btnShowWalla' onclick="jade_modules.operations.showHideColumns('Walla Script')">Walla Script</button>
 </div>
-<div id="filterButtons" >
-  <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
-  <button id='btnRemoveFilter' onclick="jade_modules.operations.removeFilter()">Remove Filter</button><br/>
-</div>
 <div id="jump">
+  <label class="section-label">Jump to scene</label>
   <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First scene</button>
   <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
   <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button>
@@ -35,6 +38,7 @@ async function mainHTML(){
   <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button><br/>
 </div>
 <div id="dateStudioEngineer">
+  <label class="section-label">Add / remove takes</label>
   <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true)">Add Take UK</button>
   <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button><br/>
   <button id="btnAddTakeUS" onclick="jade_modules.operations.addTakeDetails('US', true)">Add Take US</button>
@@ -70,9 +74,9 @@ async function mainHTML(){
     <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
     <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
   </div>
-  <div id="'Admin">
-    <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
-  </div>
+</div>
+<div id="'Admin">
+  <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
 </div>
   `;
 
