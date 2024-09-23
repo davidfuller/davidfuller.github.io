@@ -393,6 +393,9 @@ label {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+#min-and-max {
+  font-size: 13px;
+}
                    `;
   Jade.set_css(css);
   console.log('CSS done')
