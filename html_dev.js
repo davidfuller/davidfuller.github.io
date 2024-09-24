@@ -39,9 +39,9 @@ async function mainHTML(){
   <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
   <div class="row">
     <div class="column" id="column-jump-one">
-      <label class='jump-label' for="scene">Scene No</label><br/>
-      <label class='jump-label 'for="lineNo">Cue/line no</label><br/>
-      <label class='jump-label 'for="chapter">Chapter</label><br/>
+      <label id='jump-label-scene' for="scene">Scene No</label><br/>
+      <label id='jump-label-line-no' for="lineNo">Cue/line no</label><br/>
+      <label id='jump-label-chapter' for="chapter">Chapter</label><br/>
     </div>
     <div class="column" id="column-jump-two">
       <input type="text" id="scene" name="scene">

@@ -137,7 +137,7 @@ label {
 }
 
 #column-jump-one {
-  flex: 7%
+  flex: 8%
 }
 #column-jump-two {
   flex: 60%
@@ -401,6 +401,11 @@ label {
 
 #min-and-max, #min-and-max-lineNo, #min-and-max-chapter, .jump-label {
   font-size: 13px;
+}
+
+#jump-label-line-no, #jump-label-chapter, #jump-label-scene {
+  position: absolute;
+  top: 5px;
 }
                     `;
   Jade.set_css(css);
