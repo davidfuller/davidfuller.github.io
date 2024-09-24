@@ -265,7 +265,7 @@ async function findLineNo(lineNo){
       lineNo = minAndMax.max;
     }
 
-    if (sceneNo < minAndMax.min){
+    if (lineNo < minAndMax.min){
       lineNo = minAndMax.min
     }
 
