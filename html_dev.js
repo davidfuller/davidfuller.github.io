@@ -37,18 +37,24 @@ async function mainHTML(){
   <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
   <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button>
   <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
-  <label for="scene">Scene No</label>
-  <input type="text" id="scene" name="scene">
-  <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button>
-  <span id='min-and-max'></span><br/>
-  <label for="lineNo">Cue/line no</label>
-  <input type="text" id="lineNo" name="lineNo">
-  <button id='btnGoLine' onclick="jade_modules.operations.getTargetLineNo()">Go</button>
-  <span id='min-and-max-lineNo'></span><br/>
-  <label for="chapter">Chapter</label>
-  <input type="text" id="chapter" name="chapter">
-  <button id='btnGoChapter' onclick="jade_modules.operations.getTargetChapter()">Go</button>
-  <span id='min-and-max-chapter'></span><br/>
+  <div class="row">
+    <div class="column" id="column-jump-one">
+      <label for="scene">Scene No</label>
+      <label for="lineNo">Cue/line no</label>
+      <label for="chapter">Chapter</label>
+    </div>
+    <div class="column" id="column-jump-two">
+      <input type="text" id="scene" name="scene">
+      <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button>
+      <span id='min-and-max'></span><br/>
+      <input type="text" id="lineNo" name="lineNo">
+      <button id='btnGoLine' onclick="jade_modules.operations.getTargetLineNo()">Go</button>
+      <span id='min-and-max-lineNo'></span><br/>
+      <input type="text" id="chapter" name="chapter">
+      <button id='btnGoChapter' onclick="jade_modules.operations.getTargetChapter()">Go</button>
+      <span id='min-and-max-chapter'></span><br/>
+    </div>
+  </div>
 </div>
 <div id="dateStudioEngineer">
   <label class="section-label">Add / remove takes</label><br/>
