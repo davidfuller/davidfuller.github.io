@@ -43,7 +43,7 @@ async function mainHTML(){
       <label id='jump-label-line-no' for="lineNo">Cue/line no</label><br/>
       <label id='jump-label-chapter' for="chapter">Chapter</label><br/>
     </div>
-    <div class="column" id="column-jump-two">
+    <div class="column-jump" id="column-jump-two">
       <input type="text" id="scene" name="scene">
       <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button>
       <span id='min-and-max'></span><br/>

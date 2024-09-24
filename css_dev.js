@@ -129,15 +129,19 @@ label {
   padding: 10px;
 }
 
+.column-jump {
+  padding-left: 10px;
+}
+
 #column1 {
-  flex: 30%
+  flex: 20%
 }
 #column2 {
   flex: 60%
 }
 
 #column-jump-one {
-  flex: 10%
+  flex: 5%
 }
 #column-jump-two {
   flex: 60%
@@ -411,10 +415,10 @@ label {
   top: 5px;
 }
 #jump-label-chapter {
-  top: 5px;
+  top: 12px;
 }
 #jump-label-scene {
-  top: 5px;
+  top: 24px;
 }
                     `;
   Jade.set_css(css);
