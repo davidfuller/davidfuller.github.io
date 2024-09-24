@@ -496,9 +496,10 @@ async function theFormulas(){
   const sceneLineCountColumn = findColumnLetter("Scene Line Count") //B
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
-  const numberColumn = findColumnLetter("Number"); //F
-  const stageDirectionWallaDescriptionColumn = findColumnLetter("Stage Direction/ Walla description") //I
-  const UKScriptColumn = findColumnLetter("UK script"); //J
+  const cueColumn = findColumnLetter("Cue") //F
+  const numberColumn = findColumnLetter("Number"); //G
+  const stageDirectionWallaDescriptionColumn = findColumnLetter("Stage Direction/ Walla description") //J
+  const UKScriptColumn = findColumnLetter("UK script"); //K
   const ukNoOfTakesColumn = findColumnLetter("UK No of takes"); //T
   const ukTakeNoColumn = findColumnLetter("UK Take No"); //V
   console.log("uKTakeNoColumn");
@@ -585,8 +586,8 @@ async function theFormulas(){
     },
     {
       columnName: "Chapter", //E
-      formulaFirst: '="Chapter " & TEXT(' + chapterCalculationColumn + firstRow + ', "0")',
-      formulaRest: '="Chapter " & TEXT(' + chapterCalculationColumn + firstRestRow + ', "0")'
+      formulaFirst: '=IF(' + cueColumn + firstRow + '="", "","Chapter " & TEXT(' + chapterCalculationColumn + firstRow + ', "0")',
+      formulaRest: '=IF(' + cueColumn + firstRestRow + '="", "","Chapter " & TEXT(' + chapterCalculationColumn + firstRestRow + ', "0")'
     }
   ]
   
