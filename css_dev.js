@@ -137,7 +137,7 @@ label {
 }
 
 #column-jump-one {
-  flex: 8%
+  flex: 10%
 }
 #column-jump-two {
   flex: 60%
