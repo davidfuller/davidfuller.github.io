@@ -404,7 +404,16 @@ label {
 }
 
 #jump-label-line-no, #jump-label-chapter, #jump-label-scene {
-  position: absolute;
+  position: relative;
+  font-size: 13px;
+}
+#jump-label-line-no {
+  top: 5px;
+}
+#jump-label-chapter {
+  top: 5px;
+}
+#jump-label-scene {
   top: 5px;
 }
                     `;
