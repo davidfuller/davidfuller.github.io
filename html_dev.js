@@ -45,6 +45,10 @@ async function mainHTML(){
   <input type="text" id="lineNo" name="lineNo">
   <button id='btnGoLine' onclick="jade_modules.operations.getTargetLineNo()">Go</button>
   <span id='min-and-max-lineNo'></span><br/>
+  <label for="chapter">Chapter</label>
+  <input type="text" id="chapter" name="chapter">
+  <button id='btnGoChapter' onclick="jade_modules.operations.getTargetChapter()">Go</button>
+  <span id='min-and-max-chapter'></span><br/>
 </div>
 <div id="dateStudioEngineer">
   <label class="section-label">Add / remove takes</label><br/>

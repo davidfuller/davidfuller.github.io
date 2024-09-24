@@ -50,7 +50,7 @@ label {
   border-style: solid;
 }
 
-#btnGo, #btnGoLine {
+#btnGo, #btnGoLine, #btnGoChapter {
   width: fit-content;
   margin-left: 5px;
 }
@@ -69,7 +69,7 @@ label {
   font-size: 12px;
   cursor: pointer;
 }
-#scene, #lineNo {
+#scene, #lineNo, #chapter {
   width: 50px;
   background-color: #ffc901;
   color: #d34c01;
@@ -393,7 +393,7 @@ label {
   transform: rotate(45deg);
 }
 
-#min-and-max, #min-and-max-lineNo {
+#min-and-max, #min-and-max-lineNo, #min-and-max-chapter {
   font-size: 13px;
 }
                     `;

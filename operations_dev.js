@@ -407,6 +407,30 @@ async function getLineNoMaxAndMin(){
   return result;
 }
 
+async function getChapterMaxAndMin(){
+  let result = {};
+  await Excel.run(async function(excel){
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const min = scriptSheet.getRange("minChapter");
+    await excel.sync();
+    min.load("values");
+    await excel.sync();
+    const max = scriptSheet.getRange("maxChapter");
+    await excel.sync();
+    max.load("values")
+    await excel.sync();
+    console.log(min.values[0][0]);
+    console.log(max.values[0][0]);
+    
+    result.min = min.values[0][0];
+    result.max = max.values[0][0];
+    console.log(result);
+  })
+  return result;
+}
+
+
+
 async function fill(country){
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -1553,4 +1577,7 @@ async function displayMinAndMax(){
   const lineMinAndMax = await getLineNoMaxAndMin();
   let lineDisplay = tag('min-and-max-lineNo');
   lineDisplay.innerText = "(" + lineMinAndMax.min + ".." + lineMinAndMax.max + ")";
+  const chapterMinAndMax = await getChapterMaxAndMin();
+  let chapterDisplay = tag('min-and-max-chapter');
+  chapterDisplay.innerText = "(" + chapterMinAndMax.min + ".." + chapterMinAndMax.max + ")";
 }
