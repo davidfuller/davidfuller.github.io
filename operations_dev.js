@@ -679,6 +679,11 @@ async function theFormulas(){
       columnName: "Chapter", //E
       formulaFirst: '=IF(' + cueColumn + firstRow + '="", "","Chapter " & TEXT(' + chapterCalculationColumn + firstRow + ', "0"))',
       formulaRest: '=IF(' + cueColumn + firstRestRow + '="", "","Chapter " & TEXT(' + chapterCalculationColumn + firstRestRow + ', "0"))'
+    },
+    {
+      columnName: "Scene Line Count Calculation",
+      formulaFirst: 0,
+      formulaRest: '=' + endLineColumn + firstRestRow + '-' + startLineColumn + firstRestRow + '+1'
     }
   ]
   
