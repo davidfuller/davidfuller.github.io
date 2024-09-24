@@ -1446,6 +1446,8 @@ async function showHideColumns(columnType){
   console.log('Hide Unedited', hideUnedited);
   await unlock();
   await Excel.run(async function(excel){ 
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
     const settingsSheet = excel.workbook.worksheets.getItem(sheetName);
     const range = settingsSheet.getRange(rangeName);
     range.load('values');
