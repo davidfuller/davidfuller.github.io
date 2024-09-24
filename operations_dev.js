@@ -1466,11 +1466,13 @@ async function showHideColumns(columnType){
       console.log(hideUKColumns);
       for (let hide of hideUKColumns){
         let hideUKColumnsRange = scriptSheet.getRange(hide);
+        /*
         hideUKColumnsRange.load('address');
         await excel.sync();
         console.log(hideUKColumnsRange.address);
+        */
         hideUKColumnsRange.columnHidden = true;
-        await excel.sync();  
+        //await excel.sync();  
       }
     }
     if (columnType == 'US Script'){
@@ -1480,11 +1482,13 @@ async function showHideColumns(columnType){
       console.log(hideUSColumns);
       for (let hide of hideUSColumns){
         let hideUSColumnsRange = scriptSheet.getRange(hide);
+        /*
         hideUSColumnsRange.load('address');
         await excel.sync();
         console.log(hideUSColumnsRange.address);
+        */
         hideUSColumnsRange.columnHidden = true;
-        await excel.sync();  
+        //await excel.sync();  
       }
     }
     if (columnType == 'Walla Script'){
@@ -1494,11 +1498,13 @@ async function showHideColumns(columnType){
       console.log(hideWallaColumns);
       for (let hide of hideWallaColumns){
         let hideWallaColumnsRange = scriptSheet.getRange(hide);
+        /*
         hideWallaColumnsRange.load('address');
         await excel.sync();
         console.log(hideWallaColumnsRange.address);
+        */
         hideWallaColumnsRange.columnHidden = true;
-        await excel.sync();  
+        //await excel.sync();  
       }
     }
 
@@ -1509,13 +1515,16 @@ async function showHideColumns(columnType){
       console.log(hideUneditedColumns);
       for (let hide of hideUneditedColumns){
         let hideUneditedColumnsRange = scriptSheet.getRange(hide);
+        /*
         hideUneditedColumnsRange.load('address');
         await excel.sync();
         console.log(hideUneditedColumnsRange.address);
+        */
         hideUneditedColumnsRange.columnHidden = true;
-        await excel.sync();  
+        //await excel.sync();  
       }
     }
+    await excel.sync();
   })  
   console.log(columnMessage.innerText, columnType);
   columnMessage.innerText = 'Showing ' + columnType
