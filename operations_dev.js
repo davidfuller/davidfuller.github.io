@@ -780,13 +780,14 @@ async function deleteRow(){
 async function correctFormulas(firstRow){
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
-  const positionMinusColumn = findColumnLetter("Position -"); //BT
-  const startLineColumn = findColumnLetter("Start Line"); //BU
-  const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
-  const endLineColumn = findColumnLetter("End Line"); //BW
-  const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
-  const sceneColumn = findColumnLetter("Scene"); //BZ
-  const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
+  const positionMinusColumn = findColumnLetter("Position -"); //BU
+  const startLineColumn = findColumnLetter("Start Line"); //BV
+  const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BW
+  const endLineColumn = findColumnLetter("End Line"); //BX
+  const lineWordCountColumn = findColumnLetter("Line Word Count") //BZ
+  const sceneColumn = findColumnLetter("Scene"); //CA
+  const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CC
+  const positionChapterColumn = findColumnLetter("Position Chapter"); //CE
   
   const columnFormulae = [
     {
