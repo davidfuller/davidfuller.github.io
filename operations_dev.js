@@ -1452,6 +1452,7 @@ async function showHideColumns(columnType){
     const range = settingsSheet.getRange(rangeName);
     range.load('values');
     await excel.sync();
+    app.suspendScreenUpdatingUntilNextSync();
     console.log(range.values);
     let allIndex = range.values.findIndex(x => x[0] == 'All');
     console.log(allIndex);
@@ -1460,7 +1461,7 @@ async function showHideColumns(columnType){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const unhideColumnsRange = scriptSheet.getRange(unhideColumns);
     unhideColumnsRange.columnHidden = false;
-    await excel.sync();
+    //await excel.sync();
     if (columnType == 'UK Script'){
       let ukIndex = range.values.findIndex(x => x[0] == 'UK Script');
       console.log(ukIndex);
