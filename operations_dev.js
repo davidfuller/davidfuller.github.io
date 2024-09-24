@@ -605,7 +605,8 @@ async function theFormulas(){
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
   const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CC
   const positionChapterColumn = findColumnLetter("Position Chapter"); //CD
-  const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CE
+  const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CF
+  const sceneLineCountCalculationColumn = findColumnLetter("Scene Line Count Calculation"); //CG
   const firstRow = "" + firstDataRow;
   const firstRestRow = "4";
   const lastRow = "" + lastDataRow;
@@ -684,6 +685,11 @@ async function theFormulas(){
       columnName: "Scene Line Count Calculation",
       formulaFirst: 0,
       formulaRest: '=' + endLineColumn + firstRestRow + '-' + startLineColumn + firstRestRow + '+1'
+    },
+    {
+      columnName: "Scene Line Count",
+      formulaFirst: 0,
+      formulaRest: '=IF(' + cueColumn + firstRestRow + '="","",' + sceneLineCountCalculationColumn + firstRestRow + ')'
     }
   ]
   
