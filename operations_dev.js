@@ -790,21 +790,25 @@ async function correctFormulas(firstRow){
   
   const columnFormulae = [
     {
-      columnName: "Start Line", //BU
+      columnName: "Start Line", //BV
       formulaRest: "=IF(" + positionMinusColumn + firstRow + "=0," + startLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + ",2," + positionMinusColumn + firstRow + "-2)))"
     },
     {
-      columnName: "End Line", //BW
+      columnName: "End Line", //BX
       formulaRest: "=IF(" + positionEndSqaureBracketColumn + firstRow + "=0," + endLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + "," + positionMinusColumn + firstRow + "+1," + positionEndSqaureBracketColumn + firstRow + "-" + positionMinusColumn + firstRow + "-1)))"
     },
     {
-      columnName: "Scene", //BZ
+      columnName: "Scene", //CA
       formulaRest: '=IF(' + sceneNumberColumn + firstRow + '="",' +sceneColumn + (firstRow - 1) + ',VALUE(' + sceneNumberColumn + firstRow + '))'
     },
     {
-	    columnName: "Word count to this line", //CB
+	    columnName: "Word count to this line", //CC
       formulaRest: "=IF(" + sceneColumn + firstRow + "=" + sceneColumn + (firstRow - 1) + "," + wordCountToThisLineColumn + (firstRow -1) + "+" + lineWordCountColumn + firstRow + "," + lineWordCountColumn + firstRow + ")"
-  	}
+  	}    ,
+    {
+      columnName: "Chapter Calculation", //CF
+      formulaRest: '=VALUE(IF(' + positionChapterColumn + firstRow + '="",' + chapterCalculationColumn + (firstRow - 1) + ',MID(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '+7,99)))'
+    }
   ]
   
   await unlock();
