@@ -582,6 +582,11 @@ async function theFormulas(){
       columnName: "Chapter Calculation", //CE
       formulaFirst: '=IF(' + positionChapterColumn + firstRow + '="","",MID(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '+7,99))',
       formulaRest: '=IF(' + positionChapterColumn + firstRestRow + '="",' + chapterCalculationColumn + firstRow + ',MID(' + stageDirectionWallaDescriptionColumn + firstRestRow + ',' + positionChapterColumn + firstRestRow + '+7,99))'
+    },
+    {
+      columnName: "Chapter", //E
+      formulaFirst: '="Chapter " & TEXT(' + chapterCalculationColumn + firstRow + ', "0")',
+      formulaRest: '="Chapter " & TEXT(' + chapterCalculationColumn + firstRestRow + ', "0")'
     }
   ]
   
