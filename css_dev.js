@@ -137,7 +137,7 @@ label {
 }
 
 #column-jump-one {
-  flex: 30%
+  flex: 7%
 }
 #column-jump-two {
   flex: 60%
@@ -399,7 +399,7 @@ label {
   transform: rotate(45deg);
 }
 
-#min-and-max, #min-and-max-lineNo, #min-and-max-chapter {
+#min-and-max, #min-and-max-lineNo, #min-and-max-chapter, .jump-label {
   font-size: 13px;
 }
                     `;

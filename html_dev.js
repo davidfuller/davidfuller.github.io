@@ -39,20 +39,20 @@ async function mainHTML(){
   <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
   <div class="row">
     <div class="column" id="column-jump-one">
-      <label for="scene">Scene No</label>
-      <label for="lineNo">Cue/line no</label>
-      <label for="chapter">Chapter</label>
+      <label class='jump-label' for="scene">Scene No</label>
+      <label class='jump-label 'for="lineNo">Cue/line no</label>
+      <label class='jump-label 'for="chapter">Chapter</label>
     </div>
     <div class="column" id="column-jump-two">
       <input type="text" id="scene" name="scene">
       <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button>
-      <span id='min-and-max'></span><br/>
+      <span id='min-and-max'></span>
       <input type="text" id="lineNo" name="lineNo">
       <button id='btnGoLine' onclick="jade_modules.operations.getTargetLineNo()">Go</button>
-      <span id='min-and-max-lineNo'></span><br/>
+      <span id='min-and-max-lineNo'></span>
       <input type="text" id="chapter" name="chapter">
       <button id='btnGoChapter' onclick="jade_modules.operations.getTargetChapter()">Go</button>
-      <span id='min-and-max-chapter'></span><br/>
+      <span id='min-and-max-chapter'></span>
     </div>
   </div>
 </div>
