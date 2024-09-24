@@ -513,7 +513,7 @@ async function theFormulas(){
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
   const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CC
   const positionChapterColumn = findColumnLetter("Position Chapter"); //CD
-  const chapterColumn = findColumnLetter("Chapter"); //CE
+  const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CE
   const firstRow = "" + firstDataRow;
   const firstRestRow = "4";
   const lastRow = "" + lastDataRow;
@@ -579,9 +579,9 @@ async function theFormulas(){
       formulaRest: '=IF('+ stageDirectionWallaDescriptionColumn + firstRestRow + '="","",IF(ISERROR(FIND("Chapter",' + stageDirectionWallaDescriptionColumn + firstRestRow + ')),"",FIND("Chapter",' + stageDirectionWallaDescriptionColumn + firstRestRow + ')))'
     },
     {
-      columnName: "Chapter", //CE
+      columnName: "Chapter Calculation", //CE
       formulaFirst: '=IF(' + positionChapterColumn + firstRow + '="","",MID(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '+7,99))',
-      formulaRest: '=IF(' + positionChapterColumn + firstRestRow + '="",' + chapterColumn + firstRow + ',MID(' + stageDirectionWallaDescriptionColumn + firstRestRow + ',' + positionChapterColumn + firstRestRow + '+7,99))'
+      formulaRest: '=IF(' + positionChapterColumn + firstRestRow + '="",' + chapterCalculationColumn + firstRow + ',MID(' + stageDirectionWallaDescriptionColumn + firstRestRow + ',' + positionChapterColumn + firstRestRow + '+7,99))'
     }
   ]
   
