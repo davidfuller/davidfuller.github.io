@@ -39,7 +39,7 @@ async function initialiseVariables(){
   sceneIndex = findColumnIndex('Scene')
   numberIndex = findColumnIndex("Number");
   totalTakesIndex = findColumnIndex('Total Takes');
-
+  
   ukTakesIndex = findColumnIndex('UK No of takes');
   ukTakeNoIndex = findColumnIndex('UK Take No')
   ukDateIndex = findColumnIndex("UK Date Recorded");
@@ -60,6 +60,9 @@ async function initialiseVariables(){
   wallaStudioIndex = findColumnIndex("Walla Studio");
   wallaEngineerIndex = findColumnIndex("Walla Engineer");
   wallaMarkUpIndex = findColumnIndex("Walla Broadcast Assistant Markup");
+
+  chapterCalculationIndex = findColumnIndex('Chapter Calculation');
+
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     await excel.sync();
@@ -285,6 +288,51 @@ async function findLineNo(lineNo){
   })
 }
 
+async function findChapter(chapter){
+  await Excel.run(async function(excel){
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load("rowIndex");
+    activeCell.load(("columnIndex"))
+    await excel.sync()
+    const startRow = activeCell.rowIndex;
+    const startColumn = activeCell.columnIndex
+    let range = await getChapterRange(excel);
+    range.load("values");
+    await excel.sync();
+    console.log("Chapter range");
+    console.log(range.values);
+    
+    console.log("Start Row");
+    console.log(startRow);
+
+    const minAndMax = await getChapterMaxAndMin();
+    console.log("Min and Max");
+    console.log(minAndMax);
+
+    if (chapter > minAndMax.max){
+      chapter = minAndMax.max;
+    }
+
+    if (chapter < minAndMax.min){
+      chapter = minAndMax.min
+    }
+
+    const myIndex = range.values.findIndex(a => a[0] == (chapter));
+
+    console.log("Found Index");
+    console.log(myIndex);
+    
+    if (myIndex == -1){
+      alert('Invalid Line Number');
+    } else {
+      scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      const myTarget = scriptSheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
+      myTarget.select();
+      await excel.sync();
+    }
+  })
+}
 
 async function firstScene(){
   await Excel.run(async function(excel){
@@ -320,6 +368,16 @@ async function getLineRange(excel){
   endRow.load("rowindex");
   await excel.sync();
   range = scriptSheet.getRangeByIndexes(2, numberIndex, endRow.rowIndex, 1);
+  await excel.sync();
+  return range;
+}
+
+async function getChapterRange(excel){
+  scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  const endRow = scriptSheet.getUsedRange().getLastRow();
+  endRow.load("rowindex");
+  await excel.sync();
+  range = scriptSheet.getRangeByIndexes(2, chapterCalculationIndex, endRow.rowIndex, 1);
   await excel.sync();
   return range;
 }
@@ -360,7 +418,16 @@ async function getTargetLineNo(){
   }  
 }
 
-
+async function getTargetChapter(){
+  const textValue = tag("chapter").value;
+  const chapterNumber = parseInt(textValue);
+  if (chapterNumber != NaN){
+    console.log(chapterNumber);
+    await findChapter(chapterNumber);
+  }  else {
+    alert("Please enter a number")
+  }  
+}
 
 
 async function getSceneMaxAndMin(){

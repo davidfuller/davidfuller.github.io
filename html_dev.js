@@ -37,11 +37,11 @@ async function mainHTML(){
   <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
   <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button>
   <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
-  <label for="scene">Jump to scene</label>
+  <label for="scene">Scene No</label>
   <input type="text" id="scene" name="scene">
   <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button>
   <span id='min-and-max'></span><br/>
-  <label for="lineNo">Jump to line number (cue)</label>
+  <label for="lineNo">Cue/line no</label>
   <input type="text" id="lineNo" name="lineNo">
   <button id='btnGoLine' onclick="jade_modules.operations.getTargetLineNo()">Go</button>
   <span id='min-and-max-lineNo'></span><br/>
