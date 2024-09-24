@@ -780,6 +780,7 @@ async function deleteRow(){
 async function correctFormulas(firstRow){
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
+  const stageDirectionWallaDescriptionColumn = findColumnLetter("Stage Direction/ Walla description") //J
   const positionMinusColumn = findColumnLetter("Position -"); //BU
   const startLineColumn = findColumnLetter("Start Line"); //BV
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BW
