@@ -412,13 +412,13 @@ label {
   font-size: 13px;
 }
 #jump-label-line-no {
-  top: 5px;
+  top: 14px;
 }
 #jump-label-chapter {
-  top: 12px;
+  top: 24px;
 }
 #jump-label-scene {
-  top: 24px;
+  top: 3px;
 }
                     `;
   Jade.set_css(css);
