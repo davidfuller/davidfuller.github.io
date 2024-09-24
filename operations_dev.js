@@ -613,7 +613,7 @@ async function theFormulas(){
     {
       columnName: "Scene Word Count", //A
       formulaFirst: '=""',
-      formulaRest: '=IF(' + sceneLineCountColumn + firstRestRow + '<>"",' + sceneWordCountCalcColumn + firstRestRow + ',"")'
+      formulaRest: '=IF(' + cueColumn + firstRestRow + '="","",' + sceneWordCountCalcColumn + firstRestRow + ')'
     },
     {
       columnName: "Position -",
