@@ -788,6 +788,7 @@ async function correctFormulas(firstRow){
   const sceneColumn = findColumnLetter("Scene"); //CA
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CC
   const positionChapterColumn = findColumnLetter("Position Chapter"); //CE
+  const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CF
   
   const columnFormulae = [
     {
