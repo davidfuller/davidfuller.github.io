@@ -686,15 +686,15 @@ async function theFormulas(){
     {
       columnName: "Scene Borders", //CH
       formulaFirst: "Start",
-      formulaRest: '=IF(' + sceneBordersColumn + firstRow + '="Start","Original",IF(' + sceneColumn + firstRestRow + '<>' + sceneColumn + firstRow + ',"Original","Copy"))'
+      formulaRest: '=IF(' + cueColumn + firstRestRow + '="", "",IF(' + sceneBordersColumn + firstRow + '="Start","Original",IF(' + sceneColumn + firstRestRow + '<>' + sceneColumn + firstRow + ',"Original","Copy")))'
     },
     {
-      columnName: "Scene Line Count Calculation",
+      columnName: "Scene Line Count Calculation", //CG
       formulaFirst: 0,
       formulaRest: '=' + endLineColumn + firstRestRow + '-' + startLineColumn + firstRestRow + '+1'
     },
     {
-      columnName: "Scene Line Count",
+      columnName: "Scene Line Count", //B
       formulaFirst: 0,
       formulaRest: '=IF(' + cueColumn + firstRestRow + '="","",' + sceneLineCountCalculationColumn + firstRestRow + ')'
     }
