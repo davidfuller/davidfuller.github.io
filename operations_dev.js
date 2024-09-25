@@ -1758,7 +1758,7 @@ async function setDefaultColumnWidths(){
         myFormat.load('columnWidth')
         await excel.sync();
         console.log(myColumn.address, myFormat.columnWidth);
-        myFormat.columnWidth = mySheetColumns[i].width
+        myFormat.columnWidth = (mySheetColumns[i].width * 7)
         console.log(i, mySheetColumns[i].column, mySheetColumns[i].width);
         await excel.sync();
       }
