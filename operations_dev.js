@@ -600,12 +600,13 @@ async function theFormulas(){
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
   const endLineColumn = findColumnLetter("End Line"); //BW
   const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
-  const sceneColumn = findColumnLetter("Scene"); //BZ
-  const lineColumn = findColumnLetter("Line"); // CA
-  const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
-  const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CC
-  const positionChapterColumn = findColumnLetter("Position Chapter"); //CD
-  const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CE
+  const sceneColumn = findColumnLetter("Scene"); //CA
+  const lineColumn = findColumnLetter("Line"); // CB
+  const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CC
+  const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CD
+  const positionChapterColumn = findColumnLetter("Position Chapter"); //CE
+  const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CF
+  const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
   const firstRow = "" + firstDataRow;
   const firstRestRow = "4";
   const lastRow = "" + lastDataRow;
@@ -679,6 +680,11 @@ async function theFormulas(){
       columnName: "Chapter", //E
       formulaFirst: '=IF(' + cueColumn + firstRow + '="", "","Chapter " & TEXT(' + chapterCalculationColumn + firstRow + ', "0"))',
       formulaRest: '=IF(' + cueColumn + firstRestRow + '="", "","Chapter " & TEXT(' + chapterCalculationColumn + firstRestRow + ', "0"))'
+    },
+    {
+      columnName: "Scene Borders", //CH
+      formulaFirst: "Start",
+      formulaRest: '=IF(' + sceneBordersColumn + firstRow + '="Start","Original",IF(' + sceneColumn + firstRestRow + '<>' + sceneColumn + firstRow + ',"Original","Copy"))'
     }
   ]
   
@@ -790,6 +796,7 @@ async function correctFormulas(firstRow){
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CC
   const positionChapterColumn = findColumnLetter("Position Chapter"); //CE
   const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CF
+  const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
   
   const columnFormulae = [
     {
@@ -811,6 +818,10 @@ async function correctFormulas(firstRow){
     {
       columnName: "Chapter Calculation", //CF
       formulaRest: '=VALUE(IF(' + positionChapterColumn + firstRow + '="",' + chapterCalculationColumn + (firstRow - 1) + ',MID(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '+7,99)))'
+    },
+    {
+      columnName: "Scene Borders", //CH
+      formulaRest: '=IF(' + sceneBordersColumn + (firstRow - 1) + '="Start","Original",IF(' + sceneColumn + firstRow + '<>' + sceneColumn + (firstRow - 1) + ',"Original","Copy"))'
     }
   ]
   
