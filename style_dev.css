@@ -420,3 +420,8 @@ label {
 #jump-label-scene {
   top: 3px;
 }
+
+#show-hide {
+  margin-left: 5px;
+  font-size: 10px;
+}

@@ -53,7 +53,7 @@ label {
 #admin {
   display: none;
 }
-  
+
 #btnGo, #btnGoLine, #btnGoChapter {
   width: fit-content;
   margin-left: 5px;
@@ -423,6 +423,11 @@ label {
 }
 #jump-label-scene {
   top: 3px;
+}
+
+#show-hide {
+  margin-left: 5px;
+  font-size: 10px;
 }
                     `;
   Jade.set_css(css);
