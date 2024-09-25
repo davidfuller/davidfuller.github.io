@@ -3,7 +3,7 @@ function auto_exec(){
 async function mainHTML(){
   const html = `
 <h1>MuVi2 Script Controller</h1>
-<h2>Development edition</h2>
+<h2>Version Beta 2. September 25, 2024</h2>
 <div id="firstButtons">
   <label class="section-label">Lock / Unlock</label><br/>
   <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
@@ -110,8 +110,9 @@ async function mainHTML(){
   await jade_modules.operations.initialiseVariables();
   await jade_modules.operations.showHideColumns('all');
   await jade_modules.operations.displayMinAndMax();
+  await jade_modules.operations.setDefaultColumnWidths();
   await jade_modules.operations.setUpEvents();
-  
+
   console.log("I'm here data loaded");
 }
 
