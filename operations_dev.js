@@ -507,16 +507,20 @@ async function fill(country){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const studioText = tag("studio-select").value;
     const engineerText = tag("engineer-select").value;
-    let dateIndex, studioIndex, engineerIndex;
+    const markupText = tag('markup').value
+    let dateIndex, studioIndex, engineerIndex, markUpIndex;
     if (country == 'UK'){
+      markUpIndex = ukMarkUpIndex;
       dateIndex = ukDateIndex;
       studioIndex = ukStudioIndex;
       engineerIndex = ukEngineerIndex;
     } else if ( country == 'US'){
+      markUpIndex = usMarkUpIndex;
       dateIndex = usDateIndex;
       studioIndex = usStudioIndex;
       engineerIndex = usEngineerIndex;
     } else if ( country == 'Walla'){
+      markUpIndex = usMarkUpIndex;
       dateIndex = wallaDateIndex;
       studioIndex = wallaStudioIndex;
       engineerIndex = wallaEngineerIndex;
@@ -527,13 +531,15 @@ async function fill(country){
     await excel.sync();
     const myRow = activeCell.rowIndex;    
     console.log("Row Index");
-    console.log(myRow);
+    console.log(myRow)
+    const markupRange = scriptSheet.getRangeByIndexes(myRow, markUpIndex, 1, 1);
     const dateRange = scriptSheet.getRangeByIndexes(myRow, dateIndex, 1, 1);
     const studioRange = scriptSheet.getRangeByIndexes(myRow, studioIndex, 1, 1);
     const engineerRange = scriptSheet.getRangeByIndexes(myRow, engineerIndex, 1, 1);
     await excel.sync();
     await unlock();
     console.log(studioRange);
+    markupRange.values = [[markupText]]
     dateRange.values = [[dateInFormat()]];
     studioRange.values = [[studioText]];
     engineerRange.values = [[engineerText]];
