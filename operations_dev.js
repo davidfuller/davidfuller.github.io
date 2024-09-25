@@ -1721,10 +1721,9 @@ async function fillSceneNumber(){
         console.log(i, currentValue);
       } else if (borderValues[i] == 'Copy'){
         sceneValues[i][0] = currentValue;
-        console.log(i, 'Copy');
+        console.log(i, 'Copy', currentValue);
       } else if(borderValues[i] == ''){
         sceneValues[i][0] = '';
-        console.log(i, 'NOTHING')
       }
     }
     console.log("Scene Range After");
