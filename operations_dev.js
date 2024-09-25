@@ -1753,6 +1753,10 @@ async function setDefaultColumnWidths(){
     for (let i = 0; i < mySheetColumns.length; i++){
       if (mySheetColumns[i].width != ''){
         let myColumn = scriptSheet.getRange(mySheetColumns[i].column + ':' + mySheetColumns[i].column);
+        myColumn.load('address')
+        myColumn.load('columnWidth')
+        await excel.sync();
+        console.log(myColumn.address, myColumn.columnWidth);
         myColumn.columnWidth = mySheetColumns[i].width
         console.log(i, mySheetColumns[i].column, mySheetColumns[i].width);
         await excel.sync();
