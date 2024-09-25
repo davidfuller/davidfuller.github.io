@@ -1728,8 +1728,10 @@ async function fillSceneNumber(){
       } else if (borderValues[i] == 'Copy'){
         sceneValues[i][0] = currentValue;
         sceneFormat[i][0] = currentFormat;
+        lineNoValues[i][0] = currentLineNo;
       } else if(borderValues[i] == ''){
         sceneValues[i][0] = '';
+        lineNoValues[i][0] = '';
       }
     }
 
