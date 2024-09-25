@@ -426,8 +426,10 @@ label {
 }
 
 #show-hide {
-  margin-left: 5px;
+  margin-left: 15px;
   font-size: 10px;
+  padding-left: 5px;
+  cursor: pointer;
 }
                     `;
   Jade.set_css(css);
