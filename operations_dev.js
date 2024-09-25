@@ -1706,6 +1706,7 @@ async function fillSceneNumber(){
     sceneRange.load('values');
     await excel.sync();
     let borderValues = borderRange.values.map(x => x[0]);
+    let sceneValues = sceneRange.values
     console.log("Scene Borders");
     console.log(borderValues);
     console.log("Scene Range");
@@ -1714,15 +1715,15 @@ async function fillSceneNumber(){
     for (let i = 0; i < borderValues.length; i++){
       let currentValue = ''
       if (borderValues[i] == 'Original'){
-        currentValue = sceneRange.values[i][0];
+        currentValue = sceneValues[i][0];
       } else if (borderValues[i] == 'Copy'){
-        sceneRange.values[i][0] = currentValue;
+        sceneValues[i][0] = currentValue;
       } else if(borderValues[i] == ''){
-        sceneRange.values[i][0] = '';
+        sceneValues[i][0] = '';
       }
     }
     console.log("Scene Range After");
-    console.log(sceneRange.values);
+    console.log(sceneValues);
 
   }) 
 }
