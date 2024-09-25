@@ -27,6 +27,7 @@ async function getColumnData(sheetName, rangeName){
         temp.number = range.values[i][1];
         temp.column = range.values[i][2];
         temp.index = range.values[i][3];
+        temp.width = range.values[i][4];
         result.push(temp);
       }
     }
@@ -1741,4 +1742,20 @@ async function fillSceneNumber(){
     await excel.sync();
 
   }) 
+}
+
+async function setDefaultColumnWidths(){
+  await Excel.run(async function(excel){ 
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
+    for (let i = 0; i < mySheetColumns.length; i++){
+      if (mySheetColumns[i].width != ''){
+        let myColumn = scriptSheet.getRange(mySheetColumns[i].column + ':' + mySheetColumns[i].column);
+        console.log(myColumn);
+      }
+    }
+  })
+
 }
