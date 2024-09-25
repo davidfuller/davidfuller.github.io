@@ -1704,23 +1704,30 @@ async function fillSceneNumber(){
     let sceneRange = scriptSheet.getRange(sceneNumberColumn + firstDataRow + ":" +  sceneNumberColumn + lastDataRow);
     borderRange.load('values');
     sceneRange.load('values');
+    sceneRange.load('numberFormat');
     await excel.sync();
+    console.log(sceneRange.numberFormat);
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
     let borderValues = borderRange.values.map(x => x[0]);
     let sceneValues = sceneRange.values
+    let sceneFormat = sceneRange.numberFormat;
 
     let currentValue = ''
+    let currentFormat = ''
     for (let i = 0; i < borderValues.length; i++){
       if (borderValues[i] == 'Original'){
         currentValue = sceneValues[i][0];
+        currentFormat = sceneFormat[i][0];
       } else if (borderValues[i] == 'Copy'){
         sceneValues[i][0] = currentValue;
+        sceneFormat[i][0] = currentFormat;
       } else if(borderValues[i] == ''){
         sceneValues[i][0] = '';
       }
     }
     sceneRange.values = sceneValues;
+    sceneRange.numberFormat = sceneFormat
     await excel.sync();
 
   }) 
