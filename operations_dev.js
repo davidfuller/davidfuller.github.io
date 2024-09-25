@@ -1705,13 +1705,16 @@ async function fillSceneNumber(){
     borderRange.load('values');
     sceneRange.load('values');
     await excel.sync();
+    let borderValues = borderRange.values.map(x => x[0]);
     console.log("Scene Borders");
-    console.log(borderRange.values);
+    console.log(borderValues);
     console.log("Scene Range");
     console.log(sceneRange.values);
 
-    for (let row = firstDataRow; row <= lastDataRow; row++){
-
+    for (let i = 0; i < borderValues.length; i++){
+      if (borderValues[i] == 'Original'){
+        console.log(i, sceneRange.values[i][0]);
+      }
     }
 
 
