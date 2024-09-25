@@ -1714,8 +1714,8 @@ async function fillSceneNumber(){
     console.log("Scene Range");
     console.log(sceneRange.values);
 
+    let currentValue = ''
     for (let i = 0; i < borderValues.length; i++){
-      let currentValue = ''
       if (borderValues[i] == 'Original'){
         currentValue = sceneValues[i][0];
         console.log(i, currentValue);
