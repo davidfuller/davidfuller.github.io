@@ -1553,7 +1553,7 @@ async function showHideColumns(columnType){
 
     if (hideUnedited){
       let uneditedIndex = range.values.findIndex(x => x[0] == 'Unedited Script');
-      console.log(uneditedIndex);
+      console.log('Unedited column', uneditedIndex);
       let hideUneditedColumns = range.values[uneditedIndex][2].split(",")
       console.log(hideUneditedColumns);
       for (let hide of hideUneditedColumns){
@@ -1566,6 +1566,8 @@ async function showHideColumns(columnType){
         hideUneditedColumnsRange.columnHidden = true;
         //await excel.sync();  
       }
+    } else {
+      console.log('Not hiding');
     }
     await excel.sync();
   })  
@@ -1764,7 +1766,6 @@ async function setDefaultColumnWidths(){
         let myColumn = scriptSheet.getRange(mySheetColumns[i].column + ':' + mySheetColumns[i].column);
         let myFormat = myColumn.format
         myFormat.columnWidth = (mySheetColumns[i].width * 7)
-        console.log(i, mySheetColumns[i].column, mySheetColumns[i].width);
       }
     }
     await excel.sync();
