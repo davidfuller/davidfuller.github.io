@@ -1699,26 +1699,32 @@ async function fillSceneNumber(){
     app.suspendApiCalculationUntilNextSync();
     const sceneNumberColumn = findColumnLetter('Scene Number');
     const sceneBordersColumn = findColumnLetter('Scene Borders');
+    const sceneLineNumberRangeColumn = findColumnLetter('Scene Line Number Range')
 
     let borderRange = scriptSheet.getRange(sceneBordersColumn + firstDataRow + ":" +  sceneBordersColumn + lastDataRow);
     let sceneRange = scriptSheet.getRange(sceneNumberColumn + firstDataRow + ":" +  sceneNumberColumn + lastDataRow);
+    let lineNoRange = scriptSheet.getRange(sceneLineNumberRangeColumn +firstDataRow + ':' + sceneLineNumberRangeColumn +lastDataRow);
     borderRange.load('values');
     sceneRange.load('values');
     sceneRange.load('numberFormat');
+    lineNoRange.load('values')
     await excel.sync();
-    console.log(sceneRange.numberFormat);
+    console.log(lineNoRange.values)
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
     let borderValues = borderRange.values.map(x => x[0]);
     let sceneValues = sceneRange.values
     let sceneFormat = sceneRange.numberFormat;
+    let lineNoValues = lineNoRange.values
 
-    let currentValue = ''
-    let currentFormat = ''
+    let currentValue = '';
+    let currentFormat = '';
+    let currentLineNo = '';
     for (let i = 0; i < borderValues.length; i++){
       if (borderValues[i] == 'Original'){
         currentValue = sceneValues[i][0];
         currentFormat = sceneFormat[i][0];
+        currentLineNo = lineNoValues[i][0];
       } else if (borderValues[i] == 'Copy'){
         sceneValues[i][0] = currentValue;
         sceneFormat[i][0] = currentFormat;
@@ -1727,7 +1733,6 @@ async function fillSceneNumber(){
       }
     }
 
-    console.log(sceneFormat);
     sceneRange.values = sceneValues;
     sceneRange.numberFormat = sceneFormat;
     await excel.sync();
