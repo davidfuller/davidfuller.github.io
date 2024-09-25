@@ -1756,7 +1756,7 @@ async function setDefaultColumnWidths(){
         myColumn.columnWidth = mySheetColumns[i].width
       }
     }
-    await excel.sync;
+    await excel.sync();
   })
 
 }
