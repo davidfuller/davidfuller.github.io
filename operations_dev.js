@@ -1705,6 +1705,8 @@ async function fillSceneNumber(){
     borderRange.load('values');
     sceneRange.load('values');
     await excel.sync();
+    app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
     let borderValues = borderRange.values.map(x => x[0]);
     let sceneValues = sceneRange.values
     console.log("Scene Borders");
