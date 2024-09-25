@@ -10,8 +10,11 @@ let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEn
 let mySheetColumns;
 let scriptSheet;
 
+let sceneInput
+
 function auto_exec(){
 }
+
 async function getColumnData(sheetName, rangeName){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(sheetName);
@@ -397,18 +400,8 @@ async function getDataRange(excel){
   return range
 }
 
-/*
-let sceneInput = tag('scene')
-sceneInput.addEventListener('keypress',function(event){
-  if (event.key === 'Enter'){
-    event.preventDefault();
-    console.log('Hello hello hello my baby');
-  }
-})
-*/
-
 async function getTargetSceneNumber(){
-  const textValue = tag("scene").value;
+  const textValue = sceneInput.value;
   const sceneNumber = parseInt(textValue);
   if (sceneNumber != NaN){
     console.log(sceneNumber);
@@ -1774,4 +1767,15 @@ async function setDefaultColumnWidths(){
       }
     }
   })
+}
+
+async function setUpEvents(){
+  sceneInput = tag('scene');
+  sceneInput.addEventListener('keypress',function(event){
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      console.log('Hello hello hello my baby');
+    }
+  })
+  console.log('Events set up')
 }

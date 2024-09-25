@@ -110,6 +110,8 @@ async function mainHTML(){
   await jade_modules.operations.initialiseVariables();
   await jade_modules.operations.showHideColumns('all');
   await jade_modules.operations.displayMinAndMax();
+  await jade_modules.operations.setUpEvents();
+  
   console.log("I'm here data loaded");
 }
 
