@@ -97,7 +97,7 @@ async function mainHTML(){
 <div id="admin">
   <label class="section-label">Admin</label><br/>
   <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
-  <button id='btnSceneCalc' onclick="jade_modules.operations.thefillSceneNumber()">Scene Number</button>
+  <button id='btnSceneCalc' onclick="jade_modules.operations.fillSceneNumber()">Scene Number</button>
 </div>
   `;
 
