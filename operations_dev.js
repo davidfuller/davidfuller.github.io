@@ -547,7 +547,7 @@ async function fill(country){
     await lockColumns();
     engineerRange.select();
     await excel.sync();
-    dateRange.select();
+    markupRange.select();
     await excel.sync();
   })
 }
