@@ -1795,3 +1795,12 @@ async function setUpEvents(){
   })
   console.log('Events set up')
 }
+
+function showAdmin(){
+  let admin = tag('admin')
+  if (admin.style.display === 'none'){
+    admin.style.display = 'block';
+  } else {
+    admin.style.display = 'none';
+  }
+}

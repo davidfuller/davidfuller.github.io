@@ -50,6 +50,10 @@ label {
   border-style: solid;
 }
 
+#admin {
+  display: none;
+}
+  
 #btnGo, #btnGoLine, #btnGoChapter {
   width: fit-content;
   margin-left: 5px;
