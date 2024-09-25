@@ -520,7 +520,7 @@ async function fill(country){
       studioIndex = usStudioIndex;
       engineerIndex = usEngineerIndex;
     } else if ( country == 'Walla'){
-      markUpIndex = usMarkUpIndex;
+      markUpIndex = wallaMarkUpIndex;
       dateIndex = wallaDateIndex;
       studioIndex = wallaStudioIndex;
       engineerIndex = wallaEngineerIndex;
