@@ -600,13 +600,14 @@ async function theFormulas(){
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
   const endLineColumn = findColumnLetter("End Line"); //BW
   const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
-  const sceneColumn = findColumnLetter("Scene"); //CA
-  const lineColumn = findColumnLetter("Line"); // CB
-  const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CC
-  const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CD
-  const positionChapterColumn = findColumnLetter("Position Chapter"); //CE
+  const sceneColumn = findColumnLetter("Scene"); //BZ
+  const lineColumn = findColumnLetter("Line"); // CA
+  const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
+  const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CC
+  const positionChapterColumn = findColumnLetter("Position Chapter"); //CD
   const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CF
   const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
+  const sceneLineCountCalculationColumn = findColumnLetter("Scene Line Count Calculation"); //CG
   const firstRow = "" + firstDataRow;
   const firstRestRow = "4";
   const lastRow = "" + lastDataRow;
@@ -681,10 +682,21 @@ async function theFormulas(){
       formulaFirst: '=IF(' + cueColumn + firstRow + '="", "","Chapter " & TEXT(' + chapterCalculationColumn + firstRow + ', "0"))',
       formulaRest: '=IF(' + cueColumn + firstRestRow + '="", "","Chapter " & TEXT(' + chapterCalculationColumn + firstRestRow + ', "0"))'
     },
+    
     {
       columnName: "Scene Borders", //CH
       formulaFirst: "Start",
       formulaRest: '=IF(' + sceneBordersColumn + firstRow + '="Start","Original",IF(' + sceneColumn + firstRestRow + '<>' + sceneColumn + firstRow + ',"Original","Copy"))'
+    }
+    {
+      columnName: "Scene Line Count Calculation",
+      formulaFirst: 0,
+      formulaRest: '=' + endLineColumn + firstRestRow + '-' + startLineColumn + firstRestRow + '+1'
+    },
+    {
+      columnName: "Scene Line Count",
+      formulaFirst: 0,
+      formulaRest: '=IF(' + cueColumn + firstRestRow + '="","",' + sceneLineCountCalculationColumn + firstRestRow + ')'
     }
   ]
   
