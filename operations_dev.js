@@ -10,7 +10,7 @@ let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEn
 let mySheetColumns;
 let scriptSheet;
 
-let sceneInput
+let sceneInput, lineNoInput, chapterInput
 
 function auto_exec(){
 }
@@ -412,7 +412,7 @@ async function getTargetSceneNumber(){
 }
 
 async function getTargetLineNo(){
-  const textValue = tag("lineNo").value;
+  const textValue = lineNoInput.value;
   const lineNumber = parseInt(textValue);
   if (lineNumber != NaN){
     console.log(lineNumber);
@@ -423,7 +423,7 @@ async function getTargetLineNo(){
 }
 
 async function getTargetChapter(){
-  const textValue = tag("chapter").value;
+  const textValue = chapterInput.value;
   const chapterNumber = parseInt(textValue);
   if (chapterNumber != NaN){
     console.log(chapterNumber);
@@ -1771,10 +1771,24 @@ async function setDefaultColumnWidths(){
 
 async function setUpEvents(){
   sceneInput = tag('scene');
+  lineNoInput = tag('lineNo')
+  chapterInput = tag('chapter')
   sceneInput.addEventListener('keypress',async function(event){
     if (event.key === 'Enter'){
       event.preventDefault();
       await getTargetSceneNumber();
+    }
+  })
+  lineNoInput.addEventListener('keypress',async function(event){
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      await getTargetLineNo();
+    }
+  })
+  chapterInput.addEventListener('keypress',async function(event){
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      await getTargetChapter();
     }
   })
   console.log('Events set up')
