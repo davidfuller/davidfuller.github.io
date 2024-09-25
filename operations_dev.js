@@ -1709,25 +1709,19 @@ async function fillSceneNumber(){
     app.suspendApiCalculationUntilNextSync();
     let borderValues = borderRange.values.map(x => x[0]);
     let sceneValues = sceneRange.values
-    console.log("Scene Borders");
-    console.log(borderValues);
-    console.log("Scene Range");
-    console.log(sceneRange.values);
 
     let currentValue = ''
     for (let i = 0; i < borderValues.length; i++){
       if (borderValues[i] == 'Original'){
         currentValue = sceneValues[i][0];
-        console.log(i, currentValue);
       } else if (borderValues[i] == 'Copy'){
         sceneValues[i][0] = currentValue;
-        console.log(i, 'Copy', currentValue);
       } else if(borderValues[i] == ''){
         sceneValues[i][0] = '';
       }
     }
-    console.log("Scene Range After");
-    console.log(sceneValues);
+    sceneRange.values = sceneValues;
+    await excel.sync();
 
   }) 
 }
