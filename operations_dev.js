@@ -1771,10 +1771,10 @@ async function setDefaultColumnWidths(){
 
 async function setUpEvents(){
   sceneInput = tag('scene');
-  sceneInput.addEventListener('keypress',function(event){
+  sceneInput.addEventListener('keypress',async function(event){
     if (event.key === 'Enter'){
       event.preventDefault();
-      console.log('Hello hello hello my baby');
+      await getTargetSceneNumber();
     }
   })
   console.log('Events set up')
