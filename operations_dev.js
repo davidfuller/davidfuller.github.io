@@ -1737,6 +1737,7 @@ async function fillSceneNumber(){
 
     sceneRange.values = sceneValues;
     sceneRange.numberFormat = sceneFormat;
+    lineNoRange.values = lineNoValues;
     await excel.sync();
 
   }) 
