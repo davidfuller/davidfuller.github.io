@@ -397,6 +397,7 @@ async function getDataRange(excel){
   return range
 }
 
+/*
 let sceneInput = tag('scene')
 sceneInput.addEventListener('keypress',function(event){
   if (event.key === 'Enter'){
@@ -404,6 +405,7 @@ sceneInput.addEventListener('keypress',function(event){
     console.log('Hello hello hello my baby');
   }
 })
+*/
 
 async function getTargetSceneNumber(){
   const textValue = tag("scene").value;
