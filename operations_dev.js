@@ -687,7 +687,7 @@ async function theFormulas(){
       columnName: "Scene Borders", //CH
       formulaFirst: "Start",
       formulaRest: '=IF(' + sceneBordersColumn + firstRow + '="Start","Original",IF(' + sceneColumn + firstRestRow + '<>' + sceneColumn + firstRow + ',"Original","Copy"))'
-    }
+    },
     {
       columnName: "Scene Line Count Calculation",
       formulaFirst: 0,
