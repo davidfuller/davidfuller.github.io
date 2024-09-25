@@ -1700,7 +1700,7 @@ async function fillSceneNumber(){
     const sceneNumberColumn = findColumnLetter('Scene Number');
     const sceneBordersColumn = findColumnLetter('Scene Borders');
 
-    let borderRange = scriptSheet(sceneBordersColumn + firstDataRow + ":" +  sceneBordersColumn + lastDataRow);
+    let borderRange = scriptSheet.range(sceneBordersColumn + firstDataRow + ":" +  sceneBordersColumn + lastDataRow);
     borderRange.load('values');
     await excel.sync();
     console.log("Scene Borders");
