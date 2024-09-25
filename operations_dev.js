@@ -1690,3 +1690,27 @@ async function displayMinAndMax(){
   let chapterDisplay = tag('min-and-max-chapter');
   chapterDisplay.innerText = "(" + chapterMinAndMax.min + ".." + chapterMinAndMax.max + ")";
 }
+
+async function fillSceneNumber(){
+  await Excel.run(async function(excel){ 
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
+    const sceneNumberColumn = findColumnLetter('Scene Number');
+    const sceneBordersColumn = findColumnLetter('Scene Borders');
+
+    let borderRange = scriptSheet(sceneBordersColumn + firstDataRow + ":" +  sceneBordersColumn + lastDataRow);
+    borderRange.load('values');
+    await excel.sync();
+    console.log("Scene Borders");
+    console.log(borderRange.values);
+
+
+    for (let row = firstDataRow; row <= lastDataRow; row++){
+
+    }
+
+
+  }) 
+}
