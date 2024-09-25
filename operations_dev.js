@@ -1712,11 +1712,17 @@ async function fillSceneNumber(){
     console.log(sceneRange.values);
 
     for (let i = 0; i < borderValues.length; i++){
+      let currentValue = ''
       if (borderValues[i] == 'Original'){
-        console.log(i, sceneRange.values[i][0]);
+        currentValue = sceneRange.values[i][0];
+      } else if (borderValues[i] == 'Copy'){
+        sceneRange.values[i][0] = currentValue;
+      } else if(borderValues[i] == ''){
+        sceneRange.values[i][0] = '';
       }
     }
-
+    console.log("Scene Range After");
+    console.log(sceneRange.values);
 
   }) 
 }
