@@ -1726,8 +1726,10 @@ async function fillSceneNumber(){
         sceneValues[i][0] = '';
       }
     }
+
+    console.log(sceneFormat);
     sceneRange.values = sceneValues;
-    sceneRange.numberFormat = sceneFormat
+    sceneRange.numberFormat = sceneFormat;
     await excel.sync();
 
   }) 
