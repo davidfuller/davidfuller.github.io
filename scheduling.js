@@ -9,8 +9,10 @@ async function loadReduceAndSortCharacters(){
     let characters = await jade_modules.operations.getCharacters();
     console.log(characters);
     let characterRange = characterlistSheet.getRange('clCharacters');
-    characterRange.clear("Contents")
+    characterRange.clear("Contents");
+    characterRange.load('values');
     await excel.sync();
+    console.log(characterRange.values);
     characterRange.values = characters;
     await excel.sync();
   })  
