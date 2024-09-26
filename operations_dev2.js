@@ -1774,6 +1774,7 @@ async function setDefaultColumnWidths(){
 
 async function setUpEvents(){
   sceneInput = tag('scene');
+  console.log('sceneInput defined')
   lineNoInput = tag('lineNo')
   chapterInput = tag('chapter')
   sceneInput.addEventListener('keypress',async function(event){
