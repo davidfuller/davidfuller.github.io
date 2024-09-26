@@ -1756,6 +1756,7 @@ async function fillSceneNumber(){
 }
 
 async function setDefaultColumnWidths(){
+  await unlock();
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let app = excel.workbook.application;
@@ -1769,6 +1770,7 @@ async function setDefaultColumnWidths(){
       }
     }
     await excel.sync();
+    await lockColumns();
   })
 }
 
