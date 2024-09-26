@@ -43,6 +43,8 @@ async function initialiseVariables(){
   sceneIndex = findColumnIndex('Scene')
   numberIndex = findColumnIndex("Number");
   totalTakesIndex = findColumnIndex('Total Takes');
+
+  characterIndex = findColumnIndex('Character');
   
   ukTakesIndex = findColumnIndex('UK No of takes');
   ukTakeNoIndex = findColumnIndex('UK Take No')
@@ -1809,4 +1811,17 @@ function showAdmin(){
   } else {
     admin.style.display = 'none';
   }
+}
+
+async function getCharacters(){
+  let characters
+  await Excel.run(async function(excel){
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName); 
+    let characterRange = scriptSheet.getRangeByIndexes(firstDataRow, characterIndex, lastDataRow - firstDataRow, 1);
+    characterRange.load('values');
+    await excel.sync()
+    characters = characterRange.values.map(x => x[0]);      
+  })
+  console.log(characters);
+  return characters;
 }

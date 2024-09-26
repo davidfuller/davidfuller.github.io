@@ -100,6 +100,7 @@ async function mainHTML(){
   <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
   <button id='btnSceneCalc' onclick="jade_modules.operations.fillSceneNumber()">Scene Number</button>
   <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button>
+  <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
 </div>
   `;
 

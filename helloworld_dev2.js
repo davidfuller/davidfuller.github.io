@@ -1,5 +1,7 @@
 async function auto_exec(){
+  console.log("The very beginning");
   await Jade.load_js("https://davidfuller.github.io/operations_dev2.js", "operations");
+  await Jade.load_js("https://davidfuller.github.io/scheduling.js", "scheduling");
   await Jade.load_js("https://davidfuller.github.io/html_dev2.js", "html");
   await Jade.load_js("https://davidfuller.github.io/css_dev2.js", "css");
   await jade_modules.css.mainCSS();
