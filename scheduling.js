@@ -10,7 +10,7 @@ async function loadReduceAndSortCharacters(){
     console.log(characters);
     let characterRange = characterlistSheet.getRange('clCharacters');
     characterRange.clear("Contents")
-    await.excel.sync();
+    await excel.sync();
     characterRange.values = characters;
     await excel.sync();
   })  
