@@ -15,8 +15,15 @@ async function loadReduceAndSortCharacters(){
     console.log(characterRange.values);
     characterRange.values = characters;
     await excel.sync();
-    let removedResults = characterRange.removeDuplicates([0], false);
+    characterRange.removeDuplicates([0], false);
     await excel.sync();
-    console.log(removedResults.getRemoved());
+    const sortFields = [
+      {
+        key: 0,
+        ascending: true
+      }
+    ]
+    characterRange.sort.apply(sortFields);
+    await excel.sync();
   })  
 }
