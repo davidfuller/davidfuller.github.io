@@ -3,8 +3,8 @@ function auto_exec(){
 async function mainCSS(){
   const css =`
 body {
-  background-color: #ffc901;
-  color: #d34c01;
+  background-color: #d8dfe5;
+  color: #46656F;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
 }
 button {
@@ -17,7 +17,7 @@ button {
   border: none;
   width: fit-content;
   border-radius: 5px;
-  background-color: #d34c01;
+  background-color: #46656F;
   color: #fef3df;
   font-size: 12px;
   cursor: pointer;
@@ -46,7 +46,7 @@ label {
   padding-top: 0px;
   border-width: 1px;
   border-radius: 5px;
-  border-color: #d34c01;
+  border-color: #46656F;
   border-style: solid;
 }
 
@@ -68,35 +68,35 @@ label {
   border: none;
   width: fit-content;
   border-radius: 4px;
-  background-color: #d34c01;
+  background-color: #46656F;
   color: #fef3df;
   font-size: 12px;
   cursor: pointer;
 }
 #scene, #lineNo, #chapter {
   width: 50px;
-  background-color: #ffc901;
-  color: #d34c01;
+  background-color: #d8dfe5;
+  color: #46656F;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
   border-width: 1px;
   border-radius: 5px;
-  border-color: #d34c01;
+  border-color: #46656F;
   border-style: solid;
 }
 
 /*
 #chkAboveDetails {
-  background-color: #ffc901;
-  color: #d34c01;
+  background-color: #d8dfe5;
+  color: #46656F;
   border-width: 1px;
   border-radius: 5px;
-  border-color: #d34c01;
+  border-color: #46656F;
   border-style: solid;
 }
 
 #lblAboveDetails {
-  background-color: #ffc901;
-  color: #d34c01;
+  background-color: #d8dfe5;
+  color: #46656F;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
   margin-left: 5px;
   margin-bottom: 5px;
@@ -112,12 +112,12 @@ label {
 */
 #studio, #engineer, #studio-select, #engineer-select, #markup {
   width: 150px;
-  background-color: #ffc901;
-  color: #d34c01;
+  background-color: #d8dfe5;
+  color: #46656F;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
   border-width: 1px;
   border-radius: 5px;
-  border-color: #d34c01;
+  border-color: #46656F;
   border-style: solid;
 }
 
@@ -169,7 +169,7 @@ label {
   border: none;
   width: fit-content;
   border-radius: 4px;
-  background-color: #d34c01;
+  background-color: #46656F;
   color: #fef3df;
   font-size: 12px;
   cursor: pointer;
@@ -184,7 +184,7 @@ label {
   border: none;
   width: 130px;
   border-radius: 4px;
-  background-color: #d34c01;
+  background-color: #46656F;
   color: #fef3df;
   font-size: 12px;
   cursor: pointer;
@@ -223,8 +223,8 @@ label {
   left: -4px;
   height: 8px;
   width: 8px;
-  background-color: #ffc901;
-  border: #d34c01 ;
+  background-color: #d8dfe5;
+  border: #46656F ;
   border-radius: 50%;
   border-width: 2px;
   border-style: solid;
@@ -232,12 +232,12 @@ label {
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #d34c017f;
+  background-color: #46656F7f;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #d34c01;
+  background-color: #46656F;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -293,8 +293,8 @@ label {
   left: -4px;
   height: 8px;
   width: 8px;
-  background-color: #ffc901;
-  border: #d34c01 ;
+  background-color: #d8dfe5;
+  border: #46656F ;
   border-radius: 50%;
   border-width: 2px;
   border-style: solid;
@@ -302,12 +302,12 @@ label {
 
 /* On mouse-over, add a grey background color */
 .container2:hover input ~ .checkmark2 {
-  background-color: #d34c017f;
+  background-color: #46656F7f;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container2 input:checked ~ .checkmark2 {
-  background-color: #d34c01;
+  background-color: #46656F;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -365,8 +365,8 @@ label {
   left: 1px;
   height: 10px;
   width: 10px;
-  background-color: #ffc901;
-  border: #d34c01 ;
+  background-color: #d8dfe5;
+  border: #46656F ;
   border-radius: 4px;
   border-width: 2px;
   border-style: solid;
@@ -374,12 +374,12 @@ label {
 
 /* On mouse-over, add a grey background color */
 .container3:hover input ~ .checkmark3 {
-  background-color: #d34c017f;
+  background-color: #46656F7f;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container3 input:checked ~ .checkmark3 {
-  background-color: #d34c01;
+  background-color: #46656F;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
