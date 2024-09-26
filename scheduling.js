@@ -8,5 +8,9 @@ async function loadReduceAndSortCharacters(){
     characterlistSheet = excel.workbook.worksheets.getItem(characterListName);
     let characters = await jade_modules.operations.getCharacters();
     console.log(characters);
+    let characterRange = getRange('clCharacters');
+    characterRange.clear("Contents")
+    characterRange.values = characters;
+    await excel.sync();
   })  
 }

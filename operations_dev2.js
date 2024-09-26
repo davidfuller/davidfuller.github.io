@@ -1820,7 +1820,7 @@ async function getCharacters(){
     let characterRange = scriptSheet.getRangeByIndexes(firstDataRow, characterIndex, lastDataRow - firstDataRow, 1);
     characterRange.load('values');
     await excel.sync()
-    characters = characterRange.values.map(x => x[0]);      
+    characters = characterRange.values;
   })
   console.log(characters);
   return characters;
