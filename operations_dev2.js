@@ -1828,7 +1828,7 @@ async function getCharacters(){
 
 async function filterOnCharacter(characterName){
   await Excel.run(async function(excel){
-    const myRange = await getDataRange(excel);
+    let myRange = await getDataRange(excel);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const myCriteria = {
       filterOn: Excel.FilterOn.custom,
@@ -1836,7 +1836,7 @@ async function filterOnCharacter(characterName){
     }
     scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let filteredRange = scriptSheet.getUsedRange();
+    let filteredRange = myRange;
     filteredRange.load('values');
     filteredRange.load('address')
     await excel.sync();
