@@ -1835,10 +1835,13 @@ async function filterOnCharacter(characterName){
       criterion1: characterName
     }
     scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let filteredRange = scriptSheet.getUsedRange();
     filteredRange.load('values');
+    filteredRange.load('address')
     await excel.sync();
     console.log('Filtered');
+    console.log(filteredRange.address)
     console.log(filteredRange.values);
   })
 }
