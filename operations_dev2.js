@@ -1874,11 +1874,12 @@ async function myTest(){
     myRanges.load('items')
     await excel.sync();
     console.log(myRanges.items);
-    
+    /*
     for (let i = 0; i < myRanges.items.length; i++){
       console.log('Loading address')
       myRanges.item[i].load('address');
     }
+      */
     await excel.sync()
     for (let i = 0; i < myRanges.items.length; i++){
       console.log(i, myRanges.item[i].address)
