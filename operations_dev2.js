@@ -1806,6 +1806,7 @@ async function setUpEvents(){
 
 function showAdmin(){
   let admin = tag('admin')
+  console.log('Admin display', admin.style.display);
   if (admin.style.display === 'none'){
     admin.style.display = 'block';
   } else {
