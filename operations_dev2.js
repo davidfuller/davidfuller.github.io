@@ -1870,10 +1870,12 @@ async function myTest(){
     console.log('Range areas', formulaRanges.address);
     
     let myRanges = formulaRanges.areas
-    console.log(myRanges)
+    myRanges.load('items')
+    await excel.sync();
+    console.log(myRange.items);
     
     for (let i = 0; i < myRanges.count; i++){
-      myRanges[i].load('address', 'values');
+      myRanges.item[i].load('address', 'values');
     }
     await excel.sync()
     for (let i = 0; i < areas.count; i++){
