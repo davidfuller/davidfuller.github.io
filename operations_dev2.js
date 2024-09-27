@@ -1878,8 +1878,8 @@ async function myTest(){
       myRanges.item[i].load('address', 'values');
     }
     await excel.sync()
-    for (let i = 0; i < areas.count; i++){
-      console.log(i, areas.item[i].address)
+    for (let i = 0; i < myRanges.count; i++){
+      console.log(i, myRanges.item[i].address)
     }
   })
 };
