@@ -1884,7 +1884,7 @@ async function myTest(){
     let results = [];
 
     for (let i = 0; i < myRanges.items.length; i++){
-      console.log(i, myRanges.items[i].address, myRanges.items[i].rowIndex, myRanges.items[i].values.map(x => x[0]))
+      console.log(i, myRanges.items[i].address, myRanges.items[i].rowIndex, myRanges.items[i].values[0]);
       let found = -1
       for (let test = 0; test < results.length ; test++){
         console.log('Test', test);
@@ -1895,12 +1895,12 @@ async function myTest(){
       }
       if (found != -1){
         console.log('Added to item', found)
-        results[found].myItems.push(...myRanges.items[i].values.map(x => x[0]));
+        results[found].myItems.push(...myRanges.items[i].values[0]);
         console.log('After', found, results[found].myItems)
       } else {
         let newItem = {
           rowIndex: myRanges.items[i].rowIndex,
-          myItems: myRanges.items[i].values.map(x => x[0])
+          myItems: myRanges.items[i].values[0]
         }
         console.log('New item', newItem);
         results.push(newItem);
