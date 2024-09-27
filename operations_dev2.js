@@ -1895,7 +1895,9 @@ async function myTest(){
       }
       if (found != -1){
         console.log('Added to item', found)
-        results[found].myItems = results[found].myItems.concat(myRanges.items[i].values)
+        let tempArray = results[found].myItems.concat(myRanges.items[i].values);
+        console.log('temp', tempArray);
+        results[found].myItems = tempArray;
         console.log('After', found, results[found].myItems)
       } else {
         let newItem = {
@@ -1911,7 +1913,7 @@ async function myTest(){
     let headings = results.find(head => head.rowIndex == 1);
     console.log('Headings', headings);
 
-    let sceneArrayIndex = headings.findIndex(x => x == 'Scene Number')
+    let sceneArrayIndex = headings.myItems.findIndex(x => x == 'Scene Number')
     console.log('Scene Index', sceneArrayIndex);
 
 
