@@ -1862,7 +1862,7 @@ async function myTest(){
       criterion1: characterName
     }
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
-		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.formulas);
+		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
 		//formulaRanges.format.fill.color = "pink";
     formulaRanges.load('address');
     //formulaRanges.load('areas')
