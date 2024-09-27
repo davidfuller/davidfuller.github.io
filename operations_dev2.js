@@ -1915,7 +1915,7 @@ async function myTest(){
     console.log('Scene Index', sceneArrayIndex);
 
     let myData = []
-    for (let result in results){
+    for (let result of results){
       if (result.rowIndex != 1){
         let theData = {
           sceneNumber: result.myItems[sceneIndex]
