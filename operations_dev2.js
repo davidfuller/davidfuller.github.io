@@ -1864,12 +1864,11 @@ async function myTest(){
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
 		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
 		//formulaRanges.format.fill.color = "pink";
-    formulaRanges.load('address');
-    formulaRanges.load('values');
+    formulaRanges.load('address', 'areas/values');
     //formulaRanges.load('areas')
 		await excel.sync();
     console.log('Range areas', formulaRanges.address);
-    console.log('Value', formulaRanges.value);
+    console.log('Value', formulaRanges.areas.value);
     /*
     let areas = formulaRanges.areas
     let myValues = []
