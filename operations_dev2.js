@@ -1882,7 +1882,7 @@ async function myTest(){
       */
     await excel.sync()
     for (let i = 0; i < myRanges.items.length; i++){
-      console.log(i, myRanges.item[i].address)
+      console.log(i, myRanges.items[i].address)
     }
   })
 };
