@@ -1912,13 +1912,15 @@ async function myTest(){
     console.log('Headings', headings);
 
     let sceneArrayIndex = headings.myItems.findIndex(x => x == 'Scene Number')
-    console.log('Scene Index', sceneArrayIndex);
+    let numberArrayIndex = headings.myItems.findIndex(x => x == 'Number')
+    console.log('Scene Index', sceneArrayIndex, 'Number Index', numberArrayIndex);
 
     let myData = []
     for (let result of results){
       if (result.rowIndex != 1){
         let theData = {
-          sceneNumber: result.myItems[sceneIndex]
+          sceneNumber: result.myItems[sceneArrayIndex],
+          lineNumber: result.myItems[numberArrayIndex]
         }
         myData.push(theData);
       }
