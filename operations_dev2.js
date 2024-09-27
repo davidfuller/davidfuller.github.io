@@ -1831,7 +1831,7 @@ async function filterOnCharacter(characterName){
     const myRange = await getDataRange(excel);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const myCriteria = {
-      filterOn: FilterOn.custom,
+      filterOn: Excel.FilterOn.custom,
       criterion1: characterName
     }
     scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
