@@ -1895,9 +1895,7 @@ async function myTest(){
       }
       if (found != -1){
         console.log('Added to item', found)
-        let tempArray = results[found].myItems.concat(myRanges.items[i].values);
-        console.log('temp', tempArray);
-        results[found].myItems = tempArray;
+        results[found].myItems.push(...myRanges.items[i].values);
         console.log('After', found, results[found].myItems)
       } else {
         let newItem = {
