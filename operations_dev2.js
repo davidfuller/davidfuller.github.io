@@ -1914,6 +1914,16 @@ async function myTest(){
     let sceneArrayIndex = headings.myItems.findIndex(x => x == 'Scene Number')
     console.log('Scene Index', sceneArrayIndex);
 
+    let myData = []
+    for (let result in results){
+      if (result.rowIndex != 1){
+        let theData = {
+          sceneNumber: result.myItems[sceneIndex]
+        }
+        myData.push(theData);
+      }
+    }
+    console.log('myData', myData)
 
   })
 };
