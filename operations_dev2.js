@@ -1835,6 +1835,9 @@ async function filterOnCharacter(characterName){
       criterion1: characterName
     }
     scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
+    myRange.load('address');
+    await excel.sync();
+    console.log('My range address:', myRange.address)
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let filteredRange = myRange;
     filteredRange.load('values');
