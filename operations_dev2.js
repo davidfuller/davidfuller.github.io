@@ -1807,10 +1807,10 @@ async function setUpEvents(){
 function showAdmin(){
   let admin = tag('admin')
   console.log('Admin display', admin.style.display);
-  if (admin.style.display === 'none'){
-    admin.style.display = 'block';
-  } else {
+  if (admin.style.display === 'block'){
     admin.style.display = 'none';
+  } else {
+    admin.style.display = 'block';
   }
 }
 
@@ -1891,7 +1891,7 @@ async function myTest(){
         if (myRanges.items[i].rowIndex == results[test].rowIndex){
           found = test;
         }
-        if (test != -1){
+        if (found != -1){
           results[found].myItems = results[found].myItems.concat(myRanges.items[i].values)
         } else {
           let newItem = {
@@ -1899,7 +1899,6 @@ async function myTest(){
             myItems: myRanges.items[i].values
           }
           results.push(newItem);
-
         }
       }
     }
