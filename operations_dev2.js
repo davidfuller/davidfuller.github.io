@@ -1806,7 +1806,6 @@ async function setUpEvents(){
 
 function showAdmin(){
   let admin = tag('admin')
-  console.log('Admin display', admin.style.display);
   if (admin.style.display === 'block'){
     admin.style.display = 'none';
   } else {
@@ -1908,6 +1907,14 @@ async function myTest(){
       }
     }
     console.log('Results', results);
+
+    let headings = results.find(head => head.rowIndex == 1);
+    console.log('Headings', headings);
+
+    let sceneArrayIndex = headings.findIndex(x => x == 'Scene Number')
+    console.log('Scene Index', sceneArrayIndex);
+
+
   })
 };
 
