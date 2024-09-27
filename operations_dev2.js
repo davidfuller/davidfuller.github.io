@@ -1850,7 +1850,7 @@ async function filterOnCharacter(characterName){
 }
 
 async function myTest(){
-  unlock();
+  await unlock();
 	await Excel.run(async (excel) => {
     let characterName = 'GRIPHOOK:'
 		scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -1875,11 +1875,12 @@ async function myTest(){
     await excel.sync();
     console.log(myRanges.items);
     
-    for (let i = 0; i < myRanges.length; i++){
+    for (let i = 0; i < myRanges.items.length; i++){
+      console.log('Loading address')
       myRanges.item[i].load('address');
     }
     await excel.sync()
-    for (let i = 0; i < myRanges.length; i++){
+    for (let i = 0; i < myRanges.items.length; i++){
       console.log(i, myRanges.item[i].address)
     }
   })
