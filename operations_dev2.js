@@ -1886,7 +1886,7 @@ async function myTest(){
     for (let i = 0; i < myRanges.items.length; i++){
       console.log(i, myRanges.items[i].address, myRanges.items[i].rowIndex, myRanges.items[i].values)
       let found = -1
-      for (let test = 0; text < results.length ; test++){
+      for (let test = 0; test < results.length ; test++){
         if (myRanges.items[i].rowIndex == results[test].rowIndex){
           found = test;
         }
