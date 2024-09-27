@@ -1850,6 +1850,7 @@ async function filterOnCharacter(characterName){
 }
 
 async function myTest(){
+  unlock();
 	await Excel.run(async (excel) => {
     let characterName = 'GRIPHOOK:'
 		scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
