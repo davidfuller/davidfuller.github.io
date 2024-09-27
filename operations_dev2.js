@@ -1850,17 +1850,23 @@ async function filterOnCharacter(characterName){
 }
 
 async function myTest(){
-	await Excel.run(async (context) => {
-		let sheet = context.workbook.worksheets.getActiveWorksheet();
-		let usedRange = sheet.getUsedRange();
+	await Excel.run(async (excel) => {
+    let characterName = 'GRIPHOOK:'
+		scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+		let usedRange = await getDataRange(excel);
     usedRange.load('address');
-    await context.sync()
+    await excel.sync()
     console.log('Used range address', usedRange.address)
+    const myCriteria = {
+      filterOn: Excel.FilterOn.custom,
+      criterion1: characterName
+    }
+    scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
 		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.formulas);
 		//formulaRanges.format.fill.color = "pink";
     formulaRanges.load('address');
     //formulaRanges.load('areas')
-		await context.sync();
+		await excel.sync();
     console.log('Range areas', formulaRanges.address);
     /*
     let areas = formulaRanges.areas
