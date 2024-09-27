@@ -101,6 +101,7 @@ async function mainHTML(){
   <button id='btnSceneCalc' onclick="jade_modules.operations.fillSceneNumber()">Scene Number</button>
   <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button>
   <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
+  <button id="buttonFilterCharacter" onclick="jade_modules.operations.filterOnCharacter('HARRY & HERMIONE:')">Filter character</button>
 </div>
   `;
 
