@@ -1858,9 +1858,15 @@ async function myTest(){
     console.log('Used range address', usedRange.address)
 		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.formulas);
 		//formulaRanges.format.fill.color = "pink";
-    formulaRanges.load('addresses');
+    formulaRanges.load('address');
+    formulaRanges.load('areas')
 		await context.sync();
-    console.log('Range areas', formulaRanges);
-
+    console.log('Range areas', formulaRanges.address);
+    let areas = formulaRanges.areas
+    for (testRange in areas){
+      testRange.load('address')
+      await context.sync()
+      console.log(testRange.address)
+    }
   })
 };
