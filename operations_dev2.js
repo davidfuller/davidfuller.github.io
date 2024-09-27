@@ -1868,13 +1868,13 @@ async function myTest(){
     //formulaRanges.load('areas')
 		await excel.sync();
     console.log('Range areas', formulaRanges.address);
-    /*
     let areas = formulaRanges.areas
+    let myValues = []
     for (testRange in areas){
-      testRange.load('address')
-      await context.sync()
-      console.log(testRange.address)
+      testRange.load('values');
+      myValues.push(testRange.values);
     }
-      */
+    await excel.sync();
+    console.log(myValues);
   })
 };
