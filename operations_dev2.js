@@ -1864,20 +1864,19 @@ async function myTest(){
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
 		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
 		//formulaRanges.format.fill.color = "pink";
-    formulaRanges.load('address', 'areas/values');
+    formulaRanges.load('address', 'areas');
     //formulaRanges.load('areas')
 		await excel.sync();
     console.log('Range areas', formulaRanges.address);
-    console.log('Value', formulaRanges.areas.value);
-    /*
+    
     let areas = formulaRanges.areas
-    let myValues = []
-    for (testRange in areas){
-      testRange.load('values');
-      myValues.push(testRange.values);
+    
+    for (let i = 0; i < areas.count; i++){
+      areas.item[i].load('address', 'values');
     }
-    await excel.sync();
-    console.log(myValues);
-    */
+    await excel.sync()
+    for (let i = 0; i < areas.count; i++){
+      console.log(i, areas.item[i].address)
+    }
   })
 };
