@@ -1853,11 +1853,14 @@ async function myTest(){
 	await Excel.run(async (context) => {
 		let sheet = context.workbook.worksheets.getActiveWorksheet();
 		let usedRange = sheet.getUsedRange();
+    usedRange.load('address');
+    await context.sync()
+    console.log('Used range address', usedRange.address)
 		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.formulas);
-		formulaRanges.format.fill.color = "pink";
+		//formulaRanges.format.fill.color = "pink";
     formulaRanges.load('addresses');
 		await context.sync();
-    console.log('Range areas', formulaRanges.addresses);
+    console.log('Range areas', formulaRanges);
 
   })
 };
