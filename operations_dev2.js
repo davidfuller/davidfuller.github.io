@@ -1835,5 +1835,10 @@ async function filterOnCharacter(characterName){
       criterion1: characterName
     }
     scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
+    let filteredRange = myRange.getSpecialCells(Excel.SpecialCellType.visible)
+    filteredRange.load('values');
+    await excel.sync();
+    console.log('Filtered');
+    console.log(filteredRange.values);
   })
 }
