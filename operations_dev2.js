@@ -1893,18 +1893,18 @@ async function myTest(){
           found = test;
           console.log('Found');
         }
-        if (found != -1){
-          console.log('Added to item', found)
-          results[found].myItems = results[found].myItems.concat(myRanges.items[i].values)
-          console.log('After', found, results[found].myItems)
-        } else {
-          let newItem = {
-            rowIndex: myRanges.items[i].rowIndex,
-            myItems: myRanges.items[i].values
-          }
-          console.log('New item', newItem);
-          results.push(newItem);
+      }
+      if (found != -1){
+        console.log('Added to item', found)
+        results[found].myItems = results[found].myItems.concat(myRanges.items[i].values)
+        console.log('After', found, results[found].myItems)
+      } else {
+        let newItem = {
+          rowIndex: myRanges.items[i].rowIndex,
+          myItems: myRanges.items[i].values
         }
+        console.log('New item', newItem);
+        results.push(newItem);
       }
     }
     console.log('Results', results);
