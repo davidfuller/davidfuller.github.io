@@ -1888,16 +1888,21 @@ async function myTest(){
       console.log(i, myRanges.items[i].address, myRanges.items[i].rowIndex, myRanges.items[i].values)
       let found = -1
       for (let test = 0; test < results.length ; test++){
+        console.log('Test', test);
         if (myRanges.items[i].rowIndex == results[test].rowIndex){
           found = test;
+          console.log('Found');
         }
         if (found != -1){
+          console.log('Added to item', found)
           results[found].myItems = results[found].myItems.concat(myRanges.items[i].values)
+          console.log('After', found, results[found].myItems)
         } else {
           let newItem = {
             rowIndex: myRanges.items[i].rowIndex,
             myItems: myRanges.items[i].values
           }
+          console.log('New item', newItem);
           results.push(newItem);
         }
       }
