@@ -1943,7 +1943,7 @@ async function getHiddenColumns(){
     myUsedRange.load('columnIndex, columnCount, address');
     await excel.sync();
     console.log('columnIndex', myUsedRange.columnIndex, 'columnCount', myUsedRange.columnCount);
-    for (let i = columnIndex; i < columnCount; i++){
+    for (let i = myUsedRange.columnIndex; i < myUsedRange.columnCount; i++){
       let temp = myUsedRange.getCell(0,i)
       console.log(temp.address);
     }
