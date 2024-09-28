@@ -1891,7 +1891,8 @@ async function myTest(){
     let results = [];
 
     for (let i = 0; i < myRanges.items.length; i++){
-      console.log(i, myRanges.items[i].address, myRanges.items[i].rowIndex, myRanges.items[i].values[0]);
+      console.log(i, myRanges.items[i].address, myRanges.items[i].rowIndex, myRanges.items[i].rowCount, myRanges.items[i].values[0]);
+      /*
       let found = -1
       for (let test = 0; test < results.length ; test++){
         if (myRanges.items[i].rowIndex == results[test].rowIndex){
@@ -1901,12 +1902,13 @@ async function myTest(){
       if (found != -1){
         results[found].myItems.push(...myRanges.items[i].values[0]);
       } else {
+        */
         let newItem = {
           rowIndex: myRanges.items[i].rowIndex,
           myItems: myRanges.items[i].values[0]
         }
         results.push(newItem);
-      }
+     // }
     }
     console.log('Results', results);
 
