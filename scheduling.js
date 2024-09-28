@@ -45,7 +45,7 @@ async function getDirectorInfo(){
     await excel.sync();
     let dataArray = [];
     for (i = 0; i < dataRange.rowCount; i++){
-      let thisRow = [];
+      let thisRow = new Array(5).fill("");
       if (i < myData.length){
         thisRow = [myData[i].sceneNumber, myData[i].lineNumber, myData[i].ukNumTakes, myData[i].ukTakeNum, myData[i].ukDateRecorded];
       }
