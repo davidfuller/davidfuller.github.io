@@ -1,6 +1,7 @@
 let characterlistSheet, forDirectorSheet;
-const characterListName = 'Character List'
-const forDirectorName = 'For Directors'
+const characterListName = 'Character List';
+const forDirectorName = 'For Directors';
+const forDirectorTableName = 'fdTable';
 
 function auto_exec(){
 }
@@ -36,7 +37,16 @@ async function getDirectorInfo(){
     await excel.sync();
     let characterName = characterChoiceRange.values[0][0];
     console.log('Character ',characterName);
-    let myData = jade_modules.operations.getDirectorData(characterName);
+    let myData = await jade_modules.operations.getDirectorData(characterName);
     console.log('Scheduling myData', myData);
+    let dataRange = forDirectorSheet.getRange('forDirectorTableName');
+    dataRange.clear("Contents");
+    let dataArray = [];
+    for (i = 0; i < myData.length; i++){
+      let thisRow = [myData[i].sceneNumber, myData[i].lineNumber, myData[i].ukNumTakes, myData[i].ukTakeNum, myData[i].ukDateRecorded];
+      dataArray.push(thisRow);
+    }
+    dataRange.values = myData;
+    await excel.sync();
   })    
 }
