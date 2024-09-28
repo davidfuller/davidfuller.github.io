@@ -103,6 +103,7 @@ async function mainHTML(){
   <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
   <button id="buttonFilterCharacter" onclick="jade_modules.operations.filterOnCharacter('HARRY & HERMIONE:')">Filter character</button>
   <button id="buttonFilterCharacter" onclick="jade_modules.operations.myTest()">Mytest</button>
+  <button id='btnForDirector' onclick="jade_modules.scheduling.getDirectorInfo()">For Directors</button>
 </div>
   `;
 

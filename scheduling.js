@@ -1,5 +1,6 @@
-let characterlistSheet;
+let characterlistSheet, forDirectorSheet;
 const characterListName = 'Character List'
+const forDirectorName = 'For Directors'
 
 function auto_exec(){
 }
@@ -26,4 +27,13 @@ async function loadReduceAndSortCharacters(){
     characterRange.sort.apply(sortFields);
     await excel.sync();
   })  
+}
+async function getDirectorInfo(){
+  await Excel.run(async function(excel){
+    forDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
+    let characterChoiceRange = forDirectorSheet.getRange('fdCharacterChoice');
+    characterChoiceRange.load('values');
+    await excel.sync();
+    console.log('Character ',characterChoiceRange.values);
+  })    
 }
