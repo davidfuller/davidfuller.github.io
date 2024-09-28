@@ -1857,7 +1857,7 @@ async function myTest(){
 		scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
 		let usedRange = await getDataRange(excel);
     usedRange.load('address');
-    unsedRange.columnHidden = false;
+    usedRange.columnHidden = false;
     await excel.sync()
     console.log('Used range address', usedRange.address)
     const myCriteria = {
