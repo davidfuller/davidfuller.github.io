@@ -1859,6 +1859,8 @@ async function myTest(){
     usedRange.load('address');
     usedRange.columnHidden = false;
     await excel.sync()
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
     console.log('Used range address', usedRange.address)
     const myCriteria = {
       filterOn: Excel.FilterOn.custom,
@@ -1870,6 +1872,7 @@ async function myTest(){
     formulaRanges.load('address');
     //formulaRanges.load('areas')
 		await excel.sync();
+    app.suspendScreenUpdatingUntilNextSync();
     console.log('Range areas', formulaRanges.address);
     
     let myRanges = formulaRanges.areas
@@ -1881,13 +1884,6 @@ async function myTest(){
     }
     await excel.sync();
     console.log(myRanges.items);
-    /*
-    for (let i = 0; i < myRanges.items.length; i++){
-      console.log('Loading address')
-      myRanges.item[i].load('address');
-    }
-      */
-    await excel.sync()
     let results = [];
 
     for (let i = 0; i < myRanges.items.length; i++){
