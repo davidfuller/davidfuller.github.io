@@ -1849,11 +1849,11 @@ async function filterOnCharacter(characterName){
   })
 }
 
-async function myTest(){
+async function getDirectorData(characterName){
+  let myData = [];
   await unlock();
   let hiddenColumnAddresses = await getHiddenColumns();
 	await Excel.run(async (excel) => {
-    let characterName = 'GRIPHOOK:'
 		scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
 		let usedRange = await getDataRange(excel);
     usedRange.load('address');
@@ -1908,7 +1908,6 @@ async function myTest(){
     let ukDateArrayIndex = headings.myItems.findIndex(x => x == "UK Date Recorded");
     console.log('Scene Index', sceneArrayIndex, 'Number Index', numberArrayIndex);
 
-    let myData = []
     for (let result of results){
       if (result.rowIndex != 1){
         let theData = {
@@ -1921,9 +1920,9 @@ async function myTest(){
         myData.push(theData);
       }
     }
-    console.log('myData', myData)
-
+    console.log('myData', myData);
   })
+  return myData;
 };
 async function getHiddenColumns(){
   let results = [];

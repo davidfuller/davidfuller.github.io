@@ -34,6 +34,9 @@ async function getDirectorInfo(){
     let characterChoiceRange = forDirectorSheet.getRange('fdCharacterChoice');
     characterChoiceRange.load('values');
     await excel.sync();
-    console.log('Character ',characterChoiceRange.values);
+    let characterName = characterChoiceRange.values[0][0];
+    console.log('Character ',characterName);
+    let myData = jade_modules.operations.getDirectorData(characterName);
+    console.log('Scheduling myData', myData);
   })    
 }
