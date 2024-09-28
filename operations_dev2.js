@@ -1851,12 +1851,13 @@ async function filterOnCharacter(characterName){
 
 async function myTest(){
   await unlock();
-  await getHiddenColumns();
+  let hiddenColumnAddresses = await getHiddenColumns();
 	await Excel.run(async (excel) => {
     let characterName = 'GRIPHOOK:'
 		scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
 		let usedRange = await getDataRange(excel);
     usedRange.load('address');
+    unsedRange.columnHidden = false;
     await excel.sync()
     console.log('Used range address', usedRange.address)
     const myCriteria = {
@@ -1872,7 +1873,12 @@ async function myTest(){
     console.log('Range areas', formulaRanges.address);
     
     let myRanges = formulaRanges.areas
-    myRanges.load('items')
+    myRanges.load('items');
+    scriptSheet.autoFilter.remove();
+    for (let col of hiddenColumnAddresses){
+      let tempRange = scriptSheet.getRange(col);
+      tempRange.columnHidden = true;
+    }
     await excel.sync();
     console.log(myRanges.items);
     /*
@@ -1932,6 +1938,7 @@ async function myTest(){
   })
 };
 async function getHiddenColumns(){
+  let results = [];
   await Excel.run(async (excel) => {
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const myUsedRange = scriptSheet.getUsedRange();
@@ -1946,10 +1953,12 @@ async function getHiddenColumns(){
     await excel.sync();
     for (let temp of temps){
       if (temp.columnHidden){
-        console.log(temp.address);
+        results.push(temp.address);
       }
     }
   });
+  console.log('hidden columns', results);
+  return results;
 }
 
 
