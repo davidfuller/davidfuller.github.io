@@ -1851,6 +1851,7 @@ async function filterOnCharacter(characterName){
 
 async function myTest(){
   await unlock();
+  await getHiddenColumns();
 	await Excel.run(async (excel) => {
     let characterName = 'GRIPHOOK:'
 		scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -1935,5 +1936,10 @@ async function myTest(){
 
   })
 };
+async function getHiddenColumns(){
+  scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  const myUsedRange = scriptSheet.getUsedRange();
+  console.log('columnIndex', myUsedRange.columnIndex, 'columnCount', myUsedRange.columnCount);
+}
 
 
