@@ -1937,9 +1937,11 @@ async function myTest(){
   })
 };
 async function getHiddenColumns(){
-  scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-  const myUsedRange = scriptSheet.getUsedRange();
-  console.log('columnIndex', myUsedRange.columnIndex, 'columnCount', myUsedRange.columnCount);
+  await Excel.run(async (excel) => {
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const myUsedRange = scriptSheet.getUsedRange();
+    console.log('columnIndex', myUsedRange.columnIndex, 'columnCount', myUsedRange.columnCount);
+  });
 }
 
 
