@@ -41,9 +41,14 @@ async function getDirectorInfo(){
     console.log('Scheduling myData', myData);
     let dataRange = forDirectorSheet.getRange('forDirectorTableName');
     dataRange.clear("Contents");
+    dataRange.load('rowCount');
+    await excel.sync();
     let dataArray = [];
-    for (i = 0; i < myData.length; i++){
-      let thisRow = [myData[i].sceneNumber, myData[i].lineNumber, myData[i].ukNumTakes, myData[i].ukTakeNum, myData[i].ukDateRecorded];
+    for (i = 0; i < dataRange.rowCount; i++){
+      let thisRow = [];
+      if (i < myData.length){
+        thisRow = [myData[i].sceneNumber, myData[i].lineNumber, myData[i].ukNumTakes, myData[i].ukTakeNum, myData[i].ukDateRecorded];
+      }
       dataArray.push(thisRow);
     }
     dataRange.values = myData;
