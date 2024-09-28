@@ -1940,7 +1940,7 @@ async function getHiddenColumns(){
   await Excel.run(async (excel) => {
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const myUsedRange = scriptSheet.getUsedRange();
-    myUsedRange.load('columnIndex', 'columnCount');
+    myUsedRange.load('columnIndex, columnCount');
     await excel.sync();
     console.log('columnIndex', myUsedRange.columnIndex, 'columnCount', myUsedRange.columnCount);
   });
