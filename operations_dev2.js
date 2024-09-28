@@ -1911,8 +1911,11 @@ async function myTest(){
     let headings = results.find(head => head.rowIndex == 1);
     console.log('Headings', headings);
 
-    let sceneArrayIndex = headings.myItems.findIndex(x => x == 'Scene Number')
-    let numberArrayIndex = headings.myItems.findIndex(x => x == 'Number')
+    let sceneArrayIndex = headings.myItems.findIndex(x => x == 'Scene Number');
+    let numberArrayIndex = headings.myItems.findIndex(x => x == 'Number');
+    let numUkTakesArrayIndex = headings.myItems.findIndex(x => x == 'UK No of takes');
+    let ukTakeNumArrayIndex = headings.myItems.findIndex(x => x == 'UK Take No');
+    let ukDateArrayIndex = headings.myItems.findIndex(x => x == "UK Date Recorded");
     console.log('Scene Index', sceneArrayIndex, 'Number Index', numberArrayIndex);
 
     let myData = []
@@ -1920,7 +1923,10 @@ async function myTest(){
       if (result.rowIndex != 1){
         let theData = {
           sceneNumber: result.myItems[sceneArrayIndex],
-          lineNumber: result.myItems[numberArrayIndex]
+          lineNumber: result.myItems[numberArrayIndex],
+          ukNumTakes: result.myItems[numUkTakesArrayIndex],
+          ukTakeNum: result.myItems[ukTakeNumArrayIndex],
+          ukDateRecorded: result.myItems[ukDateArrayIndex]
         }
         myData.push(theData);
       }
