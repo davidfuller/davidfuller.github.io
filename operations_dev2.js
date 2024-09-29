@@ -1,6 +1,6 @@
 const firstDataRow = 3;
 const lastDataRow = 9999;
-const scriptSheetName = 'Script'
+const scriptSheetName = 'Script';
 const forDirectorName = 'For Directors';
 const columnsToLock = "A:T";
 
@@ -1948,7 +1948,7 @@ async function getHiddenColumns(){
   console.log('hidden columns', results);
   return results;
 }
-function showForDirector(){
+async function showForDirector(){
   const mainPage = tag('main-page');
   mainPage.style.display = 'none';
   const forDirectorPage = tag('for-director-page');
@@ -1956,9 +1956,9 @@ function showForDirector(){
   await Excel.run(async function(excel){
     let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
     ForDirectorSheet.activate();
-  }
+  })
 }
-function showMainPage(){
+async function showMainPage(){
   const mainPage = tag('main-page');
   mainPage.style.display = 'block';
   const forDirectorPage = tag('for-director-page');
