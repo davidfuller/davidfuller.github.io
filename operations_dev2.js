@@ -1872,19 +1872,21 @@ async function getDirectorData(characterName){
 		//formulaRanges.format.fill.color = "pink";
     formulaRanges.load('address');
     formulaRanges.load('cellCount');
+    formulaRanges.load('areaCount');
     //formulaRanges.load('areas')
 		await excel.sync();
     app.suspendScreenUpdatingUntilNextSync();
     console.log('Range areas', formulaRanges.address);
     console.log('Cell count', formulaRanges.cellCount);
+    console.log('Area count', formulaRanges.areaCount);
     
-    let myRanges = formulaRanges.areas
-    let rangeCount = myRanges.getCount();
+    let myRanges = formulaRanges.areas;
+    let rangeCount = formulaRanges.areaCount;
     await excel.sync();
     console.log('rangeCount', rangeCount);
     let theRanges = [];
     for (let i = 0; i < rangeCount; i++){
-      theRanges[i] = myRanges.getItemAt(i);
+      theRanges[i] = myRanges.item(i);
       theRanges[i].load('values');
     }
     //myRanges.load('items');
