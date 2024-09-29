@@ -1890,7 +1890,7 @@ async function getDirectorData(characterName){
     for (let i = 0; i < 29; i++){
       console.log(i, myRanges[i]);
       theRanges[i] = myRanges[i];
-      theRanges[i].load('items');
+      theRanges[i].load('values');
     }
     
     scriptSheet.autoFilter.remove();
@@ -1900,8 +1900,8 @@ async function getDirectorData(characterName){
     }
     await excel.sync();
     console.log(theRanges)
-    for (let i = 0; i < rangeCount; i++){
-      console.log('Range items', i, theRanges[i].items);
+    for (let i = 0; i < 29; i++){
+      console.log('Range items', i, theRanges[i].values);
     }
 
     
