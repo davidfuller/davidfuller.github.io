@@ -1886,7 +1886,7 @@ async function getDirectorData(characterName){
     console.log('rangeCount', rangeCount);
     let theRanges = [];
     for (let i = 0; i < rangeCount; i++){
-      myRanges[i].load('items');
+      console.log(i, myRanges[i]);
     }
     //myRanges.load('items');
     scriptSheet.autoFilter.remove();
