@@ -1880,6 +1880,7 @@ async function getDirectorData(characterName){
     
     let myRanges = formulaRanges.areas
     let rangeCount = myRanges.getCount();
+    await excel.sync();
     console.log('rangeCount', rangeCount);
     let theRanges = [];
     for (let i = 0; i < rangeCount; i++){
