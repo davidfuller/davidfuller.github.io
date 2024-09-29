@@ -1947,5 +1947,17 @@ async function getHiddenColumns(){
   console.log('hidden columns', results);
   return results;
 }
+function showForDirector(){
+  const mainPage = tag('main-page');
+  mainPage.style.display = 'none';
+  const forDirectorPage = tag('for-director-page');
+  forDirectorPage.style.display = 'block';
+}
+function showMainPage(){
+  const mainPage = tag('main-page');
+  mainPage.style.display = 'block';
+  const forDirectorPage = tag('for-director-page');
+  forDirectorPage.style.display = 'none';
+}
 
 

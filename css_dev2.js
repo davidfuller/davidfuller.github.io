@@ -431,6 +431,14 @@ label {
   padding-left: 5px;
   cursor: pointer;
 }
+
+#main-page {
+  display: block;
+}
+
+#for-director-page {
+  display: none;
+}
                     `;
   Jade.set_css(css);
   console.log('CSS done')
