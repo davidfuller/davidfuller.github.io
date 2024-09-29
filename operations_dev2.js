@@ -1875,6 +1875,7 @@ async function getDirectorData(characterName){
 		await excel.sync();
     app.suspendScreenUpdatingUntilNextSync();
     console.log('Range areas', formulaRanges.address);
+    console.log('Cell count', formulaRanges.getCellCount())
     
     let myRanges = formulaRanges.areas
     myRanges.load('items');
