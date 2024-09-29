@@ -1886,9 +1886,11 @@ async function getDirectorData(characterName){
     console.log('rangeCount', rangeCount);
     console.log(myRanges)
     let theRanges = [];
+    /*
     for (let i = 0; i < rangeCount; i++){
       console.log(i, myRanges[i]);
     }
+    */
     myRanges.load('items');
     scriptSheet.autoFilter.remove();
     for (let col of hiddenColumnAddresses){
