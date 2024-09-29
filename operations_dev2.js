@@ -1,6 +1,7 @@
 const firstDataRow = 3;
 const lastDataRow = 9999;
 const scriptSheetName = 'Script'
+const forDirectorName = 'For Directors';
 const columnsToLock = "A:T";
 
 let sceneIndex, numberIndex;
@@ -1952,12 +1953,20 @@ function showForDirector(){
   mainPage.style.display = 'none';
   const forDirectorPage = tag('for-director-page');
   forDirectorPage.style.display = 'block';
+  await Excel.run(async function(excel){
+    let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
+    ForDirectorSheet.activate();
+  }
 }
 function showMainPage(){
   const mainPage = tag('main-page');
   mainPage.style.display = 'block';
   const forDirectorPage = tag('for-director-page');
   forDirectorPage.style.display = 'none';
+  await Excel.run(async function(excel){
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    scriptSheet.activate();
+  })
 }
 
 
