@@ -1886,21 +1886,22 @@ async function getDirectorData(characterName){
     console.log('rangeCount', rangeCount);
     console.log(myRanges)
     let theRanges = [];
-    /*
-    for (let i = 0; i < rangeCount; i++){
-      console.log(i, myRanges[i]);
+    
+    for (let i = 0; i < 29; i++){
+      console.log(i, myRanges.items(i));
+      theRanges[i] = myRanges.items(i);
+      theRanges[i].load('items');
     }
-    */
-    myRanges.load('items');
+    
     scriptSheet.autoFilter.remove();
     for (let col of hiddenColumnAddresses){
       let tempRange = scriptSheet.getRange(col);
       tempRange.columnHidden = true;
     }
     await excel.sync();
-    console.log(myRanges)
+    console.log(theRanges)
     for (let i = 0; i < rangeCount; i++){
-      console.log('Range items', i, myRanges[i].items);
+      console.log('Range items', i, theRanges[i].items);
     }
 
     
