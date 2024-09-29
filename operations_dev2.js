@@ -1889,7 +1889,7 @@ async function getDirectorData(characterName){
     
     for (let i = 0; i < 29; i++){
       console.log(i, myRanges[i]);
-      theRanges[i] = myRanges.items[i];
+      theRanges[i] = myRanges[i];
       theRanges[i].load('items');
     }
     
