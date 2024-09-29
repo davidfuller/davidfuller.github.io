@@ -1884,7 +1884,7 @@ async function getDirectorData(characterName){
     
     
     let theRanges = [];
-    for (let i = 0; i < 29; i++){
+    for (let i = 0; i < myAddresses.length; i++){
       theRanges[i] = scriptSheet.getRange(myAddresses[i]);
       theRanges[i].load('values');
       theRanges[i].load('rowIndex');
