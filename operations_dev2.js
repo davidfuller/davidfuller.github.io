@@ -1887,6 +1887,8 @@ async function getDirectorData(characterName){
     for (let i = 0; i < 29; i++){
       theRanges[i] = scriptSheet.getRange(myAddresses[i]);
       theRanges[i].load('values');
+      theRanges[i].load('rowIndex');
+      theRanges[i].load('rowCount');
     }
     
     scriptSheet.autoFilter.remove();
@@ -1899,18 +1901,15 @@ async function getDirectorData(characterName){
     for (let i = 0; i < 29; i++){
       console.log('Range items', i, theRanges[i].values);
     }
-
-    
-    /*
-    console.log(myRanges.items);
     let results = [];
 
-    for (let i = 0; i < myRanges.items.length; i++){
-      for (let myRow = 0; myRow < myRanges.items[i].rowCount; myRow++){
-        console.log(i, myRow, myRanges.items[i].address, myRanges.items[i].rowIndex, myRanges.items[i].rowCount, myRanges.items[i].values[myRow]);
+    for (let i = 0; i < theRanges.length; i++){
+      console.log('numRows', theRanges[i].values.length, theRanges[i].rowCount);
+      for (let myRow = 0; myRow < theRanges[i].values.length; myRow++){
+        console.log(i, myRow, theRanges[i].rowIndex, theRanges[i].rowCount, theRanges.values[i][myRow]);
         let newItem = {
-          rowIndex: myRanges.items[i].rowIndex,
-          myItems: myRanges.items[i].values[myRow]
+          rowIndex: myRanges[i].rowIndex,
+          myItems: myRanges[i].values[myRow]
         }
         results.push(newItem);
       }
@@ -1940,7 +1939,7 @@ async function getDirectorData(characterName){
       }
     }
     console.log('myData', myData);
-    */
+
   })
   return myData;
 };
