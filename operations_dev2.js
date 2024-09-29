@@ -1879,13 +1879,27 @@ async function getDirectorData(characterName){
     console.log('Cell count', formulaRanges.cellCount);
     
     let myRanges = formulaRanges.areas
-    myRanges.load('items');
+    let rangeCount = myRanges.getCount();
+    console.log('rangeCount', rangeCount);
+    let theRanges = [];
+    for (let i = 0; i < rangeCount; i++){
+      theRanges[i] = myRanges.getItemAt(i);
+      theRanges[i].load('values');
+    }
+    //myRanges.load('items');
     scriptSheet.autoFilter.remove();
     for (let col of hiddenColumnAddresses){
       let tempRange = scriptSheet.getRange(col);
       tempRange.columnHidden = true;
     }
     await excel.sync();
+    console.log(theRanges)
+    for (let i = 0; i < rangeCount; i++){
+      console.log('Range values', i, theRanges[i].values);
+    }
+
+    
+    /*
     console.log(myRanges.items);
     let results = [];
 
@@ -1924,6 +1938,7 @@ async function getDirectorData(characterName){
       }
     }
     console.log('myData', myData);
+    */
   })
   return myData;
 };
