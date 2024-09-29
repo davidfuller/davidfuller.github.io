@@ -1869,7 +1869,6 @@ async function getDirectorData(characterName){
     }
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
 		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
-		//formulaRanges.format.fill.color = "pink";
     formulaRanges.load('address');
     formulaRanges.load('cellCount');
     formulaRanges.load('areaCount');
@@ -1880,16 +1879,13 @@ async function getDirectorData(characterName){
     console.log('Cell count', formulaRanges.cellCount);
     console.log('Area count', formulaRanges.areaCount);
     
-    let myRanges = formulaRanges.areas;
-    let rangeCount = formulaRanges.areaCount;
-    await excel.sync();
-    console.log('rangeCount', rangeCount);
-    console.log(myRanges)
-    let theRanges = [];
+    let myAddresses = formulaRanges.address.split(",");
+    console.log('myAddresses', myAddresses);
     
+    
+    let theRanges = [];
     for (let i = 0; i < 29; i++){
-      console.log(i, myRanges[i]);
-      theRanges[i] = myRanges[i];
+      theRanges[i] = scriptSheet.getRange(myAddresses[i]);
       theRanges[i].load('values');
     }
     
