@@ -1871,6 +1871,7 @@ async function getDirectorData(characterName){
 		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
 		//formulaRanges.format.fill.color = "pink";
     formulaRanges.load('address');
+    formulaRanges.load('cellCount');
     //formulaRanges.load('areas')
 		await excel.sync();
     app.suspendScreenUpdatingUntilNextSync();
