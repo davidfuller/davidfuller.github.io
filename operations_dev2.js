@@ -1886,8 +1886,7 @@ async function getDirectorData(characterName){
     console.log('rangeCount', rangeCount);
     let theRanges = [];
     for (let i = 0; i < rangeCount; i++){
-      theRanges[i] = myRanges[i];
-      theRanges[i].load('values');
+      myRanges[i].load('values');
     }
     //myRanges.load('items');
     scriptSheet.autoFilter.remove();
@@ -1896,9 +1895,9 @@ async function getDirectorData(characterName){
       tempRange.columnHidden = true;
     }
     await excel.sync();
-    console.log(theRanges)
+    console.log(myRanges)
     for (let i = 0; i < rangeCount; i++){
-      console.log('Range values', i, theRanges[i].values);
+      console.log('Range values', i, myRanges[i].values);
     }
 
     
