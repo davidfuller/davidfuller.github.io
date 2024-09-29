@@ -5,7 +5,7 @@ async function mainHTML(){
 <h1>MuVi2 Script Controller</h1>
 <h2>Version Beta 3. Development</h2>
 <div id="main-page">
-  <button id="btnForDirectorPage" onclicl="jade_modules.operations.showForDirector">For Director</button>
+  <button id="btnForDirectorPage" onclicl="jade_modules.operations.showForDirector()">For Director</button>
   <div id="firstButtons">
     <label class="section-label">Lock / Unlock</label><br/>
     <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
@@ -109,7 +109,7 @@ async function mainHTML(){
 </div>
 <div id="for-director-page">
   For Director
-  <button id="btnMainPage" onclicl="jade_modules.operations.showMainPage">Main Page</button>
+  <button id="btnMainPage" onclicl="jade_modules.operations.showMainPage()">Main Page</button>
   <button id='btnGetDirectorInfo' onclick="jade_modules.scheduling.getDirectorInfo()">For Directors</button>
 </div>
   `;
