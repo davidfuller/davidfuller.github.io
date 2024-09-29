@@ -1908,8 +1908,8 @@ async function getDirectorData(characterName){
       for (let myRow = 0; myRow < theRanges[i].values.length; myRow++){
         console.log(i, myRow, theRanges[i].rowIndex, theRanges[i].rowCount, theRanges[i].values[myRow]);
         let newItem = {
-          rowIndex: myRanges[i].rowIndex,
-          myItems: myRanges[i].values[myRow]
+          rowIndex: theRanges[i].rowIndex,
+          myItems: theRanges[i].values[myRow]
         }
         results.push(newItem);
       }
