@@ -5,7 +5,7 @@ const forActorName = 'For Actors'
 const forDirectorTableName = 'fdTable';
 const forActorsTableName = "faTable";
 const numItemsDirectorsName = 'fdItems';
-const numItemsActorsName = 'faTable';
+const numItemsActorsName = 'faItems';
 
 function auto_exec(){
 }
