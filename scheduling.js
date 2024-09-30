@@ -143,7 +143,7 @@ async function getForSchedulingInfo(){
       if (i == 0){
         newRow = {
           sceneNumber: myData[i].sceneNumber,
-          sceneWordCount: myData[i].sceneWordCount
+          sceneWordCount: myData[i].sceneWordCount,
           characterWordCount: myData[i].lineWordCount
         }
         dataArray.push(newRow);
@@ -153,7 +153,7 @@ async function getForSchedulingInfo(){
           if (myIndex == -1){
             newRow = {
               sceneNumber: myData[i].sceneNumber,
-              sceneWordCount: myData[i].sceneWordCount
+              sceneWordCount: myData[i].sceneWordCount,
               characterWordCount: myData[i].lineWordCount
             }
             dataArray.push(newRow);
