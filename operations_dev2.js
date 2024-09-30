@@ -4,7 +4,7 @@ const scriptSheetName = 'Script';
 const forDirectorName = 'For Directors';
 const columnsToLock = "A:T";
 
-let sceneIndex, numberIndex; characterIndex, locationIndex
+let sceneIndex, numberIndex, characterIndex, locationIndex;
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
