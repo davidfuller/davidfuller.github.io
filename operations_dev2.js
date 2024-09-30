@@ -1898,7 +1898,7 @@ async function getDirectorData(characterName){
     }
     await excel.sync();
     console.log(theRanges)
-    for (let i = 0; i < 29; i++){
+    for (let i = 0; i < theRanges.length; i++){
       console.log('Range items', i, theRanges[i].values);
     }
     let results = [];
