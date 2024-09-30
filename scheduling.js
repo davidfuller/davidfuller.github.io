@@ -90,7 +90,7 @@ async function getActorInfo(){
         thisRow = [myData[i].sceneNumber, myData[i].lineNumber, theLocation.location]
         dataArray.push(thisRow);
       } else {
-        dataArray[myIndex][2] = dataArray[myIndex][2] + ", " + theLocation.location
+        dataArray[myIndex][1] = dataArray[myIndex][1] + ", " + myData[i].lineNumber;
         console.log("Found Index",  myIndex, "dataArray", dataArray[myIndex]);
       }
       console.log("Index", i, "dataArray", dataArray);
