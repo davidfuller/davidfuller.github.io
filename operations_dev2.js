@@ -2078,7 +2078,7 @@ async function showMainPage(){
     scriptSheet.activate();
   })
 }
-async function showFoActorsPage(){
+async function showForActorsPage(){
   const mainPage = tag('main-page');
   mainPage.style.display = 'none';
   const forDirectorPage = tag('for-director-page');

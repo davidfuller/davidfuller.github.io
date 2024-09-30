@@ -38,7 +38,7 @@ label {
   font-size: 12px;
 }
 /* Section formatting */  
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons {
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
