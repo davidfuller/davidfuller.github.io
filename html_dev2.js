@@ -111,7 +111,7 @@ async function mainHTML(){
   <label id='for-director-label'>For Director Commands</label><br/>
   <button id="btnMainPage" onclick="jade_modules.operations.showMainPage()">Main Page</button><br>
   <div id="forDirectorButtons">
-    <button id='btnGetDirectorInfo' onclick="jade_modules.scheduling.getDirectorInfo()">For Directors</button>
+    <button id='btnGetDirectorInfo' onclick="jade_modules.scheduling.getDirectorInfo()">Calculate for director information for selected character</button>
   </div>
 </div>
   `;
