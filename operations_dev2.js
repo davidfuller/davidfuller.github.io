@@ -1900,9 +1900,11 @@ async function getDirectorData(characterName){
     }
     await excel.sync();
     console.log(theRanges)
+    /*
     for (let i = 0; i < theRanges.length; i++){
       console.log('Range items', i, theRanges[i].values);
     }
+    */
     let results = [];
 
     for (let i = 0; i < theRanges.length; i++){
@@ -1993,9 +1995,11 @@ async function getLocations(){
     }
     await excel.sync();
     console.log(theRanges)
+    /*
     for (let i = 0; i < theRanges.length; i++){
       console.log('Range items', i, theRanges[i].values);
     }
+    */
     let results = [];
     for (let i = 0; i < theRanges.length; i++){
       console.log('numRows', theRanges[i].values.length, theRanges[i].rowCount);
