@@ -41,7 +41,7 @@ async function getDirectorInfo(){
     let myData = await jade_modules.operations.getDirectorData(characterName);
     console.log('Scheduling myData', myData);
     let dataRange = forDirectorSheet.getRange(forDirectorTableName);
-    let numItems =forDirectorSheet.getRange(numItemsName)
+    let numItems = forDirectorSheet.getRange(numItemsName);
     dataRange.clear("Contents");
     dataRange.load('rowCount');
     await excel.sync();
@@ -53,9 +53,9 @@ async function getDirectorInfo(){
       }
       dataArray.push(thisRow);
     }
-    console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount);
+    console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length);
     dataRange.values = dataArray;
-    numItems.values = dataRange.count;
+    numItems.values = myData.length;
     await excel.sync();
   })    
 }
