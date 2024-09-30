@@ -139,8 +139,30 @@ async function getForSchedulingInfo(){
     
     let dataArray = [];
     for (let i = 0; i < myData.length; i++){
-      
+      let newRow;
+      if (i == 0){
+        newRow = {
+          sceneNumber: myData[i].sceneNumber,
+          sceneWordCount: myData[i].sceneWordCount
+          characterWordCount: myData[i].lineWordCount
+        }
+        dataArray.push(newRow);
+      } else {
+        if (myData[i - 1].lineNumber != myData[i].lineNumber){
+          let myIndex = dataArray.findIndex(x => x.sceneNumber == myData[i].sceneNumber);
+          if (myIndex == -1){
+            newRow = {
+              sceneNumber: myData[i].sceneNumber,
+              sceneWordCount: myData[i].sceneWordCount
+              characterWordCount: myData[i].lineWordCount
+            }
+            dataArray.push(newRow);
+          } else {
+            dataArray[myIndex].characterWordCount = dataArray[myIndex].characterWordCount + myData[i].lineWordCount;
+          }
+        }
+      } 
     }
+    console.log('dataArray', dataArray);
   })
-  
 }
