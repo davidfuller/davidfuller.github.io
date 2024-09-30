@@ -94,7 +94,11 @@ async function getActorInfo(){
         console.log('location', theLocation);
         if (myIndex == -1){
           console.log(i, "New Row")
-          thisRow = [myData[i].sceneNumber, myData[i].lineNumber, theLocation.location]
+          if (theLocation == null){
+            thisRow = [myData[i].sceneNumber, myData[i].lineNumber, ""];
+          } else {
+            thisRow = [myData[i].sceneNumber, myData[i].lineNumber, theLocation.location];
+          }
           console.log('thisRow', thisRow)
           let newIndex = dataArray.length;
           console.log('newIndex', newIndex);
