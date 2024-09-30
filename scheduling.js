@@ -109,7 +109,7 @@ async function getActorInfo(){
         console.log("Empty i", i, "dataArray", dataArray);
       }
     }
-    console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length);
+    console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length, 'dataArray.length', dataArray.length);
     let displayRange = dataRange.getRangeByIndexes(0,0, dataArray.length, 3);
     displayRange.values = dataArray;
     numItems.values = dataArray.length;    
