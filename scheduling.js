@@ -93,23 +93,25 @@ async function getActorInfo(){
           console.log(i, "New Row")
           thisRow = [myData[i].sceneNumber, myData[i].lineNumber, theLocation.location]
           console.log('thisRow', thisRow)
-          let newIndex = dataArray.length
+          let newIndex = dataArray.length;
+          console.log('newIndex', newIndex);
           dataArray[newIndex] = thisRow;
+          console.log('dataArray[newIndex]', dataArray[newIndex]);
         } else {
           console.log('Array before:', dataArray[myIndex]);
           dataArray[myIndex][1] = dataArray[myIndex][1] + ", " + myData[i].lineNumber;
           console.log("Found Index",  myIndex, "dataArray", dataArray[myIndex]);
         }
-        console.log("Index", i, "dataArray", dataArray);
+        console.log("i", i, "dataArray", dataArray);
       } else {
         let thisRow = new Array(3).fill("");
         dataArray.push(thisRow);
+        console.log("Empty i", i, "dataArray", dataArray);
       }
-      console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length);
-      dataRange.values = dataArray;
-      numItems.values = dataArray.length;
-      }
-          
+    }
+    console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length);
+    dataRange.values = dataArray;
+    numItems.values = dataArray.length;    
     //await excel.sync();
   })
 
