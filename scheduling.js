@@ -86,12 +86,14 @@ async function getActorInfo(){
       let myIndex = dataArray.findIndex(x => x[0] == myData[i].sceneNumber)
       let theLocation = myLocation.find(x => x.sceneNumber == myData[i].sceneNumber)
       if (myIndex == -1){
-        let thisRow = [myData[i].sceneNumber, myData[i].lineNumber, theLocation.location]
+        console.log(i, "New Row")
+        thisRow = [myData[i].sceneNumber, myData[i].lineNumber, theLocation.location]
         dataArray.push(thisRow);
       } else {
         dataArray[myIndex][2] = dataArray[myIndex][2] + ", " + theLocation.location
+        console.log("Found Index",  myIndex, "dataArray", dataArray[myIndex]);
       }
-      console.log(dataArray);
+      console.log("Index", i, "dataArray", dataArray);
     }
     console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length);
     dataRange.values = dataArray;
