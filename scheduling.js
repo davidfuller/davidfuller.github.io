@@ -79,6 +79,9 @@ async function getActorInfo(){
     let numItems = forActorSheet.getRange(numItemsActorsName);
     dataRange.clear("Contents");
     dataRange.load('rowCount');
+    dataRange.load('rowIndex');
+    dataRange.load('columnIndex');
+
     await excel.sync();
     
     let dataArray = [];
@@ -110,7 +113,7 @@ async function getActorInfo(){
       }
     }
     console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length, 'dataArray.length', dataArray.length);
-    let displayRange = dataRange.getRangeByIndexes(0,0, dataArray.length, 3);
+    let displayRange = forActorSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, dataArray.length, 3);
     displayRange.values = dataArray;
     numItems.values = dataArray.length;    
     //await excel.sync();
