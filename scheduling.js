@@ -105,7 +105,7 @@ async function getActorInfo(){
           dataArray[newIndex] = thisRow;
           console.log('dataArray[newIndex]', dataArray[newIndex]);
         } else {
-          if ((i > 0) && (myData[i - 1].lineNumber != myData[i].lineNumber){
+          if ((i > 0) && (myData[i - 1].lineNumber != myData[i].lineNumber)){
             console.log('Array before:', dataArray[myIndex]);
             dataArray[myIndex][1] = dataArray[myIndex][1] + ", " + myData[i].lineNumber;
             console.log("Found Index",  myIndex, "dataArray", dataArray[myIndex]);
