@@ -108,8 +108,8 @@ async function mainHTML(){
   </div>
 </div>
 <div id="for-director-page">
-  For Director
-  <button id="btnMainPage" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+  <label id='for-director-label'>For Director</label>
+  <button id="btnMainPage" onclick="jade_modules.operations.showMainPage()">Main Page</button><br>
   <button id='btnGetDirectorInfo' onclick="jade_modules.scheduling.getDirectorInfo()">For Directors</button>
 </div>
   `;

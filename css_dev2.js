@@ -439,6 +439,13 @@ label {
 #for-director-page {
   display: none;
 }
+
+#for-director-label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 15px
+}
+
                     `;
   Jade.set_css(css);
   console.log('CSS done')
