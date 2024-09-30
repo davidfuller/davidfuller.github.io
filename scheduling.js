@@ -83,7 +83,7 @@ async function getActorInfo(){
     
     let dataArray = [];
     console.log('Start of loops', dataArray)
-    for (i = 0; i < dataRange.rowCount; i++){
+    for (i = 0; i < 5; i++){
       if (i < myData.length){
         let myIndex = dataArray.findIndex(x => x[0] == myData[i].sceneNumber)
         console.log('myIndex', myIndex)
