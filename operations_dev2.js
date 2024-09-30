@@ -1941,7 +1941,6 @@ async function getDirectorData(characterName){
       }
     }
     console.log('myData', myData);
-    await excel.sync();
   })
   return myData;
 };
