@@ -116,7 +116,7 @@ async function getActorInfo(){
     let displayRange = forActorSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, dataArray.length, 3);
     displayRange.values = dataArray;
     numItems.values = dataArray.length;    
-    //await excel.sync();
+    await excel.sync();
   })
 
 
