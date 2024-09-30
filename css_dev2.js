@@ -38,7 +38,7 @@ label {
   font-size: 12px;
 }
 /* Section formatting */  
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin {
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
@@ -441,7 +441,7 @@ label {
 }
 
 #for-director-label {
-  font-size: 14px;
+  font-size: 22px;
   font-weight: bold;
   margin-left: 15px
 }
