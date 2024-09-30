@@ -64,8 +64,8 @@ async function getDirectorInfo(){
 }
 async function getActorInfo(){
   await Excel.run(async function(excel){
-    forDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
-    let characterChoiceRange = forDirectorSheet.getRange('fdCharacterChoice');
+    forActorSheet = excel.workbook.worksheets.getItem(forActorName);
+    let characterChoiceRange = forActorSheet.getRange('faCharacterChoice');
     characterChoiceRange.load('values');
     await excel.sync();
     let characterName = characterChoiceRange.values[0][0];
@@ -74,25 +74,29 @@ async function getActorInfo(){
     let myLocation = await jade_modules.operations.getLocations();
     console.log('Scheduling myData', myData);
     console.log('Locations', myLocation);
-    /*
-    let dataRange = forDirectorSheet.getRange(forDirectorTableName);
-    let numItems = forDirectorSheet.getRange(numItemsDirectorsName);
+    
+    let dataRange = forActorSheet.getRange(forActorsTableName);
+    let numItems = forActorSheet.getRange(numItemsActorsName);
     dataRange.clear("Contents");
     dataRange.load('rowCount');
     await excel.sync();
     let dataArray = [];
     for (i = 0; i < dataRange.rowCount; i++){
-      let thisRow = new Array(5).fill("");
-      if (i < myData.length){
-        thisRow = [myData[i].sceneNumber, myData[i].lineNumber, myData[i].ukNumTakes, myData[i].ukTakeNum, myData[i].ukDateRecorded];
+      let thisRow = new Array(3).fill("");
+      let myIndex = dataArray.findIndex(x => x[0] == myData[i].sceneNumber)
+      let theLocation = myLocation.find(x => x.sceneNumber == myData[i].sceneNumber)
+      if (myIndex == -1){
+        let thisRow = [myData[i].sceneNumber, myData[i].lineNumber, theLocation.location]
+        dataArray.push(thisRow);
+      } else {
+        dataArray[myIndex][2] = dataArray[myIndex][2] + ", " + theLocation.location
       }
-      dataArray.push(thisRow);
+      console.log(dataArray);
     }
     console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length);
     dataRange.values = dataArray;
-    numItems.values = myData.length;
+    numItems.values = dataArray.length;
     await excel.sync();
-    */
   })
 
 
