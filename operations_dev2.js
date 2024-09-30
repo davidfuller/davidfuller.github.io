@@ -1942,6 +1942,7 @@ async function getDirectorData(characterName){
     }
     console.log('myData', myData);
   })
+  console.log('directors myData', myData);
   return myData;
 };
 
@@ -2027,6 +2028,7 @@ async function getLocations(){
     console.log('myData', myData);
 
   })
+  console.log('get Locations myData', myData);
   return myData;
 }
 
