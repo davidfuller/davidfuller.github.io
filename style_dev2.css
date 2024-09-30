@@ -436,6 +436,10 @@ label {
   display: none;
 }
 
+#for-actor-page {
+  display: none;
+}
+
 #for-director-label {
   font-size: 22px;
   font-weight: bold;

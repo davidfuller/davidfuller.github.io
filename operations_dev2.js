@@ -2,6 +2,7 @@ const firstDataRow = 3;
 const lastDataRow = 9999;
 const scriptSheetName = 'Script';
 const forDirectorName = 'For Directors';
+const forActorsName = 'For Actors'
 const columnsToLock = "A:T";
 
 let sceneIndex, numberIndex, characterIndex, locationIndex;
@@ -2058,6 +2059,8 @@ async function showForDirector(){
   mainPage.style.display = 'none';
   const forDirectorPage = tag('for-director-page');
   forDirectorPage.style.display = 'block';
+  const forActorsPage = tag('for-actor-page');
+  forActorsPage.style.display = none;
   await Excel.run(async function(excel){
     let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
     ForDirectorSheet.activate();
@@ -2068,10 +2071,25 @@ async function showMainPage(){
   mainPage.style.display = 'block';
   const forDirectorPage = tag('for-director-page');
   forDirectorPage.style.display = 'none';
+  const forActorsPage = tag('for-actor-page');
+  forActorsPage.style.display = none;
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.activate();
   })
 }
+async function showFoActorsPage(){
+  const mainPage = tag('main-page');
+  mainPage.style.display = 'none';
+  const forDirectorPage = tag('for-director-page');
+  forDirectorPage.style.display = 'none';
+  const forActorsPage = tag('for-actor-page');
+  forActorsPage.style.display = block;
+  await Excel.run(async function(excel){
+    let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
+    actorsSheet.activate();
+  })
+}
+
 
 

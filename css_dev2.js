@@ -440,11 +440,16 @@ label {
   display: none;
 }
 
+#for-actor-page {
+  display: none;
+}
+
 #for-director-label {
   font-size: 22px;
   font-weight: bold;
   margin-left: 15px
 }
+
 #btnMainPage, #btnForDirectorPage, #forActorsButtons {
   margin-left: 15px;
 }
