@@ -110,7 +110,8 @@ async function getActorInfo(){
       }
     }
     console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length);
-    dataRange.values = dataArray;
+    let displayRange = dataRange.getRangeByIndexes(0,0, dataArray.length, 3);
+    displayRange.values = dataArray;
     numItems.values = dataArray.length;    
     //await excel.sync();
   })
