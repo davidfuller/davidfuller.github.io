@@ -110,7 +110,7 @@ async function getActorInfo(){
       }
       
       
-    await excel.sync();
+    //await excel.sync();
   })
 
 
