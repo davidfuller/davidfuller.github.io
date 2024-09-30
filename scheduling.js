@@ -2,6 +2,7 @@ let characterlistSheet, forDirectorSheet;
 const characterListName = 'Character List';
 const forDirectorName = 'For Directors';
 const forDirectorTableName = 'fdTable';
+const numItemsName = 'fdItems';
 
 function auto_exec(){
 }
@@ -40,6 +41,7 @@ async function getDirectorInfo(){
     let myData = await jade_modules.operations.getDirectorData(characterName);
     console.log('Scheduling myData', myData);
     let dataRange = forDirectorSheet.getRange(forDirectorTableName);
+    let numItems =forDirectorSheet.getRange(numItemsName)
     dataRange.clear("Contents");
     dataRange.load('rowCount');
     await excel.sync();
@@ -53,6 +55,7 @@ async function getDirectorInfo(){
     }
     console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount);
     dataRange.values = dataArray;
+    numItems.values = dataRange.count;
     await excel.sync();
   })    
 }
