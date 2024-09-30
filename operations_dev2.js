@@ -2060,7 +2060,7 @@ async function showForDirector(){
   const forDirectorPage = tag('for-director-page');
   forDirectorPage.style.display = 'block';
   const forActorsPage = tag('for-actor-page');
-  forActorsPage.style.display = none;
+  forActorsPage.style.display = 'none';
   await Excel.run(async function(excel){
     let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
     ForDirectorSheet.activate();
@@ -2072,7 +2072,7 @@ async function showMainPage(){
   const forDirectorPage = tag('for-director-page');
   forDirectorPage.style.display = 'none';
   const forActorsPage = tag('for-actor-page');
-  forActorsPage.style.display = none;
+  forActorsPage.style.display = 'none';
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.activate();
@@ -2084,7 +2084,7 @@ async function showForActorsPage(){
   const forDirectorPage = tag('for-director-page');
   forDirectorPage.style.display = 'none';
   const forActorsPage = tag('for-actor-page');
-  forActorsPage.style.display = block;
+  forActorsPage.style.display ='block';
   await Excel.run(async function(excel){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.activate();
