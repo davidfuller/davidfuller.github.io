@@ -80,7 +80,7 @@ async function getActorInfo(){
     dataRange.clear("Contents");
     dataRange.load('rowCount');
     await excel.sync();
-    /*
+    
     let dataArray = [];
     console.log('Start of loops', dataArray)
     for (i = 0; i < dataRange.rowCount; i++){
@@ -109,8 +109,7 @@ async function getActorInfo(){
       dataRange.values = dataArray;
       numItems.values = dataArray.length;
       }
-      */
-      
+          
     //await excel.sync();
   })
 
