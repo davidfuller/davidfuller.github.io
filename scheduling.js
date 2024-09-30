@@ -71,9 +71,9 @@ async function getActorInfo(){
     let characterName = characterChoiceRange.values[0][0];
     console.log('Character ',characterName);
     let myData = await jade_modules.operations.getDirectorData(characterName);
-    let myLocation = await jade_modules.operations.getLocations();
+    //let myLocation = await jade_modules.operations.getLocations();
     console.log('Scheduling myData', myData);
-    console.log('Locations', myLocation);
+    //console.log('Locations', myLocation);
     
     let dataRange = forActorSheet.getRange(forActorsTableName);
     let numItems = forActorSheet.getRange(numItemsActorsName);
