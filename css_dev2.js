@@ -445,10 +445,9 @@ label {
   font-weight: bold;
   margin-left: 15px
 }
-#btnMainPage, #btnForDirectorPage {
+#btnMainPage, #btnForDirectorPage, #forActorsButtons {
   margin-left: 15px;
 }
-
                     `;
   Jade.set_css(css);
   console.log('CSS done')

@@ -4,7 +4,7 @@ const scriptSheetName = 'Script';
 const forDirectorName = 'For Directors';
 const columnsToLock = "A:T";
 
-let sceneIndex, numberIndex;
+let sceneIndex, numberIndex; characterIndex, locationIndex
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
@@ -46,6 +46,7 @@ async function initialiseVariables(){
   totalTakesIndex = findColumnIndex('Total Takes');
 
   characterIndex = findColumnIndex('Character');
+  locationIndex = findColumnIndex('Location');
   
   ukTakesIndex = findColumnIndex('UK No of takes');
   ukTakeNoIndex = findColumnIndex('UK Take No')
@@ -1943,6 +1944,92 @@ async function getDirectorData(characterName){
   })
   return myData;
 };
+
+async function getLocations(){
+  let myData = [];
+  await unlock();
+  let hiddenColumnAddresses = await getHiddenColumns();
+	await Excel.run(async (excel) => {
+		scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+		let usedRange = await getDataRange(excel);
+    usedRange.load('address');
+    usedRange.columnHidden = false;
+    await excel.sync()
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
+    console.log('Used range address', usedRange.address)
+    const myCriteria = {
+      filterOn: Excel.FilterOn.custom,
+      criterion1: '<>'
+    }
+    scriptSheet.autoFilter.apply(usedRange, locationIndex, myCriteria);
+		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
+    formulaRanges.load('address');
+    formulaRanges.load('cellCount');
+    formulaRanges.load('areaCount');
+    //formulaRanges.load('areas')
+		await excel.sync();
+    app.suspendScreenUpdatingUntilNextSync();
+    console.log('Range areas', formulaRanges.address);
+    console.log('Cell count', formulaRanges.cellCount);
+    console.log('Area count', formulaRanges.areaCount);
+    
+    let myAddresses = formulaRanges.address.split(",");
+    console.log('myAddresses', myAddresses);
+    
+    let theRanges = [];
+    for (let i = 0; i < myAddresses.length; i++){
+      theRanges[i] = scriptSheet.getRange(myAddresses[i]);
+      theRanges[i].load('values');
+      theRanges[i].load('rowIndex');
+      theRanges[i].load('rowCount');
+    }
+    
+    scriptSheet.autoFilter.remove();
+    for (let col of hiddenColumnAddresses){
+      let tempRange = scriptSheet.getRange(col);
+      tempRange.columnHidden = true;
+    }
+    await excel.sync();
+    console.log(theRanges)
+    for (let i = 0; i < theRanges.length; i++){
+      console.log('Range items', i, theRanges[i].values);
+    }
+    let results = [];
+    for (let i = 0; i < theRanges.length; i++){
+      console.log('numRows', theRanges[i].values.length, theRanges[i].rowCount);
+      for (let myRow = 0; myRow < theRanges[i].values.length; myRow++){
+        console.log(i, myRow, theRanges[i].rowIndex, theRanges[i].rowCount, theRanges[i].values[myRow]);
+        let newItem = {
+          rowIndex: theRanges[i].rowIndex,
+          myItems: theRanges[i].values[myRow]
+        }
+        results.push(newItem);
+      }
+    }
+    console.log('Results', results);
+
+    let headings = results.find(head => head.rowIndex == 1);
+    console.log('Headings', headings);
+
+    let sceneArrayIndex = headings.myItems.findIndex(x => x == 'Scene Number');
+    let locationArrayIndex = headings.myItems.findIndex(x => x == 'Location');
+    
+    for (let result of results){
+      if (result.rowIndex != 1){
+        let theData = {
+          sceneNumber: result.myItems[sceneArrayIndex],
+          location: result.myItems[locationArrayIndex],
+        }
+        myData.push(theData);
+      }
+    }
+    console.log('myData', myData);
+
+  })
+  return myData;
+}
+
 async function getHiddenColumns(){
   let results = [];
   await Excel.run(async (excel) => {
