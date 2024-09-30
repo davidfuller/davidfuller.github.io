@@ -1908,9 +1908,9 @@ async function getDirectorData(characterName){
     let results = [];
 
     for (let i = 0; i < theRanges.length; i++){
-      console.log('numRows', theRanges[i].values.length, theRanges[i].rowCount);
+      //console.log('numRows', theRanges[i].values.length, theRanges[i].rowCount);
       for (let myRow = 0; myRow < theRanges[i].values.length; myRow++){
-        console.log(i, myRow, theRanges[i].rowIndex, theRanges[i].rowCount, theRanges[i].values[myRow]);
+        //console.log(i, myRow, theRanges[i].rowIndex, theRanges[i].rowCount, theRanges[i].values[myRow]);
         let newItem = {
           rowIndex: theRanges[i].rowIndex,
           myItems: theRanges[i].values[myRow]
@@ -2002,9 +2002,9 @@ async function getLocations(){
     */
     let results = [];
     for (let i = 0; i < theRanges.length; i++){
-      console.log('numRows', theRanges[i].values.length, theRanges[i].rowCount);
+      //console.log('numRows', theRanges[i].values.length, theRanges[i].rowCount);
       for (let myRow = 0; myRow < theRanges[i].values.length; myRow++){
-        console.log(i, myRow, theRanges[i].rowIndex, theRanges[i].rowCount, theRanges[i].values[myRow]);
+        //console.log(i, myRow, theRanges[i].rowIndex, theRanges[i].rowCount, theRanges[i].values[myRow]);
         let newItem = {
           rowIndex: theRanges[i].rowIndex,
           myItems: theRanges[i].values[myRow]
