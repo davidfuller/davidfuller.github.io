@@ -81,15 +81,20 @@ async function getActorInfo(){
     dataRange.load('rowCount');
     await excel.sync();
     let dataArray = [];
+    console.log('Start of loops', dataArray)
     for (i = 0; i < dataRange.rowCount; i++){
       let thisRow = new Array(3).fill("");
       let myIndex = dataArray.findIndex(x => x[0] == myData[i].sceneNumber)
+      console.log('myIndex', myIndex)
       let theLocation = myLocation.find(x => x.sceneNumber == myData[i].sceneNumber)
+      console.log('location', theLocation);
       if (myIndex == -1){
         console.log(i, "New Row")
         thisRow = [myData[i].sceneNumber, myData[i].lineNumber, theLocation.location]
+        console.log('thisRow', thisRow)
         dataArray.push(thisRow);
       } else {
+        console.log('Array before:', dataArray[myIndex]);
         dataArray[myIndex][1] = dataArray[myIndex][1] + ", " + myData[i].lineNumber;
         console.log("Found Index",  myIndex, "dataArray", dataArray[myIndex]);
       }
