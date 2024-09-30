@@ -1928,6 +1928,8 @@ async function getDirectorData(characterName){
     let numUkTakesArrayIndex = headings.myItems.findIndex(x => x == 'UK No of takes');
     let ukTakeNumArrayIndex = headings.myItems.findIndex(x => x == 'UK Take No');
     let ukDateArrayIndex = headings.myItems.findIndex(x => x == "UK Date Recorded");
+    let lineWordCountArrayIndex = headings.myItems.findIndex(x => x == 'Line Word Count');
+    let sceneWordCountArrayIndex = headings.myItems.findIndex(x => x == 'Scene Word Count');
     console.log('Scene Index', sceneArrayIndex, 'Number Index', numberArrayIndex);
 
     for (let result of results){
@@ -1937,7 +1939,9 @@ async function getDirectorData(characterName){
           lineNumber: result.myItems[numberArrayIndex],
           ukNumTakes: result.myItems[numUkTakesArrayIndex],
           ukTakeNum: result.myItems[ukTakeNumArrayIndex],
-          ukDateRecorded: result.myItems[ukDateArrayIndex]
+          ukDateRecorded: result.myItems[ukDateArrayIndex],
+          lineWordCount: result.myItems[lineWordCountArrayIndex],
+          sceneWordCount: result.myItems[sceneWordCountArrayIndex]
         }
         myData.push(theData);
       }

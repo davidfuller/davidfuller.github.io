@@ -1,7 +1,8 @@
-let characterlistSheet, forDirectorSheet, forActorSheet;
+let characterlistSheet, forDirectorSheet, forActorSheet, forSchedulingSheet;
 const characterListName = 'Character List';
 const forDirectorName = 'For Directors';
 const forActorName = 'For Actors'
+const forSchedulingName = 'For Scheduling'
 const forDirectorTableName = 'fdTable';
 const forActorsTableName = "faTable";
 const numItemsDirectorsName = 'fdItems';
@@ -123,8 +124,23 @@ async function getActorInfo(){
     displayRange.values = dataArray;
     numItems.values = dataArray.length;    
     await excel.sync();
+  })  
+}
+async function getForSchedulingInfo(){
+  await Excel.run(async function(excel){
+    forSchedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
+    let characterChoiceRange = forSchedulingSheet.getRange('fsCharacterChoice');
+    characterChoiceRange.load('values');
+    await excel.sync();
+    let characterName = characterChoiceRange.values[0][0];
+    console.log('Character ',characterName);
+    let myData = await jade_modules.operations.getDirectorData(characterName);
+    console.log('Scheduling myData', myData);
+    
+    let dataArray = [];
+    for (let i = 0; i < myData.length; i++){
+      
+    }
   })
-
-
   
 }
