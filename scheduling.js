@@ -187,6 +187,9 @@ async function getForSchedulingInfo(){
     await excel.sync();
 
     let displayRange = forSchedulingSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, sceneArray.length, 1);
+    displayRange.load('address');
+    await excel.sync()
+    console.log(displayRange.address);
     displayRange.values = [sceneArray];
     numItems.values = sceneArray.length;
     linesUsedRange.values = totalLineWordCount;
