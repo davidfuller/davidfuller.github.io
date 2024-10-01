@@ -3,6 +3,7 @@ const lastDataRow = 9999;
 const scriptSheetName = 'Script';
 const forDirectorName = 'For Directors';
 const forActorsName = 'For Actors'
+const forSchedulingName = 'For Scheduling'
 const columnsToLock = "A:T";
 
 let sceneIndex, numberIndex, characterIndex, locationIndex;
@@ -2116,8 +2117,8 @@ async function showForSchedulingPage(){
   const forSchedulingPage = tag('for-scheduling-page');
   forSchedulingPage.style.display = 'block';
   await Excel.run(async function(excel){
-    let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
-    actorsSheet.activate();
+    let schedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
+    schedulingSheet.activate();
   })
 }
 
