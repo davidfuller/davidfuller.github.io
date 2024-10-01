@@ -2130,4 +2130,21 @@ async function showForSchedulingPage(){
   })
 }
 
+async function registerExcelEvents(){
+  await Excel.run(async (excel) => {
+    const directorSheet = excel.workbook.worksheets.getItem(forDirectorName);
+    directorSheet = worksheet.onChanged.add(handleChange);
 
+    await excel.sync();
+    console.log("Event handler successfully registered for onChanged event in the worksheet.");
+}).catch(errorHandlerFunction);
+}
+
+async function handleChange(event) {
+  await Excel.run(async (excel) => {
+      await excel.sync();        
+      console.log("Change type of event: " + event.changeType);
+      console.log("Address of event: " + event.address);
+      console.log("Source of event: " + event.source);       
+  }).catch(errorHandlerFunction);
+}
