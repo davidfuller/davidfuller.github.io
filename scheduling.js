@@ -41,6 +41,9 @@ async function getDirectorInfo(){
     let waitLabel = tag('director-wait');
     waitLabel.style.display = 'block';
     forDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
+    const waitCell = forDirectorSheet.getRange('fdMessage');
+    waitCell.values = 'Please wait...';
+    await excel.sync();
     let characterChoiceRange = forDirectorSheet.getRange('fdCharacterChoice');
     characterChoiceRange.load('values');
     await excel.sync();
@@ -66,6 +69,8 @@ async function getDirectorInfo(){
     numItems.values = myData.length;
     await excel.sync();
     waitLabel.style.display = 'none';
+    waitCell.vakues = '';
+    await excel.sync();
   }) 
 }
 async function getActorInfo(){
