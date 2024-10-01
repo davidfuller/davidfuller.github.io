@@ -175,7 +175,7 @@ async function getForSchedulingInfo(){
         }
       } 
     }
-    console.log('dataArray', dataArray, 'totalScene', totalSceneWordCount, 'totalLine', totalLineWordCount, 'sceneNumbers', sceneNumber);
+    console.log('dataArray', dataArray, 'totalScene', totalSceneWordCount, 'totalLine', totalLineWordCount, 'sceneNumbers', sceneArray);
     let dataRange = forSchedulingSheet.getRange(forSchedulingTableName);
     let numItems = forSchedulingSheet.getRange(numItemsSchedulingName);
     let linesUsedRange = forSchedulingSheet.getRange('fsLinesUsed')
