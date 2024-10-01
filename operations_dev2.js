@@ -2136,7 +2136,7 @@ async function registerExcelEvents(){
     //directorSheet.onChanged.add(handleChange);
 
     const actorsSheet = excel.workbook.worksheets.getItem(forActorName);
-    actorsSheet.onChanged.add(handleActor);
+    actorsSheet.onChanged.add(handleChange);
 
     await excel.sync();
     console.log("Event handler successfully registered for onChanged event in the worksheet.");
