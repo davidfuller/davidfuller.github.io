@@ -154,6 +154,7 @@ async function getForSchedulingInfo(){
         }
         dataArray.push(newRow);
         arrayIndex += 1;
+        sceneArray[arrayIndex] = [];
         sceneArray[arrayIndex][0] = myData[i].sceneNumber;
         totalSceneWordCount += myData[i].sceneWordCount;
         totalLineWordCount += myData[i].lineWordCount;
@@ -168,6 +169,7 @@ async function getForSchedulingInfo(){
             }
             dataArray.push(newRow);
             arrayIndex += 1;
+            sceneArray[arrayIndex] = [];
             sceneArray[arrayIndex][0] = myData[i].sceneNumber;
             totalSceneWordCount += myData[i].sceneWordCount;
             totalLineWordCount += myData[i].lineWordCount;
