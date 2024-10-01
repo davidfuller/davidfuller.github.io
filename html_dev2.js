@@ -133,7 +133,7 @@ async function mainHTML(){
   <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
   <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button><br/>
   <div id="forSchedulingButtons">
-    <button id='btnGetSchedulingInfo' onclick="jade_modules.scheduling.getForSchedulingInfo()">Calculate for scheduling information for selected character</button>
+    <button id='btnGetSchedulingInfo' onclick="jade_modules.scheduling.getForSchedulingInfo()">Calculate for<br>scheduling information<br>for selected character</button>
   </div>
 </div>
   `;
