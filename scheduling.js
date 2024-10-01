@@ -147,7 +147,13 @@ async function getActorInfo(){
 }
 async function getForSchedulingInfo(){
   await Excel.run(async function(excel){
+    let waitLabel = tag('scheduling-wait');
+    waitLabel.style.display = 'block';
     forSchedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
+    const waitCell = forSchedulingSheet.getRange('fsMessage');
+    waitCell.values = 'Please wait...';
+    await excel.sync();
+    
     let characterChoiceRange = forSchedulingSheet.getRange('fsCharacterChoice');
     characterChoiceRange.load('values');
     await excel.sync();
@@ -217,5 +223,9 @@ async function getForSchedulingInfo(){
     linesUsedRange.values = totalLineWordCount;
     fullScenesRange.values = totalSceneWordCount;
     await excel.sync();
+    waitLabel.style.display = 'none';
+    waitCell.values = '';
+    await excel.sync();
+
   })
 }
