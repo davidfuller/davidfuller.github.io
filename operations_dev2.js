@@ -2135,16 +2135,14 @@ async function registerExcelEvents(){
     const directorSheet = excel.workbook.worksheets.getItem(forDirectorName);
     directorSheet.onChanged.add(handleChange);
     await excel.sync();
-    console.log("Event handler successfully registered for onChanged event in the director sheet.");
-    
+    console.log("Event handler successfully registered for onChanged event in the director sheet.");   
+  }).catch(errorHandlerFunction);
+  await Excel.run(async (excel) => {
     const actorsSheet = excel.workbook.worksheets.getItem(forActorName);
     actorsSheet.onChanged.add(handleActor);
     await excel.sync();
-    console.log("Event handler successfully registered for onChanged event in the actor sheet.");
-    
-    
-
-}).catch(errorHandlerFunction);
+    console.log("Event handler successfully registered for onChanged event in the actor sheet.");  
+  }).catch(errorHandlerFunction);
 }
 
 async function handleChange(event) {
