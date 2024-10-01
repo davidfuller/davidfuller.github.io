@@ -1941,16 +1941,18 @@ async function getDirectorData(characterName){
 
     for (let result of results){
       if (result.rowIndex != 1){
-        let theData = {
-          sceneNumber: result.myItems[sceneArrayIndex],
-          lineNumber: result.myItems[numberArrayIndex],
-          ukNumTakes: result.myItems[numUkTakesArrayIndex],
-          ukTakeNum: result.myItems[ukTakeNumArrayIndex],
-          ukDateRecorded: result.myItems[ukDateArrayIndex],
-          lineWordCount: result.myItems[lineWordCountArrayIndex],
-          sceneWordCount: result.myItems[sceneWordCountArrayIndex]
+        if(result.myItems[sceneArrayIndex] != ""){
+          let theData = {
+            sceneNumber: result.myItems[sceneArrayIndex],
+            lineNumber: result.myItems[numberArrayIndex],
+            ukNumTakes: result.myItems[numUkTakesArrayIndex],
+            ukTakeNum: result.myItems[ukTakeNumArrayIndex],
+            ukDateRecorded: result.myItems[ukDateArrayIndex],
+            lineWordCount: result.myItems[lineWordCountArrayIndex],
+            sceneWordCount: result.myItems[sceneWordCountArrayIndex]
+          }
+          myData.push(theData);  
         }
-        myData.push(theData);
       }
     }
     console.log('myData', myData);
