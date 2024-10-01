@@ -190,7 +190,7 @@ async function getForSchedulingInfo(){
     displayRange.load('address');
     await excel.sync()
     console.log(displayRange.address);
-    displayRange.values = [sceneArray];
+    displayRange.values = sceneArray;
     numItems.values = sceneArray.length;
     linesUsedRange.values = totalLineWordCount;
     fullScenesRange.values = totalSceneWordCount;
