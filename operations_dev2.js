@@ -2147,7 +2147,7 @@ async function handleChange(event) {
       console.log("Address of event: " + event.address);
       console.log("Source of event: " + event.source);     
       
-      if (event.address == 'C6'){
+      if ((event.address == 'C6') && event.source == 'Local'){
         await jade_modules.scheduling.getDirectorInfo();
       }
       
