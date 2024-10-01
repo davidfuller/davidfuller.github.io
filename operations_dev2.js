@@ -1753,6 +1753,8 @@ async function fillSceneNumber(){
       }
     }
 
+    console.log('sceneValues', sceneValues);
+
     sceneRange.values = sceneValues;
     sceneRange.numberFormat = sceneFormat;
     lineNoRange.values = lineNoValues;
