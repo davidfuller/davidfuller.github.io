@@ -453,7 +453,7 @@ label {
   height: auto;
   padding: 10px;
 }
-#director-wait, #actor-wait {
+#director-wait, #actor-wait, #scheduling-wait {
   display: none;
   font-size: 15px;
   margin-left: 15px;

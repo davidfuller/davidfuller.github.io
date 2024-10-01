@@ -2141,7 +2141,12 @@ async function registerExcelEvents(){
     const actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.onChanged.add(handleActor);
     await excel.sync();
-    console.log("Event handler successfully registered for onChanged event in the actor sheet.");  
+    console.log("Event handler successfully registered for onChanged event in the actor sheet."); 
+    const schedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
+    schedulingSheet.onChanged.add(handleScheduling);
+    await excel.sync();
+    console.log("Event handler successfully registered for onChanged event in the scheduling sheet.");
+    
   }).catch(errorHandlerFunction);
 }
 
@@ -2161,7 +2166,14 @@ async function handleActor(event) {
       }
   }).catch(errorHandlerFunction);
 }
-
+async function handleScheduling(event) {
+  await Excel.run(async (excel) => {
+      await excel.sync();        
+      if ((event.address == 'C6') && event.source == 'Local'){
+        await jade_modules.scheduling.getForSchedulingInfo();
+      }
+  }).catch(errorHandlerFunction);
+}
 function errorHandlerFunction(){
   console.log('I have an error')
 }
