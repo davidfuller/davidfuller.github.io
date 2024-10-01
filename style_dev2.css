@@ -436,7 +436,7 @@ label {
   display: none;
 }
 
-#for-director-label, #for-actor-label, for-scheduling-label{
+#for-director-label, #for-actor-label, #for-scheduling-label{
   font-size: 22px;
   font-weight: bold;
   margin-left: 15px
