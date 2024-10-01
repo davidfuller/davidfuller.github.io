@@ -142,7 +142,8 @@ async function getForSchedulingInfo(){
     let dataArray = [];
     let totalSceneWordCount = 0;
     let totalLineWordCount = 0;
-    let sceneArray = [];
+    let sceneArray = [][];
+    let arrayIndex = -1;
     for (let i = 0; i < myData.length; i++){
       let newRow;
       if (i == 0){
@@ -152,7 +153,8 @@ async function getForSchedulingInfo(){
           characterWordCount: myData[i].lineWordCount
         }
         dataArray.push(newRow);
-        sceneArray.push(myData[i].sceneNumber);
+        arrayIndex += 1;
+        sceneArray[arrayIndex][0] = myData[i].sceneNumber;
         totalSceneWordCount += myData[i].sceneWordCount;
         totalLineWordCount += myData[i].lineWordCount;
       } else {
@@ -165,7 +167,8 @@ async function getForSchedulingInfo(){
               characterWordCount: myData[i].lineWordCount
             }
             dataArray.push(newRow);
-            sceneArray.push(myData[i].sceneNumber);
+            arrayIndex += 1;
+            sceneArray[arrayIndex][0] = myData[i].sceneNumber;
             totalSceneWordCount += myData[i].sceneWordCount;
             totalLineWordCount += myData[i].lineWordCount;
           } else {
