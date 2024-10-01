@@ -142,7 +142,7 @@ async function getForSchedulingInfo(){
     let dataArray = [];
     let totalSceneWordCount = 0;
     let totalLineWordCount = 0;
-    let sceneArray = [][];
+    let sceneArray = [];
     let arrayIndex = -1;
     for (let i = 0; i < myData.length; i++){
       let newRow;
