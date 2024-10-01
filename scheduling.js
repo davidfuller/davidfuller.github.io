@@ -5,8 +5,10 @@ const forActorName = 'For Actors'
 const forSchedulingName = 'For Scheduling'
 const forDirectorTableName = 'fdTable';
 const forActorsTableName = "faTable";
+const forSchedulingTableName = 'fsTable'
 const numItemsDirectorsName = 'fdItems';
 const numItemsActorsName = 'faItems';
+const numItemsSchedulingName = 'fsItems';
 
 function auto_exec(){
 }
@@ -140,6 +142,7 @@ async function getForSchedulingInfo(){
     let dataArray = [];
     let totalSceneWordCount = 0;
     let totalLineWordCount = 0;
+    let sceneArray = [];
     for (let i = 0; i < myData.length; i++){
       let newRow;
       if (i == 0){
@@ -149,6 +152,7 @@ async function getForSchedulingInfo(){
           characterWordCount: myData[i].lineWordCount
         }
         dataArray.push(newRow);
+        sceneArray.push(myData[i].sceneNumber);
         totalSceneWordCount += myData[i].sceneWordCount;
         totalLineWordCount += myData[i].lineWordCount;
       } else {
@@ -161,6 +165,7 @@ async function getForSchedulingInfo(){
               characterWordCount: myData[i].lineWordCount
             }
             dataArray.push(newRow);
+            sceneArray.push(myData[i].sceneNumber);
             totalSceneWordCount += myData[i].sceneWordCount;
             totalLineWordCount += myData[i].lineWordCount;
           } else {
@@ -170,6 +175,21 @@ async function getForSchedulingInfo(){
         }
       } 
     }
-    console.log('dataArray', dataArray, 'totalScene', totalSceneWordCount, 'totalLine', totalLineWordCount);
+    console.log('dataArray', dataArray, 'totalScene', totalSceneWordCount, 'totalLine', totalLineWordCount, 'sceneNumbers', sceneNumber);
+    let dataRange = forSchedulingSheet.getRange(forSchedulingTableName);
+    let numItems = forSchedulingSheet.getRange(numItemsSchedulingName);
+    let linesUsedRange = forSchedulingSheet.getRange('fsLinesUsed')
+    let fullScenesRange = forSchedulingSheet.getRange('fsFullScene')
+    dataRange.clear("Contents");
+    dataRange.load('rowCount');
+    dataRange.load('rowIndex');
+    dataRange.load('columnIndex');
+    await excel.sync();
+
+    dataRange.values = [sceneArray];
+    numItems.values = sceneArray.length;
+    linesUsedRange.values = totalLineWordCount;
+    fullScenesRange.values = totalSceneWordCount;
+    await excel.sync();
   })
 }
