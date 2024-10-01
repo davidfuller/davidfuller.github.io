@@ -2135,6 +2135,9 @@ async function registerExcelEvents(){
     const directorSheet = excel.workbook.worksheets.getItem(forDirectorName);
     directorSheet.onChanged.add(handleChange);
 
+    const actorsSheet = excel.workbook.worksheets.getItem(forActorSheet);
+    actorsSheet.onChanged.add(handleActor);
+
     await excel.sync();
     console.log("Event handler successfully registered for onChanged event in the worksheet.");
 }).catch(errorHandlerFunction);
@@ -2143,15 +2146,17 @@ async function registerExcelEvents(){
 async function handleChange(event) {
   await Excel.run(async (excel) => {
       await excel.sync();        
-      console.log("Change type of event: " + event.changeType);
-      console.log("Address of event: " + event.address);
-      console.log("Source of event: " + event.source);     
-      
       if ((event.address == 'C6') && event.source == 'Local'){
         await jade_modules.scheduling.getDirectorInfo();
       }
-      
-
+  }).catch(errorHandlerFunction);
+}
+async function handleActor(event) {
+  await Excel.run(async (excel) => {
+      await excel.sync();        
+      if ((event.address == 'C6') && event.source == 'Local'){
+        await jade_modules.scheduling.getActorInfo();
+      }
   }).catch(errorHandlerFunction);
 }
 

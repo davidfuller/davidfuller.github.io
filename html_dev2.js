@@ -149,6 +149,7 @@ async function mainHTML(){
   await jade_modules.operations.setDefaultColumnWidths();
   await jade_modules.operations.showHideColumns('all');
   await jade_modules.operations.setUpEvents();
+  await jade_modules.operations.registerExcelEvents();
 
   console.log("I'm here data loaded. Dev3");
 }

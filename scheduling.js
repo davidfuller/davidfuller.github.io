@@ -69,7 +69,7 @@ async function getDirectorInfo(){
     numItems.values = myData.length;
     await excel.sync();
     waitLabel.style.display = 'none';
-    waitCell.vakues = '';
+    waitCell.values = '';
     await excel.sync();
   }) 
 }
