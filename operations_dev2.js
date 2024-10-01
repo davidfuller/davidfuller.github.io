@@ -2132,11 +2132,11 @@ async function showForSchedulingPage(){
 
 async function registerExcelEvents(){
   await Excel.run(async (excel) => {
-    //const directorSheet = excel.workbook.worksheets.getItem(forDirectorName);
-    //directorSheet.onChanged.add(handleChange);
+    const directorSheet = excel.workbook.worksheets.getItem(forDirectorName);
+    directorSheet.onChanged.add(handleChange);
 
-    const actorsSheet = excel.workbook.worksheets.getItem(forActorName);
-    actorsSheet.onChanged.add(handleChange);
+    //const actorsSheet = excel.workbook.worksheets.getItem(forActorName);
+    //actorsSheet.onChanged.add(handleChange);
 
     await excel.sync();
     console.log("Event handler successfully registered for onChanged event in the worksheet.");
