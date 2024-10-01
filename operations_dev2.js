@@ -702,7 +702,7 @@ async function theFormulas(){
     {
       columnName: "Scene Borders", //CH
       formulaFirst: "Start",
-      formulaRest: '=IF(' + cueColumn + firstRestRow + '="", "",IF(' + sceneBordersColumn + firstRow + '="Start","Original",IF(' + sceneColumn + firstRestRow + '<>' + sceneColumn + firstRow + ',"Original","Copy")))'
+      formulaRest: '=IF(' + cueColumn + firstRestRow + '="", IF(' + sceneBordersColumn + firstRow + '="Start",' + sceneBordersColumn + firstRow + ',""),IF(' + sceneBordersColumn + firstRow + '="Start","Original",IF(' + sceneColumn + firstRestRow + '<>' + sceneColumn + firstRow + ',"Original","Copy")))'
     },
     {
       columnName: "Scene Line Count Calculation", //CG
@@ -849,7 +849,7 @@ async function correctFormulas(firstRow){
     },
     {
       columnName: "Scene Borders", //CH
-      formulaRest: '=IF(' + sceneBordersColumn + (firstRow - 1) + '="Start","Original",IF(' + sceneColumn + firstRow + '<>' + sceneColumn + (firstRow - 1) + ',"Original","Copy"))'
+      formulaRest: '=IF(' + cueColumn + firstRow + '="", IF(' + sceneBordersColumn + (firstRow - 1) + '="Start",' + sceneBordersColumn + (firstRow - 1) + ',""),IF(' + sceneBordersColumn + (firstRow - 1) + '="Start","Original",IF(' + sceneColumn + firstRow + '<>' + sceneColumn + (firstRow - 1) + ',"Original","Copy")))'
     }
   ]
   
