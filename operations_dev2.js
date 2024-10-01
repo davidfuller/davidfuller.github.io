@@ -825,6 +825,7 @@ async function correctFormulas(firstRow){
   const positionChapterColumn = findColumnLetter("Position Chapter"); //CE
   const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CF
   const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
+  const cueColumn = findColumnLetter('Cue') //F
   
   const columnFormulae = [
     {
