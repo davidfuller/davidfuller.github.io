@@ -38,7 +38,7 @@ label {
   font-size: 12px;
 }
 /* Section formatting */  
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons {
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, #forSchedulingButtons {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
@@ -436,15 +436,11 @@ label {
   display: block;
 }
 
-#for-director-page {
+#for-director-page, #for-actor-page, #for-scheduling-page {
   display: none;
 }
 
-#for-actor-page {
-  display: none;
-}
-
-#for-director-label {
+#for-director-label, #for-actor-label, for-scheduling-label{
   font-size: 22px;
   font-weight: bold;
   margin-left: 15px

@@ -2070,6 +2070,8 @@ async function showForDirector(){
   forDirectorPage.style.display = 'block';
   const forActorsPage = tag('for-actor-page');
   forActorsPage.style.display = 'none';
+  const forSchedulingPage = tag('for-scheduling-page');
+  forSchedulingPage.style.display = 'none';
   await Excel.run(async function(excel){
     let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
     ForDirectorSheet.activate();
@@ -2082,6 +2084,8 @@ async function showMainPage(){
   forDirectorPage.style.display = 'none';
   const forActorsPage = tag('for-actor-page');
   forActorsPage.style.display = 'none';
+  const forSchedulingPage = tag('for-scheduling-page');
+  forSchedulingPage.style.display = 'none';
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.activate();
@@ -2094,11 +2098,27 @@ async function showForActorsPage(){
   forDirectorPage.style.display = 'none';
   const forActorsPage = tag('for-actor-page');
   forActorsPage.style.display ='block';
+  const forSchedulingPage = tag('for-scheduling-page');
+  forSchedulingPage.style.display = 'none';
   await Excel.run(async function(excel){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.activate();
   })
 }
 
+async function showForSchedulingPage(){
+  const mainPage = tag('main-page');
+  mainPage.style.display = 'none';
+  const forDirectorPage = tag('for-director-page');
+  forDirectorPage.style.display = 'none';
+  const forActorsPage = tag('for-actor-page');
+  forActorsPage.style.display = 'none';
+  const forSchedulingPage = tag('for-scheduling-page');
+  forSchedulingPage.style.display = 'block';
+  await Excel.run(async function(excel){
+    let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
+    actorsSheet.activate();
+  })
+}
 
 
