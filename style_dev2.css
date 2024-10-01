@@ -445,3 +445,7 @@ label {
 #btnMainPage, #btnForDirectorPage, #forActorsButtons {
   margin-left: 15px;
 }
+
+#btnGetSchedulingInfo {
+  height: auto;
+}

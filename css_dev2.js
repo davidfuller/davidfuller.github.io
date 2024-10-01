@@ -449,6 +449,9 @@ label {
 #btnMainPage, #btnForDirectorPage, #forActorsButtons {
   margin-left: 15px;
 }
+#btnGetSchedulingInfo {
+  height: auto;
+}
                     `;
   Jade.set_css(css);
   console.log('CSS done')
