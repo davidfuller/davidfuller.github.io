@@ -449,8 +449,9 @@ label {
 #btnMainPage, #btnForDirectorPage, #forActorsButtons {
   margin-left: 15px;
 }
-#btnGetSchedulingInfo {
+#btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo {
   height: auto;
+  padding: 10px;
 }
                     `;
   Jade.set_css(css);
