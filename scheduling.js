@@ -38,6 +38,8 @@ async function loadReduceAndSortCharacters(){
 }
 async function getDirectorInfo(){
   await Excel.run(async function(excel){
+    let waitLabel = tag('director-wait');
+    waitLabel.style.display = 'block';
     forDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
     let characterChoiceRange = forDirectorSheet.getRange('fdCharacterChoice');
     characterChoiceRange.load('values');
@@ -63,6 +65,7 @@ async function getDirectorInfo(){
     dataRange.values = dataArray;
     numItems.values = myData.length;
     await excel.sync();
+    waitLabel.style.display = 'none';
   }) 
 }
 async function getActorInfo(){

@@ -116,6 +116,7 @@ async function mainHTML(){
   <button id="btnForSchedulingPage" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button><br/>
   <div id="forDirectorButtons">
     <button id='btnGetDirectorInfo' onclick="jade_modules.scheduling.getDirectorInfo()">Calculate for<br/>director information<br/>for selected character</button>
+    <label id="director-wait">Please wait...</label>
   </div>
 </div>
 <div id="for-actor-page">

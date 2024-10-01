@@ -453,6 +453,11 @@ label {
   height: auto;
   padding: 10px;
 }
+#director-wait {
+  display: none;
+  font-size: 15px;
+  margin-left: 15px;
+}
                     `;
   Jade.set_css(css);
   console.log('CSS done')
