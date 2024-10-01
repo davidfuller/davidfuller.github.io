@@ -1119,6 +1119,9 @@ async function removeTake(country){
         } else if (country == 'Walla'){
           lineDetails.wallaTakes -= 1;
         }
+        if ((lineDetails.ukTakes == 0) && (lineDetails.usTakes == 0) && (lineDetails.wallaTakes == 0)){
+          lineDetails.totalTakes = 0;
+        }
         await excel.sync();
       } else {
         if (foundTake == countryTakes){
