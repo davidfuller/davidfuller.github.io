@@ -2202,10 +2202,14 @@ async function createTypeCodes(){
     }
     console.log(results);  
     resultArray = []
-    for (let i = 0; i < lastDataRow - firstDataRow; i++ ){
+    for (let i = 0; i <= lastDataRow - firstDataRow; i++ ){
       resultArray[i] = [];
     }
     console.log('ResultArray', resultArray);
-    })
+    for (let i = 0; i < results.length; i++){
+      resultArray[results[i]] = "Chapter"
+    }
+    console.log('ResultArray', resultArray);
+  })
     
 }
