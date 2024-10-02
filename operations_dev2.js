@@ -410,7 +410,7 @@ async function getTargetSceneNumber(){
   const textValue = sceneInput.value;
   const sceneNumber = parseInt(textValue);
   console.log(textValue, sceneNumber);
-  if (isNaN(sceneNumber)){
+  if (!isNaN(sceneNumber)){
     console.log(sceneNumber);
     await findSceneNo(sceneNumber);
   }  else {
@@ -421,7 +421,7 @@ async function getTargetSceneNumber(){
 async function getTargetLineNo(){
   const textValue = lineNoInput.value;
   const lineNumber = parseInt(textValue);
-  if (isNaN(lineNumber)){
+  if (!isNaN(lineNumber)){
     console.log(lineNumber);
     await findLineNo(lineNumber);
   }  else {
@@ -432,7 +432,7 @@ async function getTargetLineNo(){
 async function getTargetChapter(){
   const textValue = chapterInput.value;
   const chapterNumber = parseInt(textValue);
-  if (isNaN(chapterNumber)){
+  if (!isNaN(chapterNumber)){
     console.log(chapterNumber);
     await findChapter(chapterNumber);
   }  else {
