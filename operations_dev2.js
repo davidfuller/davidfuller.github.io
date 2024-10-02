@@ -2184,7 +2184,7 @@ function errorHandlerFunction(){
 
 async function createTypeCodes(){
   await Excel.run(async (excel) => {
-    let scriptSheet = excel.workbook.getItem(scriptSheetName);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let chapterRange = scriptSheet.getRange(positionChapterColumn + firstDataRow + ":" + positionChapterColumn + lastDataRow);
     chapterRange.load('values');
     await excel.sync();
