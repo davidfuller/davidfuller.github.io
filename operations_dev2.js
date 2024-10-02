@@ -2255,6 +2255,24 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
   return myArray;
 }
 
+async function addSceneBlock(){
+   await Excel.run(async (excel) => {
+     let typeCodeValues = await getTypeCodes();
+     consile.log('typeCodeValues', typeCodeValues);
+   });
+}
+async function getTypeCodes(){
+  let theValues;
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const typeCodeColumn = findColumnLetter("Type Code"); 
+    let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" +typeCodeColumn +lastDataRow);
+    typeCodeRange.load('values');
+    await excel.sync();
+    theValues = typeCodeRange.values.map(x => x[0]);
+  });
+  return theValues;
+}
 
 /* Do a Chapter
   Find the next chapter

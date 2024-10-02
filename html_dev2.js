@@ -107,6 +107,7 @@ async function mainHTML(){
     <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
     <button id="btnAddHandler" onclick="jade_modules.operations.registerExcelEvents()">Register events</button>
     <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button>
+    <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
   </div>
 </div>
 <div id="for-director-page">
