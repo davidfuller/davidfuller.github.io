@@ -2207,7 +2207,7 @@ async function createTypeCodes(){
     }
     console.log('ResultArray', resultArray);
     for (let i = 0; i < results.length; i++){
-      resultArray[results[i]] = "Chapter"
+      resultArray[results[i]][0] = "Chapter"
     }
     console.log('ResultArray', resultArray);
     const typeCodeColumn = findColumnLetter("Type Code"); 
