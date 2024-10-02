@@ -246,13 +246,13 @@ async function directorGoToLine(){
       let lineNumber = parseInt(lineNumberCell.values[0][0])
       console.log('lineNumber', lineNumber);
       if (!isNaN(lineNumber)){
-        await jade_modules.operations.showMainPage();
         const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
         let columnIndex = await jade_modules.operations.findColumnIndex('Number');
         let tempRange = scriptSheet.getRangeByIndexes(10, columnIndex, 1, 1);
         tempRange.select();
         await excel.sync();
         await jade_modules.operations.findLineNo(lineNumber);
+        await jade_modules.operations.showMainPage();
       } else {
         alert('Not a line number');
       }
