@@ -409,6 +409,7 @@ async function getDataRange(excel){
 async function getTargetSceneNumber(){
   const textValue = sceneInput.value;
   const sceneNumber = parseInt(textValue);
+  console.log(textValue, sceneNumber);
   if (isNaN(sceneNumber)){
     console.log(sceneNumber);
     await findSceneNo(sceneNumber);
