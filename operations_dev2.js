@@ -2194,7 +2194,7 @@ async function createTypeCodes(){
     console.log('Chapter Numbers', chapterNumbers);
     let results = [];
     for (let i = 0; i< chapterNumbers.length; i++){
-      if (chapterNumbers[i] != ''){
+      if (chapterNumbers[i] == 9){
         results.push[i];
       }
     }
