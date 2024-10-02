@@ -95,53 +95,53 @@ function findColumnLetter(name){
 
 
 
-async function lockColumns(){
-  await Excel.run(async function(excel){
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    scriptSheet.protection.load('protected');
-    let range = scriptSheet.getRange(columnsToLock);
-    await excel.sync();
-    
-    console.log(scriptSheet.protection.protected);
-    if (!scriptSheet.protection.protected){
-      console.log("Not locked");
-      range.format.protection.locked = true;
-      scriptSheet.protection.protect({ selectionMode: "Normal", allowAutoFilter: true });
-      await excel.sync();
-      console.log("Now locked");
-    } else {
-      console.log("Locked");
-    }
-  })   
+async function lockColumns(excel, sheet, lockColumns){
+  sheet.protection.load('protected');
+  let range = sheet.getRange(lockColumns);
+  await excel.sync();
+  if (!scriptSheet.protection.protected){
+    range.format.protection.locked = true;
+    sheet.protection.protect({ selectionMode: "Normal", allowAutoFilter: true });
+    await excel.sync();    
+  }
 }
 
-async function unlock(){
-  await Excel.run(async function(excel){
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    scriptSheet.protection.load('protected');
+async function unlock(excel, sheet){
+  sheet.protection.load('protected');
+  await excel.sync();
+  if (sheet.protection.protected){
+    sheet.protection.unprotect("")
     await excel.sync();
-    if (!scriptSheet.protection.protected){
-      console.log("Already unlocked");
-    } else {
-      console.log("Currently locked");
-      scriptSheet.protection.unprotect("")
-      await excel.sync();
-      console.log("Now not locked");
-    }
-  })
+  }
 }
 
 async function applyFilter(){
   /*Jade.listing:{"name":"Apply filter","description":"Applies empty filter to sheet"}*/
   await Excel.run(async function(excel){
-    await unlock();
-    const myRange = await getDataRange(excel);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = unlockIfLocked(excel, scriptSheet);
+    
+    const myRange = await getDataRange(excel);
+    
     scriptSheet.autoFilter.apply(myRange, 0, { criterion1: "*", filterOn: Excel.FilterOn.custom});
     scriptSheet.autoFilter.clearCriteria();
     await excel.sync();
-    await lockColumns();
-  })
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
+  });
+}
+
+async function unlockIfLocked(excel, sheet){
+  // returns true if it was locked
+  sheet.protection.load('protected');
+  await excel.sync();
+    
+  let isProtected = sheet.protection.protected
+  if (isProtected){
+    await unlock(excel, sheet);
+  }
+  return isProtected
 }
 
 async function removeFilter(){
@@ -150,14 +150,14 @@ async function removeFilter(){
     scriptSheet.autoFilter.load('enabled')
     await excel.sync()
     if (scriptSheet.autoFilter.enabled){
-      console.log("Autofilter enabled")
+      let isProtected = unlockIfLocked(excel, scriptSheet);
       scriptSheet.autoFilter.remove();
       await excel.sync();
-    } else {
-      console.log("Autofilter not enabled")
-    }
-    await lockColumns();
-  })
+      if (isProtected){
+        await lockColumns(excel, scriptSheet, columnsToLock);
+      }
+    }  
+  });
 }
 
 async function findScene(offset){
@@ -549,14 +549,17 @@ async function fill(country){
     const studioRange = scriptSheet.getRangeByIndexes(myRow, studioIndex, 1, 1);
     const engineerRange = scriptSheet.getRangeByIndexes(myRow, engineerIndex, 1, 1);
     await excel.sync();
-    await unlock();
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
+    
     console.log(studioRange);
     markupRange.values = [[markupText]]
     dateRange.values = [[dateInFormat()]];
     studioRange.values = [[studioText]];
     engineerRange.values = [[engineerText]];
     await excel.sync();
-    await lockColumns();
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
     engineerRange.select();
     await excel.sync();
     markupRange.select();
@@ -721,10 +724,9 @@ async function theFormulas(){
       formulaRest: '=IF(' + cueColumn + firstRestRow + '="","",' + sceneLineCountCalculationColumn + firstRestRow + ')'
     }
   ]
-  
-  await unlock();
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
       const myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow ;
@@ -738,9 +740,12 @@ async function theFormulas(){
       await excel.sync();
       console.log(range.formulas + "   " + topRowRange.formulas);
     }
-  })
-  await lockColumns();
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
+  });
 }
+/*
 async function insertRow(){
   let activeCell
   await Excel.run(async function(excel){
@@ -775,11 +780,11 @@ async function insertRow(){
   })
   return activeCell.rowIndex;
 }
-
+*/
 async function insertRowV2(currentRowIndex, doCopy){
-  await unlock();
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     const dataRange = await getDataRange(excel);
     const myLastColumn = dataRange.getLastColumn();
     myLastColumn.load("columnindex")
@@ -792,8 +797,10 @@ async function insertRowV2(currentRowIndex, doCopy){
       await excel.sync(); 
     }
     await correctFormulas(currentRowIndex + 1);
-  })
-  await lockColumns();
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
+  });
 }
 
 async function deleteRow(){
@@ -808,7 +815,8 @@ async function deleteRow(){
     myRow.load('address');
     await excel.sync();
     console.log(myRow.address);
-    await unlock();
+    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     myRow.delete("Up");
     myRow.load('address');
     await excel.sync();
@@ -817,7 +825,10 @@ async function deleteRow(){
     await doTakesAndNumTakes(activeCell.rowIndex - 1, 'UK', false, false, false, false);
     selectCell.select();
     await excel.sync();
-  })
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
+  });
 }
 async function correctFormulas(firstRow){
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
@@ -861,10 +872,9 @@ async function correctFormulas(firstRow){
       formulaRest: '=IF(' + cueColumn + firstRow + '="", IF(' + sceneBordersColumn + (firstRow - 1) + '="Start",' + sceneBordersColumn + (firstRow - 1) + ',""),IF(' + sceneBordersColumn + (firstRow - 1) + '="Start","Original",IF(' + sceneColumn + firstRow + '<>' + sceneColumn + (firstRow - 1) + ',"Original","Copy")))'
     }
   ]
-  
-  await unlock();
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
       const myRange = columnLetter + firstRow + ":" + columnLetter + (firstRow +1) ;
@@ -875,10 +885,12 @@ async function correctFormulas(firstRow){
       await excel.sync();
       console.log("Formula after sync: " + range.formulas);
     }
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
   })
-  await lockColumns();
 }
-
+/*
 async function insertTake(country, doAdditional, includeMarkUp, includeStudio, includeEngineer){
   const currentRowIndex = await insertRow();
   const doDate = true;
@@ -887,13 +899,13 @@ async function insertTake(country, doAdditional, includeMarkUp, includeStudio, i
   await doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional, includeMarkUp, includeStudio, includeEngineer);
   await lockColumns();
 }
+*/
 
 function zeroElement(value){
   return value[0];
 }
 
 async function addTakeDetails(country, doDate){
-  await unlock()
   let myAction = radioButtonChoice();
   console.log('The action: ', myAction);
 
@@ -901,6 +913,7 @@ async function addTakeDetails(country, doDate){
     const activeCell = excel.workbook.getActiveCell();
     let selectCell = activeCell.getOffsetRange(1, 0);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     let lineDetails =  await findDetailsForThisLine();
     console.log(lineDetails);
     let takeNoIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex, countryTakes;
@@ -917,7 +930,6 @@ async function addTakeDetails(country, doDate){
     } else if (country == 'US'){
       takeNoIndex = usTakeNoIndex;
       dateRecordedIndex = usDateIndex;
-      console.log('US Date Index', usDateIndex);
       markUpIndex = usMarkUpIndex;
       studioIndex = usStudioIndex;
       engineerIndex = usEngineerIndex;
@@ -926,7 +938,6 @@ async function addTakeDetails(country, doDate){
     }else if (country == 'Walla'){
       takeNoIndex = wallaTakeNoIndex;
       dateRecordedIndex = wallaDateIndex;
-      console.log('Walla Date Index', wallaDateIndex);
       markUpIndex = wallaMarkUpIndex;
       studioIndex = wallaStudioIndex;
       engineerIndex = wallaEngineerIndex;
@@ -998,26 +1009,24 @@ async function addTakeDetails(country, doDate){
       engineerRange.values = engineerText;
     }
 
-    await unlock();
     selectCell.select();
     await excel.sync();
   
-
     console.log("Line Details")
     console.log(lineDetails);
-    doTheTidyUp(lineDetails)
-        
-  })
-  await lockColumns();
+    await doTheTidyUp(lineDetails)
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    } 
+  });
 }
 
 
 async function findDetailsForThisLine(){
-  await unlock();
   let result = {};
-  
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex')
     await excel.sync();
@@ -1046,6 +1055,9 @@ async function findDetailsForThisLine(){
 
     console.log('Result');
     console.log(result);
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
   })
   /*
   Find total number of takes.
@@ -1071,8 +1083,9 @@ function cleanTakes(values){
 
 async function removeTake(country){
   let markUpIndex, engineerIndex, takeNoIndex, countryTakes;
-  await unlock();
   await Excel.run(async function(excel){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     // get the lineDetails
     const activeCell = excel.workbook.getActiveCell();
     const selectCell = activeCell.getOffsetRange(-1, 0);
@@ -1112,7 +1125,6 @@ async function removeTake(country){
       if (lineDetails.totalTakes == 1){
         console.log('Only 1 total takes, which we cannot delete, so we clear the relevant area')
         console.log('currentRowIndex: ', lineDetails.currentRowIndex);
-        scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
         let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
         clearRange.load('address');
         await excel.sync();
@@ -1152,7 +1164,6 @@ async function removeTake(country){
               console.log('currentRowIndex: ', lineDetails.currentRowIndex);
               console.log('markUpIndex', markUpIndex);
               console.log('Diff: ', (engineerIndex - markUpIndex + 1));
-              scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
               let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
               clearRange.load('address');
               await excel.sync();
@@ -1178,7 +1189,6 @@ async function removeTake(country){
               deleteRange.load('address');
               await excel.sync();
               console.log("Delete range address: ", deleteRange.address);
-              await unlock();
               deleteRange.delete("Up");
               selectCell.select();
               await excel.sync();
@@ -1201,7 +1211,6 @@ async function removeTake(country){
             console.log('currentRowIndex: ', lineDetails.currentRowIndex);
             console.log('markUpIndex', markUpIndex);
             console.log('Diff: ', (engineerIndex - markUpIndex + 1));
-            scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
             let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
             clearRange.load('address');
             await excel.sync();
@@ -1228,8 +1237,7 @@ async function removeTake(country){
           console.log(country, " is not the final take of ", country);
           console.log('currentRowIndex: ', lineDetails.currentRowIndex);
           console.log('markUpIndex', markUpIndex);
-          console.log('Diff: ', (engineerIndex - markUpIndex + 1));
-          scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+          console.log('Diff: ', (engineerIndex - markUpIndex + 1)); 
           let firstItem  = lineDetails.currentRowIndex;
           let lastItem;
           if (country == 'UK'){
@@ -1265,7 +1273,6 @@ async function removeTake(country){
             deleteRange.load('address');
             await excel.sync();
             console.log("Delete range address: ", deleteRange.address);
-            await unlock();
             deleteRange.delete("Up");
             selectCell.select();
             await excel.sync();
@@ -1279,14 +1286,13 @@ async function removeTake(country){
     } else {
       console.log('Take not found')
     }
-  
     console.log("Line Details")
     console.log(lineDetails);
-    await unlock();
     await doTheTidyUp(lineDetails)
-  })
-    
-  await lockColumns()
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
+  });
 }
 
 async function getAllLinesWithThisNumber(excel, currentRowIndex){
@@ -1352,9 +1358,7 @@ async function doTheTidyUp(lineDetails){
       }
     }
     await excel.sync();
-
-  })
-
+  });
 }
 
 
@@ -1369,9 +1373,9 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
     studioIndex = ukStudioIndex;
     engineerIndex = ukEngineerIndex;
   }
-  await unlock();
   await Excel.run(async function(excel){ 
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     let currentNumberCell = scriptSheet.getRangeByIndexes(currentRowIndex, numberIndex, 1, 1)
     currentNumberCell.load('values')
     let numberData = scriptSheet.getRange(numberColumn + firstDataRow + ":" + numberColumn + lastDataRow);
@@ -1430,8 +1434,10 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
       }
       await excel.sync();
     }
-  })
-  await lockColumns();
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
+  });
 }
 async function hideRows(visibleType, country){
   let noOfTakesColumn;
@@ -1440,10 +1446,10 @@ async function hideRows(visibleType, country){
     noOfTakesColumn = findColumnLetter("UK No of takes");
     takeNumberColumn = findColumnLetter("UK Take No")
   }
-  await unlock();
   await Excel.run(async function(excel){ 
     let myMessage = tag('takeMessage')
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     let myRange = scriptSheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
     myRange.load('values')
     await excel.sync();
@@ -1492,8 +1498,10 @@ async function hideRows(visibleType, country){
       }
       myMessage.innerText = "Showing first takes"
     }
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
   })
-  await lockColumns();
 }
 
 async function showHideColumns(columnType){
