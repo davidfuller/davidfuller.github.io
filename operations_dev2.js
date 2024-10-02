@@ -1510,9 +1510,10 @@ async function showHideColumns(columnType){
   let columnMessage = tag('columnMessage')
   let hideUnedited = tag('hideUnedited').checked;
   console.log('Hide Unedited', hideUnedited);
-  await unlock();
   await Excel.run(async function(excel){ 
     let app = excel.workbook.application;
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     app.suspendScreenUpdatingUntilNextSync();
     const settingsSheet = excel.workbook.worksheets.getItem(sheetName);
     const range = settingsSheet.getRange(rangeName);
@@ -1524,7 +1525,7 @@ async function showHideColumns(columnType){
     console.log(allIndex);
     let unhideColumns = range.values[allIndex][1]
     console.log(unhideColumns);
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    
     const unhideColumnsRange = scriptSheet.getRange(unhideColumns);
     unhideColumnsRange.columnHidden = false;
     //await excel.sync();
@@ -1596,6 +1597,9 @@ async function showHideColumns(columnType){
       console.log('Not hiding');
     }
     await excel.sync();
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
   })  
   console.log(columnMessage.innerText, columnType);
   columnMessage.innerText = 'Showing ' + columnType
@@ -1784,9 +1788,8 @@ async function fillSceneNumber(){
 }
 
 async function setDefaultColumnWidths(){
-  await unlock();
   await Excel.run(async function(excel){ 
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
@@ -1877,9 +1880,9 @@ async function filterOnCharacter(characterName){
 
 async function getDirectorData(characterName){
   let myData = [];
-  await unlock();
   let hiddenColumnAddresses = await getHiddenColumns();
 	await Excel.run(async (excel) => {
+    let isProtected = unlockIfLocked(excel, scriptSheet);
 		scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
 		let usedRange = await getDataRange(excel);
     usedRange.load('address');
