@@ -2258,7 +2258,7 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
 async function addSceneBlock(){
    await Excel.run(async (excel) => {
      let typeCodeValues = await getTypeCodes();
-     consile.log('typeCodeValues', typeCodeValues);
+     console.log('typeCodeValues', typeCodeValues);
    });
 }
 async function getTypeCodes(){
