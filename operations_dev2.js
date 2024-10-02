@@ -1,5 +1,5 @@
 const firstDataRow = 3;
-const lastDataRow = 19999;
+const lastDataRow = 9999;
 const scriptSheetName = 'Script';
 const forDirectorName = 'For Directors';
 const forActorsName = 'For Actors'
@@ -2134,14 +2134,13 @@ async function registerExcelEvents(){
   await Excel.run(async (excel) => {
     const directorSheet = excel.workbook.worksheets.getItem(forDirectorName);
     directorSheet.onChanged.add(handleChange);
-    const actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
-    actorsSheet.onChanged.add(handleActor); 
-    const schedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
-    schedulingSheet.onChanged.add(handleScheduling);
+
+    //const actorsSheet = excel.workbook.worksheets.getItem(forActorName);
+    //actorsSheet.onChanged.add(handleChange);
+
     await excel.sync();
-    console.log("Event handler successfully registered for onChanged event for three sheets.");
-    
-  }).catch(errorHandlerFunction);
+    console.log("Event handler successfully registered for onChanged event in the worksheet.");
+}).catch(errorHandlerFunction);
 }
 
 async function handleChange(event) {
@@ -2160,14 +2159,7 @@ async function handleActor(event) {
       }
   }).catch(errorHandlerFunction);
 }
-async function handleScheduling(event) {
-  await Excel.run(async (excel) => {
-      await excel.sync();        
-      if ((event.address == 'C6') && event.source == 'Local'){
-        await jade_modules.scheduling.getForSchedulingInfo();
-      }
-  }).catch(errorHandlerFunction);
-}
+
 function errorHandlerFunction(){
   console.log('I have an error')
 }
