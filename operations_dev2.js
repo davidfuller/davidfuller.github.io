@@ -2189,7 +2189,7 @@ async function createTypeCodes(){
     let chapterIndicies = await getIndices(positionChapterColumn, '<>', '');
     let resultArray = initialiseMyArray();
     console.log('ResultArray', resultArray);
-    resultArray = addValuesToArray(resultArray, results, 'Chapter', true);
+    resultArray = addValuesToArray(resultArray, chapterIndicies, 'Chapter', true);
     const typeCodeColumn = findColumnLetter("Type Code"); 
     let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" +typeCodeColumn +lastDataRow);
     typeCodeRange.values = resultArray;
