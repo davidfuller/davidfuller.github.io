@@ -248,7 +248,7 @@ async function directorGoToLine(){
       if (lineNumber != NaN){
         await jade_modules.operations.showMainPage();
         const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-        let columnIndex = await jade_modules.operations.findColumnIndex('Scene');
+        let columnIndex = await jade_modules.operations.findColumnIndex('Number');
         let tempRange = scriptSheet.getRangeByIndexes(10, columnIndex, 1, 1);
         tempRange.select();
         await excel.sync();
