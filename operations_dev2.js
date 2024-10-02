@@ -2188,7 +2188,6 @@ async function createTypeCodes(){
     const positionChapterColumn = findColumnLetter("Position Chapter"); 
     let chapterIndicies = await getIndices(positionChapterColumn, '<>', '');
     let resultArray = initialiseMyArray();
-    console.log('ResultArray', resultArray);
     resultArray = addValuesToArray(resultArray, chapterIndicies, 'Chapter', true);
     const typeCodeColumn = findColumnLetter("Type Code"); 
     let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" +typeCodeColumn +lastDataRow);
@@ -2235,11 +2234,13 @@ function initialiseMyArray(){
 
 function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
   for (let i = 0; i < myIndicies.length; i++){
+    console.log('i', i, 'myIndicies[i]', myIndicies[i], 'myArray', myArray[myIndicies[i]][0]);
     if (myArray[myIndicies[i]][0] == ''){
       myArray[myIndicies[i]][0] = theValue;
     } else if (replaceExisting){
       myArray[myIndicies[i]][0] = theValue;
     }
+    console.log('After => myArray', myArray[myIndicies[i]][0]);
   }
   console.log('myArray', myArray)
   return myArray;
