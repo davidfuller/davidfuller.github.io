@@ -2241,5 +2241,6 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
       myArray[myIndicies[i]][0] = theValue;
     }
   }
+  console.log('myArray', myArray)
   return myArray;
 }
