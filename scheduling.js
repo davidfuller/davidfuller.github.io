@@ -229,3 +229,19 @@ async function getForSchedulingInfo(){
 
   })
 }
+
+async function directorGoToLine(){
+  await Excel.run(async function(excel){
+    forDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
+    const lineIndex = 2;
+    let activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex');
+    await excel.sync(); 
+    let rowIndex = activeCell.rowIndex;
+    let lineNumberCell = forDirectorSheet.getRangeByIndexes(rowIndex, lineIndex, 1, 1);
+    lineNumberCell.load('values');
+    await excel.sync(); 
+    console.log('lineNumber', lineNumberCell.values);
+
+  })
+}
