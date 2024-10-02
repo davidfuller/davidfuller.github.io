@@ -2181,3 +2181,15 @@ function errorHandlerFunction(){
 function errorHandlerFunction(){
   console.log('I have an error')
 }
+
+async function createTypeCodes(){
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.getItem(scriptSheetName);
+    let chapterRange = scriptSheet.getRange(positionChapterColumn + firstDataRow + ":" + positionChapterColumn + lastDataRow);
+    chapterRange.load('values');
+    await excel.sync();
+    console.log('Chapter Position', chapterRange.values);
+  })
+
+
+}

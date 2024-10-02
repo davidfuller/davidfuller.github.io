@@ -106,6 +106,7 @@ async function mainHTML(){
     <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button>
     <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
     <button id="btnAddHandler" onclick="jade_modules.operations.registerExcelEvents()">Register events</button>
+    <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button>
   </div>
 </div>
 <div id="for-director-page">
