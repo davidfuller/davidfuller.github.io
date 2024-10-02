@@ -776,7 +776,7 @@ async function insertRow(){
   return activeCell.rowIndex;
 }
 
-async function insertRowV2(currentRowIndex){
+async function insertRowV2(currentRowIndex, doCopy){
   await unlock();
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -787,8 +787,10 @@ async function insertRowV2(currentRowIndex){
     const myRow = scriptSheet.getRangeByIndexes(currentRowIndex, 0, 1, myLastColumn.columnIndex+1);
     const newRow = myRow.insert("Down");
     await excel.sync();
-    newRow.copyFrom(myRow, "All");
-    await excel.sync();
+    if (doCopy){
+      newRow.copyFrom(myRow, "All");
+      await excel.sync(); 
+    }
     await correctFormulas(currentRowIndex + 1);
   })
   await lockColumns();
@@ -944,7 +946,7 @@ async function addTakeDetails(country, doDate){
       let currentRowIndex = lineDetails.indicies[countryTakes - 1];
       console.log('Current Row Index');
       console.log(currentRowIndex);
-      await insertRowV2(currentRowIndex)
+      await insertRowV2(currentRowIndex, true)
       newLineIndex = currentRowIndex + 1;
       lineDetails.indicies.push(newLineIndex);
       lineDetails.totalTakes += 1;
