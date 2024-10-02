@@ -671,7 +671,7 @@ async function theFormulas(){
     },
     {
       columnName: "Scene",
-      formulaFirst:  1,
+      formulaFirst:  0,
       formulaRest: '=IF(' + sceneNumberColumn + firstRestRow + '="",' +sceneColumn + firstRow + ',VALUE(' + sceneNumberColumn + firstRestRow + '))'
     },
     {
