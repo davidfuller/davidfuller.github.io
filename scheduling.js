@@ -1,5 +1,6 @@
 let characterlistSheet, forDirectorSheet, forActorSheet, forSchedulingSheet;
 const characterListName = 'Character List';
+const scriptSheetName = 'Script'
 const forDirectorName = 'For Directors';
 const forActorName = 'For Actors'
 const forSchedulingName = 'For Scheduling'
@@ -232,16 +233,33 @@ async function getForSchedulingInfo(){
 
 async function directorGoToLine(){
   await Excel.run(async function(excel){
-    forDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
+    const forDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
     const lineIndex = 2;
     let activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex');
     await excel.sync(); 
     let rowIndex = activeCell.rowIndex;
-    let lineNumberCell = forDirectorSheet.getRangeByIndexes(rowIndex, lineIndex, 1, 1);
-    lineNumberCell.load('values');
-    await excel.sync(); 
-    console.log('lineNumber', lineNumberCell.values);
+    if (rowIndex > 10){
+      let lineNumberCell = forDirectorSheet.getRangeByIndexes(rowIndex, lineIndex, 1, 1);
+      lineNumberCell.load('values');
+      await excel.sync(); 
+      console.log('lineNumber', lineNumberCell.values);
+      let lineNumber = parseInt(lineNumberCell.values[0][0])
+      if (lineNumber != NaN){
+        await jade_modules.operations.showMainPage();
+        const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+        let columnIndex = await jade_modules.operations.findColumnIndex('Scene');
+        let tempRange = scriptSheet.getRangeByIndexes(10, columnIndex, 1, 1);
+        tempRange.select();
+        await excel.sync();
+        await jade_modules.operations.findLineNo(lineNumber);
+      } else {
+        alert('Not a line number');
+      }
+    } else {
+      alert('Must be in a line with valid line number');
+    }
+    
 
   })
 }
