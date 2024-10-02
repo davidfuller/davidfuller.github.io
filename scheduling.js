@@ -245,6 +245,7 @@ async function directorGoToLine(){
       await excel.sync(); 
       console.log('lineNumber', lineNumberCell.values);
       let lineNumber = parseInt(lineNumberCell.values[0][0])
+      console.log('lineNumber', lineNumber);
       if (lineNumber != NaN){
         await jade_modules.operations.showMainPage();
         const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
