@@ -2230,6 +2230,7 @@ function initialiseMyArray(){
   for (let i = 0; i <= lastDataRow - firstDataRow; i++ ){
     resultArray[i] = [''];
   } 
+  return resultArray;
 }
 
 function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
