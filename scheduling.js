@@ -278,12 +278,16 @@ async function actorGoToLine(){
       console.log('lineNumber', lineNumber);
       if (!isNaN(lineNumber)){
         await jade_modules.operations.showMainPage();
+        await jade_modules.operations.findLineNo(lineNumber);
+        activeCell = excel.workbook.getActiveCell();
+        activeCell.load('rowIndex');
+        await excel.sync(); 
+        let rowIndex = activeCell.rowIndex;
         const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
         let columnIndex = await jade_modules.operations.findColumnIndex('Number');
-        let tempRange = scriptSheet.getRangeByIndexes(10, columnIndex, 1, 1);
+        let tempRange = scriptSheet.getRangeByIndexes(rowIndex, columnIndex, 1, 1);
         tempRange.select();
         await excel.sync();
-        await jade_modules.operations.findLineNo(lineNumber);
       } else {
         alert('Not a line number');
       }
