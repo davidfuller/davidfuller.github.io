@@ -2205,7 +2205,6 @@ async function getIndices(theColumn, test, testValue){
     await excel.sync();
     let theValues = theRange.values.map(x => x[0]);
     console.log('The Values', theValues);
-    let results = [];
     let index = -1;
     for (let i = 0; i< theValues.length; i++){
       let doIt = false;
