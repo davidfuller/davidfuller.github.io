@@ -2194,6 +2194,10 @@ async function createTypeCodes(){
     let sceneIndicies = await getIndices(sceneBordersColumn, 'equals', 'Original');
     resultArray = addValuesToArray(resultArray, sceneIndicies, 'Scene', false);
 
+    let cueColumn = findColumnLetter('Cue');
+    let cueIndicies = await getIndices(cueColumn, '<>', '');
+    resultArray = addValuesToArray(resultArray, cueIndicies, 'Line', false);
+
     const typeCodeColumn = findColumnLetter("Type Code"); 
     let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" +typeCodeColumn +lastDataRow);
     typeCodeRange.values = resultArray;
