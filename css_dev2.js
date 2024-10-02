@@ -450,7 +450,7 @@ label {
   margin-left: 15px;
 }
 
-#btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo, #btnActorGoToLine, #btnDirectorGoToLine {
+#btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo, #btnActorGoToLine, #btnDirectorGoToLine, #btnSchedulingGoToLine {
   height: auto;
   padding: 10px;
 }
