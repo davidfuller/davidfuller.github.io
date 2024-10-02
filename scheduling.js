@@ -277,7 +277,7 @@ async function actorGoToLine(){
       let lineNumber = parseInt(lineNumberCell.values[0][0])
       console.log('lineNumber', lineNumber);
       if (!isNaN(lineNumber)){
-        await jade_modules.operations.showMainPage();
+        
         await jade_modules.operations.findLineNo(lineNumber);
         activeCell = excel.workbook.getActiveCell();
         activeCell.load('rowIndex');
@@ -288,6 +288,7 @@ async function actorGoToLine(){
         let tempRange = scriptSheet.getRangeByIndexes(rowIndex, columnIndex, 1, 1);
         tempRange.select();
         await excel.sync();
+        await jade_modules.operations.showMainPage();
       } else {
         alert('Not a line number');
       }
