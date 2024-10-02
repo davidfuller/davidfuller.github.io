@@ -109,7 +109,7 @@ async function lockColumns(excel, sheet, theLockColumns){
   sheet.protection.load('protected');
   let range = sheet.getRange(theLockColumns);
   await excel.sync();
-  if (!scriptSheet.protection.protected){
+  if (!sheet.protection.protected){
     range.format.protection.locked = true;
     sheet.protection.protect({ selectionMode: "Normal", allowAutoFilter: true });
     await excel.sync();    
