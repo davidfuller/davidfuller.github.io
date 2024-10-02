@@ -1,5 +1,5 @@
 const firstDataRow = 3;
-const lastDataRow = 9999;
+const lastDataRow = 29999;
 const scriptSheetName = 'Script';
 const forDirectorName = 'For Directors';
 const forActorsName = 'For Actors'
