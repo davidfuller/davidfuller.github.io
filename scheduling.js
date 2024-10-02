@@ -137,8 +137,10 @@ async function getActorInfo(){
       }
     }
     console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length, 'dataArray.length', dataArray.length);
-    let displayRange = forActorSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, dataArray.length, 3);
-    displayRange.values = dataArray;
+    if (dataArray.length > 0){
+      let displayRange = forActorSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, dataArray.length, 3);
+      displayRange.values = dataArray;
+    }
     numItems.values = dataArray.length;    
     await excel.sync();
     waitLabel.style.display = 'none';
