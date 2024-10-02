@@ -310,7 +310,7 @@ async function schedulingGoToLine(){
     await excel.sync(); 
     let rowIndex = activeCell.rowIndex;
     if (rowIndex >= 10){
-      let sceneNumberCell = forActorSheet.getRangeByIndexes(rowIndex, sceneIndex, 1, 1);
+      let sceneNumberCell = forSchedulingSheet.getRangeByIndexes(rowIndex, sceneIndex, 1, 1);
       sceneNumberCell.load('values');
       await excel.sync(); 
       console.log('sceneNumber', sceneNumberCell.values);
