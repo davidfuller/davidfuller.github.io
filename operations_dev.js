@@ -403,7 +403,7 @@ async function getDataRange(excel){
 async function getTargetSceneNumber(){
   const textValue = sceneInput.value;
   const sceneNumber = parseInt(textValue);
-  if (sceneNumber != NaN){
+  if (!isNaN(sceneNumber)){
     console.log(sceneNumber);
     await findSceneNo(sceneNumber);
   }  else {
@@ -414,7 +414,7 @@ async function getTargetSceneNumber(){
 async function getTargetLineNo(){
   const textValue = lineNoInput.value;
   const lineNumber = parseInt(textValue);
-  if (lineNumber != NaN){
+  if (!isNaN(lineNumber)){
     console.log(lineNumber);
     await findLineNo(lineNumber);
   }  else {
@@ -425,7 +425,7 @@ async function getTargetLineNo(){
 async function getTargetChapter(){
   const textValue = chapterInput.value;
   const chapterNumber = parseInt(textValue);
-  if (chapterNumber != NaN){
+  if (isNaN(chapterNumber)){
     console.log(chapterNumber);
     await findChapter(chapterNumber);
   }  else {
