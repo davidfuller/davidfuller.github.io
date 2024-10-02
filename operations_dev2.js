@@ -2189,6 +2189,11 @@ async function createTypeCodes(){
     let chapterIndicies = await getIndices(positionChapterColumn, '<>', '');
     let resultArray = initialiseMyArray();
     resultArray = addValuesToArray(resultArray, chapterIndicies, 'Chapter', true);
+
+    let sceneBordersColumn = findColumnLetter('Scene Borders');
+    let sceneIndicies = await getIndices(sceneBordersColumn, 'equals', 'Original');
+    resultArray = addValuesToArray(resultArray, sceneIndicies, 'Scene', false);
+
     const typeCodeColumn = findColumnLetter("Type Code"); 
     let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" +typeCodeColumn +lastDataRow);
     typeCodeRange.values = resultArray;
