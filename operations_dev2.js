@@ -2190,12 +2190,14 @@ async function createTypeCodes(){
     chapterRange.load('values');
     await excel.sync();
     console.log('Chapter Position', chapterRange.values);
-    let chapterNumbers =chapterRange.values.map(x => x[0]);
+    let chapterNumbers = chapterRange.values.map(x => x[0]);
     console.log('Chapter Numbers', chapterNumbers);
     let results = [];
+    let index = -1;
     for (let i = 0; i< chapterNumbers.length; i++){
       if (chapterNumbers[i] == 9){
-        results.push[i];
+        index += 1
+        results[index] = i;
       }
     }
     console.log(results);  
