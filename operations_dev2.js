@@ -2210,6 +2210,10 @@ async function createTypeCodes(){
       resultArray[results[i]] = "Chapter"
     }
     console.log('ResultArray', resultArray);
+    const typeCodeColumn = findColumnLetter("Type Code"); 
+    let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" +typeCodeColumn +lastDataRow);
+    typeCodeRange.values = resultArray;
+    await excel.sync();
   })
     
 }
