@@ -2254,3 +2254,19 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
   console.log('myArray', myArray)
   return myArray;
 }
+
+
+/* Do a Chapter
+  Find the next chapter
+  Is the next row a scene
+    Insert 3 lines
+    Mark them, as Scene Block
+  Is the next row a line
+    Insert 3 lines
+  Is the next line a Scene block
+    Check there are three of them    
+  
+
+  Now do the filling in
+      
+*/
