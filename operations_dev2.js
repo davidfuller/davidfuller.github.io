@@ -91,13 +91,23 @@ function findColumnLetter(name){
   return mySheetColumns.find((col) => col.name === name).column;
 }
 
+async function lockScriptSheet(){
+  await Excel.run(async function(excel){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    await lockColumns(excel, scriptSheet, columnsToLock);
+  });
+}
 
+async function unlockScriptSheet(){
+  await Excel.run(async function(excel){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    await unlock(excel, scriptSheet);
+  });
+}
 
-
-
-async function lockColumns(excel, sheet, lockColumns){
+async function lockColumns(excel, sheet, theLockColumns){
   sheet.protection.load('protected');
-  let range = sheet.getRange(lockColumns);
+  let range = sheet.getRange(theLockColumns);
   await excel.sync();
   if (!scriptSheet.protection.protected){
     range.format.protection.locked = true;
@@ -118,7 +128,7 @@ async function unlock(excel, sheet){
 async function applyFilter(){
   /*Jade.listing:{"name":"Apply filter","description":"Applies empty filter to sheet"}*/
   await Excel.run(async function(excel){
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = unlockIfLocked(excel, scriptSheet);
     
     const myRange = await getDataRange(excel);
@@ -1735,7 +1745,7 @@ async function displayMinAndMax(){
 
 async function fillSceneNumber(){
   await Excel.run(async function(excel){ 
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
@@ -1790,6 +1800,7 @@ async function fillSceneNumber(){
 async function setDefaultColumnWidths(){
   await Excel.run(async function(excel){ 
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
@@ -1801,8 +1812,10 @@ async function setDefaultColumnWidths(){
       }
     }
     await excel.sync();
-    await lockColumns();
-  })
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
+  });
 }
 
 async function setUpEvents(){
@@ -1975,6 +1988,9 @@ async function getDirectorData(characterName){
       }
     }
     console.log('myData', myData);
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
   })
   console.log('directors myData', myData);
   return myData;
@@ -1982,10 +1998,10 @@ async function getDirectorData(characterName){
 
 async function getLocations(){
   let myData = [];
-  await unlock();
   let hiddenColumnAddresses = await getHiddenColumns();
 	await Excel.run(async (excel) => {
-		scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+		let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = unlockIfLocked(excel, scriptSheet);
 		let usedRange = await getDataRange(excel);
     usedRange.load('address');
     usedRange.columnHidden = false;
@@ -2062,7 +2078,9 @@ async function getLocations(){
       }
     }
     console.log('myData', myData);
-
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
   })
   console.log('get Locations myData', myData);
   return myData;
@@ -2071,7 +2089,7 @@ async function getLocations(){
 async function getHiddenColumns(){
   let results = [];
   await Excel.run(async (excel) => {
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const myUsedRange = scriptSheet.getUsedRange();
     myUsedRange.load('columnIndex, columnCount, address');
     await excel.sync();
