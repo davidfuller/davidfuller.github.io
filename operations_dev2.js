@@ -2192,9 +2192,10 @@ async function createTypeCodes(){
     console.log('Chapter Position', chapterRange.values);
     let chapterNumbers =chapterRange.values.map(x => x[0]);
     console.log('Chapter Numbers', chapterNumbers);
-    //let theChapters = chapterRange.values.filter((item) => {
-      //return 
-    //}
+    let theChapters = chapterNumbers.filter((item) => {
+      return item != '';
+    })
+    console.log(theChapters);
   })
 
 
