@@ -2204,7 +2204,7 @@ async function getIndices(theColumn, test, testValue){
     let theRange = scriptSheet.getRange(theColumn + firstDataRow + ":" + theColumn + lastDataRow);
     theRange.load('values');
     await excel.sync();
-    let theValues = theValues.values.map(x => x[0]);
+    let theValues = theRange.values.map(x => x[0]);
     console.log('The Values', theValues);
     let results = [];
     let index = -1;
