@@ -449,7 +449,8 @@ label {
 #btnMainPage, #btnForDirectorPage, #forActorsButtons {
   margin-left: 15px;
 }
-#btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo {
+
+#btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo, #btnActorGoToLine, #btnDirectorGoToLine {
   height: auto;
   padding: 10px;
 }

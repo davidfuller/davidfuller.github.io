@@ -274,7 +274,7 @@ async function actorGoToLine(){
       lineNumberCell.load('values');
       await excel.sync(); 
       console.log('lineNumber', lineNumberCell.values);
-      let lineNumber = parseInt(lineNumberCell.values[0][0].split(',')[0])
+      let lineNumber = parseInt(lineNumberCell.values[0][0])
       console.log('lineNumber', lineNumber);
       if (!isNaN(lineNumber)){
         await jade_modules.operations.showMainPage();
