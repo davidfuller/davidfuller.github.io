@@ -2185,6 +2185,7 @@ function errorHandlerFunction(){
 async function createTypeCodes(){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const positionChapterColumn = findColumnLetter("Position Chapter"); 
     let chapterRange = scriptSheet.getRange(positionChapterColumn + firstDataRow + ":" + positionChapterColumn + lastDataRow);
     chapterRange.load('values');
     await excel.sync();
