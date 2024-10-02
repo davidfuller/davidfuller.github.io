@@ -2233,6 +2233,7 @@ function initialiseMyArray(){
 }
 
 function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
+  console.log('My indicies', myIndicies);
   for (let i = 0; i < myIndicies.length; i++){
     console.log('i', i, 'myIndicies[i]', myIndicies[i], 'myArray', myArray[myIndicies[i]][0]);
     if (myArray[myIndicies[i]][0] == ''){
