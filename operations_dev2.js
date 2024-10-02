@@ -2186,34 +2186,59 @@ async function createTypeCodes(){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const positionChapterColumn = findColumnLetter("Position Chapter"); 
-    let chapterRange = scriptSheet.getRange(positionChapterColumn + firstDataRow + ":" + positionChapterColumn + lastDataRow);
-    chapterRange.load('values');
-    await excel.sync();
-    console.log('Chapter Position', chapterRange.values);
-    let chapterNumbers = chapterRange.values.map(x => x[0]);
-    console.log('Chapter Numbers', chapterNumbers);
-    let results = [];
-    let index = -1;
-    for (let i = 0; i< chapterNumbers.length; i++){
-      if (chapterNumbers[i] == 9){
-        index += 1
-        results[index] = i;
-      }
-    }
-    console.log(results);  
-    resultArray = []
-    for (let i = 0; i <= lastDataRow - firstDataRow; i++ ){
-      resultArray[i] = [''];
-    }
+    let chapterIndicies = await getIndices(positionChapterColumn, '<>', '');
+    let resultArray = initialiseMyArray();
     console.log('ResultArray', resultArray);
-    for (let i = 0; i < results.length; i++){
-      resultArray[results[i]][0] = "Chapter"
-    }
-    console.log('ResultArray', resultArray);
+    resultArray = addValuesToArray(resultArray, results, 'Chapter', true);
     const typeCodeColumn = findColumnLetter("Type Code"); 
     let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" +typeCodeColumn +lastDataRow);
     typeCodeRange.values = resultArray;
     await excel.sync();
   })
-    
+}
+
+async function getIndices(theColumn, test, testValue){
+  let results = [];
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let theRange = scriptSheet.getRange(theColumn + firstDataRow + ":" + theColumn + lastDataRow);
+    theRange.load('values');
+    await excel.sync();
+    let theValues = theValues.values.map(x => x[0]);
+    console.log('The Values', theValues);
+    let results = [];
+    let index = -1;
+    for (let i = 0; i< theValues.length; i++){
+      let doIt = false;
+      if (test == "equals"){
+        doIt = theValues[i] == testValue;
+      } else if (test == "<>"){
+        doIt = theValues[i] != testValue;
+      }
+      if (doIt){
+        index += 1
+        results[index] = i;
+      }
+    }
+    console.log('initial results', results)
+  })
+  return results
+}
+
+function initialiseMyArray(){
+  let resultArray = []
+  for (let i = 0; i <= lastDataRow - firstDataRow; i++ ){
+    resultArray[i] = [''];
+  } 
+}
+
+function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
+  for (let i = 0; i < myIndicies.length; i++){
+    if (myArray[myIndicies[i]][0] == ''){
+      myArray[myIndicies[i]][0] = theValue;
+    } else if (replaceExisting){
+      myArray[myIndicies[i]][0] = theValue;
+    }
+  }
+  return myArray;
 }
