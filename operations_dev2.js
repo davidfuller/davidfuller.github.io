@@ -2190,6 +2190,11 @@ async function createTypeCodes(){
     chapterRange.load('values');
     await excel.sync();
     console.log('Chapter Position', chapterRange.values);
+    let chapterNumbers =chapterRange.values.map(x => x[0]);
+    console.log('Chapter Numbers', chapterNumbers);
+    //let theChapters = chapterRange.values.filter((item) => {
+      //return 
+    //}
   })
 
 
