@@ -349,7 +349,12 @@ async function firstScene(){
     const minAndMax = await getSceneMaxAndMin();
     console.log("Min and Max");
     console.log(minAndMax);
-    await findSceneNo(minAndMax.min);
+    if (minAndMax.min < 1){
+      await findSceneNo(1);
+    } else {
+      await findSceneNo(minAndMax.min);
+    }
+    
   })
 }
 
