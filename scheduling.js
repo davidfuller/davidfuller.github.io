@@ -230,7 +230,6 @@ async function getForSchedulingInfo(){
 
   })
 }
-
 async function directorGoToLine(){
   await Excel.run(async function(excel){
     const forDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
@@ -239,7 +238,7 @@ async function directorGoToLine(){
     activeCell.load('rowIndex');
     await excel.sync(); 
     let rowIndex = activeCell.rowIndex;
-    if (rowIndex > 10){
+    if (rowIndex >= 10){
       let lineNumberCell = forDirectorSheet.getRangeByIndexes(rowIndex, lineIndex, 1, 1);
       lineNumberCell.load('values');
       await excel.sync(); 
@@ -260,7 +259,36 @@ async function directorGoToLine(){
     } else {
       alert('Must be in a line with valid line number');
     }
-    
-
+  })
+}
+async function actorGoToLine(){
+  await Excel.run(async function(excel){
+    const forActorSheet = excel.workbook.worksheets.getItem(forActorName);
+    const lineIndex = 2;
+    let activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex');
+    await excel.sync(); 
+    let rowIndex = activeCell.rowIndex;
+    if (rowIndex >= 10){
+      let lineNumberCell = forActorSheet.getRangeByIndexes(rowIndex, lineIndex, 1, 1);
+      lineNumberCell.load('values');
+      await excel.sync(); 
+      console.log('lineNumber', lineNumberCell.values);
+      let lineNumber = parseInt(lineNumberCell.values[0][0].split(',')[0])
+      console.log('lineNumber', lineNumber);
+      if (!isNaN(lineNumber)){
+        await jade_modules.operations.showMainPage();
+        const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+        let columnIndex = await jade_modules.operations.findColumnIndex('Number');
+        let tempRange = scriptSheet.getRangeByIndexes(10, columnIndex, 1, 1);
+        tempRange.select();
+        await excel.sync();
+        await jade_modules.operations.findLineNo(lineNumber);
+      } else {
+        alert('Not a line number');
+      }
+    } else {
+      alert('Must be in a line with valid line number');
+    }
   })
 }
