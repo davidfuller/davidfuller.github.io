@@ -22,6 +22,10 @@ let myTypes = {
   sceneBlock: 'Scene Block'
 }
 
+let myFormats = {
+  purple: '#f3d1f0'
+}
+
 function auto_exec(){
 }
 
@@ -2330,6 +2334,7 @@ async function addSceneBlock(chapterNo){
         let usScriptColumnIndex = findColumnIndex('US Script');
         let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, 3, usScriptColumnIndex - cueColumnIndex + 1);
         myMergeRange.merge(true);
+        myMergeRange.format.fill.color = myFormats.purple;
         await excel.sync();
       }
    });
