@@ -2292,6 +2292,15 @@ async function addSceneBlock(chapterNo){
       console.log('typeCodeValues', typeCodeValues);
       let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
       console.log('chapter Indecies', chapterIndecies)
+      let theRowIndex = -1
+      for (let i = 0; i < chapterIndecies.length; i++){
+        if (typeCodeValues.chapters.values[chapterIndecies[i]] == chapterNo){
+          theRowIndex = typeCodeValues.typeCodes.rowIndex + chapterIndecies[i]
+          break;
+        } 
+        console.log(i);
+      }
+      console.log('Found: Index', chapterIndecies[i], ' rowIndex', typeCodeValues.typeCodes.rowIndex + chapterIndecies[i]);
 
    });
 }
