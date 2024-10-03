@@ -2305,6 +2305,8 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
 }
 
 async function addSceneBlock(chapterNo){
+  await testMergedCell();
+  /*
     await Excel.run(async (excel) => {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       let typeCodeValues = await getTypeCodes();
@@ -2344,11 +2346,26 @@ async function addSceneBlock(chapterNo){
         console.log('myMergeRange.values', myMergeRange.values)
         myMergeRange.values[0][0] = "Scene " + sceneData.scene;
         await excel.sync();
+        
         console.log('myMergeRange.values', myMergeRange.values)
       }
    });
+   */
 }
-
+async function testMergedCell(){
+  await Excel.run(async (excel) => {
+      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      let testRowIndex = 211;
+      let cueColumnIndex = findColumnIndex('Cue');
+      let testRange = scriptSheet.getRangeByIndexes(testRowIndex, cueColumnIndex, 1, 1);
+      testRange.load('address');
+      testRange.load('values');
+      await excel.sync();
+      console.log(testRange.address, testRange.values);
+    });
+  
+  
+}
 async function getSceneBlockData(excel, sheet, myRowIndex){
   let sceneNumberIndex = findColumnIndex('Scene Number');
   let OtherNotesIndex = findColumnIndex('Other notes');
