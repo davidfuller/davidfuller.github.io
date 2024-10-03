@@ -2341,7 +2341,9 @@ async function addSceneBlock(chapterNo){
         let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, usScriptColumnIndex - cueColumnIndex + 1);
         myMergeRange.merge(true);
         myMergeRange.format.fill.color = myFormats.purple;
+        myMergeRange.load('values');
         await excel.sync();
+        console.log('myMergeRange.values', myMergeRange.values)
       }
    });
 }
@@ -2358,19 +2360,14 @@ async function getSceneBlockData(excel, sheet, myRowIndex){
   sceneData.location = '';
   sceneData.beasts ='';
   sceneData.otherNotes = '';
-  console.log('myDataRange length', myDataRange.values.length);
   for (let row = 0; row < myDataRange.values.length; row++){
-    console.log('Row',row);
       if (sceneData.location == ''){
-        console.log('Doing location');
         sceneData.location = myDataRange.values[row][11]
       }
       if (sceneData.beasts == ''){
-        console.log('Doing beasts');
         sceneData.beasts = myDataRange.values[row][15] 
       }
       if (sceneData.otherNotes == ''){
-        console.log('Doing other');
         sceneData.otherNotes = myDataRange.values[row][16]
       }
   }
