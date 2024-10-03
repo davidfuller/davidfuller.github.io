@@ -2358,8 +2358,8 @@ async function getSceneBlockData(excel, sheet, myRowIndex){
   sceneData.location = '';
   sceneData.beasts ='';
   sceneData.otherNotes = '';
-  console.log('myDataRange length', myDataRange[0].length);
-  for (let row = 0; row < myDataRange.length; row++){
+  console.log('myDataRange length', myDataRange.values.length);
+  for (let row = 0; row < myDataRange.values.length; row++){
     console.log('Row',row);
       if (sceneData.location == ''){
         console.log('Doing location');
