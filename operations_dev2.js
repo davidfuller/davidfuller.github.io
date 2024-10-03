@@ -817,6 +817,7 @@ async function insertRowV2(currentRowIndex, doCopy){
       await lockColumns(excel, scriptSheet, columnsToLock);
     }
   });
+  return currentRowIndex + 1;
 }
 
 async function deleteRow(){
