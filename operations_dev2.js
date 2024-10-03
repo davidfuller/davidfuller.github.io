@@ -2325,8 +2325,8 @@ async function addSceneBlock(chapterNo){
       console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
       let newRowIndex;
       if (nextRowType == myTypes.line){
-        await getSceneBlockData(excel, scriptSheet, theRowIndex);
-
+        let sceneData = await getSceneBlockData(excel, scriptSheet, theRowIndex);
+         console.log('scene Data', sceneData) 
 
 
         for (let i = 0; i < sceneBlockRows; i++){
@@ -2353,6 +2353,23 @@ async function getSceneBlockData(excel, sheet, myRowIndex){
   myDataRange.load('values');
   await excel.sync();
   console.log(myDataRange.values);
+  let sceneData = {}
+  sceneData.scene = myDataRange.values[0][0]
+  sceneData.location = '';
+  sceneData.beasts ='';
+  sceneData.otherNotes = ''
+  for (let row = 0; row < myDataRange.length; row++){
+      if (sceneData.location == ''){
+        sceneData.location = myDataRange.values[i][11]
+      }
+      if (sceneData.beasts == ''){
+        sceneData.beasts == myDataRange.values[i][15] 
+      }
+      if (sceneData.otherNotes == ''){
+        sceneData.otherNotes = myDataRange.values[i][16]
+      }
+  }
+  return sceneData;
 }
 
 function createChapterIndecies(theTypeCodesValues){
