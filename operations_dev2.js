@@ -2300,7 +2300,7 @@ async function addSceneBlock(chapterNo){
         } 
         console.log(i);
       }
-      console.log('Found: Index', chapterIndecies[i], ' rowIndex', typeCodeValues.typeCodes.rowIndex + chapterIndecies[i]);
+      console.log('Found: rowIndex', theRowIndex);
 
    });
 }
