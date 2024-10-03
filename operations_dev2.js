@@ -420,18 +420,16 @@ async function getChapterRange(excel){
   return range;
 }
 
-async function getDataRange(){
+async function getDataRange(excel){
   let range;
-  await Excel.run(async function(excel){
-    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    const myLastRow = scriptSheet.getUsedRange().getLastRow();
-    const myLastColumn = scriptSheet.getUsedRange().getLastColumn();
-    myLastRow.load("rowIndex");
-    myLastColumn.load("columnIndex")
-    await excel.sync();
-    range = scriptSheet.getRangeByIndexes(1,0, myLastRow.rowIndex, myLastColumn.columnIndex + 1);
-    await excel.sync();
-  })
+  let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  const myLastRow = scriptSheet.getUsedRange().getLastRow();
+  const myLastColumn = scriptSheet.getUsedRange().getLastColumn();
+  myLastRow.load("rowIndex");
+  myLastColumn.load("columnIndex")
+  await excel.sync();
+  range = scriptSheet.getRangeByIndexes(1,0, myLastRow.rowIndex, myLastColumn.columnIndex + 1);
+  await excel.sync();
   return range
 }
 
@@ -1913,11 +1911,12 @@ async function filterOnCharacter(characterName){
 async function getDirectorData(characterName){
   let myData = [];
   let hiddenColumnAddresses = await getHiddenColumns();
-  let usedRange = await getDataRange();
+  
 	await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     //let isProtected = unlockIfLocked(excel, scriptSheet);
-		usedRange.load('address');
+		let usedRange = await getDataRange(excel);
+    usedRange.load('address');
     usedRange.columnHidden = false;
     await excel.sync()
     let app = excel.workbook.application;
