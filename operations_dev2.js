@@ -1913,8 +1913,8 @@ async function getDirectorData(characterName){
   let myData = [];
   let hiddenColumnAddresses = await getHiddenColumns();
 	await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = unlockIfLocked(excel, scriptSheet);
-		scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
 		let usedRange = await getDataRange(excel);
     usedRange.load('address');
     usedRange.columnHidden = false;
