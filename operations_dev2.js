@@ -422,6 +422,10 @@ async function getChapterRange(excel){
 
 async function getDataRange(excel){
   let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  let usedRange = scriptSheet.getUsedRange();
+  usedRange.load('address');
+  await excel.sync();
+  console.log('Used range', usedRange.address)
   const myLastRow = scriptSheet.getUsedRange().getLastRow();
   const myLastColumn = scriptSheet.getUsedRange().getLastColumn();
   myLastRow.load("rowIndex");
