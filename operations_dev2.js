@@ -18,7 +18,8 @@ let sceneInput, lineNoInput, chapterInput;
 let myTypes = {
   chapter: 'Chapter',
   scene: 'Scene',
-  line: 'Line'
+  line: 'Line',
+  sceneBlock: 'Scene Block'
 }
 
 function auto_exec(){
@@ -2299,6 +2300,7 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
 
 async function addSceneBlock(chapterNo){
     await Excel.run(async (excel) => {
+      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       let typeCodeValues = await getTypeCodes();
       console.log('typeCodeValues', typeCodeValues);
       let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
@@ -2319,6 +2321,9 @@ async function addSceneBlock(chapterNo){
       if (nextRowType == myTypes.line){
         newRowIndex = await insertRowV2(theRowIndex + 1, false);
         console.log('newRowIndex', newRowIndex);
+        let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
+        newTypeRange.values = myTypes.sceneBlock;
+        await excel.sync();
       }
    });
 }
@@ -2346,22 +2351,26 @@ async function getTypeCodes(){
     typeCodeRange.load('values');
     typeCodeRange.load('rowIndex');
     typeCodeRange.load('rowCount');
-    typeCodeRange.load('address')
+    typeCodeRange.load('address');
+    typeCodeRange.load('columnIndex');
     chapterNoRange.load('values')
     chapterNoRange.load('rowIndex');
     chapterNoRange.load('rowCount');
-    chapterNoRange.load('address')
+    chapterNoRange.load('address');
+    chapterNoRange.load('columnIndex');
     await excel.sync();
     theValues.typeCodes = {
       values: typeCodeRange.values.map(x => x[0]),
       rowIndex: typeCodeRange.rowIndex,
       rowCount: typeCodeRange.rowCount,
+      columnIndex: typeCodeRange.columnIndex,
       address: typeCodeRange.address
     }
     theValues.chapters = {
       values: chapterNoRange.values.map(x => x[0]),
       rowIndex: chapterNoRange.rowIndex,
       rowCount: chapterNoRange.rowCount,
+      columnIndex: chapterNoRange.columnIndex,
       address: chapterNoRange.address
     }
   });
