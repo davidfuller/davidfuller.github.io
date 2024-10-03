@@ -2342,7 +2342,12 @@ async function addSceneBlock(chapterNo){
         myMergeRange.load('values');
         await excel.sync();
         console.log('myMergeRange.values', myMergeRange.values)
-        myMergeRange.values = [["Scene " + sceneData.scene],['Line 2'],['Line 2'],['Line 2']];
+        myMergeRange.values = [
+              ["Scene " + sceneData.scene, '', '', '', '', '', '', '', ''],
+              ['Line 2', '', '', '', '', '', '', '', ''],
+              ['Line 2', '', '', '', '', '', '', '', ''],
+              ['Line 2', '', '', '', '', '', '', '', '']
+              ];
         myMergeRange.format.font.name = 'Courier New';
         myMergeRange.format.font.size = 12;
         myMergeRange.format.font.bold = true;
