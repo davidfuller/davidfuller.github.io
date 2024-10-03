@@ -2297,14 +2297,16 @@ async function getTypeCodes(){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const typeCodeColumn = findColumnLetter("Type Code"); 
-    let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" +typeCodeColumn +lastDataRow);
+    let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" + typeCodeColumn +lastDataRow);
     typeCodeRange.load('values');
     typeCodeRange.load('rowIndex');
     typeCodeRange.load('rowCount');
+    typeCodeRange.load('address')
     await excel.sync();
     theValues.values = typeCodeRange.values.map(x => x[0]);
     theValues.rowIndex = typeCodeRange.rowIndex;
-    theValues.rowCount = typeCodeColumn.rowCount
+    theValues.rowCount = typeCodeRange.rowCount;
+    theValues.address = typeCodeRange.address;
   });
   return theValues;
 }

@@ -1,6 +1,9 @@
 <h1>MuVi2 Script Controller</h1>
 <h2>Version Beta 3. Development</h2>
 <div id="main-page">
+  <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
+  <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
+  <button id="btnForSchedulingPage" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button><br/>
   <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
@@ -12,9 +15,6 @@
     <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button>
     <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
   </div>
-  <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
-  <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
-  <button id="btnForSchedulingPage" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button><br/>
   <div id="firstButtons">
     <label class="section-label">Lock / Unlock</label><br/>
     <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
