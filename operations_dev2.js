@@ -2326,6 +2326,11 @@ async function addSceneBlock(chapterNo){
           newTypeRange.values = myTypes.sceneBlock;
           await excel.sync();
         }
+        let cueColumnIndex = findColumnIndex('Cue');
+        let usScriptColumnIndex = findColumnIndex('US Script');
+        let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, 3, usScriptColumnIndex - cueColumnIndex + 1);
+        myMergeRange.merge(true);
+        await excel.sync();
       }
    });
 }
