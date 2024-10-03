@@ -422,7 +422,7 @@ async function getChapterRange(excel){
 
 async function getDataRange(excel){
   let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-  let isProtected = unlockIfLocked(excel, scriptSheet);
+  let isProtected = await unlockIfLocked(excel, scriptSheet);
   console.log('isProtected', isProtected)
   let usedRange = scriptSheet.getUsedRange();
   usedRange.load('address');
