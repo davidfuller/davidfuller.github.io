@@ -425,8 +425,10 @@ async function getDataRange(excel){
   const myLastRow = scriptSheet.getUsedRange().getLastRow();
   const myLastColumn = scriptSheet.getUsedRange().getLastColumn();
   myLastRow.load("rowIndex");
+  myLastRow.load('address')
   myLastColumn.load("columnIndex")
   await excel.sync();
+  console.log('myLastRow.rowIndex', myLastRow.rowIndex, myLastRow.address);
   
   const range = scriptSheet.getRangeByIndexes(1,0, myLastRow.rowIndex, myLastColumn.columnIndex + 1);
   await excel.sync();
