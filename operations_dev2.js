@@ -2287,9 +2287,18 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
 }
 
 async function addSceneBlock(chapterNo){
-   await Excel.run(async (excel) => {
-     let typeCodeValues = await getTypeCodes();
-     console.log('typeCodeValues', typeCodeValues);
+    await Excel.run(async (excel) => {
+      let typeCodeValues = await getTypeCodes();
+      console.log('typeCodeValues', typeCodeValues);
+      let chapterIndecies = []
+      let chapterIndex = -1
+      for (let i = 0; i < typeCodeValues.typeCodes.values.length; i++){
+        if (typeCodeValues.typeCodes.values[i] == 'Chapter'){
+          chapterIndex += 1;
+          chapterIndecies[chapterIndex] = i;
+        }
+      }
+      console.log('chapter Indecies', chapterIndecies)
    });
 }
 async function getTypeCodes(){
