@@ -2359,7 +2359,11 @@ async function testMergedCell(){
       let cueColumnIndex = findColumnIndex('Cue');
       let testRange = scriptSheet.getRangeByIndexes(testRowIndex, cueColumnIndex, 1, 1);
       testRange.load('address');
-      testRange.values = [['Hello Mum']];
+      testRange.values = [['Hello Muma']];
+      testRange.format.font.name = 'Courier New';
+      testRange.format.font.size = 12;
+      testRange.format.font.bold = true;
+      testRange.format.horizontalAlignment = 'Center';
       
       await excel.sync();
       console.log(testRange.address, testRange.values);
