@@ -2305,10 +2305,8 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
 }
 
 async function addSceneBlock(chapterNo){
-  await testMergedCell();
-  /*
-    await Excel.run(async (excel) => {
-      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       let typeCodeValues = await getTypeCodes();
       console.log('typeCodeValues', typeCodeValues);
       let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
@@ -2344,13 +2342,17 @@ async function addSceneBlock(chapterNo){
         myMergeRange.load('values');
         await excel.sync();
         console.log('myMergeRange.values', myMergeRange.values)
-        myMergeRange.values[0][0] = "Scene " + sceneData.scene;
+        myMergeRange.values = [["Scene " + sceneData.scene;],['Line 2'],['Line 2'],['Line 2']];
+        myMergeRange.format.font.name = 'Courier New';
+        myMergeRange.format.font.size = 12;
+        myMergeRange.format.font.bold = true;
+        myMergeRange.format.horizontalAlignment = 'Center';
         await excel.sync();
         
         console.log('myMergeRange.values', myMergeRange.values)
       }
    });
-   */
+   
 }
 async function testMergedCell(){
   await Excel.run(async (excel) => {
