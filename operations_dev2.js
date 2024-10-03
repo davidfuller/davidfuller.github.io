@@ -13,7 +13,13 @@ let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEn
 let mySheetColumns;
 let scriptSheet;
 
-let sceneInput, lineNoInput, chapterInput
+let sceneInput, lineNoInput, chapterInput;
+
+let myTypes = {
+  chapter: 'Chapter',
+  scene: 'Scene',
+  line: 'Line'
+}
 
 function auto_exec(){
 }
@@ -2219,15 +2225,15 @@ async function createTypeCodes(){
     const positionChapterColumn = findColumnLetter("Position Chapter"); 
     let chapterIndicies = await getIndices(positionChapterColumn, '<>', '');
     let resultArray = initialiseMyArray();
-    resultArray = addValuesToArray(resultArray, chapterIndicies, 'Chapter', true);
+    resultArray = addValuesToArray(resultArray, chapterIndicies, myTypes.chapter, true);
 
     let sceneBordersColumn = findColumnLetter('Scene Borders');
     let sceneIndicies = await getIndices(sceneBordersColumn, 'equals', 'Original');
-    resultArray = addValuesToArray(resultArray, sceneIndicies, 'Scene', false);
+    resultArray = addValuesToArray(resultArray, sceneIndicies, myTypes.scene, false);
 
     let cueColumn = findColumnLetter('Cue');
     let cueIndicies = await getIndices(cueColumn, '<>', '');
-    resultArray = addValuesToArray(resultArray, cueIndicies, 'Line', false);
+    resultArray = addValuesToArray(resultArray, cueIndicies, myTypes.line, false);
 
     const typeCodeColumn = findColumnLetter("Type Code"); 
     let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" +typeCodeColumn +lastDataRow);
@@ -2302,9 +2308,13 @@ async function addSceneBlock(chapterNo){
         } 
         console.log(i);
       }
-      let neextRowType = typeCodeValues.typeCodes.values[nextIndex];
-      console.log('Found: rowIndex', theRowIndex, 'Next code:', neextRowType);
-
+      let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
+      console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
+      let newRowIndex;
+      if (nextRowType == myTypes.line){
+        newRowIndex = await insertRowV2(theRowIndex, false);
+        console.log('newRowIndex', newRowIndex);
+      }
    });
 }
 
@@ -2312,7 +2322,7 @@ function createChapterIndecies(theTypeCodesValues){
   let chapterIndecies = []
   let chapterIndex = -1
   for (let i = 0; i < theTypeCodesValues.length; i++){
-    if (theTypeCodesValues[i] == 'Chapter'){
+    if (theTypeCodesValues[i] == myTypes.chapter){
       chapterIndex += 1;
       chapterIndecies[chapterIndex] = i;
     }
