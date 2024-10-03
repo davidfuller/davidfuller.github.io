@@ -2360,13 +2360,13 @@ async function getSceneBlockData(excel, sheet, myRowIndex){
   sceneData.otherNotes = ''
   for (let row = 0; row < myDataRange.length; row++){
       if (sceneData.location == ''){
-        sceneData.location = myDataRange.values[i][11]
+        sceneData.location = myDataRange.values[row][11]
       }
       if (sceneData.beasts == ''){
-        sceneData.beasts == myDataRange.values[i][15] 
+        sceneData.beasts == myDataRange.values[row][15] 
       }
       if (sceneData.otherNotes == ''){
-        sceneData.otherNotes = myDataRange.values[i][16]
+        sceneData.otherNotes = myDataRange.values[row][16]
       }
   }
   return sceneData;
