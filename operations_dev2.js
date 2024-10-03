@@ -142,7 +142,7 @@ async function applyFilter(){
   /*Jade.listing:{"name":"Apply filter","description":"Applies empty filter to sheet"}*/
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let isProtected = unlockIfLocked(excel, scriptSheet);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
     
     const myRange = await getDataRange(excel);
     
@@ -173,7 +173,7 @@ async function removeFilter(){
     scriptSheet.autoFilter.load('enabled')
     await excel.sync()
     if (scriptSheet.autoFilter.enabled){
-      let isProtected = unlockIfLocked(excel, scriptSheet);
+      let isProtected = await unlockIfLocked(excel, scriptSheet);
       scriptSheet.autoFilter.remove();
       await excel.sync();
       if (isProtected){
@@ -2019,7 +2019,7 @@ async function getLocations(){
   let hiddenColumnAddresses = await getHiddenColumns();
 	await Excel.run(async (excel) => {
 		let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let isProtected = unlockIfLocked(excel, scriptSheet);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
 		let usedRange = await getDataRange(excel);
     usedRange.load('address');
     usedRange.columnHidden = false;
