@@ -424,20 +424,11 @@ async function getDataRange(){
   let range;
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let isProtected = await unlockIfLocked(excel, scriptSheet);
-    console.log('isProtected', isProtected)
-    let usedRange = scriptSheet.getUsedRange();
-    usedRange.load('address');
-    await excel.sync();
-    console.log('Used range', usedRange.address)
     const myLastRow = scriptSheet.getUsedRange().getLastRow();
     const myLastColumn = scriptSheet.getUsedRange().getLastColumn();
     myLastRow.load("rowIndex");
-    myLastRow.load('address')
     myLastColumn.load("columnIndex")
     await excel.sync();
-    console.log('myLastRow.rowIndex', myLastRow.rowIndex, myLastRow.address);
-    
     range = scriptSheet.getRangeByIndexes(1,0, myLastRow.rowIndex, myLastColumn.columnIndex + 1);
     await excel.sync();
   })
@@ -1925,7 +1916,7 @@ async function getDirectorData(characterName){
 	await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = unlockIfLocked(excel, scriptSheet);
-		let usedRange = await getDataRange(excel);
+		let usedRange = await getDataRange();
     usedRange.load('address');
     usedRange.columnHidden = false;
     await excel.sync()
