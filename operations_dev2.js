@@ -1916,7 +1916,7 @@ async function getDirectorData(characterName){
   let usedRange = await getDataRange();
 	await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let isProtected = unlockIfLocked(excel, scriptSheet);
+    //let isProtected = unlockIfLocked(excel, scriptSheet);
 		usedRange.load('address');
     usedRange.columnHidden = false;
     await excel.sync()
