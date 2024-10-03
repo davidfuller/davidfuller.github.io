@@ -798,6 +798,7 @@ async function insertRow(){
 }
 */
 async function insertRowV2(currentRowIndex, doCopy){
+  let newRowIndex;
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked(excel, scriptSheet);
@@ -813,11 +814,14 @@ async function insertRowV2(currentRowIndex, doCopy){
       await excel.sync(); 
     }
     await correctFormulas(currentRowIndex + 1);
+    newRow.load('rowIndex');
+    await excel.sync();
+    newRowIndex = newRow.rowIndex;
     if (isProtected){
       await lockColumns(excel, scriptSheet, columnsToLock);
     }
   });
-  return currentRowIndex + 1;
+  return newRowIndex;
 }
 
 async function deleteRow(){
