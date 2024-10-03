@@ -2359,7 +2359,8 @@ async function testMergedCell(){
       let cueColumnIndex = findColumnIndex('Cue');
       let testRange = scriptSheet.getRangeByIndexes(testRowIndex, cueColumnIndex, 1, 1);
       testRange.load('address');
-      testRange.load('values');
+      testRange.values = [['Hello Mum']];
+      
       await excel.sync();
       console.log(testRange.address, testRange.values);
     });
