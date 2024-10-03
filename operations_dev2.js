@@ -2326,10 +2326,8 @@ async function addSceneBlock(chapterNo){
       let newRowIndex;
       if (nextRowType == myTypes.line){
         let sceneData = await getSceneBlockData(excel, scriptSheet, theRowIndex);
-         console.log('scene Data', sceneData) 
-
-
-        for (let i = 0; i < sceneBlockRows; i++){
+          console.log('scene Data', sceneData) 
+          for (let i = 0; i < sceneBlockRows; i++){
           newRowIndex = await insertRowV2(theRowIndex + 1, false);
           console.log('newRowIndex', newRowIndex);
           let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
@@ -2342,6 +2340,9 @@ async function addSceneBlock(chapterNo){
         myMergeRange.merge(true);
         myMergeRange.format.fill.color = myFormats.purple;
         myMergeRange.load('values');
+        await excel.sync();
+        console.log('myMergeRange.values', myMergeRange.values)
+        myMergeRange.values[0][0] = "Scene " + sceneData.scene;
         await excel.sync();
         console.log('myMergeRange.values', myMergeRange.values)
       }
