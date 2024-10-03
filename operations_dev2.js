@@ -2286,7 +2286,7 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
   return myArray;
 }
 
-async function addSceneBlock(){
+async function addSceneBlock(chapterNo){
    await Excel.run(async (excel) => {
      let typeCodeValues = await getTypeCodes();
      console.log('typeCodeValues', typeCodeValues);
@@ -2297,16 +2297,30 @@ async function getTypeCodes(){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const typeCodeColumn = findColumnLetter("Type Code"); 
+    const chapterNoColumn = findColumnLetter('Chapter Calculation')
     let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" + typeCodeColumn +lastDataRow);
+    let chapterNoRange = scriptSheet.getRange(chapterNoColumn + firstDataRow + ":" + chapterNoColumn +lastDataRow);
     typeCodeRange.load('values');
     typeCodeRange.load('rowIndex');
     typeCodeRange.load('rowCount');
     typeCodeRange.load('address')
+    chapterNoRange.load('values')
+    chapterNoRange.load('rowIndex');
+    chapterNoRange.load('rowCount');
+    chapterNoRange.load('address')
     await excel.sync();
-    theValues.values = typeCodeRange.values.map(x => x[0]);
-    theValues.rowIndex = typeCodeRange.rowIndex;
-    theValues.rowCount = typeCodeRange.rowCount;
-    theValues.address = typeCodeRange.address;
+    theValues.typeCodes = {
+      values: typeCodeRange.values.map(x => x[0]),
+      rowIndex: typeCodeRange.rowIndex,
+      rowCount: typeCodeRange.rowCount,
+      address: typeCodeRange.address
+    }
+    theValues.chapters = {
+      values: chapterNoRange.values.map(x => x[0]),
+      rowIndex: chapterNoRange.rowIndex,
+      rowCount: chapterNoRange.rowCount,
+      address: chapterNoRange.address
+    }
   });
   return theValues;
 }
