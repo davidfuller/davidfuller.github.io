@@ -793,7 +793,7 @@ async function insertRow(){
 */
 async function insertRowV2(currentRowIndex, doCopy){
   await Excel.run(async function(excel){
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked(excel, scriptSheet);
     const dataRange = await getDataRange(excel);
     const myLastColumn = dataRange.getLastColumn();
@@ -2292,15 +2292,18 @@ async function addSceneBlock(chapterNo){
       console.log('typeCodeValues', typeCodeValues);
       let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
       console.log('chapter Indecies', chapterIndecies)
-      let theRowIndex = -1
+      let theRowIndex = - 1;
+      let nextIndex = - 1;
       for (let i = 0; i < chapterIndecies.length; i++){
         if (typeCodeValues.chapters.values[chapterIndecies[i]] == chapterNo){
           theRowIndex = typeCodeValues.typeCodes.rowIndex + chapterIndecies[i]
+          nextIndex = chapterIndecies[i] + 1;
           break;
         } 
         console.log(i);
       }
-      console.log('Found: rowIndex', theRowIndex);
+      let neextRowType = typeCodeValues.typeCodes.values[nextIndex];
+      console.log('Found: rowIndex', theRowIndex, 'Next code:', neextRowType);
 
    });
 }
