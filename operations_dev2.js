@@ -1913,11 +1913,11 @@ async function filterOnCharacter(characterName){
 async function getDirectorData(characterName){
   let myData = [];
   let hiddenColumnAddresses = await getHiddenColumns();
+  let usedRange = await getDataRange();
 	await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = unlockIfLocked(excel, scriptSheet);
-		let usedRange = await getDataRange();
-    usedRange.load('address');
+		usedRange.load('address');
     usedRange.columnHidden = false;
     await excel.sync()
     let app = excel.workbook.application;
