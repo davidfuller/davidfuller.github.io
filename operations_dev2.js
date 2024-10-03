@@ -2290,17 +2290,24 @@ async function addSceneBlock(chapterNo){
     await Excel.run(async (excel) => {
       let typeCodeValues = await getTypeCodes();
       console.log('typeCodeValues', typeCodeValues);
-      let chapterIndecies = []
-      let chapterIndex = -1
-      for (let i = 0; i < typeCodeValues.typeCodes.values.length; i++){
-        if (typeCodeValues.typeCodes.values[i] == 'Chapter'){
-          chapterIndex += 1;
-          chapterIndecies[chapterIndex] = i;
-        }
-      }
+      let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
       console.log('chapter Indecies', chapterIndecies)
+
    });
 }
+
+function createChapterIndecies(theTypeCodesValues){
+  let chapterIndecies = []
+  let chapterIndex = -1
+  for (let i = 0; i < theTypeCodesValues.length; i++){
+    if (theTypeCodesValues[i] == 'Chapter'){
+      chapterIndex += 1;
+      chapterIndecies[chapterIndex] = i;
+    }
+  }
+  return chapterIndecies;
+}
+
 async function getTypeCodes(){
   let theValues = {};
   await Excel.run(async (excel) => {
