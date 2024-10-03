@@ -2312,7 +2312,7 @@ async function addSceneBlock(chapterNo){
       console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
       let newRowIndex;
       if (nextRowType == myTypes.line){
-        newRowIndex = await insertRowV2(theRowIndex, false);
+        newRowIndex = await insertRowV2(theRowIndex + 1, false);
         console.log('newRowIndex', newRowIndex);
       }
    });
