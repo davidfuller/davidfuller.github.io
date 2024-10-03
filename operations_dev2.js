@@ -2319,11 +2319,13 @@ async function addSceneBlock(chapterNo){
       console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
       let newRowIndex;
       if (nextRowType == myTypes.line){
-        newRowIndex = await insertRowV2(theRowIndex + 1, false);
-        console.log('newRowIndex', newRowIndex);
-        let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
-        newTypeRange.values = myTypes.sceneBlock;
-        await excel.sync();
+        for (let i = 0; i < 3; i++){
+          newRowIndex = await insertRowV2(theRowIndex + 1, false);
+          console.log('newRowIndex', newRowIndex);
+          let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
+          newTypeRange.values = myTypes.sceneBlock;
+          await excel.sync();
+        }
       }
    });
 }
