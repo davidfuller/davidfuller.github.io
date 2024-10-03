@@ -393,7 +393,7 @@ async function lastScene(){
 async function getSceneRange(excel){
   scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
   const endRow = scriptSheet.getUsedRange().getLastRow();
-  endRow.load("rowindex");
+  endRow.load("rowIndex");
   await excel.sync();
   range = scriptSheet.getRangeByIndexes(2, sceneIndex, endRow.rowIndex, 1);
   await excel.sync();
@@ -403,7 +403,7 @@ async function getSceneRange(excel){
 async function getLineRange(excel){
   scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
   const endRow = scriptSheet.getUsedRange().getLastRow();
-  endRow.load("rowindex");
+  endRow.load("rowIndex");
   await excel.sync();
   range = scriptSheet.getRangeByIndexes(2, numberIndex, endRow.rowIndex, 1);
   await excel.sync();
@@ -413,7 +413,7 @@ async function getLineRange(excel){
 async function getChapterRange(excel){
   scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
   const endRow = scriptSheet.getUsedRange().getLastRow();
-  endRow.load("rowindex");
+  endRow.load("rowIndex");
   await excel.sync();
   range = scriptSheet.getRangeByIndexes(2, chapterCalculationIndex, endRow.rowIndex, 1);
   await excel.sync();
@@ -421,11 +421,11 @@ async function getChapterRange(excel){
 }
 
 async function getDataRange(excel){
-  scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
   const myLastRow = scriptSheet.getUsedRange().getLastRow();
   const myLastColumn = scriptSheet.getUsedRange().getLastColumn();
-  myLastRow.load("rowindex");
-  myLastColumn.load("columnindex")
+  myLastRow.load("rowIndex");
+  myLastColumn.load("columnIndex")
   await excel.sync();
   
   const range = scriptSheet.getRangeByIndexes(1,0, myLastRow.rowIndex, myLastColumn.columnIndex + 1);
