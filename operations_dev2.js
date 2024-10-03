@@ -2344,9 +2344,9 @@ async function addSceneBlock(chapterNo){
         console.log('myMergeRange.values', myMergeRange.values)
         myMergeRange.values = [
               ["Scene " + sceneData.scene, '', '', '', '', '', '', '', ''],
-              ['Line 2', '', '', '', '', '', '', '', ''],
-              ['Line 2', '', '', '', '', '', '', '', ''],
-              ['Line 2', '', '', '', '', '', '', '', '']
+              ['Location: ' + sceneData.location, '', '', '', '', '', '', '', ''],
+              ['Beasts: ' + sceneData.beasts, '', '', '', '', '', '', '', ''],
+              ['Other notes: ' + sceneData.otherNotes, '', '', '', '', '', '', '', '']
               ];
         myMergeRange.format.font.name = 'Courier New';
         myMergeRange.format.font.size = 12;
