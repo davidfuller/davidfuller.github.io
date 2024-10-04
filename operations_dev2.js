@@ -2312,6 +2312,7 @@ async function addSceneBlock(){
   const chapterNo = parseInt(textValue);
   if (!isNaN(chapterNo)){
     console.log(chapterNo);
+    await findChapter(chapterNo);
     await Excel.run(async (excel) => {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
         let typeCodeValues = await getTypeCodes();
