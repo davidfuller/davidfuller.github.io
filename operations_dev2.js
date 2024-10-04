@@ -2364,10 +2364,13 @@ async function addSceneBlock(chapterNo){
           newRowIndex = theRowIndex + 1;
           let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
           myMergeRange.load('address');
-          myMergeRange.select();
+          myMergeRange.clear("Contents");
+          let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
+          mergedAreas.load("address");
+          mergedAreas.load("cellCount");
           await excel.sync();
-          console.log('address', myMergeRange.address);
-          //That's the right number let's do it
+          console.log(`Address of the merged range: ${mergedAreas.address}`);
+          console.log(`Number of cells in the merged range: ${mergedAreas.cellCount}`);
         }
       }
    });
