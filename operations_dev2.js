@@ -2370,7 +2370,7 @@ async function addSceneBlock(chapterNo){
           myMergeRange = formatScenBlock(myMergeRange);
           await excel.sync()
         } else if (numActualSceneBlockRows < sceneBlockRows){
-          for (let i = numActualSceneBlockRows; i < sceneBlockRows){
+          for (let i = numActualSceneBlockRows; i < sceneBlockRows; i++){
             console.log('i', i);
             newRowIndex = await insertRowV2(theRowIndex + 1, false);
             console.log('newRowIndex', newRowIndex);
