@@ -2357,7 +2357,7 @@ async function addSceneBlock(){
       } else if (nextRowType == myTypes.sceneBlock){
         //check there are 4 of them
         let numActualSceneBlockRows = 0;
-        for (i = nextIndex - 1; i < nextIndex + 30; i++){
+        for (i = nextIndex; i < nextIndex + 30; i++){
           console.log(i, typeCodeValues.typeCodes.values[i]);
           if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
             numActualSceneBlockRows += 1;
