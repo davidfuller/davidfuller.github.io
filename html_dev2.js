@@ -11,13 +11,14 @@ async function mainHTML(){
   <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
-    <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button><br/>
+    <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
     <label id="formula-wait">Please wait...</label>
     <button id='btnSceneCalc' onclick="jade_modules.operations.fillSceneNumber()">Scene Number</button>
+    <label id="scene-wait">Please wait...</label>
     <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button>
     <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
     <button id="btnAddHandler" onclick="jade_modules.operations.registerExcelEvents()">Register events</button>
-    <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button>
+    <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button><br/>
     <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock(2)">Add scene block</button>
     <label id='add-scene-label-chapter' for="add-chapter">Chapter</label>
     <input type="text" id="add-chapter" name="add-chapter">

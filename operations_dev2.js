@@ -1767,6 +1767,8 @@ async function displayMinAndMax(){
 }
 
 async function fillSceneNumber(){
+  let waitLabel = tag('scene-wait');
+  waitLabel.style.display = 'block';
   await Excel.run(async function(excel){ 
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let app = excel.workbook.application;
@@ -1816,8 +1818,8 @@ async function fillSceneNumber(){
     sceneRange.numberFormat = sceneFormat;
     lineNoRange.values = lineNoValues;
     await excel.sync();
-
-  }) 
+  })
+  waitLabel.style.display = 'none';
 }
 
 async function setDefaultColumnWidths(){
