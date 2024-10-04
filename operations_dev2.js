@@ -2315,20 +2315,23 @@ async function addSceneBlock(){
     await findChapter(chapterNo);
     await Excel.run(async (excel) => {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-        let typeCodeValues = await getTypeCodes();
-        console.log('typeCodeValues', typeCodeValues);
-        let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
-        console.log('chapter Indecies', chapterIndecies)
-        let theRowIndex = - 1;
-        let nextIndex = - 1;
-        for (let i = 0; i < chapterIndecies.length; i++){
-          if (typeCodeValues.chapters.values[chapterIndecies[i]] == chapterNo){
-            theRowIndex = typeCodeValues.typeCodes.rowIndex + chapterIndecies[i]
-            nextIndex = chapterIndecies[i] + 1;
-            break;
-          } 
-          console.log(i);
-        }
+      let typeCodeValues = await getTypeCodes();
+      console.log('typeCodeValues', typeCodeValues);
+      let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
+      console.log('chapter Indecies', chapterIndecies)
+      let theRowIndex = - 1;
+      let nextIndex = - 1;
+      for (let i = 0; i < chapterIndecies.length; i++){
+        if (typeCodeValues.chapters.values[chapterIndecies[i]] == chapterNo){
+          theRowIndex = typeCodeValues.typeCodes.rowIndex + chapterIndecies[i]
+          nextIndex = chapterIndecies[i] + 1;
+          break;
+        } 
+        console.log(i);
+      }
+      console.log('The Row Index', theRowIndex, 'nextIndex', nextIndex)
+
+      /*
         let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
         console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
         let newRowIndex;
@@ -2412,6 +2415,7 @@ async function addSceneBlock(){
             await excel.sync()
           }
         }
+          */
     });
   }  else {
     alert("Please enter a number")
