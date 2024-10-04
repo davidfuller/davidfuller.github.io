@@ -2352,6 +2352,7 @@ async function addSceneBlock(chapterNo){
         myMergeRange.format.font.size = 12;
         myMergeRange.format.font.bold = true;
         myMergeRange.format.horizontalAlignment = 'Center';
+        myMergeRange.format.wrapText = true;
         await excel.sync();
         
         console.log('myMergeRange.values', myMergeRange.values)
