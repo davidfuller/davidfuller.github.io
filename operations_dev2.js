@@ -2382,6 +2382,7 @@ async function addSceneBlock(){
           myMergeRange = formatScenBlock(myMergeRange);
           await excel.sync()
         }
+      }
         /*  } else if (numActualSceneBlockRows < sceneBlockRows){
             for (let i = numActualSceneBlockRows; i < sceneBlockRows; i++){
               console.log('i', i);
