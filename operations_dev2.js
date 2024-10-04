@@ -2580,9 +2580,10 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
     for (let i = 0; i < theRange.columnCount; i++){
       thisCol[i] = theRange.getCell(0,i);
       thisCol[i].load('address');
-      await excel.sync();
-      console.log(i, thisCol[i].address)
       thisCol[i].load('columnWidth');
+      thisCol[i].load('width');
+      await excel.sync();
+      console.log(i, thisCol[i].address, thisCol[i].columnWidth, thisCol[i].width);
     }
     await excel.sync();
 
