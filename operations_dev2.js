@@ -2312,20 +2312,14 @@ async function addSceneBlock(){
   const chapterNo = parseInt(textValue);
   if (!isNaN(chapterNo)){
     console.log(chapterNo);
+    await findChapter(chapterNo + 1);
     await findChapter(chapterNo);
     await Excel.run(async (excel) => {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       let cueColumnIndex = findColumnIndex('Cue');
       let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
-      
-      
-    
-    
-  
-
-
-    let typeCodeValues = await getTypeCodes();
+      let typeCodeValues = await getTypeCodes();
       console.log('typeCodeValues', typeCodeValues);
       let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
       console.log('chapter Indecies', chapterIndecies)
