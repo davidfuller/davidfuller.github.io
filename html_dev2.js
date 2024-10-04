@@ -18,6 +18,9 @@ async function mainHTML(){
     <button id="btnAddHandler" onclick="jade_modules.operations.registerExcelEvents()">Register events</button>
     <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button>
     <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock(2)">Add scene block</button>
+    <label id='add-scene-label-chapter' for="add-chapter">Chapter</label>
+    <input type="text" id="add-chapter" name="add-chapter">
+    <span id='add-min-and-max-chapter'></span><br/>
   </div>
   <div id="firstButtons">
     <label class="section-label">Lock / Unlock</label><br/>

@@ -1758,6 +1758,8 @@ async function displayMinAndMax(){
   const chapterMinAndMax = await getChapterMaxAndMin();
   let chapterDisplay = tag('min-and-max-chapter');
   chapterDisplay.innerText = "(" + chapterMinAndMax.min + ".." + chapterMinAndMax.max + ")";
+  let addChapterDisplay = tag('add-min-and-max-chapter');
+  addChapterDisplay.innerText = "(" + chapterMinAndMax.min + ".." + chapterMinAndMax.max + ")";
 }
 
 async function fillSceneNumber(){
@@ -2304,74 +2306,37 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
   return myArray;
 }
 
-async function addSceneBlock(chapterNo){
-  await Excel.run(async (excel) => {
-    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-      let typeCodeValues = await getTypeCodes();
-      console.log('typeCodeValues', typeCodeValues);
-      let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
-      console.log('chapter Indecies', chapterIndecies)
-      let theRowIndex = - 1;
-      let nextIndex = - 1;
-      for (let i = 0; i < chapterIndecies.length; i++){
-        if (typeCodeValues.chapters.values[chapterIndecies[i]] == chapterNo){
-          theRowIndex = typeCodeValues.typeCodes.rowIndex + chapterIndecies[i]
-          nextIndex = chapterIndecies[i] + 1;
-          break;
-        } 
-        console.log(i);
-      }
-      let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
-      console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
-      let newRowIndex;
-      let cueColumnIndex = findColumnIndex('Cue');
-      let usScriptColumnIndex = findColumnIndex('US Script');
-      sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
-      let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex);
-      if (nextRowType == myTypes.line){
-        for (let i = 0; i < sceneBlockRows; i++){
-          newRowIndex = await insertRowV2(theRowIndex + 1, false);
-          console.log('newRowIndex', newRowIndex);
-          let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
-          newTypeRange.values = myTypes.sceneBlock;
-          await excel.sync();
-        }
-        let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
-        myMergeRange.merge(true);
-        myMergeRange.values = sceneDataArray;
-        myMergeRange = formatScenBlock(myMergeRange);
-        await excel.sync();
-        
-        console.log('myMergeRange.values', myMergeRange.values)
-      } else if (nextRowType == myTypes.sceneBlock){
-        //check there are 4 of them
-        let numActualSceneBlockRows = 0;
-        for (i = nextIndex; i < nextIndex + 30; i++){
-          if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
-            numActualSceneBlockRows += 1;
-          } else {
+async function addSceneBlock(){
+  const addChapterInput = tag('add-chapter')
+  const textValue = addChapterInput.value;
+  const chapterNo = parseInt(textValue);
+  if (!isNaN(chapterNo)){
+    console.log(chapterNo);
+    await Excel.run(async (excel) => {
+      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+        let typeCodeValues = await getTypeCodes();
+        console.log('typeCodeValues', typeCodeValues);
+        let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
+        console.log('chapter Indecies', chapterIndecies)
+        let theRowIndex = - 1;
+        let nextIndex = - 1;
+        for (let i = 0; i < chapterIndecies.length; i++){
+          if (typeCodeValues.chapters.values[chapterIndecies[i]] == chapterNo){
+            theRowIndex = typeCodeValues.typeCodes.rowIndex + chapterIndecies[i]
+            nextIndex = chapterIndecies[i] + 1;
             break;
-          }
+          } 
+          console.log(i);
         }
-        console.log('numActualSceneBlockRows', numActualSceneBlockRows)
-        if (numActualSceneBlockRows == sceneBlockRows){
-          newRowIndex = theRowIndex + 1;
-          let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
-          myMergeRange.load('address');
-          myMergeRange.clear("Contents");
-          let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
-          mergedAreas.load("cellCount");
-          await excel.sync();
-          if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
-            console.log('Not merged')
-            myMergeRange.merge(true);
-          }
-          myMergeRange.values = sceneDataArray;
-          myMergeRange = formatScenBlock(myMergeRange);
-          await excel.sync()
-        } else if (numActualSceneBlockRows < sceneBlockRows){
-          for (let i = numActualSceneBlockRows; i < sceneBlockRows; i++){
-            console.log('i', i);
+        let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
+        console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
+        let newRowIndex;
+        let cueColumnIndex = findColumnIndex('Cue');
+        let usScriptColumnIndex = findColumnIndex('US Script');
+        sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
+        let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex);
+        if (nextRowType == myTypes.line){
+          for (let i = 0; i < sceneBlockRows; i++){
             newRowIndex = await insertRowV2(theRowIndex + 1, false);
             console.log('newRowIndex', newRowIndex);
             let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
@@ -2383,30 +2348,74 @@ async function addSceneBlock(chapterNo){
           myMergeRange.values = sceneDataArray;
           myMergeRange = formatScenBlock(myMergeRange);
           await excel.sync();
-        } else if (numActualSceneBlockRows > sceneBlockRows){
-          newRowIndex = theRowIndex + 1;
-          console.log('i', i , 'newRowIndex', newRowIndex);
-          for (let i = sceneBlockRows; i < numActualSceneBlockRows; i++){
-            console.log('i', i , 'newRowIndex', newRowIndex);
-            await deleteSceneBlockRow(excel, newRowIndex);
+          
+          console.log('myMergeRange.values', myMergeRange.values)
+        } else if (nextRowType == myTypes.sceneBlock){
+          //check there are 4 of them
+          let numActualSceneBlockRows = 0;
+          for (i = nextIndex; i < nextIndex + 30; i++){
+            if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
+              numActualSceneBlockRows += 1;
+            } else {
+              break;
+            }
           }
-          let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
-          myMergeRange.load('address');
-          myMergeRange.clear("Contents");
-          let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
-          mergedAreas.load("cellCount");
-          await excel.sync();
-          if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
-            console.log('Not merged')
+          console.log('numActualSceneBlockRows', numActualSceneBlockRows)
+          if (numActualSceneBlockRows == sceneBlockRows){
+            newRowIndex = theRowIndex + 1;
+            let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
+            myMergeRange.load('address');
+            myMergeRange.clear("Contents");
+            let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
+            mergedAreas.load("cellCount");
+            await excel.sync();
+            if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
+              console.log('Not merged')
+              myMergeRange.merge(true);
+            }
+            myMergeRange.values = sceneDataArray;
+            myMergeRange = formatScenBlock(myMergeRange);
+            await excel.sync()
+          } else if (numActualSceneBlockRows < sceneBlockRows){
+            for (let i = numActualSceneBlockRows; i < sceneBlockRows; i++){
+              console.log('i', i);
+              newRowIndex = await insertRowV2(theRowIndex + 1, false);
+              console.log('newRowIndex', newRowIndex);
+              let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
+              newTypeRange.values = myTypes.sceneBlock;
+              await excel.sync();
+            }
+            let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
             myMergeRange.merge(true);
+            myMergeRange.values = sceneDataArray;
+            myMergeRange = formatScenBlock(myMergeRange);
+            await excel.sync();
+          } else if (numActualSceneBlockRows > sceneBlockRows){
+            newRowIndex = theRowIndex + 1;
+            for (let i = sceneBlockRows; i < numActualSceneBlockRows; i++){
+              console.log('i', i , 'newRowIndex', newRowIndex);
+              await deleteSceneBlockRow(excel, newRowIndex);
+            }
+            let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
+            myMergeRange.load('address');
+            myMergeRange.clear("Contents");
+            let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
+            mergedAreas.load("cellCount");
+            await excel.sync();
+            if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
+              console.log('Not merged')
+              myMergeRange.merge(true);
+            }
+            myMergeRange.values = sceneDataArray;
+            myMergeRange = formatScenBlock(myMergeRange);
+            await excel.sync()
           }
-          myMergeRange.values = sceneDataArray;
-          myMergeRange = formatScenBlock(myMergeRange);
-          await excel.sync()
         }
-      }
-   });
-   
+    });
+  }  else {
+    alert("Please enter a number")
+  }  
+  
 }
 
 async function deleteSceneBlockRow(excel, rowIndex){
