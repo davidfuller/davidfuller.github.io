@@ -2579,11 +2579,7 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
     let thisCol = []
     for (let i = 0; i < theRange.columnCount; i++){
       thisCol[i] = theRange.getCell(0,i);
-      thisCol[i].load('address');
       thisCol[i].format.load('columnWidth');
-      thisCol[i].load('width');
-      await excel.sync();
-      console.log(i, thisCol[i].address, thisCol[i].format.columnWidth, thisCol[i].width);
     }
     await excel.sync();
     let columnOneWidth = thisCol[0].format.columnWidth;
