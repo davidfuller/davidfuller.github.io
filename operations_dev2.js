@@ -2327,9 +2327,8 @@ async function addSceneBlock(chapterNo){
       let cueColumnIndex = findColumnIndex('Cue');
       let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
+      let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex);
       if (nextRowType == myTypes.line){
-        let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex);
-        console.log('scene Data', sceneDataArray) 
         for (let i = 0; i < sceneBlockRows; i++){
           newRowIndex = await insertRowV2(theRowIndex + 1, false);
           console.log('newRowIndex', newRowIndex);
@@ -2340,12 +2339,7 @@ async function addSceneBlock(chapterNo){
         let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
         myMergeRange.merge(true);
         myMergeRange.values = sceneDataArray;
-        myMergeRange.format.font.name = 'Courier New';
-        myMergeRange.format.font.size = 12;
-        myMergeRange.format.font.bold = true;
-        myMergeRange.format.fill.color = myFormats.purple;
-        myMergeRange.format.horizontalAlignment = 'Center';
-        myMergeRange.format.wrapText = true;
+        myMergeRange = formatScenBlock(myMergeRange);
         await excel.sync();
         
         console.log('myMergeRange.values', myMergeRange.values)
@@ -2369,17 +2363,29 @@ async function addSceneBlock(chapterNo){
           mergedAreas.load("cellCount");
           await excel.sync();
           if (mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns)){
-            console.log('This is good');
+            myMergeRange.values = sceneDataArray;
+            myMergeRange = formatScenBlock(myMergeRange);
           } else {
             console.log('Not merged')
             //Not merged
           }
-          
+          await excel.sync()
         }
       }
    });
    
 }
+
+function formatScenBlock(theRange){
+  theRange.format.font.name = 'Arial';
+  theRange.format.font.size = 12;
+  theRange.format.font.bold = true;
+  theRange.format.fill.color = myFormats.purple;
+  theRange.format.horizontalAlignment = 'Center';
+  theRange.format.wrapText = true;
+  return theRange;
+}
+
 async function getSceneBlockData(excel, sheet, myRowIndex){
   // returns a formatted array suitable for the merged cells
   let sceneNumberIndex = findColumnIndex('Scene Number');
