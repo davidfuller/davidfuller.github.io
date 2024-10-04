@@ -2314,8 +2314,8 @@ async function addSceneBlock(){
     console.log(chapterNo);
     await findChapter(chapterNo);
     await Excel.run(async (excel) => {
-      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-      let typeCodeValues = await getTypeCodes();
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let typeCodeValues = await getTypeCodes();
       console.log('typeCodeValues', typeCodeValues);
       let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
       console.log('chapter Indecies', chapterIndecies)
@@ -2339,22 +2339,24 @@ async function addSceneBlock(){
       let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
       let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex);
-      /*
-        if (nextRowType == myTypes.line){
-          for (let i = 0; i < sceneBlockRows; i++){
-            newRowIndex = await insertRowV2(theRowIndex + 1, false);
-            console.log('newRowIndex', newRowIndex);
-            let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
-            newTypeRange.values = myTypes.sceneBlock;
-            await excel.sync();
-          }
-          let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
-          myMergeRange.merge(true);
-          myMergeRange.values = sceneDataArray;
-          myMergeRange = formatScenBlock(myMergeRange);
+      
+      if (nextRowType == myTypes.line){
+        for (let i = 0; i < sceneBlockRows; i++){
+          newRowIndex = await insertRowV2(theRowIndex + 1, false);
+          console.log('newRowIndex', newRowIndex);
+          let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
+          newTypeRange.values = myTypes.sceneBlock;
           await excel.sync();
-          
-          console.log('myMergeRange.values', myMergeRange.values)
+        }
+        let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
+        myMergeRange.merge(true);
+        myMergeRange.values = sceneDataArray;
+        myMergeRange = formatScenBlock(myMergeRange);
+        await excel.sync();
+        
+        console.log('myMergeRange.values', myMergeRange.values)
+      }
+      /*
         } else if (nextRowType == myTypes.sceneBlock){
           //check there are 4 of them
           let numActualSceneBlockRows = 0;
