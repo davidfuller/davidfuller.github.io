@@ -2363,7 +2363,7 @@ async function addSceneBlock(){
           if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
             numActualSceneBlockRows += 1;
           } else {
-            break;
+            //break;
           }
         }
         console.log('numActualSceneBlockRows', numActualSceneBlockRows)
