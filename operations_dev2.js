@@ -2314,7 +2314,20 @@ async function addSceneBlock(){
     console.log(chapterNo);
     await findChapter(chapterNo);
     await Excel.run(async (excel) => {
-    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      let cueColumnIndex = findColumnIndex('Cue');
+      let usScriptColumnIndex = findColumnIndex('US Script');
+      sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
+      let testRange = scriptSheet.getRangeByIndexes(379, cueColumnIndex, 1, sceneBlockColumns)
+      testRange.load('address');
+      testRange.select();
+      await excel.sync();
+      console.log(testRange.address);
+    /*
+    
+  
+
+
     let typeCodeValues = await getTypeCodes();
       console.log('typeCodeValues', typeCodeValues);
       let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
@@ -2334,8 +2347,8 @@ async function addSceneBlock(){
       let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
       console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
       let newRowIndex;
-      let cueColumnIndex = findColumnIndex('Cue');
-      let usScriptColumnIndex = findColumnIndex('US Script');
+     //let cueColumnIndex = findColumnIndex('Cue');
+      //let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
       let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex);
       
@@ -2552,3 +2565,34 @@ async function getTypeCodes(){
   Now do the filling in
       
 */
+
+async function mergedRowAutoHeight(excel, theSheet, theRange){
+  theRange.load('columnCount');
+  theRange.load('columnIndex');
+  theRange.load('rowIndex');
+  theRange.load('rowCount');
+  theRange.format.load('rowHeight')
+  await excel.sync()
+  if (theRange.rowCount == 1){
+    let totalcolumnWidth = 0;
+    let thisCol = []
+    for (let i = 0; i < theRange.columnCount; i++){
+      thisCol[i] = theRange.getCell(0,i);
+      thisCol[i].load('columnWidth');
+    }
+    await excel.sync();
+    for (let i = 0; i < theRange.columnCount; i++){
+      totalcolumnWidth = totalcolumnWidth + thisCol[i].columnWidth
+    }
+    console.log(totalcolumnWidth);
+    theRange.unmerge();
+    let tempRange = theSheet.getRangeByIndexes(theRange.rowIndex, theRange.columnIndex, 1, 1);
+    tempRange.format.wrapText = false;
+    tempRange.columnWidth = totalcolumnWidth;
+    tempRange.format.wrapText = true;
+    tempRange.format.autofitRows();
+    await excel.sync()
+    
+  }
+
+}
