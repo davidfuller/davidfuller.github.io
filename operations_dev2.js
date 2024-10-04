@@ -2369,6 +2369,20 @@ async function addSceneBlock(chapterNo){
           myMergeRange.values = sceneDataArray;
           myMergeRange = formatScenBlock(myMergeRange);
           await excel.sync()
+        } else if (numActualSceneBlockRows < sceneBlockRows){
+          for (let i = numActualSceneBlockRows; i < sceneBlockRows){
+            console.log('i', i);
+            newRowIndex = await insertRowV2(theRowIndex + 1, false);
+            console.log('newRowIndex', newRowIndex);
+            let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
+            newTypeRange.values = myTypes.sceneBlock;
+            await excel.sync();
+          }
+          let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
+          myMergeRange.merge(true);
+          myMergeRange.values = sceneDataArray;
+          myMergeRange = formatScenBlock(myMergeRange);
+          await excel.sync();
         }
       }
    });
