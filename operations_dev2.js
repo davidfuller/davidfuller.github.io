@@ -2560,6 +2560,8 @@ async function getTypeCodes(){
 */
 
 async function mergedRowAutoHeight(excel, theSheet, theRange){
+  let app = excel.workbook.application;
+  app.suspendScreenUpdatingUntilNextSync();
   theRange.load('columnCount');
   theRange.load('columnIndex');
   theRange.load('rowIndex');
@@ -2576,11 +2578,8 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
     await excel.sync();
     let columnOneWidth = thisCol[0].format.columnWidth;
     for (let i = 0; i < theRange.columnCount; i++){
-      console.log(thisCol[i].format.columnWidth)
       totalcolumnWidth = totalcolumnWidth + thisCol[i].format.columnWidth
     }
-    console.log('Total Width', totalcolumnWidth);
-    let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
     theRange.unmerge();
     let tempRange = theSheet.getRangeByIndexes(theRange.rowIndex, theRange.columnIndex, 1, 1);
@@ -2591,7 +2590,6 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
     tempRange.format.load('rowHeight')
     await excel.sync()
     app.suspendScreenUpdatingUntilNextSync();
-    console.log(tempRange.format.rowHeight);
     let finalRowHeight = tempRange.rowHeight;
     tempRange.format.columnWidth = columnOneWidth;
     tempRange.format.rowHeight = finalRowHeight;
