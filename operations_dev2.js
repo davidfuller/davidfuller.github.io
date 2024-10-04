@@ -2339,14 +2339,11 @@ async function addSceneBlock(chapterNo){
         }
         let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
         myMergeRange.merge(true);
-        myMergeRange.format.fill.color = myFormats.purple;
-        myMergeRange.load('values');
-        await excel.sync();
-        console.log('myMergeRange.values', myMergeRange.values)
         myMergeRange.values = sceneDataArray;
         myMergeRange.format.font.name = 'Courier New';
         myMergeRange.format.font.size = 12;
         myMergeRange.format.font.bold = true;
+        myMergeRange.format.fill.color = myFormats.purple;
         myMergeRange.format.horizontalAlignment = 'Center';
         myMergeRange.format.wrapText = true;
         await excel.sync();
@@ -2407,7 +2404,7 @@ async function getSceneBlockData(excel, sheet, myRowIndex){
   sceneDataArray[0][0] = "Scene " + sceneData.scene;
   sceneDataArray[1][0] = 'Scene Location: ' + sceneData.location;
   sceneDataArray[2][0] = 'Beasts/Animals: ' + sceneData.beasts;
-  sceneDataArray[2][0] = 'Other notes: ' + sceneData.otherNotes;
+  sceneDataArray[3][0] = 'Other notes: ' + sceneData.otherNotes;
   
   return sceneDataArray;
 }
