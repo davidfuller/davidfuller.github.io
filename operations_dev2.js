@@ -2383,10 +2383,42 @@ async function addSceneBlock(chapterNo){
           myMergeRange.values = sceneDataArray;
           myMergeRange = formatScenBlock(myMergeRange);
           await excel.sync();
+        } else if (numActualSceneBlockRows > sceneBlockRows){
+          newRowIndex = theRowIndex + 1;
+          for (let i = sceneBlockRows; i < numActualSceneBlockRows; i++){
+            await deleteSceneBlockRow(excel, newRowIndex);
+          }
+          let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
+          myMergeRange.load('address');
+          myMergeRange.clear("Contents");
+          let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
+          mergedAreas.load("cellCount");
+          await excel.sync();
+          if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
+            console.log('Not merged')
+            myMergeRange.merge(true);
+          }
+          myMergeRange.values = sceneDataArray;
+          myMergeRange = formatScenBlock(myMergeRange);
+          await excel.sync()
         }
       }
    });
    
+}
+
+async function deleteSceneBlockRow(excel, rowIndex){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let myRow = scriptSheet.getRangeByIndexes(rowIndex, 1, 1, 1).getEntireRow();
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
+    myRow.delete("Up");
+    myRow.load('address');
+    await excel.sync();
+    console.log(myRow.address);
+    await correctFormulas(rowIndex);
+    if (isProtected){
+      await lockColumns(excel, scriptSheet, columnsToLock);
+    }
 }
 
 function formatScenBlock(theRange){
