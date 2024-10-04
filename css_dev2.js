@@ -73,7 +73,7 @@ label {
   font-size: 12px;
   cursor: pointer;
 }
-#scene, #lineNo, #chapter {
+#scene, #lineNo, #chapter, #add-chapter {
   width: 50px;
   background-color: #d8dfe5;
   color: #46656F;
@@ -407,11 +407,11 @@ label {
   transform: rotate(45deg);
 }
 
-#min-and-max, #min-and-max-lineNo, #min-and-max-chapter, .jump-label {
+#min-and-max, #min-and-max-lineNo, #min-and-max-chapter, #add-min-and-max-chapter, .jump-label {
   font-size: 13px;
 }
 
-#jump-label-line-no, #jump-label-chapter, #jump-label-scene {
+#jump-label-line-no, #jump-label-chapter, #jump-label-scene, #add-scene-label-chapter {
   position: relative;
   font-size: 13px;
 }
@@ -454,12 +454,12 @@ label {
   height: auto;
   padding: 10px;
 }
+
 #director-wait, #actor-wait, #scheduling-wait {
   display: none;
   font-size: 15px;
   margin-left: 15px;
-}
-                    `;
+}                    `;
   Jade.set_css(css);
   console.log('CSS done')
 }
