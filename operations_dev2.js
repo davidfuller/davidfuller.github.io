@@ -2323,6 +2323,7 @@ async function addSceneBlock(){
       testRange.select();
       await excel.sync();
       console.log(testRange.address);
+      await mergedRowAutoHeight(excel, scriptSheet, testRange);
     /*
     
   
@@ -2584,7 +2585,7 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
     for (let i = 0; i < theRange.columnCount; i++){
       totalcolumnWidth = totalcolumnWidth + thisCol[i].columnWidth
     }
-    console.log(totalcolumnWidth);
+    console.log('Total Width', totalcolumnWidth);
     theRange.unmerge();
     let tempRange = theSheet.getRangeByIndexes(theRange.rowIndex, theRange.columnIndex, 1, 1);
     tempRange.format.wrapText = false;
