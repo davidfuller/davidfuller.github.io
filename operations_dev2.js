@@ -2318,13 +2318,9 @@ async function addSceneBlock(){
       let cueColumnIndex = findColumnIndex('Cue');
       let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
-      let testRange = scriptSheet.getRangeByIndexes(379, cueColumnIndex, 1, sceneBlockColumns)
-      testRange.load('address');
-      testRange.select();
-      await excel.sync();
-      console.log(testRange.address);
-      await mergedRowAutoHeight(excel, scriptSheet, testRange);
-    /*
+      
+      
+    
     
   
 
@@ -2387,13 +2383,14 @@ async function addSceneBlock(){
           myMergeRange.clear("Contents");
           let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
           mergedAreas.load("cellCount");
+
           await excel.sync();
           if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
             console.log('Not merged')
             myMergeRange.merge(true);
           }
           myMergeRange.values = sceneDataArray;
-          myMergeRange = formatScenBlock(myMergeRange);
+          myMergeRange = formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
           await excel.sync()
         }
       }
@@ -2454,16 +2451,19 @@ async function deleteSceneBlockRow(excel, rowIndex){
     }
 }
 
-function formatScenBlock(theRange){
+async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns){
   theRange.format.font.name = 'Courier New';
   theRange.format.font.size = 12;
   theRange.format.font.bold = true;
   theRange.format.fill.color = myFormats.purple;
   theRange.format.horizontalAlignment = 'Center';
   theRange.format.verticalAlignment = 'Top';
-  theRange.format.autofitRows();
-  theRange.format.wrapText = true;
-  return theRange;
+  await excel.sync()
+  for (let i = 0; i < sceneBlockRows; i++){
+    let tempRange = sheet.getRangeByIndexes(newRowIndex + i, cueColumnIndex, 1, sceneBlockColumns);
+    await mergedRowAutoHeight(excel, sheet, tempRange);
+  }
+  
 }
 
 async function getSceneBlockData(excel, sheet, myRowIndex){
@@ -2598,6 +2598,7 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
     tempRange.format.autofitRows();
     tempRange.format.load('rowHeight')
     await excel.sync()
+    app.suspendScreenUpdatingUntilNextSync();
     console.log(tempRange.format.rowHeight);
     let finalRowHeight = tempRange.rowHeight;
     tempRange.format.columnWidth = columnOneWidth;
