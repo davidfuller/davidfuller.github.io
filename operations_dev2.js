@@ -2362,13 +2362,12 @@ async function addSceneBlock(chapterNo){
           let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
           mergedAreas.load("cellCount");
           await excel.sync();
-          if (mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns)){
-            myMergeRange.values = sceneDataArray;
-            myMergeRange = formatScenBlock(myMergeRange);
-          } else {
+          if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
             console.log('Not merged')
-            //Not merged
+            myMergeRange.merge(true);
           }
+          myMergeRange.values = sceneDataArray;
+          myMergeRange = formatScenBlock(myMergeRange);
           await excel.sync()
         }
       }
