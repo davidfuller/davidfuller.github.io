@@ -2343,7 +2343,7 @@ async function addSceneBlock(){
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
       let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex);
       
-      if (nextRowType == myTypes.line){
+      if ((nextRowType == myTypes.line) || (nextRowType == myTypes.scene)){
         for (let i = 0; i < sceneBlockRows; i++){
           newRowIndex = await insertRowV2(theRowIndex + 1, false);
           console.log('newRowIndex', newRowIndex);
