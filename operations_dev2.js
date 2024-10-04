@@ -2324,21 +2324,22 @@ async function addSceneBlock(){
       for (let i = 0; i < chapterIndecies.length; i++){
         if (typeCodeValues.chapters.values[chapterIndecies[i]] == chapterNo){
           theRowIndex = typeCodeValues.typeCodes.rowIndex + chapterIndecies[i]
-          nextIndex = chapterIndecies[i] + 1;
+          nextIndex = theRowIndex + 1;
           break;
         } 
         console.log(i);
       }
       console.log('The Row Index', theRowIndex, 'nextIndex', nextIndex)
 
+      
+      let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
+      console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
+      let newRowIndex;
+      let cueColumnIndex = findColumnIndex('Cue');
+      let usScriptColumnIndex = findColumnIndex('US Script');
+      sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
+      let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex);
       /*
-        let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
-        console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
-        let newRowIndex;
-        let cueColumnIndex = findColumnIndex('Cue');
-        let usScriptColumnIndex = findColumnIndex('US Script');
-        sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
-        let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex);
         if (nextRowType == myTypes.line){
           for (let i = 0; i < sceneBlockRows; i++){
             newRowIndex = await insertRowV2(theRowIndex + 1, false);
