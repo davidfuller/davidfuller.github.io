@@ -2366,11 +2366,15 @@ async function addSceneBlock(chapterNo){
           myMergeRange.load('address');
           myMergeRange.clear("Contents");
           let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
-          mergedAreas.load("address");
           mergedAreas.load("cellCount");
           await excel.sync();
-          console.log(`Address of the merged range: ${mergedAreas.address}`);
-          console.log(`Number of cells in the merged range: ${mergedAreas.cellCount}`);
+          if (mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns)){
+            console.log('This is good');
+          } else {
+            console.log('Not merged')
+            //Not merged
+          }
+          
         }
       }
    });
