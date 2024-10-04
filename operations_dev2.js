@@ -2472,15 +2472,18 @@ async function getSceneBlockData(excel, sheet, myRowIndex){
   sceneData.beasts ='';
   sceneData.otherNotes = '';
   for (let row = 0; row < myDataRange.values.length; row++){
-      if (sceneData.location == ''){
-        sceneData.location = myDataRange.values[row][11]
-      }
-      if (sceneData.beasts == ''){
-        sceneData.beasts = myDataRange.values[row][15] 
-      }
-      if (sceneData.otherNotes == ''){
-        sceneData.otherNotes = myDataRange.values[row][16]
-      }
+    if (sceneData.scene == ''){
+      sceneData.scene = myDataRange.values[row][0]
+    }
+    if (sceneData.location == ''){
+      sceneData.location = myDataRange.values[row][11]
+    }
+    if (sceneData.beasts == ''){
+      sceneData.beasts = myDataRange.values[row][15] 
+    }
+    if (sceneData.otherNotes == ''){
+      sceneData.otherNotes = myDataRange.values[row][16]
+    }
   }
 
   let sceneDataArray = Array(sceneBlockRows).fill().map(() => 
