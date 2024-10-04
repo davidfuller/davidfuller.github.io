@@ -2377,7 +2377,7 @@ async function addSceneBlock(chapterNo){
 }
 
 function formatScenBlock(theRange){
-  theRange.format.font.name = 'Arial';
+  theRange.format.font.name = 'Courier New';
   theRange.format.font.size = 12;
   theRange.format.font.bold = true;
   theRange.format.fill.color = myFormats.purple;
