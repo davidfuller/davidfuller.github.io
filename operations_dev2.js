@@ -2579,10 +2579,13 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
     let thisCol = []
     for (let i = 0; i < theRange.columnCount; i++){
       thisCol[i] = theRange.getCell(0,i);
+      console.log(i, thisCol[i])
       thisCol[i].load('columnWidth');
     }
     await excel.sync();
+
     for (let i = 0; i < theRange.columnCount; i++){
+      console.log(thisCol[i].columnWidth)
       totalcolumnWidth = totalcolumnWidth + thisCol[i].columnWidth
     }
     console.log('Total Width', totalcolumnWidth);
