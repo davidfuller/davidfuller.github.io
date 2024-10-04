@@ -2385,7 +2385,9 @@ async function addSceneBlock(chapterNo){
           await excel.sync();
         } else if (numActualSceneBlockRows > sceneBlockRows){
           newRowIndex = theRowIndex + 1;
+          console.log('i', i , 'newRowIndex', newRowIndex);
           for (let i = sceneBlockRows; i < numActualSceneBlockRows; i++){
+            console.log('i', i , 'newRowIndex', newRowIndex);
             await deleteSceneBlockRow(excel, newRowIndex);
           }
           let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
