@@ -2588,6 +2588,8 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
       totalcolumnWidth = totalcolumnWidth + thisCol[i].format.columnWidth
     }
     console.log('Total Width', totalcolumnWidth);
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
     theRange.unmerge();
     let tempRange = theSheet.getRangeByIndexes(theRange.rowIndex, theRange.columnIndex, 1, 1);
     tempRange.format.wrapText = false;
