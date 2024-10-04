@@ -2362,8 +2362,6 @@ async function addSceneBlock(){
         myMergeRange.values = sceneDataArray;
         myMergeRange = await formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
         await excel.sync();
-        
-        console.log('myMergeRange.values', myMergeRange.values)
       } else if (nextRowType == myTypes.sceneBlock){
         //check there are 4 of them
         let numActualSceneBlockRows = 0;
