@@ -2349,28 +2349,14 @@ async function addSceneBlock(chapterNo){
         await excel.sync();
         
         console.log('myMergeRange.values', myMergeRange.values)
+      } else if (nextRowType == myTypes.sceneBlock){
+        //check there are 4 of them
+        for (i = nextIndex; i < nextIndex +sceneBlockRows; i++){
+          console.log(i, typeCodeValues.typeCodes.values[nextIndex]);
+        }
       }
    });
    
-}
-async function testMergedCell(){
-  await Excel.run(async (excel) => {
-      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-      let testRowIndex = 211;
-      let cueColumnIndex = findColumnIndex('Cue');
-      let testRange = scriptSheet.getRangeByIndexes(testRowIndex, cueColumnIndex, 1, 1);
-      testRange.load('address');
-      testRange.values = [['Hello Muma']];
-      testRange.format.font.name = 'Courier New';
-      testRange.format.font.size = 12;
-      testRange.format.font.bold = true;
-      testRange.format.horizontalAlignment = 'Center';
-      
-      await excel.sync();
-      console.log(testRange.address, testRange.values);
-    });
-  
-  
 }
 async function getSceneBlockData(excel, sheet, myRowIndex){
   // returns a formatted array suitable for the merged cells
