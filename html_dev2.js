@@ -19,7 +19,7 @@ async function mainHTML(){
     <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
     <button id="btnAddHandler" onclick="jade_modules.operations.registerExcelEvents()">Register events</button>
     <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button><br/>
-    <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock(2)">Add scene block</button>
+    <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
     <label id='add-scene-label-chapter' for="add-chapter">Chapter</label>
     <input type="text" id="add-chapter" name="add-chapter">
     <span id='add-min-and-max-chapter'></span><br/>

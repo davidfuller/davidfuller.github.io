@@ -1845,11 +1845,9 @@ async function setDefaultColumnWidths(){
 
 async function setUpEvents(){
   sceneInput = tag('scene');
-  console.log('sceneInput defined');
-  lineNoInput = tag('lineNo')
-  console.log('linNoInput defined');
-
-  chapterInput = tag('chapter')
+  lineNoInput = tag('lineNo');
+  chapterInput = tag('chapter');
+  addChapterInput = tag('add-chapter');
   sceneInput.addEventListener('keypress',async function(event){
     if (event.key === 'Enter'){
       event.preventDefault();
@@ -1866,6 +1864,12 @@ async function setUpEvents(){
     if (event.key === 'Enter'){
       event.preventDefault();
       await getTargetChapter();
+    }
+  })
+  addChapterInput.addEventListener('keypress',async function(event){
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      await addSceneBlock();
     }
   })
   console.log('Events set up')
