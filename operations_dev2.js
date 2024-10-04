@@ -2353,7 +2353,7 @@ async function addSceneBlock(chapterNo){
         //check there are 4 of them
         let numActualSceneBlockRows = 0;
         for (i = nextIndex; i < nextIndex + 30; i++){
-          if (typeCodeValues.typeCodes.values[nextIndex] == myTypes.sceneBlock){
+          if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
             numActualSceneBlockRows += 1;
           } else {
             break;
