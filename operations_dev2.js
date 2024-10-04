@@ -2355,35 +2355,34 @@ async function addSceneBlock(){
         await excel.sync();
         
         console.log('myMergeRange.values', myMergeRange.values)
-      }
-      /*
-        } else if (nextRowType == myTypes.sceneBlock){
-          //check there are 4 of them
-          let numActualSceneBlockRows = 0;
-          for (i = nextIndex; i < nextIndex + 30; i++){
-            if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
-              numActualSceneBlockRows += 1;
-            } else {
-              break;
-            }
+      } else if (nextRowType == myTypes.sceneBlock){
+        //check there are 4 of them
+        let numActualSceneBlockRows = 0;
+        for (i = nextIndex; i < nextIndex + 30; i++){
+          if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
+            numActualSceneBlockRows += 1;
+          } else {
+            break;
           }
-          console.log('numActualSceneBlockRows', numActualSceneBlockRows)
-          if (numActualSceneBlockRows == sceneBlockRows){
-            newRowIndex = theRowIndex + 1;
-            let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
-            myMergeRange.load('address');
-            myMergeRange.clear("Contents");
-            let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
-            mergedAreas.load("cellCount");
-            await excel.sync();
-            if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
-              console.log('Not merged')
-              myMergeRange.merge(true);
-            }
-            myMergeRange.values = sceneDataArray;
-            myMergeRange = formatScenBlock(myMergeRange);
-            await excel.sync()
-          } else if (numActualSceneBlockRows < sceneBlockRows){
+        }
+        console.log('numActualSceneBlockRows', numActualSceneBlockRows)
+        if (numActualSceneBlockRows == sceneBlockRows){
+          newRowIndex = theRowIndex + 1;
+          let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
+          myMergeRange.load('address');
+          myMergeRange.clear("Contents");
+          let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
+          mergedAreas.load("cellCount");
+          await excel.sync();
+          if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
+            console.log('Not merged')
+            myMergeRange.merge(true);
+          }
+          myMergeRange.values = sceneDataArray;
+          myMergeRange = formatScenBlock(myMergeRange);
+          await excel.sync()
+        }
+        /*  } else if (numActualSceneBlockRows < sceneBlockRows){
             for (let i = numActualSceneBlockRows; i < sceneBlockRows; i++){
               console.log('i', i);
               newRowIndex = await insertRowV2(theRowIndex + 1, false);
@@ -2446,6 +2445,8 @@ function formatScenBlock(theRange){
   theRange.format.font.bold = true;
   theRange.format.fill.color = myFormats.purple;
   theRange.format.horizontalAlignment = 'Center';
+  theRange.format.verticalAlignment = 'Top';
+  theRange.format.autofitRows();
   theRange.format.wrapText = true;
   return theRange;
 }
