@@ -2586,7 +2586,7 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
       console.log(i, thisCol[i].address, thisCol[i].format.columnWidth, thisCol[i].width);
     }
     await excel.sync();
-
+    let columnOneWidth = thisCol[0].format.columnWidth;
     for (let i = 0; i < theRange.columnCount; i++){
       console.log(thisCol[i].format.columnWidth)
       totalcolumnWidth = totalcolumnWidth + thisCol[i].format.columnWidth
@@ -2601,7 +2601,11 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
     tempRange.format.load('rowHeight')
     await excel.sync()
     console.log(tempRange.format.rowHeight);
-    
+    let finalRowHeight = tempRange.rowHeight;
+    tempRange.format.columnWidth = columnOneWidth;
+    tempRange.format.rowHeight = finalRowHeight;
+    theRange.merge(true);
+    await excel.sync();
   }
 
 }
