@@ -2324,13 +2324,12 @@ async function addSceneBlock(){
       for (let i = 0; i < chapterIndecies.length; i++){
         if (typeCodeValues.chapters.values[chapterIndecies[i]] == chapterNo){
           theRowIndex = typeCodeValues.typeCodes.rowIndex + chapterIndecies[i]
-          nextIndex = theRowIndex + 1;
+          nextIndex = chapterIndecies[i] + 1;
           break;
         } 
         console.log(i);
       }
-      console.log('The Row Index', theRowIndex, 'nextIndex', nextIndex)
-
+      console.log('The Row Index', theRowIndex, 'nextIndex (of array)', nextIndex)
       
       let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
       console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
@@ -2358,12 +2357,12 @@ async function addSceneBlock(){
       } else if (nextRowType == myTypes.sceneBlock){
         //check there are 4 of them
         let numActualSceneBlockRows = 0;
-        for (i = nextIndex; i < nextIndex + 30; i++){
+        for (i = nextIndex - 1; i < nextIndex + 30; i++){
           console.log(i, typeCodeValues.typeCodes.values[i]);
           if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
             numActualSceneBlockRows += 1;
           } else {
-            //break;
+            break;
           }
         }
         console.log('numActualSceneBlockRows', numActualSceneBlockRows)
