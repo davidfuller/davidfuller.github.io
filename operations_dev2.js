@@ -32,6 +32,13 @@ let myFormats = {
 function auto_exec(){
 }
 
+function showMain(){
+  let waitPage = tag('start-wait');
+  let mainPage = tag('main-page');
+  waitPage.style.display = 'none';
+  mainPage.style.display = 'block';
+}
+
 async function getColumnData(sheetName, rangeName){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(sheetName);

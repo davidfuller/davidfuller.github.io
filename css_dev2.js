@@ -433,6 +433,10 @@ label {
 }
 
 #main-page {
+  display: none;
+}
+
+#start-wait {
   display: block;
 }
 

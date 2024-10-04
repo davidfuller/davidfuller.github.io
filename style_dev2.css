@@ -429,9 +429,12 @@ label {
 }
 
 #main-page {
-  display: block;
+  display: none;
 }
 
+#start-wait {
+  display: block;
+}
 #for-director-page, #for-actor-page, #for-scheduling-page {
   display: none;
 }

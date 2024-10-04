@@ -4,6 +4,9 @@ async function mainHTML(){
   const html = `
 <h1>MuVi2 Script Controller</h1>
 <h2>Version Beta 3. Development</h2>
+<div id='start-wait'>
+  <h1>Please wait...</h1>
+</div>
 <div id="main-page">
   <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
   <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
@@ -162,6 +165,7 @@ async function mainHTML(){
   await jade_modules.operations.showHideColumns('all');
   await jade_modules.operations.setUpEvents();
   await jade_modules.operations.registerExcelEvents();
+  jade_modules.operations.showMain();
 
   console.log("I'm here data loaded. Dev3");
 }
