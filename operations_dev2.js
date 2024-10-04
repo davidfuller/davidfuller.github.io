@@ -2360,8 +2360,7 @@ async function addSceneBlock(){
         let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
         myMergeRange.merge(true);
         myMergeRange.values = sceneDataArray;
-        await excel.sync();
-        myMergeRange = await formatScenBlock(myMergeRange);
+        myMergeRange = await formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
         await excel.sync();
         
         console.log('myMergeRange.values', myMergeRange.values)
@@ -2391,7 +2390,7 @@ async function addSceneBlock(){
             myMergeRange.merge(true);
           }
           myMergeRange.values = sceneDataArray;
-          myMergeRange = formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
+          myMergeRange = await formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
           await excel.sync()
         }
       }
