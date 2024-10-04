@@ -632,6 +632,8 @@ async function getDataFromSheet(sheetName, rangeName, selectTag){
 }
 
 async function theFormulas(){
+  let waitLabel = tag('formula-wait');
+  waitLabel.style.display = 'block';
   const sceneLineCountColumn = findColumnLetter("Scene Line Count") //B
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const sceneNumberColumn = findColumnLetter("Scene Number"); //D
@@ -641,8 +643,8 @@ async function theFormulas(){
   const UKScriptColumn = findColumnLetter("UK script"); //K
   const ukNoOfTakesColumn = findColumnLetter("UK No of takes"); //T
   const ukTakeNoColumn = findColumnLetter("UK Take No"); //V
-  console.log("uKTakeNoColumn");
-  console.log(ukTakeNoColumn);
+  //console.log("uKTakeNoColumn");
+  //console.log(ukTakeNoColumn);
   const positionMinusColumn = findColumnLetter("Position -"); //BT
   const startLineColumn = findColumnLetter("Start Line"); //BU
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
@@ -754,19 +756,20 @@ async function theFormulas(){
       const columnLetter = findColumnLetter(columnFormula.columnName);
       const myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow ;
       const myTopRow = columnLetter + firstRow;
-      console.log(myRange + "  " + myTopRow);
+      //console.log(myRange + "  " + myTopRow);
       const range = scriptSheet.getRange(myRange);
       const topRowRange = scriptSheet.getRange(myTopRow);
-      console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
+      //console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
       range.formulas = columnFormula.formulaRest;
       topRowRange.formulas = columnFormula.formulaFirst;
       await excel.sync();
-      console.log(range.formulas + "   " + topRowRange.formulas);
+      //console.log(range.formulas + "   " + topRowRange.formulas);
     }
     if (isProtected){
       await lockColumns(excel, scriptSheet, columnsToLock);
-    }
+    } 
   });
+  waitLabel.style.display = 'none';
 }
 /*
 async function insertRow(){
@@ -2419,7 +2422,7 @@ async function addSceneBlock(){
         }
       }    
     });
-  }  else {
+  } else {
     alert("Please enter a number")
   }    
 }

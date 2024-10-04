@@ -11,7 +11,8 @@ async function mainHTML(){
   <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
-    <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
+    <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button><br/>
+    <label id="formula-wait">Please wait...</label>
     <button id='btnSceneCalc' onclick="jade_modules.operations.fillSceneNumber()">Scene Number</button>
     <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button>
     <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
