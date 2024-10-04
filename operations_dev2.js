@@ -2351,8 +2351,17 @@ async function addSceneBlock(chapterNo){
         console.log('myMergeRange.values', myMergeRange.values)
       } else if (nextRowType == myTypes.sceneBlock){
         //check there are 4 of them
-        for (i = nextIndex; i < nextIndex +sceneBlockRows; i++){
-          console.log(i, typeCodeValues.typeCodes.values[nextIndex]);
+        let numActualSceneBlockRows = 0;
+        for (i = nextIndex; i < nextIndex + 30; i++){
+          if (typeCodeValues.typeCodes.values[nextIndex] == myTypes.sceneBlock){
+            numActualSceneBlockRows += 1;
+          } else {
+            break;
+          }
+        }
+        console.log('numActualSceneBlockRows', numActualSceneBlockRows)
+        if (numActualSceneBlockRows == sceneBlockRows){
+          //That's the right number let's do it
         }
       }
    });
