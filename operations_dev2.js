@@ -2361,6 +2361,12 @@ async function addSceneBlock(chapterNo){
         }
         console.log('numActualSceneBlockRows', numActualSceneBlockRows)
         if (numActualSceneBlockRows == sceneBlockRows){
+          newRowIndex = theRowIndex + 1;
+          let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
+          myMergeRange.load('address');
+          myMergeRange.select();
+          await excel.sync();
+          console.log('address', myMergeRange.address);
           //That's the right number let's do it
         }
       }
