@@ -5,6 +5,8 @@ const forDirectorName = 'For Directors';
 const forActorsName = 'For Actors'
 const forSchedulingName = 'For Scheduling'
 const columnsToLock = "A:T";
+const sceneBlockRows = 4;
+let sceneBlockColumns = 9; //Can be changed in add scene block
 
 let sceneIndex, numberIndex, characterIndex, locationIndex;
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
@@ -25,8 +27,6 @@ let myTypes = {
 let myFormats = {
   purple: '#f3d1f0'
 }
-
-let sceneBlockRows = 4;
 
 function auto_exec(){
 }
@@ -2324,30 +2324,26 @@ async function addSceneBlock(chapterNo){
       let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
       console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
       let newRowIndex;
+      let cueColumnIndex = findColumnIndex('Cue');
+      let usScriptColumnIndex = findColumnIndex('US Script');
+      sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
       if (nextRowType == myTypes.line){
-        let sceneData = await getSceneBlockData(excel, scriptSheet, theRowIndex);
-          console.log('scene Data', sceneData) 
-          for (let i = 0; i < sceneBlockRows; i++){
+        let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex);
+        console.log('scene Data', sceneDataArray) 
+        for (let i = 0; i < sceneBlockRows; i++){
           newRowIndex = await insertRowV2(theRowIndex + 1, false);
           console.log('newRowIndex', newRowIndex);
           let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
           newTypeRange.values = myTypes.sceneBlock;
           await excel.sync();
         }
-        let cueColumnIndex = findColumnIndex('Cue');
-        let usScriptColumnIndex = findColumnIndex('US Script');
-        let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, usScriptColumnIndex - cueColumnIndex + 1);
+        let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
         myMergeRange.merge(true);
         myMergeRange.format.fill.color = myFormats.purple;
         myMergeRange.load('values');
         await excel.sync();
         console.log('myMergeRange.values', myMergeRange.values)
-        myMergeRange.values = [
-              ["Scene " + sceneData.scene, '', '', '', '', '', '', '', ''],
-              ['Location: ' + sceneData.location, '', '', '', '', '', '', '', ''],
-              ['Beasts: ' + sceneData.beasts, '', '', '', '', '', '', '', ''],
-              ['Other notes: ' + sceneData.otherNotes, '', '', '', '', '', '', '', '']
-              ];
+        myMergeRange.values = sceneDataArray;
         myMergeRange.format.font.name = 'Courier New';
         myMergeRange.format.font.size = 12;
         myMergeRange.format.font.bold = true;
@@ -2380,6 +2376,7 @@ async function testMergedCell(){
   
 }
 async function getSceneBlockData(excel, sheet, myRowIndex){
+  // returns a formatted array suitable for the merged cells
   let sceneNumberIndex = findColumnIndex('Scene Number');
   let OtherNotesIndex = findColumnIndex('Other notes');
   let myDataRange = sheet.getRangeByIndexes(myRowIndex, sceneNumberIndex, 2, OtherNotesIndex - sceneNumberIndex + 1)
@@ -2402,7 +2399,17 @@ async function getSceneBlockData(excel, sheet, myRowIndex){
         sceneData.otherNotes = myDataRange.values[row][16]
       }
   }
-  return sceneData;
+
+  let sceneDataArray = Array(sceneBlockRows).fill().map(() => 
+               Array(sceneBlockColumns).fill(''));
+               
+  console.log(sceneDataArray);
+  sceneDataArray[0][0] = "Scene " + sceneData.scene;
+  sceneDataArray[1][0] = 'Scene Location: ' + sceneData.location;
+  sceneDataArray[2][0] = 'Beasts/Animals: ' + sceneData.beasts;
+  sceneDataArray[2][0] = 'Other notes: ' + sceneData.otherNotes;
+  
+  return sceneDataArray;
 }
 
 function createChapterIndecies(theTypeCodesValues){
