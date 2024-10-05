@@ -1771,8 +1771,6 @@ async function displayMinAndMax(){
   const chapterMinAndMax = await getChapterMaxAndMin();
   let chapterDisplay = tag('min-and-max-chapter');
   chapterDisplay.innerText = "(" + chapterMinAndMax.min + ".." + chapterMinAndMax.max + ")";
-  let addChapterDisplay = tag('add-min-and-max-chapter');
-  addChapterDisplay.innerText = "(" + chapterMinAndMax.min + ".." + chapterMinAndMax.max + ")";
 }
 
 async function fillSceneNumber(){
@@ -1856,7 +1854,6 @@ async function setUpEvents(){
   sceneInput = tag('scene');
   lineNoInput = tag('lineNo');
   chapterInput = tag('chapter');
-  addChapterInput = tag('add-chapter');
   sceneInput.addEventListener('keypress',async function(event){
     if (event.key === 'Enter'){
       event.preventDefault();
@@ -1873,12 +1870,6 @@ async function setUpEvents(){
     if (event.key === 'Enter'){
       event.preventDefault();
       await getTargetChapter();
-    }
-  })
-  addChapterInput.addEventListener('keypress',async function(event){
-    if (event.key === 'Enter'){
-      event.preventDefault();
-      await addSceneBlock();
     }
   })
   console.log('Events set up')
