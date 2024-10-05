@@ -2328,12 +2328,15 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
   return myArray;
 }
 async function selectChapterCellAtRowIndex(excel, sheet, rowIndex, isScene){
-  const rowOffset = 30;
+  const rowOffset = 5;
   let myCell = sheet.getRangeByIndexes(rowIndex + rowOffset, chapterIndex, 1, 1)
   myCell.select()
   await excel.sync();
+  let myCell = sheet.getRangeByIndexes(rowIndex - rowOffset, chapterIndex, 1, 1)
+  myCell.select()
+  await excel.sync();
   if (isScene){
-    myCell = sheet.getRangeByIndexes(rowIndex - 4, chapterIndex, 1, 1)
+    myCell = sheet.getRangeByIndexes(rowIndex, chapterIndex, 1, 1)
   } else {
     myCell = sheet.getRangeByIndexes(rowIndex, chapterIndex, 1, 1)
   }
