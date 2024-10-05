@@ -2540,6 +2540,7 @@ async function addSceneBlock(){
         }
       }    
       */  
+      }
     });
   } else {
     alert("Please enter a number")
