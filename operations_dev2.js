@@ -2419,7 +2419,6 @@ async function addSceneBlock(){
           } else if (numActualSceneBlockRows > sceneBlockRows){
             newRowIndex = theRowIndex - 1;
             console.log('newRowIndex', newRowIndex);        
-            newRowIndex = theRowIndex + 1;
             for (let i = sceneBlockRows; i < numActualSceneBlockRows; i++){
               console.log('i', i , 'newRowIndex', newRowIndex);
               await deleteSceneBlockRow(excel, newRowIndex);
