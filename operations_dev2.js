@@ -2260,7 +2260,7 @@ async function createTypeCodes(){
     let cueIndicies = await getIndices(cueColumn, '<>', '');
     resultArray = addValuesToArray(resultArray, cueIndicies, myTypes.line, false);
 
-    let ukScriptColumn = findColumnLetter('UK Script');
+    let ukScriptColumn = findColumnLetter('UK script');
     let wallaScriptIndicies = await getIndices(ukScriptColumn, "equals", 'WALLA SCRIPTED LINES');
     resultArray = addValuesToArray(resultArray, wallaScriptIndicies, myTypes.wallaScripted, false);
 
