@@ -2269,7 +2269,7 @@ async function createTypeCodes(){
 
     const typeCodeColumn = findColumnLetter("Type Code"); 
     let sceneBlockIndicies = await getIndices(typeCodeColumn, 'equals', myTypes.sceneBlock)
-    resultArray = addValuesToArray(resultArray, sceneBlockIndicies, myTypes.sceneBlock, false);
+    resultArray = addValuesToArray(resultArray, sceneBlockIndicies, myTypes.sceneBlock, true);
 
     let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" + typeCodeColumn + lastDataRow);
     typeCodeRange.values = resultArray;
