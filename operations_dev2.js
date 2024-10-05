@@ -2324,7 +2324,7 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
   console.log('myArray', myArray)
   return myArray;
 }
-async function selectChapterCallAtRowIndex(excel, sheet, rowIndex){
+async function selectChapterCellAtRowIndex(excel, sheet, rowIndex){
   const rowOffset = 30;
   let myCell = sheet.getRangeByIndexes(rowIndex + rowOffset, chapterIndex, 1, 1)
   myCell.select()
@@ -2344,7 +2344,7 @@ async function addSceneBlock(){
     console.log('Item', sceneListData.display, sceneListData.rowIndex);
     await Excel.run(async (excel) => {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-      selectChapterCallAtRowIndex(excel, scriptSheet, addSelectList[chapterSceneID].rowIndex)
+      selectChapterCellAtRowIndex(excel, scriptSheet, addSelectList[chapterSceneID].rowIndex)
       let cueColumnIndex = findColumnIndex('Cue');
       let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
@@ -2359,6 +2359,7 @@ async function addSceneBlock(){
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
       if (sceneListData.type == myTypes.scene){
         if (nextRowType == myTypes.line){
+          console.log('Parametrs', excel, scriptSheet, theRowIndex)
           let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex, 0);
           console.log(sceneDataArray);
         }
@@ -2484,8 +2485,8 @@ async function getSceneBlockData(excel, sheet, myRowIndex, numSceneBlockLines){
   // returns a formatted array suitable for the merged cells
   let sceneNumberIndex = findColumnIndex('Scene Number');
   let otherNotesIndex = findColumnIndex('Other notes');
-  console.log ('Indexes', myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1)
-  let myDataRange = sheet.getRangeByIndexes(myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1)
+  console.log ('Indexes', myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
+  let myDataRange = sheet.getRangeByIndexes(myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
   myDataRange.load('values');
   await excel.sync();
   console.log(myDataRange.values);
