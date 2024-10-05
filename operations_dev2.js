@@ -9,7 +9,7 @@ const sceneBlockRows = 4;
 
 let sceneBlockColumns = 9; //Can be changed in add scene block
 
-let sceneIndex, numberIndex, characterIndex, locationIndex;
+let sceneIndex, numberIndex, characterIndex, locationIndex, chapterIndex;
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
@@ -67,6 +67,7 @@ async function getColumnData(sheetName, rangeName){
 async function initialiseVariables(){
   sceneIndex = findColumnIndex('Scene')
   numberIndex = findColumnIndex("Number");
+  chapterIndex = findColumnIndex('Chapter')
   totalTakesIndex = findColumnIndex('Total Takes');
 
   characterIndex = findColumnIndex('Character');
@@ -2323,6 +2324,15 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
   console.log('myArray', myArray)
   return myArray;
 }
+async function selectChapterCallAtRowIndex(excel, sheet, rowIndex){
+  const rowOffset = 30;
+  let myCell = sheet.getRangeByIndexes(rowIndex + rowOffset, chapterIndex, 1, 1)
+  myCell.select()
+  await excel.sync();
+  myCell = sheet.getRangeByIndexes(rowIndex, chapterIndex, 1, 1)
+  myCell.select()
+  await excel.sync();
+}
 
 async function addSceneBlock(){
   const addChapterValue = tag("chapter-scene-select").value;
@@ -2330,12 +2340,11 @@ async function addSceneBlock(){
   let chapterSceneID = parseInt(addChapterValue);
   if (!isNaN(chapterSceneID)){
     console.log('typeCodeValues', typeCodeValues, 'addSelectList', addSelectList);
-    console.log('Item', addSelectList[chapterSceneID].display);
-    /*
-    await findChapter(chapterNo + 1);
-    await findChapter(chapterNo);
+    console.log('Item', addSelectList[chapterSceneID].display, addSelectList[chapterSceneID].rowIndex);
     await Excel.run(async (excel) => {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      selectChapterCallAtRowIndex(excel, scriptSheet, addSelectList[chapterSceneID].rowIndex)
+      /*
       let cueColumnIndex = findColumnIndex('Cue');
       let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
@@ -2438,9 +2447,8 @@ async function addSceneBlock(){
           await excel.sync()
         }
       }    
-        
+      */  
     });
-*/
   } else {
     alert("Please enter a number")
   }
