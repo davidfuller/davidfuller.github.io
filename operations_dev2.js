@@ -2279,9 +2279,10 @@ async function createTypeCodes(){
 
 async function getIndices(theColumn, test, testValue){
   let results = [];
-  console.log('testValue', testValue);
+  console.log('testValue', testValue, theColumn);
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    console.log(theColumn + firstDataRow + ":" + theColumn + lastDataRow);
     let theRange = scriptSheet.getRange(theColumn + firstDataRow + ":" + theColumn + lastDataRow);
     theRange.load('values');
     await excel.sync();
