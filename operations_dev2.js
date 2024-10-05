@@ -2255,10 +2255,9 @@ async function createTypeCodes(){
     let sceneBordersColumn = findColumnLetter('Scene Borders');
     let sceneIndicies = await getIndices(sceneBordersColumn, 'equals', 'Original');
     resultArray = addValuesToArray(resultArray, sceneIndicies, myTypes.scene, false);
-
-    let cueColumn = findColumnLetter('Cue');
-    let cueIndicies = await getIndices(cueColumn, '<>', '');
-    resultArray = addValuesToArray(resultArray, cueIndicies, myTypes.line, false);
+    const typeCodeColumn = findColumnLetter("Type Code"); 
+    let sceneBlockIndicies = await getIndices(typeCodeColumn, 'equals', myTypes.sceneBlock)
+    resultArray = addValuesToArray(resultArray, sceneBlockIndicies, myTypes.sceneBlock, true);
 
     let ukScriptColumn = findColumnLetter('UK script');
     let wallaScriptIndicies = await getIndices(ukScriptColumn, "equals", 'WALLA SCRIPTED LINES');
@@ -2267,9 +2266,9 @@ async function createTypeCodes(){
     wallaScriptIndicies = await getIndices(ukScriptColumn, "equals", 'WALLA SCRIPTED LINES?');
     resultArray = addValuesToArray(resultArray, wallaScriptIndicies, myTypes.wallaScripted, false);
 
-    const typeCodeColumn = findColumnLetter("Type Code"); 
-    let sceneBlockIndicies = await getIndices(typeCodeColumn, 'equals', myTypes.sceneBlock)
-    resultArray = addValuesToArray(resultArray, sceneBlockIndicies, myTypes.sceneBlock, true);
+    let cueColumn = findColumnLetter('Cue');
+    let cueIndicies = await getIndices(cueColumn, '<>', '');
+    resultArray = addValuesToArray(resultArray, cueIndicies, myTypes.line, false);
 
     let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" + typeCodeColumn + lastDataRow);
     typeCodeRange.values = resultArray;
