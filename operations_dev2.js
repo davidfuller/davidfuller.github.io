@@ -2489,12 +2489,10 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     console.log ('Indexes', myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
     let myDataRange = scriptSheet.getRangeByIndexes(myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
-    let temp = scriptSheet.getRange("C1041:N1042");
-    temp.load('address')
     myDataRange.load('address');
     myDataRange.load('values');
     await excel.sync();
-    console.log(temp.address);
+    console.log(myDataRange.address, myDataRange.values);
   });
   return null;
   let sceneData = {}
