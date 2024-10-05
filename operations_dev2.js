@@ -2343,6 +2343,8 @@ async function selectChapterCellAtRowIndex(excel, sheet, rowIndex, isScene){
 }
 
 async function addSceneBlock(){
+  let myWait = tag('scene-add-wait');
+  myWait.style.display = 'block'
   const addChapterValue = tag("chapter-scene-select").value;
   console.log('Chapter/Scene', addChapterValue);
   let chapterSceneID = parseInt(addChapterValue);
@@ -2504,6 +2506,7 @@ async function addSceneBlock(){
     alert("Please enter a number")
   }
   await fillChapterAndScene();
+  myWait.style.display = 'none';
 }
 
 async function deleteSceneBlockRow(excel, rowIndex){
