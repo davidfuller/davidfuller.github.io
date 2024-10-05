@@ -2497,6 +2497,7 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     console.log ('Indexes', myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
     let myDataRange = scriptSheet.getRangeByIndexes(myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
+    myDataRange.load('values');
     await excel.sync();
     
     let sceneData = {}
