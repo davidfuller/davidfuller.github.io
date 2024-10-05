@@ -2326,7 +2326,7 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
 
 async function addSceneBlock(){
   const addChapterValue = tag("chapter-scene-select").value;
-  console.log('Chapter/Scene', parseInt(addChapterValue));
+  console.log('Chapter/Scene', addChapterValue);
   let chapterSceneID = parseInt(addChapterValue);
   if (!isNaN(chapterSceneID)){
     console.log('typeCodeValues', typeCodeValues, 'addSelectList', addSelectList);
