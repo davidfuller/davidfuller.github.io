@@ -2531,9 +2531,9 @@ function createChapterAndSceneList(theTypeCodeValues){
       listIndex += 1;
       let item = {
         arrayIndex: i,
-        rowIndex: typeCodeValues.typeCodes.rowIndex + i,
+        rowIndex: theTypeCodeValues.typeCodes.rowIndex + i,
         type: myTypes.chapter,
-        number: typeCodeValues.chapters.values[i],
+        number: theTypeCodeValues.chapters.values[i],
         display: 'Chapter ' + number
       }
       theList[listIndex] = item;
@@ -2541,9 +2541,9 @@ function createChapterAndSceneList(theTypeCodeValues){
       listIndex += 1;
       let item = {
         arrayIndex: i,
-        rowIndex: typeCodeValues.typeCodes.rowIndex + i,
+        rowIndex: theTypeCodeValues.typeCodes.rowIndex + i,
         type: myTypes.scene,
-        number: typeCodeValues.scenes.values[i],
+        number: theTypeCodeValues.scenes.values[i],
         display: 'Scene ' + number
       }
       theList[listIndex] = item;
