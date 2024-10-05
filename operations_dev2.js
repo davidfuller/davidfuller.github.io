@@ -2534,7 +2534,7 @@ function createChapterAndSceneList(theTypeCodeValues){
         rowIndex: theTypeCodeValues.typeCodes.rowIndex + i,
         type: myTypes.chapter,
         number: theTypeCodeValues.chapters.values[i],
-        display: 'Chapter ' + number
+        display: 'Chapter ' + theTypeCodeValues.chapters.values[i]
       }
       theList[listIndex] = item;
     } else if (tcv[i] == myTypes.scene){
@@ -2544,7 +2544,7 @@ function createChapterAndSceneList(theTypeCodeValues){
         rowIndex: theTypeCodeValues.typeCodes.rowIndex + i,
         type: myTypes.scene,
         number: theTypeCodeValues.scenes.values[i],
-        display: 'Scene ' + number
+        display: 'Scene ' + theTypeCodeValues.scenes.values[i]
       }
       theList[listIndex] = item;
     }
