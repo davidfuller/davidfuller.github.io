@@ -144,6 +144,13 @@ label {
   flex: 60%
 }
 
+#column-add-one {
+  flex: 20%
+}
+
+#column-add-two {
+  flex: 60%
+}
 #column-jump-one {
   flex: 5%
 }

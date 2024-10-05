@@ -146,6 +146,14 @@ label {
 #column-jump-two {
   flex: 60%
 }
+
+#column-add-one {
+  flex: 20%
+}
+
+#column-add-two {
+  flex: 60%
+}
 #takeMessage, #columnMessage {
   font-size: 14px;
   margin-left: 10px;

@@ -26,6 +26,14 @@ async function mainHTML(){
     <label id='add-scene-label-chapter' for="add-chapter">Chapter</label>
     <input type="text" id="add-chapter" name="add-chapter">
     <span id='add-min-and-max-chapter'></span><br/>
+    <div class="row">
+      <div class="column" id="column-add-one">
+        <label for="chapter-scene-select">Chapter/Scene</label>
+      </div>
+      <div class="column" id="column-add-two">
+        <select id="chapter-scene-select"><option value="">Please select</option></select><br/>
+      </div>
+    </div>
   </div>
   <div id="firstButtons">
     <label class="section-label">Lock / Unlock</label><br/>
