@@ -2325,11 +2325,12 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
 }
 
 async function addSceneBlock(){
-  const addChapterValue = parseInt(tag("chapter-scene-select").value);
-  console.log('Chapter/Scene', addChapterValue);
-  if (!isNaN(addChapterValue)){
+  const addChapterValue = tag("chapter-scene-select").value;
+  console.log('Chapter/Scene', parseInt(addChapterValue));
+  let chapterSceneID = parseInt(addChapterValue);
+  if (!isNaN(chapterSceneID)){
     console.log('typeCodeValues', typeCodeValues, 'addSelectList', addSelectList);
-    console.log('Item', addSelectList[addChapterValue].display);
+    console.log('Item', addSelectList[chapterSceneID].display);
     /*
     await findChapter(chapterNo + 1);
     await findChapter(chapterNo);
