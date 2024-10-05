@@ -2268,7 +2268,7 @@ async function createTypeCodes(){
     resultArray = addValuesToArray(resultArray, wallaScriptIndicies, myTypes.wallaScripted, false);
 
     const typeCodeColumn = findColumnLetter("Type Code"); 
-    let sceneBlockIndicies = await getIndices(resultArray, 'equals', myTypes.sceneBlock)
+    let sceneBlockIndicies = await getIndices(typeCodeColumn, 'equals', myTypes.sceneBlock)
     resultArray = addValuesToArray(resultArray, sceneBlockIndicies, myTypes.sceneBlock, false);
 
     let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" + typeCodeColumn + lastDataRow);
