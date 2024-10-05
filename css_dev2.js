@@ -150,8 +150,8 @@ label {
 }
 
 #column-add-two {
-  flex: 50%;
-  padding: 3px;
+  flex: 35%;
+  padding: 7px;
 }
 
 #column-jump-one {
