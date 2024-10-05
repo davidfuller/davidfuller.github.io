@@ -2358,9 +2358,10 @@ async function addSceneBlock(){
       let newRowIndex;
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
       if (sceneListData.type == myTypes.scene){
+        let sceneDataArray;
         if (nextRowType == myTypes.line){
           console.log('Parametrs', excel, scriptSheet, theRowIndex)
-          let sceneDataArray = await getSceneBlockData(theRowIndex, 0);
+          sceneDataArray = await getSceneBlockData(theRowIndex, 0);
           console.log(sceneDataArray);
         }
         for (let i = 0; i < sceneBlockRows; i++){
