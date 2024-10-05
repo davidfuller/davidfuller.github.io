@@ -2483,8 +2483,9 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
 async function getSceneBlockData(excel, sheet, myRowIndex, numSceneBlockLines){
   // returns a formatted array suitable for the merged cells
   let sceneNumberIndex = findColumnIndex('Scene Number');
-  let OtherNotesIndex = findColumnIndex('Other notes');
-  let myDataRange = sheet.getRangeByIndexes(myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, OtherNotesIndex - sceneNumberIndex + 1)
+  let otherNotesIndex = findColumnIndex('Other notes');
+  console.log ('Indexes', myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1)
+  let myDataRange = sheet.getRangeByIndexes(myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1)
   myDataRange.load('values');
   await excel.sync();
   console.log(myDataRange.values);
