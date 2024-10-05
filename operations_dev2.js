@@ -2352,46 +2352,49 @@ async function addSceneBlock(){
       let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
       let theRowIndex = sceneListData.rowIndex
-      let nextIndex = sceneListData.arrayIndex +1
+      let nextIndex = sceneListData.arrayIndex + 1;
+      let previousIndex = sceneListData.arrayIndex - 1;
       
-      console.log('The Row Index', theRowIndex, 'nextIndex (of array)', nextIndex)
+      console.log('The Row Index', theRowIndex, 'nextIndex (of array)', nextIndex, 'previous', previousIndex)
         
       let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
+      let previousRowType = typeCodeValues.typeCodes.values(previousIndex);
       console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
       let newRowIndex;
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
       if (sceneListData.type == myTypes.scene){
         let sceneDataArray;
-        if ((nextRowType == myTypes.line) || (nextRowType == myTypes.wallaScripted)){
+        if (previousRowType == myTypes.sceneBlock){
+          //check there are 4 of them
+          let numActualSceneBlockRows = 0;
+          for (i = nextIndex; i < nextIndex + 30; i++){
+            console.log(i, typeCodeValues.typeCodes.values[i]);
+            if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
+              numActualSceneBlockRows += 1;
+            } else {
+              break;
+            }
+          }
+          let sceneDataArray = await getSceneBlockData(theRowIndex, numActualSceneBlockRows);
+          console.log('numActualSceneBlockRows', numActualSceneBlockRows)
+        } else if ((nextRowType == myTypes.line) || (nextRowType == myTypes.wallaScripted)){
           console.log('Parametrs', excel, scriptSheet, theRowIndex)
           sceneDataArray = await getSceneBlockData(theRowIndex, 0);
           console.log(sceneDataArray);
-        }
-        for (let i = 0; i < sceneBlockRows; i++){
-          newRowIndex = await insertRowV2(theRowIndex, false);
-          console.log('newRowIndex', newRowIndex);
-          let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
-          newTypeRange.values = myTypes.sceneBlock;
+        
+          for (let i = 0; i < sceneBlockRows; i++){
+            newRowIndex = await insertRowV2(theRowIndex, false);
+            console.log('newRowIndex', newRowIndex);
+            let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
+            newTypeRange.values = myTypes.sceneBlock;
+            await excel.sync();
+          }
+          let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
+          myMergeRange.merge(true);
+          myMergeRange.values = sceneDataArray;
+          myMergeRange = await formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
           await excel.sync();
         }
-        let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
-        myMergeRange.merge(true);
-        myMergeRange.values = sceneDataArray;
-        myMergeRange = await formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
-        await excel.sync();
-      } else if (nextRowType == myTypes.sceneBlock){
-        //check there are 4 of them
-        let numActualSceneBlockRows = 0;
-        for (i = nextIndex; i < nextIndex + 30; i++){
-          console.log(i, typeCodeValues.typeCodes.values[i]);
-          if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
-            numActualSceneBlockRows += 1;
-          } else {
-            break;
-          }
-        }
-        let sceneDataArray = await getSceneBlockData(theRowIndex, numActualSceneBlockRows);
-        console.log('numActualSceneBlockRows', numActualSceneBlockRows)
       }
 /*
       
