@@ -29,7 +29,8 @@ async function mainHTML(){
         <label id='scene-add-wait'>Please wait...</label>
       </div>
       <div class="column" id="column-add-two">
-        <select id="chapter-scene-select"><option value="">Please select</option></select><br/>
+        <select id="chapter-scene-select"><option value="">Please select</option></select>
+        <button id='btnGoChapterScene' onclick="jade_modules.operations.goSceneChapter()">Go</button>
       </div>
     </div>
   </div>
