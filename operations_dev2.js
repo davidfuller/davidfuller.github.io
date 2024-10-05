@@ -23,7 +23,8 @@ let myTypes = {
   chapter: 'Chapter',
   scene: 'Scene',
   line: 'Line',
-  sceneBlock: 'Scene Block'
+  sceneBlock: 'Scene Block',
+  wallaScripted: 'Walla Scripted'
 }
 
 let myFormats = {
@@ -2259,8 +2260,18 @@ async function createTypeCodes(){
     let cueIndicies = await getIndices(cueColumn, '<>', '');
     resultArray = addValuesToArray(resultArray, cueIndicies, myTypes.line, false);
 
+    let ukScriptColumn = findColumnLetter('UK Script');
+    let wallaScriptIndicies = await getIndices(ukScriptColumn, "equals", 'WALLA SCRIPTED LINES');
+    resultArray = addValuesToArray(resultArray, wallaScriptIndicies, myTypes.wallaScripted, false);
+
+    wallaScriptIndicies = await getIndices(ukScriptColumn, "equals", 'WALLA SCRIPTED LINES?');
+    resultArray = addValuesToArray(resultArray, wallaScriptIndicies, myTypes.wallaScripted, false);
+
     const typeCodeColumn = findColumnLetter("Type Code"); 
-    let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" +typeCodeColumn +lastDataRow);
+    let sceneBlockIndicies = await getIndices(resultArray, 'equals', myTypes.sceneBlock)
+    resultArray = addValuesToArray(resultArray, sceneBlockIndicies, myTypes.sceneBlock, false);
+
+    let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" + typeCodeColumn + lastDataRow);
     typeCodeRange.values = resultArray;
     await excel.sync();
   })
