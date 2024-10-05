@@ -2668,6 +2668,6 @@ async function fillChapterAndScene(){
   addSelectList = createChapterAndSceneList(typeCodeValues);
   let chapterAddSelect = tag('chapter-scene-select');
   for (let i = 0; i < addSelectList.length; i++){
-    chapterAddSelect.add(new Option(addSelectList[i].display, addSelectList[i]));
+    chapterAddSelect.add(new Option(addSelectList[i].display, addSelectList[i].arrayIndex));
   }
 }
