@@ -2363,6 +2363,13 @@ async function addSceneBlock(){
           let sceneDataArray = await getSceneBlockData(theRowIndex, 0);
           console.log(sceneDataArray);
         }
+        for (let i = 0; i < sceneBlockRows; i++){
+          newRowIndex = await insertRowV2(theRowIndex, false);
+          console.log('newRowIndex', newRowIndex);
+          let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex - 1, typeCodeValues.typeCodes.columnIndex, 1, 1);
+          newTypeRange.values = myTypes.sceneBlock;
+          await excel.sync();
+        }
       }
 /*
       
@@ -2490,11 +2497,8 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     console.log ('Indexes', myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
     let myDataRange = scriptSheet.getRangeByIndexes(myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
-    myDataRange.load('address');
-    myDataRange.load('values');
     await excel.sync();
-    console.log(myDataRange.address, myDataRange.values);
- 
+    
     let sceneData = {}
     sceneData.scene = myDataRange.values[0][0]
     sceneData.location = '';
@@ -2516,8 +2520,6 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
     }
 
     sceneDataArray = Array(sceneBlockRows).fill().map(() => Array(sceneBlockColumns).fill(''));
-                
-    console.log(sceneDataArray);
     sceneDataArray[0][0] = "Scene " + sceneData.scene;
     sceneDataArray[1][0] = 'Scene Location: ' + sceneData.location;
     sceneDataArray[2][0] = 'Beasts/Animals: ' + sceneData.beasts;
