@@ -2677,6 +2677,7 @@ async function fillChapterAndScene(){
   typeCodeValues = await getTypeCodes();
   addSelectList = createChapterAndSceneList(typeCodeValues);
   let chapterAddSelect = tag('chapter-scene-select');
+  console.log('Selected index:', chapterAddSelect.selectedIndex);
   chapterAddSelect.innerHTML = '';
   chapterAddSelect.add(new Option('Please select', ''));
   for (let i = 0; i < addSelectList.length; i++){

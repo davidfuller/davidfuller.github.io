@@ -145,11 +145,11 @@ label {
 }
 
 #column-add-one {
-  flex: 20%
+  flex: 50%
 }
 
 #column-add-two {
-  flex: 60%
+  flex: 50%
 }
 #column-jump-one {
   flex: 5%
@@ -461,7 +461,7 @@ label {
   margin-left: 15px;
 }
 
-#btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo, #btnActorGoToLine, #btnDirectorGoToLine, #btnSchedulingGoToLine {
+#btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo, #btnActorGoToLine, #btnDirectorGoToLine, #btnSchedulingGoToLine, #btnAddSceneBlock {
   height: auto;
   padding: 10px;
 }
