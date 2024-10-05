@@ -2326,7 +2326,8 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
 async function addSceneBlock(){
   const addChapterInput = tag('add-chapter')
   const addChapterValue = tag("chapter-scene-select").value;
-  console.log('Chapter/Scene', addChapterValue);
+  const addChapterText = tag("chapter-scene-select").text
+  console.log('Chapter/Scene', parseInt(addChapterValue), addChapterText);
   /*
   const textValue = addChapterInput.value;
   const chapterNo = parseInt(textValue);
