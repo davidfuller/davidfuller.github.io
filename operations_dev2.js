@@ -2656,5 +2656,13 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
     theRange.merge(true);
     await excel.sync();
   }
+}
+async function fillChapterAndScene(){
+  let typeCodeValues = await getTypeCodes();
+  let list = createChapterAndSceneList(typeCodeValues);
+  let chapterAddSelect = tag('chapter-scene-select');
 
+  for (let i = 0; i < list.length; i++){
+    chapterAddSelect.add(new Option(list[i].display, list[i].rowIndex));
+  }
 }
