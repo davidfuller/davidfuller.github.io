@@ -2333,7 +2333,7 @@ async function selectChapterCellAtRowIndex(excel, sheet, rowIndex, isScene){
   myCell.select()
   await excel.sync();
   if (isScene){
-    myCell = sheet.getRangeByIndexes(rowIndex - 2, chapterIndex, 1, 1)
+    myCell = sheet.getRangeByIndexes(rowIndex - 4, chapterIndex, 1, 1)
   } else {
     myCell = sheet.getRangeByIndexes(rowIndex, chapterIndex, 1, 1)
   }
