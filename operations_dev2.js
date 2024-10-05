@@ -2341,7 +2341,17 @@ async function selectChapterCellAtRowIndex(excel, sheet, rowIndex, isScene){
   myCell.select()
   await excel.sync();
 }
-
+async function goSceneChapter(){
+  const addChapterValue = tag("chapter-scene-select").value;
+  let chapterSceneID = parseInt(addChapterValue);
+  if (!isNaN(chapterSceneID)){
+    let sceneListData = addSelectList[chapterSceneID]
+    await Excel.run(async (excel) => {
+      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      await selectChapterCellAtRowIndex(excel, scriptSheet, addSelectList[chapterSceneID].rowIndex, false);
+    });
+  }   
+}
 async function addSceneBlock(){
   let myWait = tag('scene-add-wait');
   myWait.style.display = 'block'
@@ -2354,7 +2364,7 @@ async function addSceneBlock(){
     console.log('Item', sceneListData.display, sceneListData.rowIndex);
     await Excel.run(async (excel) => {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-      selectChapterCellAtRowIndex(excel, scriptSheet, addSelectList[chapterSceneID].rowIndex, (addSelectList[chapterSceneID].type == myTypes.scene))
+      await selectChapterCellAtRowIndex(excel, scriptSheet, addSelectList[chapterSceneID].rowIndex, (addSelectList[chapterSceneID].type == myTypes.scene))
       let cueColumnIndex = findColumnIndex('Cue');
       let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
