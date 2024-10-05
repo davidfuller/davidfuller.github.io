@@ -2417,6 +2417,7 @@ async function addSceneBlock(){
             myMergeRange = await formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
             await excel.sync();
           } else if (numActualSceneBlockRows > sceneBlockRows){
+            newRowIndex = theRowIndex - 1;
             console.log('newRowIndex', newRowIndex);
             /*
             newRowIndex = theRowIndex + 1;
