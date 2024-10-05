@@ -2358,7 +2358,7 @@ async function addSceneBlock(){
       console.log('The Row Index', theRowIndex, 'nextIndex (of array)', nextIndex, 'previous', previousIndex)
         
       let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
-      let previousRowType = typeCodeValues.typeCodes.values(previousIndex);
+      let previousRowType = typeCodeValues.typeCodes.values[previousIndex];
       console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
       let newRowIndex;
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
