@@ -2526,19 +2526,26 @@ async function getTypeCodes(){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const typeCodeColumn = findColumnLetter("Type Code"); 
-    const chapterNoColumn = findColumnLetter('Chapter Calculation')
+    const chapterNoColumn = findColumnLetter('Chapter Calculation');
+    const sceneColumn = findColumnLetter('Scene')
     let typeCodeRange = scriptSheet.getRange(typeCodeColumn + firstDataRow + ":" + typeCodeColumn +lastDataRow);
     let chapterNoRange = scriptSheet.getRange(chapterNoColumn + firstDataRow + ":" + chapterNoColumn +lastDataRow);
+    let sceneRange = scriptSheet.getRange(sceneColumn + firstDataRow + ":" + sceneColumn +lastDataRow);
     typeCodeRange.load('values');
     typeCodeRange.load('rowIndex');
     typeCodeRange.load('rowCount');
     typeCodeRange.load('address');
     typeCodeRange.load('columnIndex');
-    chapterNoRange.load('values')
+    chapterNoRange.load('values');
     chapterNoRange.load('rowIndex');
     chapterNoRange.load('rowCount');
     chapterNoRange.load('address');
     chapterNoRange.load('columnIndex');
+    sceneRange.load('values');
+    sceneRange.load('rowIndex');
+    sceneRange.load('rowCount');
+    sceneRange.load('address');
+    sceneRange.load('columnIndex');
     await excel.sync();
     theValues.typeCodes = {
       values: typeCodeRange.values.map(x => x[0]),
@@ -2553,6 +2560,13 @@ async function getTypeCodes(){
       rowCount: chapterNoRange.rowCount,
       columnIndex: chapterNoRange.columnIndex,
       address: chapterNoRange.address
+    }
+    theValues.scenes = {
+      values: sceneRange.values.map(x => x[0]),
+      rowIndex: sceneRange.rowIndex,
+      rowCount: sceneRange.rowCount,
+      columnIndex: sceneRange.columnIndex,
+      address: sceneRange.address
     }
   });
   return theValues;
