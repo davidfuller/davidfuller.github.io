@@ -2411,14 +2411,11 @@ async function addSceneBlock(){
               newTypeRange.values = myTypes.sceneBlock;
               await excel.sync();
             }
-            /*
-            newRowIndex  = theRowIndex - sceneBlockRows;
             let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
             myMergeRange.merge(true);
             myMergeRange.values = sceneDataArray;
             myMergeRange = await formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
             await excel.sync();
-            */
           }
         } else if ((nextRowType == myTypes.line) || (nextRowType == myTypes.wallaScripted)){
           console.log('Parametrs', excel, scriptSheet, theRowIndex)
