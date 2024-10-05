@@ -2422,9 +2422,10 @@ async function addSceneBlock(){
             for (let i = sceneBlockRows; i < numActualSceneBlockRows; i++){
               console.log('i', i , 'newRowIndex', newRowIndex);
               await deleteSceneBlockRow(excel, newRowIndex);
+              theRowIndex -= 1;
             }
             let topRow = theRowIndex - sceneBlockRows;
-            console.log('topRow', topRow);
+            console.log('topRow', topRow, 'theRowIndex', theRowIndex);
             /*
             let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
             myMergeRange.load('address');
