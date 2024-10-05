@@ -2327,12 +2327,17 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
   console.log('myArray', myArray)
   return myArray;
 }
-async function selectChapterCellAtRowIndex(excel, sheet, rowIndex){
+async function selectChapterCellAtRowIndex(excel, sheet, rowIndex, isScene){
   const rowOffset = 30;
   let myCell = sheet.getRangeByIndexes(rowIndex + rowOffset, chapterIndex, 1, 1)
   myCell.select()
   await excel.sync();
-  myCell = sheet.getRangeByIndexes(rowIndex, chapterIndex, 1, 1)
+  if (isScene){
+    myCell = sheet.getRangeByIndexes(rowIndex - 5, chapterIndex, 1, 1)
+  } else {
+    myCell = sheet.getRangeByIndexes(rowIndex, chapterIndex, 1, 1)
+  }
+  
   myCell.select()
   await excel.sync();
 }
@@ -2347,7 +2352,7 @@ async function addSceneBlock(){
     console.log('Item', sceneListData.display, sceneListData.rowIndex);
     await Excel.run(async (excel) => {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-      selectChapterCellAtRowIndex(excel, scriptSheet, addSelectList[chapterSceneID].rowIndex)
+      selectChapterCellAtRowIndex(excel, scriptSheet, addSelectList[chapterSceneID].rowIndex, (addSelectList[chapterSceneID].type == myTypes.scene))
       let cueColumnIndex = findColumnIndex('Cue');
       let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
