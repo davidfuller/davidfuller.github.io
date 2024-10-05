@@ -2677,10 +2677,12 @@ async function fillChapterAndScene(){
   typeCodeValues = await getTypeCodes();
   addSelectList = createChapterAndSceneList(typeCodeValues);
   let chapterAddSelect = tag('chapter-scene-select');
+  let selected = chapterAddSelect.selectedIndex;
   console.log('Selected index:', chapterAddSelect.selectedIndex);
   chapterAddSelect.innerHTML = '';
   chapterAddSelect.add(new Option('Please select', ''));
   for (let i = 0; i < addSelectList.length; i++){
     chapterAddSelect.add(new Option(addSelectList[i].display, i));
   }
+  chapterAddSelect.selectedIndex = selected;
 }

@@ -145,12 +145,15 @@ label {
 }
 
 #column-add-one {
-  flex: 50%
+  flex: 65%;
+  padding: 0px;
 }
 
 #column-add-two {
-  flex: 50%
+  flex: 50%;
+  padding: 3px;
 }
+
 #column-jump-one {
   flex: 5%
 }
