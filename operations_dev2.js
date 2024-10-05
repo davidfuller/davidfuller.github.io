@@ -2483,6 +2483,7 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
 
 async function getSceneBlockData(myRowIndex, numSceneBlockLines){
   // returns a formatted array suitable for the merged cells
+  let sceneDataArray;
   await Excel.run(async (excel) => {
     let sceneNumberIndex = findColumnIndex('Scene Number');
     let otherNotesIndex = findColumnIndex('Other notes');
@@ -2493,38 +2494,36 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
     myDataRange.load('values');
     await excel.sync();
     console.log(myDataRange.address, myDataRange.values);
-  });
-  return null;
-  let sceneData = {}
-  sceneData.scene = myDataRange.values[0][0]
-  sceneData.location = '';
-  sceneData.beasts ='';
-  sceneData.otherNotes = '';
-  for (let row = 0; row < myDataRange.values.length; row++){
-    if (sceneData.scene == ''){
-      sceneData.scene = myDataRange.values[row][0]
+ 
+    let sceneData = {}
+    sceneData.scene = myDataRange.values[0][0]
+    sceneData.location = '';
+    sceneData.beasts ='';
+    sceneData.otherNotes = '';
+    for (let row = 0; row < myDataRange.values.length; row++){
+      if (sceneData.scene == ''){
+        sceneData.scene = myDataRange.values[row][0]
+      }
+      if (sceneData.location == ''){
+        sceneData.location = myDataRange.values[row][11]
+      }
+      if (sceneData.beasts == ''){
+        sceneData.beasts = myDataRange.values[row][15] 
+      }
+      if (sceneData.otherNotes == ''){
+        sceneData.otherNotes = myDataRange.values[row][16]
+      }
     }
-    if (sceneData.location == ''){
-      sceneData.location = myDataRange.values[row][11]
-    }
-    if (sceneData.beasts == ''){
-      sceneData.beasts = myDataRange.values[row][15] 
-    }
-    if (sceneData.otherNotes == ''){
-      sceneData.otherNotes = myDataRange.values[row][16]
-    }
-  }
 
-  let sceneDataArray = Array(sceneBlockRows).fill().map(() => 
-               Array(sceneBlockColumns).fill(''));
-               
-  console.log(sceneDataArray);
-  sceneDataArray[0][0] = "Scene " + sceneData.scene;
-  sceneDataArray[1][0] = 'Scene Location: ' + sceneData.location;
-  sceneDataArray[2][0] = 'Beasts/Animals: ' + sceneData.beasts;
-  sceneDataArray[3][0] = 'Other notes: ' + sceneData.otherNotes;
-  
-  return sceneDataArray;
+    sceneDataArray = Array(sceneBlockRows).fill().map(() => Array(sceneBlockColumns).fill(''));
+                
+    console.log(sceneDataArray);
+    sceneDataArray[0][0] = "Scene " + sceneData.scene;
+    sceneDataArray[1][0] = 'Scene Location: ' + sceneData.location;
+    sceneDataArray[2][0] = 'Beasts/Animals: ' + sceneData.beasts;
+    sceneDataArray[3][0] = 'Other notes: ' + sceneData.otherNotes;
+});
+return sceneDataArray;
 }
 
 function createChapterIndecies(theTypeCodesValues){
