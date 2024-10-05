@@ -370,7 +370,7 @@ async function findChapter(chapter){
     if (myIndex == -1){
       alert('Invalid Line Number');
     } else {
-      scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       const myTarget = scriptSheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
       myTarget.select();
       await excel.sync();
