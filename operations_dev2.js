@@ -371,9 +371,12 @@ async function findChapter(chapter){
       alert('Invalid Line Number');
     } else {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-      const myTarget = scriptSheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
-      myTarget.select();
-      await excel.sync();
+      let myTarget;
+      for (let i = -1; i <= 1; i++){
+        myTarget = scriptSheet.getRangeByIndexes(myIndex + 2 + (4 * i), startColumn, 1, 1);
+        myTarget.select();
+        await excel.sync();
+      }
     }
   })
 }
