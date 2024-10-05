@@ -2325,6 +2325,9 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
 
 async function addSceneBlock(){
   const addChapterInput = tag('add-chapter')
+  const addChapterValue = tag("chapter-scene-select").value;
+  console.log('Chapter/Scene', addChapterValue);
+  /*
   const textValue = addChapterInput.value;
   const chapterNo = parseInt(textValue);
   if (!isNaN(chapterNo)){
@@ -2438,7 +2441,8 @@ async function addSceneBlock(){
     });
   } else {
     alert("Please enter a number")
-  }    
+  }
+ */ 
 }
 
 async function deleteSceneBlockRow(excel, rowIndex){
@@ -2663,6 +2667,6 @@ async function fillChapterAndScene(){
   let chapterAddSelect = tag('chapter-scene-select');
 
   for (let i = 0; i < list.length; i++){
-    chapterAddSelect.add(new Option(list[i].display, list[i].rowIndex));
+    chapterAddSelect.add(new Option(list[i].display, list[i].arrayIndex));
   }
 }
