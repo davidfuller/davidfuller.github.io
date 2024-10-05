@@ -2400,6 +2400,21 @@ async function addSceneBlock(){
             myMergeRange.values = sceneDataArray;
             myMergeRange = await formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
             await excel.sync()
+          } else if (numActualSceneBlockRows < sceneBlockRows){
+            for (let i = numActualSceneBlockRows; i < sceneBlockRows; i++){
+              console.log('i', i);
+              newRowIndex = await insertRowV2(theRowIndex - 1, false);
+              console.log('newRowIndex', newRowIndex);
+              let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
+              newTypeRange.values = myTypes.sceneBlock;
+              await excel.sync();
+            }
+            newRowIndex  = theRowIndex - sceneBlockRows;
+            let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
+            myMergeRange.merge(true);
+            myMergeRange.values = sceneDataArray;
+            myMergeRange = await formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
+            await excel.sync();
           }
         } else if ((nextRowType == myTypes.line) || (nextRowType == myTypes.wallaScripted)){
           console.log('Parametrs', excel, scriptSheet, theRowIndex)
