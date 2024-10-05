@@ -2340,6 +2340,7 @@ async function addSceneBlock(){
       console.log('typeCodeValues', typeCodeValues);
       let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
       console.log('chapter Indecies', chapterIndecies)
+      let myList = createChapterAndSceneList(TypeCodeValues)
       let theRowIndex = - 1;
       let nextIndex = - 1;
       for (let i = 0; i < chapterIndecies.length; i++){
@@ -2519,6 +2520,37 @@ function createChapterIndecies(theTypeCodesValues){
     }
   }
   return chapterIndecies;
+}
+
+function createChapterAndSceneList(theTypeCodeValues){
+  let theList = [];
+  let listIndex = -1;
+  let tcv = theTypeCodeValues.typeCodes.values;
+  for (let i = 0; i < tcv.length; i++){
+    if (tcv[i] == myTypes.chapter){
+      listIndex += 1;
+      let item = {
+        arrayIndex: i,
+        rowIndex: typeCodeValues.typeCodes.rowIndex + i,
+        type: myTypes.chapter,
+        number: typeCodeValues.chapters.values[i],
+        display: 'Chapter ' + number
+      }
+      theList[listIndex] = item;
+    } else if (tcv[i] == myTypes.scene){
+      listIndex += 1;
+      let item = {
+        arrayIndex: i,
+        rowIndex: typeCodeValues.typeCodes.rowIndex + i,
+        type: myTypes.scene,
+        number: typeCodeValues.scenes.values[i],
+        display: 'Scene ' + number
+      }
+      theList[listIndex] = item;
+    }
+  }
+  console.log('The list', theList);
+  return theList;
 }
 
 async function getTypeCodes(){
