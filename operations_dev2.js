@@ -2462,7 +2462,7 @@ async function addSceneBlock(){
   } else {
     alert("Please enter a number")
   }
-  
+  await fillChapterAndScene();
 }
 
 async function deleteSceneBlockRow(excel, rowIndex){
