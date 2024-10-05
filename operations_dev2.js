@@ -2362,7 +2362,7 @@ async function addSceneBlock(){
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
       if (sceneListData.type == myTypes.scene){
         let sceneDataArray;
-        if (nextRowType == myTypes.line){
+        if ((nextRowType == myTypes.line) || (nextRowType == myTypes.wallaScripted)){
           console.log('Parametrs', excel, scriptSheet, theRowIndex)
           sceneDataArray = await getSceneBlockData(theRowIndex, 0);
           console.log(sceneDataArray);
