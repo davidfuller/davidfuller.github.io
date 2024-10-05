@@ -17,6 +17,7 @@ let mySheetColumns;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
+let typeCodeValues, addSelectList;
 
 let myTypes = {
   chapter: 'Chapter',
@@ -2324,15 +2325,12 @@ function addValuesToArray(myArray, myIndicies, theValue, replaceExisting){
 }
 
 async function addSceneBlock(){
-  const addChapterInput = tag('add-chapter')
-  const addChapterValue = tag("chapter-scene-select").value;
-  const addChapterText = tag("chapter-scene-select").text
-  console.log('Chapter/Scene', parseInt(addChapterValue), addChapterText);
-  /*
-  const textValue = addChapterInput.value;
-  const chapterNo = parseInt(textValue);
-  if (!isNaN(chapterNo)){
-    console.log(chapterNo);
+  const addChapterValue = parseInt(tag("chapter-scene-select").value);
+  console.log('Chapter/Scene', addChapterValue);
+  if (!isNaN(addChapterValue)){
+    console.log('typeCodeValues', typeCodeValues, 'addSelectList', addSelectList);
+    console.log('Item', addSelectList[addChapterValue].display);
+    /*
     await findChapter(chapterNo + 1);
     await findChapter(chapterNo);
     await Excel.run(async (excel) => {
@@ -2340,7 +2338,7 @@ async function addSceneBlock(){
       let cueColumnIndex = findColumnIndex('Cue');
       let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
-      let typeCodeValues = await getTypeCodes();
+      
       console.log('typeCodeValues', typeCodeValues);
       let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
       console.log('chapter Indecies', chapterIndecies)
@@ -2439,11 +2437,13 @@ async function addSceneBlock(){
           await excel.sync()
         }
       }    
+        
     });
+*/
   } else {
     alert("Please enter a number")
   }
- */ 
+  
 }
 
 async function deleteSceneBlockRow(excel, rowIndex){
@@ -2663,11 +2663,10 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
   }
 }
 async function fillChapterAndScene(){
-  let typeCodeValues = await getTypeCodes();
-  let list = createChapterAndSceneList(typeCodeValues);
+  typeCodeValues = await getTypeCodes();
+  addSelectList = createChapterAndSceneList(typeCodeValues);
   let chapterAddSelect = tag('chapter-scene-select');
-
-  for (let i = 0; i < list.length; i++){
-    chapterAddSelect.add(new Option(list[i].display, list[i].arrayIndex));
+  for (let i = 0; i < addSelectList.length; i++){
+    chapterAddSelect.add(new Option(addSelectlist[i].display, addSelectList[i]));
   }
 }
