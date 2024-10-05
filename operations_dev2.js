@@ -2339,33 +2339,23 @@ async function addSceneBlock(){
   console.log('Chapter/Scene', addChapterValue);
   let chapterSceneID = parseInt(addChapterValue);
   if (!isNaN(chapterSceneID)){
+    let sceneListData = addSelectList[chapterSceneID]
     console.log('typeCodeValues', typeCodeValues, 'addSelectList', addSelectList);
-    console.log('Item', addSelectList[chapterSceneID].display, addSelectList[chapterSceneID].rowIndex);
+    console.log('Item', sceneListData.display, sceneListData.rowIndex);
     await Excel.run(async (excel) => {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       selectChapterCallAtRowIndex(excel, scriptSheet, addSelectList[chapterSceneID].rowIndex)
-      /*
       let cueColumnIndex = findColumnIndex('Cue');
       let usScriptColumnIndex = findColumnIndex('US Script');
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
+      let theRowIndex = sceneListData.rowIndex
+      let nextIndex = sceneListData.arrayIndex +1
       
-      console.log('typeCodeValues', typeCodeValues);
-      let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
-      console.log('chapter Indecies', chapterIndecies)
-      let myList = createChapterAndSceneList(typeCodeValues)
-      let theRowIndex = - 1;
-      let nextIndex = - 1;
-      for (let i = 0; i < chapterIndecies.length; i++){
-        if (typeCodeValues.chapters.values[chapterIndecies[i]] == chapterNo){
-          theRowIndex = typeCodeValues.typeCodes.rowIndex + chapterIndecies[i]
-          nextIndex = chapterIndecies[i] + 1;
-          break;
-        } 
-      }
       console.log('The Row Index', theRowIndex, 'nextIndex (of array)', nextIndex)
         
       let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
       console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
+      /*
       let newRowIndex;
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
       
