@@ -2355,9 +2355,15 @@ async function addSceneBlock(){
         
       let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
       console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
-      /*
       let newRowIndex;
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
+      if (sceneListData.type == myTypes.scene){
+        if (nextRowType == myTypes.line){
+          let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex, 0);
+          console.log(sceneDataArray);
+        }
+      }
+/*
       
       if ((nextRowType == myTypes.line) || (nextRowType == myTypes.scene)){
         let sceneDataArray = await getSceneBlockData(excel, scriptSheet, theRowIndex, 0);
