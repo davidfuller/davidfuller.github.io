@@ -2340,7 +2340,7 @@ async function addSceneBlock(){
       console.log('typeCodeValues', typeCodeValues);
       let chapterIndecies = createChapterIndecies(typeCodeValues.typeCodes.values);
       console.log('chapter Indecies', chapterIndecies)
-      let myList = createChapterAndSceneList(TypeCodeValues)
+      let myList = createChapterAndSceneList(typeCodeValues)
       let theRowIndex = - 1;
       let nextIndex = - 1;
       for (let i = 0; i < chapterIndecies.length; i++){
