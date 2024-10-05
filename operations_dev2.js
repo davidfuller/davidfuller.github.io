@@ -2360,7 +2360,7 @@ async function addSceneBlock(){
       if (sceneListData.type == myTypes.scene){
         if (nextRowType == myTypes.line){
           console.log('Parametrs', excel, scriptSheet, theRowIndex)
-          let sceneDataArray = await getSceneBlockData(excel, theRowIndex, 0);
+          let sceneDataArray = await getSceneBlockData(theRowIndex, 0);
           console.log(sceneDataArray);
         }
       }
@@ -2481,19 +2481,21 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   
 }
 
-async function getSceneBlockData(excel, myRowIndex, numSceneBlockLines){
+async function getSceneBlockData(myRowIndex, numSceneBlockLines){
   // returns a formatted array suitable for the merged cells
-  let sceneNumberIndex = findColumnIndex('Scene Number');
-  let otherNotesIndex = findColumnIndex('Other notes');
-  let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-  console.log ('Indexes', myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
-  let myDataRange = scriptSheet.getRangeByIndexes(myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
-  let temp = scriptSheet.getRange("C1041:N1042");
-  temp.load('address')
-  myDataRange.load('address');
-  myDataRange.load('values');
-  await excel.sync();
-  console.log(temp.address);
+  await Excel.run(async (excel) => {
+    let sceneNumberIndex = findColumnIndex('Scene Number');
+    let otherNotesIndex = findColumnIndex('Other notes');
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    console.log ('Indexes', myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
+    let myDataRange = scriptSheet.getRangeByIndexes(myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
+    let temp = scriptSheet.getRange("C1041:N1042");
+    temp.load('address')
+    myDataRange.load('address');
+    myDataRange.load('values');
+    await excel.sync();
+    console.log(temp.address);
+  });
   return null;
   let sceneData = {}
   sceneData.scene = myDataRange.values[0][0]
