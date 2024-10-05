@@ -918,12 +918,12 @@ async function correctFormulas(firstRow){
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
       const myRange = columnLetter + firstRow + ":" + columnLetter + (firstRow +1) ;
-      console.log("Range to replace: " + myRange);
+      //console.log("Range to replace: " + myRange);
       const range = scriptSheet.getRange(myRange);
-      console.log("Formula: " + columnFormula.formulaRest);
+      //console.log("Formula: " + columnFormula.formulaRest);
       range.formulas = columnFormula.formulaRest;
       await excel.sync();
-      console.log("Formula after sync: " + range.formulas);
+      //console.log("Formula after sync: " + range.formulas);
     }
     if (isProtected){
       await lockColumns(excel, scriptSheet, columnsToLock);
@@ -2366,7 +2366,7 @@ async function addSceneBlock(){
         for (let i = 0; i < sceneBlockRows; i++){
           newRowIndex = await insertRowV2(theRowIndex, false);
           console.log('newRowIndex', newRowIndex);
-          let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex - 1, typeCodeValues.typeCodes.columnIndex, 1, 1);
+          let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
           newTypeRange.values = myTypes.sceneBlock;
           await excel.sync();
         }
