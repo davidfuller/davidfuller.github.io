@@ -92,13 +92,13 @@ async function doWallaTable(typeWalla, theResults){
     let resultArray = []
     for (let i = 0; i < theResults.length; i++){
       resultArray[i] = []
-      resultArray[i][1] = theResults[i].all;
-      resultArray[i][2] = theResults[i].lineRange;
-      resultArray[i][3] = typeWalla;
-      resultArray[i][4] = theResults[i].character;
-      resultArray[i][5] = theResults[i].description;
-      resultArray[i][6] = theResults[i].numCharacters;
-      resultArray[i][7] = theResults[i].line;
+      resultArray[i][0] = theResults[i].all;
+      resultArray[i][1] = theResults[i].lineRange;
+      resultArray[i][2] = typeWalla;
+      resultArray[i][3] = theResults[i].character;
+      resultArray[i][4] = theResults[i].description;
+      resultArray[i][5] = theResults[i].numCharacters;
+      resultArray[i][6] = theResults[i].line;
     }
     let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
     displayRange.load('rowCount, columnCount');
