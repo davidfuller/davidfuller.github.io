@@ -14,7 +14,7 @@ let sceneIndex, numberIndex, characterIndex, locationIndex, chapterIndex, lineIn
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
-let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex;
+let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex;
 let mySheetColumns;
 let scriptSheet;
 
@@ -101,6 +101,7 @@ async function initialiseVariables(){
   wallaLineRangeIndex = findColumnIndex('Walla Line Range');
   numberOfPeoplePresentIndex = findColumnIndex('Number of people present');
   wallaOriginalIndex = findColumnIndex('Walla Original');  
+  wallaCueIndex = findColumnIndex('Walla Cue No')
 
   chapterCalculationIndex = findColumnIndex('Chapter Calculation');
 
@@ -2940,10 +2941,17 @@ async function calculateWallaCues(){
     }
     console.log('Rows to do: ', rowsToDo);
     let wallaNumber = 0
+    let theCells = []
     for (let i = 0; i < rowsToDo.length; i++){
       wallaNumber += 1
       wallaCue = "W" + String(wallaNumber).padStart(5, 0);
       console.log(wallaCue)
+      theCells[i] = scriptSheet.getRangeByIndexes(rowsToDo[i] + wallaRange.rowIndex, wallaCueIndex, 1, 1) 
+      theCells[i].load('address')
+    }
+    await excel.sync();
+    for (let i = 0; theCells.length; i++){
+      console.log(theCells[i].address);
     }
 
   })
