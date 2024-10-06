@@ -117,6 +117,6 @@ async function loadIntoScriptSheet(){
     let myRowIndex = await jade_modules.operations.getLineNoRowIndex(6)
     console.log('row Index', myRowIndex);
     let wallaData = {}
-    await jade,modules.operations.createWalla(wallaData, myRowIndex, false, true)
+    await jade_modules.operations.createWalla(wallaData, myRowIndex, false, true)
   })
 }
