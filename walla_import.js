@@ -25,8 +25,8 @@ function splitLine(theLine){
   theCharacter = theSections[0].trim();
   console.log(theCharacter)
   thePosition = theSections[1].trim()
-  wholeScene = thePosition.indexOf('whole scene')
-  firstLine = thePosition.indexOf('line')
+  wholeScene = thePosition.toLowerCase().indexOf('whole scene')
+  firstLine = thePosition.toLowerCase().indexOf('line')
   console.log(thePosition, parseInt(thePosition), wholeScene, firstLine);
 
 }
