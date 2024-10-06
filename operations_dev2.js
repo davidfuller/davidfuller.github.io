@@ -2850,6 +2850,18 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
     firstWallaRange.load('address');
     await excel.sync();
     console.log(firstWallaRange.address);
+
+    let dataArray = [
+      wallaData.wallaLineRange,
+      wallaData.typeOfWalla,
+      wallaData.characters,
+      wallaData.description,
+      wallaData.numCharacters
+    ]
+
+    firstWallaRange.values = dataArray;
+    await excel.sync();
+
   })
 
 }
