@@ -2818,3 +2818,16 @@ async function fillChapterAndScene(){
   }
   chapterAddSelect.selectedIndex = selected;
 }
+
+async function parseSource(){
+  const wallaSheetName = 'Walla Import';
+  const sourceTextRangeName = 'wiSource';
+
+  await Excel.run(async (excel) => {
+    let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
+    let sourceRange = wallaSheet.getRange(sourceTextRangeName);
+    sourceRange.load('values')
+    await excel.sync();
+    console.log('sourceRange', sourceRange);
+  })
+}
