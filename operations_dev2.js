@@ -2157,6 +2157,23 @@ async function showForDirector(){
     ForDirectorSheet.activate();
   })
 }
+async function showWallaImportPage(){
+  const mainPage = tag('main-page');
+  mainPage.style.display = 'none';
+  const forDirectorPage = tag('for-director-page');
+  forDirectorPage.style.display = 'block';
+  const forActorsPage = tag('for-actor-page');
+  forActorsPage.style.display = 'none';
+  const forSchedulingPage = tag('for-scheduling-page');
+  forSchedulingPage.style.display = 'none';
+  const wallaImportPage = tag('walla-import-page')
+  await Excel.run(async function(excel){
+    let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
+    ForDirectorSheet.activate();
+  })
+}
+
+
 async function showMainPage(){
   const mainPage = tag('main-page');
   mainPage.style.display = 'block';

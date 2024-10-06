@@ -140,7 +140,8 @@ async function mainHTML(){
   <label id='for-actor-label'>For Actor Commands</label><br/>
   <button id="btnMainPage" onclick="jade_modules.operations.showMainPage()">Main Page</button>
   <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
-  <button id="btnForSchedulingPage" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button><br/>
+  <button id="btnForSchedulingPage" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+  <button id="btnWallaImport" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button><br/>
   <div id="forActorsButtons">
     <button id='btnGetActorInfo' onclick="jade_modules.scheduling.getActorInfo()">Calculate for<br/>actor information<br/>for selected character</button>
     <button id="btnActorGoToLine" onclick="jade_modules.scheduling.actorGoToLine()">Go to this line in script<br/>(First line if multiple)</button>
@@ -156,6 +157,15 @@ async function mainHTML(){
     <button id='btnGetSchedulingInfo' onclick="jade_modules.scheduling.getForSchedulingInfo()">Calculate for<br>scheduling information<br>for selected character</button>
     <button id="btnSchedulingGoToLine" onclick="jade_modules.scheduling.schedulingGoToLine()">Goto first line of<br/>the selected scene</button>
     <label id='scheduling-wait'>Please wait...</label>
+  </div>
+</div>
+<div id="walla-import-page"></div>
+  <label id='for-scheduling-label'>For Scheduling Commands</label><br/>
+  <button id="btnMainPage" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+  <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
+  <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button><br/>
+  <div id="wallaImportButtons">
+    <button id='btnParseSource' onclick="jade_modules.wallaImport.parseSource()">Parse source text</button>
   </div>
 </div>
   `;
