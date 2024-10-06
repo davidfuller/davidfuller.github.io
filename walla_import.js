@@ -28,12 +28,18 @@ async function parseSource(){
     Type of Walla - top line
     Walla characters - character
     Walla description - the description
+    Num of characters - count the characters
+    walla original - All
 */
 function splitLine(theLine){
   //first split with '-'
   let theSections = theLine.split('-');
   let theCharacter = theSections[0].trim();
   console.log(theCharacter)
+
+  let individualCharacters = theCharacter.split(',')
+  consoele.log(individualCharacters)
+
   let thePosition = theSections[1].trim()
   let wholeScene = thePosition.toLowerCase().indexOf('whole scene')
   let firstLine = thePosition.toLowerCase().indexOf('line')
@@ -55,7 +61,7 @@ function splitLine(theLine){
   if (isNaN(parseInt(lastBit))){
     theDescription = lastBit;
     lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
-    lineRange = theLine.substring(theRestPosition, lastBitPosition) ;
+    lineRange = theLine.substring(theRestPosition, lastBitPosition - 2).trim() ;
   } else {
     theDescription = 'N/A'
     lineRange = theRest;
@@ -68,7 +74,9 @@ function splitLine(theLine){
     character: theCharacter,
     wholeScene: (wholeScene != -1),
     line: lineNo,
-    rest: theRest
+    rest: theRest,
+    description: theDescription,
+    lineRange:  lineRange
   }
   return result;
 
