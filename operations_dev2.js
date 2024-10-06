@@ -2851,27 +2851,6 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
     await excel.sync();
     console.log(firstWallaRange.address, wallaOriginalRange.address);
 
-    if (firstWallaRange.values[0][1] != ''){
-      if (doReplace){
-        firstWallaRange.clear("Contents");
-        wallaOriginalRange.clear("Contents");
-      }
-      if (doNext){
-        for (let i = rowIndex + 1; i < rowIndex + 100; i++){
-          console.log(i)
-          firstWallaRange = scriptSheet.getRangeByIndexes(i, wallaLineRangeIndex, 1, numberColumns);
-          wallaOriginalRange = scriptSheet.getRangeByIndexes(i, wallaOriginalIndex, 1 , 1)
-          firstWallaRange.load('values');
-          await excel.sync();
-          if (firstWallaRange.values[0][1] == ''){
-            rowIndex = i;
-            break;
-          }
-        }
-        console.log('New row index', rowIndex)
-      }
-    }
-
     let dataArray = [
       wallaData.wallaLineRange,
       wallaData.typeOfWalla,
@@ -2879,6 +2858,32 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
       wallaData.description,
       wallaData.numCharacters
     ]
+
+    if (firstWallaRange.values[0][1] != ''){
+      if (doReplace){
+        firstWallaRange.clear("Contents");
+        wallaOriginalRange.clear("Contents");
+      }
+      if (doNext){
+        if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
+          for (let i = rowIndex + 1; i < rowIndex + 100; i++){
+            console.log(i)
+            firstWallaRange = scriptSheet.getRangeByIndexes(i, wallaLineRangeIndex, 1, numberColumns);
+            wallaOriginalRange = scriptSheet.getRangeByIndexes(i, wallaOriginalIndex, 1 , 1)
+            firstWallaRange.load('values');
+            await excel.sync();
+            if (firstWallaRange.values[0][1] == ''){
+              rowIndex = i;
+              break;
+            }
+          }
+          console.log('New row index', rowIndex)
+        } else {
+          console.log('Already there')
+          return null;
+        }
+      }
+    }
 
     firstWallaRange.values = [dataArray];
     wallaOriginalRange.values = [[wallaData.all]]
@@ -2888,4 +2893,20 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
 
   })
 
+}
+
+function isDataTheSame(newData, currentData){
+  if (newData.length == currentData.length){
+    for (let i = 0; i < newData.length){
+      if (newData[i] != currentData[i]){
+        console.log('Not the same');
+        return false
+      }
+    }
+    console.log('The same')
+    return true
+  } else {
+    console.log('Different dimensions')
+    return null;
+  }
 }
