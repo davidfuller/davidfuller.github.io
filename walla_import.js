@@ -13,9 +13,11 @@ async function parseSource(){
     await excel.sync();
     let mySourceText = sourceRange.values[0][0];
     let theLines = mySourceText.split('\n');
+    let theResults = [];
     for (let i = 1; i < theLines.length; i++){
-      splitLine(theLines[i]);
+      theResults[i - 1] = splitLine(theLines[i]);
     }
+    console.log('theResults', theResults)
   })
 }
 
@@ -27,15 +29,23 @@ function splitLine(theLine){
   let thePosition = theSections[1].trim()
   let wholeScene = thePosition.toLowerCase().indexOf('whole scene')
   let firstLine = thePosition.toLowerCase().indexOf('line')
-  let lineNo;
+  let lineNo = -1;
   if (firstLine != -1){
     lineNo = parseInt(thePosition.substring(firstLine + 4));
   }
   let theRestPosition = theLine.toLowerCase().indexOf(thePosition.toLowerCase());
-  let theRest;
+  let theRest = '';
   if (theRestPosition != -1){
     theRest = theLine.substring(theRestPosition);
   }
-  console.log(thePosition, parseInt(thePosition), wholeScene, firstLine, lineNo, theRestPosition, theRest);
+  
+  result = {
+    all: theLine,
+    character: theCharacter,
+    wholeScene: (wholeScene != -1),
+    line: lineNo,
+    rest: theRest
+  }
+  return result;
 
 }
