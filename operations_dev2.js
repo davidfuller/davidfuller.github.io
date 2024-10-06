@@ -2897,7 +2897,7 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
 
 function isDataTheSame(newData, currentData){
   if (newData.length == currentData.length){
-    for (let i = 0; i < newData.length){
+    for (let i = 0; i < newData.length; i++){
       if (newData[i] != currentData[i]){
         console.log('Not the same');
         return false
