@@ -1,6 +1,9 @@
 const wallaSheetName = 'Walla Import';
 const sourceTextRangeName = 'wiSource';
 
+async function auto_exec(){
+}
+
 async function parseSource(){
   await Excel.run(async (excel) => {
     let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
