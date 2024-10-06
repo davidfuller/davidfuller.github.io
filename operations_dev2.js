@@ -2905,7 +2905,6 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
   })
 
 }
-
 function isDataTheSame(newData, currentData){
   if (newData.length == currentData.length){
     for (let i = 0; i < newData.length; i++){
@@ -2920,4 +2919,18 @@ function isDataTheSame(newData, currentData){
     console.log('Different dimensions')
     return null;
   }
+}
+
+async function calculateWallaCues(){
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
+    let wallaRange = scriptSheet.getRangeByIndexes(firstDataRow, wallaLineRangeIndex, (lastDataRow - firstDataRow), numberColumns);
+    wallaRange.load('rowIndex');
+    wallaRange.load('values');
+    await excel.sync();
+    console.log ('rowIndex', wallaRange.rowIndex, 'values', wallaRange.values);
+    
+  })
+
 }
