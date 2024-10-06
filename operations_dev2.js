@@ -2933,7 +2933,7 @@ async function calculateWallaCues(){
     let rowsToDo = []
     let rowIndex = -1;
     for (let i = 0; i < wallaRange.values.length; i++){
-      if (!allEmpty(wallaRange.values[t])){
+      if (!allEmpty(wallaRange.values[i])){
         rowIndex += 1;
         rowsToDo[rowIndex] = i
       }
