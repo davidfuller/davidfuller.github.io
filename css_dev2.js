@@ -451,11 +451,11 @@ label {
   display: block;
 }
 
-#for-director-page, #for-actor-page, #for-scheduling-page {
+#for-director-page, #for-actor-page, #for-scheduling-page, #walla-import-page {
   display: none;
 }
 
-#for-director-label, #for-actor-label, #for-scheduling-label{
+#for-director-label, #for-actor-label, #for-scheduling-label, #walla-import-label{
   font-size: 22px;
   font-weight: bold;
   margin-left: 15px
