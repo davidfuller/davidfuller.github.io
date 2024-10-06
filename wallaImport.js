@@ -1,7 +1,7 @@
 const wallaSheetName = 'Walla Import';
 const sourceTextRangeName = 'wiSource';
 
-async function auto_exec(){
+function auto_exec(){
 }
 
 async function parseSource(){
