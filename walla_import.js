@@ -100,7 +100,7 @@ async function doWallaTable(typeWalla, theResults){
       resultArray[i][6] = theResults[i].numCharacters;
       resultArray[i][7] = theResults[i].line;
     }
-    let displayRange = getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
+    let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
     displayRange.values = resultArray;
     await excel.sync()
   })
