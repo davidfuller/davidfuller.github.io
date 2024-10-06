@@ -4,6 +4,7 @@ const scriptSheetName = 'Script';
 const forDirectorName = 'For Directors';
 const forActorsName = 'For Actors'
 const forSchedulingName = 'For Scheduling'
+const wallaImportName = 'Walla Import'
 const columnsToLock = "A:T";
 const sceneBlockRows = 4;
 
@@ -2152,6 +2153,8 @@ async function showForDirector(){
   forActorsPage.style.display = 'none';
   const forSchedulingPage = tag('for-scheduling-page');
   forSchedulingPage.style.display = 'none';
+  const wallaImportPage = tag('walla-import-page');
+  wallaImportPage.style.display = 'none';
   await Excel.run(async function(excel){
     let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
     ForDirectorSheet.activate();
@@ -2166,10 +2169,11 @@ async function showWallaImportPage(){
   forActorsPage.style.display = 'none';
   const forSchedulingPage = tag('for-scheduling-page');
   forSchedulingPage.style.display = 'none';
-  const wallaImportPage = tag('walla-import-page')
+  const wallaImportPage = tag('walla-import-page');
+  wallaImportPage.style.display = 'block';
   await Excel.run(async function(excel){
-    let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
-    ForDirectorSheet.activate();
+    let wallaImportSheet = excel.workbook.worksheets.getItem(wallaImportName);
+    wallaImportSheet.activate();
   })
 }
 
@@ -2183,6 +2187,8 @@ async function showMainPage(){
   forActorsPage.style.display = 'none';
   const forSchedulingPage = tag('for-scheduling-page');
   forSchedulingPage.style.display = 'none';
+  const wallaImportPage = tag('walla-import-page');
+  wallaImportPage.style.display = 'none';
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.activate();
@@ -2197,6 +2203,8 @@ async function showForActorsPage(){
   forActorsPage.style.display ='block';
   const forSchedulingPage = tag('for-scheduling-page');
   forSchedulingPage.style.display = 'none';
+  const wallaImportPage = tag('walla-import-page');
+  wallaImportPage.style.display = 'none';
   await Excel.run(async function(excel){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.activate();
@@ -2212,6 +2220,8 @@ async function showForSchedulingPage(){
   forActorsPage.style.display = 'none';
   const forSchedulingPage = tag('for-scheduling-page');
   forSchedulingPage.style.display = 'block';
+  const wallaImportPage = tag('walla-import-page');
+  wallaImportPage.style.display = 'none';
   await Excel.run(async function(excel){
     let schedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
     schedulingSheet.activate();
