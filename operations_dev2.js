@@ -2946,14 +2946,10 @@ async function calculateWallaCues(){
       wallaNumber += 1
       wallaCue = "W" + String(wallaNumber).padStart(5, 0);
       console.log(wallaCue)
-      theCells[i] = scriptSheet.getRangeByIndexes(rowsToDo[i] + wallaRange.rowIndex, wallaCueIndex, 1, 1) 
-      theCells[i].load('address')
+      theCells[i] = scriptSheet.getRangeByIndexes(rowsToDo[i] + wallaRange.rowIndex, wallaCueIndex, 1, 1);
+      theCells[i].values = [[wallaCue]]
     }
     await excel.sync();
-    for (let i = 0; i < theCells.length; i++){
-      console.log(theCells[i].address);
-    }
-
   })
 
 }
