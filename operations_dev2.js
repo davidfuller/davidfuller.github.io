@@ -98,7 +98,7 @@ async function initialiseVariables(){
   wallaEngineerIndex = findColumnIndex("Walla Engineer");
   wallaMarkUpIndex = findColumnIndex("Walla Broadcast Assistant Markup");
 
-  wallaLineRangeIndex = findColumnIndex('Walla line range');
+  wallaLineRangeIndex = findColumnIndex('Walla Line Range');
   numberOfPeoplePresentIndex = findColumnIndex('Number of people present');
     
 
