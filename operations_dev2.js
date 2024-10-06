@@ -7,6 +7,7 @@ const forSchedulingName = 'For Scheduling'
 const wallaImportName = 'Walla Import'
 const columnsToLock = "A:T";
 const sceneBlockRows = 4;
+const namedCharacters = 'Named Characters - For reaction sounds and walla';
 
 let sceneBlockColumns = 9; //Can be changed in add scene block
 
@@ -2934,7 +2935,7 @@ async function calculateWallaCues(){
     let rowsToDo = []
     let rowIndex = -1;
     for (let i = 0; i < wallaRange.values.length; i++){
-      if (!allEmpty(wallaRange.values[i])){
+      if (wallaRange.values[i][1].toLowerCase() == namedCharacters.toLowerCase()){
         rowIndex += 1;
         rowsToDo[rowIndex] = i
       }
@@ -2943,7 +2944,7 @@ async function calculateWallaCues(){
     let wallaCueColumn = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaCueIndex, (lastDataRow - firstDataRow), 1);
     wallaCueColumn.clear("Contents")
     await excel.sync();
-    
+
     let wallaNumber = 0
     let theCells = []
     for (let i = 0; i < rowsToDo.length; i++){
