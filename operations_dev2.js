@@ -2828,6 +2828,6 @@ async function parseSource(){
     let sourceRange = wallaSheet.getRange(sourceTextRangeName);
     sourceRange.load('values')
     await excel.sync();
-    console.log('sourceRange', sourceRange);
+    console.log('sourceRange', sourceRange.values);
   })
 }
