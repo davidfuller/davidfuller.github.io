@@ -31,7 +31,11 @@ function splitLine(theLine){
   if (firstLine != -1){
     lineNo = parseInt(thePosition.substring(firstLine + 4));
   }
-  
-  console.log(thePosition, parseInt(thePosition), wholeScene, firstLine, lineNo);
+  let theRestPosition = theLine.toLowerCase().indexOf(thePosition.toLowerCase());
+  let theRest;
+  if (theRestPosition != -1){
+    theRest = theLine.substring(theRestPosition);
+  }
+  console.log(thePosition, parseInt(thePosition), wholeScene, firstLine, lineNo, theRestPosition, theRest);
 
 }
