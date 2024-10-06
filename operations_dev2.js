@@ -3020,7 +3020,7 @@ async function getSceneWallaInformation(sceneNo){
         if (sceneRange.values[i][0] == sceneNo){
           sceneRowIndex = i + typeOfWallaRange.rowIndex;
           console.log('sceneRowIndex', sceneRowIndex);
-          
+          await insertRowV2(sceneRowIndex, false);
         }
       }
     }
