@@ -2936,7 +2936,7 @@ async function calculateWallaCues(){
     let rowsToDo = []
     let rowIndex = -1;
     for (let i = 0; i < wallaRange.values.length; i++){
-      if ((wallaRange.values[i][1].toLowerCase() == namedCharacters.toLowerCase()) || (wallaRange.values[i][1].toLowerCase() == namedCharactersColon.toLowerCase()){
+      if ((wallaRange.values[i][1].toLowerCase() == namedCharacters.toLowerCase()) || (wallaRange.values[i][1].toLowerCase() == namedCharactersColon.toLowerCase())){
         rowIndex += 1;
         rowsToDo[rowIndex] = i
       }
