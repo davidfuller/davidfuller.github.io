@@ -2876,15 +2876,15 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
             firstWallaRange.load('values');
             await excel.sync();
             console.log('Testing row: ', i, 'Row data: ', firstWallaRange.values[0]);
-            if (firstWallaRange.values[0][1] == ''){
-              if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
+            if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
+              if (firstWallaRange.values[0][1] == ''){
                 rowIndex = i;
                 break;
-              } else {
-                console.log('Already there');
-                loadMessage.style.display = 'block'
-                return null;
               }
+            } else {
+              console.log('Already there');
+              loadMessage.style.display = 'block'
+              return null;
             }
           }
           console.log('New row index', rowIndex)
