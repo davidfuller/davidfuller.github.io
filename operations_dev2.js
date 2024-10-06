@@ -2999,14 +2999,16 @@ async function getSceneWallaInformation(sceneNo){
         }
       } 
     }
-    let cues = '\n';
-    let details = namedCharactersColon + '\n'
+    let cues = [''];
+    let details = [namedCharactersColon];
+    let item = 0;
     for (let i = 0; i < myIndecies.length; i++){
-      cues = cues + wallaCueRange[myIndecies[i]][0] + '\n';
-      details = details + wallaOriginalRange[myIndecies[i]][0] + '\n';
+      item += 1;
+      cues[item] = wallaCueRange[myIndecies[i]][0];
+      details[item] = wallaOriginalRange[myIndecies[i]][0];
     }
-    alert(cues);
-    alert(details);
+    console.log(cues);
+    console.log(details);
   })
 }
 function isNamedWalla(theType){
