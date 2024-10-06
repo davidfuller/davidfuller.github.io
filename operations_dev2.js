@@ -2834,17 +2834,16 @@ async function fillChapterAndScene(){
   chapterAddSelect.selectedIndex = selected;
 }
 
-async function parseSource(){
-  const wallaSheetName = 'Walla Import';
-  const sourceTextRangeName = 'wiSource';
-
+async function createWalla(wallaData, rowIndex, doReplace, doNext){
   await Excel.run(async (excel) => {
-    let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
-    let sourceRange = wallaSheet.getRange(sourceTextRangeName);
-    sourceRange.load('values')
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let wallaLineRangeColumn = findColumnIndex('Walla line range');
+    let numberOfPeoplePresent = findColumnIndex('Number of people present');
+    let numberColumns = numberOfPeoplePresent - wallaLineRangeColumn + 1
+    let firstWallaRange = scriptSheet.getRangeByIndexes(rowIndex, wallaLineRangeColumn, 1, numberColumns);
+    firstWallaRange.load('address');
     await excel.sync();
-    let mySourceText = sourceRange.values[0][0];
-    let theLines = mySourceText.split('\n');
-    console.log(theLines);
+    console.log(firstWallaRange.address);
   })
+
 }
