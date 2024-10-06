@@ -101,6 +101,11 @@ async function doWallaTable(typeWalla, theResults){
       resultArray[i][7] = theResults[i].line;
     }
     let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
+    displayRange.load('rowCount, columnCount');
+    await excel.sync();
+    console.log(resultArray)
+    console.log('Display Range rows: ', displayRange.rowCount, 'columns: ', displayRange.columnCount);
+
     displayRange.values = resultArray;
     await excel.sync()
   })
