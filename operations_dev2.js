@@ -2847,8 +2847,9 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
     let firstWallaRange = scriptSheet.getRangeByIndexes(rowIndex, wallaLineRangeIndex, 1, numberColumns);
     let wallaOriginalRange = scriptSheet.getRangeByIndexes(rowIndex, wallaOriginalIndex, 1 , 1)
     firstWallaRange.load('address');
+    wallaOriginalRange.load('address')
     await excel.sync();
-    console.log(firstWallaRange.address);
+    console.log(firstWallaRange.address, wallaOriginalRange.address);
 
     let dataArray = [
       wallaData.wallaLineRange,
