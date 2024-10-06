@@ -1,6 +1,7 @@
 const wallaSheetName = 'Walla Import';
 const sourceTextRangeName = 'wiSource';
 const namedCharacters = 'Named Characters - For reaction sounds and walla';
+const wallaTableName = 'wiTable';
 
 function auto_exec(){
 }
@@ -18,6 +19,7 @@ async function parseSource(){
       theResults[i - 1] = splitLine(theLines[i]);
     }
     console.log('theResults', theResults)
+    await doWallaTable(theLines[0], theResults)
   })
 }
 
@@ -75,5 +77,18 @@ function splitLine(theLine){
     numCharacters: individualCharacters.length
   }
   return result;
+
+}
+
+async function doWallaTable(typeWalla, theResults){
+  await Excel.run(async (excel) => {
+    let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
+    let wallaTable = wallaSheet.getRange(wallaTableName);
+    wallaTable.load('rowIndex, rowCount, columnIndex, columnCount, address');
+    await excel.sync();
+    console.log(wallaTable.address, wallaTable.rowCount);
+    console.log(typeWalla, theResults);
+
+  })
 
 }
