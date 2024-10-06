@@ -2993,7 +2993,7 @@ async function getSceneWallaInformation(sceneNo){
     await excel.sync();
     let myIndecies = [];
     let theIndex = - 1;
-    for (let i = 0; i = typeOfWallaRange.values.length; i++){
+    for (let i = 0; i < typeOfWallaRange.values.length; i++){
       console.log('Scene: ', sceneRange.values[i][0]);
       if (isNamedWalla(typeOfWallaRange.values[i][0])){
         if (sceneRange.values[i][0] == sceneNo){
@@ -3014,6 +3014,12 @@ async function getSceneWallaInformation(sceneNo){
     }
     console.log(cues);
     console.log(details);
+    for (let i = 0; i < typeCodeRange.values.length; i++){
+      if (typeCodeRange.values[i][0] == myTypes.scene){
+        
+      }
+      
+    }
   })
 }
 function isNamedWalla(theType){
