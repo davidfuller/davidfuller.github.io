@@ -2940,6 +2940,10 @@ async function calculateWallaCues(){
       }
     }
     console.log('Rows to do: ', rowsToDo);
+    let wallaCueColumn = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaCueIndex, (lastDataRow - firstDataRow), 1);
+    wallaCueColumn.clear("Contents")
+    await excel.sync();
+    
     let wallaNumber = 0
     let theCells = []
     for (let i = 0; i < rowsToDo.length; i++){
