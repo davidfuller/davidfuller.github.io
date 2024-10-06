@@ -168,6 +168,7 @@ async function mainHTML(){
   <div id="wallaImportButtons">
     <button id='btnParseSource' onclick="jade_modules.wallaimport.parseSource()">Parse source text</button>
     <button id='btnLoadScript' onclick="jade_modules.wallaimport.loadIntoScriptSheet()">Load into script sheet</button>
+    <label id='load-message'>This item is already present</label>
   </div>
 </div>
   `;

@@ -466,7 +466,7 @@ label {
   padding: 10px;
 }
 
-#director-wait, #actor-wait, #scheduling-wait, #formula-wait, #scene-wait, #scene-add-wait {
+#director-wait, #actor-wait, #scheduling-wait, #formula-wait, #scene-wait, #scene-add-wait, #load-message{
   display: none;
   font-size: 15px;
   margin-left: 15px;

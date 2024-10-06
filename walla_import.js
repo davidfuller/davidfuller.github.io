@@ -113,6 +113,8 @@ async function doWallaTable(typeWalla, theResults){
 
 async function loadIntoScriptSheet(){
   await Excel.run(async (excel) => {
+    let loadMessage = tag('load-message');
+    loadMessage.style.display = 'none';
     const lineNoArrayColumn = 6;
     const lineRangeArrayColumn = 1;
     const typeOfWallaArrayColumn = 2;

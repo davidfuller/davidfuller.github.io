@@ -2191,6 +2191,8 @@ async function showWallaImportPage(){
   forSchedulingPage.style.display = 'none';
   const wallaImportPage = tag('walla-import-page');
   wallaImportPage.style.display = 'block';
+  let loadMessage = tag('load-message');
+  loadMessage.style.display = 'none';
   await Excel.run(async function(excel){
     let wallaImportSheet = excel.workbook.worksheets.getItem(wallaImportName);
     wallaImportSheet.activate();
@@ -2841,6 +2843,7 @@ async function fillChapterAndScene(){
 
 async function createWalla(wallaData, rowIndex, doReplace, doNext){
   await Excel.run(async (excel) => {
+    let loadMessage = tag('load-message');
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
     let firstWallaRange = scriptSheet.getRangeByIndexes(rowIndex, wallaLineRangeIndex, 1, numberColumns);
@@ -2873,13 +2876,20 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
             firstWallaRange.load('values');
             await excel.sync();
             if (firstWallaRange.values[0][1] == ''){
-              rowIndex = i;
-              break;
+              if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
+                rowIndex = i;
+                break;
+              } else {
+                console.log('Already there');
+                loadMessage.style.display = 'block'
+                return null;
+              }
             }
           }
           console.log('New row index', rowIndex)
         } else {
           console.log('Already there')
+          loadMessage.style.display = 'block'
           return null;
         }
       }
