@@ -10,7 +10,7 @@ const sceneBlockRows = 4;
 
 let sceneBlockColumns = 9; //Can be changed in add scene block
 
-let sceneIndex, numberIndex, characterIndex, locationIndex, chapterIndex;
+let sceneIndex, numberIndex, characterIndex, locationIndex, chapterIndex, lineIndex;
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
@@ -74,6 +74,7 @@ async function initialiseVariables(){
 
   characterIndex = findColumnIndex('Character');
   locationIndex = findColumnIndex('Location');
+  lineIndex = findColumnIndex('Line');
   
   ukTakesIndex = findColumnIndex('UK No of takes');
   ukTakeNoIndex = findColumnIndex('UK Take No')
@@ -420,7 +421,7 @@ async function getLineRange(excel){
   const endRow = scriptSheet.getUsedRange().getLastRow();
   endRow.load("rowIndex");
   await excel.sync();
-  range = scriptSheet.getRangeByIndexes(2, numberIndex, endRow.rowIndex, 1);
+  range = scriptSheet.getRangeByIndexes(2, lineIndex, endRow.rowIndex, 1);
   await excel.sync();
   return range;
 }
