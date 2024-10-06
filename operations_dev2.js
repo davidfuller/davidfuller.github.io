@@ -2925,12 +2925,29 @@ async function calculateWallaCues(){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
-    let wallaRange = scriptSheet.getRangeByIndexes(firstDataRow, wallaLineRangeIndex, (lastDataRow - firstDataRow), numberColumns);
+    let wallaRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaLineRangeIndex, (lastDataRow - firstDataRow), numberColumns);
     wallaRange.load('rowIndex');
     wallaRange.load('values');
     await excel.sync();
     console.log ('rowIndex', wallaRange.rowIndex, 'values', wallaRange.values);
-    
+    let rowsToDo = []
+    let rowIndex = -1;
+    for (let i = 0; i < wallaRange.values.length; i++){
+      if (!allEmpty(wallaRange.values[t])){
+        rowIndex += 1;
+        rowsToDo[rowIndex] = i
+      }
+    }
+    console.log('Rows to do: ', rowsToDo);
   })
 
+}
+
+function allEmpty(theArray){
+  for (let i = 0; i < theArray.length; i++){
+    if (theArray[i] != ''){
+      return false;
+    }
+  }
+  return true;
 }
