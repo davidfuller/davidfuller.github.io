@@ -21,6 +21,11 @@ async function parseSource(){
   })
 }
 
+/* where to put the data
+    Walla cue Number - auto calculated starting at W00001
+
+    Walla line range - either 'whole scene' or the best guess of line range
+*/
 function splitLine(theLine){
   //first split with '-'
   let theSections = theLine.split('-');
@@ -39,7 +44,8 @@ function splitLine(theLine){
     theRest = theLine.substring(theRestPosition);
   }
   let lastBit = theSections[theSections.length - 1];
-  console.log('lastBit', lastBit);
+  console.log('lastBit', lastBit, parseInt(lastBit));
+  
   
   result = {
     all: theLine,
