@@ -114,6 +114,19 @@ async function doWallaTable(typeWalla, theResults){
 async function loadIntoScriptSheet(){
   await Excel.run(async (excel) => {
     let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
+    let wallaTableRange = wallaSheet.getRange(wallaTableName);
+    wallaTableRange.load('rowIndex');
+    wallaTableRange.load('rowCount');
+    wallaTableRange.load('values');
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load("rowIndex");
+    activeCell.load(("columnIndex"))
+    await excel.sync();
+
+    let arrayRow = activeCell.rowIndex - wallaTableRange.rowIndex
+    console.log('array row: ', arrayRow, 'data: ', wallaTableRange.values[arrayRow]);
+
+
     let myRowIndex = await jade_modules.operations.getLineNoRowIndex(6)
     console.log('row Index', myRowIndex);
     let wallaData = {}
