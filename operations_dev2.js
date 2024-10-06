@@ -2939,6 +2939,13 @@ async function calculateWallaCues(){
       }
     }
     console.log('Rows to do: ', rowsToDo);
+    let wallaNumber = 0
+    for (let i = 0; i < rowsToDo.length; i++){
+      wallaNumber += 1
+      wallaCue = "W" + String(wallaNumber).padStart(5, 0);
+      console.log(wallaCue)
+    }
+
   })
 
 }
