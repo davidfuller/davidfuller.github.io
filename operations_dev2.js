@@ -14,7 +14,7 @@ let sceneIndex, numberIndex, characterIndex, locationIndex, chapterIndex, lineIn
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
-let wallaLineRangeIndex, numberOfPeoplePresentIndex;
+let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex;
 let mySheetColumns;
 let scriptSheet;
 
@@ -100,9 +100,7 @@ async function initialiseVariables(){
 
   wallaLineRangeIndex = findColumnIndex('Walla Line Range');
   numberOfPeoplePresentIndex = findColumnIndex('Number of people present');
-    
-
-
+  wallaOriginalIndex = findColumnIndex('Walla Original');  
 
   chapterCalculationIndex = findColumnIndex('Chapter Calculation');
 
@@ -2847,6 +2845,7 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
     let firstWallaRange = scriptSheet.getRangeByIndexes(rowIndex, wallaLineRangeIndex, 1, numberColumns);
+    let wallaOriginalRange = scriptSheet.getRangeByIndexes(rowIndex, wallaOriginalIndex, 1 , 1)
     firstWallaRange.load('address');
     await excel.sync();
     console.log(firstWallaRange.address);
@@ -2860,6 +2859,7 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
     ]
 
     firstWallaRange.values = [dataArray];
+    wallaOriginalRange.values = [[wallaData.all]]
     await excel.sync();
 
   })
