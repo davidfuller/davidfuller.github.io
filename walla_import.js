@@ -11,6 +11,8 @@ async function parseSource(){
     let sourceRange = wallaSheet.getRange(sourceTextRangeName);
     sourceRange.load('values')
     await excel.sync();
-    console.log('sourceRange', sourceRange);
+    let mySourceText = sourceRange.values[0][0];
+    let theLines = mySourceText.split('\n');
+    console.log(theLines);
   })
 }
