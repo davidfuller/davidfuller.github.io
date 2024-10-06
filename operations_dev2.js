@@ -16,7 +16,7 @@ let sceneIndex, numberIndex, characterIndex, locationIndex, chapterIndex, lineIn
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
-let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex;
+let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
 let mySheetColumns;
 let scriptSheet;
 
@@ -28,7 +28,8 @@ let myTypes = {
   scene: 'Scene',
   line: 'Line',
   sceneBlock: 'Scene Block',
-  wallaScripted: 'Walla Scripted'
+  wallaScripted: 'Walla Scripted',
+  wallaBlock: 'Walla Block'
 }
 
 let myFormats = {
@@ -103,6 +104,7 @@ async function initialiseVariables(){
   wallaLineRangeIndex = findColumnIndex('Walla Line Range');
   typeOfWallaIndex = findColumnIndex('Type Of Walla')
   numberOfPeoplePresentIndex = findColumnIndex('Number of people present');
+  typeCodeIndex = findColumnIndex('Type Code');
   wallaOriginalIndex = findColumnIndex('Walla Original');  
   wallaCueIndex = findColumnIndex('Walla Cue No')
 
@@ -2979,17 +2981,20 @@ async function getSceneWallaInformation(sceneNo){
     let sceneRange = scriptSheet.getRangeByIndexes(firstRowIndex, sceneIndex, lastRowIndex, 1);
     let wallaCueRange = scriptSheet.getRangeByIndexes(firstRowIndex, wallaCueIndex, lastRowIndex, 1);
     let wallaOriginalRange = scriptSheet.getRangeByIndexes(firstRowIndex, wallaOriginalIndex, lastRowIndex, 1);
+    let typeCodeRange = scriptSheet.getRangeByIndexes(firstRowIndex, typeCodeIndex, lastRowIndex, 1);
 
     typeOfWallaRange.load('rowIndex');
     typeOfWallaRange.load('values');
     sceneRange.load('values');
     wallaCueRange.load('values');
     wallaOriginalRange.load('values');
+    typeCodeRange.load('values')
     
     await excel.sync();
     let myIndecies = [];
     let theIndex = - 1;
     for (let i = 0; i = typeOfWallaRange.length; i++){
+      console.log('Scene: ', sceneRange[i][0]);
       if (isNamedWalla(typeOfWallaRange[i][0])){
         if (sceneRange[i][0] == sceneNo){
           theIndex += 1;
