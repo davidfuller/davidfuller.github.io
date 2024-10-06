@@ -3005,8 +3005,8 @@ async function getSceneWallaInformation(sceneNo){
       cues = cues + wallaCueRange[myIndecies[i]][0] + '\n';
       details = details + wallaOriginalRange[myIndecies[i]][0] + '\n';
     }
-    console.log('Cues: ', cues)
-    console.log('Details ', details)
+    alert(cues);
+    alert(details);
   })
 }
 function isNamedWalla(theType){
