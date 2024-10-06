@@ -56,7 +56,7 @@ function splitLine(theLine){
   let lastBitPosition;
   let lineRange;
   if (isNaN(parseInt(lastBit))){
-    theDescription = lastBit;
+    theDescription = lastBit.trim();
     lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
     lineRange = theLine.substring(theRestPosition, lastBitPosition - 2).trim() ;
   } else {
