@@ -3055,7 +3055,7 @@ async function getSceneWallaInformation(){
           }
         } else if (typeCodeRange.values[i][0] == myTypes.chapter){
           if (sceneRange.values[i][0] == sceneNo){
-            sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows;
+            sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 1;
             console.log('sceneRowIndex', sceneRowIndex);
             doIt = true;
             break;
