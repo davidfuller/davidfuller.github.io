@@ -2846,9 +2846,31 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
     let firstWallaRange = scriptSheet.getRangeByIndexes(rowIndex, wallaLineRangeIndex, 1, numberColumns);
     let wallaOriginalRange = scriptSheet.getRangeByIndexes(rowIndex, wallaOriginalIndex, 1 , 1)
     firstWallaRange.load('address');
+    firstWallaRange.load('values');
     wallaOriginalRange.load('address')
     await excel.sync();
     console.log(firstWallaRange.address, wallaOriginalRange.address);
+
+    if (firstWallaRange.values[0][1] != ''){
+      if (doReplace){
+        firstWallaRange.clear("Contents");
+        wallaOriginalRange.clear("Contents");
+      }
+      if (doNext){
+        for (let i = rowIndex + 1; i < rowIndex + 100; i++){
+          console.log(i)
+          firstWallaRange = scriptSheet.getRangeByIndexes(i, wallaLineRangeIndex, 1, numberColumns);
+          wallaOriginalRange = scriptSheet.getRangeByIndexes(i, wallaOriginalIndex, 1 , 1)
+          firstWallaRange.load('values');
+          await excel.sync();
+          if (firstWallaRange.values[0][1] == ''){
+            rowIndex = i;
+            break;
+          }
+        }
+        console.log('New row index', rowIndex)
+      }
+    }
 
     let dataArray = [
       wallaData.wallaLineRange,
