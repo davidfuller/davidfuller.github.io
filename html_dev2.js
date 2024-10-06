@@ -10,7 +10,8 @@ async function mainHTML(){
 <div id="main-page">
   <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
   <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
-  <button id="btnForSchedulingPage" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button><br/>
+  <button id="btnForSchedulingPage" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+  <button id="btnWallaImport" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button><br/>
   <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
@@ -159,8 +160,8 @@ async function mainHTML(){
     <label id='scheduling-wait'>Please wait...</label>
   </div>
 </div>
-<div id="walla-import-page"></div>
-  <label id='for-scheduling-label'>For Scheduling Commands</label><br/>
+<div id="walla-import-page">
+  <label id='walla-import-label'>Walla Import</label><br/>
   <button id="btnMainPage" onclick="jade_modules.operations.showMainPage()">Main Page</button>
   <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
   <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button><br/>
