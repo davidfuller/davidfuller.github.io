@@ -35,11 +35,8 @@ function splitLine(theLine){
   //first split with '-'
   let theSections = theLine.split('-');
   let theCharacter = theSections[0].trim();
-  console.log(theCharacter)
-
   let individualCharacters = theCharacter.split(',')
-  console.log(individualCharacters)
-
+  
   let thePosition = theSections[1].trim()
   let wholeScene = thePosition.toLowerCase().indexOf('whole scene')
   let firstLine = thePosition.toLowerCase().indexOf('line')
@@ -67,8 +64,6 @@ function splitLine(theLine){
     lineRange = theRest;
   }
   
-  console.log('Description', theDescription, 'last Pos', lastBitPosition, 'line range', lineRange)
-
   result = {
     all: theLine,
     character: theCharacter,
@@ -76,7 +71,8 @@ function splitLine(theLine){
     line: lineNo,
     rest: theRest,
     description: theDescription,
-    lineRange:  lineRange
+    lineRange:  lineRange,
+    numCharacters: individualCharacters.length
   }
   return result;
 
