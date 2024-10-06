@@ -335,6 +335,7 @@ async function findLineNo(lineNo){
 }
 
 async function getLineNoRowIndex(lineNo){
+  let myRowIndex;
   await Excel.run(async function(excel){
     let range = await getLineRange(excel);
     range.load("values");
@@ -342,7 +343,9 @@ async function getLineNoRowIndex(lineNo){
     await excel.sync();
     const myIndex = range.values.findIndex(a => a[0] == (lineNo));
     console.log(myIndex, range.rowIndex);
+    myRowIndex = myIndex + range.rowIndex;
   })
+  return myRowIndex;
 }
 
 async function findChapter(chapter){
