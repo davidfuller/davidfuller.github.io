@@ -334,6 +334,17 @@ async function findLineNo(lineNo){
   })
 }
 
+async function getLineNoRowIndex(lineNo){
+  await Excel.run(async function(excel){
+    let range = await getLineRange(excel);
+    range.load("values");
+    range.load('rowIndex')
+    await excel.sync();
+    const myIndex = range.values.findIndex(a => a[0] == (lineNo));
+    console.log(myIndex, range.rowIndex);
+  })
+}
+
 async function findChapter(chapter){
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
