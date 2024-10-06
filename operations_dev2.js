@@ -2950,7 +2950,7 @@ async function calculateWallaCues(){
       theCells[i].load('address')
     }
     await excel.sync();
-    for (let i = 0; theCells.length; i++){
+    for (let i = 0; i < theCells.length; i++){
       console.log(theCells[i].address);
     }
 
