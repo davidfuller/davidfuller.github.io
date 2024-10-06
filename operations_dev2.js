@@ -3021,6 +3021,9 @@ async function getSceneWallaInformation(sceneNo){
           sceneRowIndex = i + typeOfWallaRange.rowIndex;
           console.log('sceneRowIndex', sceneRowIndex);
           await insertRowV2(sceneRowIndex, false);
+          let typeCodeCell = scriptSheet.getRangeByIndexes(sceneRowIndex,typeCodeIndex,1,1);
+          typeCodeCell.values =[[myTypes.wallaBlock]];
+          break;
         }
       }
     }
