@@ -3044,27 +3044,40 @@ async function getSceneWallaInformation(){
       console.log(cues.join('\n'));
       console.log(details.join('\n'));
       let sceneRowIndex = -1; 
+      let doIt = false;
       for (let i = 0; i < typeCodeRange.values.length; i++){
         if (typeCodeRange.values[i][0] == myTypes.scene){
           if (sceneRange.values[i][0] == sceneNo){
             sceneRowIndex = i + typeOfWallaRange.rowIndex;
             console.log('sceneRowIndex', sceneRowIndex);
-            await insertRowV2(sceneRowIndex, false);
-            let typeCodeCell = scriptSheet.getRangeByIndexes(sceneRowIndex, typeCodeIndex, 1, 1);
-            let wallaCueCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
-            let wallaDetailsCell = scriptSheet.getRangeByIndexes(sceneRowIndex, numberIndex, 1, 1);
-            typeCodeCell.values =[[myTypes.wallaBlock]];
-            wallaCueCell.values = [[cues.join('\n')]];
-            wallaDetailsCell.values = [[details.join('\n')]]
-            let wallaDetailsMergeRange = scriptSheet.getRangeByIndexes(sceneRowIndex, numberIndex, 1, wallaBlockColumns);
-            wallaDetailsMergeRange.merge(true);
-            await formatWallaBlockCue(excel, wallaCueCell);
-            await formatWallaBlock(excel, scriptSheet, wallaDetailsMergeRange, sceneRowIndex, numberIndex, 1, wallaBlockColumns);
+            doIt = true;
+            break;
+          }
+        } else if (typeCodeRange.values[i][0] == myTypes.chapter){
+          if (sceneRange.values[i][0] == sceneNo){
+            sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows;
+            console.log('sceneRowIndex', sceneRowIndex);
+            doIt = true;
             break;
           }
         }
       }
+      if (doIt){
+        await insertRowV2(sceneRowIndex, false);
+        let typeCodeCell = scriptSheet.getRangeByIndexes(sceneRowIndex, typeCodeIndex, 1, 1);
+        let wallaCueCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
+        let wallaDetailsCell = scriptSheet.getRangeByIndexes(sceneRowIndex, numberIndex, 1, 1);
+        typeCodeCell.values =[[myTypes.wallaBlock]];
+        wallaCueCell.values = [[cues.join('\n')]];
+        wallaDetailsCell.values = [[details.join('\n')]]
+        let wallaDetailsMergeRange = scriptSheet.getRangeByIndexes(sceneRowIndex, numberIndex, 1, wallaBlockColumns);
+        wallaDetailsMergeRange.merge(true);
+        await formatWallaBlockCue(excel, wallaCueCell);
+        await formatWallaBlock(excel, scriptSheet, wallaDetailsMergeRange, sceneRowIndex, numberIndex, 1, wallaBlockColumns);
+      }
     })
+  } else {
+    alert('Enter a valid scene number')
   }
 }
 function isNamedWalla(theType){
