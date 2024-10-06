@@ -2875,6 +2875,7 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
             wallaOriginalRange = scriptSheet.getRangeByIndexes(i, wallaOriginalIndex, 1 , 1)
             firstWallaRange.load('values');
             await excel.sync();
+            console.log('Testing row: ', i, 'Row data: ', firstWallaRange.values[0]);
             if (firstWallaRange.values[0][1] == ''){
               if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
                 rowIndex = i;
