@@ -38,6 +38,8 @@ function splitLine(theLine){
   if (theRestPosition != -1){
     theRest = theLine.substring(theRestPosition);
   }
+  let lastBit = theSections[theSections.length - 1];
+  console.log('lastBit', lastBit);
   
   result = {
     all: theLine,
