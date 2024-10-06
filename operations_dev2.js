@@ -8,6 +8,7 @@ const wallaImportName = 'Walla Import'
 const columnsToLock = "A:T";
 const sceneBlockRows = 4;
 const namedCharacters = 'Named Characters - For reaction sounds and walla';
+const namedCharactersColon = 'Named Characters - For reaction sounds and walla:';
 
 let sceneBlockColumns = 9; //Can be changed in add scene block
 
@@ -2935,7 +2936,7 @@ async function calculateWallaCues(){
     let rowsToDo = []
     let rowIndex = -1;
     for (let i = 0; i < wallaRange.values.length; i++){
-      if (wallaRange.values[i][1].toLowerCase() == namedCharacters.toLowerCase()){
+      if ((wallaRange.values[i][1].toLowerCase() == namedCharacters.toLowerCase()) || (wallaRange.values[i][1].toLowerCase() == namedCharactersColon.toLowerCase()){
         rowIndex += 1;
         rowsToDo[rowIndex] = i
       }
