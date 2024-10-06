@@ -45,8 +45,16 @@ function splitLine(theLine){
   }
   let lastBit = theSections[theSections.length - 1];
   console.log('lastBit', lastBit, parseInt(lastBit));
+
+  let theDescription;
+  if (isNaN(parseInt(lastBit))){
+    theDescription = lastBit;
+    lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase);
+    lineRange = theLine.substring(theRestPosition,lastBitPosition) ;
+  }
   
-  
+  console.log('Description', theDescription, 'last Pos', lastBitPosition, 'line range', lineRange)
+
   result = {
     all: theLine,
     character: theCharacter,
