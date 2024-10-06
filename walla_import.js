@@ -21,12 +21,17 @@ async function parseSource(){
 
 function splitLine(theLine){
   //first split with '-'
-  theSections = theLine.split('-');
-  theCharacter = theSections[0].trim();
+  let theSections = theLine.split('-');
+  let theCharacter = theSections[0].trim();
   console.log(theCharacter)
-  thePosition = theSections[1].trim()
-  wholeScene = thePosition.toLowerCase().indexOf('whole scene')
-  firstLine = thePosition.toLowerCase().indexOf('line')
-  console.log(thePosition, parseInt(thePosition), wholeScene, firstLine);
+  let thePosition = theSections[1].trim()
+  let wholeScene = thePosition.toLowerCase().indexOf('whole scene')
+  let firstLine = thePosition.toLowerCase().indexOf('line')
+  let lineNo;
+  if (firstLine != -1){
+    lineNo = parseInt(thePosition.substring(firstLine + 4));
+  }
+  
+  console.log(thePosition, parseInt(thePosition), wholeScene, firstLine, lineNo);
 
 }
