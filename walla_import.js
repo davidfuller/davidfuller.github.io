@@ -25,6 +25,9 @@ async function parseSource(){
     Walla cue Number - auto calculated starting at W00001
 
     Walla line range - either 'whole scene' or the best guess of line range
+    Type of Walla - top line
+    Walla characters - character
+    Walla description - the description
 */
 function splitLine(theLine){
   //first split with '-'
@@ -44,13 +47,18 @@ function splitLine(theLine){
     theRest = theLine.substring(theRestPosition);
   }
   let lastBit = theSections[theSections.length - 1];
-  console.log('lastBit', lastBit, parseInt(lastBit));
+  
 
   let theDescription;
+  let lastBitPosition;
+  let lineRange;
   if (isNaN(parseInt(lastBit))){
     theDescription = lastBit;
-    lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase);
-    lineRange = theLine.substring(theRestPosition,lastBitPosition) ;
+    lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
+    lineRange = theLine.substring(theRestPosition, lastBitPosition) ;
+  } else {
+    theDescription = 'N/A'
+    lineRange = theRest;
   }
   
   console.log('Description', theDescription, 'last Pos', lastBitPosition, 'line range', lineRange)
