@@ -2860,7 +2860,9 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
 
     firstWallaRange.values = [dataArray];
     wallaOriginalRange.values = [[wallaData.all]]
+    firstWallaRange.select();   
     await excel.sync();
+    await showMainPage();
 
   })
 
