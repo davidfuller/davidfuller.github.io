@@ -2659,6 +2659,16 @@ async function formatWallaBlock(excel, sheet, theRange, newRowIndex, leftMostCol
     await mergedRowAutoHeight(excel, sheet, tempRange);
   }
 }
+async function formatWallaBlockCue(excel, theRange){
+  theRange.format.font.name = 'Courier New';
+  theRange.format.font.size = 12;
+  theRange.format.font.bold = true;
+  theRange.format.fill.color = myFormats.green;
+  theRange.format.horizontalAlignment = 'Center';
+  theRange.format.verticalAlignment = 'Top';
+  await excel.sync();
+  
+}
 
 
 async function getSceneBlockData(myRowIndex, numSceneBlockLines){
@@ -3045,6 +3055,7 @@ async function getSceneWallaInformation(sceneNo){
           wallaDetailsCell.values = [[details.join('\n')]]
           let wallaDetailsMergeRange = scriptSheet.getRangeByIndexes(sceneRowIndex, numberIndex, 1, wallaBlockColumns);
           wallaDetailsMergeRange.merge(true);
+          await formatWallaBlockCue(excel, wallaCueCell);
           await formatWallaBlock(excel, scriptSheet, wallaDetailsMergeRange, sceneRowIndex, numberIndex, 1, wallaBlockColumns);
           break;
         }
