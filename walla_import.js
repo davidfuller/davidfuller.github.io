@@ -38,7 +38,7 @@ function splitLine(theLine){
   console.log(theCharacter)
 
   let individualCharacters = theCharacter.split(',')
-  consoele.log(individualCharacters)
+  console.log(individualCharacters)
 
   let thePosition = theSections[1].trim()
   let wholeScene = thePosition.toLowerCase().indexOf('whole scene')
