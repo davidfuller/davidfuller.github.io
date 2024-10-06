@@ -14,6 +14,7 @@ let sceneIndex, numberIndex, characterIndex, locationIndex, chapterIndex, lineIn
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
+let wallaLineRangeIndex, numberOfPeoplePresentIndex;
 let mySheetColumns;
 let scriptSheet;
 
@@ -96,6 +97,12 @@ async function initialiseVariables(){
   wallaStudioIndex = findColumnIndex("Walla Studio");
   wallaEngineerIndex = findColumnIndex("Walla Engineer");
   wallaMarkUpIndex = findColumnIndex("Walla Broadcast Assistant Markup");
+
+  wallaLineRangeIndex = findColumnIndex('Walla line range');
+  numberOfPeoplePresentIndex = findColumnIndex('Number of people present');
+    
+
+
 
   chapterCalculationIndex = findColumnIndex('Chapter Calculation');
 
@@ -2837,10 +2844,8 @@ async function fillChapterAndScene(){
 async function createWalla(wallaData, rowIndex, doReplace, doNext){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let wallaLineRangeColumn = findColumnIndex('Walla line range');
-    let numberOfPeoplePresent = findColumnIndex('Number of people present');
-    let numberColumns = numberOfPeoplePresent - wallaLineRangeColumn + 1
-    let firstWallaRange = scriptSheet.getRangeByIndexes(rowIndex, wallaLineRangeColumn, 1, numberColumns);
+    let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
+    let firstWallaRange = scriptSheet.getRangeByIndexes(rowIndex, wallaLineRangeIndex, 1, numberColumns);
     firstWallaRange.load('address');
     await excel.sync();
     console.log(firstWallaRange.address);
