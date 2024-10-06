@@ -1,8 +1,8 @@
 const wallaSheetName = 'Walla Import';
 const sourceTextRangeName = 'wiSource';
+const namedCharacters = 'Named Characters - For reaction sounds and walla';
 
 function auto_exec(){
-  alert("I'm here")
 }
 
 async function parseSource(){
@@ -13,6 +13,15 @@ async function parseSource(){
     await excel.sync();
     let mySourceText = sourceRange.values[0][0];
     let theLines = mySourceText.split('\n');
-    console.log(theLines);
+    for (let i = 1; i < theLines.length; i++){
+      splitLine(theLines[i]);
+    }
   })
+}
+
+function splitLine(theLine){
+  //first split with '-'
+  theSections = theLine.split('-');
+  theCharacter = theSections[0].trim();
+  console.log(theCharacter)
 }
