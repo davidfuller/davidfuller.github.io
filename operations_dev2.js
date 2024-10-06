@@ -11,8 +11,9 @@ const namedCharacters = 'Named Characters - For reaction sounds and walla';
 const namedCharactersColon = 'Named Characters - For reaction sounds and walla:';
 
 let sceneBlockColumns = 9; //Can be changed in add scene block
+let wallaBlockColumns = 8;
 
-let sceneIndex, numberIndex, characterIndex, locationIndex, chapterIndex, lineIndex;
+let sceneIndex, numberIndex, cueIndex, characterIndex, locationIndex, chapterIndex, lineIndex;
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
@@ -75,6 +76,7 @@ async function initialiseVariables(){
   numberIndex = findColumnIndex("Number");
   chapterIndex = findColumnIndex('Chapter')
   totalTakesIndex = findColumnIndex('Total Takes');
+  cueIndex = findColumnIndex('Cue');
 
   characterIndex = findColumnIndex('Character');
   locationIndex = findColumnIndex('Location');
@@ -3012,8 +3014,8 @@ async function getSceneWallaInformation(sceneNo){
       cues[item] = wallaCueRange.values[myIndecies[i]][0];
       details[item] = wallaOriginalRange.values[myIndecies[i]][0];
     }
-    console.log(cues);
-    console.log(details);
+    console.log(cues.join('\n'));
+    console.log(details.join('\n'));
     let sceneRowIndex = -1; 
     for (let i = 0; i < typeCodeRange.values.length; i++){
       if (typeCodeRange.values[i][0] == myTypes.scene){
@@ -3021,8 +3023,14 @@ async function getSceneWallaInformation(sceneNo){
           sceneRowIndex = i + typeOfWallaRange.rowIndex;
           console.log('sceneRowIndex', sceneRowIndex);
           await insertRowV2(sceneRowIndex, false);
-          let typeCodeCell = scriptSheet.getRangeByIndexes(sceneRowIndex,typeCodeIndex,1,1);
+          let typeCodeCell = scriptSheet.getRangeByIndexes(sceneRowIndex, typeCodeIndex, 1, 1);
+          let wallaCueCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
+          let wallaDetailsCell = scriptSheet.getRangeByIndexes(sceneRowIndex, numberIndex, 1, 1);
           typeCodeCell.values =[[myTypes.wallaBlock]];
+          wallaCueCell.values = [[cues.join('\n')]];
+          wallaDetailsCell.values = [[details.join('\n')]]
+          let wallaDetailsMergeRange = scriptSheet.getRangeByIndexes(sceneRowIndex, numberIndex, 1, wallaBlockColumns);
+          wallaDetailsMergeRange.merge(true);
           break;
         }
       }
