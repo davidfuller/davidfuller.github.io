@@ -2972,7 +2972,7 @@ function allEmpty(theArray){
 
 async function getSceneWallaInformation(sceneNo){
   await Excel.run(async (excel) => {
-    const firstRowIndex = forstDataRow - 1;
+    const firstRowIndex = firstDataRow - 1;
     const lastRowIndex = lastDataRow - firstDataRow;
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let typeOfWallaRange = scriptSheet.getRangeByIndexes(firstRowIndex, typeOfWallaIndex, lastRowIndex, 1);
