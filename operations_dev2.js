@@ -2164,7 +2164,7 @@ async function showWallaImportPage(){
   const mainPage = tag('main-page');
   mainPage.style.display = 'none';
   const forDirectorPage = tag('for-director-page');
-  forDirectorPage.style.display = 'block';
+  forDirectorPage.style.display = 'none';
   const forActorsPage = tag('for-actor-page');
   forActorsPage.style.display = 'none';
   const forSchedulingPage = tag('for-scheduling-page');

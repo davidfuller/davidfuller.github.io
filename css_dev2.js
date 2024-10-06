@@ -38,8 +38,8 @@ label {
   margin-left: 5px;
   font-size: 12px;
 }
-/* Section formatting */  
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, #forSchedulingButtons {
+/* Section formatting */
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, #forSchedulingButtons, #wallaImportButtons {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
