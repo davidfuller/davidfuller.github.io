@@ -113,6 +113,13 @@ async function doWallaTable(typeWalla, theResults){
 
 async function loadIntoScriptSheet(){
   await Excel.run(async (excel) => {
+    const lineNoArrayColumn = 6;
+    const lineRangeArrayColumn = 1;
+    const typeOfWallaArrayColumn = 2;
+    const characterArrayColumn = 3;
+    const descriptionArrayColumn = 4;
+    const numCharactersArrayColumn = 5;
+    const allArrayColumn = 0;
     let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
     let wallaTableRange = wallaSheet.getRange(wallaTableName);
     wallaTableRange.load('rowIndex');
@@ -126,10 +133,18 @@ async function loadIntoScriptSheet(){
     let arrayRow = activeCell.rowIndex - wallaTableRange.rowIndex
     console.log('array row: ', arrayRow, 'data: ', wallaTableRange.values[arrayRow]);
 
-
-    let myRowIndex = await jade_modules.operations.getLineNoRowIndex(6)
+    let lineNo = wallaTableRange[arrayRow][lineNoArrayColumn];
+    let myRowIndex = await jade_modules.operations.getLineNoRowIndex(lineNo)
     console.log('row Index', myRowIndex);
-    let wallaData = {}
+    let wallaData = {
+      wallaLineRange: wallaTableRange[arrayRow][lineRangeArrayColumn],
+      typeOfWalla: wallaTableRange[arrayRow][typeOfWallaArrayColumn],
+      characters: wallaTableRange[arrayRow][characterArrayColumn],
+      description: wallaTableRange[arrayRow][descriptionArrayColumn],
+      numCharacters: wallaTableRange[arrayRow][numCharactersArrayColumn],
+      all: wallaTableRange[arrayRow][allArrayColumn]
+    }
+    console.log('Walla Data', wallaData);
     await jade_modules.operations.createWalla(wallaData, myRowIndex, false, true)
   })
 }
