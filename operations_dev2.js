@@ -2859,7 +2859,7 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
       wallaData.numCharacters
     ]
 
-    firstWallaRange.values = dataArray;
+    firstWallaRange.values = [dataArray];
     await excel.sync();
 
   })
