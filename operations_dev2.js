@@ -3014,11 +3014,15 @@ async function getSceneWallaInformation(sceneNo){
     }
     console.log(cues);
     console.log(details);
+    let sceneRowIndex = -1; 
     for (let i = 0; i < typeCodeRange.values.length; i++){
       if (typeCodeRange.values[i][0] == myTypes.scene){
-        
+        if (sceneRange.values[i][0] == sceneNo){
+          sceneRowIndex = i + typeOfWallaRange.rowIndex;
+          console.log('sceneRowIndex', sceneRowIndex);
+          
+        }
       }
-      
     }
   })
 }
