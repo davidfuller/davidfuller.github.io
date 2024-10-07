@@ -3026,7 +3026,7 @@ async function getSceneWallaInformation(typeNo){
   let doNamed, doUnnamed;
   if (typeNo == 1){
     doNamed = true;
-    oUnnamed = false;
+    doUnnamed = false;
   } else {
     doNamed = false;
     doUnnamed = true;
