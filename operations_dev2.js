@@ -11,6 +11,8 @@ const namedCharacters = 'Named Characters - For reaction sounds and walla';
 const namedCharactersColon = 'Named Characters - For reaction sounds and walla:';
 const unnamedCharacters = 'Un-named Character Walla';
 const unnamedCharactersColon = 'Un-named Character Walla:';
+const generalWalla = 'General Walla';
+const generalWallaColon = 'General Walla:';
 let sceneBlockColumns = 9; //Can be changed in add scene block
 let wallaBlockColumns = 8;
 
@@ -3023,14 +3025,24 @@ function allEmpty(theArray){
 async function getSceneWallaInformation(typeNo){
   let wallaScene = tag('walla-scene').value;
   sceneNo = parseInt(wallaScene);
-  let doNamed, doUnnamed;
+  let doNamed, doUnnamed, doGeneral;
   if (typeNo == 1){
     doNamed = true;
     doUnnamed = false;
-  } else {
+    doGeneral = false;
+  } else if (typeNo == 2){
     doNamed = false;
     doUnnamed = true;
+    doGeneral = false;
+  } else if (typeNo == 3){
+    doNamed = false;
+    doUnnamed = false;
+    doGeneral = true;
+  } else {
+    alert('Invalid choice');
+    return null;
   }
+
   if (!isNaN(sceneNo)){
     await Excel.run(async (excel) => {
       const firstRowIndex = firstDataRow - 1;
@@ -3070,7 +3082,24 @@ async function getSceneWallaInformation(typeNo){
       if (doUnnamed){
         for (let i = 0; i < typeOfWallaRange.values.length; i++){
           console.log('Unnamed Scene: ', sceneRange.values[i][0]);
+          if (sceneRange.values[i][0] == sceneNo){
+            console.log('Walla Type: ',typeOfWallaRange.values[i][0])
+          }
           if (isUnamedWalla(typeOfWallaRange.values[i][0])){
+            if (sceneRange.values[i][0] == sceneNo){
+              theIndex += 1;
+              myIndecies[theIndex] = i;
+            }
+          } else if (sceneRange.values[i][0] > sceneNo){
+              break; 
+          }
+        }
+      }
+
+      if (doGeneral){
+        for (let i = 0; i < typeOfWallaRange.values.length; i++){
+          console.log('General Scene: ', sceneRange.values[i][0]);
+          if (isGeneralWalla(typeOfWallaRange.values[i][0])){
             if (sceneRange.values[i][0] == sceneNo){
               theIndex += 1;
               myIndecies[theIndex] = i;
@@ -3157,9 +3186,13 @@ async function getSceneWallaInformation(typeNo){
   }
 }
 function isNamedWalla(theType){
-  return ((theType.toLowerCase() == namedCharacters.toLowerCase()) || (theType.toLowerCase() == namedCharactersColon.toLowerCase()))     
+  return ((theType.toLowerCase() == namedCharacters.toLowerCase()) || (theType.toLowerCase() == namedCharactersColon.toLowerCase()));
 }
 
 function isUnamedWalla(theType){
-  return ((theType.toLowerCase() == unnamedCharacters.toLowerCase()) || (theType.toLowerCase() == unnamedCharactersColon.toLowerCase()))     
+  return ((theType.toLowerCase() == unnamedCharacters.toLowerCase()) || (theType.toLowerCase() == unnamedCharactersColon.toLowerCase()));
+}
+
+function isGeneralWalla(theType){
+  return ((theType.toLowerCase() == generalWalla.toLowerCase()) || (theType.toLowerCase() == generalWallaColon.toLowerCase()));
 }
