@@ -2424,8 +2424,12 @@ async function goWallaScene(){
     await Excel.run(async (excel) => {
       let range = await getSceneRange(excel);
       range.load("values");
+      const activeCell = excel.workbook.getActiveCell();
+      activeCell.load("rowIndex");
       await excel.sync();
-      myIndex = range.values.findIndex(a => a[0] == (currentValue + offset));
+      const startRow = activeCell.rowIndex;
+      let currentValue = range.values[startRow - 2][0];
+      myIndex = range.values.findIndex(a => a[0] == (currentValue));
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       await selectChapterCellAtRowIndex(excel, scriptSheet, myIndex, false);
     });
