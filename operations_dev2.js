@@ -3095,22 +3095,23 @@ async function getSceneWallaInformation(){
         if (typeCodeRange.values[i][0] == myTypes.scene){
           if (sceneRange.values[i][0] == sceneNo){
             sceneRowIndex = i + typeOfWallaRange.rowIndex;
-            console.log('sceneRowIndex', sceneRowIndex);
+            console.log('Scene route sceneRowIndex', sceneRowIndex);
             doIt = true;
             break;
           }
         } else if (typeCodeRange.values[i][0] == myTypes.chapter){
           if (sceneRange.values[i][0] == sceneNo){
             sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 1;
-            console.log('sceneRowIndex', sceneRowIndex);
+            console.log('Chapter Route sceneRowIndex', sceneRowIndex);
             doIt = true;
             break;
           }
         }
       }
-      /*if (doIt){
+      if (doIt){
         let selectCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
         selectCell.select();
+        /*
         await insertRowV2(sceneRowIndex, false);
         let typeCodeCell = scriptSheet.getRangeByIndexes(sceneRowIndex, typeCodeIndex, 1, 1);
         let wallaCueCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
@@ -3122,8 +3123,8 @@ async function getSceneWallaInformation(){
         wallaDetailsMergeRange.merge(true);
         await formatWallaBlockCue(excel, wallaCueCell);
         await formatWallaBlock(excel, scriptSheet, wallaDetailsMergeRange, sceneRowIndex, numberIndex, 1, wallaBlockColumns);
-      }
         */
+      }
     })
   } else {
     alert('Enter a valid scene number')
