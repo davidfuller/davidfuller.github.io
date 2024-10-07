@@ -39,7 +39,7 @@ function splitLine(theLine){
   let theCharacter = theSections[0].trim();
   let individualCharacters = theCharacter.split(',')
   let thePosition = '';
-  if (!(theSections[1] === undefinded)){
+  if (!(theSections[1] === undefined)){
     thePosition = theSections[1].trim()
   }
   let wholeScene = thePosition.toLowerCase().indexOf('whole scene')
