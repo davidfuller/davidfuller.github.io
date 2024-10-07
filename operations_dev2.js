@@ -2419,9 +2419,8 @@ async function goSceneChapter(){
 
 async function goWallaScene(){
   const addSceneValue = tag("walla-scene").value;
-  let sceneID = parseInt(addChapterValue);
+  let sceneID = parseInt(addSceneValue);
   if (!isNaN(sceneID)){
-    let sceneListData = addSelectList[chapterSceneID]
     await Excel.run(async (excel) => {
       let range = await getSceneRange(excel);
       range.load("values");
