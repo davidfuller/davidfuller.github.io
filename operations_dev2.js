@@ -10,7 +10,7 @@ const sceneBlockRows = 4;
 const namedCharacters = 'Named Characters - For reaction sounds and walla';
 const namedCharactersColon = 'Named Characters - For reaction sounds and walla:';
 const unnamedCharacters = 'Un-named Character Walla';
-const unnamedCharactersColon = 'Un-named Character Walla';
+const unnamedCharactersColon = 'Un-named Character Walla:';
 let sceneBlockColumns = 9; //Can be changed in add scene block
 let wallaBlockColumns = 8;
 
