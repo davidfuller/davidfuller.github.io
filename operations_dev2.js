@@ -3080,7 +3080,22 @@ async function getSceneWallaInformation(){
     
 
       let cues = [''];
-      let details = [namedCharactersColon];
+      let details = []
+      if (doNamed){
+        if (myIndecies.length = 0){
+          details = [namedCharactersColon + ' none'];
+        } else {
+          details = [namedCharactersColon];
+        }
+      }
+      if (doUnnamed){
+        if (myIndecies.length = 0){
+          details = [unnamedCharactersColon + ' none'];  
+        } else {
+          details = [unnamedCharactersColon];  
+        }
+      }
+      
       let item = 0;
       for (let i = 0; i < myIndecies.length; i++){
         item += 1;
@@ -3088,14 +3103,8 @@ async function getSceneWallaInformation(){
         details[item] = wallaOriginalRange.values[myIndecies[i]][0];
       }
 
-      if (myIndecies.length = 0){
-        cues[0] = '';
-        details[0] = unnamedCharactersColon + ' None';
-      }
-
       console.log(cues.join('\n'));
       console.log(details.join('\n'));
-
       
       let sceneRowIndex = -1; 
       let doIt = false;
