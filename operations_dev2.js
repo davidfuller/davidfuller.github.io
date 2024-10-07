@@ -3095,12 +3095,15 @@ async function getSceneWallaInformation(){
       }
       
       let item = 0;
+
       for (let i = 0; i < myIndecies.length; i++){
         item += 1;
+        console.log(item)
         cues[item] = wallaCueRange.values[myIndecies[i]][0];
         details[item] = wallaOriginalRange.values[myIndecies[i]][0];
       }
 
+      console.log(details);
       console.log(cues.join('\n'));
       console.log(details.join('\n'));
       
