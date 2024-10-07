@@ -3020,11 +3020,17 @@ function allEmpty(theArray){
   return true;
 }
 
-async function getSceneWallaInformation(){
+async function getSceneWallaInformation(typeNo){
   let wallaScene = tag('walla-scene').value;
   sceneNo = parseInt(wallaScene);
-  let doNamed = false;
-  let doUnnamed = true
+  let doNamed, doUnnamed;
+  if (typeNo == 1){
+    doNamed = true;
+    oUnnamed = false;
+  } else {
+    doNamed = false;
+    doUnnamed = true;
+  }
   if (!isNaN(sceneNo)){
     await Excel.run(async (excel) => {
       const firstRowIndex = firstDataRow - 1;
