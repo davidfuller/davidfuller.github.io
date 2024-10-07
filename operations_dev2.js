@@ -3080,14 +3080,14 @@ async function getSceneWallaInformation(){
       let cues = [''];
       let details = []
       if (doNamed){
-        if (myIndecies.length = 0){
+        if (myIndecies.length == 0){
           details = [namedCharactersColon + ' none'];
         } else {
           details = [namedCharactersColon];
         }
       }
       if (doUnnamed){
-        if (myIndecies.length = 0){
+        if (myIndecies.length == 0){
           details = [unnamedCharactersColon + ' none'];  
         } else {
           details = [unnamedCharactersColon];  
