@@ -3077,6 +3077,8 @@ async function getSceneWallaInformation(){
 
       console.log(myIndecies, theIndex);
 
+    
+
       let cues = [''];
       let details = [namedCharactersColon];
       let item = 0;
@@ -3085,6 +3087,12 @@ async function getSceneWallaInformation(){
         cues[item] = wallaCueRange.values[myIndecies[i]][0];
         details[item] = wallaOriginalRange.values[myIndecies[i]][0];
       }
+
+      if (myIndecies.length = 0){
+        cues[0] = '';
+        details[0] = unnamedCharactersColon + ' None';
+      }
+
       console.log(cues.join('\n'));
       console.log(details.join('\n'));
 
