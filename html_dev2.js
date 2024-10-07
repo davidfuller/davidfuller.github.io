@@ -36,6 +36,7 @@ async function mainHTML(){
         <select id="chapter-scene-select"><option value="">Please select</option></select>
         <button id='btnGoChapterScene' onclick="jade_modules.operations.goSceneChapter()">Go</button><br/>
         <input type="text" id="walla-scene" name="walla-scene">
+        <button id='btnGoWallaScene' onclick="jade_modules.operations.goWallaScene()">Go</button>
       </div>
     </div>
   </div>

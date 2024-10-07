@@ -2416,6 +2416,24 @@ async function goSceneChapter(){
     });
   }   
 }
+
+async function goWallaScene(){
+  const addSceneValue = tag("walla-scene").value;
+  let sceneID = parseInt(addChapterValue);
+  if (!isNaN(sceneID)){
+    let sceneListData = addSelectList[chapterSceneID]
+    await Excel.run(async (excel) => {
+      let range = await getSceneRange(excel);
+      range.load("values");
+      await excel.sync();
+      myIndex = range.values.findIndex(a => a[0] == (currentValue + offset));
+      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      await selectChapterCellAtRowIndex(excel, scriptSheet, myIndex, false);
+    });
+  }   
+}
+
+
 async function addSceneBlock(){
   let myWait = tag('scene-add-wait');
   myWait.style.display = 'block'
