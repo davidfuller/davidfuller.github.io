@@ -31,6 +31,7 @@ async function mainHTML(){
         <label id='scene-add-wait'>Please wait...</label><br/>
         <button id="btnAddWallaBlockNamed" onclick="jade_modules.operations.getSceneWallaInformation(1)">Add walla block (Named)</button>
         <button id="btnAddWallaBlockUnnamed" onclick="jade_modules.operations.getSceneWallaInformation(2)">Add walla block (Un-named)</button>
+        <button id="btnAddWallaBlockGeneral" onclick="jade_modules.operations.getSceneWallaInformation(3)">Add walla block (General)</button>
         <label for="walla-scene">Scene</label><br/>
       </div>
       <div class="column" id="column-add-two">

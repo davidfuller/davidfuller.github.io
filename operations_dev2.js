@@ -3082,7 +3082,7 @@ async function getSceneWallaInformation(typeNo){
       if (doUnnamed){
         for (let i = 0; i < typeOfWallaRange.values.length; i++){
           console.log('Unnamed Scene: ', sceneRange.values[i][0]);
-          if (isUnamedWalla(typeOfWallaRange.values[i][0].trim())){
+          if (isUnamedWalla(typeOfWallaRange.values[i][0])){
             if (sceneRange.values[i][0] == sceneNo){
               theIndex += 1;
               myIndecies[theIndex] = i;
@@ -3113,19 +3113,26 @@ async function getSceneWallaInformation(typeNo){
       let details = []
       if (doNamed){
         if (myIndecies.length == 0){
-          details = [namedCharactersColon + ' none'];
+          details = [namedCharactersColon + ' None'];
         } else {
           details = [namedCharactersColon];
         }
       }
       if (doUnnamed){
         if (myIndecies.length == 0){
-          details = [unnamedCharactersColon + ' none'];  
+          details = [unnamedCharactersColon + ' None'];  
         } else {
           details = [unnamedCharactersColon];  
         }
       }
       
+      if (doGeneral){
+        if (myIndecies.length == 0){
+          details = [generalWallaColon + ' None'];  
+        } else {
+          details = [generalWallaColon];  
+        }
+      }
       let item = 0;
 
       for (let i = 0; i < myIndecies.length; i++){
@@ -3155,6 +3162,8 @@ async function getSceneWallaInformation(typeNo){
               sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 1;  
             } else if (doUnnamed){
               sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 2;  
+            } else if (doGeneral){
+              sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 2;  
             }
             console.log('Chapter Route sceneRowIndex', sceneRowIndex);
             doIt = true;
@@ -3183,13 +3192,13 @@ async function getSceneWallaInformation(typeNo){
   }
 }
 function isNamedWalla(theType){
-  return ((theType.toLowerCase() == namedCharacters.toLowerCase()) || (theType.toLowerCase() == namedCharactersColon.toLowerCase()));
+  return ((theType.trim().toLowerCase() == namedCharacters.trim().toLowerCase()) || (theType.trim().toLowerCase() == namedCharactersColon.trim().toLowerCase()));
 }
 
 function isUnamedWalla(theType){
-  return ((theType.toLowerCase() == unnamedCharacters.toLowerCase()) || (theType.toLowerCase() == unnamedCharactersColon.toLowerCase()));
+  return ((theType.trim().toLowerCase() == unnamedCharacters.trim().toLowerCase()) || (theType.trim().toLowerCase() == unnamedCharactersColon.trim().toLowerCase()));
 }
 
 function isGeneralWalla(theType){
-  return ((theType.toLowerCase() == generalWalla.toLowerCase()) || (theType.toLowerCase() == generalWallaColon.toLowerCase()));
+  return ((theType.trim().toLowerCase() == generalWalla.trim().toLowerCase()) || (theType.trim().toLowerCase() == generalWallaColon.trim().toLowerCase()));
 }
