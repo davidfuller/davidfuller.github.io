@@ -3119,6 +3119,11 @@ async function getSceneWallaInformation(){
           }
         } else if (typeCodeRange.values[i][0] == myTypes.chapter){
           if (sceneRange.values[i][0] == sceneNo){
+            if (doNamed){
+              sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 1;  
+            } else if (doUnnamed){
+              sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 2;  
+            }
             sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 1;
             console.log('Chapter Route sceneRowIndex', sceneRowIndex);
             doIt = true;
