@@ -3164,7 +3164,7 @@ async function getSceneWallaInformation(typeNo){
             } else if (doUnnamed){
               sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 2;  
             } else if (doGeneral){
-              sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 2;  
+              sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 3;  
             }
             console.log('Chapter Route sceneRowIndex', sceneRowIndex);
             doIt = true;
