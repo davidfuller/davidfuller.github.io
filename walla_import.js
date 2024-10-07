@@ -38,8 +38,10 @@ function splitLine(theLine){
   let theSections = theLine.split('-');
   let theCharacter = theSections[0].trim();
   let individualCharacters = theCharacter.split(',')
-  
-  let thePosition = theSections[1].trim()
+  let thePosition = '';
+  if (!(theSections[1] === undefinded)){
+    thePosition = theSections[1].trim()
+  }
   let wholeScene = thePosition.toLowerCase().indexOf('whole scene')
   let firstLine = thePosition.toLowerCase().indexOf('line')
   let lineNo = -1;
