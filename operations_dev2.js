@@ -3111,7 +3111,6 @@ async function getSceneWallaInformation(){
       if (doIt){
         let selectCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
         selectCell.select();
-        /*
         await insertRowV2(sceneRowIndex, false);
         let typeCodeCell = scriptSheet.getRangeByIndexes(sceneRowIndex, typeCodeIndex, 1, 1);
         let wallaCueCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
@@ -3123,7 +3122,6 @@ async function getSceneWallaInformation(){
         wallaDetailsMergeRange.merge(true);
         await formatWallaBlockCue(excel, wallaCueCell);
         await formatWallaBlock(excel, scriptSheet, wallaDetailsMergeRange, sceneRowIndex, numberIndex, 1, wallaBlockColumns);
-        */
       }
     })
   } else {
