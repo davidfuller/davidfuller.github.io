@@ -3082,10 +3082,7 @@ async function getSceneWallaInformation(typeNo){
       if (doUnnamed){
         for (let i = 0; i < typeOfWallaRange.values.length; i++){
           console.log('Unnamed Scene: ', sceneRange.values[i][0]);
-          if (sceneRange.values[i][0] == sceneNo){
-            console.log('Walla Type: ',typeOfWallaRange.values[i][0])
-          }
-          if (isUnamedWalla(typeOfWallaRange.values[i][0])){
+          if (isUnamedWalla(typeOfWallaRange.values[i][0].trim())){
             if (sceneRange.values[i][0] == sceneNo){
               theIndex += 1;
               myIndecies[theIndex] = i;
