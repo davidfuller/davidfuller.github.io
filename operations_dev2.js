@@ -3074,10 +3074,8 @@ async function getSceneWallaInformation(){
           }
         }
       }
-
+ 
       console.log(myIndecies, theIndex);
-
-    
 
       let cues = [''];
       let details = []
