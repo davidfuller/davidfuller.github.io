@@ -3088,7 +3088,7 @@ async function getSceneWallaInformation(){
       console.log(cues.join('\n'));
       console.log(details.join('\n'));
 
-      /*
+      
       let sceneRowIndex = -1; 
       let doIt = false;
       for (let i = 0; i < typeCodeRange.values.length; i++){
@@ -3108,7 +3108,7 @@ async function getSceneWallaInformation(){
           }
         }
       }
-      if (doIt){
+      /*if (doIt){
         let selectCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
         selectCell.select();
         await insertRowV2(sceneRowIndex, false);
