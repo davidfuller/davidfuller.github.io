@@ -3063,19 +3063,19 @@ async function getSceneWallaInformation(){
       
       if (doUnnamed){
         for (let i = 0; i < typeOfWallaRange.values.length; i++){
-          console.log('Scene: ', sceneRange.values[i][0]);
+          console.log('Unnamed Scene: ', sceneRange.values[i][0]);
           if (isUnamedWalla(typeOfWallaRange.values[i][0])){
             if (sceneRange.values[i][0] == sceneNo){
               theIndex += 1;
               myIndecies[theIndex] = i;
-            } else if (sceneRange.values[i][0] > sceneNo){
-              break;
             }
-          } 
+          } else if (sceneRange.values[i][0] > sceneNo){
+              break; 
+          }
         }
       }
 
-      console.log(myIndecies);
+      console.log(myIndecies, theIndex);
 
       /*
       let cues = [''];
