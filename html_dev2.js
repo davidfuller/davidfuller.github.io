@@ -30,6 +30,7 @@ async function mainHTML(){
         <label for="chapter-scene-select">Chapter/Scene</label><br/>
         <label id='scene-add-wait'>Please wait...</label><br/>
         <button id="btnAddWallaBlock" onclick="jade_modules.operations.getSceneWallaInformation(2)">Add walla block</button>
+        <label for="walla-scene">Scene</label><br/>
       </div>
       <div class="column" id="column-add-two">
         <select id="chapter-scene-select"><option value="">Please select</option></select>

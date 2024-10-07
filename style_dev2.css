@@ -107,7 +107,7 @@ label {
   cursor: pointer;
 }
 */
-#studio, #engineer, #studio-select, #engineer-select, #chapter-scene-select, #markup {
+#studio, #engineer, #studio-select, #engineer-select, #chapter-scene-select, #markup, #walla-scene {
   width: 150px;
   background-color: #d8dfe5;
   color: #46656F;
