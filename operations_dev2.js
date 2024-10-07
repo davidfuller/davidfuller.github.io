@@ -2396,15 +2396,16 @@ async function selectChapterCellAtRowIndex(excel, sheet, rowIndex, isScene){
   let myCell = sheet.getRangeByIndexes(rowIndex + rowOffset, chapterIndex, 1, 1)
   myCell.select()
   await excel.sync();
-  myCell = sheet.getRangeByIndexes(rowIndex - rowOffset, chapterIndex, 1, 1)
-  myCell.select()
-  await excel.sync();
+  if (rowIndex - rowOffset > 0){
+    myCell = sheet.getRangeByIndexes(rowIndex - rowOffset, chapterIndex, 1, 1)
+    myCell.select()
+    await excel.sync();
+  }
   if (isScene){
     myCell = sheet.getRangeByIndexes(rowIndex, chapterIndex, 1, 1)
   } else {
     myCell = sheet.getRangeByIndexes(rowIndex, chapterIndex, 1, 1)
   }
-  
   myCell.select()
   await excel.sync();
 }
