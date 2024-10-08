@@ -3244,7 +3244,7 @@ async function deleteAllSceneAndWallaBlocks(){
     console.log(theIndexes);
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let thisRow = [];
-    for (let i = 0 ; i < theIndexes.length; i+){
+    for (let i = 0 ; i < theIndexes.length; i++){
       thisRow[i] = scriptSheet.getRangeByIndexes(theIndexes[i],1,1,1).getEntireRow();
       thisRow[i].delete("Up");
       console.log('Before sync');
