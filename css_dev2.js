@@ -474,7 +474,11 @@ label {
   display: none;
   font-size: 15px;
   margin-left: 15px;
-}                    `;
+}
+#fillButton {
+  display: none;
+}
+`;
   Jade.set_css(css);
   console.log('CSS done')
 }

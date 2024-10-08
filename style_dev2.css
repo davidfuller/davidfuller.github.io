@@ -471,3 +471,6 @@ label {
   font-size: 15px;
   margin-left: 15px;
 }
+#fillButton {
+  display: none;
+}
