@@ -3229,7 +3229,7 @@ function isGeneralWalla(theType){
 
 async function deleteAllSceneAndWallaBlocks(){
   await Excel.run(async (excel) => {
-    let myTypeCodes = await bgetTypeCodes();
+    let myTypeCodes = await getTypeCodes();
     console.log(myTypeCodes);
 
     const firstRowIndex = firstDataRow - 1;
