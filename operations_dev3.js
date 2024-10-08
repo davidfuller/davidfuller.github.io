@@ -3231,7 +3231,16 @@ async function deleteAllSceneAndWallaBlocks(){
   await Excel.run(async (excel) => {
     let myTypeCodes = await getTypeCodes();
     console.log(myTypeCodes);
-
+    let theIndexes = [];
+    let theIndex = -1
+    for (let i = 0; i < myTypeCodes.typeCodes.values.length;i++){
+      if (myTypeCodes.typeCodes.values[i] == myTypeCodes.sceneBlock){
+          theIndex += 1
+          theIndexes[i] = i + myTypeCodes.typeCodes.rowIndex
+      }
+    }
+    console.log(theIndexes);
+    
     const firstRowIndex = firstDataRow - 1;
     const lastRowIndex = lastDataRow - firstDataRow;
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
