@@ -3235,7 +3235,7 @@ async function deleteAllSceneAndWallaBlocks(){
     let theIndex = -1
     for (let i = 0; i < myTypeCodes.typeCodes.values.length;i++){
       //console.log(i, myTypeCodes.typeCodes.values[i]);
-      if (myTypeCodes.typeCodes.values[i] == myTypes.sceneBlock){
+      if ((myTypeCodes.typeCodes.values[i] == myTypes.sceneBlock)||(myTypeCodes.typeCodes.values[i] == myTypes.wallaBlock)){
           theIndex += 1
           theIndexes[i] = i + myTypeCodes.typeCodes.rowIndex
       }
