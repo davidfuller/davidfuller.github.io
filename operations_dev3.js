@@ -137,6 +137,8 @@ function findColumnLetter(name){
 async function lockScriptSheet(){
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    scriptSheet.protection.load('protection');
+    await excel.sync();
     await lockColumns(excel, scriptSheet, columnsToLock);
     document.body.style.backgroundColor = '#ff00ff';
   });
