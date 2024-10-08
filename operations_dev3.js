@@ -135,11 +135,9 @@ function findColumnLetter(name){
 }
 
 async function lockScriptSheet(){
-  await Excel.run(async function(excel){
-    await excel.sync();
-    await lockColumns(excel, columnsToLock);
-    document.body.style.backgroundColor = '#ff00ff';
-  });
+  await lockColumns(columnsToLock);
+  document.body.style.backgroundColor = '#ff00ff';
+
 }
 
 async function unlockScriptSheet(){
@@ -150,15 +148,17 @@ async function unlockScriptSheet(){
 }
 
 async function lockColumns(excel, theLockColumns){
-  let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-  scriptSheet.protection.load('protection');
-  let range = sheet.getRange(theLockColumns);
-  await excel.sync();
-  if (!scriptSheet.protection.protected){
-    range.format.protection.locked = true;
-    sheet.protection.protect({ selectionMode: "Normal", allowAutoFilter: true });
-    await excel.sync();    
-  }
+  await Excel.run(async function(excel){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    scriptSheet.protection.load('protection');
+    let range = sheet.getRange(theLockColumns);
+    await excel.sync();
+    if (!scriptSheet.protection.protected){
+      range.format.protection.locked = true;
+      sheet.protection.protect({ selectionMode: "Normal", allowAutoFilter: true });
+      await excel.sync();    
+    }
+  })
 }
 
 async function unlock(excel, sheet){
@@ -182,7 +182,7 @@ async function applyFilter(){
     scriptSheet.autoFilter.clearCriteria();
     await excel.sync();
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   });
 }
@@ -209,7 +209,7 @@ async function removeFilter(){
       scriptSheet.autoFilter.remove();
       await excel.sync();
       if (isProtected){
-        await lockColumns(excel, columnsToLock);
+        await lockColumns(columnsToLock);
       }
     }  
   });
@@ -632,7 +632,7 @@ async function fill(country){
     engineerRange.values = [[engineerText]];
     await excel.sync();
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
     engineerRange.select();
     await excel.sync();
@@ -827,7 +827,7 @@ async function theFormulas(){
       //console.log(range.formulas + "   " + topRowRange.formulas);
     }
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     } 
   });
   waitLabel.style.display = 'none';
@@ -889,7 +889,7 @@ async function insertRowV2(currentRowIndex, doCopy){
     await excel.sync();
     newRowIndex = newRow.rowIndex;
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   });
   return newRowIndex;
@@ -918,7 +918,7 @@ async function deleteRow(){
     selectCell.select();
     await excel.sync();
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   });
 }
@@ -979,7 +979,7 @@ async function correctFormulas(firstRow){
       //console.log("Formula after sync: " + range.formulas);
     }
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   })
 }
@@ -1109,7 +1109,7 @@ async function addTakeDetails(country, doDate){
     console.log(lineDetails);
     await doTheTidyUp(lineDetails)
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     } 
   });
 }
@@ -1149,7 +1149,7 @@ async function findDetailsForThisLine(){
     console.log('Result');
     console.log(result);
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   })
   /*
@@ -1383,7 +1383,7 @@ async function removeTake(country){
     console.log(lineDetails);
     await doTheTidyUp(lineDetails)
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   });
 }
@@ -1528,7 +1528,7 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
       await excel.sync();
     }
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   });
 }
@@ -1592,7 +1592,7 @@ async function hideRows(visibleType, country){
       myMessage.innerText = "Showing first takes"
     }
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   })
 }
@@ -1691,7 +1691,7 @@ async function showHideColumns(columnType){
     }
     await excel.sync();
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   })  
   console.log(columnMessage.innerText, columnType);
@@ -1898,7 +1898,7 @@ async function setDefaultColumnWidths(){
     }
     await excel.sync();
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   });
 }
@@ -2072,7 +2072,7 @@ async function getDirectorData(characterName){
     }
     console.log('myData', myData);
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   })
   console.log('directors myData', myData);
@@ -2162,7 +2162,7 @@ async function getLocations(){
     }
     console.log('myData', myData);
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
   })
   console.log('get Locations myData', myData);
@@ -2670,7 +2670,7 @@ async function deleteSceneBlockRow(excel, rowIndex){
     console.log(myRow.address);
     await correctFormulas(rowIndex);
     if (isProtected){
-      await lockColumns(excel, columnsToLock);
+      await lockColumns(columnsToLock);
     }
 }
 
