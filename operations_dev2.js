@@ -696,7 +696,7 @@ async function theFormulas(){
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
   const endLineColumn = findColumnLetter("End Line"); //BW
   const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
-  const sceneColumn = findColumnLetter("Scene"); //BZ
+  const sceneColumn = findColumnLetter("Scene"); //CB
   const lineColumn = findColumnLetter("Line"); // CA
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
   const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CC
@@ -704,6 +704,7 @@ async function theFormulas(){
   const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CF
   const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
   const sceneLineCountCalculationColumn = findColumnLetter("Scene Line Count Calculation"); //CG
+  const alphaLineRangeColumn = findColumnLetter('Alpha Line Range') //CJ
   const firstRow = "" + firstDataRow;
   const firstRestRow = "4";
   const lastRow = "" + lastDataRow;
@@ -744,9 +745,9 @@ async function theFormulas(){
       formulaRest: '=IF(NOT(OR(' + ukTakeNoColumn + firstRestRow + '="",' + ukTakeNoColumn + firstRestRow + '=1)), 0, LEN(TRIM(' + UKScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + UKScriptColumn + firstRestRow + ', " ", "")) + 1)'
     },
     {
-      columnName: "Scene",
-      formulaFirst:  0,
-      formulaRest: '=IF(' + sceneNumberColumn + firstRestRow + '="",' +sceneColumn + firstRow + ',VALUE(' + sceneNumberColumn + firstRestRow + '))'
+      columnName: "Scene", //CB
+      formulaFirst:  '=seFirstScene',
+      formulaRest: '=IF(OR(' + sceneBordersColumn + firstRestRow + '="Copy",' + sceneBordersColumn + firstRestRow + '=""),' + sceneColumn + firstRow + ',' + sceneColumn + firstRow + '+1)'
     },
     {
       columnName: "Line",
@@ -778,11 +779,10 @@ async function theFormulas(){
       formulaFirst: '=IF(' + cueColumn + firstRow + '="", "","Chapter " & TEXT(' + chapterCalculationColumn + firstRow + ', "0"))',
       formulaRest: '=IF(' + cueColumn + firstRestRow + '="", "","Chapter " & TEXT(' + chapterCalculationColumn + firstRestRow + ', "0"))'
     },
-    
     {
-      columnName: "Scene Borders", //CH
+      columnName: "Scene Borders", //CI
       formulaFirst: "Start",
-      formulaRest: '=IF(' + cueColumn + firstRestRow + '="", IF(' + sceneBordersColumn + firstRow + '="Start",' + sceneBordersColumn + firstRow + ',""),IF(' + sceneBordersColumn + firstRow + '="Start","Original",IF(' + sceneColumn + firstRestRow + '<>' + sceneColumn + firstRow + ',"Original","Copy")))'
+      formulaRest: '=IF(' + cueColumn + firstRestRow + '="", IF(' + sceneBordersColumn + firstRow + '="Start",' + sceneBordersColumn + firstRow + ',""),IF(' + alphaLineRangeColumn + firstRestRow + '=' + alphaLineRangeColumn + firstRow + ',"Copy","Original"))'
     },
     {
       columnName: "Scene Line Count Calculation", //CG
@@ -793,6 +793,11 @@ async function theFormulas(){
       columnName: "Scene Line Count", //B
       formulaFirst: 0,
       formulaRest: '=IF(' + cueColumn + firstRestRow + '="","",' + sceneLineCountCalculationColumn + firstRestRow + ')'
+    },
+    {
+      columnName: "Scene Number", //D
+      formulaFirst: '=IF(' + sceneColumn + firstRow + '=0,"",' + sceneColumn + firstRow + ')',
+      formulaRest: '=IF(' + sceneColumn + firstRestRow + '=0,"",' + sceneColumn + firstRestRow + ')',
     }
   ]
   await Excel.run(async function(excel){ 
@@ -933,8 +938,8 @@ async function correctFormulas(firstRow){
       formulaRest: "=IF(" + positionEndSqaureBracketColumn + firstRow + "=0," + endLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + "," + positionMinusColumn + firstRow + "+1," + positionEndSqaureBracketColumn + firstRow + "-" + positionMinusColumn + firstRow + "-1)))"
     },
     {
-      columnName: "Scene", //CA
-      formulaRest: '=IF(' + sceneNumberColumn + firstRow + '="",' +sceneColumn + (firstRow - 1) + ',VALUE(' + sceneNumberColumn + firstRow + '))'
+      columnName: "Scene", //CB
+      formulaRest: '=IF(OR(' + sceneBordersColumn + firstRow + '="Copy",' + sceneBordersColumn + firstRow + '=""),' + sceneColumn + (firstRow - 1) + ',' + sceneColumn + (firstRow - 1) + '+1)'
     },
     {
 	    columnName: "Word count to this line", //CC
@@ -945,9 +950,10 @@ async function correctFormulas(firstRow){
       formulaRest: '=VALUE(IF(' + positionChapterColumn + firstRow + '="",' + chapterCalculationColumn + (firstRow - 1) + ',MID(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '+7,99)))'
     },
     {
-      columnName: "Scene Borders", //CH
-      formulaRest: '=IF(' + cueColumn + firstRow + '="", IF(' + sceneBordersColumn + (firstRow - 1) + '="Start",' + sceneBordersColumn + (firstRow - 1) + ',""),IF(' + sceneBordersColumn + (firstRow - 1) + '="Start","Original",IF(' + sceneColumn + firstRow + '<>' + sceneColumn + (firstRow - 1) + ',"Original","Copy")))'
+      columnName: "Scene Borders", //CI
+      formulaRest: '=IF(' + cueColumn + firstRow + '="", IF(' + sceneBordersColumn + (firstRow - 1) + '="Start",' + sceneBordersColumn + (firstRow - 1) + ',""),IF(' + alphaLineRangeColumn + firstRow + '=' + alphaLineRangeColumn + (firstRow - 1) + ',"Copy","Original"))'
     }
+    
   ]
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
