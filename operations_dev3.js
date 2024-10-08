@@ -166,10 +166,11 @@ async function lockColumns(excel, theLockColumns){
 }
 
 async function unlock(excel, sheet){
-  sheet.protection.load('protected');
+  let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  scriptSheet.protection.load('protected');
   await excel.sync();
-  if (sheet.protection.protected){
-    sheet.protection.unprotect("")
+  if (scriptSheet.protection.protected){
+    scriptSheet.protection.unprotect("")
     await excel.sync();
   }
 }
