@@ -180,7 +180,7 @@ async function mainHTML(){
 </div>
   `;
 
-  await Jade.open_canvas("Script Controller", html, true);
+  await Jade.open_canvas("Script-Controller", html, true);
   console.log('Canvas open');
   await jade_modules.operations.getDataFromSheet('Settings','studioChoice','studio-select');
   await jade_modules.operations.getDataFromSheet('Settings','engineerChoice','engineer-select');
