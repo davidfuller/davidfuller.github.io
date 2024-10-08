@@ -527,8 +527,8 @@ async function getSceneMaxAndMin(){
     await excel.sync();
     max.load("values")
     await excel.sync();
-    console.log(min.values[0][0]);
-    console.log(max.values[0][0]);
+    console.log('scene min:', min.values[0][0]);
+    console.log('scene max: ',max.values[0][0]);
     
     result.min = min.values[0][0];
     result.max = max.values[0][0];
