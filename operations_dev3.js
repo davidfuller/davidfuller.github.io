@@ -3229,30 +3229,37 @@ function isGeneralWalla(theType){
 
 async function deleteAllSceneAndWallaBlocks(){
   await Excel.run(async (excel) => {
-    let myTypeCodes = await getTypeCodes();
-    console.log(myTypeCodes);
-    let theIndexes = [];
-    let theIndex = -1
-    for (let i = 0; i < myTypeCodes.typeCodes.values.length;i++){
-      //console.log(i, myTypeCodes.typeCodes.values[i]);
-      if ((myTypeCodes.typeCodes.values[i] == myTypes.sceneBlock)||(myTypeCodes.typeCodes.values[i] == myTypes.wallaBlock)){
-          theIndex += 1
-          theIndexes[theIndex] = i + myTypeCodes.typeCodes.rowIndex;
-          break;
+    for (let myDelete = 0; myDelete < 1; myDelete++){
+
+      let myTypeCodes = await getTypeCodes();
+      console.log(myTypeCodes);
+      let theIndexes = [];
+      let theIndex = -1
+      for (let i = 0; i < myTypeCodes.typeCodes.values.length;i++){
+        //console.log(i, myTypeCodes.typeCodes.values[i]);
+        if ((myTypeCodes.typeCodes.values[i] == myTypes.sceneBlock)||(myTypeCodes.typeCodes.values[i] == myTypes.wallaBlock)){
+            theIndex += 1
+            theIndexes[theIndex] = i + myTypeCodes.typeCodes.rowIndex;
+            break;
+        }
+      }
+      console.log('The Indexes',theIndexes);
+      
+      
+      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      let thisRow = [];
+      for (let i = 0 ; i < theIndexes.length; i++){
+        thisRow[i] = scriptSheet.getRangeByIndexes(theIndexes[i],1,1,1).getEntireRow();
+        thisRow[i].select();
+        await excel.sync();
+        thisRow[i].delete("Up");
+        console.log('Num: ', myDelete)
+        console.log('Before sync');
+        await excel.sync();
+        console.log('After sync');  
       }
     }
-    console.log('The Indexes',theIndexes);
     
-    
-    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let thisRow = [];
-    for (let i = 0 ; i < theIndexes.length; i++){
-      thisRow[i] = scriptSheet.getRangeByIndexes(theIndexes[i],1,1,1).getEntireRow();
-      thisRow[i].delete("Up");
-      console.log('Before sync');
-      await excel.sync();
-      console.log('After sync');  
-    }
     
     const firstRowIndex = firstDataRow - 1;
     const lastRowIndex = lastDataRow - firstDataRow;
