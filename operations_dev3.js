@@ -151,7 +151,7 @@ async function lockColumns(excel, theLockColumns){
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.protection.load('protection');
-    let range = sheet.getRange(theLockColumns);
+    let range = scriptSheet.getRange(theLockColumns);
     await excel.sync();
     if (!scriptSheet.protection.protected){
       range.format.protection.locked = true;
