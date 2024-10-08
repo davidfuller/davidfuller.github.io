@@ -150,6 +150,9 @@ async function unlockScriptSheet(){
 async function lockColumns(excel, theLockColumns){
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    scriptSheet.load('address');
+    await excel.sync();
+    console.log(scriptSheet.address)
     scriptSheet.protection.load('protection');
     let range = scriptSheet.getRange(theLockColumns);
     await excel.sync();
