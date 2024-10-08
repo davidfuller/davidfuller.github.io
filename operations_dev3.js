@@ -138,6 +138,7 @@ async function lockScriptSheet(){
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     await lockColumns(excel, scriptSheet, columnsToLock);
+    document.body.style.backgroundColor = '#ff00ff';
   });
 }
 
