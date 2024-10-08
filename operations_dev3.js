@@ -3229,7 +3229,7 @@ function isGeneralWalla(theType){
 
 async function deleteAllSceneAndWallaBlocks(){
   await Excel.run(async (excel) => {
-    for (let myDelete = 0; myDelete < 1; myDelete++){
+    for (let myDelete = 0; myDelete < 10; myDelete++){
 
       let myTypeCodes = await getTypeCodes();
       console.log(myTypeCodes);
