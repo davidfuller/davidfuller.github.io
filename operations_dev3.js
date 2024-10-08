@@ -3246,9 +3246,12 @@ async function deleteAllSceneAndWallaBlocks(){
     for (let i = 0 ; i < 8; i++){
       thisRow[i] = scriptSheet.getRangeByIndexes(theIndexes[i],1,1,1).getEntireRow();
       thisRow[i].delete("Up");
+      console.log(i, theIndexes[i])
     }
+    console.log('Before sync');
     await excel.sync();
-
+    console.log('After sync');
+    
     const firstRowIndex = firstDataRow - 1;
     const lastRowIndex = lastDataRow - firstDataRow;
     
