@@ -3243,7 +3243,7 @@ async function deleteAllSceneAndWallaBlocks(){
     }
     console.log('The Indexes',theIndexes);
     
-    /*
+    
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let thisRow = [];
     for (let i = 0 ; i < theIndexes.length; i++){
@@ -3256,6 +3256,6 @@ async function deleteAllSceneAndWallaBlocks(){
     
     const firstRowIndex = firstDataRow - 1;
     const lastRowIndex = lastDataRow - firstDataRow;
-    */
+    
   })
 }
