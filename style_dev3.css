@@ -474,3 +474,6 @@ label {
 #fillButton {
   display: none;
 }
+#Script-Controller {
+  background-color: red;
+}

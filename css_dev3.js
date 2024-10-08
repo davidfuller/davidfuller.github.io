@@ -478,6 +478,9 @@ label {
 #fillButton {
   display: none;
 }
+#Script-Controller {
+  background-color: red;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')
