@@ -24,6 +24,7 @@ async function mainHTML(){
     <button id="btnAddHandler" onclick="jade_modules.operations.registerExcelEvents()">Register events</button>
     <button id="btnWallaCues" onclick="jade_modules.operations.calculateWallaCues()">Create Walla Cues</button>
     <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button><br/>
+    <button id="btnDeleteSceneWalla" onclick="jade_modules.operations.deleteAllSceneAndWallaBlocks()">Delete all Scene and Walla blocks</button>
     <div class="row">
       <div class="column" id="column-add-one">
         <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>

@@ -3226,3 +3226,14 @@ function isUnamedWalla(theType){
 function isGeneralWalla(theType){
   return ((theType.trim().toLowerCase() == generalWalla.trim().toLowerCase()) || (theType.trim().toLowerCase() == generalWallaColon.trim().toLowerCase()));
 }
+
+async function deleteAllSceneAndWallaBlocks(){
+  await Excel.run(async (excel) => {
+    let myTypeCodes = await bgetTypeCodes();
+    console.log(myTypeCodes);
+
+    const firstRowIndex = firstDataRow - 1;
+    const lastRowIndex = lastDataRow - firstDataRow;
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  })
+}
