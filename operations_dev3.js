@@ -3237,7 +3237,7 @@ async function deleteAllSceneAndWallaBlocks(){
       //console.log(i, myTypeCodes.typeCodes.values[i]);
       if ((myTypeCodes.typeCodes.values[i] == myTypes.sceneBlock)||(myTypeCodes.typeCodes.values[i] == myTypes.wallaBlock)){
           theIndex += 1
-          theIndexes[theIndex] = i + myTypeCodes.typeCodes.rowIndex - 1;
+          theIndexes[theIndex] = i + myTypeCodes.typeCodes.rowIndex;
           break;
       }
     }
