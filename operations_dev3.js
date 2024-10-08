@@ -3237,11 +3237,12 @@ async function deleteAllSceneAndWallaBlocks(){
       //console.log(i, myTypeCodes.typeCodes.values[i]);
       if ((myTypeCodes.typeCodes.values[i] == myTypes.sceneBlock)||(myTypeCodes.typeCodes.values[i] == myTypes.wallaBlock)){
           theIndex += 1
-          theIndexes[i] = i + myTypeCodes.typeCodes.rowIndex
+          theIndexes[i] = i + myTypeCodes.typeCodes.rowIndex - 1;
           break;
       }
     }
-    console.log(theIndexes);
+    console.log('The Indexes',theIndexes);
+    /*
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let thisRow = [];
     for (let i = 0 ; i < theIndexes.length; i++){
@@ -3254,6 +3255,6 @@ async function deleteAllSceneAndWallaBlocks(){
     
     const firstRowIndex = firstDataRow - 1;
     const lastRowIndex = lastDataRow - firstDataRow;
-    
+    */
   })
 }
