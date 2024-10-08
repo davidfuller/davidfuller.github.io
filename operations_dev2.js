@@ -406,7 +406,10 @@ async function findChapter(chapter){
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       let myTarget;
       for (let i = -1; i <= 1; i++){
-        myTarget = scriptSheet.getRangeByIndexes(myIndex + 2 + (4 * i), startColumn, 1, 1);
+        let tempRowIndex = myIndex + 2 + (4 * i);
+        console.log(tempRowIndex)
+        if (tempRowIndex < 0){ tempRowIndex = 0};
+        myTarget = scriptSheet.getRangeByIndexes(tempRowIndex, startColumn, 1, 1);
         myTarget.select();
         await excel.sync();
       }
