@@ -136,7 +136,7 @@ function findColumnLetter(name){
 
 async function lockScriptSheet(){
   await lockColumns(columnsToLock);
-  document.body.style.backgroundColor = '#ff00ff';
+  document.body.backgroundColor = '#ff00ff';
 
 }
 
