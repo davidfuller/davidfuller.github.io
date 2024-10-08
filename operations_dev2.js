@@ -798,6 +798,11 @@ async function theFormulas(){
       columnName: "Scene Number", //D
       formulaFirst: '=IF(' + sceneColumn + firstRow + '=0,"",' + sceneColumn + firstRow + ')',
       formulaRest: '=IF(' + sceneColumn + firstRestRow + '=0,"",' + sceneColumn + firstRestRow + ')',
+    },
+    {
+      columnName: "Alpha Line Range", //CJ
+      formulaFirst: '=' + startLineColumn + firstRow + '&' + endLineColumn + firstRow,
+      formulaRest: '=' + startLineColumn + firstRestRow + '&' + endLineColumn + firstRestRow
     }
   ]
   await Excel.run(async function(excel){ 
