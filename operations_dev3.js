@@ -3241,9 +3241,16 @@ async function deleteAllSceneAndWallaBlocks(){
       }
     }
     console.log(theIndexes);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let thisRow = [];
+    for (let i = 0 ; i < 8; i++){
+      thisRow[i] = scriptSheet.getRangeByIndexes(theIndexes[i],1,1,1).getEntireRow();
+      thisRow[i].delete("Up");
+    }
+    await excel.sync();
 
     const firstRowIndex = firstDataRow - 1;
     const lastRowIndex = lastDataRow - firstDataRow;
-    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    
   })
 }
