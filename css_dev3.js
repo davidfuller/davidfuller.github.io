@@ -479,7 +479,8 @@ label {
   display: none;
 }
 #Script-Controller {
-  background-color: red;
+  background-color: #d8dfe5;
+  color: #46656F;
 }
 `;
   Jade.set_css(css);
