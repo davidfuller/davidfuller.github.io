@@ -3266,3 +3266,13 @@ async function deleteAllSceneAndWallaBlocks(){
     
   })
 }
+
+async function clearWalla(){
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let wallaOrigninalRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaOriginalIndex, lastDataRow - firstDataRow, 1);
+    wallaOrigninalRange.clear("Contents");
+    let wallaDetails = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaCueIndex, lastDataRow - firstDataRow, numberOfPeoplePresentIndex - wallaCueIndex + 1);
+    wallaDetails.clear('Contents');
+  })
+}

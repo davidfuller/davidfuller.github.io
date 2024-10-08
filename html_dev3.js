@@ -22,6 +22,7 @@ async function mainHTML(){
     <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button>
     <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
     <button id="btnAddHandler" onclick="jade_modules.operations.registerExcelEvents()">Register events</button>
+    <button id="btnClearWallal" onclick="jade_modules.operations.clearWalla()">Clear Walla</button>
     <button id="btnWallaCues" onclick="jade_modules.operations.calculateWallaCues()">Create Walla Cues</button>
     <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button><br/>
     <button id="btnDeleteSceneWalla" onclick="jade_modules.operations.deleteAllSceneAndWallaBlocks()">Delete all Scene and Walla blocks</button>
