@@ -1,10 +1,15 @@
 async function auto_exec(){
   console.log("The very beginning");
   await Jade.load_js("https://davidfuller.github.io/operations_dev3.js", "operations");
-  await Jade.load_js("https://davidfuller.github.io/scheduling3.js", "scheduling");
-  await Jade.load_js("https://davidfuller.github.io/walla_import3.js", "wallaimport");
+  console.log('After operations');
+  await Jade.load_js("https://davidfuller.github.io/scheduling_dev3.js", "scheduling");
+  console.log('After scheduling');
+  await Jade.load_js("https://davidfuller.github.io/walla_import_dev3.js", "wallaimport");
+  console.log('After wallaimport');
   await Jade.load_js("https://davidfuller.github.io/html_dev3.js", "html");
+  console.log('After html');
   await Jade.load_js("https://davidfuller.github.io/css_dev3.js", "css");
+  console.log('After css');
   await jade_modules.css.mainCSS();
   await jade_modules.html.mainHTML();
 }
