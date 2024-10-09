@@ -2705,7 +2705,7 @@ async function sortOutSceneLineNumberRange(startRow, endRow){
     let sceneLineNumberColumn = findColumnLetter('Scene Line Number Range');
     let sourceAddress = sceneLineNumberColumn + (startRow - 1);
     let sourceRange = scriptSheet.getRange(sourceAddress);
-    sourceRange.load(values);
+    sourceRange.load('values');
     await excel.sync();
     let myValue = sourceRange.values[0][0];
     console.log(myValue);
