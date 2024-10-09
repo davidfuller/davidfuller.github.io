@@ -817,12 +817,14 @@ async function theFormulas(actualFirstRow, actualLastRow){
   let firstRow = "" + firstDataRow;
   let firstRestRow = "4";
   let lastRow = "" + lastDataRow;
+  let doTopRow = false;
   
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked(excel, scriptSheet);
     console.log('actual', actualFirstRow, actualLastRow);
-    if ((actualFirstRow === undefined) || (actualFirstRow == firstRestRow)) {
+    if ((actualFirstRow === undefined) || (actualFirstRow == firstRow)) {
+      doTopRow = false
       if ((actualLastRow === undefined)||(actualLastRow == lastRow)){
       } else {
         lastRow = actualLastRow;
@@ -843,7 +845,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
       let topRowRange;
       let myRange;
       let range;
-      if ((actualFirstRow === undefined) || (actualFirstRow == firstRestRow)) {
+      if (doTopRow) {
         console.log('Doing top row');
         myTopRow = columnLetter + firstRow;
         topRowRange = scriptSheet.getRange(myTopRow);
