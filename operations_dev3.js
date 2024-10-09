@@ -816,7 +816,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
   waitLabel.style.display = 'block';
   let firstRow = "" + firstDataRow;
   let firstRestRow = "4";
-  const lastRow = "" + lastDataRow;
+  let lastRow = "" + lastDataRow;
   
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
