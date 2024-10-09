@@ -689,7 +689,7 @@ async function getDataFromSheet(sheetName, rangeName, selectTag){
   })
 }
 
-async function theFormulas(){
+async function theFormulas(actualFirstRow, actualLastRow){
   let waitLabel = tag('formula-wait');
   waitLabel.style.display = 'block';
   const sceneLineCountColumn = findColumnLetter("Scene Line Count") //B
@@ -822,14 +822,36 @@ async function theFormulas(){
     let isProtected = await unlockIfLocked(excel, scriptSheet);
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
-      const myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow ;
-      const myTopRow = columnLetter + firstRow;
+      let myTopRow;
+      let topRowRange;
+      let myRange;
+      let range;
+      if ((actualFirstRow == undefined) || (actualFirstRow == firstRestRow)) {
+        myTopRow = columnLetter + firstRow;
+        topRowRange = scriptSheet.getRange(myTopRow);
+        topRowRange.formulas = columnFormula.formulaFirst;
+        if ((actualLastRow == undefined)||(actualLastRow == lastRow)){
+          myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow;
+        } else {
+          // use actualLastRow
+          myRange = columnLetter + firstRestRow + ":" + columnLetter + actualLastRow;
+        }
+        range = scriptSheet.getRange(myRange);
+        range.formulas = columnFormula.formulaRest;
+      } else {
+        // No top row needed. use actualFirstRow
+        if ((actualLastRow == undefined)||(actualLastRow == lastRow)){
+          //actualFirstRow default lastRow
+          myRange = columnLetter + actualFirstRow + ":" + columnLetter + lastRow;
+        } else {
+          //actualFirstRow actualLastRow
+          myRange = columnLetter + actualFirstRow + ":" + columnLetter + actualLastRow;
+        }
+        range = scriptSheet.getRange(myRange);
+        range.formulas = columnFormula.formulaRest;
+      }
       //console.log(myRange + "  " + myTopRow);
-      const range = scriptSheet.getRange(myRange);
-      const topRowRange = scriptSheet.getRange(myTopRow);
       //console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
-      range.formulas = columnFormula.formulaRest;
-      topRowRange.formulas = columnFormula.formulaFirst;
       await excel.sync();
       //console.log(range.formulas + "   " + topRowRange.formulas);
     }
@@ -875,7 +897,7 @@ async function insertRow(){
   return activeCell.rowIndex;
 }
 */
-async function insertRowV2(currentRowIndex, doCopy){
+async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
   let newRowIndex;
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -891,7 +913,13 @@ async function insertRowV2(currentRowIndex, doCopy){
       newRow.copyFrom(myRow, "All");
       await excel.sync(); 
     }
-    await correctFormulas(currentRowIndex + 1);
+    if (doFullFormula){
+      console.log('Doing full formulas');
+      await theFormulas("" + (currentRowIndex + 1), "" + (currentRowIndex + 1));
+    } else {
+      await correctFormulas(currentRowIndex + 1);  
+    }
+    
     newRow.load('rowIndex');
     await excel.sync();
     newRowIndex = newRow.rowIndex;
@@ -1058,7 +1086,7 @@ async function addTakeDetails(country, doDate){
       let currentRowIndex = lineDetails.indicies[countryTakes - 1];
       console.log('Current Row Index');
       console.log(currentRowIndex);
-      await insertRowV2(currentRowIndex, true)
+      await insertRowV2(currentRowIndex, true, false)
       newLineIndex = currentRowIndex + 1;
       lineDetails.indicies.push(newLineIndex);
       lineDetails.totalTakes += 1;
@@ -2528,7 +2556,7 @@ async function addSceneBlock(){
             console.log('topRowIndex', topRowIndex);
             for (let i = numActualSceneBlockRows; i < sceneBlockRows; i++){
               console.log('i', i);
-              newRowIndex = await insertRowV2(topRowIndex, false);
+              newRowIndex = await insertRowV2(topRowIndex, false, true);
               console.log('newRowIndex', newRowIndex);
               let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
               newTypeRange.values = myTypes.sceneBlock;
@@ -2569,7 +2597,7 @@ async function addSceneBlock(){
           console.log(sceneDataArray);
         
           for (let i = 0; i < sceneBlockRows; i++){
-            newRowIndex = await insertRowV2(theRowIndex, false);
+            newRowIndex = await insertRowV2(theRowIndex, false, true);
             console.log('newRowIndex', newRowIndex);
             let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
             newTypeRange.values = myTypes.sceneBlock;
@@ -2585,7 +2613,7 @@ async function addSceneBlock(){
         if ((nextRowType == myTypes.line) || (nextRowType == myTypes.scene)){
           let sceneDataArray = await getSceneBlockData(theRowIndex, 0);
           for (let i = 0; i < sceneBlockRows; i++){
-            newRowIndex = await insertRowV2(theRowIndex + 1, false);
+            newRowIndex = await insertRowV2(theRowIndex + 1, false, true);
             console.log('newRowIndex', newRowIndex);
             let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
             newTypeRange.values = myTypes.sceneBlock;
@@ -2627,7 +2655,7 @@ async function addSceneBlock(){
           } else if (numActualSceneBlockRows < sceneBlockRows){
             for (let i = numActualSceneBlockRows; i < sceneBlockRows; i++){
               console.log('i', i);
-              newRowIndex = await insertRowV2(theRowIndex + 1, false);
+              newRowIndex = await insertRowV2(theRowIndex + 1, false, true);
               console.log('newRowIndex', newRowIndex);
               let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
               newTypeRange.values = myTypes.sceneBlock;
@@ -3199,7 +3227,7 @@ async function getSceneWallaInformation(typeNo){
       if (doIt){
         let selectCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
         selectCell.select();
-        await insertRowV2(sceneRowIndex, false);
+        await insertRowV2(sceneRowIndex, false, false);
         let typeCodeCell = scriptSheet.getRangeByIndexes(sceneRowIndex, typeCodeIndex, 1, 1);
         let wallaCueCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
         let wallaDetailsCell = scriptSheet.getRangeByIndexes(sceneRowIndex, numberIndex, 1, 1);
