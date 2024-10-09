@@ -717,8 +717,8 @@ async function theFormulas(actualFirstRow, actualLastRow){
   const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
   const sceneLineCountCalculationColumn = findColumnLetter("Scene Line Count Calculation"); //CG
   const alphaLineRangeColumn = findColumnLetter('Alpha Line Range') //CJ
-  const firstRow = "" + firstDataRow;
-  const firstRestRow = "4";
+  let firstRow = "" + firstDataRow;
+  let firstRestRow = "4";
   const lastRow = "" + lastDataRow;
   const columnFormulae = [
     {
