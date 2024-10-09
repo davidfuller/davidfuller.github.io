@@ -846,9 +846,10 @@ async function theFormulas(actualFirstRow, actualLastRow){
           firstRestRow = "" + actualFirstRow;
           myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow;
         } else {
-          //actualFirstRow actualLastRow
+          console.log('actualFirstRow actualLastRow');
           firstRow = "" + (actualFirstRow - 1);
           firstRestRow = "" + actualFirstRow;
+          console.log('firstRow: ', firstRow, "firstRestRow", firstRestRow);
           myRange = columnLetter + firstRestRow + ":" + columnLetter + actualLastRow;
         }
         range = scriptSheet.getRange(myRange);
