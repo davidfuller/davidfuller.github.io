@@ -843,12 +843,12 @@ async function theFormulas(actualFirstRow, actualLastRow){
       let myRange;
       let range;
       if ((actualFirstRow == undefined) || (actualFirstRow == firstRestRow)) {
+        console.log('Doing top row');
         myTopRow = columnLetter + firstRow;
         topRowRange = scriptSheet.getRange(myTopRow);
         topRowRange.formulas = columnFormula.formulaFirst;
       } 
       
-      myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow;
       myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow;
       range = scriptSheet.getRange(myRange);
       range.formulas = columnFormula.formulaRest;
