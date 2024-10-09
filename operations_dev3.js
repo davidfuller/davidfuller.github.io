@@ -689,37 +689,28 @@ async function getDataFromSheet(sheetName, rangeName, selectTag){
   })
 }
 
-async function theFormulas(actualFirstRow, actualLastRow){
-  let waitLabel = tag('formula-wait');
-  waitLabel.style.display = 'block';
-  const sceneLineCountColumn = findColumnLetter("Scene Line Count") //B
-  const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
-  const sceneNumberColumn = findColumnLetter("Scene Number"); //D
+function getColumnFormulae(firstRow, firstRestRow, lastRow){
   const cueColumn = findColumnLetter("Cue") //F
-  const numberColumn = findColumnLetter("Number"); //G
-  const stageDirectionWallaDescriptionColumn = findColumnLetter("Stage Direction/ Walla description") //J
-  const UKScriptColumn = findColumnLetter("UK script"); //K
-  const ukNoOfTakesColumn = findColumnLetter("UK No of takes"); //T
-  const ukTakeNoColumn = findColumnLetter("UK Take No"); //V
-  //console.log("uKTakeNoColumn");
-  //console.log(ukTakeNoColumn);
+  const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CC
+  const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
   const positionMinusColumn = findColumnLetter("Position -"); //BT
   const startLineColumn = findColumnLetter("Start Line"); //BU
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
   const endLineColumn = findColumnLetter("End Line"); //BW
-  const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
+  const numberColumn = findColumnLetter("Number"); //G
+  const ukTakeNoColumn = findColumnLetter("UK Take No"); //V
+  const UKScriptColumn = findColumnLetter("UK script"); //K
+  const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
   const sceneColumn = findColumnLetter("Scene"); //CB
-  const lineColumn = findColumnLetter("Line"); // CA
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
-  const sceneWordCountCalcColumn = findColumnLetter("Scene word count calc"); //CC
+  const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
+  const lineColumn = findColumnLetter("Line"); // CA
+  const stageDirectionWallaDescriptionColumn = findColumnLetter("Stage Direction/ Walla description") //J
   const positionChapterColumn = findColumnLetter("Position Chapter"); //CD
   const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CF
-  const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
-  const sceneLineCountCalculationColumn = findColumnLetter("Scene Line Count Calculation"); //CG
   const alphaLineRangeColumn = findColumnLetter('Alpha Line Range') //CJ
-  let firstRow = "" + firstDataRow;
-  let firstRestRow = "4";
-  const lastRow = "" + lastDataRow;
+  const sceneLineCountCalculationColumn = findColumnLetter("Scene Line Count Calculation"); //CG
+
   const columnFormulae = [
     {
       columnName: "Scene Word Count", //A
@@ -817,9 +808,34 @@ async function theFormulas(actualFirstRow, actualLastRow){
       formulaRest: '=' + startLineColumn + firstRestRow + '&' + endLineColumn + firstRestRow
     }
   ]
+  return columnFormulae;
+}
+
+async function theFormulas(actualFirstRow, actualLastRow){
+  let waitLabel = tag('formula-wait');
+  waitLabel.style.display = 'block';
+  let firstRow = "" + firstDataRow;
+  let firstRestRow = "4";
+  const lastRow = "" + lastDataRow;
+  
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked(excel, scriptSheet);
+    if ((actualFirstRow == undefined) || (actualFirstRow == firstRestRow)) {
+      if ((actualLastRow == undefined)||(actualLastRow == lastRow)){
+      } else {
+        lastRow = actualLastRow;
+      }
+    } else {
+      firstRow = "" + (actualFirstRow - 1);
+      firstRestRow = "" + actualFirstRow;
+      if ((actualLastRow == undefined)||(actualLastRow == lastRow)){
+      } else {
+        lastRow = actualLastRow;
+      }
+    }
+    console.log('firstRow: ', firstRow, "firstRestRow", firstRestRow, "lastRow", lastRow);
+    let columnFormulae = getColumnFormulae(firstRow, firstRestRow, lastRow);
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
       let myTopRow;
@@ -830,33 +846,15 @@ async function theFormulas(actualFirstRow, actualLastRow){
         myTopRow = columnLetter + firstRow;
         topRowRange = scriptSheet.getRange(myTopRow);
         topRowRange.formulas = columnFormula.formulaFirst;
-        if ((actualLastRow == undefined)||(actualLastRow == lastRow)){
-          myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow;
-        } else {
-          // use actualLastRow
-          myRange = columnLetter + firstRestRow + ":" + columnLetter + actualLastRow;
-        }
-        range = scriptSheet.getRange(myRange);
-        range.formulas = columnFormula.formulaRest;
-      } else {
-        // No top row needed. use actualFirstRow
-        if ((actualLastRow == undefined)||(actualLastRow == lastRow)){
-          //actualFirstRow default lastRow
-          firstRow = "" + (actualFirstRow - 1);
-          firstRestRow = "" + actualFirstRow;
-          myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow;
-        } else {
-          console.log('actualFirstRow actualLastRow');
-          firstRow = "" + (actualFirstRow - 1);
-          firstRestRow = "" + actualFirstRow;
-          console.log('firstRow: ', firstRow, "firstRestRow", firstRestRow);
-          myRange = columnLetter + firstRestRow + ":" + columnLetter + actualLastRow;
-        }
-        range = scriptSheet.getRange(myRange);
-        range.formulas = columnFormula.formulaRest;
-      }
+      } 
+      
+      myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow;
+      myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow;
+      range = scriptSheet.getRange(myRange);
+      range.formulas = columnFormula.formulaRest;
+    
       //console.log(myRange + "  " + myTopRow);
-      //console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
+      console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
       await excel.sync();
       //console.log(range.formulas + "   " + topRowRange.formulas);
     }
