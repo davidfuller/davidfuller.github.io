@@ -2945,12 +2945,10 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
     tempRange.format.wrapText = false;
     await excel.sync()
     console.log('totalcolumnWidth', totalcolumnWidth);
-    for (let w = 100; w<1500; w++){
-      console.log(w);
-      let myFormat = tempRange.format;
-      myFormat.columnWidth = w;
-      await excel.sync()  
-    }
+    if (totalcolumnWidth > 1300){totalcolumnWidth = 1300}
+    console.log('totalcolumnWidth', totalcolumnWidth);
+    tempRange.format.columnWidth = totalcolumnWidth
+    await excel.sync()  
     tempRange.format.columnWidth = totalcolumnWidth;
     await excel.sync()
     tempRange.format.wrapText = true;
