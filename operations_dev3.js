@@ -1868,7 +1868,7 @@ async function displayMinAndMax(){
   chapterDisplay.innerText = "(" + chapterMinAndMax.min + ".." + chapterMinAndMax.max + ")";
 }
 
-async function fillSceneNumber(){
+async function fillSceneNumber(startRow, endRow, ){
   let waitLabel = tag('scene-wait');
   waitLabel.style.display = 'block';
   await Excel.run(async function(excel){ 
@@ -1876,48 +1876,41 @@ async function fillSceneNumber(){
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
-    const sceneNumberColumn = findColumnLetter('Scene Number');
+    
     const sceneBordersColumn = findColumnLetter('Scene Borders');
     const sceneLineNumberRangeColumn = findColumnLetter('Scene Line Number Range')
 
-    let borderRange = scriptSheet.getRange(sceneBordersColumn + firstDataRow + ":" +  sceneBordersColumn + lastDataRow);
-    let sceneRange = scriptSheet.getRange(sceneNumberColumn + firstDataRow + ":" +  sceneNumberColumn + lastDataRow);
-    let lineNoRange = scriptSheet.getRange(sceneLineNumberRangeColumn +firstDataRow + ':' + sceneLineNumberRangeColumn +lastDataRow);
+    console.log('startRow', startRow, 'endRow', endRow);
+    if (startRow === undefined){
+      startRow = firstDataRow;
+    }
+    if (endRow === undefined){
+      endRow = lastDataRow;
+    }
+
+    let borderRange = scriptSheet.getRange(sceneBordersColumn + startRow + ":" +  sceneBordersColumn + endRow);
+    let lineNoRange = scriptSheet.getRange(sceneLineNumberRangeColumn + startRow + ':' + sceneLineNumberRangeColumn + endRow);
     borderRange.load('values');
-    sceneRange.load('values');
-    sceneRange.load('numberFormat');
     lineNoRange.load('values')
     await excel.sync();
     console.log(lineNoRange.values)
+    
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
     let borderValues = borderRange.values.map(x => x[0]);
-    let sceneValues = sceneRange.values
-    let sceneFormat = sceneRange.numberFormat;
     let lineNoValues = lineNoRange.values
 
-    let currentValue = '';
-    let currentFormat = '';
     let currentLineNo = '';
     for (let i = 0; i < borderValues.length; i++){
       if (borderValues[i] == 'Original'){
-        currentValue = sceneValues[i][0];
-        currentFormat = sceneFormat[i][0];
         currentLineNo = lineNoValues[i][0];
       } else if (borderValues[i] == 'Copy'){
-        sceneValues[i][0] = currentValue;
-        sceneFormat[i][0] = currentFormat;
         lineNoValues[i][0] = currentLineNo;
       } else if(borderValues[i] == ''){
-        sceneValues[i][0] = '';
         lineNoValues[i][0] = '';
       }
     }
 
-    console.log('sceneValues', sceneValues);
-
-    //sceneRange.values = sceneValues;
-    //sceneRange.numberFormat = sceneFormat;
     lineNoRange.values = lineNoValues;
     await excel.sync();
   })
