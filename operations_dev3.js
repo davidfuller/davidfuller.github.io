@@ -1868,7 +1868,7 @@ async function displayMinAndMax(){
   chapterDisplay.innerText = "(" + chapterMinAndMax.min + ".." + chapterMinAndMax.max + ")";
 }
 
-async function fillSceneNumber(startRow, endRow, ){
+async function fillSceneNumber(startRow, endRow){
   let waitLabel = tag('scene-wait');
   waitLabel.style.display = 'block';
   await Excel.run(async function(excel){ 
@@ -2561,6 +2561,7 @@ async function addSceneBlock(){
               newTypeRange.values = myTypes.sceneBlock;
               await excel.sync();
             }
+            await fillSceneNumber(newRowIndex + 1, newRowIndex + sceneBlockRows);
             let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
             myMergeRange.merge(true);
             myMergeRange.values = sceneDataArray;
