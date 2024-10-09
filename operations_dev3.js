@@ -2561,7 +2561,7 @@ async function addSceneBlock(){
               newTypeRange.values = myTypes.sceneBlock;
               await excel.sync();
             }
-            await fillSceneNumber(newRowIndex + 1, newRowIndex + sceneBlockRows);
+            await sortOutSceneLineNumberRange(newRowIndex + 1, newRowIndex + sceneBlockRows);
             let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
             myMergeRange.merge(true);
             myMergeRange.values = sceneDataArray;
@@ -2603,7 +2603,7 @@ async function addSceneBlock(){
             newTypeRange.values = myTypes.sceneBlock;
             await excel.sync();
           }
-          await fillSceneNumber(newRowIndex + 1, newRowIndex + sceneBlockRows);
+          await sortOutSceneLineNumberRange(newRowIndex + 1, newRowIndex + sceneBlockRows);
           let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
           myMergeRange.merge(true);
           myMergeRange.values = sceneDataArray;
@@ -2620,7 +2620,7 @@ async function addSceneBlock(){
             newTypeRange.values = myTypes.sceneBlock;
             await excel.sync();
           }
-          await fillSceneNumber(newRowIndex + 1, newRowIndex + sceneBlockRows);
+          await sortOutSceneLineNumberRange(newRowIndex + 1, newRowIndex + sceneBlockRows);
           let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
           myMergeRange.merge(true);
           myMergeRange.values = sceneDataArray;
@@ -2663,7 +2663,7 @@ async function addSceneBlock(){
               newTypeRange.values = myTypes.sceneBlock;
               await excel.sync();
             }
-            await fillSceneNumber(newRowIndex + 1, newRowIndex + sceneBlockRows);
+            await sortOutSceneLineNumberRange(newRowIndex + 1, newRowIndex + sceneBlockRows);
             let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
             myMergeRange.merge(true);
             myMergeRange.values = sceneDataArray;
@@ -2697,6 +2697,22 @@ async function addSceneBlock(){
   }
   await fillChapterAndScene();
   myWait.style.display = 'none';
+}
+
+async function sortOutSceneLineNumberRange(startRow, endRow){
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let sceneLineNumberColumn = findColumnLetter('Scene Line Number Range');
+    let sourceAddress = sceneLineNumberColumn + (startRow - 1);
+    let sourceRange = scriptSheet.range(sourceAddress);
+    sourceRange.load(values);
+    await excel.sync();
+    let myValue = sourceRange.values[0][0];
+    console.log(myValue);
+    let destRangeAddress = sceneLineNumberColumn + startRow + ':' + sceneLineNumberColumn + endRow;
+    let destRange = scriptSheet.getRange(destRangeAddress);
+    destRange.values = myValue;
+  })
 }
 
 async function deleteSceneBlockRow(excel, rowIndex){
