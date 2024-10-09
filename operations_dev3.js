@@ -821,6 +821,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked(excel, scriptSheet);
+    console.log('actual', actualFirstRow, actualLastRow);
     if ((actualFirstRow === undefined) || (actualFirstRow == firstRestRow)) {
       if ((actualLastRow === undefined)||(actualLastRow == lastRow)){
       } else {
