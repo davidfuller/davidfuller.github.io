@@ -2691,6 +2691,7 @@ async function addSceneBlock(){
           }
         }    
       }
+      await fillChapterAndScene();
     });
   } else {
     alert("Please enter a number")
