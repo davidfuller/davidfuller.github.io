@@ -765,7 +765,7 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
 	  {
 	    columnName: "Scene word count calc",
       formulaFirst:  0,
-      formulaRest: "=VLOOKUP(" + endLineColumn + firstRestRow + "," + "$" + lineColumn + "$" + firstRestRow + ":$" + wordCountToThisLineColumn + "$" + lastRow + ",2,FALSE)"
+      formulaRest: "=VLOOKUP(" + endLineColumn + firstRestRow + "," + "$" + lineColumn + "$" + (firstDataRow + 1) + ":$" + wordCountToThisLineColumn + "$" + lastDataRow + ",2,FALSE)"
   	},
     {
       columnName: "Position Chapter", //CD
