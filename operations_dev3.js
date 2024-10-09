@@ -842,10 +842,14 @@ async function theFormulas(actualFirstRow, actualLastRow){
         // No top row needed. use actualFirstRow
         if ((actualLastRow == undefined)||(actualLastRow == lastRow)){
           //actualFirstRow default lastRow
-          myRange = columnLetter + actualFirstRow + ":" + columnLetter + lastRow;
+          firstRow = "" + (actualFirstRow - 1);
+          firstRestRow = "" + actualFirstRow;
+          myRange = columnLetter + firstRestRow + ":" + columnLetter + lastRow;
         } else {
           //actualFirstRow actualLastRow
-          myRange = columnLetter + actualFirstRow + ":" + columnLetter + actualLastRow;
+          firstRow = "" + (actualFirstRow - 1);
+          firstRestRow = "" + actualFirstRow;
+          myRange = columnLetter + firstRestRow + ":" + columnLetter + actualLastRow;
         }
         range = scriptSheet.getRange(myRange);
         range.formulas = columnFormula.formulaRest;
@@ -915,7 +919,7 @@ async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
     }
     if (doFullFormula){
       console.log('Doing full formulas');
-      await theFormulas("" + (currentRowIndex + 1), "" + (currentRowIndex + 1));
+      await theFormulas((currentRowIndex + 1), (currentRowIndex + 1));
     } else {
       await correctFormulas(currentRowIndex + 1);  
     }
