@@ -39,6 +39,7 @@ async function mainHTML(){
       <div class="column" id="column-add-two">
         <select id="chapter-scene-select"><option value="">Please select</option></select>
         <button id='btnGoChapterScene' onclick="jade_modules.operations.goSceneChapter()">Go</button><br/>
+        <button id="btnRefreshList" onclick="jade_modules.operations.fillChapterAndScene()">Refresh List</button>
         <input type="text" id="walla-scene" name="walla-scene">
         <button id='btnGoWallaScene' onclick="jade_modules.operations.goWallaScene()">Go</button>
       </div>
