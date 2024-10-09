@@ -821,15 +821,15 @@ async function theFormulas(actualFirstRow, actualLastRow){
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked(excel, scriptSheet);
-    if ((actualFirstRow == undefined) || (actualFirstRow == firstRestRow)) {
-      if ((actualLastRow == undefined)||(actualLastRow == lastRow)){
+    if ((actualFirstRow == 'undefined') || (actualFirstRow == firstRestRow)) {
+      if ((actualLastRow == 'undefined')||(actualLastRow == lastRow)){
       } else {
         lastRow = actualLastRow;
       }
     } else {
       firstRow = "" + (actualFirstRow - 1);
       firstRestRow = "" + actualFirstRow;
-      if ((actualLastRow == undefined)||(actualLastRow == lastRow)){
+      if ((actualLastRow == 'undefined')||(actualLastRow == lastRow)){
       } else {
         lastRow = actualLastRow;
       }
@@ -842,7 +842,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
       let topRowRange;
       let myRange;
       let range;
-      if ((actualFirstRow == undefined) || (actualFirstRow == firstRestRow)) {
+      if ((actualFirstRow == 'undefined') || (actualFirstRow == firstRestRow)) {
         console.log('Doing top row');
         myTopRow = columnLetter + firstRow;
         topRowRange = scriptSheet.getRange(myTopRow);
