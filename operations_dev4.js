@@ -2466,7 +2466,7 @@ async function showLocation(){
   forSchedulingPage.style.display = 'none';
   const wallaImportPage = tag('walla-import-page');
   wallaImportPage.style.display = 'none';
-  const locationPage = tag('location.page')
+  const locationPage = tag('location-page')
   locationPage.style.display = 'block';
   await Excel.run(async function(excel){
     let locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
