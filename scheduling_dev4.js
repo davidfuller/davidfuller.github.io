@@ -194,8 +194,7 @@ async function getLocationInfo(){
     let myData = await jade_modules.operations.getLocationData(locationName);
     console.log('Scheduling myData', myData);
     
-    /*
-    let dataRange = forActorSheet.getRange(forActorsTableName);
+    let dataRange = locationSheet.getRange(forActorsTableName);
     let numItems = forActorSheet.getRange(numItemsActorsName);
     dataRange.clear("Contents");
     dataRange.load('rowCount');

@@ -2213,12 +2213,9 @@ async function getLocationData(locationText){
 
     let sceneArrayIndex = headings.myItems.findIndex(x => x == 'Scene Number');
     let numberArrayIndex = headings.myItems.findIndex(x => x == 'Number');
-    let numUkTakesArrayIndex = headings.myItems.findIndex(x => x == 'UK No of takes');
-    let ukTakeNumArrayIndex = headings.myItems.findIndex(x => x == 'UK Take No');
-    let ukDateArrayIndex = headings.myItems.findIndex(x => x == "UK Date Recorded");
-    let lineWordCountArrayIndex = headings.myItems.findIndex(x => x == 'Line Word Count');
-    let sceneWordCountArrayIndex = headings.myItems.findIndex(x => x == 'Scene Word Count');
-    console.log('Scene Index', sceneArrayIndex, 'Number Index', numberArrayIndex);
+    let locationArrayIndex = headings.myItems.findIndex(x => x == 'Location');
+    
+    console.log('Scene Index', sceneArrayIndex, 'Number Index', numberArrayIndex, 'Location index', locationArrayIndex);
 
     for (let result of results){
       if (result.rowIndex != 1){
@@ -2226,11 +2223,7 @@ async function getLocationData(locationText){
           let theData = {
             sceneNumber: result.myItems[sceneArrayIndex],
             lineNumber: result.myItems[numberArrayIndex],
-            ukNumTakes: result.myItems[numUkTakesArrayIndex],
-            ukTakeNum: result.myItems[ukTakeNumArrayIndex],
-            ukDateRecorded: result.myItems[ukDateArrayIndex],
-            lineWordCount: result.myItems[lineWordCountArrayIndex],
-            sceneWordCount: result.myItems[sceneWordCountArrayIndex]
+            location: result.myItems[locationArrayIndex],
           }
           myData.push(theData);  
         }
@@ -2369,6 +2362,8 @@ async function showForDirector(){
   forSchedulingPage.style.display = 'none';
   const wallaImportPage = tag('walla-import-page');
   wallaImportPage.style.display = 'none';
+  const locationPage = tag('location-page');
+  locationPage.style.display = 'none';
   await Excel.run(async function(excel){
     let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
     ForDirectorSheet.activate();
@@ -2387,6 +2382,8 @@ async function showWallaImportPage(){
   wallaImportPage.style.display = 'block';
   let loadMessage = tag('load-message');
   loadMessage.style.display = 'none';
+  const locationPage = tag('location-page');
+  locationPage.style.display = 'none';
   await Excel.run(async function(excel){
     let wallaImportSheet = excel.workbook.worksheets.getItem(wallaImportName);
     wallaImportSheet.activate();
@@ -2406,7 +2403,9 @@ async function showMainPage(){
   forSchedulingPage.style.display = 'none';
   const wallaImportPage = tag('walla-import-page');
   wallaImportPage.style.display = 'none';
-  const versionInfo = tag('sheet-version')
+  const locationPage = tag('location-page');
+  locationPage.style.display = 'none';
+  const versionInfo = tag('sheet-version');
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.activate();
@@ -2433,6 +2432,8 @@ async function showForActorsPage(){
   forSchedulingPage.style.display = 'none';
   const wallaImportPage = tag('walla-import-page');
   wallaImportPage.style.display = 'none';
+  const locationPage = tag('location-page');
+  locationPage.style.display = 'none';
   await Excel.run(async function(excel){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.activate();
@@ -2450,6 +2451,8 @@ async function showForSchedulingPage(){
   forSchedulingPage.style.display = 'block';
   const wallaImportPage = tag('walla-import-page');
   wallaImportPage.style.display = 'none';
+  const locationPage = tag('location-page');
+  locationPage.style.display = 'none';
   await Excel.run(async function(excel){
     let schedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
     schedulingSheet.activate();
@@ -2466,8 +2469,10 @@ async function showLocation(){
   forSchedulingPage.style.display = 'none';
   const wallaImportPage = tag('walla-import-page');
   wallaImportPage.style.display = 'none';
-  const locationPage = tag('location-page')
+  const locationPage = tag('location-page');
   locationPage.style.display = 'block';
+  const locationWait = tag('location-wait');
+  locationWait.style.display = 'none';
   await Excel.run(async function(excel){
     let locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
     locationSheet.activate();
