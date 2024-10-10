@@ -186,7 +186,7 @@ async function getLocationInfo(){
     waitCell.values = 'Please wait...';
     await excel.sync();
     
-    let locationChoiceRange = locationSheetName.getRange('loLocationChoice');
+    let locationChoiceRange = locationSheet.getRange('loLocationChoice');
     locationChoiceRange.load('values');
     await excel.sync();
     let locationName = locationChoiceRange.values[0][0];
