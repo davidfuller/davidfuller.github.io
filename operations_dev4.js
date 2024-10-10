@@ -2607,13 +2607,6 @@ async function addSceneBlock(){
           myMergeRange.values = sceneDataArray;
           myMergeRange = await formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
           await excel.sync();
-          let myBorders = myMergeRange.format.borders;
-          myBorders.load('items');
-          await excel.sync();
-          console.log('Border count', myBorders.count);
-          for (let i = 0; i < myBorders.items.length; i++){
-            console.log(i, myBorders.items[i].color, myBorders.items[i].id, myBorders.items[i].sideIndex, myBorders.items[i].style, myBorders.items[i].weight)
-          }
         }
       } else if (sceneListData.type == myTypes.chapter){
         if ((nextRowType == myTypes.line) || (nextRowType == myTypes.scene)){
@@ -2742,7 +2735,13 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   theRange.format.fill.color = myFormats.purple;
   theRange.format.horizontalAlignment = 'Center';
   theRange.format.verticalAlignment = 'Top';
+  let myBorders = theRange.format.borders;
+  myBorders.load('items');
   await excel.sync()
+  console.log('Border count', myBorders.count);
+  for (let i = 0; i < myBorders.items.length; i++){
+    console.log(i, myBorders.items[i].color, myBorders.items[i].id, myBorders.items[i].sideIndex, myBorders.items[i].style, myBorders.items[i].weight)
+  }
   for (let i = 0; i < sceneBlockRows; i++){
     let tempRange = sheet.getRangeByIndexes(newRowIndex + i, cueColumnIndex, 1, sceneBlockColumns);
     await mergedRowAutoHeight(excel, sheet, tempRange);
