@@ -181,8 +181,8 @@ async function getLocationInfo(){
   await Excel.run(async function(excel){
     let waitLabel = tag('location-wait');
     waitLabel.style.display = 'block';
-    locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
-    const waitCell = forActorSheet.getRange('loMessage');
+    let locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
+    const waitCell = locationSheet.getRange('loMessage');
     waitCell.values = 'Please wait...';
     await excel.sync();
     
