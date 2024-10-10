@@ -2768,6 +2768,19 @@ async function formatWallaBlockCue(excel, theRange){
 }
 
 
+function removeDoubleLf(myText){
+  let mySplit = myText.split('\n');
+  let result = []
+  let resultIndex = -1;
+  for (let i = 0; i < mySplit.length; i++){
+    if (mySplit[i] != ''){
+      resultIndex += 1
+      result[resultIndex] = mySplit[i];
+    }
+  }
+  return result.join('\n');
+}
+
 async function getSceneBlockData(myRowIndex, numSceneBlockLines){
   // returns a formatted array suitable for the merged cells
   let sceneDataArray;
@@ -2786,17 +2799,18 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
     sceneData.beasts ='';
     sceneData.otherNotes = '';
     for (let row = 0; row < myDataRange.values.length; row++){
+      console.log('Row', row);
       if (sceneData.scene == ''){
         sceneData.scene = myDataRange.values[row][0]
       }
       if (sceneData.location == ''){
-        sceneData.location = myDataRange.values[row][11]
+        sceneData.location = removeDoubleLf(myDataRange.values[row][11]);
       }
       if (sceneData.beasts == ''){
-        sceneData.beasts = myDataRange.values[row][15] 
+        sceneData.beasts = removeDoubleLf(myDataRange.values[row][15]);
       }
       if (sceneData.otherNotes == ''){
-        sceneData.otherNotes = myDataRange.values[row][16]
+        sceneData.otherNotes = removeDoubleLf(myDataRange.values[row][16]);
       }
     }
 
@@ -2808,7 +2822,6 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
 });
 return sceneDataArray;
 }
-
 function createChapterIndecies(theTypeCodesValues){
   let chapterIndecies = []
   let chapterIndex = -1
