@@ -822,7 +822,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked(excel, scriptSheet);
-    console.log('actual', actualFirstRow, actualLastRow);
+    //console.log('actual', actualFirstRow, actualLastRow);
     if ((actualFirstRow === undefined) || (actualFirstRow == firstRow)) {
       doTopRow = false
       if ((actualLastRow === undefined)||(actualLastRow == lastRow)){
@@ -837,7 +837,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
         lastRow = actualLastRow;
       }
     }
-    console.log('firstRow: ', firstRow, "firstRestRow", firstRestRow, "lastRow", lastRow);
+    //console.log('firstRow: ', firstRow, "firstRestRow", firstRestRow, "lastRow", lastRow);
     let columnFormulae = getColumnFormulae(firstRow, firstRestRow, lastRow);
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
@@ -2962,7 +2962,7 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
     tempRange.format.wrapText = false;
     await excel.sync()
     if (totalcolumnWidth > 1300){totalcolumnWidth = 1300}
-    console.log('totalcolumnWidth', totalcolumnWidth);
+    //console.log('totalcolumnWidth', totalcolumnWidth);
     tempRange.format.columnWidth = totalcolumnWidth
     await excel.sync()
     tempRange.format.wrapText = true;
