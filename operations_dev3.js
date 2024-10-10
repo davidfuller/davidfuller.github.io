@@ -2803,15 +2803,13 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
         sceneData.scene = myDataRange.values[row][0]
       }
       if (sceneData.location == ''){
-        let tempLoc = removeDoubleLf(myDataRange.values[row][11]);
-        console.log(tempLoc);
         sceneData.location = removeDoubleLf(myDataRange.values[row][11]);
       }
       if (sceneData.beasts == ''){
-        sceneData.beasts = myDataRange.values[row][15] 
+        sceneData.beasts = removeDoubleLf(myDataRange.values[row][15]);
       }
       if (sceneData.otherNotes == ''){
-        sceneData.otherNotes = myDataRange.values[row][16]
+        sceneData.otherNotes = removeDoubleLf(myDataRange.values[row][16]);
       }
     }
 
