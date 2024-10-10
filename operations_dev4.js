@@ -2454,6 +2454,25 @@ async function showForSchedulingPage(){
     schedulingSheet.activate();
   })
 }
+async function showLocation(){
+  const mainPage = tag('main-page');
+  mainPage.style.display = 'none';
+  const forDirectorPage = tag('for-director-page');
+  forDirectorPage.style.display = 'none';
+  const forActorsPage = tag('for-actor-page');
+  forActorsPage.style.display = 'none';
+  const forSchedulingPage = tag('for-scheduling-page');
+  forSchedulingPage.style.display = 'none';
+  const wallaImportPage = tag('walla-import-page');
+  wallaImportPage.style.display = 'none';
+  const locationPage = tag('location.page')
+  locationPage.style.display = 'block';
+  await Excel.run(async function(excel){
+    let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
+    ForDirectorSheet.activate();
+  })
+}
+
 
 async function registerExcelEvents(){
   await Excel.run(async (excel) => {

@@ -451,7 +451,7 @@ label {
   display: block;
 }
 
-#for-director-page, #for-actor-page, #for-scheduling-page, #walla-import-page {
+#for-director-page, #for-actor-page, #for-scheduling-page, #walla-import-page, #location-page {
   display: none;
 }
 
