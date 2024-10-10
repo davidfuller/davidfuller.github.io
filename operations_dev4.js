@@ -2592,10 +2592,8 @@ async function addSceneBlock(){
             await excel.sync();
           }
         } else if ((nextRowType == myTypes.line) || (nextRowType == myTypes.wallaScripted)){
-          console.log('Parametrs', excel, scriptSheet, theRowIndex)
           sceneDataArray = await getSceneBlockData(theRowIndex, 0);
-          console.log(sceneDataArray);
-        
+          
           for (let i = 0; i < sceneBlockRows; i++){
             newRowIndex = await insertRowV2(theRowIndex, false, true);
             console.log('newRowIndex', newRowIndex);
@@ -2609,6 +2607,13 @@ async function addSceneBlock(){
           myMergeRange.values = sceneDataArray;
           myMergeRange = await formatSceneBlock(excel, scriptSheet, myMergeRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
           await excel.sync();
+          let myBorders = myMergeRange.format.borders;
+          myBorders.load('items');
+          await excel.sync();
+          console.log('Border count', myBorders.count);
+          for (let i = 0; i < myBorders.items.length; i++){
+            console.log(i, myBorders.items[i].color, myBorders.items[i].id, myBorders.items[i].sideIndex, myBorders.items[i].style, myBorders.items[i].weight)
+          }
         }
       } else if (sceneListData.type == myTypes.chapter){
         if ((nextRowType == myTypes.line) || (nextRowType == myTypes.scene)){
