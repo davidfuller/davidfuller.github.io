@@ -2767,6 +2767,18 @@ async function formatWallaBlockCue(excel, theRange){
   
 }
 
+function removeDoubleLf(myText){
+  let mySplit = myText.split('\n');
+  let result = []
+  let resultIndex = -1;
+  for (let i = 0; i < mySplit.length; i++){
+    if (mySplit[i] != ''){
+      resultIndex += 1
+      result[resultIndex] = mySplit[i];
+    }
+  }
+  return result.join('\n');
+}
 
 async function getSceneBlockData(myRowIndex, numSceneBlockLines){
   // returns a formatted array suitable for the merged cells
@@ -2791,9 +2803,9 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
         sceneData.scene = myDataRange.values[row][0]
       }
       if (sceneData.location == ''){
-        let tempLoc = myDataRange.values[row][11].split('\n')
+        let tempLoc = removeDoubleLf(myDataRange.values[row][11]);
         console.log(tempLoc);
-        sceneData.location = myDataRange.values[row][11]
+        sceneData.location = removeDoubleLf(myDataRange.values[row][11]);
       }
       if (sceneData.beasts == ''){
         sceneData.beasts = myDataRange.values[row][15] 
