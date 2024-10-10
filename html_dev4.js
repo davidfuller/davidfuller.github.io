@@ -189,7 +189,7 @@ async function mainHTML(){
   <div id="locationButtons">
     <button id='btnGetLocationInfor' onclick="jade_modules.scheduling.getLocationInfo()">Get info for<br/>location</button>
     <button id='btnLocationGoTo' onclick="jade_modules.scheduling.goToLocationLine()">Goto first line of<br/>of selected scene</button>
-    <label id='load-message'>This item is already present</label>
+    <label id='location-wait'>Please wait...</label>
   </div>
 </div>
   `;
