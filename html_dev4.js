@@ -188,7 +188,7 @@ async function mainHTML(){
   <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
   <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button><br/>
   <div id="locationButtons">
-    <button id='btnGetLocationInfor' onclick="jade_modules.scheduling.getLocationInfo()">Get info for<br/>location</button>
+    <button id='btnGetLocationInfo' onclick="jade_modules.scheduling.getLocationInfo()">Get info for<br/>location</button>
     <button id='btnLocationGoTo' onclick="jade_modules.scheduling.goToLocationLine()">Goto first line of<br/>of selected scene</button>
     <label id='location-wait'>Please wait...</label>
   </div>
