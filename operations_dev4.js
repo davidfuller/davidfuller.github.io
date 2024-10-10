@@ -45,11 +45,12 @@ let myFormats = {
 function auto_exec(){
 }
 
-function showMain(){
+async function showMain(){
   let waitPage = tag('start-wait');
   let mainPage = tag('main-page');
   waitPage.style.display = 'none';
   mainPage.style.display = 'block';
+  await showMainPage();
 }
 
 async function getColumnData(sheetName, rangeName){
