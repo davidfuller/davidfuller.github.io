@@ -2287,7 +2287,8 @@ async function showMainPage(){
     versionRange.load('values');
     dateRange.load('values');
     await excel.sync();
-    let versionString = 'Version ' + versionRange.values + ' Released: ' + dateRange.values;
+    let theDate = new Date(Math.round((dateRange.values - 25569)));
+    let versionString = 'Version ' + versionRange.values + ' Released: ' + theDate;
     console.log('============= Version String:', versionString);
     versionInfo.innerText = versionString;
   })
