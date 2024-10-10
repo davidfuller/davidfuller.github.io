@@ -1,6 +1,7 @@
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
+const settingsSheetName = 'Settings';
 const forDirectorName = 'For Directors';
 const forActorsName = 'For Actors'
 const forSchedulingName = 'For Scheduling'
@@ -2274,9 +2275,18 @@ async function showMainPage(){
   forSchedulingPage.style.display = 'none';
   const wallaImportPage = tag('walla-import-page');
   wallaImportPage.style.display = 'none';
+  const versionInfo = tag('sheet-version')
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.activate();
+    settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
+    let versionRange = settingsSheet.getRange('seVersion')
+    let dateRange = settingsSheet.getRange('seDate')
+    versionRange.load('values');
+    dateRange.load('values');
+    await excel.sync();
+    let versionString = 'Version ' + versionRange.values + ' Released: ' + dateRange.values;
+    versionInfo.innerText = versionString;
   })
 }
 async function showForActorsPage(){
