@@ -196,7 +196,7 @@ async function mainHTML(){
   await jade_modules.operations.setUpEvents();
   await jade_modules.operations.registerExcelEvents();
   await jade_modules.operations.fillChapterAndScene();
-  jade_modules.operations.showMain();
+  await jade_modules.operations.showMain();
 
   console.log("I'm here data loaded. Dev5");
 }
