@@ -8,40 +8,17 @@ const locationSheetName = 'Locations'
 const forDirectorTableName = 'fdTable';
 const forActorsTableName = "faTable";
 const forSchedulingTableName = 'fsTable'
+const locationTableName = 'lTable'
 const numItemsDirectorsName = 'fdItems';
 const numItemsActorsName = 'faItems';
 const numItemsSchedulingName = 'fsItems';
+const numItemsLocationName = 'loItems'
 
 function auto_exec(){
 }
 async function loadReduceAndSortCharacters(){
   await Excel.run(async function(excel){ 
     characterlistSheet = excel.workbook.worksheets.getItem(characterListName);
-    let characters = await jade_modules.operations.getCharacters();
-    console.log('the characters', characters);
-    let characterRange = characterlistSheet.getRange('clCharacters');
-    characterRange.clear("Contents");
-    characterRange.load('values');
-    await excel.sync();
-    console.log(characterRange.values);
-    characterRange.values = characters;
-    await excel.sync();
-    characterRange.removeDuplicates([0], false);
-    await excel.sync();
-    const sortFields = [
-      {
-        key: 0,
-        ascending: true
-      }
-    ]
-    characterRange.sort.apply(sortFields);
-    await excel.sync();
-  })  
-}
-
-async function loadReduceAndSortLocations(){
-  await Excel.run(async function(excel){ 
-    let locationListSheet = excel.workbook.worksheets.getItem(locationListName);
     let characters = await jade_modules.operations.getCharacters();
     console.log('the characters', characters);
     let characterRange = characterlistSheet.getRange('clCharacters');
@@ -194,8 +171,8 @@ async function getLocationInfo(){
     let myData = await jade_modules.operations.getLocationData(locationName);
     console.log('Scheduling myData', myData);
     
-    let dataRange = locationSheet.getRange(forActorsTableName);
-    let numItems = forActorSheet.getRange(numItemsActorsName);
+    let dataRange = locationSheet.getRange(locationTableName);
+    let numItems = forActorSheet.getRange(numItemsLocationName);
     dataRange.clear("Contents");
     dataRange.load('rowCount');
     dataRange.load('rowIndex');
@@ -247,7 +224,7 @@ async function getLocationInfo(){
     waitLabel.style.display = 'none';
     waitCell.values = '';
     await excel.sync();
-    */
+    
   })  
 }
 
