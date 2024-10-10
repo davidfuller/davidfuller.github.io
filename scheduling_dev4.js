@@ -4,6 +4,7 @@ const scriptSheetName = 'Script'
 const forDirectorName = 'For Directors';
 const forActorName = 'For Actors'
 const forSchedulingName = 'For Scheduling'
+const locationSheetName = 'Locations'
 const forDirectorTableName = 'fdTable';
 const forActorsTableName = "faTable";
 const forSchedulingTableName = 'fsTable'
@@ -37,6 +38,32 @@ async function loadReduceAndSortCharacters(){
     await excel.sync();
   })  
 }
+
+async function loadReduceAndSortLocations(){
+  await Excel.run(async function(excel){ 
+    let locationListSheet = excel.workbook.worksheets.getItem(locationListName);
+    let characters = await jade_modules.operations.getCharacters();
+    console.log('the characters', characters);
+    let characterRange = characterlistSheet.getRange('clCharacters');
+    characterRange.clear("Contents");
+    characterRange.load('values');
+    await excel.sync();
+    console.log(characterRange.values);
+    characterRange.values = characters;
+    await excel.sync();
+    characterRange.removeDuplicates([0], false);
+    await excel.sync();
+    const sortFields = [
+      {
+        key: 0,
+        ascending: true
+      }
+    ]
+    characterRange.sort.apply(sortFields);
+    await excel.sync();
+  })  
+}
+
 async function getDirectorInfo(){
   await Excel.run(async function(excel){
     let waitLabel = tag('director-wait');
@@ -148,6 +175,83 @@ async function getActorInfo(){
     await excel.sync();
   })  
 }
+
+async function getLocationInfo(){
+  await Excel.run(async function(excel){
+    let waitLabel = tag('location-wait');
+    waitLabel.style.display = 'block';
+    locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
+    const waitCell = forActorSheet.getRange('loMessage');
+    waitCell.values = 'Please wait...';
+    await excel.sync();
+    
+    let locationChoiceRange = locationSheetName.getRange('loLocationChoice');
+    locationChoiceRange.load('values');
+    await excel.sync();
+    let locationName = locationChoiceRange.values[0][0];
+    console.log('Location Text ',locationName);
+    let myData = await jade_modules.operations.getLocationData(locationName);
+    console.log('Scheduling myData', myData);
+    
+    /*
+    let dataRange = forActorSheet.getRange(forActorsTableName);
+    let numItems = forActorSheet.getRange(numItemsActorsName);
+    dataRange.clear("Contents");
+    dataRange.load('rowCount');
+    dataRange.load('rowIndex');
+    dataRange.load('columnIndex');
+
+    await excel.sync();
+    
+    let dataArray = [];
+    console.log('Start of loops', dataArray)
+    for (i = 0; i < myData.length; i++){
+      if (i < myData.length){
+        let myIndex = dataArray.findIndex(x => x[0] == myData[i].sceneNumber)
+        console.log('myIndex', myIndex)
+        let theLocation = myLocation.find(x => x.sceneNumber == myData[i].sceneNumber)
+        console.log('location', theLocation);
+        if (myIndex == -1){
+          console.log(i, "New Row")
+          if (theLocation == null){
+            thisRow = [myData[i].sceneNumber, myData[i].lineNumber, ""];
+          } else {
+            thisRow = [myData[i].sceneNumber, myData[i].lineNumber, theLocation.location];
+          }
+          console.log('thisRow', thisRow)
+          let newIndex = dataArray.length;
+          console.log('newIndex', newIndex);
+          dataArray[newIndex] = thisRow;
+          console.log('dataArray[newIndex]', dataArray[newIndex]);
+        } else {
+          if ((i > 0) && (myData[i - 1].lineNumber != myData[i].lineNumber)){
+            console.log('Array before:', dataArray[myIndex]);
+            dataArray[myIndex][1] = dataArray[myIndex][1] + ", " + myData[i].lineNumber;
+            console.log("Found Index",  myIndex, "dataArray", dataArray[myIndex]);
+          }
+        }
+        console.log("i", i, "dataArray", dataArray);
+      } else {
+        let thisRow = new Array(3).fill("");
+        dataArray.push(thisRow);
+        console.log("Empty i", i, "dataArray", dataArray);
+      }
+    }
+    console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length, 'dataArray.length', dataArray.length);
+    if (dataArray.length > 0){
+      let displayRange = forActorSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, dataArray.length, 3);
+      displayRange.values = dataArray;
+    }
+    numItems.values = dataArray.length;    
+    await excel.sync();
+    waitLabel.style.display = 'none';
+    waitCell.values = '';
+    await excel.sync();
+    */
+  })  
+}
+
+
 async function getForSchedulingInfo(){
   await Excel.run(async function(excel){
     let waitLabel = tag('scheduling-wait');

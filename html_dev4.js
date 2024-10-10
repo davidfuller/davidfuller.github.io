@@ -181,6 +181,17 @@ async function mainHTML(){
     <label id='load-message'>This item is already present</label>
   </div>
 </div>
+<div id="location-page"></div>
+  <label id='location-label'>Locations</label><br/>
+  <button id="btnMainPage" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+  <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
+  <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button><br/>
+  <div id="locationButtons">
+    <button id='btnGetLocationInfor' onclick="jade_modules.scheduling.getLocationInfo()">Get info for<br/>location</button>
+    <button id='btnLocationGoTo' onclick="jade_modules.scheduling.goToLocationLine()">Goto first line of<br/>of selected scene</button>
+    <label id='load-message'>This item is already present</label>
+  </div>
+</div>
   `;
 
   await Jade.open_canvas("Script-Controller", html, true);

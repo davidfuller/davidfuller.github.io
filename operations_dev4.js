@@ -2010,6 +2010,28 @@ async function filterOnCharacter(characterName){
   })
 }
 
+async function filterOnLocation(locationText){
+  await Excel.run(async function(excel){
+    let myRange = await getDataRange(excel);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const myCriteria = {
+      filterOn: Excel.FilterOn.custom,
+      criterion1: '=*' + locationText +'*'
+    }
+    scriptSheet.autoFilter.apply(myRange, locationIndex, myCriteria);
+    myRange.load('address');
+    await excel.sync();
+    console.log('My range address:', myRange.address)
+    let filteredRange = myRange;
+    filteredRange.load('values');
+    filteredRange.load('address')
+    await excel.sync();
+    console.log('Filtered');
+    console.log(filteredRange.address)
+    console.log(filteredRange.values);
+  })
+}
+
 async function getDirectorData(characterName){
   let myData = [];
   let hiddenColumnAddresses = await getHiddenColumns();
@@ -2029,6 +2051,112 @@ async function getDirectorData(characterName){
       criterion1: characterName
     }
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
+		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
+    formulaRanges.load('address');
+    formulaRanges.load('cellCount');
+    formulaRanges.load('areaCount');
+    //formulaRanges.load('areas')
+		await excel.sync();
+    app.suspendScreenUpdatingUntilNextSync();
+    console.log('Range areas', formulaRanges.address);
+    console.log('Cell count', formulaRanges.cellCount);
+    console.log('Area count', formulaRanges.areaCount);
+    
+    let myAddresses = formulaRanges.address.split(",");
+    console.log('myAddresses', myAddresses);
+    
+    
+    let theRanges = [];
+    for (let i = 0; i < myAddresses.length; i++){
+      theRanges[i] = scriptSheet.getRange(myAddresses[i]);
+      theRanges[i].load('values');
+      theRanges[i].load('rowIndex');
+      theRanges[i].load('rowCount');
+    }
+    
+    scriptSheet.autoFilter.remove();
+    for (let col of hiddenColumnAddresses){
+      let tempRange = scriptSheet.getRange(col);
+      tempRange.columnHidden = true;
+    }
+    await excel.sync();
+    console.log(theRanges)
+    /*
+    for (let i = 0; i < theRanges.length; i++){
+      console.log('Range items', i, theRanges[i].values);
+    }
+    */
+    let results = [];
+
+    for (let i = 0; i < theRanges.length; i++){
+      //console.log('numRows', theRanges[i].values.length, theRanges[i].rowCount);
+      for (let myRow = 0; myRow < theRanges[i].values.length; myRow++){
+        //console.log(i, myRow, theRanges[i].rowIndex, theRanges[i].rowCount, theRanges[i].values[myRow]);
+        let newItem = {
+          rowIndex: theRanges[i].rowIndex,
+          myItems: theRanges[i].values[myRow]
+        }
+        results.push(newItem);
+      }
+    }
+    console.log('Results', results);
+
+    let headings = results.find(head => head.rowIndex == 1);
+    console.log('Headings', headings);
+
+    let sceneArrayIndex = headings.myItems.findIndex(x => x == 'Scene Number');
+    let numberArrayIndex = headings.myItems.findIndex(x => x == 'Number');
+    let numUkTakesArrayIndex = headings.myItems.findIndex(x => x == 'UK No of takes');
+    let ukTakeNumArrayIndex = headings.myItems.findIndex(x => x == 'UK Take No');
+    let ukDateArrayIndex = headings.myItems.findIndex(x => x == "UK Date Recorded");
+    let lineWordCountArrayIndex = headings.myItems.findIndex(x => x == 'Line Word Count');
+    let sceneWordCountArrayIndex = headings.myItems.findIndex(x => x == 'Scene Word Count');
+    console.log('Scene Index', sceneArrayIndex, 'Number Index', numberArrayIndex);
+
+    for (let result of results){
+      if (result.rowIndex != 1){
+        if(result.myItems[sceneArrayIndex] != ""){
+          let theData = {
+            sceneNumber: result.myItems[sceneArrayIndex],
+            lineNumber: result.myItems[numberArrayIndex],
+            ukNumTakes: result.myItems[numUkTakesArrayIndex],
+            ukTakeNum: result.myItems[ukTakeNumArrayIndex],
+            ukDateRecorded: result.myItems[ukDateArrayIndex],
+            lineWordCount: result.myItems[lineWordCountArrayIndex],
+            sceneWordCount: result.myItems[sceneWordCountArrayIndex]
+          }
+          myData.push(theData);  
+        }
+      }
+    }
+    console.log('myData', myData);
+    if (isProtected){
+      await lockColumns(columnsToLock);
+    }
+  })
+  console.log('directors myData', myData);
+  return myData;
+}
+
+async function getLocationData(locationText){
+  let myData = [];
+  let hiddenColumnAddresses = await getHiddenColumns();
+  
+	await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
+		let usedRange = await getDataRange(excel);
+    usedRange.load('address');
+    usedRange.columnHidden = false;
+    await excel.sync()
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
+    console.log('Used range address', usedRange.address)
+    const myCriteria = {
+      filterOn: Excel.FilterOn.custom,
+      criterion1: '=*' + locationText +'*'
+    }
+    scriptSheet.autoFilter.apply(myRange, locationIndex, myCriteria);
 		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
     formulaRanges.load('address');
     formulaRanges.load('cellCount');
