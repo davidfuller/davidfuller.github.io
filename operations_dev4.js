@@ -2157,7 +2157,7 @@ async function getLocationData(locationText){
       filterOn: Excel.FilterOn.custom,
       criterion1: '=*' + locationText +'*'
     }
-    scriptSheet.autoFilter.apply(myRange, locationIndex, myCriteria);
+    scriptSheet.autoFilter.apply(usedRange, locationIndex, myCriteria);
 		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
     formulaRanges.load('address');
     formulaRanges.load('cellCount');
