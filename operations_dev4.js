@@ -6,6 +6,7 @@ const forDirectorName = 'For Directors';
 const forActorsName = 'For Actors'
 const forSchedulingName = 'For Scheduling'
 const wallaImportName = 'Walla Import'
+const locationSheetName = 'Locations'
 const columnsToLock = "A:T";
 const sceneBlockRows = 4;
 const namedCharacters = 'Named Characters - For reaction sounds and walla';
@@ -2468,8 +2469,8 @@ async function showLocation(){
   const locationPage = tag('location.page')
   locationPage.style.display = 'block';
   await Excel.run(async function(excel){
-    let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
-    ForDirectorSheet.activate();
+    let locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
+    locationSheet.activate();
   })
 }
 
