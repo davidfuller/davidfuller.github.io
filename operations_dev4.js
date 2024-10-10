@@ -2265,6 +2265,7 @@ async function showWallaImportPage(){
 
 
 async function showMainPage(){
+  console.log('Showing Mian Page')
   const mainPage = tag('main-page');
   mainPage.style.display = 'block';
   const forDirectorPage = tag('for-director-page');
