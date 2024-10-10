@@ -2285,10 +2285,10 @@ async function showMainPage(){
     let versionRange = settingsSheet.getRange('seVersion')
     let dateRange = settingsSheet.getRange('seDate')
     versionRange.load('values');
-    dateRange.load('values');
+    dateRange.load('text');
     await excel.sync();
-    let theDate = new Date(Math.round((dateRange.values - 25569)));
-    let versionString = 'Version ' + versionRange.values + ' Released: ' + theDate;
+    console.log(dateRange.text);
+    let versionString = 'Version ' + versionRange.values + ' Released: ' + dateRange.text;
     console.log('============= Version String:', versionString);
     versionInfo.innerText = versionString;
   })
