@@ -177,6 +177,7 @@ async function getActorInfo(){
 }
 
 async function getLocationInfo(){
+  console.log("I'm here")
   await Excel.run(async function(excel){
     let waitLabel = tag('location-wait');
     waitLabel.style.display = 'block';
