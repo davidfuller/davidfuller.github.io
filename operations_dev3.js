@@ -2786,11 +2786,12 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
     sceneData.beasts ='';
     sceneData.otherNotes = '';
     for (let row = 0; row < myDataRange.values.length; row++){
+      console.log('Row', row);
       if (sceneData.scene == ''){
         sceneData.scene = myDataRange.values[row][0]
       }
       if (sceneData.location == ''){
-        let tempLoc = myDataRange.values[row][11].split['\n']
+        let tempLoc = myDataRange.values[row][11].split('\n')
         console.log(tempLoc);
         sceneData.location = myDataRange.values[row][11]
       }
