@@ -2472,9 +2472,12 @@ async function showMainPage(){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.activate();
     settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
-    let versionRange = settingsSheet.getRange('seVersion')
+    let versionRange = settingsSheet.getRange('seVersion');
+    await excel.sync();
     let dateRange = settingsSheet.getRange('seDate')
+    await excel.sync();
     versionRange.load('values');
+    await excel.sync();
     dateRange.load('text');
     await excel.sync();
     console.log(dateRange.text);
