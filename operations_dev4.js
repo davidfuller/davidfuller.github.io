@@ -2284,7 +2284,7 @@ async function getLocationData(locationText){
           let theData = {
             sceneNumber: result.myItems[sceneArrayIndex],
             lineNumber: result.myItems[numberArrayIndex],
-            location: result.myItems[locationArrayIndex],
+            location: removeDoubleLf(result.myItems[locationArrayIndex])
           }
           myData.push(theData);  
         }
