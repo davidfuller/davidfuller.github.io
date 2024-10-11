@@ -68,7 +68,7 @@ async function mainHTML(){
     <button id='btnShowUK' onclick="jade_modules.operations.showHideColumns('UK Script')">UK Script</button>
     <button id='btnShowUS' onclick="jade_modules.operations.showHideColumns('US Script')">US Script</button>
     <button id='btnShowWalla' onclick="jade_modules.operations.showHideColumns('Walla Script')">Walla Script</button>
-    <label class="container3">Always hide UK Script Unedited
+    <label class="container3">Always hide UK Script without dialog tags
       <input type="checkbox" id='hideUnedited' checked="checked">
       <span class="checkmark3"></span>
     </label>

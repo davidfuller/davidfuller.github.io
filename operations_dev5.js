@@ -1,3 +1,4 @@
+const codeVersion = 5.1;
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -702,7 +703,7 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
   const endLineColumn = findColumnLetter("End Line"); //BW
   const numberColumn = findColumnLetter("Number"); //G
   const ukTakeNoColumn = findColumnLetter("UK Take No"); //V
-  const UKScriptColumn = findColumnLetter("UK Script without dialog tags"); //K
+  const UKScriptColumn = findColumnLetter("UK script"); //K
   const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
   const sceneColumn = findColumnLetter("Scene"); //CB
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
@@ -2477,8 +2478,8 @@ async function showMainPage(){
     dateRange.load('text');
     await excel.sync();
     console.log(dateRange.text);
-    let versionString = 'Version ' + versionRange.values + ' Released: ' + dateRange.text;
-    console.log('============= Version String:', versionString);
+    let versionString = 'Version ' + versionRange.values + ' Code: ' + codeVersion + ' Released: ' + dateRange.text;
+    
     versionInfo.innerText = versionString;
   })
 }
@@ -2625,7 +2626,7 @@ async function createTypeCodes(){
     let sceneBlockIndicies = await getIndices(typeCodeColumn, 'equals', myTypes.sceneBlock)
     resultArray = addValuesToArray(resultArray, sceneBlockIndicies, myTypes.sceneBlock, true);
 
-    let ukScriptColumn = findColumnLetter('UK Script without dialog tags');
+    let ukScriptColumn = findColumnLetter('UK script');
     let wallaScriptIndicies = await getIndices(ukScriptColumn, "equals", 'WALLA SCRIPTED LINES');
     resultArray = addValuesToArray(resultArray, wallaScriptIndicies, myTypes.wallaScripted, false);
 
