@@ -181,8 +181,9 @@ async function getLocationInfo(){
     
     let dataArray = [];
     console.log('Start of loops', dataArray)
+    let sceneArray = myData.map(x => x.sceneNumber);
 
-    console.log('Scene Number', myData.sceneNumber);
+    console.log('Scene Number', sceneArray);
 
     /*
     for (i = 0; i < myData.length; i++){
