@@ -702,7 +702,7 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
   const endLineColumn = findColumnLetter("End Line"); //BW
   const numberColumn = findColumnLetter("Number"); //G
   const ukTakeNoColumn = findColumnLetter("UK Take No"); //V
-  const UKScriptColumn = findColumnLetter("UK script"); //K
+  const UKScriptColumn = findColumnLetter("UK Script without dialog tags"); //K
   const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
   const sceneColumn = findColumnLetter("Scene"); //CB
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
@@ -1809,7 +1809,7 @@ Scene Line Number Range	3	C	2
 Scene Number	4	D	3
 Cue	5	E	4
 Number	6	F	5
-UK script	10	J	9
+UK Script without dialog tags	10	J	9
 UK Date Recorded	22	V	21
 UK Studio	23	W	22
 UK Engineer	24	X	23
@@ -2625,7 +2625,7 @@ async function createTypeCodes(){
     let sceneBlockIndicies = await getIndices(typeCodeColumn, 'equals', myTypes.sceneBlock)
     resultArray = addValuesToArray(resultArray, sceneBlockIndicies, myTypes.sceneBlock, true);
 
-    let ukScriptColumn = findColumnLetter('UK script');
+    let ukScriptColumn = findColumnLetter('UK Script without dialog tags');
     let wallaScriptIndicies = await getIndices(ukScriptColumn, "equals", 'WALLA SCRIPTED LINES');
     resultArray = addValuesToArray(resultArray, wallaScriptIndicies, myTypes.wallaScripted, false);
 
