@@ -2171,8 +2171,10 @@ async function gatherActorsforScene(sceneNumberArray){
       let characterIndex = -1;
       for (let s = 0; s < myIndecies.length; s++){
         let thisCharacter = characterValues[myIndecies[s]];
-        characterIndex += 1
-        characterArray[characterIndex] = thisCharacter;
+        if (thisCharacter != ''){
+          characterIndex += 1
+          characterArray[characterIndex] = thisCharacter;
+        }
       }
       //console.log('Character Array', characterArray);
       let sortedArray = Array.from(new Set(characterArray)).sort();

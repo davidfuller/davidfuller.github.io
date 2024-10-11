@@ -191,7 +191,7 @@ async function getLocationInfo(){
 
     let result = []
     for (let i = 0; i < sceneArray.length; i++){
-      result[i] = [sceneArray[i], locationArray[i], lineArray[i], characterData[i]]
+      result[i] = [sceneArray[i], locationArray[i], lineArray[i], characterData[i].characters.join(',')]
     }
 
     console.log('Result', result);
