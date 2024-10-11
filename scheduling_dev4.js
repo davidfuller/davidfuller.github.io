@@ -176,6 +176,7 @@ async function getLocationInfo(){
     dataRange.load('rowCount');
     dataRange.load('rowIndex');
     dataRange.load('columnIndex');
+    dataRange.load('columnCount')
 
     await excel.sync();
     
@@ -191,10 +192,14 @@ async function getLocationInfo(){
 
     let result = []
     for (let i = 0; i < sceneArray.length; i++){
-      result[i] = [sceneArray[i], locationArray[i], lineArray[i], characterData[i].characters.join(',')]
+      result[i] = [sceneArray[i], locationArray[i], lineArray[i], characterData[i].characters.join(', ')]
     }
 
     console.log('Result', result);
+    numItems.values = [[result.length]];
+    let tempRange = locationSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, result.length, dataRange.columnCount);
+    tempRange.values = result;
+    
     /*
     for (i = 0; i < myData.length; i++){
 
