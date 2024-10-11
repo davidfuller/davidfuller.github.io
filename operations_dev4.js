@@ -2181,7 +2181,7 @@ async function gatherActorsforScene(sceneNumberArray){
         index: a,
         rowIndex: a + sceneRange.rowIndex,
         scene: sceneNumberArray[a],
-        characters: characterArray
+        characters: sortedArray
       }
       myData.push(newData);
     }
