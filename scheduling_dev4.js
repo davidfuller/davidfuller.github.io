@@ -199,52 +199,7 @@ async function getLocationInfo(){
     numItems.values = [[result.length]];
     let tempRange = locationSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, result.length, dataRange.columnCount);
     tempRange.values = result;
-    
-    /*
-    for (i = 0; i < myData.length; i++){
-
-      if (i < myData.length){
-        let myIndex = dataArray.findIndex(x => x[0] == myData[i].sceneNumber)
-        console.log('myIndex', myIndex)
-        let theLocation = myLocation.find(x => x.sceneNumber == myData[i].sceneNumber)
-        console.log('location', theLocation);
-        if (myIndex == -1){
-          console.log(i, "New Row")
-          if (theLocation == null){
-            thisRow = [myData[i].sceneNumber, myData[i].lineNumber, ""];
-          } else {
-            thisRow = [myData[i].sceneNumber, myData[i].lineNumber, theLocation.location];
-          }
-          console.log('thisRow', thisRow)
-          let newIndex = dataArray.length;
-          console.log('newIndex', newIndex);
-          dataArray[newIndex] = thisRow;
-          console.log('dataArray[newIndex]', dataArray[newIndex]);
-        } else {
-          if ((i > 0) && (myData[i - 1].lineNumber != myData[i].lineNumber)){
-            console.log('Array before:', dataArray[myIndex]);
-            dataArray[myIndex][1] = dataArray[myIndex][1] + ", " + myData[i].lineNumber;
-            console.log("Found Index",  myIndex, "dataArray", dataArray[myIndex]);
-          }
-        }
-        console.log("i", i, "dataArray", dataArray);
-      } else {
-        let thisRow = new Array(3).fill("");
-        dataArray.push(thisRow);
-        console.log("Empty i", i, "dataArray", dataArray);
-      }
-    }
-    console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length, 'dataArray.length', dataArray.length);
-    if (dataArray.length > 0){
-      let displayRange = forActorSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, dataArray.length, 3);
-      displayRange.values = dataArray;
-    }
-    numItems.values = dataArray.length;    
-    await excel.sync();
-    waitLabel.style.display = 'none';
     waitCell.values = '';
-    await excel.sync();
-    */
     waitLabel.style.display = 'none';
   })  
 }
