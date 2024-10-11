@@ -2139,6 +2139,42 @@ async function getDirectorData(characterName){
   return myData;
 }
 
+async function gatherActorsforScene(sceneNumberArray) {
+  let startIndex = firstDataRow - 1;
+    let rowCount = lastDataRow - firstDataRow + 1;
+    let sceneRange = scriptSheet.getRangeByIndexes(startIndex, sceneIndex, rowCount, 1);
+    let characterRange = scriptSheet.getRangeByIndexes(startIndex, characterIndex, rowCount, 1);
+    sceneRange.load('values, rowIndex');
+    characterRange.load('values, rowIndex');
+    await excel.sync();
+    console.log('Scene:', sceneRange.values, 'rowIndex', sceneRange.rowIndex);
+    console.log('Character:', characterRange.values, 'rowIndex', characterRange.rowIndex);
+    let sceneValues = sceneRange.values.map(x => x[0]);
+    let characterValues = characterRange.values.map(x => x[0]);
+    console.log('Scene Values', sceneValues);
+
+    for (let a = 0; a < sceneNumberArray.length; a++){
+      let myIndecies = sceneValues.map((x, i) => [x, i]).filter(([x, i]) => x == sceneNumberArray[a]).map(([x, i]) => i);
+      console.log('Scene Indecies', myIndecies);
+      let characterArray = [];
+      let characterIndex = -1;
+      for (let s = 0; s < myIndecies.length; s++){
+        let thisCharacter = characterValues[myIndecies[s]];
+        characterIndex += 1
+        characterArray[characterIndex] = thisCharacter;
+      }
+      console.log('Character Array', characterArray);
+      let sortedArray = Array.from(new Set(characterArray)).sort();
+      console.log('Sorted array', sortedArray);
+      let newData = {
+        index: a,
+        rowIndex: a + sceneRange.rowIndex,
+        scene: scen
+
+      }
+    }
+}
+
 async function getLocationData(locationText){
   let myData = [];
   let hiddenColumnAddresses = await getHiddenColumns();
