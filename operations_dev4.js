@@ -2158,15 +2158,15 @@ async function gatherActorsforScene(sceneNumberArray){
     sceneRange.load('values, rowIndex');
     characterRange.load('values, rowIndex');
     await excel.sync();
-    console.log('Scene:', sceneRange.values, 'rowIndex', sceneRange.rowIndex);
-    console.log('Character:', characterRange.values, 'rowIndex', characterRange.rowIndex);
+    //console.log('Scene:', sceneRange.values, 'rowIndex', sceneRange.rowIndex);
+    //console.log('Character:', characterRange.values, 'rowIndex', characterRange.rowIndex);
     let sceneValues = sceneRange.values.map(x => x[0]);
     let characterValues = characterRange.values.map(x => x[0]);
-    console.log('Scene Values', sceneValues);
+    //console.log('Scene Values', sceneValues);
 
     for (let a = 0; a < sceneNumberArray.length; a++){
       let myIndecies = sceneValues.map((x, i) => [x, i]).filter(([x, i]) => x == sceneNumberArray[a]).map(([x, i]) => i);
-      console.log('Scene Indecies', myIndecies);
+      //console.log('Scene Indecies', myIndecies);
       let characterArray = [];
       let characterIndex = -1;
       for (let s = 0; s < myIndecies.length; s++){
@@ -2174,9 +2174,9 @@ async function gatherActorsforScene(sceneNumberArray){
         characterIndex += 1
         characterArray[characterIndex] = thisCharacter;
       }
-      console.log('Character Array', characterArray);
+      //console.log('Character Array', characterArray);
       let sortedArray = Array.from(new Set(characterArray)).sort();
-      console.log('Sorted array', sortedArray);
+      //console.log('Sorted array', sortedArray);
       let newData = {
         index: a,
         rowIndex: a + sceneRange.rowIndex,
@@ -2194,7 +2194,7 @@ async function gatherActorsforScene(sceneNumberArray){
       await lockColumns(columnsToLock);
     }
   })
-  console.log('myData about to return', myData)
+  //console.log('myData about to return', myData)
   return myData;
 }
 
