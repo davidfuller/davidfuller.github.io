@@ -197,8 +197,11 @@ async function getLocationInfo(){
 
     console.log('Result', result);
     numItems.values = [[result.length]];
-    let tempRange = locationSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, result.length, dataRange.columnCount);
-    tempRange.values = result;
+
+    if (result.length > 0){
+      let tempRange = locationSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, result.length, dataRange.columnCount);
+      tempRange.values = result;
+    }
     waitCell.values = '';
     waitLabel.style.display = 'none';
   })  
