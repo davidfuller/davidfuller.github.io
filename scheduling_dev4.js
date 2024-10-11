@@ -189,6 +189,12 @@ async function getLocationInfo(){
     let characterData = await jade_modules.operations.gatherActorsforScene(sceneArray);
     console.log('Character Data', characterData);
 
+    let result = []
+    for (let i = 0; i < sceneArray.length; i++){
+      result[i] = [sceneArray[i], locationArray[i], lineArray[i], characterData[i]]
+    }
+
+    console.log('Result', result);
     /*
     for (i = 0; i < myData.length; i++){
 
