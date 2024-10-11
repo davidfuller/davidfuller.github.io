@@ -2550,7 +2550,7 @@ async function registerExcelEvents(){
     const schedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
     schedulingSheet.onChanged.add(handleScheduling);
     const locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
-    locationSheet.onChanged.add(handleLocation);
+    locationSheet.onEdit.add(handleLocation);
     await excel.sync();
     console.log("Event handler successfully registered for onChanged event for four sheets.");
 }).catch(errorHandlerFunction);

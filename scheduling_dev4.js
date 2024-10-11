@@ -408,7 +408,7 @@ async function locationGoToLine(){
     await excel.sync(); 
     let rowIndex = activeCell.rowIndex;
     if (rowIndex >= 10){
-      let sceneNumberCell = forSchedulingSheet.getRangeByIndexes(rowIndex, sceneIndex, 1, 1);
+      let sceneNumberCell = locationSheet.getRangeByIndexes(rowIndex, sceneIndex, 1, 1);
       sceneNumberCell.load('values');
       await excel.sync(); 
       console.log('sceneNumber', sceneNumberCell.values);
