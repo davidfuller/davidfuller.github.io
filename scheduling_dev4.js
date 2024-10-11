@@ -172,7 +172,7 @@ async function getLocationInfo(){
     console.log('Scheduling myData', myData);
     
     let dataRange = locationSheet.getRange(locationTableName);
-    let numItems = forActorSheet.getRange(numItemsLocationName);
+    let numItems = locationSheet.getRange(numItemsLocationName);
     dataRange.clear("Contents");
     dataRange.load('rowCount');
     dataRange.load('rowIndex');
@@ -182,7 +182,12 @@ async function getLocationInfo(){
     
     let dataArray = [];
     console.log('Start of loops', dataArray)
+
+    console.log('Scene Number', myData.sceneNumber);
+
+    /*
     for (i = 0; i < myData.length; i++){
+
       if (i < myData.length){
         let myIndex = dataArray.findIndex(x => x[0] == myData[i].sceneNumber)
         console.log('myIndex', myIndex)
@@ -224,7 +229,7 @@ async function getLocationInfo(){
     waitLabel.style.display = 'none';
     waitCell.values = '';
     await excel.sync();
-    
+    */
   })  
 }
 

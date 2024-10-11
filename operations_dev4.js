@@ -2139,8 +2139,19 @@ async function getDirectorData(characterName){
   return myData;
 }
 
-async function gatherActorsforScene(sceneNumberArray) {
-  let startIndex = firstDataRow - 1;
+async function gatherActorsforScene(sceneNumberArray){
+  let myData = [];
+  let hiddenColumnAddresses = await getHiddenColumns();
+  
+	await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked(excel, scriptSheet);
+		let usedRange = await getDataRange(excel);
+    usedRange.load('address');
+    usedRange.columnHidden = false;
+    await excel.sync()
+    
+    let startIndex = firstDataRow - 1;
     let rowCount = lastDataRow - firstDataRow + 1;
     let sceneRange = scriptSheet.getRangeByIndexes(startIndex, sceneIndex, rowCount, 1);
     let characterRange = scriptSheet.getRangeByIndexes(startIndex, characterIndex, rowCount, 1);
@@ -2169,10 +2180,22 @@ async function gatherActorsforScene(sceneNumberArray) {
       let newData = {
         index: a,
         rowIndex: a + sceneRange.rowIndex,
-        scene: scen
-
+        scene: sceneNumberArray[a],
+        characters: characterArray
       }
+      myData.push(newData);
     }
+    for (let col of hiddenColumnAddresses){
+      let tempRange = scriptSheet.getRange(col);
+      tempRange.columnHidden = true;
+    }
+    await excel.sync();
+    if (isProtected){
+      await lockColumns(columnsToLock);
+    }
+  })
+  console.log('myData about to return', myData)
+  return myData;
 }
 
 async function getLocationData(locationText){
