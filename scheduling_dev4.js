@@ -402,7 +402,7 @@ async function schedulingGoToLine(){
 async function locationGoToLine(){
   await Excel.run(async function(excel){
     const locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
-    const sceneIndex = 2;
+    const sceneIndex = 1;
     let activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex');
     await excel.sync(); 
