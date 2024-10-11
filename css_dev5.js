@@ -482,6 +482,9 @@ label {
   background-color: #d8dfe5;
   color: #46656F;
 }
+#sheet-version {
+  font-size: 10px;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')
