@@ -2552,7 +2552,7 @@ async function registerExcelEvents(){
     const locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
     locationSheet.onChanged.add(handleLocation);
     await excel.sync();
-    console.log("Event handler successfully registered for onChanged event for three sheets.");
+    console.log("Event handler successfully registered for onChanged event for four sheets.");
 }).catch(errorHandlerFunction);
 }
 
@@ -2586,6 +2586,7 @@ async function handleLocation(event) {
   await Excel.run(async (excel) => {
       await excel.sync();        
       if ((event.address == 'C6') && event.source == 'Local'){
+        console.log('I got here')
         await jade_modules.scheduling.getLocationInfo();
       }
   }).catch(errorHandlerFunction);
