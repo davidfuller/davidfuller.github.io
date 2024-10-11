@@ -2549,6 +2549,8 @@ async function registerExcelEvents(){
     actorsSheet.onChanged.add(handleActor); 
     const schedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
     schedulingSheet.onChanged.add(handleScheduling);
+    const locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
+    locationSheet.onChanged.add(handleLocation);
     await excel.sync();
     console.log("Event handler successfully registered for onChanged event for three sheets.");
 }).catch(errorHandlerFunction);
@@ -2576,6 +2578,15 @@ async function handleScheduling(event) {
       await excel.sync();        
       if ((event.address == 'C6') && event.source == 'Local'){
         await jade_modules.scheduling.getForSchedulingInfo();
+      }
+  }).catch(errorHandlerFunction);
+}
+
+async function handleLocation(event) {
+  await Excel.run(async (excel) => {
+      await excel.sync();        
+      if ((event.address == 'C6') && event.source == 'Local'){
+        await jade_modules.scheduling.getLocationInfo();
       }
   }).catch(errorHandlerFunction);
 }

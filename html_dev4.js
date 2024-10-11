@@ -12,7 +12,7 @@ async function mainHTML(){
   <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
   <button id="btnForSchedulingPage" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
   <button id="btnWallaImport" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
-  <button id="btnLocationPage" onclick="jade_modules.operations.showLocation()">Location</button>
+  <button id="btnLocationPage" onclick="jade_modules.operations.showLocation()">Location</button><br/>
   <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
@@ -189,7 +189,7 @@ async function mainHTML(){
   <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button><br/>
   <div id="locationButtons">
     <button id='btnGetLocationInfo' onclick="jade_modules.scheduling.getLocationInfo()">Get info for<br/>location</button>
-    <button id='btnLocationGoTo' onclick="jade_modules.scheduling.goToLocationLine()">Goto first line of<br/>of selected scene</button>
+    <button id='btnLocationGoTo' onclick="jade_modules.scheduling.locationGoToLine()">Goto first line of<br/>of selected scene</button>
     <label id='location-wait'>Please wait...</label>
   </div>
 </div>

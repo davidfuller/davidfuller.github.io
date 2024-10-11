@@ -398,3 +398,39 @@ async function schedulingGoToLine(){
     }
   })
 }
+
+async function locationGoToLine(){
+  await Excel.run(async function(excel){
+    const locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
+    const sceneIndex = 2;
+    let activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex');
+    await excel.sync(); 
+    let rowIndex = activeCell.rowIndex;
+    if (rowIndex >= 10){
+      let sceneNumberCell = forSchedulingSheet.getRangeByIndexes(rowIndex, sceneIndex, 1, 1);
+      sceneNumberCell.load('values');
+      await excel.sync(); 
+      console.log('sceneNumber', sceneNumberCell.values);
+      let sceneNumber = parseInt(sceneNumberCell.values[0][0])
+      console.log('sceneNumber', sceneNumber);
+      if (!isNaN(sceneNumber)){
+        await jade_modules.operations.findSceneNo(sceneNumber);
+        activeCell = excel.workbook.getActiveCell();
+        activeCell.load('rowIndex');
+        await excel.sync(); 
+        let rowIndex = activeCell.rowIndex;
+        const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+        let columnIndex = await jade_modules.operations.findColumnIndex('Scene Number');
+        let tempRange = scriptSheet.getRangeByIndexes(rowIndex, columnIndex, 1, 1);
+        tempRange.select();
+        await excel.sync();
+        await jade_modules.operations.showMainPage();
+      } else {
+        alert('Not a scene number');
+      }
+    } else {
+      alert('Must be in a line with valid scene number');
+    }
+  })
+}
