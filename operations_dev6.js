@@ -179,18 +179,12 @@ async function unlockScriptSheet(){
   });
 }
 
-async function lockColumns(excel, theLockColumns){
+async function lockColumns(){
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    scriptSheet.load('name');
-    
-    await excel.sync();
-    console.log(scriptSheet.name)
     scriptSheet.protection.load('protected');
-    let range = scriptSheet.getRange(theLockColumns);
     await excel.sync();
     if (!scriptSheet.protection.protected){
-      range.format.protection.locked = true;
       scriptSheet.protection.protect({ selectionMode: "Normal", allowAutoFilter: true });
       await excel.sync();    
     }
