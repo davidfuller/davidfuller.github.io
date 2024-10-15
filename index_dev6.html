@@ -136,9 +136,10 @@
 </div>
 <div id="for-director-page">
   <label id='for-director-label'>For Director Commands</label><br/>
-  <button id="btnMainPage" onclick="jade_modules.operations.showMainPage()">Main Page</button>
-  <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
-  <button id="btnForSchedulingPage" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button><br/>
+  <button id="btnMainPage" class="director-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+  <button id="btnForActorPage" class="director-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
+  <button id="btnForSchedulingPage" class="director-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+  <button id="btnWallaImport" class="director-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button><br/>
   <div id="forDirectorButtons">
     <button id='btnGetDirectorInfo' class='director-button' onclick="jade_modules.scheduling.getDirectorInfo()">Calculate for<br/>director information<br/>for selected character</button>
     <button id="btnDirectorGoToLine" class='director-button' onclick="jade_modules.scheduling.directorGoToLine()">Go to this line in script</button>

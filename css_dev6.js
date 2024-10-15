@@ -497,16 +497,29 @@ label {
 #forActorsButtons {
   border-color: #592509;
 }
+
+#forDirectorButtons{
+  border-color: #06394d;
+}
+
 .actor-nav{
   background-color: #592509;
   color: #fbe2d5; 
   margin-left: 15px;
   margin-right: 0px;
 }
+
 .director-button {
-  background-color: #caedfb;
-  color: #06394d; 
+  color: #caedfb;
+  background-color: #06394d; 
   vertical-align: top;
+}
+
+.director-nav{
+  background-color: #06394d;
+  color: #caedfb; 
+  margin-left: 10px;
+  margin-right: 0px;
 }
 `;
   Jade.set_css(css);
