@@ -3695,7 +3695,7 @@ async function getActorScriptDetails(indexes){
     let columnCount = ukScriptIndex - cueIndex + 1;
     console.log(indexes[0],cueIndex, indexes.length,columnCount)
     let dataRange = scriptSheet.getRangeByIndexes(indexes[0], cueIndex, indexes.length, columnCount);
-    dataRange.load('values, format/font/bold, format/font/colour, format/font/name, format/font/size');
+    dataRange.load('values, format/font/bold, format/font/color, format/font/name, format/font/size');
     await excel.sync();
     console.log(dataRange.values);
     console.log(dataRange.format.font.bold);
