@@ -191,7 +191,7 @@ async function lockColumns(){
   })
 }
 
-async function unlock(excel, sheet){
+async function unlock(){
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.protection.load('protected');
