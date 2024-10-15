@@ -2499,6 +2499,8 @@ async function showForActorsPage(){
   wallaImportPage.style.display = 'none';
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
+  const scriptController = tag('Script-Controller');
+  scriptController.style.backgroundColor = '#FBE2D5';
   await Excel.run(async function(excel){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.activate();
