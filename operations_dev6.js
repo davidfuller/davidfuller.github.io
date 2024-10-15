@@ -2504,14 +2504,18 @@ async function showForActorsPage(){
   wallaImportPage.style.display = 'none';
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
-  const scriptController = tag('Script-Controller');
-  scriptController.style.backgroundColor = screenColours.actor;
-  scriptController.style.height = '100vh';
-  scriptController.style.color = '#592509'
+  styleScriptController('actor')
   await Excel.run(async function(excel){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.activate();
   })
+}
+
+function styleScriptController(theme){
+  const scriptController = tag('Script-Controller');
+  scriptController.style.backgroundColor = screenColours[theme];
+  scriptController.style.height = '100vh';
+  scriptController.style.color = '#592509'
 }
 
 async function showForSchedulingPage(){
