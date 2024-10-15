@@ -2507,6 +2507,7 @@ async function showForActorsPage(){
   const scriptController = tag('Script-Controller');
   scriptController.style.backgroundColor = screenColours.actor;
   scriptController.style.height = '100vh';
+  scriptController.style.color = '#592509'
   await Excel.run(async function(excel){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.activate();
