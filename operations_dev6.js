@@ -3695,12 +3695,20 @@ async function getActorScriptDetails(indexes){
     let columnCount = ukScriptIndex - cueIndex + 1;
     console.log(indexes[0],cueIndex, indexes.length,columnCount)
     let dataRange = scriptSheet.getRangeByIndexes(indexes[0], cueIndex, indexes.length, columnCount);
-    dataRange.load('values, format/font/bold, format/font/color, format/font/name, format/font/size');
+    dataRange.load('values');
+    let rangeProperties = dataRange.getCellProperties({
+      format: {
+        font: {
+          color: true,
+          name: true,
+          size: true,
+          bold: true,
+          italic: true
+        }
+      }
+    })
     await excel.sync();
     console.log(dataRange.values);
-    console.log(dataRange.format.font.bold);
-    console.log(dataRange.format.font.color);
-    console.log(dataRange.format.font.name);
-    console.log(dataRange.format.font.size);
+    console.log(rangeProperties.value);
   })
 }
