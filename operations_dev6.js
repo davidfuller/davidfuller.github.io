@@ -44,6 +44,11 @@ let myFormats = {
   green: '#daf2d0'
 }
 
+let screenColours = {
+  main: '#d8dfe5',
+  actor: '#fbe2d5'
+}
+
 function auto_exec(){
 }
 
@@ -2500,7 +2505,7 @@ async function showForActorsPage(){
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
   const scriptController = tag('Script-Controller');
-  scriptController.style.backgroundColor = '#FBE2D5';
+  scriptController.style.backgroundColor = screenColours.actor;
   await Excel.run(async function(excel){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.activate();

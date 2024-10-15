@@ -479,6 +479,8 @@ label {
   display: none;
 }
 #Script-Controller {
+  height: 100vh;
+  padding: 5px;
   background-color: #d8dfe5;
   color: #46656F;
 }
