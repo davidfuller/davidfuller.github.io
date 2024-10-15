@@ -55,7 +55,7 @@ let screenColours = {
   },
   director: {
     background: '#caedfb',
-    fontColour: '#06394D'
+    fontColour: '#06394d'
   }
 }
 

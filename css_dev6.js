@@ -503,6 +503,11 @@ label {
   margin-left: 15px;
   margin-right: 0px;
 }
+.director-button {
+  background-color: #caedfb;
+  color: #06394d; 
+  vertical-align: top;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')
