@@ -3652,7 +3652,7 @@ async function getRowIndeciesForScene(sceneNumber){
     let sceneRange =scriptSheet.getRangeByIndexes(firstDataRow, sceneIndex, lastDataRow - firstDataRow, 1);
     sceneRange.load('values, rowIndex');
     excel.sync();
-    myIndecies = sceneRange.map((x, i) => [x, i]).filter(([x, i]) => x == sceneNumber).map(([x, i]) => i + sceneRange.rowIndex);
+    myIndecies = sceneRange.values.map((x, i) => [x, i]).filter(([x, i]) => x == sceneNumber).map(([x, i]) => i + sceneRange.rowIndex);
   })
   return myIndecies;
 }
