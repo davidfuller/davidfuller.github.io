@@ -434,3 +434,33 @@ async function locationGoToLine(){
     }
   })
 }
+
+async function createScript(){
+  let sceneNumber = await getSceneNumberActor();
+  if (!isNaN(sceneNumber)){
+    
+  }
+  await Excel.run(async function(excel){
+  })
+}
+
+async function getSceneNumberActor(){
+  let sceneNumber;
+  await Excel.run(async function(excel){
+    const forActorSheet = excel.workbook.worksheets.getItem(forActorName);
+    const sceneIndex = 1;
+    let activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex');
+    await excel.sync(); 
+    let rowIndex = activeCell.rowIndex;
+    if (rowIndex >= 10){
+      let sceneCell = forActorSheet.getRangeByIndexes(rowIndex, sceneIndex, 1, 1);
+      sceneCell.load('values');
+      await excel.sync(); 
+      console.log('scene', sceneCell.values);
+      sceneNumber = parseInt(sceneCell.values[0][0])
+      console.log('sceneNumber', sceneNumber);
+    }
+  })
+  return sceneNumber;
+}
