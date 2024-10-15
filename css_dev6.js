@@ -494,7 +494,13 @@ label {
 }
 
 #forActorsButtons {
-  color: #592509;
+  border-color: #592509;
+}
+.actor-nav{
+  background-color: #592509;
+  color: #fbe2d5; 
+  margin-left: 15px;
+  margin-right: 0px;
 }
 `;
   Jade.set_css(css);
