@@ -176,6 +176,8 @@ async function lockColumns(){
       await excel.sync();    
     }
     let protectionText = tag('lockMessage')
+    scriptSheet.protection.load('protected');
+    await excel.sync();
     if (scriptSheet.protection.protected){
       protectionText.innerText = 'Sheet locked'
     } else {
@@ -193,6 +195,8 @@ async function unlock(){
       scriptSheet.protection.unprotect("")
       await excel.sync();
     }
+    scriptSheet.protection.load('protected');
+    await excel.sync();
     let protectionText = tag('lockMessage')
     if (scriptSheet.protection.protected){
       protectionText.innerText = 'Sheet locked'
