@@ -56,6 +56,10 @@ let screenColours = {
   director: {
     background: '#caedfb',
     fontColour: '#06394d'
+  },
+  scheduling: {
+    background: '#daf2d0',
+    fontColour: '#1d3a10'
   }
 }
 
@@ -2544,6 +2548,7 @@ async function showForSchedulingPage(){
   wallaImportPage.style.display = 'none';
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
+  styleScriptController('scheduling');
   await Excel.run(async function(excel){
     let schedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
     schedulingSheet.activate();

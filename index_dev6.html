@@ -160,12 +160,13 @@
 </div>
 <div id="for-scheduling-page">
   <label id='for-scheduling-label'>For Scheduling Commands</label><br/>
-  <button id="btnMainPage" onclick="jade_modules.operations.showMainPage()">Main Page</button>
-  <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
-  <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button><br/>
+  <button id="btnMainPage" class="scheduling-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+  <button id="btnForDirectorPage" class="scheduling-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
+  <button id="btnForActorPage" class="scheduling-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
+  <button id="btnWallaImport" class="scheduling-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button><br/>
   <div id="forSchedulingButtons">
-    <button id='btnGetSchedulingInfo' onclick="jade_modules.scheduling.getForSchedulingInfo()">Calculate for<br>scheduling information<br>for selected character</button>
-    <button id="btnSchedulingGoToLine" onclick="jade_modules.scheduling.schedulingGoToLine()">Goto first line of<br/>the selected scene</button>
+    <button id='btnGetSchedulingInfo' class="scheduling-button" onclick="jade_modules.scheduling.getForSchedulingInfo()">Calculate for<br>scheduling information<br>for selected character</button>
+    <button id="btnSchedulingGoToLine" class="scheduling-button" onclick="jade_modules.scheduling.schedulingGoToLine()">Goto first line of<br/>the selected scene</button>
     <label id='scheduling-wait'>Please wait...</label>
   </div>
 </div>

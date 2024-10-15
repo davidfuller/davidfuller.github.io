@@ -500,6 +500,10 @@ label {
   border-color: #06394d;
 }
 
+#forSchedulingButtons{
+  border-color: #1d3a10;
+}
+
 .actor-nav{
   background-color: #592509;
   color: #fbe2d5; 
@@ -516,6 +520,18 @@ label {
 .director-nav{
   background-color: #06394d;
   color: #caedfb; 
+  margin-left: 10px;
+  margin-right: 0px;
+}
+
+.scheduling-button {
+  background-color: #1d3a10;
+  color: #daf2d0; 
+  vertical-align: top;
+}
+.scheduling-nav{
+  background-color: #1d3a10;
+  color: #daf2d0; 
   margin-left: 10px;
   margin-right: 0px;
 }
