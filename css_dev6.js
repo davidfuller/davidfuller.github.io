@@ -486,7 +486,7 @@ label {
   color: #46656F;
 }
 #sheet-version {
-  font-size: 10px;
+  font-size: 12px;
 }
 .actor-button {
   background-color: #592509;
@@ -505,7 +505,7 @@ label {
 .actor-nav{
   background-color: #592509;
   color: #fbe2d5; 
-  margin-left: 15px;
+  margin-left: 10px;
   margin-right: 0px;
 }
 
