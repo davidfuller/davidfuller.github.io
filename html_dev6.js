@@ -155,8 +155,8 @@ async function mainHTML(){
   <button id="btnForSchedulingPage" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
   <button id="btnWallaImport" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button><br/>
   <div id="forActorsButtons">
-    <button id='btnGetActorInfo' onclick="jade_modules.scheduling.getActorInfo()">Calculate for<br/>actor information<br/>for selected character</button>
-    <button id="btnActorGoToLine" onclick="jade_modules.scheduling.actorGoToLine()">Go to this line in script<br/>(First line if multiple)</button>
+    <button id='btnGetActorInfo' class='actor-button' onclick="jade_modules.scheduling.getActorInfo()">Calculate for<br/>actor information<br/>for selected character</button>
+    <button id="btnActorGoToLine" class='actor-button' onclick="jade_modules.scheduling.actorGoToLine()">Go to this line in script<br/>(First line if multiple)</button>
     <label id='actor-wait'>Please wait...</label>
   </div>
 </div>

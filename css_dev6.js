@@ -487,6 +487,10 @@ label {
 #sheet-version {
   font-size: 10px;
 }
+.actor-button {
+  background-color: #592509;
+  color: #fbe2d5; 
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')
