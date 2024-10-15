@@ -501,8 +501,12 @@ label {
 #forDirectorButtons{
   border-color: #06394d;
 }
-#forSchedulingButtons{
+#forSchedulingButtons {
   border-color: #1d3a10;
+}
+
+#wallaImportButtons {
+  border-color: #481343;
 }
 
 .actor-nav{
@@ -533,6 +537,17 @@ label {
 .scheduling-nav{
   background-color: #1d3a10;
   color: #daf2d0; 
+  margin-left: 10px;
+  margin-right: 0px;
+}
+.walla-button {
+  background-color: #481343;
+  color: #f2ceef; 
+  vertical-align: top;
+}
+.scheduling-nav{
+  background-color: #481343;
+  color: #f2ceef; 
   margin-left: 10px;
   margin-right: 0px;
 }

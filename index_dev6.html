@@ -172,12 +172,14 @@
 </div>
 <div id="walla-import-page">
   <label id='walla-import-label'>Walla Import</label><br/>
-  <button id="btnMainPage" onclick="jade_modules.operations.showMainPage()">Main Page</button>
-  <button id="btnForDirectorPage" onclick="jade_modules.operations.showForDirector()">For Director</button>
-  <button id="btnForActorPage" onclick="jade_modules.operations.showForActorsPage()">For Actors</button><br/>
+  <button id="btnMainPage" class="walla-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+  <button id="btnForDirectorPage" class="walla-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
+  <button id="btnForActorPage" class="walla-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
+  <button id="btnForSchedulingPage" class="walla-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+  <button id="btnLocationPage" class="walla-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
   <div id="wallaImportButtons">
-    <button id='btnParseSource' onclick="jade_modules.wallaimport.parseSource()">Parse source text</button>
-    <button id='btnLoadScript' onclick="jade_modules.wallaimport.loadIntoScriptSheet()">Load into script sheet</button>
+    <button id='btnParseSource' class="walla-button" onclick="jade_modules.wallaimport.parseSource()">Parse source text</button>
+    <button id='btnLoadScript' class="walla-button" onclick="jade_modules.wallaimport.loadIntoScriptSheet()">Load into script sheet</button>
     <label id='load-message'>This item is already present</label>
   </div>
 </div>
