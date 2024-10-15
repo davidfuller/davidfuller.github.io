@@ -2051,21 +2051,34 @@ async function getDirectorData(characterName){
     let myAddresses = formulaRanges.address.split(",");
     console.log('myAddresses', myAddresses);
     
-    
-    let theRanges = [];
-    for (let i = 0; i < myAddresses.length; i++){
-      theRanges[i] = scriptSheet.getRange(myAddresses[i]);
-      theRanges[i].load('values');
-      theRanges[i].load('rowIndex');
-      theRanges[i].load('rowCount');
-    }
-    
     scriptSheet.autoFilter.remove();
     for (let col of hiddenColumnAddresses){
       let tempRange = scriptSheet.getRange(col);
       tempRange.columnHidden = true;
     }
-    await excel.sync();
+    
+    let startIndex = 0;
+    let stopIndex = 1000;
+    let doIt = true;
+    let theRanges = [];
+
+    while (doIt){
+      if (stopIndex > myAdresses.length){
+        stopIndex = myAddresses.length;
+        doIt = false;
+      }
+      console.log('startIndex', startIndex, 'stopIndex', stopIndex);
+    
+      for (let i = startIndex; i < stopIndex; i++){
+        theRanges[i] = scriptSheet.getRange(myAddresses[i]);
+        theRanges[i].load('values');
+        theRanges[i].load('rowIndex');
+        theRanges[i].load('rowCount');
+      }
+      await excel.sync();
+      startIndex = startIndex + 1000;
+      stopIndex = stopIndex + 1000;
+    }
     console.log(theRanges)
     /*
     for (let i = 0; i < theRanges.length; i++){
