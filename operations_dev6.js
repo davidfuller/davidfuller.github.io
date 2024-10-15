@@ -3682,7 +3682,7 @@ async function getSceneBlockNear(index){
       let sceneBlockRange= scriptSheet.getRangeByIndexes(indexes[0], cueIndex, indexes.length, 1);
       sceneBlockRange.load('values');
       await excel.sync();
-      sceneBlockText = sceneBlockRange.map(x => x[0])
+      sceneBlockText = sceneBlockRange.values.map(x => x[0])
     }
   })
   return sceneBlockText;
