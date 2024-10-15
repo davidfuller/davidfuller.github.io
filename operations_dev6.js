@@ -3650,10 +3650,9 @@ async function getRowIndeciesForScene(sceneNumber){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     console.log(firstDataRow, sceneIndex, lastDataRow)
-    let sceneRange =scriptSheet.getRangeByIndexes(firstDataRow, sceneIndex, lastDataRow - firstDataRow, 1);
-    sceneRange.load('values');
-    sceneRange.load('rowIndex');
-    excel.sync();
+    let sceneRange = scriptSheet.getRangeByIndexes(firstDataRow, sceneIndex, lastDataRow - firstDataRow, 1);
+    sceneRange.load('values, rowIndex');
+    await excel.sync();
     myIndecies = sceneRange.values.map((x, i) => [x, i]).filter(([x, i]) => x == sceneNumber).map(([x, i]) => i + sceneRange.rowIndex);
   })
   return myIndecies;
