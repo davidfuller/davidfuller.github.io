@@ -166,19 +166,6 @@ function findColumnLetter(name){
   return mySheetColumns.find((col) => col.name === name).column;
 }
 
-async function lockScriptSheet(){
-  await lockColumns(columnsToLock);
-  document.body.backgroundColor = '#ff00ff';
-
-}
-
-async function unlockScriptSheet(){
-  await Excel.run(async function(excel){
-    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    await unlock(excel, scriptSheet);
-  });
-}
-
 async function lockColumns(){
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -227,7 +214,7 @@ async function unlockIfLocked(excel, sheet){
     
   let isProtected = sheet.protection.protected
   if (isProtected){
-    await unlock(excel, sheet);
+    await unlock();
   }
   return isProtected
 }
@@ -242,7 +229,7 @@ async function removeFilter(){
       scriptSheet.autoFilter.remove();
       await excel.sync();
       if (isProtected){
-        await lockColumns(columnsToLock);
+        await lockColumns();
       }
     }  
   });
