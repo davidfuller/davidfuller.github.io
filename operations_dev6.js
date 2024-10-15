@@ -3668,6 +3668,8 @@ async function getSceneBlockNear(index){
     await excel.sync();
     let indexes = []
     let theIndex = -1;
+    console.log(index + startOffset, typeCodeIndex, endOffset - startOffset)
+    console.log(typeCodeRange.values);
     for (let i = 0; i < typeCodeRange.values.length; i++){
       if (typeCodeRange.values[i][0] == myTypes.sceneBlock){
         theIndex += 1;
