@@ -215,7 +215,7 @@ async function unlockIfLocked(){
     scriptSheet.protection.load('protected');
     await excel.sync();
     
-    isProtected = sheet.protection.protected
+    isProtected = scriptSheet.protection.protected
     if (isProtected){
       await unlock();
     }
