@@ -3676,8 +3676,9 @@ async function getSceneBlockNear(index){
     }
     console.log('indexes', indexes);
 
-    if (indexes.length >0){
-      let sceneBlockRange= scriptSheet.getRangeByIndexes(indexes[0], cueIndex, indexes[indexes.length - indexes[0]], 1);
+    if (indexes.length > 0){
+      console.log(indexes[0], cueIndex, indexes.length)
+      let sceneBlockRange= scriptSheet.getRangeByIndexes(indexes[0], cueIndex, indexes[indexes.length], 1);
       sceneBlockRange.load('values');
       await excel.sync();
       console.log(sceneBlockRange.values);
