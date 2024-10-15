@@ -162,7 +162,7 @@ label {
 #column-jump-two {
   flex: 60%
 }
-#takeMessage, #columnMessage {
+#takeMessage, #columnMessage, #lockMessage {
   font-size: 14px;
   margin-left: 10px;
 }
