@@ -47,7 +47,7 @@ async function mainHTML(){
     </div>
   </div>
   <div id="firstButtons">
-    <label class="section-label">Lock / Unlock</label><br/>
+    <label class="section-label">Lock / Unlock</label><span id="lockMessage"></span><br/>
     <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
     <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
   </div>

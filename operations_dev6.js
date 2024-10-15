@@ -2453,8 +2453,15 @@ async function showMainPage(){
     await excel.sync();
     console.log(dateRange.text);
     let versionString = 'Version ' + versionRange.values + ' Code: ' + codeVersion + ' Released: ' + dateRange.text;
-    
     versionInfo.innerText = versionString;
+    scriptSheet.protection.load('protected');
+    await excel.sync();
+    let protectionText = tag('lockMessage')
+    if (scriptSheet.protection.protected){
+      protectionText.innerText = 'Sheet locked'
+    } else {
+      protectionText.innerText = 'Sheet unlocked'
+    }
   })
 }
 async function showForActorsPage(){
