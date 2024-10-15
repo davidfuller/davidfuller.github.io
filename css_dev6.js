@@ -509,6 +509,10 @@ label {
   border-color: #481343;
 }
 
+#locationButtons {
+  border-color: #0d3714;
+}
+
 .actor-nav{
   background-color: #592509;
   color: #fbe2d5; 
@@ -548,6 +552,17 @@ label {
 .walla-nav{
   background-color: #481343;
   color: #f2ceef; 
+  margin-left: 10px;
+  margin-right: 0px;
+}
+.location-button {
+  background-color: #0d3714;
+  color: #c1f0c8; 
+  vertical-align: top;
+}
+.location-nav{
+  background-color: #0d3714;
+  color: #c1f0c8; 
   margin-left: 10px;
   margin-right: 0px;
 }

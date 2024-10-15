@@ -64,6 +64,10 @@ let screenColours = {
   walla: {
     background: '#f2ceef',
     fontColour: '#481343'
+  },
+  location: {
+    background: '#c1f0c8',
+    fontColour: '#0d3714'
   }
 }
 
@@ -2573,6 +2577,7 @@ async function showLocation(){
   locationPage.style.display = 'block';
   const locationWait = tag('location-wait');
   locationWait.style.display = 'none';
+  styleScriptController('location');
   await Excel.run(async function(excel){
     let locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
     locationSheet.activate();
