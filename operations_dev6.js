@@ -175,6 +175,12 @@ async function lockColumns(){
       scriptSheet.protection.protect({ selectionMode: "Normal", allowAutoFilter: true });
       await excel.sync();    
     }
+    let protectionText = tag('lockMessage')
+    if (scriptSheet.protection.protected){
+      protectionText.innerText = 'Sheet locked'
+    } else {
+      protectionText.innerText = 'Sheet unlocked'
+    }
   })
 }
 
@@ -186,6 +192,12 @@ async function unlock(){
     if (scriptSheet.protection.protected){
       scriptSheet.protection.unprotect("")
       await excel.sync();
+    }
+    let protectionText = tag('lockMessage')
+    if (scriptSheet.protection.protected){
+      protectionText.innerText = 'Sheet locked'
+    } else {
+      protectionText.innerText = 'Sheet unlocked'
     }
   })
 }
