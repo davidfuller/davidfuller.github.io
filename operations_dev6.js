@@ -3649,11 +3649,38 @@ async function getRowIndeciesForScene(sceneNumber){
   let myIndecies;
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    console.log(firstDataRow, sceneIndex, lastDataRow)
     let sceneRange = scriptSheet.getRangeByIndexes(firstDataRow, sceneIndex, lastDataRow - firstDataRow, 1);
     sceneRange.load('values, rowIndex');
     await excel.sync();
     myIndecies = sceneRange.values.map((x, i) => [x, i]).filter(([x, i]) => x == sceneNumber).map(([x, i]) => i + sceneRange.rowIndex);
   })
   return myIndecies;
+}
+
+async function getSceneBlockNear(index){
+  let startOffset = -12;
+  let endOffset = + 6;
+  let sceneBlockText = [];
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let typeCodeRange = scriptSheet.getRangeByIndexes(index + startOffset, typeCodeIndex, endOffset - startOffset, 1);
+    typeCodeRange.load('values, rowIndex');
+    await excel.sync();
+    let indexes = []
+    let theIndex = -1;
+    for (let i = 0; i < typeCodeRange.values.length; i++){
+      if (typeCodeRange.values[i][0] == myTypes.sceneBlock){
+        theIndex += 1;
+        indexes = i + typeCodeRange.rowIndex; 
+      }
+    }
+    console.log('indexes', indexes);
+
+    if (indexes.length >0){
+      let sceneBlockRange= scriptSheet.getRangeByIndexes(indexes[0], cueIndex, indexes[indexes.length - indexes[0]], 1);
+      sceneBlockRange.load('values');
+      await excel.sync();
+      console.log(sceneBlockRange.values);
+    }
+  })
 }

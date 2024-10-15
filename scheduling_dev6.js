@@ -440,6 +440,7 @@ async function createScript(){
   if (!isNaN(sceneNumber)){
     let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
     console.log('Indexes: ', indexes);
+    let sceneBlock = jade_modules.operations.getSceneBlockNear(indexes[0]);
   }
   await Excel.run(async function(excel){
   })
@@ -461,7 +462,9 @@ async function getSceneNumberActor(){
       console.log('scene', sceneCell.values);
       sceneNumber = parseInt(sceneCell.values[0][0])
       console.log('sceneNumber', sceneNumber);
+      
     }
   })
   return sceneNumber;
 }
+
