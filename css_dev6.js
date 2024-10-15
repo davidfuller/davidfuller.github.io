@@ -490,6 +490,11 @@ label {
 .actor-button {
   background-color: #592509;
   color: #fbe2d5; 
+  vertical-align: top;
+}
+
+#forActorsButtons {
+  color: #592509;
 }
 `;
   Jade.set_css(css);
