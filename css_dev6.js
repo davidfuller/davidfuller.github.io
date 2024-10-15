@@ -545,7 +545,7 @@ label {
   color: #f2ceef; 
   vertical-align: top;
 }
-.scheduling-nav{
+.walla-nav{
   background-color: #481343;
   color: #f2ceef; 
   margin-left: 10px;
