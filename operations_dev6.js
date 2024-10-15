@@ -2479,6 +2479,7 @@ async function showMainPage(){
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
   const versionInfo = tag('sheet-version');
+  styleScriptController('main')
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.activate();
