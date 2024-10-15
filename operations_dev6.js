@@ -3692,11 +3692,12 @@ async function getActorScriptDetails(indexes){
   let details = {};
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let columnCount = ukScriptIndex - cueIndex;
+    let columnCount = ukScriptIndex - cueIndex + 1;
     console.log(indexes[0],cueIndex, indexes.length,columnCount)
     let dataRange = scriptSheet.getRangeByIndexes(indexes[0], cueIndex, indexes.length, columnCount);
-    dataRange.load('values');
+    dataRange.load('values, format');
     await excel.sync();
     console.log(dataRange.values);
+    console.log(dataRange.format)
   })
 }
