@@ -60,6 +60,10 @@ let screenColours = {
   scheduling: {
     background: '#daf2d0',
     fontColour: '#1d3a10'
+  },
+  walla: {
+    background: '#f2ceef',
+    fontColour: '#481343'
   }
 }
 
@@ -2466,7 +2470,7 @@ async function showWallaImportPage(){
   loadMessage.style.display = 'none';
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
-  
+  styleScriptController('walla');
   await Excel.run(async function(excel){
     let wallaImportSheet = excel.workbook.worksheets.getItem(wallaImportName);
     wallaImportSheet.activate();
