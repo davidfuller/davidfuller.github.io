@@ -3643,3 +3643,16 @@ async function clearWalla(){
     wallaDetails.clear('Contents');
   })
 }
+
+
+async function getRowIndeciesForScene(sceneNumber){
+  let myIndecies;
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let sceneRange =scriptSheet.getRangeByIndexes(firstDataRow, sceneIndexIndex, lastDataRow - firstDataRow, 1);
+    sceneRange.load('values, rowIndex');
+    excel.sync();
+    myIndecies = sceneRange.map((x, i) => [x, i]).filter(([x, i]) => x == sceneNumber).map(([x, i]) => i + sceneRange.rowIndex);
+  })
+  return myIndecies;
+}

@@ -438,7 +438,8 @@ async function locationGoToLine(){
 async function createScript(){
   let sceneNumber = await getSceneNumberActor();
   if (!isNaN(sceneNumber)){
-    
+    let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
+    console.lof('Indexes: ', indexes);
   }
   await Excel.run(async function(excel){
   })
