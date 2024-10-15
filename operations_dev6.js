@@ -52,6 +52,10 @@ let screenColours = {
   actor: {
     background: '#fbe2d5',
     fontColour: '#592509'
+  },
+  director: {
+    background: '#caedfb',
+    fontColour: '#06394D'
   }
 }
 
@@ -2457,6 +2461,7 @@ async function showWallaImportPage(){
   loadMessage.style.display = 'none';
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
+  styleScriptController('director');
   await Excel.run(async function(excel){
     let wallaImportSheet = excel.workbook.worksheets.getItem(wallaImportName);
     wallaImportSheet.activate();
