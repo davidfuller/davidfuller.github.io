@@ -24,7 +24,7 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
-let mySheetColumns;
+let mySheetColumns, ukScriptIndex;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
@@ -116,6 +116,7 @@ async function initialiseVariables(){
   characterIndex = findColumnIndex('Character');
   locationIndex = findColumnIndex('Location');
   lineIndex = findColumnIndex('Line');
+  ukScriptIndex = findColumnIndex('UK script');
   
   ukTakesIndex = findColumnIndex('UK No of takes');
   ukTakeNoIndex = findColumnIndex('UK Take No')
@@ -3681,7 +3682,21 @@ async function getSceneBlockNear(index){
       let sceneBlockRange= scriptSheet.getRangeByIndexes(indexes[0], cueIndex, indexes.length, 1);
       sceneBlockRange.load('values');
       await excel.sync();
-      console.log(sceneBlockRange.values);
+      sceneBlockText = sceneBlockRange.map(x => x[0])
     }
+  })
+  return sceneBlockText;
+}
+
+async function getActorScriptDetails(indexes){
+  let details = {};
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let columnCount = ukScriptIndex - cueIndex;
+    console.log(indexes[0],cueIndex, indexes.length,columnCount)
+    let dataRange = scriptSheet.getRangeByIndexes(indexes[0], cueIndex, indexes.length, columnCount);
+    dataRange.load('values');
+    await excel.sync();
+    console.log(dataRange.values);
   })
 }
