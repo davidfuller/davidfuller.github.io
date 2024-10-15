@@ -3671,6 +3671,7 @@ async function getSceneBlockNear(index){
     console.log(index + startOffset, typeCodeIndex, endOffset - startOffset)
     console.log(typeCodeRange.values);
     for (let i = 0; i < typeCodeRange.values.length; i++){
+      console.log(i, typeCodeRange.values[i][0], myTypes.sceneBlock)
       if (typeCodeRange.values[i][0] == myTypes.sceneBlock){
         theIndex += 1;
         indexes = i + typeCodeRange.rowIndex; 
