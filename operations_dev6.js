@@ -2063,7 +2063,7 @@ async function getDirectorData(characterName){
     let theRanges = [];
 
     while (doIt){
-      if (stopIndex > myAdresses.length){
+      if (stopIndex > myAddresses.length){
         stopIndex = myAddresses.length;
         doIt = false;
       }
