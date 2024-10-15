@@ -45,8 +45,14 @@ let myFormats = {
 }
 
 let screenColours = {
-  main: '#d8dfe5',
-  actor: '#fbe2d5'
+  main: {
+    background:'#d8dfe5',
+    fontColour: '#46656F'
+  },
+  actor: {
+    background: '#fbe2d5',
+    fontColour: '#592509'
+  }
 }
 
 function auto_exec(){
@@ -2513,9 +2519,9 @@ async function showForActorsPage(){
 
 function styleScriptController(theme){
   const scriptController = tag('Script-Controller');
-  scriptController.style.backgroundColor = screenColours[theme];
+  scriptController.style.backgroundColor = screenColours[theme].background;
   scriptController.style.height = '100vh';
-  scriptController.style.color = '#592509'
+  scriptController.style.color = screenColours[theme].fontColour
 }
 
 async function showForSchedulingPage(){
