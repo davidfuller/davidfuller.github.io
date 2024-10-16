@@ -3751,7 +3751,7 @@ async function getActorScriptRanges(indexes){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     for (let i = 0; i< rangeBounds.length; i++){
-      let rowCount = rangebBunds[i].end - rangeBounds[i].start + 1
+      let rowCount = rangeBounds[i].end - rangeBounds[i].start + 1
       let cueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, cueIndex, rowCount, 1);
       cueRange.load('values');
       await excel.sync();
