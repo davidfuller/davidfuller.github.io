@@ -86,15 +86,12 @@ async function getActorInfo(){
   await Excel.run(async function(excel){
     let waitLabel = tag('actor-wait');
     waitLabel.style.display = 'block';
-    forActorSheet = excel.workbook.worksheets.getItem(forActorName);
+    let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
     const waitCell = forActorSheet.getRange('faMessage');
     waitCell.values = 'Please wait...';
     await excel.sync();
     
-    let characterChoiceRange = forActorSheet.getRange('faCharacterChoice');
-    characterChoiceRange.load('values');
-    await excel.sync();
-    let characterName = characterChoiceRange.values[0][0];
+    let characterName = await getActor();
     console.log('Character ',characterName);
     let myData = await jade_modules.operations.getDirectorData(characterName);
     let myLocation = await jade_modules.operations.getLocations();
@@ -447,10 +444,7 @@ async function createScript(){
     let book = await jade_modules.operations.getBook();
     let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
     let details = await jade_modules.operations.getActorScriptDetails(indexes)
-    let characterChoiceRange = forActorSheet.getRange('faCharacterChoice');
-    characterChoiceRange.load('values');
-    await excel.sync();
-    let characterName = characterChoiceRange.values[0][0];
+    let characterName = await getActor();
     await putDataInActorScriptSheet(book, characterName);
   }
   await Excel.run(async function(excel){
@@ -486,4 +480,17 @@ async function putDataInActorScriptSheet(book, character){
     let characterRange = actorScriptSheet.getRange(actorScriptCharacterName);
     characterRange.values = character;
   })
+}
+
+async function getActor(){
+  let characterName;
+  await Excel.run(async function(excel){
+    let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
+    let characterChoiceRange = forActorSheet.getRange('faCharacterChoice');
+    characterChoiceRange.load('values');
+    await excel.sync();
+    characterName = characterChoiceRange.values[0][0];
+    console.log('Character ',characterName);
+  })
+  return characterName;
 }
