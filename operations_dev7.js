@@ -24,7 +24,7 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
-let mySheetColumns, ukScriptIndex;
+let mySheetColumns, ukScriptIndex, bookIndex;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
@@ -147,6 +147,7 @@ async function initialiseVariables(){
   wallaCueIndex = findColumnIndex('Walla Cue No')
 
   chapterCalculationIndex = findColumnIndex('Chapter Calculation');
+  bookIndex = findColumnIndex('Book');
 
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -3704,4 +3705,22 @@ async function getActorScriptDetails(indexes){
     console.log(dataRange.values);
     console.log(rangeProperties.value);
   })
+}
+
+async function getBook(){
+  let book;
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let bookRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, bookIndex, 50, 1);
+    bookRange.load('values');
+    await excel.sync();
+    for (let i = 0; i < bookRange.values.length; i++){
+      console.log(i);
+      if (bookRange.values[i][0].trim().toLowerCase().startsWith('book')){
+        book = bookRange.values[i][0].trim();
+        break;
+      }
+    }
+  })
+  return book;
 }

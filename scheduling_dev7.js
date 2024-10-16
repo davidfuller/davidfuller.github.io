@@ -440,6 +440,7 @@ async function createScript(){
   if (!isNaN(sceneNumber)){
     let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
     console.log('Indexes: ', indexes);
+    let book = await jade_modules.operations.getBook();
     let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
     let details = await jade_modules.operations.getActorScriptDetails(indexes)
   }
@@ -463,7 +464,6 @@ async function getSceneNumberActor(){
       console.log('scene', sceneCell.values);
       sceneNumber = parseInt(sceneCell.values[0][0])
       console.log('sceneNumber', sceneNumber);
-      
     }
   })
   return sceneNumber;
