@@ -3747,15 +3747,16 @@ async function getActorScriptRanges(indexes){
       }
     }
   }
-
+  let cueRange
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     for (let i = 0; i< rangeBounds.length; i++){
       let rowCount = rangeBounds[i].end - rangeBounds[i].start + 1
-      let cueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, cueIndex, rowCount, 1);
+      cueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, cueIndex, rowCount, 1);
       cueRange.load('values');
       await excel.sync();
       console.log('rangeBounds: ', rangeBounds, 'cueRange', cueRange.values);
     }
   })
+  return cueRange;
 }
