@@ -3727,10 +3727,9 @@ async function getBook(){
 }
 
 async function getActorScriptRanges(indexes){
-  
   let rangeBounds = []
   let rangeIndex = 0;
-  
+    
   for (let i = 0; i < indexes.length; i++){
     if (i == 0){
       rangeBounds[rangeIndex] = {};
@@ -3748,6 +3747,12 @@ async function getActorScriptRanges(indexes){
       }
     }
   }
-  console.log('rangeBounds: ', rangeBounds)
 
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let cueRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, bookIndex, 50, 1);
+    cueRange.load('values');
+    await excel.sync();
+    console.log('rangeBounds: ', rangeBounds, 'cueRange', cueRange);
+  })
 }
