@@ -13,6 +13,10 @@ const numItemsDirectorsName = 'fdItems';
 const numItemsActorsName = 'faItems';
 const numItemsSchedulingName = 'fsItems';
 const numItemsLocationName = 'loItems'
+const actorScriptName = 'Actor Script';
+const actorScriptBookName = 'asBook';
+const actorScriptCharacterName = 'asCharacter'
+const actorScriptTableName = 'asTable'
 
 function auto_exec(){
 }
@@ -443,6 +447,11 @@ async function createScript(){
     let book = await jade_modules.operations.getBook();
     let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
     let details = await jade_modules.operations.getActorScriptDetails(indexes)
+    let characterChoiceRange = forActorSheet.getRange('faCharacterChoice');
+    characterChoiceRange.load('values');
+    await excel.sync();
+    let characterName = characterChoiceRange.values[0][0];
+    await putDataInActorScriptSheet(book, characterName);
   }
   await Excel.run(async function(excel){
   })
@@ -469,3 +478,12 @@ async function getSceneNumberActor(){
   return sceneNumber;
 }
 
+async function putDataInActorScriptSheet(book, character){
+  await Excel.run(async function(excel){
+    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    let bookRange = actorScriptSheet.getRange(actorScriptBookName);
+    bookRange.values = book;
+    let characterRange = actorScriptSheet.getRange(actorScriptCharacterName);
+    characterRange.values = character;
+  })
+}
