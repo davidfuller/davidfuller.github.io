@@ -3722,5 +3722,6 @@ async function getBook(){
       }
     }
   })
+  console.log('Book: ', book);
   return book;
 }
