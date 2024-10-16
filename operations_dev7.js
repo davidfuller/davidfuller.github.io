@@ -3641,7 +3641,11 @@ async function getSceneBlockNear(index){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     console.log(index + startOffset, typeCodeIndex, endOffset - startOffset, 1)
-    let typeCodeRange = scriptSheet.getRangeByIndexes(index + startOffset, typeCodeIndex, endOffset - startOffset, 1);
+    let startRowIndex = index + startOffset
+    if (startRowIndex < 1){
+      startRowIndex = 1;
+    }
+    let typeCodeRange = scriptSheet.getRangeByIndexes(startRowIndex, typeCodeIndex, endOffset - startOffset, 1);
     typeCodeRange.load('values, rowIndex');
     await excel.sync();
     let indexes = []
