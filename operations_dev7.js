@@ -3725,3 +3725,28 @@ async function getBook(){
   console.log('Book: ', book);
   return book;
 }
+
+async function getActorScriptRanges(indexes){
+  
+  let rangeBounds = []
+  let rangeIndex = 0;
+  
+  for (let i = 0; i < indexes.length; i++){
+    if (i == 0){
+      rangeBounds[rangeIndex] = {}
+      rangeBounds[rangeIndex].start = indexes[i];
+    }else if (i == indexes.length -1){
+      rangeBounds[rangeIndex].end = indexes[i]
+    } else {
+      if (indexes[i] == indexes[i-1]){
+        //Do Nothing
+      } else {
+        rangeBounds[rangeIndex].end = indexes[i - 1]
+        rangeIndex += 1
+        rangeBounds[rangeIndex].start = indexes[i];
+      }
+    }
+  }
+  console.log('rangeBounds: ', rangeBounds)
+
+}

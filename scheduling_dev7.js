@@ -444,6 +444,7 @@ async function createScript(){
   if (!isNaN(sceneNumber)){
     let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
     console.log('Indexes: ', indexes);
+    await jade_modules.operations.getActorScriptRanges(indexes);
     let book = await jade_modules.operations.getBook();
     let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
     let details = await jade_modules.operations.getActorScriptDetails(indexes)
