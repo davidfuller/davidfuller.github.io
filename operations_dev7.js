@@ -3730,7 +3730,8 @@ async function getBook(){
 async function getActorScriptRanges(indexes, startRowIndex){
   let rangeBounds = []
   let rangeIndex = 0;
-  let cueBlockColumnIndex = 0;  
+  let cueBlockColumnIndex = 0;
+  let characterBolockColumnIndex = 1;  
   for (let i = 0; i < indexes.length; i++){
     if (i == 0){
       rangeBounds[rangeIndex] = {};
@@ -3754,9 +3755,6 @@ async function getActorScriptRanges(indexes, startRowIndex){
     for (let i = 0; i< rangeBounds.length; i++){
       let rowCount = rangeBounds[i].end - rangeBounds[i].start + 1
       cueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, cueIndex, rowCount, 1);
-      cueRange.load('values');
-      await excel.sync();
-      console.log('rangeBounds: ', rangeBounds, 'cueRange', cueRange.values);
     }
     let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     console.log('start row/column', startRowIndex, cueBlockColumnIndex)
@@ -3764,6 +3762,7 @@ async function getActorScriptRanges(indexes, startRowIndex){
     range.copyFrom(cueRange, 'Values', false, false);
     range.copyFrom(cueRange, 'Formats', false, false);
     await excel.sync();
+    range = actorScriptSheet.getRangeByIndexes(startRowIndex, characterBolockColumnIndex, 1, 1);
   })
   
 }
