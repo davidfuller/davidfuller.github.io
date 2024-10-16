@@ -448,7 +448,7 @@ async function createScript(){
     let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
     let details = await jade_modules.operations.getActorScriptDetails(indexes)
     let characterName = await getActor();
-    await putDataInActorScriptSheet(book, characterName);
+    await putDataInActorScriptSheet(book, characterName, sceneBlockText);
   }
   await Excel.run(async function(excel){
   })
@@ -475,14 +475,20 @@ async function getSceneNumberActor(){
   return sceneNumber;
 }
 
-async function putDataInActorScriptSheet(book, character){
+async function putDataInActorScriptSheet(book, character, sceneBlock){
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     let bookRange = actorScriptSheet.getRange(actorScriptBookName);
     bookRange.values = book;
     let characterRange = actorScriptSheet.getRange(actorScriptCharacterName);
     characterRange.values = character;
-    let tableRange = actorScriptSheet
+    let tableRange = actorScriptSheet.getRange(actorScriptTableName);
+    tableRange.clear("Contents");
+    let startRowIndex = 1
+    let sceneBlockColumnIndex = 0;
+    let range = actorScriptSheet.getRangeByIndexes(startRowIndex,sceneBlockColumnIndex, sceneBlock.length, 1);
+    range.values = sceneBlock;
+    await excel.sync();
   })
 }
 
