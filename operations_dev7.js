@@ -3733,7 +3733,7 @@ async function getActorScriptRanges(indexes){
   
   for (let i = 0; i < indexes.length; i++){
     if (i == 0){
-      rangeBounds[rangeIndex] = {}
+      rangeBounds[rangeIndex] = {};
       rangeBounds[rangeIndex].start = indexes[i];
     }else if (i == indexes.length -1){
       rangeBounds[rangeIndex].end = indexes[i]
@@ -3743,6 +3743,7 @@ async function getActorScriptRanges(indexes){
       } else {
         rangeBounds[rangeIndex].end = indexes[i - 1]
         rangeIndex += 1
+        rangeBounds[rangeIndex] = {};
         rangeBounds[rangeIndex].start = indexes[i];
       }
     }
