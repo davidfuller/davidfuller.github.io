@@ -3750,9 +3750,12 @@ async function getActorScriptRanges(indexes){
 
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let cueRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, bookIndex, 50, 1);
-    cueRange.load('values');
-    await excel.sync();
-    console.log('rangeBounds: ', rangeBounds, 'cueRange', cueRange.values);
+    for (let i = 0; i< rangeBounds.length; i++){
+      let rowCount = rangebBunds[i].end - rangeBounds[i].start + 1
+      let cueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, cueIndex, rowCount, 1);
+      cueRange.load('values');
+      await excel.sync();
+      console.log('rangeBounds: ', rangeBounds, 'cueRange', cueRange.values);
+    }
   })
 }
