@@ -568,7 +568,7 @@ label {
 }
 
 #btnActorScript {
-  display: none;
+  display: block;
 }
 `;
   Jade.set_css(css);

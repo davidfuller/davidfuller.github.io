@@ -1,4 +1,4 @@
-const codeVersion = '6.0';
+const codeVersion = '7.0';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
