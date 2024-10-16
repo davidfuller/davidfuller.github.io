@@ -3734,6 +3734,7 @@ async function getActorScriptRanges(indexes, startRowIndex){
   let actorCueColumnIndex = 0;
   let actorCharacterColumnIndex = 1;  
   let actorDirectionColumnIndex = 2;
+  let actorUkScriptColumnIndex = 3;
   for (let i = 0; i < indexes.length; i++){
     if (i == 0){
       rangeBounds[rangeIndex] = {};
@@ -3751,7 +3752,7 @@ async function getActorScriptRanges(indexes, startRowIndex){
       }
     }
   }
-  let cueRange, characterRange, directionRange;
+  let cueRange, characterRange, directionRange, ukScriptRange;
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     for (let i = 0; i< rangeBounds.length; i++){
@@ -3759,18 +3760,22 @@ async function getActorScriptRanges(indexes, startRowIndex){
       cueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, cueIndex, rowCount, 1);
       characterRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, characterIndex, rowCount, 1);
       directionRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, stageDirectionWallaDescriptionIndex, rowCount, 1);
+      ukScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, ukScriptIndex, rowCount, 1);
     }
     let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     console.log('start row', startRowIndex)
     let actorCueRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCueColumnIndex, 1, 1);
     let actorCharacterRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCharacterColumnIndex, 1, 1);
     let actorDirectionRange  = actorScriptSheet.getRangeByIndexes(startRowIndex, actorDirectionColumnIndex, 1, 1);
+    let actorUkScriptRange  = actorScriptSheet.getRangeByIndexes(startRowIndex, actorUkScriptColumnIndex, 1, 1);
     actorCueRange.copyFrom(cueRange, 'Values', false, false);
     actorCueRange.copyFrom(cueRange, 'Formats', false, false);
     actorCharacterRange.copyFrom(characterRange, 'Values', false, false);
     actorCharacterRange.copyFrom(characterRange, 'Formats', false, false);
     actorDirectionRange.copyFrom(directionRange, 'Values', false, false);
     actorDirectionRange.copyFrom(directionRange, 'Formats', false, false);
+    actorUkScriptRange.copyFrom(ukScriptRange, 'Values', false, false);
+    actorUkScriptRange.copyFrom(ukScriptRange, 'Formats', false, false);
     await excel.sync();
     
   })
