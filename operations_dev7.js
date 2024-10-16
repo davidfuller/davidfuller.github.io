@@ -3758,7 +3758,8 @@ async function getActorScriptRanges(indexes, startRowIndex){
       await excel.sync();
       console.log('rangeBounds: ', rangeBounds, 'cueRange', cueRange.values);
     }
-    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    console.log('start row/column', startRowIndex, cueBlockColumnIndex)
     range = actorScriptSheet.getRangeByIndexes(startRowIndex, cueBlockColumnIndex, 1, 1);
     range.copyFrom(cueRange, 'Values', false, false);
     range.copyFrom(cueRange, 'Formats', false, false);
