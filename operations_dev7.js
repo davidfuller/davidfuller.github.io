@@ -3638,13 +3638,28 @@ async function clearWalla(){
 
 
 async function getRowIndeciesForScene(sceneNumber){
-  let myIndecies;
+  let myIndecies, newIndexes;
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let sceneRange = scriptSheet.getRangeByIndexes(firstDataRow, sceneIndex, lastDataRow - firstDataRow, 1);
     sceneRange.load('values, rowIndex');
     await excel.sync();
     myIndecies = sceneRange.values.map((x, i) => [x, i]).filter(([x, i]) => x == sceneNumber).map(([x, i]) => i + sceneRange.rowIndex);
+    let typeCodeRange = scriptSheet.getRangeByIndexes(myIndecies[0], typeCodeIndex, myIndecies[myIndecies.length-1] - myIndecies[0], 1);
+    typeCodeRange.load('values, rowIndex');
+    await excel.sync();
+    let dodgyIndexes = typeCodeRange.values.map((x, i) => [x, i]).filter(([x, i]) => x == myTypes.sceneBlock).map(([x, i]) => i + typeCodeRange.rowIndex);
+    console.log('dodgy', dodgyIndexes);
+    newIndexes = [];
+    let newIndex = - 1;
+    for (let i = 0; i < myIndecies.length; i++){
+      if (!(dodgyIndexes.includes(myIndecies[i]))){
+        newIndex += 1;
+        newIndexes[newIndex] = myIndecies[i];
+      }
+    }
+    console.log('newIndexes', newIndexes)
+
   })
   return myIndecies;
 }
