@@ -3661,7 +3661,7 @@ async function getRowIndeciesForScene(sceneNumber){
     console.log('newIndexes', newIndexes)
 
   })
-  return newIndecies;
+  return newIndexes;
 }
 
 async function getSceneBlockNear(index){
