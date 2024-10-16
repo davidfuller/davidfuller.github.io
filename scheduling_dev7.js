@@ -452,6 +452,17 @@ async function createScript(){
     await jade_modules.operations.getActorScriptRanges(indexes, rowIndex);
   }
   await Excel.run(async function(excel){
+    let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    let usedRange = actorScriptSheet.getUsedRange();
+    let theBorders = usedRange.format.borders;
+    theBorders.getItem("EdgeTop").style = "None";
+    theBorders.getItem("EdgeBottom").style = "None";
+    theBorders.getItem("EdgeLeft").style = "None";
+    theBorders.getItem("EdgeRight").style = "None";
+    theBorders.getItem("InsideVertical").style = "None";
+    theBorders.getItem("InsideHorizontal").style = "None";
+    theBorders.getItem("DiagonalDown").style = "None";
+    theBorders.getItem("DiagonalUp").style = "None";
   })
 }
 
