@@ -739,10 +739,11 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
   const lineWordCountColumn = findColumnLetter("Line Word Count") //BY
   const lineColumn = findColumnLetter("Line"); // CA
   const stageDirectionWallaDescriptionColumn = findColumnLetter("Stage Direction/ Walla description") //J
-  const positionChapterColumn = findColumnLetter("Position Chapter"); //CD
-  const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CF
+  const positionChapterColumn = findColumnLetter("Position Chapter"); //CF
+  const chapterCalculationColumn = findColumnLetter("Chapter Calculation"); //CG
   const alphaLineRangeColumn = findColumnLetter('Alpha Line Range') //CJ
-  const sceneLineCountCalculationColumn = findColumnLetter("Scene Line Count Calculation"); //CG
+  const sceneLineCountCalculationColumn = findColumnLetter("Scene Line Count Calculation"); //CH
+  const bookColumn = findColumnLetter("Book"); //CK
 
   const columnFormulae = [
     {
@@ -751,17 +752,17 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
       formulaRest: '=IF(' + cueColumn + firstRestRow + '="","",' + sceneWordCountCalcColumn + firstRestRow + ')'
     },
     {
-      columnName: "Position -",
+      columnName: "Position -", //BV
       formulaFirst: '=IF(' + sceneLineNumberRangeColumn + firstRow + '="",0,FIND("-",' + sceneLineNumberRangeColumn + firstRow + '))',
       formulaRest: '=IF(' + sceneLineNumberRangeColumn + firstRestRow + '="",0,FIND("-",' + sceneLineNumberRangeColumn + firstRestRow + '))'
     },
     {
-      columnName: "Start Line",
+      columnName: "Start Line", //BW
       formulaFirst: 0,
       formulaRest: "=IF(" + positionMinusColumn + firstRestRow + "=0," + startLineColumn + firstRow + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRestRow + ",2," + positionMinusColumn + firstRestRow + "-2)))"
     },
     {
-      columnName: "Position ]",
+      columnName: "Position ]", //BX
       formulaFirst: '=IF(' + sceneLineNumberRangeColumn + firstRow + '="",0,FIND("]",' + sceneLineNumberRangeColumn + firstRow + '))',
       formulaRest: '=IF(' + sceneLineNumberRangeColumn + firstRestRow + '="",0,FIND("]",' + sceneLineNumberRangeColumn + firstRestRow + '))'
     },
@@ -771,12 +772,12 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
       formulaRest: "=IF(" + positionEndSqaureBracketColumn + firstRestRow + "=0," + endLineColumn + firstRow + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRestRow + "," + positionMinusColumn + firstRestRow + "+1," + positionEndSqaureBracketColumn + firstRestRow + "-" + positionMinusColumn + firstRestRow + "-1)))"
     },
     {
-      columnName: "Valid Line Number",
+      columnName: "Valid Line Number", //BZ
       formulaFirst:  "=AND(" + numberColumn + firstRow + ">=" + startLineColumn + firstRow + ", " + numberColumn + firstRow + "<=" + endLineColumn + firstRow + ")",
       formulaRest: "=AND(" + numberColumn + firstRestRow + ">=" + startLineColumn + firstRestRow + ", " + numberColumn + firstRestRow + "<=" + endLineColumn + firstRestRow + ")"
     },
     {
-      columnName: "Line Word Count", //BY
+      columnName: "Line Word Count", //CA
       formulaFirst:  0,
       formulaRest: '=IF(NOT(OR(' + ukTakeNoColumn + firstRestRow + '="",' + ukTakeNoColumn + firstRestRow + '=1)), 0, LEN(TRIM(' + UKScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + UKScriptColumn + firstRestRow + ', " ", "")) + 1)'
     },
@@ -786,27 +787,27 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
       formulaRest: '=IF(OR(' + sceneBordersColumn + firstRestRow + '="Copy",' + sceneBordersColumn + firstRestRow + '=""),' + sceneColumn + firstRow + ',' + sceneColumn + firstRow + '+1)'
     },
     {
-      columnName: "Line",
+      columnName: "Line", //CC
       formulaFirst:  0,
       formulaRest: "=" + numberColumn + firstRestRow + ""
     },
 	  {
-	    columnName: "Word count to this line",
+	    columnName: "Word count to this line", //CD
       formulaFirst:  0,
       formulaRest: "=IF(" + sceneColumn + firstRestRow + "=" + sceneColumn + firstRow + "," + wordCountToThisLineColumn + firstRow + "+" + lineWordCountColumn + firstRestRow + "," + lineWordCountColumn + firstRestRow + ")"
   	},
 	  {
-	    columnName: "Scene word count calc",
+	    columnName: "Scene word count calc", //CE
       formulaFirst:  0,
       formulaRest: "=VLOOKUP(" + endLineColumn + firstRestRow + "," + "$" + lineColumn + "$" + (firstDataRow + 1) + ":$" + wordCountToThisLineColumn + "$" + lastDataRow + ",2,FALSE)"
   	},
     {
-      columnName: "Position Chapter", //CD
+      columnName: "Position Chapter", //CF
       formulaFirst: '=IF(' + stageDirectionWallaDescriptionColumn + firstRow + '="","",IF(ISERROR(FIND("Chapter",' + stageDirectionWallaDescriptionColumn + firstRow + ')),"",FIND("Chapter",' + stageDirectionWallaDescriptionColumn + firstRow + ')))',
       formulaRest: '=IF('+ stageDirectionWallaDescriptionColumn + firstRestRow + '="","",IF(ISERROR(FIND("Chapter",' + stageDirectionWallaDescriptionColumn + firstRestRow + ')),"",FIND("Chapter",' + stageDirectionWallaDescriptionColumn + firstRestRow + ')))'
     },
     {
-      columnName: "Chapter Calculation", //CE
+      columnName: "Chapter Calculation", //CG
       formulaFirst: '=VALUE(IF(' + positionChapterColumn + firstRow + '="","",MID(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '+7,99)))',
       formulaRest: '=VALUE(IF(' + positionChapterColumn + firstRestRow + '="",' + chapterCalculationColumn + firstRow + ',MID(' + stageDirectionWallaDescriptionColumn + firstRestRow + ',' + positionChapterColumn + firstRestRow + '+7,99)))'
     },
@@ -821,7 +822,7 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
       formulaRest: '=IF(' + cueColumn + firstRestRow + '="", IF(' + sceneBordersColumn + firstRow + '="Start",' + sceneBordersColumn + firstRow + ',""),IF(' + alphaLineRangeColumn + firstRestRow + '=' + alphaLineRangeColumn + firstRow + ',"Copy","Original"))'
     },
     {
-      columnName: "Scene Line Count Calculation", //CG
+      columnName: "Scene Line Count Calculation", //CH
       formulaFirst: 0,
       formulaRest: '=' + endLineColumn + firstRestRow + '-' + startLineColumn + firstRestRow + '+1'
     },
@@ -839,6 +840,11 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
       columnName: "Alpha Line Range", //CJ
       formulaFirst: '=' + startLineColumn + firstRow + '&' + endLineColumn + firstRow,
       formulaRest: '=' + startLineColumn + firstRestRow + '&' + endLineColumn + firstRestRow
+    },
+    {
+      columnName: "Book", //CK
+      formulaFirst: '=IF(' + positionChapterColumn + firstRow + '="","",LEFT(' + stageDirectionWallaDescriptionColumn + firstRow + ', ' + positionChapterColumn + firstRow + '-3))',
+      formulaRest: '=IF(' + positionChapterColumn + firstRestRow + '="",' + bookColumn + firstRow + ',LEFT(' + stageDirectionWallaDescriptionColumn + firstRestRow + ',' + positionChapterColumn + firstRestRow + '-3))'
     }
   ]
   return columnFormulae;
@@ -977,6 +983,7 @@ async function correctFormulas(firstRow){
   const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
   const cueColumn = findColumnLetter('Cue') //F
   const alphaLineRangeColumn = findColumnLetter('Alpha Line Range') //CJ
+  const bookColumn = findColumnLetter("Book"); //CK
   
   const columnFormulae = [
     {
@@ -1002,6 +1009,11 @@ async function correctFormulas(firstRow){
     {
       columnName: "Scene Borders", //CI
       formulaRest: '=IF(' + cueColumn + firstRow + '="", IF(' + sceneBordersColumn + (firstRow - 1) + '="Start",' + sceneBordersColumn + (firstRow - 1) + ',""),IF(' + alphaLineRangeColumn + firstRow + '=' + alphaLineRangeColumn + (firstRow - 1) + ',"Copy","Original"))'
+    },
+    ,
+    {
+      columnName: "Book", //CK
+      formulaRest: '=IF(' + positionChapterColumn + firstRow + '="",' + bookColumn + (firstRow - 1) + ',LEFT(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '-3))'
     }
     
   ]
