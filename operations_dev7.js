@@ -16,6 +16,7 @@ const unnamedCharacters = 'Un-named Character Walla';
 const unnamedCharactersColon = 'Un-named Character Walla:';
 const generalWalla = 'General Walla';
 const generalWallaColon = 'General Walla:';
+const actorScriptName = 'Actor Script';
 let sceneBlockColumns = 9; //Can be changed in add scene block
 let wallaBlockColumns = 8;
 
@@ -3726,10 +3727,10 @@ async function getBook(){
   return book;
 }
 
-async function getActorScriptRanges(indexes){
+async function getActorScriptRanges(indexes, startRowIndex){
   let rangeBounds = []
   let rangeIndex = 0;
-    
+  let cueBlockColumnIndex = 0;  
   for (let i = 0; i < indexes.length; i++){
     if (i == 0){
       rangeBounds[rangeIndex] = {};
@@ -3757,6 +3758,11 @@ async function getActorScriptRanges(indexes){
       await excel.sync();
       console.log('rangeBounds: ', rangeBounds, 'cueRange', cueRange.values);
     }
+    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    range = actorScriptSheet.getRangeByIndexes(startRowIndex, cueBlockColumnIndex, 1, 1);
+    range.copyFrom(cueRange, 'Values', false, false);
+    range.copyFrom(cueRange, 'Formats', false, false);
+    await excel.sync();
   })
-  return cueRange;
+  
 }
