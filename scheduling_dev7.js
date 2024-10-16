@@ -448,7 +448,7 @@ async function createScript(){
     let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
     let details = await jade_modules.operations.getActorScriptDetails(indexes)
     let characterName = await getActor();
-    let rowIndex = putDataInActorScriptSheet(book, characterName, sceneBlockText);
+    let rowIndex = await putDataInActorScriptSheet(book, characterName, sceneBlockText);
     await jade_modules.operations.getActorScriptRanges(indexes, rowIndex);
   }
   await Excel.run(async function(excel){
