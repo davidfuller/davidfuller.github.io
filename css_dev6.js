@@ -566,6 +566,10 @@ label {
   margin-left: 10px;
   margin-right: 0px;
 }
+
+#btnActorScript {
+  display: none;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')

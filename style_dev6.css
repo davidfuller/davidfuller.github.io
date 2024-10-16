@@ -559,9 +559,13 @@ label {
   color: #c1f0c8; 
   vertical-align: top;
 }
-.location-nav{
+.location-nav {
   background-color: #0d3714;
   color: #c1f0c8; 
   margin-left: 10px;
   margin-right: 0px;
+}
+
+#btnActorScript {
+  display: none;
 }
