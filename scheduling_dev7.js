@@ -487,9 +487,14 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
     let startRowIndex = 1
     let sceneBlockColumnIndex = 0;
     console.log(startRowIndex,sceneBlockColumnIndex, sceneBlock.length, 1)
-    console.log(sceneBlock)
+    console.log(sceneBlock);
+    let temp = [];
+    for (for i = 0; i < sceneBlock.length; i++){
+      temp[i] = [sceneBlock[i]];
+    }
+    console.log('temp:', temp);
     let range = actorScriptSheet.getRangeByIndexes(startRowIndex, sceneBlockColumnIndex, sceneBlock.length, 1);
-    range.values = sceneBlock;
+    range.values = temp;
     await excel.sync();
   })
 }
