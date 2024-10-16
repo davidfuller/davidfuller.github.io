@@ -3645,7 +3645,7 @@ async function getRowIndeciesForScene(sceneNumber){
     sceneRange.load('values, rowIndex');
     await excel.sync();
     myIndecies = sceneRange.values.map((x, i) => [x, i]).filter(([x, i]) => x == sceneNumber).map(([x, i]) => i + sceneRange.rowIndex);
-    let typeCodeRange = scriptSheet.getRangeByIndexes(myIndecies[0], typeCodeIndex, myIndecies[myIndecies.length-1] - myIndecies[0], 1);
+    let typeCodeRange = scriptSheet.getRangeByIndexes(myIndecies[0], typeCodeIndex, myIndecies[myIndecies.length-1] - myIndecies[0] + 1, 1);
     typeCodeRange.load('values, rowIndex');
     await excel.sync();
     let dodgyIndexes = typeCodeRange.values.map((x, i) => [x, i]).filter(([x, i]) => x == myTypes.sceneBlock).map(([x, i]) => i + typeCodeRange.rowIndex);
@@ -3661,7 +3661,7 @@ async function getRowIndeciesForScene(sceneNumber){
     console.log('newIndexes', newIndexes)
 
   })
-  return myIndecies;
+  return newIndecies;
 }
 
 async function getSceneBlockNear(index){
