@@ -489,7 +489,7 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
     console.log(startRowIndex,sceneBlockColumnIndex, sceneBlock.length, 1)
     console.log(sceneBlock);
     let temp = [];
-    for (for i = 0; i < sceneBlock.length; i++){
+    for (let i = 0; i < sceneBlock.length; i++){
       temp[i] = [sceneBlock[i]];
     }
     console.log('temp:', temp);
