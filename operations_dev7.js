@@ -3763,7 +3763,7 @@ async function getActorScriptRanges(indexes, startRowIndex){
     let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     console.log('start row', startRowIndex)
     let actorCueRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCueColumnIndex, 1, 1);
-    let actorCharacterRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCueColumnIndex, 1, 1);
+    let actorCharacterRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCharacterColumnIndex, 1, 1);
     let actorDirectionRange  = actorScriptSheet.getRangeByIndexes(startRowIndex, actorDirectionColumnIndex, 1, 1);
     actorCueRange.copyFrom(cueRange, 'Values', false, false);
     actorCueRange.copyFrom(cueRange, 'Formats', false, false);
