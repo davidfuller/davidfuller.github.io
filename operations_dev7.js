@@ -3753,6 +3753,6 @@ async function getActorScriptRanges(indexes){
     let cueRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, bookIndex, 50, 1);
     cueRange.load('values');
     await excel.sync();
-    console.log('rangeBounds: ', rangeBounds, 'cueRange', cueRange);
+    console.log('rangeBounds: ', rangeBounds, 'cueRange', cueRange.values);
   })
 }
