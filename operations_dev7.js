@@ -3761,7 +3761,7 @@ async function getActorScriptRanges(indexes, startRowIndex){
       directionRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, stageDirectionWallaDescriptionIndex, rowCount, 1);
     }
     let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
-    console.log('start row/column', startRowIndex, cueBlockColumnIndex)
+    console.log('start row', startRowIndex)
     let actorCueRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCueColumnIndex, 1, 1);
     let actorCharacterRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCueColumnIndex, 1, 1);
     let actorDirectionRange  = actorScriptSheet.getRangeByIndexes(startRowIndex, actorDirectionColumnIndex, 1, 1);
