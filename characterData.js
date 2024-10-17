@@ -99,8 +99,9 @@ async function showMain(){
   waitPage.style.display = 'none';
   await Excel.run(async (excel) => {
     let settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
-    let dateRange = settingsSheet.getRange('seData');
+    let dateRange = settingsSheet.getRange('seDate');
     dateRange.load('text');
+    await excel.sync();
     let versionRange = settingsSheet.getRange('seVersion');
     versionRange.load('values');
     await excel.sync();
