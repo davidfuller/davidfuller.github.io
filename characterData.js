@@ -93,10 +93,10 @@ async function handleChange(event) {
 }
 
 async function showMain(){
-  let main = tag(main-page);
-  main.style.display = 'block';
-  let wait = tag('start-wait');
-  wait.style.display = 'none';
+  let mainPage = tag(main-page);
+  mainPage.style.display = 'block';
+  let waitPage = tag('start-wait');
+  waitPage.style.display = 'none';
   await Excel.run(async (excel) => {
     let settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
     let dateRange = settingsSheet.getRange('seData');
