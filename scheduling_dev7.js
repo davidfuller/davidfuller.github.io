@@ -614,5 +614,5 @@ async function formatHeading(sheetName){
     theRange.format.fill.color = myFormats.green;
     theRange.format.horizontalAlignment = 'Left';
     theRange.format.verticalAlignment = 'Top';
-  }
+  })
 }
