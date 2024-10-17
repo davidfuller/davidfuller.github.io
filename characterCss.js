@@ -46,6 +46,11 @@ h2 {
   border-color: #424200;
   border-style: solid;
 }
+
+#wait-message {
+  display: none;
+  font-size: 12px;
+}
   `;
   Jade.set_css(css);
   console.log('CSS done')

@@ -10,6 +10,7 @@ async function mainHTML(){
 <div id="main-page">
   <button id='btnPrepare' onclick="jade_modules.characterdata.makeTheFullList()">Make the list</button>
   <button id="btnCalculate" onclick="jade_modules.characterdata.whichBooks()">Calculate which books</button>
+  <label id="wait-message">Please wait...</label>
 </div>
    `;
 

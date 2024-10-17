@@ -46,6 +46,11 @@ async function whichBooks(){
   await Excel.run(async function(excel){ 
     let linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
     let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
+    let waitMessageRange = characterSheet.range('chMessage');
+    waitMessageRange.values = [['Please wait...']]
+    let waitMessage = tag('wait-message');
+    waitMessage.style.display = 'block';
+    await excel.sync();
     let results = [];
     let resultIndex = -1;
     for (let i = 1; i<= 7; i++){
@@ -59,8 +64,11 @@ async function whichBooks(){
       }
     }
     resultValue = results.join(', ');
+
     let booksRange = characterSheet.getRange('chBooks');
     booksRange.values = [[resultValue]];
+    waitMessageRange.values = [['']];
+    waitMessage.style.display = 'none';
   })
 }
 
