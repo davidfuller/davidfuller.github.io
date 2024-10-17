@@ -446,24 +446,11 @@ async function createScript(){
     console.log('Indexes: ', indexes);
     let book = await jade_modules.operations.getBook();
     let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
-    let details = await jade_modules.operations.getActorScriptDetails(indexes)
     let characterName = await getActor();
-    let rowIndex = await putDataInActorScriptSheet(book, characterName, sceneBlockText);
-    await jade_modules.operations.getActorScriptRanges(indexes, rowIndex);
+    let rowDetails = await putDataInActorScriptSheet(book, characterName, sceneBlockText);
+    await jade_modules.operations.getActorScriptRanges(indexes, rowDetails[0].nextRowIndex);
   }
-  await Excel.run(async function(excel){
-    let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
-    let usedRange = actorScriptSheet.getUsedRange();
-    let theBorders = usedRange.format.borders;
-    theBorders.getItem("EdgeTop").style = "None";
-    theBorders.getItem("EdgeBottom").style = "None";
-    theBorders.getItem("EdgeLeft").style = "None";
-    theBorders.getItem("EdgeRight").style = "None";
-    theBorders.getItem("InsideVertical").style = "None";
-    theBorders.getItem("InsideHorizontal").style = "None";
-    theBorders.getItem("DiagonalDown").style = "None";
-    theBorders.getItem("DiagonalUp").style = "None";
-  })
+  await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes);
   await showActorScript();
 }
 
@@ -489,7 +476,7 @@ async function getSceneNumberActor(){
 }
 
 async function putDataInActorScriptSheet(book, character, sceneBlock){
-  let rowIndex;
+  let rowDetails = [];
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     let bookRange = actorScriptSheet.getRange(actorScriptBookName);
@@ -510,9 +497,20 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
     let range = actorScriptSheet.getRangeByIndexes(startRowIndex, sceneBlockColumnIndex, sceneBlock.length, 1);
     range.values = temp;
     await excel.sync();
-    rowIndex = startRowIndex + sceneBlock.length
+    
+    let sceneBlockIndexes = [];
+    for (let i = 0; i < sceneBlock.length; i++){
+      sceneBlockIndexes[i] = startRowIndex + i;
+    }
+    let nextRowIndex = startRowIndex + sceneBlock.length
+    rowDetails.push(
+      {
+        nextRowIndex: nextRowIndex,
+        sceneBlockRowIndexes: sceneBlockIndexes
+      }
+    )
   })
-  return rowIndex
+  return rowDetails;
 }
 
 async function getActor(){
@@ -532,5 +530,54 @@ async function showActorScript(){
   await Excel.run(async function(excel){
     let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     actorScriptSheet.activate();
+  })
+}
+
+async function formatActorScript(sheetName, sceneBlockRowIndexes){
+  await removeBorders(sheetName);
+  await formatSceneBlocks(sheetName, sceneBlockRowIndexes);
+}
+
+async function removeBorders(sheetName){
+  await Excel.run(async function(excel){
+    let theSheet = excel.workbook.worksheets.getItem(sheetName);
+    let usedRange = theSheet.getUsedRange();
+    let theBorders = usedRange.format.borders;
+    theBorders.getItem("EdgeTop").style = "None";
+    theBorders.getItem("EdgeBottom").style = "None";
+    theBorders.getItem("EdgeLeft").style = "None";
+    theBorders.getItem("EdgeRight").style = "None";
+    theBorders.getItem("InsideVertical").style = "None";
+    theBorders.getItem("InsideHorizontal").style = "None";
+    theBorders.getItem("DiagonalDown").style = "None";
+    theBorders.getItem("DiagonalUp").style = "None";
+  })
+}
+
+async function formatSceneBlocks(sheetName, rowIndexes){
+  let firstColumn = 0;
+  let columnCount = 4;
+
+  for (let i = 0; i < rowIndexes.length; i++){
+    await mergeTheRow(sheetName, rowIndexes[i], 1, firstColumn, columnCount);
+  }
+
+  await Excel.run(async function(excel){
+    let theSheet = excel.workbook.worksheets.getItem(sheetName);
+  })
+  
+}
+
+async function mergeTheRow(sheetName, rowIndex, rowCount, firstColumnIndex, columnCount){
+  await Excel.run(async function(excel){
+    let theSheet = excel.workbook.worksheets.getItem(sheetName);
+    let myMergeRange = theSheet.getRangeByIndexes(rowIndex, firstColumnIndex, rowCount, columnCount);
+    myMergeRange.load('address');
+    let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
+    mergedAreas.load("cellCount");
+    await excel.sync();
+    if (!(mergedAreas.cellCount == (rowCount * sceneBlockColumns))){
+      myMergeRange.merge(true);
+    }
   })
 }
