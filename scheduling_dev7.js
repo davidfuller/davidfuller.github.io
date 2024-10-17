@@ -22,7 +22,8 @@ const actorScriptTableName = 'asTable'
 let myFormats = {
   purple: '#f3d1f0',
   green: '#daf2d0',
-  lightGrey: '#a6a6a6'
+  lightGrey: '#a6a6a6',
+  orange: '#f7c7ac'
 }
 
 function auto_exec(){
@@ -456,7 +457,7 @@ async function createScript(){
     let characterName = await getActor();
     let rowDetails = await putDataInActorScriptSheet(book, characterName, sceneBlockText);
     let rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, rowDetails[0].nextRowIndex);
-    await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes, rowIndexes);
+    await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes, rowIndexes, characterName);
     await showActorScript();
   } else {
     alert('Please select a scene')
@@ -545,12 +546,13 @@ async function showActorScript(){
   })
 }
 
-async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndexes){
+async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndexes, character){
   await removeBorders(sheetName);
   await formatSceneBlocks(sheetName, sceneBlockRowIndexes);
   await formatHeading(sheetName);
   for (let i = 0; i < scriptRowIndexes.length; i++){
     await cueColumnFontColour(sheetName, scriptRowIndexes[i]);
+    await highlightCharacters(sheetName, character, scriptRowIndexes[i]);
   }
 }
 
@@ -626,8 +628,25 @@ async function cueColumnFontColour(sheetName, rowDetails){
   await Excel.run(async function(excel){
     let cueColumnIndex = 0;
     let theSheet = excel.workbook.worksheets.getItem(sheetName);
-    console.log(rowDetails.startRow, cueColumnIndex, rowDetails.rowCount, 1);
     let theRange = theSheet.getRangeByIndexes(rowDetails.startRow, cueColumnIndex, rowDetails.rowCount, 1);
     theRange.format.font.color = myFormats.lightGrey;
   })
+}
+
+async function highlightCharacters(sheetName, character, rowDetails){
+  let characterColumnIndex = 1;
+  await Excel.run(async (excel) => {
+    let theSheet = excel.workbook.worksheets.getItem(sheetName);
+    let theRange = theSheet.getRangeByIndexes(rowDetails.startRow, characterColumnIndex, rowDetails.rowCount, 1);
+    let conditionalFormat = theRange.conditionalFormats.add(Excel.ConditionalFormatType.containsText);
+    
+    // Color the font of every cell containing "Delayed".
+    conditionalFormat.textComparison.format.fill.color = myFormats.orange;
+    conditionalFormat.textComparison.rule = {
+      operator: Excel.ConditionalTextOperator.contains,
+      text: character
+    };
+    
+    await excel.sync();
+});
 }
