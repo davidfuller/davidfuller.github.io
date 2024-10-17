@@ -10,7 +10,8 @@ async function makeTheFullList(){
       thisRange.load('values')
       await excel.sync();
       let myValues = thisRange.values.map(x => x[0]);
-      console.log(i, myValues);
+      let filteredValues = myValues.filter((x) => x != 0)
+      console.log(i, myValues, filteredValues);
       //let myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i + firstDataRow - 1);
     }
   })
