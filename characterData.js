@@ -1,5 +1,7 @@
-const linkedDataSheetName = 'Linked_Data'
-const characterSheetName = 'Characters'
+const linkedDataSheetName = 'Linked_Data';
+const characterSheetName = 'Characters';
+const settingsSheetName = 'Settings';
+const codeVersion = '1.0';
 function auto_exec(){
   console.log('Hello');
 }
@@ -40,6 +42,7 @@ async function makeTheFullList(){
     ]
     resultRange.sort.apply(sortFields);
     await excel.sync();
+    console.log('The full list is made');
   })
 }
 async function whichBooks(){
@@ -71,4 +74,38 @@ async function whichBooks(){
     waitMessage.style.display = 'none';
   })
 }
+async function registerExcelEvents(){
+  await Excel.run(async (excel) => {
+    let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
+    characterSheet.onChanged.add(handleChange);
+    await excel.sync();
+    console.log("Event handler successfully registered for onChanged event for four sheets.");
+  })
+}
 
+async function handleChange(event) {
+  await Excel.run(async (excel) => {
+      await excel.sync();        
+      if ((event.address == 'C10') && event.source == 'Local'){
+        await whichBooks();
+      }
+  })
+}
+
+async function showMain(){
+  let main = tag(main-page);
+  main.style.display = 'block';
+  let wait = tag('start-wait');
+  wait.style.display = 'none';
+  await Excel.run(async (excel) => {
+    let settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
+    let dateRange = settingsSheet.getRange('seData');
+    dateRange.load('text');
+    let versionRange = settingsSheet.getRange('seVersion');
+    versionRange.load('values');
+    await excel.sync();
+    let versionString = 'Version ' + versionRange.values + ' Code: ' + codeVersion + ' Released: ' + dateRange.text;
+    let versionInfo = tag('sheet-version')
+    versionInfo.innerText = versionString;
+  })
+}

@@ -35,16 +35,19 @@ h2 {
   font-size: 14px;
   font-weight: normal;
 }
+
 #main-page {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
   padding-left: 10px;
-  padding-top: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-width: 1px;
   border-radius: 5px;
   border-color: #424200;
   border-style: solid;
+  display: none;
 }
 
 #wait-message {

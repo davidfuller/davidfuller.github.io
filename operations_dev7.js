@@ -2593,7 +2593,7 @@ async function registerExcelEvents(){
     locationSheet.onSelectionChanged.add(handleSelection)
     await excel.sync();
     console.log("Event handler successfully registered for onChanged event for four sheets.");
-}).catch(errorHandlerFunction);
+  }).catch(errorHandlerFunction);
 }
 
 async function handleChange(event) {
