@@ -23,7 +23,7 @@ async function makeTheFullList(){
       let tempRange = linkedDataSheet.getRangeByIndexes(startRow, resultRange.columnIndex, filteredValues.length, 1);
       tempRange.values = filteredValues;
       await excel.sync();
-      let startRow = startRow + filteredValues.length
+      startRow = startRow + filteredValues.length
     }
   })
 }
