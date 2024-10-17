@@ -455,8 +455,8 @@ async function createScript(){
     let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
     let characterName = await getActor();
     let rowDetails = await putDataInActorScriptSheet(book, characterName, sceneBlockText);
-    await jade_modules.operations.getActorScriptRanges(indexes, rowDetails[0].nextRowIndex);
-    let rowIndexes = await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes);
+    let rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, rowDetails[0].nextRowIndex);
+    await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes, rowIndexes);
     await showActorScript();
   } else {
     alert('Please select a scene')
@@ -545,10 +545,13 @@ async function showActorScript(){
   })
 }
 
-async function formatActorScript(sheetName, sceneBlockRowIndexes){
+async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndexes){
   await removeBorders(sheetName);
   await formatSceneBlocks(sheetName, sceneBlockRowIndexes);
   await formatHeading(sheetName);
+  for (let i = 0; i < scriptRowIndexes; i++){
+    await cueColumnFontColour(sheetName, scriptRowIndexes[i]);
+  }
 }
 
 async function removeBorders(sheetName){
@@ -616,5 +619,14 @@ async function formatHeading(sheetName){
     theRange.format.fill.color = myFormats.green;
     theRange.format.horizontalAlignment = 'Left';
     theRange.format.verticalAlignment = 'Top';
+  })
+}
+
+async function cueColumnFontColour(sheetName, rowDetails){
+  await Excel.run(async function(excel){
+    let cueColumnIndex = 0;
+    let theSheet = excel.workbook.worksheets.getItem(sheetName);
+    let theRange = theSheet.getRangeByIndexes(rowDetails.startRow, cueColumnIndex, rowDetails.rowCount, 1);
+    theRange.format.font.color = myFormats.lightGrey;
   })
 }
