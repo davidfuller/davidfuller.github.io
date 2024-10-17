@@ -1,4 +1,5 @@
 const linkedDataSheetName = 'Linked_Data'
+const characterSheetName = 'Characters'
 function auto_exec(){
   console.log('Hello');
 }
@@ -41,3 +42,25 @@ async function makeTheFullList(){
     await excel.sync();
   })
 }
+async function whichBooks(){
+  await Excel.run(async function(excel){ 
+    let linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
+    let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
+    let results = [];
+    let resultIndex = -1;
+    for (let i = 1; i<= 7; i++){
+      let rangeName = 'ldIsInBook0' + i;
+      let thisRange = linkedDataSheet.getRange(rangeName);
+      thisRange.load('values')
+      await excel.sync();
+      if (thisRange.values[0][0]){
+        resultIndex += 1;
+        results[resultIndex] = i;
+      }
+    }
+    resultValue = results.join(', ');
+    let booksRange = characterSheet.getRange('chBooks');
+    booksRange.values = [[resultValue]];
+  })
+}
+
