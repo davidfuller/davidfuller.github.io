@@ -15,7 +15,8 @@ const numItemsSchedulingName = 'fsItems';
 const numItemsLocationName = 'loItems'
 const actorScriptName = 'Actor Script';
 const actorScriptBookName = 'asBook';
-const actorScriptCharacterName = 'asCharacter'
+const actorScriptCharacterName = 'asCharacter';
+const actorScriptCharcaterHeadingName = 'asCharacterHeading'
 const actorScriptTableName = 'asTable'
 let myFormats = {
   purple: '#f3d1f0',
@@ -488,6 +489,8 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     let bookRange = actorScriptSheet.getRange(actorScriptBookName);
     bookRange.values = book;
+    let headingRange = actorScriptSheet.getRange(actorScriptCharcaterHeadingName);
+    headingRange.values = [['Character: ']]
     let characterRange = actorScriptSheet.getRange(actorScriptCharacterName);
     characterRange.values = character;
     let tableRange = actorScriptSheet.getRange(actorScriptTableName);
@@ -543,6 +546,7 @@ async function showActorScript(){
 async function formatActorScript(sheetName, sceneBlockRowIndexes){
   await removeBorders(sheetName);
   await formatSceneBlocks(sheetName, sceneBlockRowIndexes);
+  await formatHeading(sheetName);
 }
 
 async function removeBorders(sheetName){
@@ -584,7 +588,6 @@ async function formatSceneBlocks(sheetName, rowIndexes){
   })
   
 }
-
 async function mergeTheRow(sheetName, rowIndex, rowCount, firstColumnIndex, columnCount){
   await Excel.run(async function(excel){
     let theSheet = excel.workbook.worksheets.getItem(sheetName);
@@ -597,4 +600,19 @@ async function mergeTheRow(sheetName, rowIndex, rowCount, firstColumnIndex, colu
       myMergeRange.merge(true);
     }
   })
+}
+async function formatHeading(sheetName){
+  let rowIndex = 0
+  let firstColumn = 0;
+  let columnCount = 3;
+  await Excel.run(async function(excel){
+    let theSheet = excel.workbook.worksheets.getItem(sheetName);
+    let theRange = theSheet.getRangeByIndexes(rowIndex, firstColumn, 1, columnCount);
+    theRange.format.font.name = 'Courier New';
+    theRange.format.font.size = 14;
+    theRange.format.font.bold = true;
+    theRange.format.fill.color = myFormats.green;
+    theRange.format.horizontalAlignment = 'Left';
+    theRange.format.verticalAlignment = 'Top';
+  }
 }
