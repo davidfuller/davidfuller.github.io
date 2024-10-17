@@ -464,6 +464,7 @@ async function createScript(){
     theBorders.getItem("DiagonalDown").style = "None";
     theBorders.getItem("DiagonalUp").style = "None";
   })
+  await showActorScript();
 }
 
 async function getSceneNumberActor(){
@@ -525,4 +526,11 @@ async function getActor(){
     console.log('Character ',characterName);
   })
   return characterName;
+}
+
+async function showActorScript(){
+  await Excel.run(async function(excel){
+    let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    actorScriptSheet.activate();
+  })
 }
