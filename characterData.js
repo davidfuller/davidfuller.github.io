@@ -46,7 +46,7 @@ async function whichBooks(){
   await Excel.run(async function(excel){ 
     let linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
     let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
-    let waitMessageRange = characterSheet.range('chMessage');
+    let waitMessageRange = characterSheet.getRange('chMessage');
     waitMessageRange.values = [['Please wait...']]
     let waitMessage = tag('wait-message');
     waitMessage.style.display = 'block';
