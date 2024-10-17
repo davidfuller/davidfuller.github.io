@@ -93,7 +93,7 @@ async function handleChange(event) {
 }
 
 async function showMain(){
-  let mainPage = tag(main-page);
+  let mainPage = tag('main-page');
   mainPage.style.display = 'block';
   let waitPage = tag('start-wait');
   waitPage.style.display = 'none';
