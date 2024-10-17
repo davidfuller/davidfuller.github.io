@@ -449,9 +449,12 @@ async function createScript(){
     let characterName = await getActor();
     let rowDetails = await putDataInActorScriptSheet(book, characterName, sceneBlockText);
     await jade_modules.operations.getActorScriptRanges(indexes, rowDetails[0].nextRowIndex);
+    await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes);
+    await showActorScript();
+  } else {
+    alert('Please select a scene')
   }
-  await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes);
-  await showActorScript();
+  
 }
 
 async function getSceneNumberActor(){
