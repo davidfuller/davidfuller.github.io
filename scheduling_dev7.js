@@ -567,6 +567,15 @@ async function formatSceneBlocks(sheetName, rowIndexes){
 
   await Excel.run(async function(excel){
     let theSheet = excel.workbook.worksheets.getItem(sheetName);
+    for (let i = 0; i < rowIndexes.length; i++){
+      let theRange = theSheet.getRangeByIndexes(rowIndexes[i], firstColumn, 1, columnCount);
+      theRange.format.font.name = 'Courier New';
+      theRange.format.font.size = 12;
+      theRange.format.font.bold = true;
+      theRange.format.fill.color = myFormats.purple;
+      theRange.format.horizontalAlignment = 'Center';
+      theRange.format.verticalAlignment = 'Top';
+    }
   })
   
 }
