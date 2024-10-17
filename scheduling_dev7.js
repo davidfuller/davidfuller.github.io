@@ -579,7 +579,7 @@ async function mergeTheRow(sheetName, rowIndex, rowCount, firstColumnIndex, colu
     let mergedAreas = myMergeRange.getMergedAreasOrNullObject();
     mergedAreas.load("cellCount");
     await excel.sync();
-    if (!(mergedAreas.cellCount == (rowCount * sceneBlockColumns))){
+    if (!(mergedAreas.cellCount == (rowCount * columnCount))){
       myMergeRange.merge(true);
     }
   })
