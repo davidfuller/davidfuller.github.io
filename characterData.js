@@ -29,5 +29,15 @@ async function makeTheFullList(){
       await excel.sync();
       startRow = startRow + filteredValues.length
     }
+    resultRange.removeDuplicates([0], false);
+    await excel.sync();
+    const sortFields = [
+      {
+        key: 0,
+        ascending: true
+      }
+    ]
+    resultRange.sort.apply(sortFields);
+    await excel.sync();
   })
 }
