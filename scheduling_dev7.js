@@ -18,9 +18,11 @@ const actorScriptBookName = 'asBook';
 const actorScriptCharacterName = 'asCharacter';
 const actorScriptCharcaterHeadingName = 'asCharacterHeading'
 const actorScriptTableName = 'asTable'
+
 let myFormats = {
   purple: '#f3d1f0',
-  green: '#daf2d0'
+  green: '#daf2d0',
+  lightGrey: '#a6a6a6'
 }
 
 function auto_exec(){
@@ -454,7 +456,7 @@ async function createScript(){
     let characterName = await getActor();
     let rowDetails = await putDataInActorScriptSheet(book, characterName, sceneBlockText);
     await jade_modules.operations.getActorScriptRanges(indexes, rowDetails[0].nextRowIndex);
-    await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes);
+    let rowIndexes = await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes);
     await showActorScript();
   } else {
     alert('Please select a scene')
