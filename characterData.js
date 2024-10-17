@@ -18,10 +18,14 @@ async function makeTheFullList(){
       await excel.sync();
       let myValues = thisRange.values.map(x => x[0]);
       let filteredValues = myValues.filter((x) => x != 0)
-      console.log(i, myValues, filteredValues);
+      let filteredRangedValues = []
+      for (let j = 0; j < filteredValues.length; j++){
+        filteredRangedValues[j] = [filteredValues[j]];
+      }
+      console.log(i, myValues, filteredValues, filteredRangedValues);
       //let myIndecies = myData.map((x, i) => [x, i]).filter(([x, i]) => x == targetValue).map(([x, i]) => i + firstDataRow - 1);
       let tempRange = linkedDataSheet.getRangeByIndexes(startRow, resultRange.columnIndex, filteredValues.length, 1);
-      tempRange.values = filteredValues;
+      tempRange.values = filteredRangedValues;
       await excel.sync();
       startRow = startRow + filteredValues.length
     }
