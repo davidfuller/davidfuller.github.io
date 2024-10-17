@@ -549,7 +549,7 @@ async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndex
   await removeBorders(sheetName);
   await formatSceneBlocks(sheetName, sceneBlockRowIndexes);
   await formatHeading(sheetName);
-  for (let i = 0; i < scriptRowIndexes; i++){
+  for (let i = 0; i < scriptRowIndexes.length; i++){
     await cueColumnFontColour(sheetName, scriptRowIndexes[i]);
   }
 }
@@ -626,6 +626,7 @@ async function cueColumnFontColour(sheetName, rowDetails){
   await Excel.run(async function(excel){
     let cueColumnIndex = 0;
     let theSheet = excel.workbook.worksheets.getItem(sheetName);
+    console.log(rowDetails.startRow, cueColumnIndex, rowDetails.rowCount, 1);
     let theRange = theSheet.getRangeByIndexes(rowDetails.startRow, cueColumnIndex, rowDetails.rowCount, 1);
     theRange.format.font.color = myFormats.lightGrey;
   })
