@@ -17,6 +17,10 @@ const actorScriptName = 'Actor Script';
 const actorScriptBookName = 'asBook';
 const actorScriptCharacterName = 'asCharacter'
 const actorScriptTableName = 'asTable'
+let myFormats = {
+  purple: '#f3d1f0',
+  green: '#daf2d0'
+}
 
 function auto_exec(){
 }
@@ -575,6 +579,7 @@ async function formatSceneBlocks(sheetName, rowIndexes){
       theRange.format.fill.color = myFormats.purple;
       theRange.format.horizontalAlignment = 'Center';
       theRange.format.verticalAlignment = 'Top';
+      await jade_modules.operations.mergedRowAutoHeight(excel, theSheet, theRange);
     }
   })
   
