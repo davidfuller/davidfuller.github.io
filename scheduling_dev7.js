@@ -131,9 +131,9 @@ async function getActorInformation(asDropdown){
         if (myIndex == -1){
           console.log(i, "New Row")
           if (theLocation == null){
-            thisRow = [myData[i].sceneNumber, myData[i].lineNumber, ""];
+            thisRow = [myData[i].character, myData[i].sceneNumber, myData[i].lineNumber, ""];
           } else {
-            thisRow = [myData[i].sceneNumber, myData[i].lineNumber, theLocation.location];
+            thisRow = [myData[i].character, myData[i].sceneNumber, myData[i].lineNumber, theLocation.location];
           }
           console.log('thisRow', thisRow)
           let newIndex = dataArray.length;
@@ -149,14 +149,14 @@ async function getActorInformation(asDropdown){
         }
         console.log("i", i, "dataArray", dataArray);
       } else {
-        let thisRow = new Array(3).fill("");
+        let thisRow = new Array(4).fill("");
         dataArray.push(thisRow);
         console.log("Empty i", i, "dataArray", dataArray);
       }
     }
     console.log('dataArray', dataArray, 'rowCount', dataRange.rowCount, 'dataLength', myData.length, 'dataArray.length', dataArray.length);
     if (dataArray.length > 0){
-      let displayRange = forActorSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, dataArray.length, 3);
+      let displayRange = forActorSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, dataArray.length, 4);
       displayRange.values = dataArray;
     }
     numItems.values = dataArray.length;    
