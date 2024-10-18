@@ -350,7 +350,7 @@ async function directorGoToLine(){
 async function actorGoToLine(){
   await Excel.run(async function(excel){
     const forActorSheet = excel.workbook.worksheets.getItem(forActorName);
-    const lineIndex = 2;
+    const lineIndex = 3;
     let activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex');
     await excel.sync(); 
