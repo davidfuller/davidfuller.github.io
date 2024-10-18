@@ -1,7 +1,7 @@
 const linkedDataSheetName = 'Linked_Data';
 const characterSheetName = 'Characters';
 const settingsSheetName = 'Settings';
-const codeVersion = '1.0';
+const codeVersion = '1.1';
 function auto_exec(){
   console.log('Hello');
 }
@@ -99,6 +99,9 @@ async function handleChange(event) {
       await excel.sync();        
       if ((event.address == 'B10') && event.source == 'Local'){
         await whichBooks();
+      }
+      if ((event.address == 'B13') && event.source == 'Local'){
+        await textSearch();
       }
   })
 }
