@@ -54,6 +54,18 @@ h2 {
   display: none;
   font-size: 12px;
 }
+
+#show-hide {
+  margin-left: 15px;
+  font-size: 10px;
+  padding-left: 5px;
+  cursor: pointer;
+}
+
+.section-label {
+  font-size: 14px;
+  font-weight: bold;
+}
   `;
   Jade.set_css(css);
   console.log('CSS done')
