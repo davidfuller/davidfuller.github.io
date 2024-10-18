@@ -46,6 +46,8 @@ async function makeTheFullList(){
   })
 }
 async function whichBooks(){
+  let waitMessage = tag('admin-wait-message');
+  waitMessage.style.display = 'block';
   await Excel.run(async function(excel){ 
     let linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
     let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
@@ -73,6 +75,7 @@ async function whichBooks(){
     waitMessageRange.values = [['']];
     waitMessage.style.display = 'none';
   })
+  waitMessage.style.display = 'none';
 }
 async function registerExcelEvents(){
   await Excel.run(async (excel) => {
@@ -112,7 +115,7 @@ async function showMain(){
 }
 
 async function refreshLinks(){
-  let waitMessage = tag('wait-message');
+  let waitMessage = tag('admin-wait-message');
   waitMessage.style.display = 'block';
   await Excel.run(async (excel) => {
     let theLinks = excel.workbook.linkedWorkbooks

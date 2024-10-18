@@ -9,7 +9,7 @@ async function mainHTML(){
 </div>
 <div id="main-page">
   <button id="btnCalculate" onclick="jade_modules.characterdata.whichBooks()">Calculate which books</button>
-  <label id="wait-message">Please wait...</label>
+  <label id="wait-message">Please wait...</label><br/>
   <a id='show-hide' onclick="jade_modules.characterdata.showAdmin()">Show/hide admin</a>
 </div>
 <div id="admin">
