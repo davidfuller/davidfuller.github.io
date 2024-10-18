@@ -144,4 +144,41 @@ function showAdmin(){
   }
 }
 
+async function textSearch(){
+  await Excel.run(async function(excel){ 
+    let linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
+    let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
+    let waitMessageRange = characterSheet.getRange('chMessage');
+    waitMessageRange.values = [['Please wait...']]
+    let waitMessage = tag('wait-message');
+    waitMessage.style.display = 'block';
 
+    let textSearchRange = characterSheet.getRange('chTextSearch');
+    textSearchRange.load('values');
+    await excel.sync();
+
+    let searchText = textSearchRange.values[0][0]
+    if (searchText != ''){
+      let results = [];
+      let resultIndex = -1;
+      for (let i = 1; i<= 7; i++){
+        let rangeName = 'ldSheet' + i;
+        let thisRange = linkedDataSheet.getRange(rangeName);
+        thisRange.load('values')
+        await excel.sync();
+        let myValues = thisRange.values.map(x => x[0]);
+        let filteredValues = myValues.filter((x) => x != 0)
+        console.log(i, myValues, filteredValues);
+        for (let j = 0; j < filteredValues.length; j++){
+          if (filteredValues[j].toLowerCase().includes(textSearchRange.toLowerCase())){
+            resultIndex += 1;
+            results[resultIndex] = {character: filteredValues[j], chapter: i }
+          }
+        }
+      }
+      console.log('Results', results);
+    }
+    waitMessageRange.values = [['']];
+    waitMessage.style.display = 'none';
+  })
+}
