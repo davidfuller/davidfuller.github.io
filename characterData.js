@@ -110,3 +110,16 @@ async function showMain(){
     versionInfo.innerText = versionString;
   })
 }
+
+async function refreshLinks(){
+  let waitMessage = tag('wait-message');
+  waitMessage.style.display = 'block';
+  await Excel.run(async (excel) => {
+    let theLinks = excel.workbook.linkedWorkbooks
+    theLinks.load('workbookLinksRefreshMode', 'items');
+    await excel.sync();
+    console.log(theLinks.workbookLinksRefreshMode, theLinks.items.toJSON());
+  })
+  waitMessage.style.display = 'none';
+}
+
