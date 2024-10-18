@@ -498,6 +498,7 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
     characterRange.values = character;
     let tableRange = actorScriptSheet.getRange(actorScriptTableName);
     tableRange.clear("Contents");
+    tableRange.clear("Formats");
     let startRowIndex = 1
     let sceneBlockColumnIndex = 0;
     console.log(startRowIndex,sceneBlockColumnIndex, sceneBlock.length, 1)
@@ -552,6 +553,7 @@ async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndex
   await formatHeading(sheetName);
   for (let i = 0; i < scriptRowIndexes.length; i++){
     await cueColumnFontColour(sheetName, scriptRowIndexes[i]);
+    await clearScriptFill(sheetName,scriptRowIndexes[i]);
     await highlightCharacters(sheetName, character, scriptRowIndexes[i]);
   }
 }
@@ -633,6 +635,16 @@ async function cueColumnFontColour(sheetName, rowDetails){
   })
 }
 
+async function clearScriptFill(sheetName, rowDetails){
+  await Excel.run(async function(excel){
+    let cueColumnIndex = 0;
+    let columnCount = 4;
+    let theSheet = excel.workbook.worksheets.getItem(sheetName);
+    let theRange = theSheet.getRangeByIndexes(rowDetails.startRow, cueColumnIndex, rowDetails.rowCount, columnCount);
+    theRange.format.fill.clear();
+  })
+}
+
 async function highlightCharacters(sheetName, character, rowDetails){
   let characterColumnIndex = 1;
   await Excel.run(async (excel) => {
@@ -640,7 +652,6 @@ async function highlightCharacters(sheetName, character, rowDetails){
     let theRange = theSheet.getRangeByIndexes(rowDetails.startRow, characterColumnIndex, rowDetails.rowCount, 1);
     let conditionalFormat = theRange.conditionalFormats.add(Excel.ConditionalFormatType.containsText);
     
-    // Color the font of every cell containing "Delayed".
     conditionalFormat.textComparison.format.fill.color = myFormats.orange;
     conditionalFormat.textComparison.rule = {
       operator: Excel.ConditionalTextOperator.contains,
