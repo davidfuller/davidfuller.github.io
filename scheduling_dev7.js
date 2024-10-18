@@ -448,6 +448,8 @@ async function locationGoToLine(){
 }
 
 async function createScript(){
+  let actorWait = tag('actor-wait');
+  actorWait.style.display = 'block';
   let sceneNumber = await getSceneNumberActor();
   if (!isNaN(sceneNumber)){
     let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
@@ -462,7 +464,7 @@ async function createScript(){
   } else {
     alert('Please select a scene')
   }
-  
+  actorWait.style.display = 'none';
 }
 
 async function getSceneNumberActor(){
