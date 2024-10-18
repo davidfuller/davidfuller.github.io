@@ -195,6 +195,14 @@ async function textSearch(){
       let displayRange = characterSheet.getRangeByIndexes(theTable.rowIndex, theTable.columnIndex, displayResult.length, theTable.columnCount);
       displayRange.values = displayResult;
       await excel.sync();
+      const sortFields = [
+        {
+          key: 0,
+          ascending: true
+        }
+      ]
+      theTable.sort.apply(sortFields);
+      await excel.sync();
     }
     waitMessageRange.values = [['']];
     waitMessage.style.display = 'none';
