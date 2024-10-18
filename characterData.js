@@ -202,6 +202,9 @@ async function textSearch(){
         }
       ]
       theTable.sort.apply(sortFields);
+      let numItems = characterSheet.getRange('chItems');
+      numItems.values = displayResult.length
+      
       await excel.sync();
     }
     waitMessageRange.values = [['']];
