@@ -50,18 +50,18 @@ h2 {
 #wait-message, #admin-wait-message {
   display: none;
   font-size: 12px;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 #show-hide {
-  margin-left: 10px;
+  margin-left: 5px;
   font-size: 12px;
   padding-left: 5px;
   cursor: pointer;
 }
 
 .section-label {
-  margin-left: 10px;
+  margin-left: 5px;
   font-size: 14px;
   font-weight: bold;
 }
