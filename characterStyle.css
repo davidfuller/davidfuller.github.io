@@ -49,6 +49,7 @@ h2 {
 #wait-message, #admin-wait-message {
   display: none;
   font-size: 12px;
+  margin-left: 10px;
 }
 
 #show-hide {
