@@ -222,7 +222,7 @@ async function getLocationInfo(){
 }
 
 async function getActorText(){
-
+  await getActorInformation(false);
 }
 
 async function getForSchedulingInfo(){
