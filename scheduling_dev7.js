@@ -503,7 +503,7 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
     characterRange.unmerge()
     characterRange.load('rowIndex, columnIndex')
     await excel.sync();
-    let mergeRange = actorScriptBookName.getRangeByIndexes(characterRange.rowIndex, characterRange.columnIndex, 1, 2);
+    let mergeRange = actorScriptSheet.getRangeByIndexes(characterRange.rowIndex, characterRange.columnIndex, 1, 2);
     mergeRange.merge(true);
     let tableRange = actorScriptSheet.getRange(actorScriptTableName);
     tableRange.clear("Contents");
