@@ -106,7 +106,7 @@ async function getActorInformation(asDropdown){
     
     let characterName = await getActor(asDropdown);
     console.log('Character ',characterName);
-    let myData = await jade_modules.operations.getDirectorData(characterName);
+    let myData = await jade_modules.operations.getDirectorData(characterName, asDropdown);
     let myLocation = await jade_modules.operations.getLocations();
     console.log('Scheduling myData', myData);
     console.log('Locations', myLocation);
