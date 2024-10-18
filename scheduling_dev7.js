@@ -90,7 +90,12 @@ async function getDirectorInfo(){
     await excel.sync();
   }) 
 }
+
 async function getActorInfo(){
+  await getActorInformation(true);
+}
+
+async function getActorInformation(asDropdown){
   await Excel.run(async function(excel){
     let waitLabel = tag('actor-wait');
     waitLabel.style.display = 'block';
@@ -99,7 +104,7 @@ async function getActorInfo(){
     waitCell.values = 'Please wait...';
     await excel.sync();
     
-    let characterName = await getActor();
+    let characterName = await getActor(asDropdown);
     console.log('Character ',characterName);
     let myData = await jade_modules.operations.getDirectorData(characterName);
     let myLocation = await jade_modules.operations.getLocations();
@@ -216,6 +221,9 @@ async function getLocationInfo(){
   })  
 }
 
+async function getActorText(){
+
+}
 
 async function getForSchedulingInfo(){
   await Excel.run(async function(excel){
@@ -536,11 +544,16 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
   return rowDetails;
 }
 
-async function getActor(){
+async function getActor(asDropDown){
   let characterName;
   await Excel.run(async function(excel){
     let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
-    let characterChoiceRange = forActorSheet.getRange('faCharacterChoice');
+    let characterChoiceRange
+    if (asDropDown){
+      characterChoiceRange = forActorSheet.getRange('faCharacterChoice');
+    } else {
+      characterChoiceRange = forActorSheet.getRange('faTextSearch');
+    }
     characterChoiceRange.load('values');
     await excel.sync();
     characterName = characterChoiceRange.values[0][0];

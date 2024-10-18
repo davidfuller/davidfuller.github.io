@@ -2033,7 +2033,7 @@ async function filterOnLocation(locationText){
   })
 }
 
-async function getDirectorData(characterName){
+async function getDirectorData(characterName, exactSearch){
   let myData = [];
   let hiddenColumnAddresses = await getHiddenColumns();
   
@@ -2047,9 +2047,17 @@ async function getDirectorData(characterName){
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
     console.log('Used range address', usedRange.address)
-    const myCriteria = {
-      filterOn: Excel.FilterOn.custom,
-      criterion1: characterName
+    let myCriteria
+    if (exactSearch){
+      myCriteria = {
+        filterOn: Excel.FilterOn.custom,
+        criterion1: characterName
+      }
+    } else {
+      myCriteria = {
+        filterOn: Excel.FilterOn.custom,
+        criterion1: '=*' + characterName +'*'
+      }
     }
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
 		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
