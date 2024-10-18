@@ -170,7 +170,7 @@ async function textSearch(){
         let filteredValues = myValues.filter((x) => x != 0)
         console.log(i, myValues, filteredValues);
         for (let j = 0; j < filteredValues.length; j++){
-          if (filteredValues[j].toLowerCase().includes(textSearchRange.toLowerCase())){
+          if (filteredValues[j].toLowerCase().includes(searchText.toLowerCase())){
             resultIndex += 1;
             results[resultIndex] = {character: filteredValues[j], chapter: i }
           }
