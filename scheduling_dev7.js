@@ -554,6 +554,7 @@ async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndex
   for (let i = 0; i < scriptRowIndexes.length; i++){
     await cueColumnFontColour(sheetName, scriptRowIndexes[i]);
     await clearScriptFill(sheetName,scriptRowIndexes[i]);
+    await clearStrikethrough(sheetName, scriptRowIndexes[i]);
     await highlightCharacters(sheetName, character, scriptRowIndexes[i]);
   }
 }
@@ -642,6 +643,16 @@ async function clearScriptFill(sheetName, rowDetails){
     let theSheet = excel.workbook.worksheets.getItem(sheetName);
     let theRange = theSheet.getRangeByIndexes(rowDetails.startRow, cueColumnIndex, rowDetails.rowCount, columnCount);
     theRange.format.fill.clear();
+  })
+}
+
+async function clearStrikethrough(sheetName, rowDetails){
+  await Excel.run(async function(excel){
+    let cueColumnIndex = 0;
+    let columnCount = 4;
+    let theSheet = excel.workbook.worksheets.getItem(sheetName);
+    let theRange = theSheet.getRangeByIndexes(rowDetails.startRow, cueColumnIndex, rowDetails.rowCount, columnCount);
+    theRange.format.font.strikethrough = false;
   })
 }
 
