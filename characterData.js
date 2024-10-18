@@ -171,14 +171,31 @@ async function textSearch(){
         console.log(i, myValues, filteredValues);
         for (let j = 0; j < filteredValues.length; j++){
           if (filteredValues[j].toLowerCase().includes(searchText.toLowerCase())){
-            resultIndex += 1;
-            results[resultIndex] = {character: filteredValues[j], chapter: i }
+            let theIndex = doesCharacterAlreadyExist(results, filteredValues[j]);
+            if (theIndex != -1){
+              let booksArray = results[theIndex].books;
+              booksArray.push(i);
+              results[theIndex].books = booksArray;
+              console.log(j, booksArray, results)
+            } else {
+              resultIndex += 1;
+              results[resultIndex] = {character: filteredValues[j], books: [i] }
+            }
           }
         }
       }
-      console.log('Results', results);
     }
     waitMessageRange.values = [['']];
     waitMessage.style.display = 'none';
   })
+}
+
+function doesCharacterAlreadyExist(resultArray, newCharacter){
+  for (let i = 0; i < resultArray.length; i++){
+    if (resultArray[i].character == newCharacter){
+      return i;
+    }
+  }
+  return -1
+
 }
