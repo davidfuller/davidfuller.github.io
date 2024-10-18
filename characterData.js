@@ -118,7 +118,7 @@ async function refreshLinks(){
     let theLinks = excel.workbook.linkedWorkbooks
     theLinks.load('workbookLinksRefreshMode', 'items');
     await excel.sync();
-    console.log(theLinks.workbookLinksRefreshMode, theLinks.items.toJSON());
+    console.log(theLinks.workbookLinksRefreshMode, theLinks.items);
   })
   waitMessage.style.display = 'none';
 }
