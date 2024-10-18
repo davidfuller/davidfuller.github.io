@@ -188,7 +188,7 @@ async function textSearch(){
       console.log('Results: ', results)
       let displayResult = [];
       for (let i = 0; i < results.length; i++){
-        displayResult[i] = [results[i].character, results[i].books.join(', '), results.books.length]
+        displayResult[i] = [results[i].character, results[i].books.join(', '), results[i].books.length]
       }
       console.log('Display Result', displayResult);
       theTable.values = displayResult;
