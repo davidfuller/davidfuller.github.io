@@ -121,14 +121,22 @@ async function getActorInformation(asDropdown){
     await excel.sync();
     
     let dataArray = [];
+    // dataArray for putting in range [character, scene, lines, location]
+    // lines are comma seperated for when both character and scene are the same
+    // e.g ["RON", "123", "456, 789", "Hogwarts"]
     console.log('Start of loops', dataArray)
     for (i = 0; i < myData.length; i++){
+      //Looping through the director data (myData)
       if (i < myData.length){
-        let myIndex = dataArray.findIndex(x => x[1] == myData[i].sceneNumber)
+        //Does this character & scene already exist in data array
+        let myIndex = dataArray.findIndex(x => (x[1] == myData[i].sceneNumber) && (x[0] == myData[i].character));
+        //returns -1 if not found
         console.log('myIndex', myIndex)
+        //Find the location of the scene.
         let theLocation = myLocation.find(x => x.sceneNumber == myData[i].sceneNumber)
         console.log('location', theLocation);
         if (myIndex == -1){
+          // We need to add a new row. 
           console.log(i, "New Row")
           if (theLocation == null){
             thisRow = [myData[i].character, myData[i].sceneNumber, myData[i].lineNumber, ""];
@@ -141,8 +149,12 @@ async function getActorInformation(asDropdown){
           dataArray[newIndex] = thisRow;
           console.log('dataArray[newIndex]', dataArray[newIndex]);
         } else {
+          //Having found a row we should add the line
+          //However it is possible the same line number is present on multiple consecutive rows
+          //This should not be added. Test for this
           if ((i > 0) && (myData[i - 1].lineNumber != myData[i].lineNumber)){
             console.log('Array before:', dataArray[myIndex]);
+            //Add the lineNumber to array element 2 concatanated with a ", "
             dataArray[myIndex][2] = dataArray[myIndex][2] + ", " + myData[i].lineNumber;
             console.log("Found Index",  myIndex, "dataArray", dataArray[myIndex]);
           }
