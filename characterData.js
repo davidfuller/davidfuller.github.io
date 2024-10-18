@@ -97,7 +97,7 @@ async function registerExcelEvents(){
 async function handleChange(event) {
   await Excel.run(async (excel) => {
       await excel.sync();        
-      if ((event.address == 'C10') && event.source == 'Local'){
+      if ((event.address == 'B10') && event.source == 'Local'){
         await whichBooks();
       }
   })
