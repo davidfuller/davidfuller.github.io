@@ -458,6 +458,8 @@ async function createScript(){
     let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
     let characterName = await getActor();
     let rowDetails = await putDataInActorScriptSheet(book, characterName, sceneBlockText);
+    //give 1 row of scpace between sceneblock and script
+    rowDetails[0].nextRowIndex += 1;
     let rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, rowDetails[0].nextRowIndex);
     await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes, rowIndexes, characterName);
     await showActorScript();
