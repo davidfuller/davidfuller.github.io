@@ -160,7 +160,8 @@ async function textSearch(){
     let searchText = textSearchRange.values[0][0]
     let theTable = characterSheet.getRange('chTable');
     theTable.clear('Contents');
-
+    theTable.load('rowIndex, columnIndex, columnCount');
+    await excel.sync();
     if (searchText != ''){
       let results = [];
       let resultIndex = -1;
@@ -191,7 +192,8 @@ async function textSearch(){
         displayResult[i] = [results[i].character, results[i].books.join(', '), results[i].books.length]
       }
       console.log('Display Result', displayResult);
-      theTable.values = displayResult;
+      let displayRange = characterSheet.getRangeByIndexes(theTable.rowIndex, theTable.columnIndex, displayResult.length, theTable.columnCount);
+      displayRange.values = displayResult;
       await excel.sync();
     }
     waitMessageRange.values = [['']];
