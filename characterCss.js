@@ -5,7 +5,6 @@ async function mainCSS(){
 body {
   background-color: #ffffb3;
   color: #424200;
-  font-family: 'Aptos Narrow', 'Arial Narrow', 'Arial', 'Helvetica', 'sans-serif';
 }
 button {
   margin-left: 5px;
@@ -25,13 +24,11 @@ button {
 h1 {
   margin-left: 15px;
   margin-bottom: 5px;
-  font-family: 'Aptos Narrow', 'Arial Narrow', 'Arial', 'Helvetica', 'sans-serif';
   font-size: 18px;
 }
 h2 {
   margin-left: 15px;
   margin-bottom: 10px;
-  font-family: 'Aptos Narrow', 'Arial Narrow', 'Arial', 'Helvetica', 'sans-serif';
   font-size: 14px;
   font-weight: normal;
 }
