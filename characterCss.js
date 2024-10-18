@@ -56,13 +56,14 @@ h2 {
 }
 
 #show-hide {
-  margin-left: 15px;
-  font-size: 10px;
+  margin-left: 10px;
+  font-size: 12px;
   padding-left: 5px;
   cursor: pointer;
 }
 
 .section-label {
+  margin-left: 10px;
   font-size: 14px;
   font-weight: bold;
 }
