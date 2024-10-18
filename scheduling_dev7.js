@@ -124,7 +124,7 @@ async function getActorInformation(asDropdown){
     console.log('Start of loops', dataArray)
     for (i = 0; i < myData.length; i++){
       if (i < myData.length){
-        let myIndex = dataArray.findIndex(x => x[0] == myData[i].sceneNumber)
+        let myIndex = dataArray.findIndex(x => x[1] == myData[i].sceneNumber)
         console.log('myIndex', myIndex)
         let theLocation = myLocation.find(x => x.sceneNumber == myData[i].sceneNumber)
         console.log('location', theLocation);
