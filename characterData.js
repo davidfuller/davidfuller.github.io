@@ -58,6 +58,8 @@ async function whichBooks(){
     waitMessage.style.display = 'block';
     let booksRange = characterSheet.getRange('chBooks');
     booksRange.values = [['']];
+    let numRange = characterSheet.getRange('chNumBooks');
+    numRange.values = [['']];
     await excel.sync();
     let results = [];
     let resultIndex = -1;
@@ -73,6 +75,7 @@ async function whichBooks(){
     }
     resultValue = results.join(', ');
     booksRange.values = [[resultValue]];
+    numRange.values = [[results.length]];
     waitMessageRange.values = [['']];
     waitMessage.style.display = 'none';
   })
