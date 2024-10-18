@@ -158,6 +158,9 @@ async function textSearch(){
     await excel.sync();
 
     let searchText = textSearchRange.values[0][0]
+    let theTable = characterSheet.getRange('chTable');
+    theTable.clear('Contents');
+
     if (searchText != ''){
       let results = [];
       let resultIndex = -1;
@@ -168,7 +171,6 @@ async function textSearch(){
         await excel.sync();
         let myValues = thisRange.values.map(x => x[0]);
         let filteredValues = myValues.filter((x) => x != 0)
-        console.log(i, myValues, filteredValues);
         for (let j = 0; j < filteredValues.length; j++){
           if (filteredValues[j].toLowerCase().includes(searchText.toLowerCase())){
             let theIndex = doesCharacterAlreadyExist(results, filteredValues[j]);
@@ -176,7 +178,6 @@ async function textSearch(){
               let booksArray = results[theIndex].books;
               booksArray.push(i);
               results[theIndex].books = booksArray;
-              console.log(j, booksArray, results)
             } else {
               resultIndex += 1;
               results[resultIndex] = {character: filteredValues[j], books: [i] }
@@ -184,6 +185,14 @@ async function textSearch(){
           }
         }
       }
+      console.log('Results: ', results)
+      let displayResult = [];
+      for (let i = 0; i < results.length; i++){
+        displayResult[i] = [results.character, results.books.join(', '), results.books.length]
+      }
+      console.log('Display Result', displayResult);
+      theTable.values = displayResult;
+      await excel.sync();
     }
     waitMessageRange.values = [['']];
     waitMessage.style.display = 'none';
