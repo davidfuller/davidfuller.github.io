@@ -60,22 +60,27 @@ async function whichBooks(){
     booksRange.values = [['']];
     let numRange = characterSheet.getRange('chNumBooks');
     numRange.values = [['']];
+    let characterNameRange = characterSheet.getRange('chCharacterName');
+    characterNameRange.load('values')
     await excel.sync();
-    let results = [];
-    let resultIndex = -1;
-    for (let i = 1; i<= 7; i++){
-      let rangeName = 'ldIsInBook0' + i;
-      let thisRange = linkedDataSheet.getRange(rangeName);
-      thisRange.load('values')
-      await excel.sync();
-      if (thisRange.values[0][0]){
-        resultIndex += 1;
-        results[resultIndex] = i;
+    let characterName = characterNameRange.values[0][0]
+    if (characterName != ''){
+      let results = [];
+      let resultIndex = -1;
+      for (let i = 1; i<= 7; i++){
+        let rangeName = 'ldIsInBook0' + i;
+        let thisRange = linkedDataSheet.getRange(rangeName);
+        thisRange.load('values')
+        await excel.sync();
+        if (thisRange.values[0][0]){
+          resultIndex += 1;
+          results[resultIndex] = i;
+        }
       }
+      resultValue = results.join(', ');
+      booksRange.values = [[resultValue]];
+      numRange.values = [[results.length]];
     }
-    resultValue = results.join(', ');
-    booksRange.values = [[resultValue]];
-    numRange.values = [[results.length]];
     waitMessageRange.values = [['']];
     waitMessage.style.display = 'none';
   })
