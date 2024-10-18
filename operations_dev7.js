@@ -2133,6 +2133,7 @@ async function getDirectorData(characterName, exactSearch){
     let ukDateArrayIndex = headings.myItems.findIndex(x => x == "UK Date Recorded");
     let lineWordCountArrayIndex = headings.myItems.findIndex(x => x == 'Line Word Count');
     let sceneWordCountArrayIndex = headings.myItems.findIndex(x => x == 'Scene Word Count');
+    let characterArrayIndex = headings.myItems.findIndex(x => x == 'Character')
     console.log('Scene Index', sceneArrayIndex, 'Number Index', numberArrayIndex);
 
     for (let result of results){
@@ -2145,7 +2146,8 @@ async function getDirectorData(characterName, exactSearch){
             ukTakeNum: result.myItems[ukTakeNumArrayIndex],
             ukDateRecorded: result.myItems[ukDateArrayIndex],
             lineWordCount: result.myItems[lineWordCountArrayIndex],
-            sceneWordCount: result.myItems[sceneWordCountArrayIndex]
+            sceneWordCount: result.myItems[sceneWordCountArrayIndex],
+            character: result.myItems[characterArrayIndex]
           }
           myData.push(theData);  
         }
