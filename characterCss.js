@@ -36,7 +36,7 @@ h2 {
   font-weight: normal;
 }
 
-#main-page {
+#main-page, #admin {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
@@ -50,7 +50,7 @@ h2 {
   display: none;
 }
 
-#wait-message {
+#wait-message, #admin-wait-message {
   display: none;
   font-size: 12px;
 }

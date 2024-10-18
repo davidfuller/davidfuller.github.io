@@ -124,3 +124,13 @@ async function refreshLinks(){
   waitMessage.style.display = 'none';
 }
 
+function showAdmin(){
+  let admin = tag('admin')
+  if (admin.style.display === 'block'){
+    admin.style.display = 'none';
+  } else {
+    admin.style.display = 'block';
+  }
+}
+
+
