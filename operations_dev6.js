@@ -1,4 +1,4 @@
-const codeVersion = '6.1';
+const codeVersion = '6.2';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -41,7 +41,8 @@ let myTypes = {
 
 let myFormats = {
   purple: '#f3d1f0',
-  green: '#daf2d0'
+  green: '#daf2d0',
+  wallaGreen: '#b5e6a2'
 }
 
 let screenColours = {
@@ -3688,3 +3689,19 @@ async function getActorScriptDetails(indexes){
     console.log(rangeProperties.value);
   })
 }
+async function fillColorLinesAndScriptedWalla(){
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let typeCodeRange = scriptSheet.getRangeByIndexes(firstDataRow, typeCodeIndex, lastDataRow - firstDataRow, 1);
+    typeCodeRange.load('values, rowIndex');
+    await excel.sync();
+    let typeCodes = typeCodeRange.values.map(x => x[0]);
+    const theRowIndex = typeCodeRange.rowIndex;
+    const wallaScriptedIndexes = typeCodes.map((x, i) => [x, i]).filter(([x, i]) => x == myTypes.wallaScripted).map(([x, i]) => i + theRowIndex);
+    console.log('typeCodes: ', typeCodes);
+    console.log('theRowIndex:', theRowIndex);
+    console.log('walla scripted indexes:', wallaScriptedIndexes);
+  })
+  
+}
+
