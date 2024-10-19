@@ -25,7 +25,7 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
-let mySheetColumns, ukScriptIndex, bookIndex;
+let mySheetColumns, ukScriptIndex, bookIndex, otherNotesIndex;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
@@ -120,6 +120,7 @@ async function initialiseVariables(){
   locationIndex = findColumnIndex('Location');
   lineIndex = findColumnIndex('Line');
   ukScriptIndex = findColumnIndex('UK script');
+  otherNotesIndex = findColumnIndex('Other notes');
   
   ukTakesIndex = findColumnIndex('UK No of takes');
   ukTakeNoIndex = findColumnIndex('UK Take No')
@@ -3831,6 +3832,16 @@ async function fillColorLinesAndScriptedWalla(){
     console.log('typeCodes: ', typeCodes);
     console.log('theRowIndex:', theRowIndex);
     console.log('walla scripted indexes:', wallaScriptedIndexes);
+    const lineIndexes = typeCodes.map((x, i) => [x, i]).filter(([x, i]) => x == myTypes.line).map(([x, i]) => i + theRowIndex);
+    console.log('line indexes: ', lineIndexes);
+    const columnCount = otherNotesIndex - cueIndex + 1;
+    let wallaRanges = [];
+    for (let i = 0; i < wallaScriptedIndexes.length; i++){
+      wallaRanges[i] = scriptSheet.getRangeByIndexes(wallaScriptedIndexes[i], cueIndex, 1, columnCount);
+      wallaRanges[i].format.fill.color = 'red';    
+    }
+    await excel.sync();
   })
   
 }
+
