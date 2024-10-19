@@ -3708,7 +3708,7 @@ async function fillColorLinesAndScriptedWalla(){
     let wallaRanges = [];
     for (let i = 0; i < wallaScriptedIndexes.length; i++){
       wallaRanges[i] = scriptSheet.getRangeByIndexes(wallaScriptedIndexes[i], cueIndex, 1, columnCount);
-      wallaRanges[i].format.fill.color = 'red';    
+      wallaRanges[i].format.fill.color = myFormats.wallaGreen;  
     }
     await excel.sync();
   })

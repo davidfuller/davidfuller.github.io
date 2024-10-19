@@ -466,7 +466,7 @@ label {
   margin-left: 15px;
 }
 
-#btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo, #btnActorGoToLine, #btnDirectorGoToLine, #btnSchedulingGoToLine, #btnAddSceneBlock, #btnGetLocationInfo, #btnLocationGoTo{
+#btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo, #btnActorGoToLine, #btnDirectorGoToLine, #btnSchedulingGoToLine, #btnAddSceneBlock, #btnGetLocationInfo, #btnLocationGoTo, #btnChangeFills {
   height: auto;
   padding: 10px;
 }

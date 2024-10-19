@@ -462,7 +462,7 @@ label {
   margin-left: 15px;
 }
 
-#btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo, #btnActorGoToLine, #btnDirectorGoToLine, #btnSchedulingGoToLine, #btnAddSceneBlock, #btnGetLocationInfo, #btnLocationGoTo, #btnGetActorText {
+#btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo, #btnActorGoToLine, #btnDirectorGoToLine, #btnSchedulingGoToLine, #btnAddSceneBlock, #btnGetLocationInfo, #btnLocationGoTo, #btnGetActorText, #btnChangeFills {
   height: auto;
   padding: 10px;
 }
