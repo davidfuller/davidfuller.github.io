@@ -3843,9 +3843,15 @@ async function fillColorLinesAndScriptedWalla(){
     }
     await excel.sync();
     let lineRanges = [];
+    let myCount = 0;
     for (let i = 0; i < lineIndexes.length; i++){
       lineRanges[i] = scriptSheet.getRangeByIndexes(lineIndexes[i], cueIndex, 1, columnCount);
       lineRanges[i].format.fill.clear();
+      myCount += 1;
+      if (myCount >= 1000){
+        myCount = 0;
+        await excel.sync();
+      }
     }
     await excel.sync();
     if (isProtected){
