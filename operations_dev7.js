@@ -3823,6 +3823,7 @@ async function getActorScriptRanges(indexes, startRowIndex){
 async function fillColorLinesAndScriptedWalla(){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked();
     let typeCodeRange = scriptSheet.getRangeByIndexes(firstDataRow, typeCodeIndex, lastDataRow - firstDataRow, 1);
     typeCodeRange.load('values, rowIndex');
     await excel.sync();
@@ -3838,7 +3839,7 @@ async function fillColorLinesAndScriptedWalla(){
     let wallaRanges = [];
     for (let i = 0; i < wallaScriptedIndexes.length; i++){
       wallaRanges[i] = scriptSheet.getRangeByIndexes(wallaScriptedIndexes[i], cueIndex, 1, columnCount);
-      wallaRanges[i].format.fill.color = myFormats.wallaGreen;
+      wallaRanges[i].format.fill.color = myFormats.wallaGreen;  
     }
     await excel.sync();
     let lineRanges = [];
@@ -3847,6 +3848,10 @@ async function fillColorLinesAndScriptedWalla(){
       lineRanges[i].format.fill.clear();
     }
     await excel.sync();
+    if (isProtected){
+      await lockColumns();
+    }
   })
+  
 }
 
