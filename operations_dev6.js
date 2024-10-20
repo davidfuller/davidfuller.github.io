@@ -3707,9 +3707,15 @@ async function fillColorLinesAndScriptedWalla(){
     console.log('line indexes: ', lineIndexes);
     const columnCount = otherNotesIndex - cueIndex + 1;
     let wallaRanges = [];
+    let myCount = 0;
     for (let i = 0; i < wallaScriptedIndexes.length; i++){
       wallaRanges[i] = scriptSheet.getRangeByIndexes(wallaScriptedIndexes[i], cueIndex, 1, columnCount);
-      wallaRanges[i].format.fill.color = myFormats.wallaGreen;  
+      wallaRanges[i].format.fill.color = myFormats.wallaGreen;
+      myCount += 1;
+      if (myCount >= 1000){
+        myCount = 0;
+        await excel.sync();
+      }
     }
     await excel.sync();
     let lineRanges = [];
