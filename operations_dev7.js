@@ -2659,6 +2659,7 @@ function errorHandlerFunction(){
 }
 
 async function createTypeCodes(){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const positionChapterColumn = findColumnLetter("Position Chapter"); 
@@ -2688,6 +2689,9 @@ async function createTypeCodes(){
     typeCodeRange.values = resultArray;
     await excel.sync();
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 async function getIndices(theColumn, test, testValue){
