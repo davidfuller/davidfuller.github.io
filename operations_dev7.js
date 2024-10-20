@@ -1015,7 +1015,6 @@ async function correctFormulas(firstRow){
       columnName: "Scene Borders", //CI
       formulaRest: '=IF(' + cueColumn + firstRow + '="", IF(' + sceneBordersColumn + (firstRow - 1) + '="Start",' + sceneBordersColumn + (firstRow - 1) + ',""),IF(' + alphaLineRangeColumn + firstRow + '=' + alphaLineRangeColumn + (firstRow - 1) + ',"Copy","Original"))'
     },
-    ,
     {
       columnName: "Book", //CK
       formulaRest: '=IF(' + positionChapterColumn + firstRow + '="",' + bookColumn + (firstRow - 1) + ',LEFT(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '-3))'
