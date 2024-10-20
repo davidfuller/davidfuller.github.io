@@ -2642,17 +2642,17 @@ async function createTypeCodes(){
     resultArray = addValuesToArray(resultArray, chapterIndicies, myTypes.chapter, true);
 
     let sceneBordersColumn = findColumnLetter('Scene Borders');
-    let sceneIndicies = await getIndices(sceneBordersColumn, 'equals', 'Original');
+    let sceneIndicies = await getIndices(sceneBordersColumn, 'textEquals', 'Original');
     resultArray = addValuesToArray(resultArray, sceneIndicies, myTypes.scene, false);
     const typeCodeColumn = findColumnLetter("Type Code"); 
-    let sceneBlockIndicies = await getIndices(typeCodeColumn, 'equals', myTypes.sceneBlock)
+    let sceneBlockIndicies = await getIndices(typeCodeColumn, 'textEquals', myTypes.sceneBlock)
     resultArray = addValuesToArray(resultArray, sceneBlockIndicies, myTypes.sceneBlock, true);
 
     let ukScriptColumn = findColumnLetter('UK script');
-    let wallaScriptIndicies = await getIndices(ukScriptColumn, "equals", 'WALLA SCRIPTED LINES');
+    let wallaScriptIndicies = await getIndices(ukScriptColumn, "textEquals", 'WALLA SCRIPTED LINES');
     resultArray = addValuesToArray(resultArray, wallaScriptIndicies, myTypes.wallaScripted, false);
 
-    wallaScriptIndicies = await getIndices(ukScriptColumn, "equals", 'WALLA SCRIPTED LINES?');
+    wallaScriptIndicies = await getIndices(ukScriptColumn, "textEquals", 'WALLA SCRIPTED LINES?');
     resultArray = addValuesToArray(resultArray, wallaScriptIndicies, myTypes.wallaScripted, false);
 
     let cueColumn = findColumnLetter('Cue');
@@ -2679,7 +2679,11 @@ async function getIndices(theColumn, test, testValue){
     let index = -1;
     for (let i = 0; i< theValues.length; i++){
       let doIt = false;
-      if (test == "equals"){
+      if (test == "textEquals"){
+        doIt = theValues[i].toLowerCase() == testValue.toLowerCase();
+      } else if (test == "textNotEquals"){
+        doIt = theValues[i].toLowerCase() != testValue.toLowerCase();
+      } else if (test == "equals"){
         doIt = theValues[i] == testValue;
       } else if (test == "<>"){
         doIt = theValues[i] != testValue;
