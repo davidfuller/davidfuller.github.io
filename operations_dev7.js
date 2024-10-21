@@ -2617,15 +2617,18 @@ async function handleChange(event) {
       if ((event.address == 'C6') && event.source == 'Local'){
         await jade_modules.scheduling.getDirectorInfo();
       }
-  }).catch(errorHandlerFunction);
+  }).catch(errorHandlerFunction(e));
 }
 async function handleActor(event) {
   await Excel.run(async (excel) => {
       await excel.sync();        
-      if ((event.address == 'C6') && event.source == 'Local'){
+      if ((event.address == 'D6') && event.source == 'Local'){
         await jade_modules.scheduling.getActorInfo();
       }
-  }).catch(errorHandlerFunction);
+      if((event.address == 'D4') && event.source == 'Local'){
+        await jade_modules.scheduling.getActorText();
+      }
+  }).catch(errorHandlerFunction(e));
 }
 
 async function handleScheduling(event) {
@@ -2634,7 +2637,7 @@ async function handleScheduling(event) {
       if ((event.address == 'C6') && event.source == 'Local'){
         await jade_modules.scheduling.getForSchedulingInfo();
       }
-  }).catch(errorHandlerFunction);
+  }).catch(errorHandlerFunction(e));
 }
 
 async function handleLocation(event) {
@@ -2644,21 +2647,19 @@ async function handleLocation(event) {
         console.log('I got here')
         await jade_modules.scheduling.getLocationInfo();
       }
-  }).catch(errorHandlerFunction);
+  }).catch(errorHandlerFunction(e));
 }
 
 async function handleSelection(event) {
   await Excel.run(async (excel) => {
       await excel.sync();        
       console.log('I got here, event', event)
-  }).catch(errorHandlerFunction);
-}
-function errorHandlerFunction(){
-  console.log('I have an error')
+  }).catch(errorHandlerFunction(e));
 }
 
-function errorHandlerFunction(){
+function errorHandlerFunction(e){
   console.log('I have an error')
+  console.log(e)
 }
 
 async function createTypeCodes(){
