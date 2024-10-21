@@ -237,7 +237,7 @@ async function searchCharacter(){
     let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
     let choiceRange = forActorSheet.getRange('faChoice');
     choiceRange.load('values')
-    await Excel.sync();
+    await excel.sync();
     if (choiceRange.values[0][0] == 'List Search'){
       await getActorText();
     } else if (choiceRange.values[0][0] == 'Text Search'){
