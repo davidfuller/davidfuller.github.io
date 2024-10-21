@@ -26,6 +26,11 @@ let myFormats = {
   orange: '#f7c7ac'
 }
 
+let choiceType ={
+  list: 'List Search',
+  text: 'Text Search'
+}
+
 function auto_exec(){
 }
 async function loadReduceAndSortCharacters(){
@@ -66,7 +71,8 @@ async function getDirectorInfo(){
     await excel.sync();
     let characterName = characterChoiceRange.values[0][0];
     console.log('Character ',characterName);
-    let myData = await jade_modules.operations.getDirectorData(characterName);
+    let character = {name: characterName, type: choiceType.list}
+    let myData = await jade_modules.operations.getDirectorData(character);
     console.log('Scheduling myData', myData);
     let dataRange = forDirectorSheet.getRange(forDirectorTableName);
     let numItems = forDirectorSheet.getRange(numItemsDirectorsName);
@@ -92,10 +98,10 @@ async function getDirectorInfo(){
 }
 
 async function getActorInfo(){
-  await getActorInformation(true);
+  await getActorInformation();
 }
 
-async function getActorInformation(asDropdown){
+async function getActorInformation(){
   await Excel.run(async function(excel){
     let waitLabel = tag('actor-wait');
     waitLabel.style.display = 'block';
@@ -104,9 +110,9 @@ async function getActorInformation(asDropdown){
     waitCell.values = 'Please wait...';
     await excel.sync();
     
-    let characterName = await getActor(asDropdown);
-    console.log('Character ',characterName);
-    let myData = await jade_modules.operations.getDirectorData(characterName, asDropdown);
+    let character = await getActor();
+    console.log('Character ',character.name, character.type);
+    let myData = await jade_modules.operations.getDirectorData(character);
     let myLocation = await jade_modules.operations.getLocations();
     console.log('Scheduling myData', myData);
     console.log('Locations', myLocation);
@@ -239,15 +245,15 @@ async function searchCharacter(){
     choiceRange.load('values')
     await excel.sync();
     console.log(choiceRange.values[0][0]);
-    if (choiceRange.values[0][0] == 'List Search'){
+    if (choiceRange.values[0][0] == choiceType.list){
       await getActorInfo();
-    } else if (choiceRange.values[0][0] == 'Text Search'){
+    } else if (choiceRange.values[0][0] == choiceType.text){
       await getActorText();
     }
   }).catch(e => console.log('My error', e))
 }
 async function getActorText(){
-  await getActorInformation(false);
+  await getActorInformation();
 }
 
 async function getForSchedulingInfo(){
@@ -264,7 +270,8 @@ async function getForSchedulingInfo(){
     await excel.sync();
     let characterName = characterChoiceRange.values[0][0];
     console.log('Character ',characterName);
-    let myData = await jade_modules.operations.getDirectorData(characterName);
+    let character = {name: characterName, type: choiceType.list}
+    let myData = await jade_modules.operations.getDirectorData(character);
     console.log('Scheduling myData', myData);
     
     let dataArray = [];
@@ -480,21 +487,23 @@ async function createScript(){
   let actorWait = tag('actor-wait');
   actorWait.style.display = 'block';
   let sceneNumbers = await getSceneNumberActor();
-  let sceneNumber = sceneNumbers[0];
-  if (!isNaN(sceneNumber)){
-    let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
-    console.log('Indexes: ', indexes);
-    let book = await jade_modules.operations.getBook();
-    let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
-    let characterName = await getActor();
-    let rowDetails = await putDataInActorScriptSheet(book, characterName, sceneBlockText);
-    //give 1 row of scpace between sceneblock and script
-    rowDetails[0].nextRowIndex += 1;
-    let rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, rowDetails[0].nextRowIndex);
-    await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes, rowIndexes, characterName);
-    await showActorScript();
-  } else {
-    alert('Please select a scene')
+  for (let i = 0; i < sceneNumbers.length; i++){
+    let sceneNumber = sceneNumbers[i]
+    if (!isNaN(sceneNumber)){
+      let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
+      console.log('Indexes: ', indexes);
+      let book = await jade_modules.operations.getBook();
+      let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
+      let character = await getActor();
+      let rowDetails = await putDataInActorScriptSheet(book, character, sceneBlockText);
+      //give 1 row of scpace between sceneblock and script
+      rowDetails[0].nextRowIndex += 1;
+      let rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, rowDetails[0].nextRowIndex);
+      await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes, rowIndexes, characterName);
+      await showActorScript();
+    } else {
+      alert('Please select a scene')
+    }
   }
   actorWait.style.display = 'none';
 }
@@ -552,9 +561,14 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
     let bookRange = actorScriptSheet.getRange(actorScriptBookName);
     bookRange.values = book;
     let headingRange = actorScriptSheet.getRange(actorScriptCharcaterHeadingName);
-    headingRange.values = [['Character: ']]
+    if (character.type = choiceType.list){
+      headingRange.values = [['Character: ']]
+    } else {
+      headingRange.values = [['Character: (Text Search)']]
+    }
+    
     let characterRange = actorScriptSheet.getRange(actorScriptCharacterName);
-    characterRange.values = character;
+    characterRange.values = character.name;
     characterRange.unmerge()
     characterRange.load('rowIndex, columnIndex')
     await excel.sync();
@@ -591,22 +605,29 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
   return rowDetails;
 }
 
-async function getActor(asDropDown){
-  let characterName;
+async function getActor(){
+  let character = {};
   await Excel.run(async function(excel){
     let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
-    let characterChoiceRange
-    if (asDropDown){
+    let choiceRange = forActorSheet.getRange('faChoice');
+    choiceRange.load('values')
+    await excel.sync();
+    let characterChoiceRange, myChoiceType;
+    console.log(choiceRange.values[0][0]);
+    if (choiceRange.values[0][0] == choiceType.list){
       characterChoiceRange = forActorSheet.getRange('faCharacterChoice');
-    } else {
+      myChoiceType = choiceType.list;
+    } else if (choiceRange.values[0][0] == choiceType.text){
       characterChoiceRange = forActorSheet.getRange('faTextSearch');
+      myChoiceType = choiceType.text;
     }
     characterChoiceRange.load('values');
     await excel.sync();
-    characterName = characterChoiceRange.values[0][0];
-    console.log('Character ',characterName);
+    character.name = characterChoiceRange.values[0][0];
+    character.type = myChoiceType;
+    console.log('Character ',character);
   })
-  return characterName;
+  return character;
 }
 
 async function showActorScript(){
@@ -739,5 +760,5 @@ async function highlightCharacters(sheetName, character, rowDetails){
     };
     
     await excel.sync();
-});
+  });
 }

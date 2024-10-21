@@ -73,6 +73,11 @@ let screenColours = {
   }
 }
 
+let choiceType ={
+  list: 'List Search',
+  text: 'Text Search'
+}
+
 function auto_exec(){
 }
 
@@ -2038,7 +2043,7 @@ async function filterOnLocation(locationText){
   })
 }
 
-async function getDirectorData(characterName, exactSearch){
+async function getDirectorData(character){
   let myData = [];
   let hiddenColumnAddresses = await getHiddenColumns();
   
@@ -2053,15 +2058,15 @@ async function getDirectorData(characterName, exactSearch){
     app.suspendScreenUpdatingUntilNextSync();
     console.log('Used range address', usedRange.address)
     let myCriteria
-    if (exactSearch){
+    if (character.type == choiceType.list){
       myCriteria = {
         filterOn: Excel.FilterOn.custom,
-        criterion1: characterName
+        criterion1: character.name
       }
     } else {
       myCriteria = {
         filterOn: Excel.FilterOn.custom,
-        criterion1: '=*' + characterName +'*'
+        criterion1: '=*' + character.name +'*'
       }
     }
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
