@@ -106,7 +106,7 @@ async function getActorInformation(){
     waitCell.values = 'Please wait...';
     await excel.sync();
     
-    let character = await getActor(forActorSheet);
+    let character = await getActor(forActorName);
     console.log('Character ',character.name, character.type);
     let myData = await jade_modules.operations.getDirectorData(character);
     let myLocation = await jade_modules.operations.getLocations();
