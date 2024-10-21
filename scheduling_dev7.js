@@ -503,6 +503,11 @@ async function getSceneNumberActor(){
   await Excel.run(async function(excel){
     const forActorSheet = excel.workbook.worksheets.getItem(forActorName);
     const sceneIndex = 1;
+    let selectedRanges = excel.workbook.getSelectedRanges();
+    selectedRanges.load('address');
+    await excel.sync();
+    console.log('Selected ranges: ', selectedRanges.address);
+
     let activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex');
     await excel.sync(); 
