@@ -593,6 +593,7 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
 
 async function getActor(sheetName){
   let character = {};
+  let choiceRangeName, characterListRangeName, characterTextRangeName;
   if (sheetName == forActorName){
     choiceRangeName = 'faChoice';
     characterListRangeName = 'faCharacterChoice';
