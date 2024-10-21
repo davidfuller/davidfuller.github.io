@@ -502,7 +502,7 @@ async function getSceneNumberActor(){
   let sceneNumber;
   await Excel.run(async function(excel){
     const forActorSheet = excel.workbook.worksheets.getItem(forActorName);
-    const sceneIndex = 2;
+    const sceneColumnIndex = 2;
     let selectedRanges = excel.workbook.getSelectedRanges();
     selectedRanges.load('address');
     await excel.sync();
@@ -514,9 +514,22 @@ async function getSceneNumberActor(){
     }
     await excel.sync();
     console.log('Selected ranges: ', selectedRanges.address);
+    let sceneRange = [];
+    let sceneIndex = -1;
     for (let i = 0; i < myAddresses.length; i++){
-      console.log('Details: ', tempRange[i].rowIndex, tempRange[i].rowCount);
+      for (let row = 0; row < tempRange[i].rowCount; row++){
+        let thisRow = row + tempRange[i].rowIndex;
+        sceneIndex += 1;
+        sceneRange[sceneIndex] = forActorSheet.getRangeByIndexes(thisRow, sceneColumnIndex, 1, 1)
+        sceneRange[sceneIndex].load('values');
+      }
     }
+    await excel.sync();
+    let result = []
+    for (let i = 0; i < sceneRange.length; i++){
+      result[i] = sceneRange[i].values[0][0];
+    }
+    console.log('The results', results);
 
     /*let activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex');
