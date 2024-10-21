@@ -529,7 +529,7 @@ async function getSceneNumberActor(){
     for (let i = 0; i < sceneRange.length; i++){
       result[i] = sceneRange[i].values[0][0];
     }
-    console.log('The results', results);
+    console.log('The results', result);
 
     /*let activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex');
