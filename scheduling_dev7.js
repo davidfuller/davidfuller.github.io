@@ -544,7 +544,7 @@ async function getSceneNumberActor(){
       console.log('sceneNumber', sceneNumber);
     }
       */
-  })
+  }).catch(e => console.log('My error', e));
   return sceneNumber;
 }
 
