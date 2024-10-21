@@ -298,8 +298,8 @@ async function getForSchedulingInfo(){
     
     for(let i = 0; i < dataArray.length; i++){
       sceneArray[i] = [];
-      sceneArray[i][0] = myData[i].characters.join('|');
-      sceneArray[i][1] = myData[i].sceneNumber;
+      sceneArray[i][0] = dataArray[i].characters.join('|');
+      sceneArray[i][1] = dataArray[i].sceneNumber;
     }
     console.log('dataArray', dataArray, 'totalScene', totalSceneWordCount, 'totalLine', totalLineWordCount, 'sceneNumbers', sceneArray);
     
