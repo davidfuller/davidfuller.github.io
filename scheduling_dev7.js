@@ -267,7 +267,7 @@ async function getForSchedulingInfo(){
           sceneNumber: myData[i].sceneNumber,
           sceneWordCount: myData[i].sceneWordCount,
           characterWordCount: myData[i].lineWordCount,
-          character: myData[i].character
+          characters: [myData[i].character]
         }
         dataArray.push(newRow);
         arrayIndex += 1;
@@ -284,7 +284,7 @@ async function getForSchedulingInfo(){
               sceneNumber: myData[i].sceneNumber,
               sceneWordCount: myData[i].sceneWordCount,
               characterWordCount: myData[i].lineWordCount,
-              character: myData[i].character
+              characters: [myData[i].character];
             }
             dataArray.push(newRow);
             arrayIndex += 1;
@@ -297,8 +297,8 @@ async function getForSchedulingInfo(){
           } else {
             dataArray[myIndex].characterWordCount = dataArray[myIndex].characterWordCount + myData[i].lineWordCount;
             totalLineWordCount += myData[i].lineWordCount;
-            if (dataArray[myIndex].character.toLowerCase() != myData[i].character.toLowerCase()){
-              dataArray[myIndex].character = dataArray[myIndex].character + ", " + myData[i].character
+            if (!(dataArray[myIndex].characters.some(x => x.toLowerCase() == myData[i].character.toLowerCase()))){
+              dataArray[myIndex].characters.push(myData[i].character);
             }
           }
         }
