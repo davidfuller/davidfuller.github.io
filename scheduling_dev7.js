@@ -471,24 +471,38 @@ async function locationGoToLine(){
 async function createScript(){
   let actorWait = tag('actor-wait');
   actorWait.style.display = 'block';
+  let isAllNaN = true;
   let sceneNumbers = await getSceneNumberActor();
-  for (let i = 0; i < sceneNumbers.length; i++){
-    let sceneNumber = sceneNumbers[i]
-    if (!isNaN(sceneNumber)){
-      let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
-      console.log('Indexes: ', indexes);
-      let book = await jade_modules.operations.getBook();
-      let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
-      let character = await getActor(forActorName);
-      let rowDetails = await putDataInActorScriptSheet(book, character, sceneBlockText);
-      //give 1 row of scpace between sceneblock and script
-      rowDetails[0].nextRowIndex += 1;
-      let rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, rowDetails[0].nextRowIndex);
-      await formatActorScript(actorScriptName, rowDetails[0].sceneBlockRowIndexes, rowIndexes, character.name);
-      await showActorScript();
-    } else {
-      alert('Please select a scene')
+  
+  if (sceneNumbers.length > 0){
+    let book = await jade_modules.operations.getBook();
+    let character = await getActor(forActorName);
+    await topOfFirstPage(book, character);
+  
+    let theRowIndex = 1;
+    let rowIndexes;
+    for (let i = 0; i < sceneNumbers.length; i++){
+      let sceneNumber = sceneNumbers[i]
+      if (!isNaN(sceneNumber)){
+        isAllNaN = false;
+        let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
+        console.log('Indexes: ', indexes);
+        let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
+        let rowDetails = await putDataInActorScriptSheet(sceneBlockText, theRowIndex);
+        //give 1 row of scpace between sceneblock and script
+        theRowIndex = rowDetails.nextRowIndex + 1;
+        rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, theRowIndex);
+        await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name);
+        theRowIndex = rowIndexes[rowIndexes.length - 1].startRow + rowIndexes[rowIndexes.length - 1].rowCount + 1;
+      }
     }
+    if (isAllNaN){
+      alert('Please select a scene')
+    } else {
+      await showActorScript();
+    }
+  } else {
+    alert('Please select a scene')
   }
   actorWait.style.display = 'none';
 }
@@ -538,9 +552,7 @@ async function getSceneNumberActor(){
   }).catch(e => console.log('My error', e));
   return sceneNumbers;
 }
-
-async function putDataInActorScriptSheet(book, character, sceneBlock){
-  let rowDetails = [];
+async function topOfFirstPage(book, character){
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     let bookRange = actorScriptSheet.getRange(actorScriptBookName);
@@ -551,7 +563,6 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
     } else {
       headingRange.values = [['Character: (Text Search)']]
     }
-    
     let characterRange = actorScriptSheet.getRange(actorScriptCharacterName);
     characterRange.values = character.name;
     characterRange.unmerge()
@@ -559,10 +570,17 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
     await excel.sync();
     let mergeRange = actorScriptSheet.getRangeByIndexes(characterRange.rowIndex, characterRange.columnIndex, 1, 2);
     mergeRange.merge(true);
+  })
+}
+
+async function putDataInActorScriptSheet(sceneBlock, startRowIndex){
+  let rowDetails = {};
+  await Excel.run(async function(excel){
+    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+  
     let tableRange = actorScriptSheet.getRange(actorScriptTableName);
     tableRange.clear("Contents");
     tableRange.clear("Formats");
-    let startRowIndex = 1
     let sceneBlockColumnIndex = 0;
     console.log(startRowIndex,sceneBlockColumnIndex, sceneBlock.length, 1)
     console.log(sceneBlock);
@@ -580,12 +598,7 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
       sceneBlockIndexes[i] = startRowIndex + i;
     }
     let nextRowIndex = startRowIndex + sceneBlock.length
-    rowDetails.push(
-      {
-        nextRowIndex: nextRowIndex,
-        sceneBlockRowIndexes: sceneBlockIndexes
-      }
-    )
+    rowDetails = { nextRowIndex: nextRowIndex, sceneBlockRowIndexes: sceneBlockIndexes}
   })
   return rowDetails;
 }
