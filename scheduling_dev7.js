@@ -561,7 +561,7 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
     let bookRange = actorScriptSheet.getRange(actorScriptBookName);
     bookRange.values = book;
     let headingRange = actorScriptSheet.getRange(actorScriptCharcaterHeadingName);
-    if (character.type = choiceType.list){
+    if (character.type == choiceType.list){
       headingRange.values = [['Character: ']]
     } else {
       headingRange.values = [['Character: (Text Search)']]
