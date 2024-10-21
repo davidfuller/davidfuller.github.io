@@ -504,9 +504,19 @@ async function getSceneNumberActor(){
     const forActorSheet = excel.workbook.worksheets.getItem(forActorName);
     const sceneIndex = 2;
     let selectedRanges = excel.workbook.getSelectedRanges();
-    selectedRanges.load('address, rowIndex, rowCount');
+    selectedRanges.load('address');
     await excel.sync();
-    console.log('Selected ranges: ', selectedRanges.address, selectedRanges.rowIndex, selectedRanges.rowCount);
+    let myAddresses = selectedRanges.address.split(',')
+    let tempRange = []
+    for (let i = 0; i < myAddresses.length; i++){
+      tempRange[i] = forActorSheet.getRange(myAddresses[i]);
+      tempRange[i].load('rowIndex, rowCount')
+    }
+    await excel.sync();
+    console.log('Selected ranges: ', selectedRanges.address);
+    for (let i = 0; i < myAddresses.length; i++){
+      console.log('Details: ', tempRange[i].rowIndex, tempRange[i].rowCount);
+    }
 
     /*let activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex');
