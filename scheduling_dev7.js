@@ -532,8 +532,10 @@ async function getSceneNumberActor(){
     for (let i = 0; i < sceneRange.length; i++){
       let thisNumber = parseInt(sceneRange[i].values[0][0]);
       if (!isNaN(thisNumber)){
-        resultIndex += 1;
-        result[resultIndex] = thisNumber
+        if (!result.includes(thisNumber)){
+          resultIndex += 1;
+          result[resultIndex] = thisNumber;
+        }
       }
     }
     console.log('The results', result);
