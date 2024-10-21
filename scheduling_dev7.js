@@ -519,9 +519,11 @@ async function getSceneNumberActor(){
     for (let i = 0; i < myAddresses.length; i++){
       for (let row = 0; row < tempRange[i].rowCount; row++){
         let thisRow = row + tempRange[i].rowIndex;
-        sceneIndex += 1;
-        sceneRange[sceneIndex] = forActorSheet.getRangeByIndexes(thisRow, sceneColumnIndex, 1, 1)
-        sceneRange[sceneIndex].load('values');
+        if (thisRow > 9){
+          sceneIndex += 1;
+          sceneRange[sceneIndex] = forActorSheet.getRangeByIndexes(thisRow, sceneColumnIndex, 1, 1)
+          sceneRange[sceneIndex].load('values');
+        }
       }
     }
     await excel.sync();
