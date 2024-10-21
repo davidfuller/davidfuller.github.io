@@ -256,7 +256,6 @@ async function getForSchedulingInfo(){
     let totalSceneWordCount = 0;
     let totalLineWordCount = 0;
     let sceneArray = [];
-    let arrayIndex = -1;
     for (let i = 0; i < myData.length; i++){
       let newRow;
       if (myData[i].sceneWordCount == ''){
@@ -270,10 +269,6 @@ async function getForSchedulingInfo(){
           characters: [myData[i].character]
         }
         dataArray.push(newRow);
-        arrayIndex += 1;
-        sceneArray[arrayIndex] = [];
-        sceneArray[arrayIndex][0] = myData[i].character;
-        sceneArray[arrayIndex][1] = myData[i].sceneNumber;
         totalSceneWordCount += myData[i].sceneWordCount;
         totalLineWordCount += myData[i].lineWordCount;
       } else {
@@ -287,10 +282,6 @@ async function getForSchedulingInfo(){
               characters: [myData[i].character]
             }
             dataArray.push(newRow);
-            arrayIndex += 1;
-            sceneArray[arrayIndex] = [];
-            sceneArray[arrayIndex][0] = myData[i].character;
-            sceneArray[arrayIndex][1] = myData[i].sceneNumber;
             totalSceneWordCount += myData[i].sceneWordCount;
             console.log(i, 'totalscene', totalSceneWordCount, 'sceneWordCount', myData[i].sceneWordCount, 'sceneNo', myData[i].sceneNumber);
             totalLineWordCount += myData[i].lineWordCount;
@@ -304,7 +295,15 @@ async function getForSchedulingInfo(){
         }
       } 
     }
+    
+    for(let i = 0; i < dataArray.length; i++){
+      sceneArray[i] = [];
+      sceneArray[i][0] = myData[i].characters.join('|');
+      sceneArray[i][1] = myData[i].sceneNumber;
+    }
     console.log('dataArray', dataArray, 'totalScene', totalSceneWordCount, 'totalLine', totalLineWordCount, 'sceneNumbers', sceneArray);
+    
+    
     let dataRange = forSchedulingSheet.getRange(forSchedulingTableName);
     let numItems = forSchedulingSheet.getRange(numItemsSchedulingName);
     let linesUsedRange = forSchedulingSheet.getRange('fsLinesUsed')
