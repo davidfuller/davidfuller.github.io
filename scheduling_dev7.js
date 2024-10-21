@@ -232,7 +232,19 @@ async function getLocationInfo(){
     waitLabel.style.display = 'none';
   })  
 }
-
+async function searchCharacter(){
+  await Excel.run(async function(excel) {
+    let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
+    let choiceRange = forActorSheet.getRange('faChoice');
+    choiceRange.load('values')
+    await Excel.sync();
+    if (choiceRange.values[0][0] == 'List Search'){
+      await getActorText();
+    } else if (choiceRange.values[0][0] == 'Text Search'){
+      await getActorInfo();
+    }
+  }).catch(e => console.log('My error', e))
+}
 async function getActorText(){
   await getActorInformation(false);
 }
