@@ -388,7 +388,7 @@ async function findLineNo(lineNo){
     theRowIndex = range.rowIndex + myIndex
 
     console.log("Found Index, Range Value, Calculated Row Index");
-    console.log(myIndex, range.values[myIndex], theRowIndex);
+    console.log(myIndex, range.values[myIndex], theRowIndex, lineNo);
     
     if (myIndex == -1){
       alert('Invalid Line Number');
