@@ -610,7 +610,7 @@ async function getActor(sheetName){
       characterChoiceRange = theSheet.getRange(characterListRangeName);
       myChoiceType = choiceType.list;
     } else if (choiceRange.values[0][0] == choiceType.text){
-      characterChoiceRange = forActorSheet.getRange(characterTextRangeName);
+      characterChoiceRange = theSheet.getRange(characterTextRangeName);
       myChoiceType = choiceType.text;
     }
     characterChoiceRange.load('values');
