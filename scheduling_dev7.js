@@ -478,6 +478,7 @@ async function createScript(){
     let book = await jade_modules.operations.getBook();
     let character = await getActor(forActorName);
     await topOfFirstPage(book, character);
+    await clearActorScriptBody();
   
     let theRowIndex = 1;
     let rowIndexes;
@@ -572,15 +573,20 @@ async function topOfFirstPage(book, character){
     mergeRange.merge(true);
   })
 }
-
-async function putDataInActorScriptSheet(sceneBlock, startRowIndex){
-  let rowDetails = {};
+async function clearActorScriptBody(){
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
   
     let tableRange = actorScriptSheet.getRange(actorScriptTableName);
     tableRange.clear("Contents");
     tableRange.clear("Formats");
+  })
+  
+}
+async function putDataInActorScriptSheet(sceneBlock, startRowIndex){
+  let rowDetails = {};
+  await Excel.run(async function(excel){
+    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     let sceneBlockColumnIndex = 0;
     console.log(startRowIndex,sceneBlockColumnIndex, sceneBlock.length, 1)
     console.log(sceneBlock);
