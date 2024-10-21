@@ -240,9 +240,9 @@ async function searchCharacter(){
     await excel.sync();
     console.log(choiceRange.values[0][0]);
     if (choiceRange.values[0][0] == 'List Search'){
-      await getActorText();
-    } else if (choiceRange.values[0][0] == 'Text Search'){
       await getActorInfo();
+    } else if (choiceRange.values[0][0] == 'Text Search'){
+      await getActorText();
     }
   }).catch(e => console.log('My error', e))
 }
