@@ -284,7 +284,7 @@ async function getForSchedulingInfo(){
               sceneNumber: myData[i].sceneNumber,
               sceneWordCount: myData[i].sceneWordCount,
               characterWordCount: myData[i].lineWordCount,
-              characters: [myData[i].character];
+              characters: [myData[i].character]
             }
             dataArray.push(newRow);
             arrayIndex += 1;
