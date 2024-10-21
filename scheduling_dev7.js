@@ -528,8 +528,13 @@ async function getSceneNumberActor(){
     }
     await excel.sync();
     let result = []
+    let resultIndex = -1;
     for (let i = 0; i < sceneRange.length; i++){
-      result[i] = sceneRange[i].values[0][0];
+      let thisNumber = parseInt(sceneRange[i].values[0][0]);
+      if (!isNaN(thisNumber)){
+        resultIndex += 1;
+        result[resultIndex] = thisNumber
+      }
     }
     console.log('The results', result);
 
