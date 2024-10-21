@@ -594,6 +594,7 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
 async function getActor(sheetName){
   let character = {};
   let choiceRangeName, characterListRangeName, characterTextRangeName;
+  console.log('sheetName', sheetName, forActorName, forSchedulingName);
   if (sheetName == forActorName){
     choiceRangeName = 'faChoice';
     characterListRangeName = 'faCharacterChoice';
@@ -603,6 +604,7 @@ async function getActor(sheetName){
     characterListRangeName = 'fsCharacterChoice';
     characterTextRangeName = 'fsTextSearch';
   }
+  console.log('range names: ', choiceRangeName);
   await Excel.run(async function(excel){
     let theSheet = excel.workbook.worksheets.getItem(sheetName);
     let choiceRange = theSheet.getRange(choiceRangeName);
