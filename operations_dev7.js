@@ -353,6 +353,7 @@ async function findSceneNo(sceneNo){
 }
 
 async function findLineNo(lineNo){
+  let theRowIndex = -1;
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
@@ -363,6 +364,7 @@ async function findLineNo(lineNo){
     const startColumn = activeCell.columnIndex
     let range = await getLineRange(excel);
     range.load("values");
+    range.load('rowIndex')
     await excel.sync();
     console.log("Line range");
     console.log(range.values);
@@ -383,6 +385,7 @@ async function findLineNo(lineNo){
     }
 
     const myIndex = range.values.findIndex(a => a[0] == (lineNo));
+    theRowIndex = range.rowIndex + myIndex
 
     console.log("Found Index");
     console.log(myIndex);
@@ -391,11 +394,12 @@ async function findLineNo(lineNo){
       alert('Invalid Line Number');
     } else {
       scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-      const myTarget = scriptSheet.getRangeByIndexes(myIndex + 2, startColumn, 1, 1);
+      const myTarget = scriptSheet.getRangeByIndexes(theRowIndex, startColumn, 1, 1);
       myTarget.select();
       await excel.sync();
     }
   })
+  return theRowIndex
 }
 
 async function getLineNoRowIndex(lineNo){
@@ -2479,7 +2483,7 @@ async function showWallaImportPage(){
 
 
 async function showMainPage(){
-  console.log('Showing Mian Page')
+  console.log('Showing Main Page')
   const mainPage = tag('main-page');
   mainPage.style.display = 'block';
   const forDirectorPage = tag('for-director-page');

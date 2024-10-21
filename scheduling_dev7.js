@@ -375,11 +375,7 @@ async function actorGoToLine(){
       let lineNumber = parseInt(lineNumberCell.values[0][0])
       console.log('lineNumber', lineNumber);
       if (!isNaN(lineNumber)){
-        await jade_modules.operations.findLineNo(lineNumber);
-        activeCell = excel.workbook.getActiveCell();
-        activeCell.load('rowIndex');
-        await excel.sync(); 
-        let rowIndex = activeCell.rowIndex;
+        let rowIndex = await jade_modules.operations.findLineNo(lineNumber);
         const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
         let columnIndex = await jade_modules.operations.findColumnIndex('Number');
         let tempRange = scriptSheet.getRangeByIndexes(rowIndex, columnIndex, 1, 1);
