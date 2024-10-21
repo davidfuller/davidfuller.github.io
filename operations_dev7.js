@@ -2596,7 +2596,6 @@ async function showLocation(){
   })
 }
 
-
 async function registerExcelEvents(){
   await Excel.run(async (excel) => {
     const directorSheet = excel.workbook.worksheets.getItem(forDirectorName);
@@ -2628,10 +2627,10 @@ async function handleActor(event) {
   await Excel.run(async (excel) => {
       await excel.sync();        
       if ((event.address == 'D6') && event.source == 'Local'){
-        await jade_modules.scheduling.getActorInfo();
+        await jade_modules.scheduling.searchCharacter();
       }
       if((event.address == 'D4') && event.source == 'Local'){
-        await jade_modules.scheduling.getActorText();
+        await jade_modules.scheduling.searchCharacter();
       }
   }).catch(errorHandlerFunction(e));
 }
@@ -2639,7 +2638,7 @@ async function handleActor(event) {
 async function handleScheduling(event) {
   await Excel.run(async (excel) => {
       await excel.sync();        
-      if ((event.address == 'C6') && event.source == 'Local'){
+      if (((event.address == 'D4')||(event.address == 'D6')) && event.source == 'Local'){
         await jade_modules.scheduling.getForSchedulingInfo();
       }
   }).catch(errorHandlerFunction(e));
