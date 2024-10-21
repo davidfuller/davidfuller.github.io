@@ -97,10 +97,6 @@ async function getDirectorInfo(){
   }) 
 }
 
-async function getActorInfo(){
-  await getActorInformation();
-}
-
 async function getActorInformation(){
   await Excel.run(async function(excel){
     let waitLabel = tag('actor-wait');
@@ -110,7 +106,7 @@ async function getActorInformation(){
     waitCell.values = 'Please wait...';
     await excel.sync();
     
-    let character = await getActor();
+    let character = await getActor(forActorSheet);
     console.log('Character ',character.name, character.type);
     let myData = await jade_modules.operations.getDirectorData(character);
     let myLocation = await jade_modules.operations.getLocations();
@@ -238,21 +234,8 @@ async function getLocationInfo(){
     waitLabel.style.display = 'none';
   })  
 }
+
 async function searchCharacter(){
-  await Excel.run(async function(excel) {
-    let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
-    let choiceRange = forActorSheet.getRange('faChoice');
-    choiceRange.load('values')
-    await excel.sync();
-    console.log(choiceRange.values[0][0]);
-    if (choiceRange.values[0][0] == choiceType.list){
-      await getActorInfo();
-    } else if (choiceRange.values[0][0] == choiceType.text){
-      await getActorText();
-    }
-  }).catch(e => console.log('My error', e))
-}
-async function getActorText(){
   await getActorInformation();
 }
 
@@ -265,12 +248,7 @@ async function getForSchedulingInfo(){
     waitCell.values = 'Please wait...';
     await excel.sync();
     
-    let characterChoiceRange = forSchedulingSheet.getRange('fsCharacterChoice');
-    characterChoiceRange.load('values');
-    await excel.sync();
-    let characterName = characterChoiceRange.values[0][0];
-    console.log('Character ',characterName);
-    let character = {name: characterName, type: choiceType.list}
+    let character = await getActor(forSchedulingName);
     let myData = await jade_modules.operations.getDirectorData(character);
     console.log('Scheduling myData', myData);
     
@@ -288,12 +266,14 @@ async function getForSchedulingInfo(){
         newRow = {
           sceneNumber: myData[i].sceneNumber,
           sceneWordCount: myData[i].sceneWordCount,
-          characterWordCount: myData[i].lineWordCount
+          characterWordCount: myData[i].lineWordCount,
+          character: myData[i].character
         }
         dataArray.push(newRow);
         arrayIndex += 1;
         sceneArray[arrayIndex] = [];
-        sceneArray[arrayIndex][0] = myData[i].sceneNumber;
+        sceneArray[arrayIndex][0] = myData[i].character;
+        sceneArray[arrayIndex][1] = myData[i].sceneNumber;
         totalSceneWordCount += myData[i].sceneWordCount;
         totalLineWordCount += myData[i].lineWordCount;
       } else {
@@ -303,12 +283,14 @@ async function getForSchedulingInfo(){
             newRow = {
               sceneNumber: myData[i].sceneNumber,
               sceneWordCount: myData[i].sceneWordCount,
-              characterWordCount: myData[i].lineWordCount
+              characterWordCount: myData[i].lineWordCount,
+              character: myData[i].character
             }
             dataArray.push(newRow);
             arrayIndex += 1;
             sceneArray[arrayIndex] = [];
-            sceneArray[arrayIndex][0] = myData[i].sceneNumber;
+            sceneArray[arrayIndex][0] = myData[i].character;
+            sceneArray[arrayIndex][1] = myData[i].sceneNumber;
             totalSceneWordCount += myData[i].sceneWordCount;
             console.log(i, 'totalscene', totalSceneWordCount, 'sceneWordCount', myData[i].sceneWordCount, 'sceneNo', myData[i].sceneNumber);
             totalLineWordCount += myData[i].lineWordCount;
@@ -328,10 +310,11 @@ async function getForSchedulingInfo(){
     dataRange.load('rowCount');
     dataRange.load('rowIndex');
     dataRange.load('columnIndex');
+    dataRange.load('columnCount');
     await excel.sync();
 
     if (sceneArray.length > 0){
-      let displayRange = forSchedulingSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, sceneArray.length, 1);
+      let displayRange = forSchedulingSheet.getRangeByIndexes(dataRange.rowIndex, dataRange.columnIndex, sceneArray.length, dataRange.columnCount);
       displayRange.values = sceneArray;
     }
     numItems.values = sceneArray.length;
@@ -494,7 +477,7 @@ async function createScript(){
       console.log('Indexes: ', indexes);
       let book = await jade_modules.operations.getBook();
       let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
-      let character = await getActor();
+      let character = await getActor(forActorName);
       let rowDetails = await putDataInActorScriptSheet(book, character, sceneBlockText);
       //give 1 row of scpace between sceneblock and script
       rowDetails[0].nextRowIndex += 1;
@@ -605,20 +588,29 @@ async function putDataInActorScriptSheet(book, character, sceneBlock){
   return rowDetails;
 }
 
-async function getActor(){
+async function getActor(sheetName){
   let character = {};
+  if (sheetName == forActorName){
+    choiceRangeName = 'faChoice';
+    characterListRangeName = 'faCharacterChoice';
+    characterTextRangeName = 'faTextSearch';
+  } else if (sheetName == forSchedulingName){
+    choiceRangeName = 'fsChoice'
+    characterListRangeName = 'fsCharacterChoice';
+    characterTextRangeName = 'fsTextSearch';
+  }
   await Excel.run(async function(excel){
-    let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
-    let choiceRange = forActorSheet.getRange('faChoice');
+    let theSheet = excel.workbook.worksheets.getItem(sheetName);
+    let choiceRange = theSheet.getRange(choiceRangeName);
     choiceRange.load('values')
     await excel.sync();
     let characterChoiceRange, myChoiceType;
     console.log(choiceRange.values[0][0]);
     if (choiceRange.values[0][0] == choiceType.list){
-      characterChoiceRange = forActorSheet.getRange('faCharacterChoice');
+      characterChoiceRange = theSheet.getRange(characterListRangeName);
       myChoiceType = choiceType.list;
     } else if (choiceRange.values[0][0] == choiceType.text){
-      characterChoiceRange = forActorSheet.getRange('faTextSearch');
+      characterChoiceRange = forActorSheet.getRange(characterTextRangeName);
       myChoiceType = choiceType.text;
     }
     characterChoiceRange.load('values');
