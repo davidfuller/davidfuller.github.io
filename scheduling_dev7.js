@@ -297,8 +297,8 @@ async function getForSchedulingInfo(){
           } else {
             dataArray[myIndex].characterWordCount = dataArray[myIndex].characterWordCount + myData[i].lineWordCount;
             totalLineWordCount += myData[i].lineWordCount;
-            if (sceneArray[myIndex][0].toLowerCase() != myData[i].character.toLowerCase()){
-              sceneArray[myIndex[0]] = sceneArray[myIndex[0]] + ", " + myData[i].character
+            if (dataArray[myIndex].character.toLowerCase() != myData[i].character.toLowerCase()){
+              dataArrayArray[myIndex].character = dataArray[myIndex].character + ", " + myData[i].character
             }
           }
         }
