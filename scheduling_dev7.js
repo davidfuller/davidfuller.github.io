@@ -479,7 +479,8 @@ async function locationGoToLine(){
 async function createScript(){
   let actorWait = tag('actor-wait');
   actorWait.style.display = 'block';
-  let sceneNumber = await getSceneNumberActor();
+  let sceneNumbers = await getSceneNumberActor();
+  let sceneNumber = sceneNumbers[0];
   if (!isNaN(sceneNumber)){
     let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
     console.log('Indexes: ', indexes);
@@ -499,7 +500,7 @@ async function createScript(){
 }
 
 async function getSceneNumberActor(){
-  let sceneNumber;
+  let sceneNumbers = [];
   await Excel.run(async function(excel){
     const forActorSheet = excel.workbook.worksheets.getItem(forActorName);
     const sceneColumnIndex = 2;
@@ -539,22 +540,9 @@ async function getSceneNumberActor(){
       }
     }
     console.log('The results', result);
-
-    /*let activeCell = excel.workbook.getActiveCell();
-    activeCell.load('rowIndex');
-    await excel.sync(); 
-    let rowIndex = activeCell.rowIndex;
-    if (rowIndex >= 10){
-      let sceneCell = forActorSheet.getRangeByIndexes(rowIndex, sceneIndex, 1, 1);
-      sceneCell.load('values');
-      await excel.sync(); 
-      console.log('scene', sceneCell.values);
-      sceneNumber = parseInt(sceneCell.values[0][0])
-      console.log('sceneNumber', sceneNumber);
-    }
-      */
+    sceneNumbers = result
   }).catch(e => console.log('My error', e));
-  return sceneNumber;
+  return sceneNumbers;
 }
 
 async function putDataInActorScriptSheet(book, character, sceneBlock){
