@@ -2070,7 +2070,7 @@ async function getDirectorData(character){
       }
     }
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
-		let formulaRanges = usedRange.getSpecialCells('Visible');
+		let formulaRanges = usedRange.getSpecialCells("Visible", "Text");
     formulaRanges.load('address');
     formulaRanges.load('cellCount');
     formulaRanges.load('areaCount');
