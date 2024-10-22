@@ -498,6 +498,7 @@ async function createScript(){
         theRowIndex = rowIndexes[rowIndexes.length - 1].startRow + rowIndexes[rowIndexes.length - 1].rowCount + 1;
       }
     }
+    await makeChaptersBlackFont(actorScriptName, theRowIndex);
     if (isAllNaN){
       alert('Please select a scene')
     } else {
@@ -745,6 +746,28 @@ async function cueColumnFontColour(sheetName, rowDetails){
     let theRange = theSheet.getRangeByIndexes(rowDetails.startRow, cueColumnIndex, rowDetails.rowCount, 1);
     theRange.format.font.color = myFormats.lightGrey;
   })
+}
+
+async function makeChaptersBlackFont(sheetName, lastRowIndex){
+  await Excel.run(async function(excel){
+    let stageDirectionColumnIndex = 2;
+    let firstRowIndex = 7
+    let rowCount = lastRowIndex - firstRowIndex + 1;
+    let theSheet = excel.workbook.worksheets.getItem(sheetName);
+    let myRange = theSheet.getRangeByIndexes(firstRowIndex, stageDirectionColumnIndex, rowCount, 1);
+    myRange.load('values, rowIndex');
+    await excel.sync();
+    let values = myRange.values.map(x => x[0]);
+    console.log('Values:', values, 'RowIndex', myRange.rowIndex, 'lastRowIndex', lastRowIndex)
+    for (let i = 0; i < values.length; i++){
+      if (values[i].toLowerCase().includes('chapter') && values[i].toLowerCase.includes('book')){
+        let tempRowIndex = i + myRange.rowIndex;
+        console.log('Found: ', i, 'rowIndex: ', tempRowIndex)
+        let tempRange = theSheet.getRangeByIndexes(tempRowIndex, stageDirectionColumnIndex, 1, 1);
+        tempRange.format.font.colour = '#000000';
+        await excel.sync();
+      }
+    }
 }
 
 async function clearScriptFill(sheetName, rowDetails){
