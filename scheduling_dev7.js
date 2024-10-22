@@ -493,6 +493,9 @@ async function createScript(){
           let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
           let doPageBreak = i > 0;
           let rowDetails = await putDataInActorScriptSheet(sceneBlockText, theRowIndex, doPageBreak);
+          if (rowDetails.sceneBlockRowIndexes.length = 0){
+            console.log('Missing scene block (from rowDetails): ', sceneNumber)
+          }
           //give 1 row of scpace between sceneblock and script
           theRowIndex = rowDetails.nextRowIndex + 1;
           rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, theRowIndex);
@@ -599,21 +602,23 @@ async function putDataInActorScriptSheet(sceneBlock, startRowIndex, doPageBreak)
     let sceneBlockColumnIndex = 0;
     console.log(startRowIndex, sceneBlockColumnIndex, sceneBlock.length, 1)
     console.log(sceneBlock);
-    let temp = [];
-    for (let i = 0; i < sceneBlock.length; i++){
-      temp[i] = [sceneBlock[i]];
-    }
-    console.log('temp:', temp);
-    let range = actorScriptSheet.getRangeByIndexes(startRowIndex, sceneBlockColumnIndex, sceneBlock.length, 1);
-    if (doPageBreak){
-      actorScriptSheet.horizontalPageBreaks.add(range)
-    };
-    range.values = temp;
-    await excel.sync();
-    
     let sceneBlockIndexes = [];
-    for (let i = 0; i < sceneBlock.length; i++){
-      sceneBlockIndexes[i] = startRowIndex + i;
+    if (sceneBlock.length > 0){
+      let temp = [];
+      for (let i = 0; i < sceneBlock.length; i++){
+        temp[i] = [sceneBlock[i]];
+      }
+      console.log('temp:', temp);
+      let range = actorScriptSheet.getRangeByIndexes(startRowIndex, sceneBlockColumnIndex, sceneBlock.length, 1);
+      if (doPageBreak){
+        actorScriptSheet.horizontalPageBreaks.add(range)
+      };
+      range.values = temp;
+      await excel.sync();
+      
+      for (let i = 0; i < sceneBlock.length; i++){
+        sceneBlockIndexes[i] = startRowIndex + i;
+      }
     }
     let nextRowIndex = startRowIndex + sceneBlock.length
     rowDetails = { nextRowIndex: nextRowIndex, sceneBlockRowIndexes: sceneBlockIndexes}
