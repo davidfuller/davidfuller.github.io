@@ -484,7 +484,7 @@ async function processCharacterListForWordAndScene(){
     await excel.sync();
     let myCharacters = characterRange.values.map(x => x[0]);
     console.log('Characters: ', myCharacters, 'rowIndex: ', characterRange.rowIndex )
-    for (let i = 0; i < 1; i ++){
+    for (let i = 0; i < myCharacters.length; i ++){
       if (myCharacters[i] != ''){
         let details = await getWordCountForCharacter(myCharacters[i]);
         console.log(i, 'Character: ', myCharacters[i], ' Details: ', details);
@@ -548,6 +548,6 @@ async function getWordCountForCharacter(characterName){
   return {
     sceneWordCount: totalSceneWordCount,
     lineWordCount: totalLineWordCount,
-    scenes: sceneArray.map(x => x[0]).join(',')
+    scenes: sceneArray.map(x => x[0]).join(', ')
   }
 }
