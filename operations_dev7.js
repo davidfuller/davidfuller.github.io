@@ -2051,6 +2051,14 @@ async function getDirectorData(character){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
 		let usedRange = await getDataRange(excel);
+
+
+    let myFilter = scriptSheet.autoFilter
+    myFilter.load('criteria');
+    await excel.sync();
+    console.log('The criteria: ', myFilter.criteria)
+
+
     usedRange.load('address');
     usedRange.columnHidden = false;
     await excel.sync()
