@@ -768,6 +768,7 @@ async function makeChaptersBlackFont(sheetName, lastRowIndex){
         await excel.sync();
       }
     }
+  })
 }
 
 async function clearScriptFill(sheetName, rowDetails){
