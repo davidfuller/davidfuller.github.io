@@ -480,6 +480,6 @@ async function processCharacterListForWordAndScene(){
     characterRange.load('values, rowIndex');
     await excel.sync();
     let myCharacters = characterRange.values.map(x => x[0]);
-    console.log('Characters: ', myCharacters, 'rowIndex: ', rowIndex )
+    console.log('Characters: ', myCharacters, 'rowIndex: ', characterRange.rowIndex )
   })
 }
