@@ -751,7 +751,7 @@ async function cueColumnFontColour(sheetName, rowDetails){
 async function makeChaptersBlackFont(sheetName, lastRowIndex){
   await Excel.run(async function(excel){
     let stageDirectionColumnIndex = 2;
-    let firstRowIndex = 7
+    let firstRowIndex = 5
     let rowCount = lastRowIndex - firstRowIndex + 1;
     let theSheet = excel.workbook.worksheets.getItem(sheetName);
     let myRange = theSheet.getRangeByIndexes(firstRowIndex, stageDirectionColumnIndex, rowCount, 1);
