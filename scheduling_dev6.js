@@ -484,11 +484,13 @@ async function processCharacterListForWordAndScene(){
     await excel.sync();
     let myCharacters = characterRange.values.map(x => x[0]);
     console.log('Characters: ', myCharacters, 'rowIndex: ', characterRange.rowIndex )
-    for (let i = 0; i < 10; i ++){
-      let details = await getWordCountForCharacter(myCharacters[i]);
-      console.log(i, 'Character: ', myCharacters[i], ' Details: ', details);
-      let tempRange = characterListSheet.getRangeByIndexes(i + characterRange.rowIndex, detailsRange.columnIndex, 1, detailsRange.columnCount);
-      tempRange.values = [[details.sceneWordCount, details.lineWordCount, details.scenes]];
+    for (let i = 0; i < 100; i ++){
+      if (myCharacters[i] != ''){
+        let details = await getWordCountForCharacter(myCharacters[i]);
+        console.log(i, 'Character: ', myCharacters[i], ' Details: ', details);
+        let tempRange = characterListSheet.getRangeByIndexes(i + characterRange.rowIndex, detailsRange.columnIndex, 1, detailsRange.columnCount);
+        tempRange.values = [[details.sceneWordCount, details.lineWordCount, details.scenes]];
+      }
     }
   })
 }
