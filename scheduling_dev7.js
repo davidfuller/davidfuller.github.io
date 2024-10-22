@@ -493,7 +493,7 @@ async function createScript(){
           let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
           let doPageBreak = i > 0;
           let rowDetails = await putDataInActorScriptSheet(sceneBlockText, theRowIndex, doPageBreak);
-          if (rowDetails.sceneBlockRowIndexes.length = 0){
+          if (rowDetails.sceneBlockRowIndexes.length == 0){
             console.log('Missing scene block (from rowDetails): ', sceneNumber)
           }
           //give 1 row of scpace between sceneblock and script
