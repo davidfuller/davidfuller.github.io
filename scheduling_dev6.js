@@ -475,18 +475,19 @@ async function getSceneNumberActor(){
 
 async function processCharacterListForWordAndScene(){
   await Excel.run(async function(excel){
-    const sceneColumnIndex = 3
-    const columnCount = 3;
     const characterListSheet = excel.workbook.worksheets.getItem(characterListName);
     let characterRange = characterListSheet.getRange('clCharacters');
+    let detailsRange = characterListSheet.getRange('clTable')
     characterRange.load('values, rowIndex');
+    detailsRange.load('columnIndex, columnCount')
+    detailsRange.clear("Contents");
     await excel.sync();
     let myCharacters = characterRange.values.map(x => x[0]);
     console.log('Characters: ', myCharacters, 'rowIndex: ', characterRange.rowIndex )
     for (let i = 0; i < 10; i ++){
       let details = await getWordCountForCharacter(myCharacters[i]);
       console.log(i, 'Character: ', myCharacters[i], ' Details: ', details);
-      let tempRange = characterListSheet.getRangeByIndexes(i + characterRange.rowIndex, sceneColumnIndex, 1, columnCount);
+      let tempRange = characterListSheet.getRangeByIndexes(i + characterRange.rowIndex, detailsRange.columnIndex, 1, detailsRange.columnCount);
       tempRange.values = [[details.sceneWordCount, details.lineWordCount, details.scenes]];
     }
   })
