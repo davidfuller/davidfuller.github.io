@@ -481,5 +481,64 @@ async function processCharacterListForWordAndScene(){
     await excel.sync();
     let myCharacters = characterRange.values.map(x => x[0]);
     console.log('Characters: ', myCharacters, 'rowIndex: ', characterRange.rowIndex )
+    for (let i = 0; i < 10; i ++){
+      let details = getWordCountForCharacter(myCharacters[i]);
+      console.log(i, 'Character: ', myCharacters[i], ' Details: ', details);
+    }
   })
+}
+
+async function getWordCountForCharacter(characterName){
+  let myData = await jade_modules.operations.getDirectorData(characterName);
+  console.log('Scheduling myData', myData);
+    
+  let dataArray = [];
+  let totalSceneWordCount = 0;
+  let totalLineWordCount = 0;
+  let sceneArray = [];
+  let arrayIndex = -1;
+  for (let i = 0; i < myData.length; i++){
+    let newRow;
+    if (myData[i].sceneWordCount == ''){
+      myData[i].sceneWordCount = 0;
+    }
+    if (i == 0){
+      newRow = {
+        sceneNumber: myData[i].sceneNumber,
+        sceneWordCount: myData[i].sceneWordCount,
+        characterWordCount: myData[i].lineWordCount
+      }
+      dataArray.push(newRow);
+      arrayIndex += 1;
+      sceneArray[arrayIndex] = [];
+      sceneArray[arrayIndex][0] = myData[i].sceneNumber;
+      totalSceneWordCount += myData[i].sceneWordCount;
+      totalLineWordCount += myData[i].lineWordCount;
+    } else {
+      if (myData[i - 1].lineNumber != myData[i].lineNumber){
+        let myIndex = dataArray.findIndex(x => x.sceneNumber == myData[i].sceneNumber);
+        if (myIndex == -1){
+          newRow = {
+            sceneNumber: myData[i].sceneNumber,
+            sceneWordCount: myData[i].sceneWordCount,
+            characterWordCount: myData[i].lineWordCount
+          }
+          dataArray.push(newRow);
+          arrayIndex += 1;
+          sceneArray[arrayIndex] = [];
+          sceneArray[arrayIndex][0] = myData[i].sceneNumber;
+          totalSceneWordCount += myData[i].sceneWordCount;
+          console.log(i, 'totalscene', totalSceneWordCount, 'sceneWordCount', myData[i].sceneWordCount, 'sceneNo', myData[i].sceneNumber);
+          totalLineWordCount += myData[i].lineWordCount;
+        } else {
+          dataArray[myIndex].characterWordCount = dataArray[myIndex].characterWordCount + myData[i].lineWordCount;
+          totalLineWordCount += myData[i].lineWordCount;
+        }
+      }
+    } 
+  }
+  return {
+    sceneWordCount: totalSceneWordCount,
+    lineWordCount: totalLineWordCount
+  }
 }
