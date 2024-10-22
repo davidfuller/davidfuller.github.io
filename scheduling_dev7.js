@@ -489,7 +489,8 @@ async function createScript(){
         let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
         console.log('Indexes: ', indexes);
         let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
-        let rowDetails = await putDataInActorScriptSheet(sceneBlockText, theRowIndex);
+        let doPageBreak = i > 0;
+        let rowDetails = await putDataInActorScriptSheet(sceneBlockText, theRowIndex, doPageBreak);
         //give 1 row of scpace between sceneblock and script
         theRowIndex = rowDetails.nextRowIndex + 1;
         rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, theRowIndex);
@@ -576,6 +577,7 @@ async function topOfFirstPage(book, character){
 async function clearActorScriptBody(){
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    actorScriptSheet.horizontalPageBreaks.removePageBreaks();
   
     let tableRange = actorScriptSheet.getRange(actorScriptTableName);
     tableRange.clear("Contents");
@@ -583,7 +585,7 @@ async function clearActorScriptBody(){
   })
   
 }
-async function putDataInActorScriptSheet(sceneBlock, startRowIndex){
+async function putDataInActorScriptSheet(sceneBlock, startRowIndex, doPageBreak){
   let rowDetails = {};
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
@@ -596,6 +598,9 @@ async function putDataInActorScriptSheet(sceneBlock, startRowIndex){
     }
     console.log('temp:', temp);
     let range = actorScriptSheet.getRangeByIndexes(startRowIndex, sceneBlockColumnIndex, sceneBlock.length, 1);
+    if (doPageBreak){
+      actorScriptSheet.horizontalPageBreaks.add(range)
+    };
     range.values = temp;
     await excel.sync();
     
