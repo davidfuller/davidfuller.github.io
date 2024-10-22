@@ -2070,13 +2070,14 @@ async function getDirectorData(character){
       }
     }
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
-		let formulaRanges = usedRange.getSpecialCells("Visible", "Text");
+		let formulaRanges = usedRange.getSpecialCells("Visible");
     formulaRanges.load('address');
     formulaRanges.load('cellCount');
     formulaRanges.load('areaCount');
-    //formulaRanges.load('areas')
+    formulaRanges.load('areas')
 		await excel.sync();
-    app.suspendScreenUpdatingUntilNextSync();
+    //app.suspendScreenUpdatingUntilNextSync();
+    console.log('Areas:', formulaRanges.areas.toJSON());
     console.log('Range areas', formulaRanges.address);
     console.log('Cell count', formulaRanges.cellCount);
     console.log('Area count', formulaRanges.areaCount);
