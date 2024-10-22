@@ -482,7 +482,7 @@ async function processCharacterListForWordAndScene(){
     let myCharacters = characterRange.values.map(x => x[0]);
     console.log('Characters: ', myCharacters, 'rowIndex: ', characterRange.rowIndex )
     for (let i = 0; i < 10; i ++){
-      let details = getWordCountForCharacter(myCharacters[i]);
+      let details = await getWordCountForCharacter(myCharacters[i]);
       console.log(i, 'Character: ', myCharacters[i], ' Details: ', details);
     }
   })
