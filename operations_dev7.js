@@ -2070,7 +2070,7 @@ async function getDirectorData(character){
       }
     }
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
-		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
+		let formulaRanges = usedRange.getSpecialCells('Visible');
     formulaRanges.load('address');
     formulaRanges.load('cellCount');
     formulaRanges.load('areaCount');
