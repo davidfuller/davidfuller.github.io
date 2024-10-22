@@ -483,6 +483,7 @@ async function createScript(){
     let theRowIndex = 1;
     let rowIndexes;
     for (let i = 0; i < sceneNumbers.length; i++){
+      actorWait.innerText = 'Please wait doing scene: ' + (i + 1) + ' of ' + sceneNumbers.length;
       let sceneNumber = sceneNumbers[i]
       if (!isNaN(sceneNumber)){
         isAllNaN = false;
@@ -507,6 +508,7 @@ async function createScript(){
   } else {
     alert('Please select a scene')
   }
+  actorWait.innerText = 'Please wait...'
   actorWait.style.display = 'none';
 }
 
@@ -591,7 +593,7 @@ async function putDataInActorScriptSheet(sceneBlock, startRowIndex, doPageBreak)
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     let sceneBlockColumnIndex = 0;
-    console.log(startRowIndex,sceneBlockColumnIndex, sceneBlock.length, 1)
+    console.log(startRowIndex, sceneBlockColumnIndex, sceneBlock.length, 1)
     console.log(sceneBlock);
     let temp = [];
     for (let i = 0; i < sceneBlock.length; i++){
