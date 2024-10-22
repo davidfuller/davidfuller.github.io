@@ -483,20 +483,24 @@ async function createScript(){
     let theRowIndex = 1;
     let rowIndexes;
     for (let i = 0; i < sceneNumbers.length; i++){
-      actorWait.innerText = 'Please wait doing scene: ' + (i + 1) + ' of ' + sceneNumbers.length;
+      actorWait.innerText = 'Please wait... Doing scene: ' + (i + 1) + ' of ' + sceneNumbers.length;
       let sceneNumber = sceneNumbers[i]
       if (!isNaN(sceneNumber)){
         isAllNaN = false;
         let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
         console.log('Indexes: ', indexes);
-        let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
-        let doPageBreak = i > 0;
-        let rowDetails = await putDataInActorScriptSheet(sceneBlockText, theRowIndex, doPageBreak);
-        //give 1 row of scpace between sceneblock and script
-        theRowIndex = rowDetails.nextRowIndex + 1;
-        rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, theRowIndex);
-        await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name);
-        theRowIndex = rowIndexes[rowIndexes.length - 1].startRow + rowIndexes[rowIndexes.length - 1].rowCount + 1;
+        if (indexes.length > 0){
+          let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
+          let doPageBreak = i > 0;
+          let rowDetails = await putDataInActorScriptSheet(sceneBlockText, theRowIndex, doPageBreak);
+          //give 1 row of scpace between sceneblock and script
+          theRowIndex = rowDetails.nextRowIndex + 1;
+          rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, theRowIndex);
+          await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name);
+          theRowIndex = rowIndexes[rowIndexes.length - 1].startRow + rowIndexes[rowIndexes.length - 1].rowCount + 1;
+        } else {
+          console.log('Missing scene block: ', sceneNumber)
+        }
       }
     }
     await makeChaptersBlackFont(actorScriptName, theRowIndex);
