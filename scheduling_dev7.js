@@ -764,7 +764,7 @@ async function makeChaptersBlackFont(sheetName, lastRowIndex){
         let tempRowIndex = i + myRange.rowIndex;
         console.log('Found: ', i, 'rowIndex: ', tempRowIndex)
         let tempRange = theSheet.getRangeByIndexes(tempRowIndex, stageDirectionColumnIndex, 1, 1);
-        tempRange.format.font.colour = '#000000';
+        tempRange.format.font.color = '#000000';
         await excel.sync();
       }
     }
