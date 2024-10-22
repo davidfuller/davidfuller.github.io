@@ -566,7 +566,7 @@ async function topOfFirstPage(book, character){
       headingRange.values = [['Character: (Text Search)']]
     }
     let characterRange = actorScriptSheet.getRange(actorScriptCharacterName);
-    characterRange.values = character.name;
+    characterRange.values = character.name.charAt(0).toUpperCase() + character.name.slice(1);
     characterRange.unmerge()
     characterRange.load('rowIndex, columnIndex')
     await excel.sync();
