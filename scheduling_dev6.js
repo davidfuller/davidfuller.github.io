@@ -472,3 +472,14 @@ async function getSceneNumberActor(){
   return sceneNumber;
 }
 
+
+async function processCharacterListForWordAndScene(){
+  await Excel.run(async function(excel){
+    const characterListSheet = excel.workbook.worksheets.getItem(characterListName);
+    let characterRange = characterListSheet.getRange('clCharacters');
+    characterRange.load('values, rowIndex');
+    await excel.sync();
+    let myCharacters = characterRange.values.map(x => x[0]);
+    console.log('Characters: ', myCharacters, 'rowIndex: ', rowIndex )
+  })
+}

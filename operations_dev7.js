@@ -2058,13 +2058,27 @@ async function getDirectorData(character){
     await excel.sync();
     console.log('The criteria: ', myFilter.criteria)
 
-
     usedRange.load('address');
     usedRange.columnHidden = false;
     await excel.sync()
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
     console.log('Used range address', usedRange.address)
+
+    let doChunking = false;
+    //find the min and max for column G
+    let minAndMax = getLineNoMaxAndMin();
+    if ((minAndMax.max - minAndMax.min) > 10000){
+      doChunking = true;
+    }
+
+    let chunkLength = 1000;
+    let startChunk = minAndMax.min;
+    let endChunk = startChunk + chunkLength;
+
+    
+
+
     let myCriteria
     if (character.type == choiceType.list){
       myCriteria = {
@@ -2072,11 +2086,27 @@ async function getDirectorData(character){
         criterion1: character.name
       }
     } else {
-      myCriteria = {
-        filterOn: Excel.FilterOn.custom,
-        criterion1: '=*' + character.name +'*'
+      if (doChunking){
+        myNumberCriteria = {
+          filterOn: Excel.FilterOn.custom,
+          criterion1: '>=' + startNumber,
+          criterion2: '<=' + endNumber,
+          operator: 'And'
+        }
+        myCharacterCriteria = {
+          filterOn: Excel.FilterOn.custom,
+          criterion1: '=*' + character.name +'*'
+        } 
+      } else {
+        myCriteria = {
+          filterOn: Excel.FilterOn.custom,
+          criterion1: '=*' + character.name +'*'
+        }  
       }
+      
     }
+    
+    
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
 		let formulaRanges = usedRange.getSpecialCells("Visible");
     formulaRanges.load('address');
