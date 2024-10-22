@@ -760,7 +760,7 @@ async function makeChaptersBlackFont(sheetName, lastRowIndex){
     let values = myRange.values.map(x => x[0]);
     console.log('Values:', values, 'RowIndex', myRange.rowIndex, 'lastRowIndex', lastRowIndex)
     for (let i = 0; i < values.length; i++){
-      if (values[i].toLowerCase().includes('chapter') && values[i].toLowerCase.includes('book')){
+      if (values[i].toLowerCase().includes('chapter') && values[i].toLowerCase().includes('book')){
         let tempRowIndex = i + myRange.rowIndex;
         console.log('Found: ', i, 'rowIndex: ', tempRowIndex)
         let tempRange = theSheet.getRangeByIndexes(tempRowIndex, stageDirectionColumnIndex, 1, 1);
