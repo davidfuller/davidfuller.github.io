@@ -73,9 +73,10 @@ async function whichBooks(){
         if (theBooks.includes(',')){
           numBooks = theBooks.split(',').length;
         } else {
-          numBooks = parseInt(theBooks);
-          if (isNaN(numBooks)){
+          if (isNaN(parseInt(theBooks))){
             numBooks = 0;
+          } else {
+            numBooks = 1;
           }
         }
         numRange.values = [[numBooks]];
