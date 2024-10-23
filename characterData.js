@@ -303,6 +303,13 @@ async function gatherData(){
         await excel.sync();
       }
     }
-    
+    const sortFields = [
+      {
+        key: 0,
+        ascending: true
+      }
+    ]
+    resultRange.sort.apply(sortFields);
+    await excel.sync();
   })
 }
