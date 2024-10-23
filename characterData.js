@@ -286,18 +286,23 @@ async function gatherData(){
       //Add currentNames back in.
       console.log(resultRange.rowIndex, resultRange.columnIndex, currentNames.length, resultRange.columnCount);
       console.log('currentNames', currentNames);
-      let tempRange = linkedDataSheet.getRangeByIndexes(resultRange.rowIndex, resultRange.columnIndex, currentNames.length, resultRange.columnCount);
-      tempRange.values = currentNames;
-      await excel.sync();
+      let tempRange;
+      if (currentNames.length > 0){
+        tempRange = linkedDataSheet.getRangeByIndexes(resultRange.rowIndex, resultRange.columnIndex, currentNames.length, resultRange.columnCount);
+        tempRange.values = currentNames;
+        await excel.sync();
+      }
+      
       
       //Now do the new rows
       let startRowIndex = resultRange.rowIndex + currentNames.length;
       console.log(startRowIndex, resultRange.columnIndex, newRows.length, resultRange.columnCount);
       console.log('New rows', newRows);
-      tempRange = linkedDataSheet.getRangeByIndexes(startRowIndex, resultRange.columnIndex, newRows.length, resultRange.columnCount);
-      tempRange.values = newRows;
-      await excel.sync();
-      
+      if (newRow.length > 0){
+        tempRange = linkedDataSheet.getRangeByIndexes(startRowIndex, resultRange.columnIndex, newRows.length, resultRange.columnCount);
+        tempRange.values = newRows;
+        await excel.sync();
+      }
     }
     
   })
