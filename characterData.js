@@ -273,10 +273,13 @@ async function gatherData(){
         }
       }
       let startRowIndex = resultRange.rowIndex + resultRange.values.length;
+      console.log(startRowIndex, resultRange.columnIndex, newRows.length, resultRange.columnCount);
+      console.log('New rows', newRows);
       let tempRange = linkedDataSheet.getRangeByIndexes(startRowIndex, resultRange.columnIndex, newRows.length, resultRange.columnCount);
       tempRange.values = newRows;
       await excel.sync();
+      
     }
-    console.log('New rows', newRows);
+    
   })
 }
