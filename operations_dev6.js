@@ -2063,7 +2063,7 @@ async function getDirectorData(characterName){
       //Check end condition
 
       
-      let temptest = minAndMax.min + chunkLength + 100;
+      let temptest = minAndMax.min + chunkLength + 2100;
       console.log('EndChunk: ', endChunk, 'temptest:', temptest)
       if (endChunk > temptest){
         endChunk = temptest;
