@@ -253,8 +253,13 @@ async function gatherData(){
       await excel.sync();
       console.log ('result rowCount', resultRange.rowCount, 'values: ', resultRange.values);
       //let currentNames = resultRange.values.map(x => x[0]).filter((x) => {x != '' })
-      let currentNames = resultRange.values.filter((x) => {x[0] != '' })
-      console.log(currentNames);
+      currentNames = [];
+      for (let i = 0; i < resultRange.values.length; i++){
+        if (resultRange.values[i][0] != ''){
+          currentNames.push(resultRange.values[i]);
+        }
+      }
+      console.log('currentNames: ', currentNames);
       for (let item = 0; item < bookRange.text.length; item++){
         let thisCharacter = bookRange.text[item][0];
         if (thisCharacter != '0'){
