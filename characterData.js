@@ -244,8 +244,11 @@ async function gatherData(){
       console.log('bookName', bookName);
       let bookRange = linkedDataSheet.getRange(bookName);
       bookRange.load('text, address, rowCount');
+      resultRange.load('text, rowIndex, rowCOunt')
       await excel.sync();
-      console.log ('Book: ', i, 'rowCount:', bookRange.rowCount, 'data: ', bookRange.text);
+      console.log ('Book: ', i, 'rowCount:', bookRange.rowCount, 'data: ', bookRange.text, 'result rowCount', resultRange.rowCount);
+      let currentNames = resultRange.text.map(x => x[0]).filter((x) => {x != '' })
+      console.log(currentNames);
     }
   })
 }
