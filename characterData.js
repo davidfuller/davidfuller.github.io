@@ -234,9 +234,10 @@ async function gatherData(){
     let linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
     //get results range and clear it
     let resultRange = linkedDataSheet.getRange(resultName);
+    resultRange.load('address');
     resultRange.clear("Contents")
     await excel.sync();
-
+    console.log('address: ', resultRange.address);
     for (let i = 0; i < numBooks; i++){
       let bookName = bookNameBase + (i + 1);
       // Get the book details
