@@ -246,14 +246,22 @@ async function gatherData(){
       bookRange.load('text, address, rowCount');
       await excel.sync();
       console.log ('Book: ', i, 'rowCount:', bookRange.rowCount, 'data: ', bookRange.text, 'length', bookRange.text.length);
-      resultRange.load('text, rowIndex, rowCount')
+      resultRange.load('values, rowIndex, rowCount')
       await excel.sync();
-      console.log ('result rowCount', resultRange.rowCount), resultRange.text;
-      let currentNames = resultRange.text.map(x => x[0]).filter((x) => {x != '' })
+      console.log ('result rowCount', resultRange.rowCount), resultRange.values;
+      l
+      let currentNames = resultRange.values.map(x => x[0]).filter((x) => {x != '' })
       console.log(currentNames);
       for (let item = 0; item < bookRange.text.length; item++){
-        if (bookRange.text[item][0] != '0'){
-          console.log(item, bookRange.text[item][0]);
+        let thisCharacter = bookRange.text[item][0];
+        if (thisCharacter != '0'){
+          if (currentNames.includes(thisCharacter)){
+            //do something
+          } else {
+            let newElement = [thisCharacter, '' + (i + 1), bookRange.text[item][1], bookRange.text[item][2], bookRange.text[item][3]]
+
+          }
+          
         }
       }
     }
