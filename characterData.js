@@ -222,5 +222,28 @@ function doesCharacterAlreadyExist(resultArray, newCharacter){
     }
   }
   return -1
+}
 
+async function gatherData(){
+  //This takes the data from each of the books and creates total data
+  const resultName = 'ldTotal';
+  const numBooks = 7;
+  const bookNameBase = 'ldSheet';
+
+  await Excel.run(async function(excel){
+    let linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
+    //get results range and clear it
+    let resultRange = linkedDataSheet.getRange(resultName);
+    resultRange.clear("Contents")
+    await excel.sync();
+
+    for (let i = 0; i < numBooks; i++){
+      let bookName = bookNameBase + (i + 1);
+      // Get the book details
+      let bookRange = linkedDataSheet.getRange(bookName);
+      bookRange.load('values', 'rowCount')
+      await excel.sync();
+      console.log ('Book: ', i, 'rowIndex: ', bookRange.rowIndex, 'data: ', bookRange.values);
+    }
+  })
 }
