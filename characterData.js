@@ -272,7 +272,7 @@ async function gatherData(){
           }
         }
       }
-      let startRowIndex = resultRange.rowIndex + resultRange.values.length;
+      let startRowIndex = resultRange.rowIndex + currentNames.length;
       console.log(startRowIndex, resultRange.columnIndex, newRows.length, resultRange.columnCount);
       console.log('New rows', newRows);
       let tempRange = linkedDataSheet.getRangeByIndexes(startRowIndex, resultRange.columnIndex, newRows.length, resultRange.columnCount);
