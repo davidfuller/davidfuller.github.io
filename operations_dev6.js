@@ -2075,7 +2075,6 @@ async function getDirectorData(characterName){
         doChunk = false;
       }
 */
-
       // set up loop criteria
       myNumberCriteria = {
         filterOn: Excel.FilterOn.custom,
