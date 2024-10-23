@@ -298,7 +298,7 @@ async function gatherData(){
       let startRowIndex = resultRange.rowIndex + currentNames.length;
       console.log(startRowIndex, resultRange.columnIndex, newRows.length, resultRange.columnCount);
       console.log('New rows', newRows);
-      if (newRow.length > 0){
+      if (newRows.length > 0){
         tempRange = linkedDataSheet.getRangeByIndexes(startRowIndex, resultRange.columnIndex, newRows.length, resultRange.columnCount);
         tempRange.values = newRows;
         await excel.sync();
