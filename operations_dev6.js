@@ -2034,10 +2034,75 @@ async function getDirectorData(characterName){
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
     console.log('Used range address', usedRange.address)
+
+    //find the min and max for column G
+    let minAndMax = getLineNoMaxAndMin();
+
+    // set up loop variables
+
+    let chunkLength = 1000;
+    let startChunk = minAndMax.min;
+    let endChunk = startChunk + chunkLength;
+
+    //set up the character criteria
     const myCriteria = {
       filterOn: Excel.FilterOn.custom,
       criterion1: characterName
     }
+
+    let myNumberCriteria = {};
+
+    //set up loop boolean
+    let doChunk = true;
+
+    //start the loop
+    let tempArray = [];
+    while(doChunk){
+      // set up end loop
+      endChunk = startChunk + chunkLength;
+      //Check end condition
+      if (endChunk > minAndMax.max){
+        endChunk = minAndMax.max;
+        doChunk = false;
+      }
+
+      // set up loop criteria
+      myNumberCriteria = {
+        filterOn: Excel.FilterOn.custom,
+        criterion1: '>=' + startChunk,
+        criterion2: '<' + endChunk,
+        operator: 'And'
+      }
+      //remove the autofilter
+      scriptSheet.autoFilter.remove();
+      
+      //apply filters to both columns
+      scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
+      scriptSheet.autoFilter.apply(usedRange, numberIndex, myNumberCriteria);
+
+      // get the formula range for this chunk
+      let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
+      formulaRanges.load('address');
+      formulaRanges.load('cellCount');
+      formulaRanges.load('areaCount');
+      formulaRanges.load('areas')
+      await excel.sync();
+      console.log('Range areas', formulaRanges.address);
+      console.log('Cell count', formulaRanges.cellCount);
+      console.log('Area count', formulaRanges.areaCount);
+      console.log('Areas to JSON', formulaRanges.areas.toJSON());
+      tempArray = tempArray.concat(formulaRanges);
+      console.log('concataned:', tempArray)
+      //increment the loop
+      startChunk += chunkLength;
+    }
+    let myAddresses = '';
+    if (tempArray.length > 0){
+      myAddresses = tempArray.split(",");
+    }
+    console.log('myAddresses', myAddresses);
+    /*
+
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
 		let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
     formulaRanges.load('address');
@@ -2052,7 +2117,8 @@ async function getDirectorData(characterName){
     
     let myAddresses = formulaRanges.address.split(",");
     console.log('myAddresses', myAddresses);
-    
+    */
+
     scriptSheet.autoFilter.remove();
     for (let col of hiddenColumnAddresses){
       let tempRange = scriptSheet.getRange(col);
