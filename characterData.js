@@ -240,10 +240,11 @@ async function gatherData(){
     for (let i = 0; i < numBooks; i++){
       let bookName = bookNameBase + (i + 1);
       // Get the book details
+      console.log('bookName', bookName);
       let bookRange = linkedDataSheet.getRange(bookName);
       bookRange.load('values', 'rowCount')
       await excel.sync();
-      console.log ('Book: ', i, 'rowIndex: ', bookRange.rowCount, 'data: ', bookRange.values);
+      console.log ('Book: ', i, 'rowCount: ', bookRange.rowCount, 'data: ', bookRange.values);
     }
   })
 }
