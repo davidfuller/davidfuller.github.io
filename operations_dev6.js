@@ -2040,7 +2040,7 @@ async function getDirectorData(characterName){
 
     // set up loop variables
 
-    let chunkLength = 1000;
+    let chunkLength = 10000;
     let startChunk = minAndMax.min;
     let endChunk = startChunk + chunkLength;
 
@@ -2062,7 +2062,7 @@ async function getDirectorData(characterName){
       endChunk = startChunk + chunkLength;
       //Check end condition
 
-      
+      /*
       let temptest = minAndMax.min + chunkLength + 2100;
       console.log('EndChunk: ', endChunk, 'temptest:', temptest)
       if (endChunk > temptest){
@@ -2070,13 +2070,14 @@ async function getDirectorData(characterName){
         doChunk = false;
       }
       console.log('After endChunk:', endChunk, 'doChunk:', doChunk);
-
-      /*
+      */
+      
       if (endChunk > minAndMax.max){
         endChunk = minAndMax.max;
         doChunk = false;
       }
-*/
+      console.log('After endChunk:', endChunk, 'doChunk:', doChunk);
+
       // set up loop criteria
       myNumberCriteria = {
         filterOn: Excel.FilterOn.custom,
