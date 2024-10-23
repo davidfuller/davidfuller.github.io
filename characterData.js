@@ -67,9 +67,9 @@ async function whichBooks(){
     if (characterName != ''){
       let results = await findCharacter(characterName, true)
       if (results[0].valid){
-        let theBooks = [[results[0].books]];
+        let theBooks = results[0].books;
         let numBooks = 0;
-        booksRange.values = theBooks;
+        booksRange.values = [[theBooks]];
         if (theBooks.includes(',')){
           numBooks = theBooks.split(',').length;
         } else {
