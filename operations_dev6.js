@@ -2020,22 +2020,109 @@ async function filterOnLocation(locationText){
   })
 }
 
+async function doChunkedFilter(characterName, sheetName, textSearch){
+  let myAddresses;
+  let hiddenColumnAddresses = await getHiddenColumns();
+  //This does a filter based on a parameter criteria and a chunking of lineNo
+  //It returns a string array of addresses
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(sheetName);
+    let usedRange = await getDataRange(excel);
+    usedRange.load('address');
+    usedRange.columnHidden = false;
+    await excel.sync()
+
+    //find the min and max for column G
+    let minAndMax = await getLineNoMaxAndMin();
+
+    // set up loop variables
+    let chunkLength = 10000;
+    let startChunk = minAndMax.min;
+    let endChunk = startChunk + chunkLength;
+
+    //set up the character criteria
+    let myCriteria = {};
+    
+    if (textSearch){
+      myCriteria ={
+        filterOn: Excel.FilterOn.custom,
+        criterion1: '=*' + character.name +'*'
+      }
+    } else {}
+      myCriteria = {
+        filterOn: Excel.FilterOn.custom,
+        criterion1: characterName
+    }
+    let myNumberCriteria = {};
+
+    //set up loop boolean
+    let doChunk = true;
+
+    //start the loop
+    let tempArray = [];
+    while(doChunk){
+      // set up end loop
+      endChunk = startChunk + chunkLength;
+      //Check end condition
+      if (endChunk > minAndMax.max){
+        endChunk = minAndMax.max;
+        doChunk = false;
+      }
+      console.log('After endChunk:', endChunk, 'doChunk:', doChunk);
+      // set up loop criteria
+      myNumberCriteria = {
+        filterOn: Excel.FilterOn.custom,
+        criterion1: '>=' + startChunk,
+        criterion2: '<' + endChunk,
+        operator: 'And'
+      }
+      //remove the autofilter
+      scriptSheet.autoFilter.remove();
+            
+      //apply filters to both columns
+      scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
+      scriptSheet.autoFilter.apply(usedRange, numberIndex, myNumberCriteria);
+
+      // get the formula range for this chunk
+      let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
+      formulaRanges.load('address');
+      await excel.sync();
+      console.log('Range areas', formulaRanges.address);
+    
+      tempArray = tempArray.concat(formulaRanges.address.split(','));
+      console.log('concataned:', tempArray)
+      //increment the loop
+      startChunk += chunkLength;
+    }
+    myAddresses = [...new Set(tempArray)];
+    scriptSheet.autoFilter.remove();
+    for (let col of hiddenColumnAddresses){
+      let tempRange = scriptSheet.getRange(col);
+      tempRange.columnHidden = true;
+    }
+  })
+  return myAddresses;
+}
+
 async function getDirectorData(characterName){
   let myData = [];
-  let hiddenColumnAddresses = await getHiddenColumns();
+  //let hiddenColumnAddresses = await getHiddenColumns();
   
 	await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
-		let usedRange = await getDataRange(excel);
+		/*
+    let usedRange = await getDataRange(excel);
     usedRange.load('address');
     usedRange.columnHidden = false;
     await excel.sync()
+    */
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
-    console.log('Used range address', usedRange.address)
+    //console.log('Used range address', usedRange.address)
 
     //find the min and max for column G
+    /*
     let minAndMax = await getLineNoMaxAndMin();
 
     // set up loop variables
@@ -2062,7 +2149,7 @@ async function getDirectorData(characterName){
       endChunk = startChunk + chunkLength;
       //Check end condition
 
-      /*
+      
       let temptest = minAndMax.min + chunkLength + 2100;
       console.log('EndChunk: ', endChunk, 'temptest:', temptest)
       if (endChunk > temptest){
@@ -2070,7 +2157,7 @@ async function getDirectorData(characterName){
         doChunk = false;
       }
       console.log('After endChunk:', endChunk, 'doChunk:', doChunk);
-      */
+      
       
       if (endChunk > minAndMax.max){
         endChunk = minAndMax.max;
@@ -2111,8 +2198,13 @@ async function getDirectorData(characterName){
       startChunk += chunkLength;
 
     }
+    
     let myAddresses = [...new Set(tempArray)];
     console.log('myAddresses', myAddresses);
+    */
+    let myAddresses = await doChunkedFilter(characterName, scriptSheetName, false);
+    console.log('myAddresses', myAddresses);
+    
     /*
 
     scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
@@ -2131,11 +2223,13 @@ async function getDirectorData(characterName){
     console.log('myAddresses', myAddresses);
     */
 
+    /*
     scriptSheet.autoFilter.remove();
     for (let col of hiddenColumnAddresses){
       let tempRange = scriptSheet.getRange(col);
       tempRange.columnHidden = true;
     }
+    */
     
     let startIndex = 0;
     let stopIndex = 1000;
