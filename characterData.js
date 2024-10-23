@@ -1,7 +1,7 @@
 const linkedDataSheetName = 'Linked_Data';
 const characterSheetName = 'Characters';
 const settingsSheetName = 'Settings';
-const codeVersion = '1.1';
+const codeVersion = '2.0';
 function auto_exec(){
   console.log('Hello');
 }
@@ -243,7 +243,7 @@ async function gatherData(){
       let bookRange = linkedDataSheet.getRange(bookName);
       bookRange.load('values', 'rowCount')
       await excel.sync();
-      console.log ('Book: ', i, 'rowIndex: ', bookRange.rowIndex, 'data: ', bookRange.values);
+      console.log ('Book: ', i, 'rowIndex: ', bookRange.rowCount, 'data: ', bookRange.values);
     }
   })
 }
