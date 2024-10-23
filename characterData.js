@@ -243,9 +243,9 @@ async function gatherData(){
       // Get the book details
       console.log('bookName', bookName);
       let bookRange = linkedDataSheet.getRange(bookName);
-      bookRange.load('values, address, rowCount');
+      bookRange.load('text, address, rowCount');
       await excel.sync();
-      console.log ('Book: ', i, 'rowCount:', bookRange.rowCount, 'data: ', bookRange.values);
+      console.log ('Book: ', i, 'rowCount:', bookRange.rowCount, 'data: ', bookRange.text);
     }
   })
 }
