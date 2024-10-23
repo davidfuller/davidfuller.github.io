@@ -212,7 +212,7 @@ async function textSearch(){
       console.log('Results: ', results)
       let displayResult = [];
       for (let i = 0; i < results.length; i++){
-        displayResult[i] = [results[i].character, results[i].books, numBooks[results[i].books]];
+        displayResult[i] = [results[i].character, results[i].books, numBooks(results[i].books)];
       }
       console.log('Display Result', displayResult);
       let displayRange = characterSheet.getRangeByIndexes(theTable.rowIndex, theTable.columnIndex, displayResult.length, theTable.columnCount);
