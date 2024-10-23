@@ -2102,7 +2102,9 @@ async function getDirectorData(characterName){
       console.log('Cell count', formulaRanges.cellCount);
       console.log('Area count', formulaRanges.areaCount);
       console.log('Areas to JSON', formulaRanges.areas.toJSON());
-      tempArray = tempArray.concat(formulaRanges.address);
+
+
+      tempArray = tempArray.concat(formulaRanges.address.split[',']);
       console.log('concataned:', tempArray)
       //increment the loop
       startChunk += chunkLength;
