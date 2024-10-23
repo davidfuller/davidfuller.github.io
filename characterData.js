@@ -48,7 +48,34 @@ async function makeTheFullList(){
   })
   waitMessage.style.display = 'none';
 }
+
 async function whichBooks(){
+  await Excel.run(async function(excel){ 
+    let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
+    let waitMessageRange = characterSheet.getRange('chMessage');
+    waitMessageRange.values = [['Please wait...']]
+    let waitMessage = tag('wait-message');
+    waitMessage.style.display = 'block';
+    let booksRange = characterSheet.getRange('chBooks');
+    booksRange.values = [['']];
+    let numRange = characterSheet.getRange('chNumBooks');
+    numRange.values = [['']];
+    let characterNameRange = characterSheet.getRange('chCharacterName');
+    characterNameRange.load('values')
+    await excel.sync();
+    let characterName = characterNameRange.values[0][0]
+    if (characterName != ''){
+      let results = await findCharacter(characterName, true)
+      if (results[0].valid){
+        booksRange.values = [[results[0].books]];
+        numRange.values = [[results[0].books.split(',').length]]
+      }
+    }
+    waitMessageRange.values = [['']];
+    waitMessage.style.display = 'none';
+  })
+} 
+async function whichBooksOld(){
   await Excel.run(async function(excel){ 
     let linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
     let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
@@ -312,4 +339,63 @@ async function gatherData(){
     resultRange.sort.apply(sortFields);
     await excel.sync();
   })
+}
+
+async function findCharacter(characterName, exact){
+  const resultName = 'ldTotal';
+  let results = [];
+  await Excel.run(async function(excel){
+    let linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
+    let resultRange = linkedDataSheet.getRange(resultName)
+    resultRange.load('values');
+    await excel.sync();
+    
+    characterNames = [];
+    for (let i = 0; i < resultRange.values.length; i++){
+      if (resultRange.values[i][0] != ''){
+        let temp = {
+          index: i,
+          character: resultRange.values[i][0]
+        }
+        characterNames.push(temp);
+      }
+    }
+    if (exact){
+      let index = characterNames.findIndex(x => (x.character == characterName))
+      let result = {};
+      if (index == -1){
+        result = {
+          valid: false
+        }
+      } else {
+        let item = characterNames[index].index;
+        result = {
+          valid: true,
+          character: resultRange.values[item][0],
+          books: resultRange.values[item][1],
+          sceneWords: resultRange.values[item][2],
+          lineWords: resultRange.values[item][3],
+          scenes: resultRange.values[item][4]
+        }
+      }
+      results = [result];
+    } else {
+      for (let i = 0; i < characterNames.length, i++){
+        if (characterNames[i].character.toLowerCase() == characterName.toLowerCase()){
+          let item = characterNames[i].index;
+          result = {
+            valid: true,
+            character: resultRange.values[item][0],
+            books: resultRange.values[item][1],
+            sceneWords: resultRange.values[item][2],
+            lineWords: resultRange.values[item][3],
+            scenes: resultRange.values[item][4]
+          }
+          results.push(result)
+        }
+      }
+    }
+    console.log('Results: ', results)  
+  })
+  return results;
 }
