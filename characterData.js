@@ -239,8 +239,7 @@ async function gatherData(){
     await excel.sync();
     console.log('address: ', resultRange.address);
     
-    //for (let i = 0; i < numBooks; i++){
-    for (let i = 0; i < 2; i++){
+    for (let i = 0; i < numBooks; i++){
       let newRows = [];
       let bookName = bookNameBase + (i + 1);
       // Get the book details
