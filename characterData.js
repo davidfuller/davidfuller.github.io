@@ -67,8 +67,18 @@ async function whichBooks(){
     if (characterName != ''){
       let results = await findCharacter(characterName, true)
       if (results[0].valid){
-        booksRange.values = [[results[0].books]];
-        numRange.values = [[results[0].books.split(',').length]]
+        let theBooks = [[results[0].books]];
+        let numBooks = 0;
+        booksRange.values = theBooks;
+        if (theBooks.includes(',')){
+          numBooks = theBooks.split(',').length;
+        } else {
+          numBooks = parseInt(theBooks);
+          if (isNaN(numBooks)){
+            numBooks = 0;
+          }
+        }
+        numRange.values = [[numBooks]];
       }
     }
     waitMessageRange.values = [['']];
