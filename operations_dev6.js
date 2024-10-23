@@ -2036,7 +2036,7 @@ async function getDirectorData(characterName){
     console.log('Used range address', usedRange.address)
 
     //find the min and max for column G
-    let minAndMax = getLineNoMaxAndMin();
+    let minAndMax = await getLineNoMaxAndMin();
 
     // set up loop variables
 
