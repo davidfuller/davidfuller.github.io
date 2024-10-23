@@ -68,24 +68,29 @@ async function whichBooks(){
       let results = await findCharacter(characterName, true)
       if (results[0].valid){
         let theBooks = '' + results[0].books;
-        let numBooks = 0;
         booksRange.values = [[theBooks]];
-        if (theBooks.includes(',')){
-          numBooks = theBooks.split(',').length;
-        } else {
-          if (isNaN(parseInt(theBooks))){
-            numBooks = 0;
-          } else {
-            numBooks = 1;
-          }
-        }
-        numRange.values = [[numBooks]];
+        numRange.values = [[numBooks(theBooks)]];
       }
     }
     waitMessageRange.values = [['']];
     waitMessage.style.display = 'none';
   })
 } 
+
+function numBooks(theBooks){
+  theBooks = '' + theBooks;
+  let numBooks;
+  if (theBooks.includes(',')){
+    numBooks = theBooks.split(',').length;
+  } else {
+    if (isNaN(parseInt(theBooks))){
+      numBooks = 0;
+    } else {
+      numBooks = 1;
+    }
+  }
+  return numBooks;
+}
 async function whichBooksOld(){
   await Excel.run(async function(excel){ 
     let linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
@@ -186,6 +191,51 @@ function showAdmin(){
 }
 
 async function textSearch(){
+  await Excel.run(async function(excel){ 
+    let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
+    let waitMessageRange = characterSheet.getRange('chMessage');
+    waitMessageRange.values = [['Please wait...']]
+    let waitMessage = tag('wait-message');
+    waitMessage.style.display = 'block';
+
+    let textSearchRange = characterSheet.getRange('chTextSearch');
+    textSearchRange.load('values');
+    await excel.sync();
+
+    let searchText = textSearchRange.values[0][0]
+    let theTable = characterSheet.getRange('chTable');
+    theTable.clear('Contents');
+    theTable.load('rowIndex, columnIndex, columnCount');
+    await excel.sync();
+    if (searchText != ''){
+      let results = await findCharacter(searchText, false)
+      console.log('Results: ', results)
+      let displayResult = [];
+      for (let i = 0; i < results.length; i++){
+        displayResult[i] = [results[i].character, results[i].books, numBooks[results[i].books]];
+      }
+      console.log('Display Result', displayResult);
+      let displayRange = characterSheet.getRangeByIndexes(theTable.rowIndex, theTable.columnIndex, displayResult.length, theTable.columnCount);
+      displayRange.values = displayResult;
+      await excel.sync();
+      const sortFields = [
+        {
+          key: 0,
+          ascending: true
+        }
+      ]
+      theTable.sort.apply(sortFields);
+      let numItems = characterSheet.getRange('chItems');
+      numItems.values = displayResult.length
+      
+      await excel.sync();
+    }
+    waitMessageRange.values = [['']];
+    waitMessage.style.display = 'none';
+  })
+}
+
+async function textSearchOld(){
   await Excel.run(async function(excel){ 
     let linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
     let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
