@@ -267,8 +267,13 @@ async function gatherData(){
           for (let charIndex = 0; charIndex < currentNames.length; charIndex++){
             if (currentNames[charIndex][0] == thisCharacter){
               //Do something with charIndex
-              console.log('Already exists: ', thisCharacter, ' index ', charIndex )
+              console.log('Already exists: ', thisCharacter, ' before ', currentNames[charIndex] )
+              currentNames[charIndex][1] = currentNames[charIndex][1] + ', ' + (i + 1);
+              currentNames[charIndex][2] = currentNames[charIndex][2] + parseInt(bookRange.text[item][1]); 
+              currentNames[charIndex][3] = currentNames[charIndex][3] + parseInt(bookRange.text[item][2]); 
+              currentNames[charIndex][4] = currentNames[charIndex][4] + ', ' + bookRange.text[item][3]; 
               found = true;
+              console.log('Already exists: ', thisCharacter, ' after ', currentNames[charIndex] )
             } 
           }
           if (!found){
