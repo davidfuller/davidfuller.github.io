@@ -265,7 +265,7 @@ async function gatherData(){
         if (thisCharacter != '0'){
           let found = false;
           for (let charIndex = 0; charIndex < currentNames.length; charIndex++){
-            if (currentNames[charIndex] == thisCharacter){
+            if (currentNames[charIndex][0] == thisCharacter){
               //Do something with charIndex
               console.log('Already exists: ', thisCharacter, ' index ', charIndex )
               found = true;
