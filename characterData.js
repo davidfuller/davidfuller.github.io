@@ -250,19 +250,24 @@ async function gatherData(){
       resultRange.load('values, rowIndex, rowCount')
       await excel.sync();
       console.log ('result rowCount', resultRange.rowCount, 'values: ', resultRange.values);
-      let currentNames = resultRange.values.map(x => x[0]).filter((x) => {x != '' })
+      //let currentNames = resultRange.values.map(x => x[0]).filter((x) => {x != '' })
+      let currentNames = resultRange.values.filter((x) => {x[0] != '' })
       console.log(currentNames);
       for (let item = 0; item < bookRange.text.length; item++){
         let thisCharacter = bookRange.text[item][0];
         if (thisCharacter != '0'){
-          if (currentNames.includes(thisCharacter)){
-            //do something
-          } else {
+          let found = false;
+          for (let charIndex = 0; charIndex < currentNames.length; charIndex++){
+            if (currentNames[charIndex] == thisCharacter){
+              //Do something with charIndex
+              found = true;
+            } 
+          }
+          if (!found){
             let newElement = [thisCharacter, '' + (i + 1), bookRange.text[item][1], bookRange.text[item][2], bookRange.text[item][3]];
             console.log('Item:', item, 'New element: ', newElement)
             newRows.push(newElement);
           }
-          
         }
       }
     }
