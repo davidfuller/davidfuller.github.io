@@ -2061,10 +2061,20 @@ async function getDirectorData(characterName){
       // set up end loop
       endChunk = startChunk + chunkLength;
       //Check end condition
+
+      let temptest = minAndMax.min + chunkLength + 100;
+
+      if (endChunk > temptest){
+        endChunk = temptest;
+        doChunk = false;
+      }
+
+      /*
       if (endChunk > minAndMax.max){
         endChunk = minAndMax.max;
         doChunk = false;
       }
+*/
 
       // set up loop criteria
       myNumberCriteria = {
