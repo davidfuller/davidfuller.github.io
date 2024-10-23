@@ -283,6 +283,12 @@ async function gatherData(){
           }
         }
       }
+      //Add currentNames back in.
+      let tempRange = linkedDataSheet.getRangeByIndexes(resultRange.rowIndex, resultRange.columnIndex, currentNames.length, resultRange.columnCount);
+      tempRange.values = currentNames;
+      await excel.sync();
+      
+      //Now do the new rows
       let startRowIndex = resultRange.rowIndex + currentNames.length;
       console.log(startRowIndex, resultRange.columnIndex, newRows.length, resultRange.columnCount);
       console.log('New rows', newRows);
