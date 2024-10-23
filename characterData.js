@@ -246,7 +246,7 @@ async function gatherData(){
       bookRange.load('text, address, rowCount');
       await excel.sync();
       console.log ('Book: ', i, 'rowCount:', bookRange.rowCount, 'data: ', bookRange.text);
-      resultRange.load('values, rowIndex, rowCount')
+      resultRange.load('text, rowIndex, rowCount')
       await excel.sync();
       console.log ('result rowCount', resultRange.rowCount);
       let currentNames = resultRange.text.map(x => x[0]).filter((x) => {x != '' })
