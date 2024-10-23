@@ -2062,12 +2062,14 @@ async function getDirectorData(characterName){
       endChunk = startChunk + chunkLength;
       //Check end condition
 
+      
       let temptest = minAndMax.min + chunkLength + 100;
-
+      console.log('EndChunk: ', endChunk, 'temptest:', temptest)
       if (endChunk > temptest){
         endChunk = temptest;
         doChunk = false;
       }
+      console.log('After endChunk:', endChunk, 'doChunk:', doChunk);
 
       /*
       if (endChunk > minAndMax.max){
@@ -2100,10 +2102,11 @@ async function getDirectorData(characterName){
       console.log('Cell count', formulaRanges.cellCount);
       console.log('Area count', formulaRanges.areaCount);
       console.log('Areas to JSON', formulaRanges.areas.toJSON());
-      tempArray = tempArray.concat(formulaRanges);
+      tempArray = tempArray.concat(formulaRanges.address);
       console.log('concataned:', tempArray)
       //increment the loop
       startChunk += chunkLength;
+
     }
     let myAddresses = '';
     if (tempArray.length > 0){
