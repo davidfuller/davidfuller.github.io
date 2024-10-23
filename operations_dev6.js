@@ -2104,7 +2104,7 @@ async function getDirectorData(characterName){
       console.log('Areas to JSON', formulaRanges.areas.toJSON());
 
 
-      tempArray = tempArray.concat(formulaRanges.address.split[',']);
+      tempArray = tempArray.concat(formulaRanges.address.split(','));
       console.log('concataned:', tempArray)
       //increment the loop
       startChunk += chunkLength;
