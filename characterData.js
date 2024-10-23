@@ -380,7 +380,7 @@ async function findCharacter(characterName, exact){
       }
       results = [result];
     } else {
-      for (let i = 0; i < characterNames.length, i++){
+      for (let i = 0; i < characterNames.length; i++){
         if (characterNames[i].character.toLowerCase() == characterName.toLowerCase()){
           let item = characterNames[i].index;
           result = {
