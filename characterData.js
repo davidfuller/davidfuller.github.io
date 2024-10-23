@@ -240,7 +240,7 @@ async function gatherData(){
     console.log('address: ', resultRange.address);
     
     //for (let i = 0; i < numBooks; i++){
-    for (let i = 0; i < 1; i++){
+    for (let i = 0; i < 2; i++){
       let newRows = [];
       let bookName = bookNameBase + (i + 1);
       // Get the book details
@@ -262,6 +262,7 @@ async function gatherData(){
           for (let charIndex = 0; charIndex < currentNames.length; charIndex++){
             if (currentNames[charIndex] == thisCharacter){
               //Do something with charIndex
+              console.log('Already exists: ', thisCharacter, ' index ', charIndex )
               found = true;
             } 
           }
