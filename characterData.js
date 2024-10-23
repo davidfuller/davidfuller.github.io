@@ -245,12 +245,17 @@ async function gatherData(){
       let bookRange = linkedDataSheet.getRange(bookName);
       bookRange.load('text, address, rowCount');
       await excel.sync();
-      console.log ('Book: ', i, 'rowCount:', bookRange.rowCount, 'data: ', bookRange.text);
+      console.log ('Book: ', i, 'rowCount:', bookRange.rowCount, 'data: ', bookRange.text, 'length', bookRange.text.length);
       resultRange.load('text, rowIndex, rowCount')
       await excel.sync();
       console.log ('result rowCount', resultRange.rowCount), resultRange.text;
       let currentNames = resultRange.text.map(x => x[0]).filter((x) => {x != '' })
       console.log(currentNames);
+      for (let item = 0; item < bookRange.text.length; item++){
+        if (bookRange.text[item][0] != '0'){
+          console.log(item, bookRange.text[item][0]);
+        }
+      }
     }
   })
 }
