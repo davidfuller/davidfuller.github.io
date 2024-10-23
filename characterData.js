@@ -257,8 +257,8 @@ async function gatherData(){
           if (currentNames.includes(thisCharacter)){
             //do something
           } else {
-            let newElement = [thisCharacter, '' + (i + 1), bookRange.text[item][1], bookRange.text[item][2], bookRange.text[item][3]]
-
+            let newElement = [thisCharacter, '' + (i + 1), bookRange.text[item][1], bookRange.text[item][2], bookRange.text[item][3]];
+            console.log('Item:', item, 'New element: ', newElement)
           }
           
         }
