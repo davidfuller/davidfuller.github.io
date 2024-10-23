@@ -238,8 +238,10 @@ async function gatherData(){
     resultRange.clear("Contents")
     await excel.sync();
     console.log('address: ', resultRange.address);
-    let newRows = [];
-    for (let i = 0; i < numBooks; i++){
+    
+    //for (let i = 0; i < numBooks; i++){
+    for (let i = 0; i < 1; i++){
+      let newRows = [];
       let bookName = bookNameBase + (i + 1);
       // Get the book details
       console.log('bookName', bookName);
@@ -247,7 +249,7 @@ async function gatherData(){
       bookRange.load('text, address, rowCount');
       await excel.sync();
       console.log ('Book: ', i, 'rowCount:', bookRange.rowCount, 'data: ', bookRange.text, 'length', bookRange.text.length);
-      resultRange.load('values, rowIndex, rowCount')
+      resultRange.load('values, rowIndex, rowCount, columnIndex, columnCount')
       await excel.sync();
       console.log ('result rowCount', resultRange.rowCount, 'values: ', resultRange.values);
       //let currentNames = resultRange.values.map(x => x[0]).filter((x) => {x != '' })
@@ -265,11 +267,15 @@ async function gatherData(){
           }
           if (!found){
             let newElement = [thisCharacter, '' + (i + 1), bookRange.text[item][1], bookRange.text[item][2], bookRange.text[item][3]];
-            console.log('Item:', item, 'New element: ', newElement)
+            //console.log('Item:', item, 'New element: ', newElement)
             newRows.push(newElement);
           }
         }
       }
+      let startRowIndex = resultRange.rowIndex + resultRange.values.length;
+      let tempRange = linkedDataSheet.getRangeByIndexes(startRowIndex, resultRange.columnIndex, newRows.length, resultRange.columnCount);
+      tempRange.values = newRows;
+      await excel.sync();
     }
     console.log('New rows', newRows);
   })
