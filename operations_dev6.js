@@ -2110,10 +2110,7 @@ async function getDirectorData(characterName){
       startChunk += chunkLength;
 
     }
-    let myAddresses = '';
-    if (tempArray.length > 0){
-      myAddresses = tempArray.split(",");
-    }
+    let myAddresses = [...new Set(tempArray)];
     console.log('myAddresses', myAddresses);
     /*
 
