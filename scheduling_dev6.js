@@ -565,9 +565,9 @@ async function createSceneWordCountData(){
     for (let i = 0; i < countDetails.length; i++){
       display[i] = [ countDetails[i].scene, countDetails[i].wordCount];
     }
-    /*
+    console.log(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount)
     let displayRange = characterListSheet.getRangeByIndexes(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount);
     displayRange.values = display;
-    */
+    
   })
 }
