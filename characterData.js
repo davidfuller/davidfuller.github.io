@@ -1,7 +1,7 @@
 const linkedDataSheetName = 'Linked_Data';
 const characterSheetName = 'Characters';
 const settingsSheetName = 'Settings';
-const codeVersion = '2.0';
+const codeVersion = '2.1';
 function auto_exec(){
   console.log('Hello');
 }
@@ -533,7 +533,7 @@ async function display(results){
     //now do the total books
     let uniqueBooks = [...new Set(allBooks)];
     let sortedBooks = uniqueBooks.sort().join(', ');
-    let sortedBooksRange = characterSheet.getRange('chAllBook');
+    let sortedBooksRange = characterSheet.getRange('chAllBooks');
     sortedBooksRange.values = [[sortedBooks]];
     await excel.sync();
     
