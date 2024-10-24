@@ -135,10 +135,10 @@ async function handleChange(event) {
   await Excel.run(async (excel) => {
       await excel.sync();        
       if ((event.address == 'B7') && event.source == 'Local'){
-        await whichBooks();
+        await textSearch();
       }
       if ((event.address == 'B9') && event.source == 'Local'){
-        await textSearch();
+        await whichBooks();
       }
   })
 }
