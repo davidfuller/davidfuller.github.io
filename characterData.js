@@ -462,6 +462,20 @@ async function display(results){
     theTable.sort.apply(sortFields);
     let numItems = characterSheet.getRange('chItems');
     numItems.values = displayResult.length
+
+    let totalLinesWords = 0;
+    let totalSceneWords = 0;
+    for (let i = 0; i < results.length; i++){
+      totalLinesWords += results[i].lineWords;
+      totalSceneWords += results[i].sceneWords;
+    }
+
+    let linesUsedRange = characterSheet.getRange('chLinesUsed');
+    let fullScenesRange = characterSheet.getRange('chFullScene');
+
+    linesUsedRange.values = [[totalLinesWords]];
+    fullScenesRange.values = [[totalSceneWords]];
+
     await excel.sync();
   })
 }
