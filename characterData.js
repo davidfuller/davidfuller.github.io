@@ -528,3 +528,19 @@ async function display(results){
     await excel.sync();
   })
 }
+
+async function doSearch(){
+  await Excel.run(async function(excel){
+    const characterSheet = excel.workbook.worksheets.getItem(characterSheetName);
+    let choiceRange = characterSheet.getRange('chSearchType');
+    choiceRange.load('values');
+    await excel.sync();
+
+    if (choiceRange.values[0][0] == 'Text Search'){
+      await textSearch();
+    } else {
+      await whichBooks();
+    }
+  })
+ 
+}

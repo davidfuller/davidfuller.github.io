@@ -8,8 +8,7 @@ async function mainHTML(){
   <h1>Please wait...</h1>
 </div>
 <div id="main-page">
-  <button id="btnCalculate" onclick="jade_modules.characterdata.whichBooks()">Calculate which books</button>
-  <button id="btnTextSearch" onclick="jade_modules.characterdata.textSearch()">Text Search</button>
+  <button id="btnSearch" onclick="jade_modules.characterdata.textSearch()">Search</button>
   <label id="wait-message">Please wait...</label><br/>
   <a id='show-hide' onclick="jade_modules.characterdata.showAdmin()">Show/hide admin</a>
 </div>
