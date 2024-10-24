@@ -372,12 +372,30 @@ async function gatherData(){
     resultRange.sort.apply(sortFields);
     await excel.sync();
 
+    let wordCountAllBooksRange = linkedDataSheet.getRange('ldWordCountAllBooks')
+    wordCountAllBooksRange.load('rowIndex, columnIndex, columnCount');
+    wordCountAllBooksRange.clear("Contents")
+    await excel.symc();
+    let startRowIndex = wordCountAllBooksRange.rowIndex;
     //now do the scene word count
     for (let i = 0; i < numBooks; i++){
       let bookRange = linkedDataSheet.getRange('ldWordCount' + (i + 1));
-
+      bookRange.load('values')
+      await excel.sync();
+      let result = [];
+      let index = - 1;
+      for (let i = 0; i < bookRange.values.length; i++){
+        if (!((bookRange.values[i][0] == 0) || (bookRange.values[i][1] == 0))){
+          index += 1;
+          result[index] = bookRange.values[i];
+        }
+      }
+      console.log('Book: ', (i+1), 'Word Count: ', result);
+      let tempRange = linkedDataSheet.getRangeByIndexes(startRowIndex, wordCountAllBooksRange.columnIndex, result.length, wordCountAllBooksRange.columnCount);
+      tempRange.values = result;
+      await excel.sync;
+      startRowIndex = startRowIndex + result.length;
     }
-
   })
 }
 
