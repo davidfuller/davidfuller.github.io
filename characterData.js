@@ -134,10 +134,10 @@ async function registerExcelEvents(){
 async function handleChange(event) {
   await Excel.run(async (excel) => {
       await excel.sync();        
-      if ((event.address == 'B10') && event.source == 'Local'){
+      if ((event.address == 'B7') && event.source == 'Local'){
         await whichBooks();
       }
-      if ((event.address == 'B13') && event.source == 'Local'){
+      if ((event.address == 'B9') && event.source == 'Local'){
         await textSearch();
       }
   })
@@ -504,8 +504,6 @@ async function display(results){
     }
     //remove duplicates
     let uniqueScenes = [...new Set(scenesUsed)];
-    console.log('Scenes Used: ', scenesUsed, "Unique Scenes: ", uniqueScenes);
-
     const linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
     let sceneWordCount = linkedDataSheet.getRange('ldWordCountAllBooks');
     sceneWordCount.load('values');
@@ -514,17 +512,12 @@ async function display(results){
     let wordCountData = sceneWordCount.values
     let justScenes = wordCountData.map(x => x[0])
 
-    console.log('Wordcount Data: ', wordCountData, "Just Scenes", justScenes);
-    
     for(let i = 0; i < uniqueScenes.length; i++){
       let myIndex = justScenes.indexOf(parseInt(uniqueScenes[i]))
-      console.log('i ', i, 'myIndex', myIndex);
       if (myIndex != -1){
         totalSceneWords = totalSceneWords + wordCountData[myIndex][1];
       }
     }
-
-    console.log(totalSceneWords);
 
     let linesUsedRange = characterSheet.getRange('chLinesUsed');
     let fullScenesRange = characterSheet.getRange('chFullScene');
