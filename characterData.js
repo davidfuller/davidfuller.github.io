@@ -469,11 +469,21 @@ async function display(results){
     let totalSceneWords = 0;
     let scenesUsed = [];
     for (let i = 0; i < results.length; i++){
-      totalLinesWords += results[i].lineWords;
-      totalSceneWords += results[i].sceneWords;
+      let doScene = true;
       if (results[i].scenes != 0){
         let theScenes = ('' + results[i].scenes).split(', ');
+        for (let item = 0; item < theScenes.length; item++){
+          if (scenesUsed.contains(theScenes[item])){
+            doScene = false;
+            console.log('Already exists:', theScenes[item])
+            break;
+          }
+        }
         scenesUsed = scenesUsed.concat(theScenes);
+      }
+      totalLinesWords += results[i].lineWords;
+      if (doScene){
+        totalSceneWords += results[i].sceneWords;
       }
     }
     console.log('Scenes Used: ', scenesUsed);
