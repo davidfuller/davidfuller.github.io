@@ -517,7 +517,7 @@ async function display(results){
     console.log('Wordcount Data: ', wordCountData, "Just Scenes", justScenes);
     
     for(let i = 0; i < uniqueScenes.length; i++){
-      let myIndex = justScenes.indexOf(uniqueScenes[i])
+      let myIndex = justScenes.indexOf(parseInt(uniqueScenes[i]))
       console.log('i ', i, 'myIndex', myIndex);
       if (myIndex != -1){
         totalSceneWords = totalSceneWords + wordCountData[myIndex][1];
