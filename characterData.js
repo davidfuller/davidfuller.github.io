@@ -473,7 +473,7 @@ async function display(results){
       if (results[i].scenes != 0){
         let theScenes = ('' + results[i].scenes).split(', ');
         for (let item = 0; item < theScenes.length; item++){
-          if (scenesUsed.contains(theScenes[item])){
+          if (scenesUsed.includes(theScenes[item])){
             doScene = false;
             console.log('Already exists:', theScenes[item])
             break;
