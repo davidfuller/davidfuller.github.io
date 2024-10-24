@@ -56,10 +56,6 @@ async function whichBooks(){
     waitMessageRange.values = [['Please wait...']]
     let waitMessage = tag('wait-message');
     waitMessage.style.display = 'block';
-    let booksRange = characterSheet.getRange('chBooks');
-    booksRange.values = [['']];
-    let numRange = characterSheet.getRange('chNumBooks');
-    numRange.values = [['']];
     let characterNameRange = characterSheet.getRange('chCharacterName');
     characterNameRange.load('values')
     await excel.sync();
