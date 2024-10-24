@@ -562,10 +562,10 @@ async function createSceneWordCountData(){
     
     let countDetails = await jade_modules.operations.getSceneWordCount();
     let display = []
-    /*
     for (let i = 0; i < countDetails.length; i++){
       display[i] = [ countDetails[i].scene, countDetails[i].wordCount];
     }
+    /*
     let displayRange = characterListSheet.getRangeByIndexes(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount);
     displayRange.values = display;
     */
