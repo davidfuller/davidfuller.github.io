@@ -553,6 +553,7 @@ async function getWordCountForCharacter(characterName){
 
 async function createSceneWordCountData(){
   await Excel.run(async function(excel){
+    /*
     const characterListSheet = excel.workbook.worksheets.getItem(characterListName);
     let sceneWordCountRange = characterListSheet.getRange('clSceneWordCount');
     sceneWordCountRange.clear("Contents") ;
@@ -565,5 +566,6 @@ async function createSceneWordCountData(){
     }
     let displayRange = characterListSheet.getRangeByIndexes(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount);
     displayRange.values = display;
+    */
   })
 }
