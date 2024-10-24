@@ -1,4 +1,4 @@
-const codeVersion = '6.3';
+const codeVersion = '6.4';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -24,7 +24,7 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
-let mySheetColumns, ukScriptIndex, otherNotesIndex;
+let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
@@ -149,6 +149,7 @@ async function initialiseVariables(){
   wallaCueIndex = findColumnIndex('Walla Cue No')
 
   chapterCalculationIndex = findColumnIndex('Chapter Calculation');
+  sceneWordCountCalcIndex = findColumnIndex('Scene word count calc'); 
 
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -3917,3 +3918,37 @@ async function fillColorLinesAndScriptedWalla(){
   
 }
 
+async function getSceneWordCount(){
+  let myData = []
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let startRowIndex = firstDataRow - 1;
+    let rowCount = lastDataRow - firstDataRow + 1;
+    let sceneRange = scriptSheet.getRangeByIndexes(startRowIndex, sceneIndex, rowCount, 1);
+    let countRange = scriptSheet.getRangeByIndexes(startRowIndex, sceneWordCountCalcIndex, rowCount, 1);
+    sceneRange.load('values');
+    countRange.load('values');
+    await excel.sync();
+
+    for (let i = 0; i < sceneRange.values.length; i++){
+      if (myData.length == 0){
+        if (sceneRange.values[i][0] > 0) {
+          let thisData = { scene: sceneRange.values[i][0], wordCount: countRange.values[i][0]}
+          myData.push(thisData);
+        } 
+      } else {
+        if (i == 0){
+          let thisData = { scene: sceneRange.values[i][0], wordCount: countRange.values[i][0]}
+          myData.push(thisData);
+        } else {
+          if (sceneRange.values[i][0] != sceneRange.values[i - 1][0]){
+            let thisData = { scene: sceneRange.values[i][0], wordCount: countRange.values[i][0]}
+          myData.push(thisData);
+          }
+        }
+      }
+    }
+    console.log('sceneWordCount data:', myData);
+  })
+  return myData; 
+}

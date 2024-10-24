@@ -550,3 +550,20 @@ async function getWordCountForCharacter(characterName){
     scenes: sceneArray.map(x => x[0]).join(', ')
   }
 }
+
+async function createSceneWordCountData(){
+  await Excel.run(async function(excel){
+    const characterListSheet = excel.workbook.worksheets.getItem(characterListName);
+    let sceneWordCountRange = characterListSheet.getRange('clSceneWordCount');
+    sceneWordCountRange.clear("Contents") ;
+    sceneWordCountRange.load('rowIndex, columnIndex, columnCount')
+    await excel.sync();
+    let countDetails = jade_modules.operations.getSceneWordCount();
+    let display = []
+    for (let i = 0; i < countDetails.length; i++){
+      display[i] = [ countDetails[i].scene, countDetails[i].wordCount];
+    }
+    let displayRange = characterListSheet.getRangeByIndexes(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount);
+    displayRange.values = display;
+  })
+}
