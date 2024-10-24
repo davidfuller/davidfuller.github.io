@@ -371,6 +371,13 @@ async function gatherData(){
     ]
     resultRange.sort.apply(sortFields);
     await excel.sync();
+
+    //now do the scene word count
+    for (let i = 0; i < numBooks; i++){
+      let bookRange = linkedDataSheet.getRange('ldWordCount' + (i + 1));
+
+    }
+
   })
 }
 
@@ -474,7 +481,7 @@ async function display(results){
         let theScenes = ('' + results[i].scenes).split(', ');
         for (let item = 0; item < theScenes.length; item++){
           if (scenesUsed.includes(theScenes[item])){
-            doScene = false;
+            doScene = true;
             console.log('Already exists:', theScenes[item])
             break;
           }
