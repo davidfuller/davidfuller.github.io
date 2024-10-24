@@ -553,12 +553,12 @@ async function getWordCountForCharacter(characterName){
 
 async function createSceneWordCountData(){
   await Excel.run(async function(excel){
-    /*
     const characterListSheet = excel.workbook.worksheets.getItem(characterListName);
     let sceneWordCountRange = characterListSheet.getRange('clSceneWordCount');
     sceneWordCountRange.clear("Contents") ;
     sceneWordCountRange.load('rowIndex, columnIndex, columnCount')
     await excel.sync();
+    /*
     let countDetails = jade_modules.operations.getSceneWordCount();
     let display = []
     for (let i = 0; i < countDetails.length; i++){
