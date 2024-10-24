@@ -441,7 +441,7 @@ async function display(results){
   await Excel.run(async function(excel){
     let displayResult = [];
     for (let i = 0; i < results.length; i++){
-      displayResult[i] = [results[i].character, results[i].books, numBooks(results[i].books)];
+      displayResult[i] = [results[i].character, results[i].books, numBooks(results[i].books), results[i].scenes];
     }
     console.log('Display Result', displayResult);
     let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
