@@ -375,7 +375,7 @@ async function gatherData(){
     let wordCountAllBooksRange = linkedDataSheet.getRange('ldWordCountAllBooks')
     wordCountAllBooksRange.load('rowIndex, columnIndex, columnCount');
     wordCountAllBooksRange.clear("Contents")
-    await excel.symc();
+    await excel.sync();
     let startRowIndex = wordCountAllBooksRange.rowIndex;
     //now do the scene word count
     for (let i = 0; i < numBooks; i++){
