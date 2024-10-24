@@ -67,9 +67,7 @@ async function whichBooks(){
     if (characterName != ''){
       let results = await findCharacter(characterName, true)
       if (results[0].valid){
-        let theBooks = '' + results[0].books;
-        booksRange.values = [[theBooks]];
-        numRange.values = [[numBooks(theBooks)]];
+       await display(results);
       }
     }
     waitMessageRange.values = [['']];

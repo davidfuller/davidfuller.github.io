@@ -24,8 +24,8 @@ async function mainHTML(){
 await Jade.open_canvas("character-summary", html, true);
 console.log('Canvas open');
 await jade_modules.characterdata.registerExcelEvents();
-await jade_modules.characterdata.makeTheFullList();
 await jade_modules.characterdata.refreshLinks();
+await jade_modules.characterdata.gatherData ();
 await jade_modules.characterdata.showMain();
 console.log("I'm here data loaded.");
 }
