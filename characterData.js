@@ -203,32 +203,10 @@ async function textSearch(){
     await excel.sync();
 
     let searchText = textSearchRange.values[0][0]
-    let theTable = characterSheet.getRange('chTable');
-    theTable.clear('Contents');
-    theTable.load('rowIndex, columnIndex, columnCount');
-    await excel.sync();
     if (searchText != ''){
       let results = await findCharacter(searchText, false)
       console.log('Results: ', results)
-      let displayResult = [];
-      for (let i = 0; i < results.length; i++){
-        displayResult[i] = [results[i].character, results[i].books, numBooks(results[i].books)];
-      }
-      console.log('Display Result', displayResult);
-      let displayRange = characterSheet.getRangeByIndexes(theTable.rowIndex, theTable.columnIndex, displayResult.length, theTable.columnCount);
-      displayRange.values = displayResult;
-      await excel.sync();
-      const sortFields = [
-        {
-          key: 0,
-          ascending: true
-        }
-      ]
-      theTable.sort.apply(sortFields);
-      let numItems = characterSheet.getRange('chItems');
-      numItems.values = displayResult.length
-      
-      await excel.sync();
+      await display(results);
     }
     waitMessageRange.values = [['']];
     waitMessage.style.display = 'none';
@@ -459,4 +437,33 @@ async function findCharacter(characterName, exact){
     console.log('Results: ', results)  
   })
   return results;
+}
+
+async function display(results){
+  await Excel.run(async function(excel){
+    let displayResult = [];
+    for (let i = 0; i < results.length; i++){
+      displayResult[i] = [results[i].character, results[i].books, numBooks(results[i].books)];
+    }
+    console.log('Display Result', displayResult);
+    let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
+    let theTable = characterSheet.getRange('chTable');
+    theTable.clear('Contents');
+    theTable.load('rowIndex, columnIndex, columnCount');
+    await excel.sync();
+    
+    let displayRange = characterSheet.getRangeByIndexes(theTable.rowIndex, theTable.columnIndex, displayResult.length, theTable.columnCount);
+    displayRange.values = displayResult;
+    await excel.sync();
+    const sortFields = [
+      {
+        key: 0,
+        ascending: true
+      }
+    ]
+    theTable.sort.apply(sortFields);
+    let numItems = characterSheet.getRange('chItems');
+    numItems.values = displayResult.length
+    await excel.sync();
+  })
 }
