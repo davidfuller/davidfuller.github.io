@@ -461,11 +461,15 @@ async function display(results){
 
     let totalLinesWords = 0;
     let totalSceneWords = 0;
+    let scenesUsed = [];
     for (let i = 0; i < results.length; i++){
       totalLinesWords += results[i].lineWords;
       totalSceneWords += results[i].sceneWords;
+      let theScenes = ('' + results[i].scenes).split(', ');
+      scenesUsed = scenesUsed.concat(theScenes);
     }
-
+    console.log('Scenes Used: ', scenesUsed);
+    
     let linesUsedRange = characterSheet.getRange('chLinesUsed');
     let fullScenesRange = characterSheet.getRange('chFullScene');
 
