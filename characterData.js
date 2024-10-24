@@ -437,7 +437,13 @@ async function display(results){
   await Excel.run(async function(excel){
     let displayResult = [];
     for (let i = 0; i < results.length; i++){
-      displayResult[i] = [results[i].character, results[i].books, numBooks(results[i].books), results[i].scenes];
+      let sceneDisplay;
+      if (results[i].scenes == 0){
+        sceneDisplay = '';
+      } else {
+        sceneDisplay = results[i].scenes
+      }
+      displayResult[i] = [results[i].character, results[i].books, numBooks(results[i].books), sceneDisplay];
     }
     console.log('Display Result', displayResult);
     let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
@@ -465,11 +471,13 @@ async function display(results){
     for (let i = 0; i < results.length; i++){
       totalLinesWords += results[i].lineWords;
       totalSceneWords += results[i].sceneWords;
-      let theScenes = ('' + results[i].scenes).split(', ');
-      scenesUsed = scenesUsed.concat(theScenes);
+      if (results[i].scenes != 0){
+        let theScenes = ('' + results[i].scenes).split(', ');
+        scenesUsed = scenesUsed.concat(theScenes);
+      }
     }
     console.log('Scenes Used: ', scenesUsed);
-    
+
     let linesUsedRange = characterSheet.getRange('chLinesUsed');
     let fullScenesRange = characterSheet.getRange('chFullScene');
 
