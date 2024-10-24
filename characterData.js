@@ -494,24 +494,37 @@ async function display(results){
     let totalSceneWords = 0;
     let scenesUsed = [];
     for (let i = 0; i < results.length; i++){
-      let doScene = true;
+      // lets create a list of scenes used by this result
       if (results[i].scenes != 0){
+        //Split it as a string
         let theScenes = ('' + results[i].scenes).split(', ');
-        for (let item = 0; item < theScenes.length; item++){
-          if (scenesUsed.includes(theScenes[item])){
-            doScene = true;
-            console.log('Already exists:', theScenes[item])
-            break;
-          }
-        }
         scenesUsed = scenesUsed.concat(theScenes);
-      }
-      totalLinesWords += results[i].lineWords;
-      if (doScene){
-        totalSceneWords += results[i].sceneWords;
+        totalLinesWords += results[i].lineWords;
       }
     }
-    console.log('Scenes Used: ', scenesUsed);
+    //remove duplicates
+    let uniqueScenes = [...new Set(scenesUsed)];
+    console.log('Scenes Used: ', scenesUsed, "Unique Scenes: ", uniqueScenes);
+
+    const linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
+    let sceneWordCount = linkedDataSheet.getRange('ldWordCountAllBooks');
+    sceneWordCount.load('values');
+    await excel.sync();
+
+    let wordCountData = sceneWordCount.values
+    let justScenes = wordCountData.map(x => x[0])
+
+    console.log('Wordcount Data: ', wordCountData, "Just Scenes", justScenes);
+    
+    for(let i = 0; i < uniqueScenes.length; i++){
+      let myIndex = justScenes.indexOf(uniqueScenes[i])
+      console.log('i ', i, 'myIndex', myIndex);
+      if (myIndex != -1){
+        totalSceneWords = totalSceneWords + wordCountData[myIndex][1];
+      }
+    }
+
+    console.log(totalSceneWords);
 
     let linesUsedRange = characterSheet.getRange('chLinesUsed');
     let fullScenesRange = characterSheet.getRange('chFullScene');
