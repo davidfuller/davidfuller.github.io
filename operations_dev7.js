@@ -4119,7 +4119,7 @@ async function getDirectorDataV2(character){
         ukNumTakes: ukNumTakesRange.values[uniqueIndexes[i]][0],
         ukTakeNum: ukTakeNumRange.values[uniqueIndexes[i]][0],
         ukDateRecorded: ukDateRecordedRange.values[uniqueIndexes[i]][0],
-        lineWordCount: lineWordCountRange.values[uniqueIndexes][i][0],
+        lineWordCount: lineWordCountRange.values[uniqueIndexes[i]][0],
         sceneWordCount: sceneWordCountRange.values[uniqueIndexes[i]][0]
       }
       myData.push(theData);    
