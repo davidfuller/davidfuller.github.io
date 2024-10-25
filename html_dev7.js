@@ -15,7 +15,7 @@ async function mainHTML(){
     <button id="btnWallaImport" class="nav-button" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
     <button id="btnLocationPage" class="nav-button" onclick="jade_modules.operations.showLocation()">Location</button><br/>
     <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
-</div>
+  </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
     <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
