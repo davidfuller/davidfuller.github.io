@@ -2104,17 +2104,17 @@ async function doChunkedFilter(character, sheetName){
       }
       //remove the autofilter
       scriptSheet.autoFilter.remove();
-      await excel.sync();
       //apply filters to both columns
       console.log('Used Range: ', usedRange.address, 'characterIndex:', characterIndex, 'myCriteria: ', myCriteria);
       scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
-      await excel.sync();
       scriptSheet.autoFilter.apply(usedRange, numberIndex, myNumberCriteria);
-      await excel.sync();
       // get the formula range for this chunk
-      let formulaRanges = usedRange.getSpecialCells('Visible');
+      let formulaRanges = usedRange.getSpecialCellsOrNullObject('Visible');
       formulaRanges.load('address');
       await excel.sync();
+      if (formulaRanges.isNullObject){
+        console.log('Null object detected');
+      }
       console.log('Range areas', formulaRanges.address);
     
       tempArray = tempArray.concat(formulaRanges.address.split(','));
