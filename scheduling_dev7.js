@@ -524,13 +524,16 @@ async function createScript(){
 }
 
 async function displayScenes(){
+  console.log('In displayScenes');
   let theScenes = await getSceneNumberActor();
+  console.log('theScenes: ', theScenes);
   let display = ''
   if (theScenes.length == 0){
     display = 'Nothing selected';
   } else {
     display = theScenes.join(', ');
   }
+  console.log('display', display);
   let scenesDisplay = tag('actor-scene-display');
   scenesDisplay.innerText = display;  
 }

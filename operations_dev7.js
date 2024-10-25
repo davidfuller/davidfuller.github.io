@@ -2761,7 +2761,7 @@ async function registerExcelEvents(){
     locationSheet.onSelectionChanged.add(handleSelection)
     await excel.sync();
     console.log("Event handler successfully registered for onChanged event for four sheets.");
-  }).catch(errorHandlerFunction);
+  }).catch(errorHandlerFunction(e));
 }
 
 async function handleChange(event) {
@@ -2814,6 +2814,7 @@ async function actorSelectionChange(event){
   await Excel.run(async (excel) => {
     await excel.sync();        
     if (event.source == 'Local'){
+      console.log('actorSelectionChange ', event.address);
       await jade_modules.scheduling.displayScenes();
     }
   }).catch(errorHandlerFunction(e))
