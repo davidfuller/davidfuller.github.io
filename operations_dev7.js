@@ -2104,6 +2104,7 @@ async function doChunkedFilter(characterName, sheetName, textSearch){
       scriptSheet.autoFilter.remove();
       await excel.sync();
       //apply filters to both columns
+      console.log('Used Range: ', usedRange.address, 'characterIndex:', characterIndex, 'myCriteria: ', myCriteria);
       scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
       await excel.sync();
       scriptSheet.autoFilter.apply(usedRange, numberIndex, myNumberCriteria);
