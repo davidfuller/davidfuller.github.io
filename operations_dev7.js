@@ -4098,7 +4098,8 @@ async function getDirectorDataV2(character){
     let index = -1;
     if (character.type == choiceType.text){
       for (let i = 0; i < characterRange.values.length; i++){
-        if (characterRange.values[i][0].toLowerCase().contains(character.name.toLowerCase())){
+        let theValue = characterRange.values[i][0].toLowerCase();
+        if (theValue.contains(character.name.toLowerCase())){
           index += 1;
           myIndexes[index] = i;
         }
