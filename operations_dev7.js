@@ -2118,11 +2118,19 @@ async function doChunkedFilter(character, sheetName){
         console.log('Null object NOT detected');
       }
       console.log('Range areas', formulaRanges.address, 'Areas object', formulaRanges.areas.items);
-    
+      let formulaRangeItems = formulaRanges.areas.items;
+      let theAddresses = []
+      for (let i = 0; i < formulaRangeItems.length; i++){
+        theAddresses[i] = formulaRangeItems[i].address;
+      }
+      console.log('theAddresses', theAddresses);
+      tempArray = tempArray.concat(theAddresses);
+      /*
       if (!(formulaRanges === null)){
         tempArray = tempArray.concat(formulaRanges.address.split(','));
         console.log('concataned:', tempArray)
       }
+      */
       //increment the loop
       startChunk += chunkLength;
     }
