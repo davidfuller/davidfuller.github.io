@@ -2060,7 +2060,7 @@ async function doChunkedFilter(character, sheetName){
     let minAndMax = await getLineNoMaxAndMin();
 
     // set up loop variables
-    let chunkLength = 500;
+    let chunkLength = 1000;
     let startChunk = minAndMax.min;
     let endChunk = startChunk + chunkLength;
 
