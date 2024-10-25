@@ -4104,6 +4104,14 @@ async function getDirectorDataV2(character){
           myIndexes[index] = i;
         }
       }
+    } else {
+      for (let i = 0; i < characterRange.values.length; i++){
+        let theValue = '' + characterRange.values[i][0].toLowerCase();
+        if (theValue = character.name.toLowerCase()){
+          index += 1;
+          myIndexes[index] = i;
+        }
+      }
     }
 
     //remove duplicate values
