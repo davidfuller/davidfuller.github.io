@@ -2259,7 +2259,7 @@ async function getDirectorData(character){
       startIndex = startIndex + 200;
       stopIndex = stopIndex + 200;
     }
-    console.log('theRanges', theRanges, theRanges.toJSON())
+    console.log('theRanges', theRanges)
     /*
     for (let i = 0; i < theRanges.length; i++){
       console.log('Range items', i, theRanges[i].values);
