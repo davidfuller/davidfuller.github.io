@@ -2256,8 +2256,8 @@ async function getDirectorData(character){
         theRanges[i].load('rowCount');
       }
       await excel.sync();
-      startIndex = startIndex + 1000;
-      stopIndex = stopIndex + 1000;
+      startIndex = startIndex + 500;
+      stopIndex = stopIndex + 500;
     }
     console.log(theRanges)
     /*
