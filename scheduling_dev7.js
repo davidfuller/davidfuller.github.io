@@ -256,6 +256,7 @@ async function getForSchedulingInfo(){
     let totalSceneWordCount = 0;
     let totalLineWordCount = 0;
     let sceneArray = [];
+    let arrayIndex = -1;
     for (let i = 0; i < myData.length; i++){
       let newRow;
       if (myData[i].sceneWordCount == ''){
@@ -269,6 +270,9 @@ async function getForSchedulingInfo(){
           characters: [myData[i].character]
         }
         dataArray.push(newRow);
+        arrayIndex += 1;
+        sceneArray[arrayIndex] = [];
+        sceneArray[arrayIndex][0] = myData[i].sceneNumber;
         totalSceneWordCount += myData[i].sceneWordCount;
         totalLineWordCount += myData[i].lineWordCount;
       } else {
@@ -564,6 +568,8 @@ async function getSceneNumberActor(){
   }).catch(e => console.log('My error', e));
   return sceneNumbers;
 }
+
+
 async function topOfFirstPage(book, character){
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
@@ -817,4 +823,104 @@ async function highlightCharacters(sheetName, character, rowDetails){
     
     await excel.sync();
   });
+}
+
+async function processCharacterListForWordAndScene(){
+  await Excel.run(async function(excel){
+    const characterListSheet = excel.workbook.worksheets.getItem(characterListName);
+    let characterRange = characterListSheet.getRange('clCharacters');
+    let detailsRange = characterListSheet.getRange('clTable')
+    characterRange.load('values, rowIndex');
+    detailsRange.load('columnIndex, columnCount')
+    detailsRange.clear("Contents");
+    await excel.sync();
+    let myCharacters = characterRange.values.map(x => x[0]);
+    console.log('Characters: ', myCharacters, 'rowIndex: ', characterRange.rowIndex )
+    for (let i = 0; i < myCharacters.length; i ++){
+      if (myCharacters[i] != ''){
+        let details = await getWordCountForCharacter(myCharacters[i]);
+        console.log(i, 'Character: ', myCharacters[i], ' Details: ', details);
+        let tempRange = characterListSheet.getRangeByIndexes(i + characterRange.rowIndex, detailsRange.columnIndex, 1, detailsRange.columnCount);
+        tempRange.values = [[details.sceneWordCount, details.lineWordCount, details.scenes]];
+      }
+    }
+  })
+}
+
+async function getWordCountForCharacter(characterName){
+  let myData = await jade_modules.operations.getDirectorData(characterName);
+  console.log('Scheduling myData', myData);
+    
+  let dataArray = [];
+  let totalSceneWordCount = 0;
+  let totalLineWordCount = 0;
+  let sceneArray = [];
+  let arrayIndex = -1;
+  for (let i = 0; i < myData.length; i++){
+    let newRow;
+    if (myData[i].sceneWordCount == ''){
+      myData[i].sceneWordCount = 0;
+    }
+    if (i == 0){
+      newRow = {
+        sceneNumber: myData[i].sceneNumber,
+        sceneWordCount: myData[i].sceneWordCount,
+        characterWordCount: myData[i].lineWordCount
+      }
+      dataArray.push(newRow);
+      arrayIndex += 1;
+      sceneArray[arrayIndex] = [];
+      sceneArray[arrayIndex][0] = myData[i].sceneNumber;
+      totalSceneWordCount += myData[i].sceneWordCount;
+      totalLineWordCount += myData[i].lineWordCount;
+    } else {
+      if (myData[i - 1].lineNumber != myData[i].lineNumber){
+        let myIndex = dataArray.findIndex(x => x.sceneNumber == myData[i].sceneNumber);
+        if (myIndex == -1){
+          newRow = {
+            sceneNumber: myData[i].sceneNumber,
+            sceneWordCount: myData[i].sceneWordCount,
+            characterWordCount: myData[i].lineWordCount
+          }
+          dataArray.push(newRow);
+          arrayIndex += 1;
+          sceneArray[arrayIndex] = [];
+          sceneArray[arrayIndex][0] = myData[i].sceneNumber;
+          totalSceneWordCount += myData[i].sceneWordCount;
+          console.log(i, 'totalscene', totalSceneWordCount, 'sceneWordCount', myData[i].sceneWordCount, 'sceneNo', myData[i].sceneNumber);
+          totalLineWordCount += myData[i].lineWordCount;
+        } else {
+          dataArray[myIndex].characterWordCount = dataArray[myIndex].characterWordCount + myData[i].lineWordCount;
+          totalLineWordCount += myData[i].lineWordCount;
+        }
+      }
+    } 
+  }
+
+  return {
+    sceneWordCount: totalSceneWordCount,
+    lineWordCount: totalLineWordCount,
+    scenes: sceneArray.map(x => x[0]).join(', ')
+  }
+}
+
+async function createSceneWordCountData(){
+  await Excel.run(async function(excel){
+    console.log('Starting');
+    const characterListSheet = excel.workbook.worksheets.getItem(characterListName);
+    let sceneWordCountRange = characterListSheet.getRange('clSceneWordCount');
+    sceneWordCountRange.clear("Contents") ;
+    sceneWordCountRange.load('rowIndex, columnIndex, columnCount')
+    await excel.sync();
+    
+    let countDetails = await jade_modules.operations.getSceneWordCount();
+    let display = []
+    for (let i = 0; i < countDetails.length; i++){
+      display[i] = [ countDetails[i].scene, countDetails[i].wordCount];
+    }
+    console.log(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount)
+    let displayRange = characterListSheet.getRangeByIndexes(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount);
+    displayRange.values = display;
+    
+  })
 }

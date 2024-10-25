@@ -1,4 +1,4 @@
-const codeVersion = '7.0';
+const codeVersion = '7.1';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -25,7 +25,7 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
-let mySheetColumns, ukScriptIndex, bookIndex, otherNotesIndex;
+let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
@@ -157,6 +157,7 @@ async function initialiseVariables(){
 
   chapterCalculationIndex = findColumnIndex('Chapter Calculation');
   bookIndex = findColumnIndex('Book');
+  sceneWordCountCalcIndex = findColumnIndex('Scene word count calc'); 
 
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -2043,28 +2044,115 @@ async function filterOnLocation(locationText){
   })
 }
 
+async function doChunkedFilter(characterName, sheetName, textSearch){
+  let myAddresses;
+  let hiddenColumnAddresses = await getHiddenColumns();
+  //This does a filter based on a parameter criteria and a chunking of lineNo
+  //It returns a string array of addresses
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(sheetName);
+    let usedRange = await getDataRange(excel);
+    usedRange.load('address');
+    usedRange.columnHidden = false;
+    await excel.sync()
+
+    //find the min and max for column G
+    let minAndMax = await getLineNoMaxAndMin();
+
+    // set up loop variables
+    let chunkLength = 10000;
+    let startChunk = minAndMax.min;
+    let endChunk = startChunk + chunkLength;
+
+    //set up the character criteria
+    let myCriteria = {};
+    
+    if (textSearch){
+      myCriteria ={
+        filterOn: Excel.FilterOn.custom,
+        criterion1: '=*' + character.name +'*'
+      }
+    } else {}
+      myCriteria = {
+        filterOn: Excel.FilterOn.custom,
+        criterion1: characterName
+    }
+    let myNumberCriteria = {};
+
+    //set up loop boolean
+    let doChunk = true;
+
+    //start the loop
+    let tempArray = [];
+    while(doChunk){
+      // set up end loop
+      endChunk = startChunk + chunkLength;
+      //Check end condition
+      if (endChunk > minAndMax.max){
+        endChunk = minAndMax.max;
+        doChunk = false;
+      }
+      console.log('After endChunk:', endChunk, 'doChunk:', doChunk);
+      // set up loop criteria
+      myNumberCriteria = {
+        filterOn: Excel.FilterOn.custom,
+        criterion1: '>=' + startChunk,
+        criterion2: '<' + endChunk,
+        operator: 'And'
+      }
+      //remove the autofilter
+      scriptSheet.autoFilter.remove();
+            
+      //apply filters to both columns
+      scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
+      scriptSheet.autoFilter.apply(usedRange, numberIndex, myNumberCriteria);
+
+      // get the formula range for this chunk
+      let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
+      formulaRanges.load('address');
+      await excel.sync();
+      console.log('Range areas', formulaRanges.address);
+    
+      tempArray = tempArray.concat(formulaRanges.address.split(','));
+      console.log('concataned:', tempArray)
+      //increment the loop
+      startChunk += chunkLength;
+    }
+    myAddresses = [...new Set(tempArray)];
+    scriptSheet.autoFilter.remove();
+    for (let col of hiddenColumnAddresses){
+      let tempRange = scriptSheet.getRange(col);
+      tempRange.columnHidden = true;
+    }
+  })
+  return myAddresses;
+}
+
 async function getDirectorData(character){
   let myData = [];
-  let hiddenColumnAddresses = await getHiddenColumns();
+  //let hiddenColumnAddresses = await getHiddenColumns();
   
 	await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
+    /*
 		let usedRange = await getDataRange(excel);
 
 
     let myFilter = scriptSheet.autoFilter
     myFilter.load('criteria');
     await excel.sync();
+    
     console.log('The criteria: ', myFilter.criteria)
 
     usedRange.load('address');
     usedRange.columnHidden = false;
     await excel.sync()
+    */
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
-    console.log('Used range address', usedRange.address)
-
+    //console.log('Used range address', usedRange.address)
+    /*
     let doChunking = false;
     //find the min and max for column G
     let minAndMax = getLineNoMaxAndMin();
@@ -2128,7 +2216,11 @@ async function getDirectorData(character){
       let tempRange = scriptSheet.getRange(col);
       tempRange.columnHidden = true;
     }
-    
+    */
+
+    let myAddresses = await doChunkedFilter(characterName, scriptSheetName, false);
+    console.log('myAddresses', myAddresses);
+
     let startIndex = 0;
     let stopIndex = 1000;
     let doIt = true;
@@ -3922,3 +4014,37 @@ async function fillColorLinesAndScriptedWalla(){
   
 }
 
+async function getSceneWordCount(){
+  let myData = []
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let startRowIndex = firstDataRow - 1;
+    let rowCount = lastDataRow - firstDataRow + 1;
+    let sceneRange = scriptSheet.getRangeByIndexes(startRowIndex, sceneIndex, rowCount, 1);
+    let countRange = scriptSheet.getRangeByIndexes(startRowIndex, sceneWordCountCalcIndex, rowCount, 1);
+    sceneRange.load('values');
+    countRange.load('values');
+    await excel.sync();
+
+    for (let i = 0; i < sceneRange.values.length; i++){
+      if (myData.length == 0){
+        if (sceneRange.values[i][0] > 0) {
+          let thisData = { scene: sceneRange.values[i][0], wordCount: countRange.values[i][0]}
+          myData.push(thisData);
+        } 
+      } else {
+        if (i == 0){
+          let thisData = { scene: sceneRange.values[i][0], wordCount: countRange.values[i][0]}
+          myData.push(thisData);
+        } else {
+          if (sceneRange.values[i][0] != sceneRange.values[i - 1][0]){
+            let thisData = { scene: sceneRange.values[i][0], wordCount: countRange.values[i][0]}
+          myData.push(thisData);
+          }
+        }
+      }
+    }
+    console.log('sceneWordCount data:', myData);
+  })
+  return myData; 
+}
