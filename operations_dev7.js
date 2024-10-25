@@ -2110,15 +2110,19 @@ async function doChunkedFilter(character, sheetName){
       scriptSheet.autoFilter.apply(usedRange, numberIndex, myNumberCriteria);
       // get the formula range for this chunk
       let formulaRanges = usedRange.getSpecialCellsOrNullObject('Visible');
-      formulaRanges.load('address');
+      formulaRanges.load('address, areas');
       await excel.sync();
       if (formulaRanges.isNullObject){
         console.log('Null object detected');
+      } else {
+        console.log('Null object NOT detected');
       }
-      console.log('Range areas', formulaRanges.address);
+      console.log('Range areas', formulaRanges.address, 'Areas object', formulaRanges.areas.toJSON());
     
-      tempArray = tempArray.concat(formulaRanges.address.split(','));
-      console.log('concataned:', tempArray)
+      if (!(formulaRanges === null)){
+        tempArray = tempArray.concat(formulaRanges.address.split(','));
+        console.log('concataned:', tempArray)
+      }
       //increment the loop
       startChunk += chunkLength;
     }
