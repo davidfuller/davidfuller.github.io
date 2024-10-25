@@ -2112,7 +2112,7 @@ async function doChunkedFilter(character, sheetName){
       scriptSheet.autoFilter.apply(usedRange, numberIndex, myNumberCriteria);
       await excel.sync();
       // get the formula range for this chunk
-      let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
+      let formulaRanges = usedRange.getSpecialCells(Excel.SpecialCellType.visible);
       formulaRanges.load('address');
       await excel.sync();
       console.log('Range areas', formulaRanges.address);
