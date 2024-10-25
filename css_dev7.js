@@ -46,6 +46,7 @@ label {
   width: 370px;
   padding-left: 10px;
   padding-top: 0px;
+  padding-bottom: 15px;
   border-width: 1px;
   border-radius: 5px;
   border-color: #46656F;
@@ -497,7 +498,7 @@ label {
   width: 150px;
 }
 
-#forActorsButtons {
+#forActorsButtons, #actor-nav-buttons {
   border-color: #592509;
 }
 
