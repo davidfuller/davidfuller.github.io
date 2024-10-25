@@ -572,7 +572,7 @@ label {
 }
 
 .nav-button {
-  margin-left: 5px;
+  margin-left: 5px !important;
   width: 95px;
 }
 
