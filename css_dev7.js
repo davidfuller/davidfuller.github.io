@@ -572,8 +572,13 @@ label {
 }
 
 .nav-button {
-  margin-left: 15px;
+  margin-left: 5px;
 }
+
+.nav-button :first-child{
+  margin-left: 15px
+}
+  
 `;
   Jade.set_css(css);
   console.log('CSS done')
