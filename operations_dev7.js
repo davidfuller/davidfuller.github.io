@@ -2044,7 +2044,7 @@ async function filterOnLocation(locationText){
   })
 }
 
-async function doChunkedFilter(character, sheetName, textSearch){
+async function doChunkedFilter(character, sheetName){
   let myAddresses;
   let hiddenColumnAddresses = await getHiddenColumns();
   //This does a filter based on a parameter criteria and a chunking of lineNo
@@ -2067,7 +2067,7 @@ async function doChunkedFilter(character, sheetName, textSearch){
     //set up the character criteria
     let myCriteria = {};
     
-    if (textSearch){
+    if (character.type == choiceType.list){
       myCriteria ={
         filterOn: Excel.FilterOn.custom,
         criterion1: '=*' + character.name +'*'
@@ -2130,7 +2130,7 @@ async function doChunkedFilter(character, sheetName, textSearch){
   return myAddresses;
 }
 
-async function getDirectorData(characterName){
+async function getDirectorData(character){
   let myData = [];
   //let hiddenColumnAddresses = await getHiddenColumns();
   
@@ -2220,7 +2220,7 @@ async function getDirectorData(characterName){
     }
     */
 
-    let myAddresses = await doChunkedFilter(characterName, scriptSheetName, false);
+    let myAddresses = await doChunkedFilter(character, scriptSheetName);
     console.log('myAddresses', myAddresses);
 
     let startIndex = 0;
