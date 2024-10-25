@@ -45,7 +45,7 @@ label {
   margin-top: 10px;
   width: 370px;
   padding-left: 10px;
-  padding-top: 0px;
+  padding-top: 10px;
   padding-bottom: 15px;
   border-width: 1px;
   border-radius: 5px;
