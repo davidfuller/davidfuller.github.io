@@ -4136,7 +4136,7 @@ async function getFirstLastIndex(){
   await Excel.run(async (excel) => {
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let usedRange = scriptSheet.getUsedRange()
-    usedRange.load('rowIndex', 'rowCount', 'columnIndex', 'columnCount');
+    usedRange.load('rowIndex, rowCount, columnIndex, columnCount');
     await excel.sync()
     details = {
       rowIndex: usedRange.rowIndex,
