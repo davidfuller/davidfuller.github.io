@@ -2238,7 +2238,7 @@ async function getDirectorData(character){
     console.log('myAddresses', myAddresses);
 
     let startIndex = 0;
-    let stopIndex = 1000;
+    let stopIndex = 500;
     let doIt = true;
     let theRanges = [];
 
