@@ -2117,7 +2117,7 @@ async function doChunkedFilter(character, sheetName){
       } else {
         console.log('Null object NOT detected');
       }
-      console.log('Range areas', formulaRanges.address, 'Areas object', formulaRanges.areas.toJSON());
+      console.log('Range areas', formulaRanges.address, 'Areas object', formulaRanges.areas.items);
     
       if (!(formulaRanges === null)){
         tempArray = tempArray.concat(formulaRanges.address.split(','));
