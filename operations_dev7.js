@@ -2815,10 +2815,7 @@ async function actorSelectionChange(event){
   await Excel.run(async (excel) => {
     await excel.sync();
     console.log('actorSelectionChange 1', event);
-    if (event.source == 'Local'){
-      console.log('actorSelectionChange 2', event.address);
-      await jade_modules.scheduling.displayScenes();
-    }
+    await jade_modules.scheduling.displayScenes();
   }).catch(errorHandlerFunction(e))
 }
 function errorHandlerFunction(e){
