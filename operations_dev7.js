@@ -2256,10 +2256,10 @@ async function getDirectorData(character){
         theRanges[i].load('rowCount');
       }
       await excel.sync();
-      startIndex = startIndex + 500;
-      stopIndex = stopIndex + 500;
+      startIndex = startIndex + 200;
+      stopIndex = stopIndex + 200;
     }
-    console.log(theRanges)
+    console.log('theRanges', theRanges, theRanges.toJSON())
     /*
     for (let i = 0; i < theRanges.length; i++){
       console.log('Range items', i, theRanges[i].values);
