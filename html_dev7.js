@@ -177,7 +177,7 @@ async function mainHTML(){
     <label class="container">Highlighted scenes
       <input type='radio' id='radHighlighted' checked="checked" name='radio'>
       <span class="checkmark"></span>
-    </label>Radio
+    </label>
   </div>
 </div>
 <div id="for-scheduling-page">
