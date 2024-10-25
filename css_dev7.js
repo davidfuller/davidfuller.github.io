@@ -570,6 +570,10 @@ label {
 #btnActorScript {
   display: block;
 }
+
+.nav-button {
+  margin-left: 15px;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')

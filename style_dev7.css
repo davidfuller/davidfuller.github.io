@@ -569,3 +569,7 @@ label {
 #btnActorScript {
   display: block;
 }
+
+.nav-button {
+  margin-left: 15px;
+}
