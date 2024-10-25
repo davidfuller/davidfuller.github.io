@@ -2049,10 +2049,11 @@ async function doChunkedFilter(characterName, sheetName, textSearch){
         filterOn: Excel.FilterOn.custom,
         criterion1: '=*' + character.name +'*'
       }
-    } else {}
+    } else {
       myCriteria = {
         filterOn: Excel.FilterOn.custom,
         criterion1: characterName
+      }
     }
     let myNumberCriteria = {};
 
