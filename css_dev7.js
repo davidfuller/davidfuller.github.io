@@ -519,8 +519,9 @@ label {
 .actor-nav{
   background-color: #592509;
   color: #fbe2d5; 
-  margin-left: 5px;
   margin-right: 0px;
+  margin-left: 5px !important;
+  width: 95px;
 }
 
 .director-button {
