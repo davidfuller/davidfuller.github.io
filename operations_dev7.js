@@ -2266,9 +2266,9 @@ async function getDirectorData(character){
     }
     */
     let results = [];
-
+    console.log('The Ranges length', theRanges.length);
     for (let i = 0; i < theRanges.length; i++){
-      //console.log('numRows', theRanges[i].values.length, theRanges[i].rowCount);
+      console.log('i', i, 'numRows', theRanges[i].values.length, theRanges[i].rowCount);
       for (let myRow = 0; myRow < theRanges[i].values.length; myRow++){
         //console.log(i, myRow, theRanges[i].rowIndex, theRanges[i].rowCount, theRanges[i].values[myRow]);
         let newItem = {
