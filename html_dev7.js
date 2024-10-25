@@ -158,11 +158,13 @@ async function mainHTML(){
 </div>
 <div id="for-actor-page">
   <label id='for-actor-label'>For Actor Commands</label><br/>
-  <button id="btnMainPage" class="actor-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
-  <button id="btnForDirectorPageActor" class="actor-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
-  <button id="btnForSchedulingPage" class="actor-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
-  <button id="btnWallaImport" class="actor-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
-  <button id="btnLocationPage" class="actor-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
+  <div id="actor-nav-buttons">
+    <button id="btnMainPage" class="actor-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+    <button id="btnForDirectorPageActor" class="actor-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
+    <button id="btnForSchedulingPage" class="actor-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+    <button id="btnWallaImport" class="actor-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
+    <button id="btnLocationPage" class="actor-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
+  </div>
   <div id="forActorsButtons">
     <button id='btnGetActorInfo' class='actor-button' onclick="jade_modules.scheduling.searchCharacter()">Search Character</button>
     <button id="btnActorGoToLine" class='actor-button' onclick="jade_modules.scheduling.actorGoToLine()">Go to this line in script<br/>(First line if multiple)</button>
