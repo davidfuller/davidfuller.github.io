@@ -523,6 +523,18 @@ async function createScript(){
   actorWait.style.display = 'none';
 }
 
+async function displayScenes(){
+  let theScenes = await getSceneNumberActor();
+  let display = ''
+  if (theScenes.length == 0){
+    display = 'Nothing selected';
+  } else {
+    display = theScenes.join(', ');
+  }
+  let scenesDisplay = tag('actor-scene-display');
+  scenesDisplay.innerText = display;  
+}
+
 async function getSceneNumberActor(){
   let sceneNumbers = [];
   await Excel.run(async function(excel){

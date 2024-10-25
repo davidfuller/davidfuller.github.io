@@ -2750,6 +2750,7 @@ async function registerExcelEvents(){
     directorSheet.onChanged.add(handleChange);
     const actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.onChanged.add(handleActor); 
+    actorsSheet.onSelectionChanged.add(actorSelectionChange);
     const schedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
     schedulingSheet.onChanged.add(handleScheduling);
     const locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
@@ -2809,6 +2810,14 @@ async function handleSelection(event) {
   }).catch(errorHandlerFunction(e));
 }
 
+async function actorSelectionChange(event){
+  await Excel.run(async (excel) => {
+    await excel.sync();        
+    if (event.source == 'Local'){
+      await jade_modules.scheduling.displayScenes();
+    }
+  }).catch(errorHandlerFunction(e))
+}
 function errorHandlerFunction(e){
   console.log('I have an error')
   console.log(e)
