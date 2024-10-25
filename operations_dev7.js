@@ -2044,7 +2044,7 @@ async function filterOnLocation(locationText){
   })
 }
 
-async function doChunkedFilter(characterName, sheetName, textSearch){
+async function doChunkedFilter(character, sheetName, textSearch){
   let myAddresses;
   let hiddenColumnAddresses = await getHiddenColumns();
   //This does a filter based on a parameter criteria and a chunking of lineNo
@@ -2075,7 +2075,7 @@ async function doChunkedFilter(characterName, sheetName, textSearch){
     } else {}
       myCriteria = {
         filterOn: Excel.FilterOn.custom,
-        criterion1: characterName
+        criterion1: character.name
     }
     let myNumberCriteria = {};
 
