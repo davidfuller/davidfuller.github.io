@@ -579,6 +579,80 @@ label {
   margin-left: 5px !important;
   width: 95px;
 }
+/* Actor Checkmark/Container */
+/* Start of checkbox stuff */
+/* Customize the label (the container) */
+.container-actor {
+  display: block;
+  position: relative;
+  padding-left: 10px;
+  margin-left: 10px;
+  margin-bottom: 0px;
+  cursor: pointer;
+  font-size: 12px;
+  /*left: 216px;
+  top: -26px;*/
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container-actor input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark-actor {
+  position: absolute;
+  top: 2px;
+  left: -4px;
+  height: 8px;
+  width: 8px;
+  background-color: #fbe2d5;
+  border: #592509 ;
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+}
+
+/* On mouse-over, add a grey background color */
+.container-actor:hover input ~ .checkmark-actor {
+  background-color: #592509;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container-actor input:checked ~ .checkmark-actor {
+  background-color: #592509;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark-actor:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container-actor input:checked ~ .checkmark-actor:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container-actor .checkmark-actor:after {
+  left: 2px;
+  top: 2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: white;
+}
+
 
 `;
   Jade.set_css(css);

@@ -613,8 +613,8 @@ label {
   left: -4px;
   height: 8px;
   width: 8px;
-  background-color: #d8dfe5;
-  border: #46656F ;
+  background-color: #fbe2d5;
+  border: #592509 ;
   border-radius: 50%;
   border-width: 2px;
   border-style: solid;
@@ -622,12 +622,12 @@ label {
 
 /* On mouse-over, add a grey background color */
 .container-actor:hover input ~ .checkmark-actor {
-  background-color: #46656F7f;
+  background-color: #592509;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container-actor input:checked ~ .checkmark-actor {
-  background-color: #46656F;
+  background-color: #592509;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
