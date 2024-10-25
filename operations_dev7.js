@@ -25,7 +25,7 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
-let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex;
+let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, lineWordCountIndex;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
@@ -156,6 +156,7 @@ async function initialiseVariables(){
   wallaCueIndex = findColumnIndex('Walla Cue No')
 
   chapterCalculationIndex = findColumnIndex('Chapter Calculation');
+  lineWordCountIndex = findColumnIndex('Line Word Count');
   bookIndex = findColumnIndex('Book');
   sceneWordCountCalcIndex = findColumnIndex('Scene word count calc'); 
 
@@ -4063,4 +4064,86 @@ async function getSceneWordCount(){
     console.log('sceneWordCount data:', myData);
   })
   return myData; 
+}
+
+async function getDirectorDataV2(character){
+  let myData = [];
+  await Excel.run(async (excel) => {
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let isProtected = await unlockIfLocked();
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
+    let indexDetails = await getFirstLastIndex();
+    //get character column range
+    let characterRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, characterIndex, indexDetails.rowCount, 1);
+    let sceneRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, sceneIndex, indexDetails.rowCount, 1);
+    let numberRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, numberIndex, indexDetails.rowCount, 1);
+    let ukNumTakesRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, ukTakesIndex, indexDetails.rowCount, 1);
+    let ukTakeNumRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, ukTakeNoIndex, indexDetails.rowCount, 1);
+    let ukDateRecordedRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, ukDateIndex, indexDetails.rowCount, 1); 
+    let lineWordCountRange  = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, lineWordCountIndex, indexDetails.rowCount, 1); 
+    let sceneWordCountRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, sceneWordCountCalcIndex, indexDetails.rowCount, 1); 
+    
+    characterRange.load('values');
+    sceneRange.load('values');
+    numberRange.load('values');
+    ukNumTakesRange.load('values');
+    ukTakeNumRange.load('values');
+    ukDateRecordedRange.load('values');
+    lineWordCountRange.load('values');
+    sceneWordCountRange.load('values')
+    await excel.sync();
+
+    let myIndexes = [];
+    let index = -1;
+    if (character.type == choiceType.text){
+      for (let i = 0; i < characterRange.values.length; i++){
+        if (characterRange.values[i][0].toLowerCase().contains(character.name.toLowerCase())){
+          index += 1;
+          myIndexes[index] = i;
+        }
+      }
+    }
+
+    //remove duplicate values
+
+    let uniqueIndexes = [...new Set(myIndexes)];
+    myData = [];
+    
+    for (let i = 0; i < uniqueIndexes.length; i++){
+      let theData = {
+        character: characterRange.values[uniqueIndexes[i]][0],
+        sceneNumber: sceneRange.values[uniqueIndexes[i]][0],
+        lineNumber: numberRange.values[uniqueIndexes[i]][0],
+        ukNumTakes: ukNumTakesRange.values[uniqueIndexes[i]][0],
+        ukTakeNum: ukTakeNumRange.values[uniqueIndexes[i]][0],
+        ukDateRecorded: ukDateRecordedRange.values[uniqueIndexes[i]][0],
+        lineWordCount: lineWordCountRange.values[uniqueIndexes][i][0],
+        sceneWordCount: sceneWordCountRange.values[uniqueIndexes[i]][0]
+      }
+      myData.push(theData);    
+    }
+    console.log('myData', myData);
+    if (isProtected){
+      await lockColumns();
+    }
+  })
+  return myData;
+}
+
+async function getFirstLastIndex(){
+  let details = {};
+  await Excel.run(async (excel) => {
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let usedRange = scriptSheet.getUsedRange()
+    usedRange.load('rowIndex', 'rowCount', 'columnIndex', 'columnCount');
+    await excel.sync()
+    details = {
+      rowIndex: usedRange.rowIndex,
+      rowCount: usedRange.rowCount,
+      columnIndex: usedRange.columnIndex,
+      columnCount:  usedRange.columnCount
+    }
+  })
+  return details;
 }

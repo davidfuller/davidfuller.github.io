@@ -72,7 +72,7 @@ async function getDirectorInfo(){
     let characterName = characterChoiceRange.values[0][0];
     console.log('Character ',characterName);
     let character = {name: characterName, type: choiceType.list}
-    let myData = await jade_modules.operations.getDirectorData(character);
+    let myData = await jade_modules.operations.getDirectorDataV2(character);
     console.log('Scheduling myData', myData);
     let dataRange = forDirectorSheet.getRange(forDirectorTableName);
     let numItems = forDirectorSheet.getRange(numItemsDirectorsName);
@@ -108,7 +108,7 @@ async function getActorInformation(){
     
     let character = await getActor(forActorName);
     console.log('Character ',character.name, character.type);
-    let myData = await jade_modules.operations.getDirectorData(character);
+    let myData = await jade_modules.operations.getDirectorDataV2(character);
     let myLocation = await jade_modules.operations.getLocations();
     console.log('Scheduling myData', myData);
     console.log('Locations', myLocation);
@@ -249,7 +249,7 @@ async function getForSchedulingInfo(){
     await excel.sync();
     
     let character = await getActor(forSchedulingName);
-    let myData = await jade_modules.operations.getDirectorData(character);
+    let myData = await jade_modules.operations.getDirectorDataV2(character);
     console.log('Scheduling myData', myData);
     
     let dataArray = [];
@@ -848,7 +848,7 @@ async function processCharacterListForWordAndScene(){
 }
 
 async function getWordCountForCharacter(characterName){
-  let myData = await jade_modules.operations.getDirectorData(characterName);
+  let myData = await jade_modules.operations.getDirectorDataV2(characterName);
   console.log('Scheduling myData', myData);
     
   let dataArray = [];
