@@ -1,7 +1,7 @@
 const linkedDataSheetName = 'Linked_Data';
 const characterSheetName = 'Characters';
 const settingsSheetName = 'Settings';
-const codeVersion = '2.0';
+const codeVersion = '2.1';
 function auto_exec(){
   console.log('Hello');
 }
@@ -461,6 +461,7 @@ async function findCharacter(characterName, exact){
 async function display(results){
   await Excel.run(async function(excel){
     let displayResult = [];
+    let allBooks = [];
     for (let i = 0; i < results.length; i++){
       let sceneDisplay;
       if (results[i].scenes == 0){
@@ -469,6 +470,8 @@ async function display(results){
         sceneDisplay = results[i].scenes
       }
       displayResult[i] = [results[i].character, results[i].books, numBooks(results[i].books), sceneDisplay];
+      let tempArray = ('' + results[i].books).split(', ');
+      allBooks = allBooks.concat(tempArray);
     }
     console.log('Display Result', displayResult);
     let characterSheet = excel.workbook.worksheets.getItem(characterSheetName); 
@@ -526,6 +529,14 @@ async function display(results){
     fullScenesRange.values = [[totalSceneWords]];
 
     await excel.sync();
+    
+    //now do the total books
+    let uniqueBooks = [...new Set(allBooks)];
+    let sortedBooks = uniqueBooks.sort().join(', ');
+    let sortedBooksRange = characterSheet.getRange('chAllBooks');
+    sortedBooksRange.values = [[sortedBooks]];
+    await excel.sync();
+    
   })
 }
 
