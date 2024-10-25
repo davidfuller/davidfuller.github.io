@@ -2067,6 +2067,7 @@ async function doChunkedFilter(character, sheetName){
     //set up the character criteria
     let myCriteria = {};
     
+    console.log('Character Object: ', character);
     if (character.type == choiceType.text){
       myCriteria ={
         filterOn: Excel.FilterOn.custom,
