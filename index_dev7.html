@@ -4,12 +4,14 @@
   <h1>Please wait...</h1>
 </div>
 <div id="main-page">
-  <button id="btnForDirectorPage" class="nav-button" onclick="jade_modules.operations.showForDirector()">For Director</button>
-  <button id="btnForActorPage" class="nav-button" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
-  <button id="btnForSchedulingPage" class="nav-button" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
-  <button id="btnWallaImport" class="nav-button" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
-  <button id="btnLocationPage" class="nav-button" onclick="jade_modules.operations.showLocation()">Location</button><br/>
-  <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
+  <div id="nav-buttons">
+    <button id="btnForDirectorPage" class="nav-button" onclick="jade_modules.operations.showForDirector()">For Director</button>
+    <button id="btnForActorPage" class="nav-button" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
+    <button id="btnForSchedulingPage" class="nav-button" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+    <button id="btnWallaImport" class="nav-button" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
+    <button id="btnLocationPage" class="nav-button" onclick="jade_modules.operations.showLocation()">Location</button><br/>
+    <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
+  </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
     <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
