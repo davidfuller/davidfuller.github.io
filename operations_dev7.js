@@ -2092,7 +2092,7 @@ async function doChunkedFilter(characterName, sheetName, textSearch){
         endChunk = minAndMax.max;
         doChunk = false;
       }
-      console.log('After endChunk:', endChunk, 'doChunk:', doChunk);
+      console.log('StartChunk: ', startChunk, 'After endChunk:', endChunk, 'doChunk:', doChunk);
       // set up loop criteria
       myNumberCriteria = {
         filterOn: Excel.FilterOn.custom,
@@ -2102,11 +2102,12 @@ async function doChunkedFilter(characterName, sheetName, textSearch){
       }
       //remove the autofilter
       scriptSheet.autoFilter.remove();
-            
+      await excel.sync();
       //apply filters to both columns
       scriptSheet.autoFilter.apply(usedRange, characterIndex, myCriteria);
+      await excel.sync();
       scriptSheet.autoFilter.apply(usedRange, numberIndex, myNumberCriteria);
-
+      await excel.sync();
       // get the formula range for this chunk
       let formulaRanges = usedRange.getSpecialCellsOrNullObject(Excel.SpecialCellType.visible);
       formulaRanges.load('address');
