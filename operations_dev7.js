@@ -2128,7 +2128,7 @@ async function doChunkedFilter(characterName, sheetName, textSearch){
   return myAddresses;
 }
 
-async function getDirectorData(character){
+async function getDirectorData(characterName){
   let myData = [];
   //let hiddenColumnAddresses = await getHiddenColumns();
   
