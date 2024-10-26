@@ -190,6 +190,7 @@ async function mainHTML(){
         <span id="actor-scene-display"></span>
       </div>
     </div>
+    <label id='script-wait'>Please wait...</label>
   </div>
 </div>
 <div id="for-scheduling-page">

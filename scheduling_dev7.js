@@ -479,7 +479,7 @@ async function locationGoToLine(){
 }
 
 async function createScript(){
-  let actorWait = tag('actor-wait');
+  let actorWait = tag('script-wait');
   actorWait.style.display = 'block';
   let isAllNaN = true;
   let sceneNumbers = await getSceneNumberActor();
