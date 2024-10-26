@@ -171,16 +171,23 @@ async function mainHTML(){
     <label id='actor-wait'>Please wait...</label>
   </div>
   <div id="scriptButtons">
-    <button id="btnActorScript" class='actor-button' onclick="jade_modules.scheduling.createScript()">Create Actor Script</button>
-    <label class="container-actor">All scenes
-      <input type='radio' id='radAllScenes' name='radio' onclick="jade_modules.scheduling.displayScenes()">
-      <span class="checkmark-actor"></span>
-    </label>
-    <label class="container-actor">Highlighted scenes
-      <input type='radio' id='radHighlighted' checked="checked" name='radio' onclick="jade_modules.scheduling.displayScenes()">
-      <span class="checkmark-actor"></span>
-    </label>
-    <span id="actor-scene-display"></span>
+    <div class="row-script">
+      <div class="column-script" id="column-one-script">
+        <button id="btnActorScript" class='actor-button' onclick="jade_modules.scheduling.createScript()">Create Actor Script</button>
+        <label class="container-actor">All scenes
+          <input type='radio' id='radAllScenes' name='radio' onclick="jade_modules.scheduling.displayScenes()">
+          <span class="checkmark-actor"></span>
+        </label>
+        <label class="container-actor">Highlighted scenes
+          <input type='radio' id='radHighlighted' checked="checked" name='radio' onclick="jade_modules.scheduling.displayScenes()">
+          <span class="checkmark-actor"></span>
+        </label>
+      </div>
+      <div class="column-script" id="column-two-script">
+        <label id="actor-scene-heading">Scenes</label>
+        <span id="actor-scene-display"></span>
+      </div>
+    </div>
   </div>
 </div>
 <div id="for-scheduling-page">

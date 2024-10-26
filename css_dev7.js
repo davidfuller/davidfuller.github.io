@@ -657,6 +657,25 @@ label {
   font-size: 12px;
 }
 
+#actor-scene-heading {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.row-script {
+  display: flex;
+}
+
+.column-script {
+  padding: 10px;
+}
+
+#column-one-script {
+  flex: 50%
+}
+#column-two-script {
+  flex: 50%
+}
 
 `;
   Jade.set_css(css);
