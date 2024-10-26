@@ -145,11 +145,13 @@ async function mainHTML(){
 </div>
 <div id="for-director-page">
   <label id='for-director-label'>For Director Commands</label><br/>
-  <button id="btnMainPage" class="director-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
-  <button id="btnForActorPage" class="director-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
-  <button id="btnForSchedulingPage" class="director-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
-  <button id="btnWallaImport" class="director-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
-  <button id="btnLocationPage" class="director-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
+  <div id="director-nav-buttons">
+    <button id="btnMainPage" class="director-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+    <button id="btnForActorPage" class="director-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
+    <button id="btnForSchedulingPage" class="director-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+    <button id="btnWallaImport" class="director-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
+    <button id="btnLocationPage" class="director-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
+  </div>
   <div id="forDirectorButtons">
     <button id='btnGetDirectorInfo' class='director-button' onclick="jade_modules.scheduling.getDirectorInfo()">Calculate for<br/>director information<br/>for selected character</button>
     <button id="btnDirectorGoToLine" class='director-button' onclick="jade_modules.scheduling.directorGoToLine()">Go to this line in script</button>
@@ -184,7 +186,7 @@ async function mainHTML(){
         </label>
       </div>
       <div class="column-script" id="column-two-script">
-        <label id="actor-scene-heading">Scenes</label>
+        <label id="actor-scene-heading">Scenes</label><br/>
         <span id="actor-scene-display"></span>
       </div>
     </div>

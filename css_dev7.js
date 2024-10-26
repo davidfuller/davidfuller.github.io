@@ -40,7 +40,7 @@ label {
   font-size: 12px;
 }
 /* Section formatting */
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, #forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons, #scriptButtons {
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, #forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons, #scriptButtons, #director-nav-buttons {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
@@ -502,7 +502,7 @@ label {
   border-color: #592509;
 }
 
-#forDirectorButtons{
+#forDirectorButtons, #director-nav-buttons {
   border-color: #06394d;
 }
 #forSchedulingButtons {
@@ -536,6 +536,7 @@ label {
   color: #caedfb; 
   margin-left: 10px;
   margin-right: 0px;
+  width: 95px;
 }
 
 .scheduling-button {
