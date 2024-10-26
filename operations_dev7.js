@@ -2690,11 +2690,11 @@ async function showForActorsPage(){
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
   styleScriptController('actor');
-  await jade_modules.scheduling.displayScenes();
   await Excel.run(async function(excel){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.activate();
   })
+  await jade_modules.scheduling.displayScenes();
 }
 
 function styleScriptController(theme){

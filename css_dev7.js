@@ -659,6 +659,7 @@ label {
 }
 #actor-scene-display {
   font-size: 12px;
+  margin-left: 5px;
 }
 
 #actor-scene-heading {
