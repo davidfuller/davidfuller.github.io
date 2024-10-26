@@ -40,7 +40,7 @@ label {
   font-size: 12px;
 }
 /* Section formatting */
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, #forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons {
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, #forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons, #scriptButtons {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
@@ -652,6 +652,9 @@ label {
   height: 4px;
   border-radius: 50%;
   background: white;
+}
+#actor-scene-display {
+  font-size: 12px;
 }
 
 

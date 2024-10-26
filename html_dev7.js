@@ -169,6 +169,8 @@ async function mainHTML(){
     <button id='btnGetActorInfo' class='actor-button' onclick="jade_modules.scheduling.searchCharacter()">Search Character</button>
     <button id="btnActorGoToLine" class='actor-button' onclick="jade_modules.scheduling.actorGoToLine()">Go to this line in script<br/>(First line if multiple)</button>
     <label id='actor-wait'>Please wait...</label>
+  </div>
+  <div id="scriptButtons">
     <button id="btnActorScript" class='actor-button' onclick="jade_modules.scheduling.createScript()">Create Actor Script</button>
     <label class="container-actor">All scenes
       <input type='radio' id='radAllScenes' name='radio'>
@@ -178,7 +180,7 @@ async function mainHTML(){
       <input type='radio' id='radHighlighted' checked="checked" name='radio'>
       <span class="checkmark-actor"></span>
     </label>
-    <div id="actor-scene-display"></div>
+    <span id="actor-scene-display"></span>
   </div>
 </div>
 <div id="for-scheduling-page">
