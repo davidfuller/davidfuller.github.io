@@ -209,11 +209,13 @@ async function mainHTML(){
 </div>
 <div id="walla-import-page">
   <label id='walla-import-label'>Walla Import</label><br/>
-  <button id="btnMainPage" class="walla-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
-  <button id="btnForDirectorPageWalla" class="walla-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
-  <button id="btnForActorPage" class="walla-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
-  <button id="btnForSchedulingPage" class="walla-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
-  <button id="btnLocationPage" class="walla-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
+  <div id="walla-nav-buttons">
+    <button id="btnMainPage" class="walla-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+    <button id="btnForDirectorPageWalla" class="walla-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
+    <button id="btnForActorPage" class="walla-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
+    <button id="btnForSchedulingPage" class="walla-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+    <button id="btnLocationPage" class="walla-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
+  </div>
   <div id="wallaImportButtons">
     <button id='btnParseSource' class="walla-button" onclick="jade_modules.wallaimport.parseSource()">Parse source text</button>
     <button id='btnLoadScript' class="walla-button" onclick="jade_modules.wallaimport.loadIntoScriptSheet()">Load into script sheet</button>
@@ -222,11 +224,14 @@ async function mainHTML(){
 </div>
 <div id="location-page">
   <label id='location-label'>Locations</label><br/>
-  <button id="btnMainPage" class="location-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
-  <button id="btnForDirectorPageLocation" class="location-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
-  <button id="btnForActorPage" class="location-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
-  <button id="btnForSchedulingPage" class="location-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
-  <button id="btnWallaImport" class="location-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button><br/>
+  <label id='location-label'>Locations</label><br/>
+  <div id="location-nav-buttons">
+    <button id="btnMainPage" class="location-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+    <button id="btnForDirectorPageLocation" class="location-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
+    <button id="btnForActorPage" class="location-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
+    <button id="btnForSchedulingPage" class="location-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+    <button id="btnWallaImport" class="location-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button><br/>
+  </div>
   <div id="locationButtons">
     <button id='btnGetLocationInfo' class="location-button" onclick="jade_modules.scheduling.getLocationInfo()">Get info for<br/>location</button>
     <button id='btnLocationGoTo' class="location-button" onclick="jade_modules.scheduling.locationGoToLine()">Goto first line of<br/>of selected scene</button>
