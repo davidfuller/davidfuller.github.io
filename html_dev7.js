@@ -224,7 +224,6 @@ async function mainHTML(){
 </div>
 <div id="location-page">
   <label id='location-label'>Locations</label><br/>
-  <label id='location-label'>Locations</label><br/>
   <div id="location-nav-buttons">
     <button id="btnMainPage" class="location-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
     <button id="btnForDirectorPageLocation" class="location-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
