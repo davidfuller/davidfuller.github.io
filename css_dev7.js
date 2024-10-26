@@ -463,7 +463,7 @@ label {
   margin-left: 15px
 }
 
-#btnMainPage, #btnForDirectorPage, #forActorsButtons {
+#btnMainPage, #btnForDirectorPage, #forActorsButtons, #scriptButtons {
   margin-left: 15px;
 }
 
@@ -498,7 +498,7 @@ label {
   width: 150px;
 }
 
-#forActorsButtons, #actor-nav-buttons {
+#forActorsButtons, #actor-nav-buttons, #scriptButtons {
   border-color: #592509;
 }
 
