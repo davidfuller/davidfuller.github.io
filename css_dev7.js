@@ -534,7 +534,7 @@ label {
 .director-nav{
   background-color: #06394d;
   color: #caedfb; 
-  margin-left: 10px;
+  margin-left: 5px;
   margin-right: 0px;
   width: 95px;
 }
