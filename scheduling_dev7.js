@@ -31,6 +31,12 @@ let choiceType ={
   text: 'Text Search'
 }
 
+let scriptChoice = {
+  all: 'all',
+  selection: 'selection',
+  none: 'none'
+}
+
 function auto_exec(){
 }
 async function loadReduceAndSortCharacters(){
@@ -527,15 +533,36 @@ async function displayScenes(){
   console.log('In displayScenes');
   let theScenes = await getSceneNumberActor();
   console.log('theScenes: ', theScenes);
+  let theChoice = getActorScriptChoice();
   let display = ''
-  if (theScenes.length == 0){
-    display = 'Nothing selected';
+  if (theChoice == scriptChoice.all){
+    display = 'All';
+  } else if (theChoice == scriptChoice.selection) {
+    if (theScenes.length == 0){
+      display = 'Nothing selected';
+    } else {
+      display = theScenes.join(', ');
+    }
   } else {
-    display = theScenes.join(', ');
+    display = '';
   }
+  
   console.log('display', display);
   let scenesDisplay = tag('actor-scene-display');
   scenesDisplay.innerText = display;  
+}
+
+function getActorScriptChoice(){
+  const radioAll = tag('radAllScenes');
+  const radioHighlighted = tag('radHighlighted');
+  
+  if (radioAll.checked){
+    return scriptChoice.all;
+  } else if (radioHighlighted.checked) {
+    return scriptChoice.selection;
+  } else {
+    return scriptChoice.none;
+  }
 }
 
 async function getSceneNumberActor(){
