@@ -580,7 +580,6 @@ async function getSceneNumberActor(){
       tempRange[i].load('rowIndex, rowCount')
     }
     await excel.sync();
-    console.log('Selected ranges: ', selectedRanges.address);
     let sceneRange = [];
     let sceneIndex = -1;
     for (let i = 0; i < myAddresses.length; i++){
