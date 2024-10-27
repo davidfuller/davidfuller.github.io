@@ -453,11 +453,11 @@ label {
   display: block;
 }
 
-#for-director-page, #for-actor-page, #for-scheduling-page, #walla-import-page, #location-page, #script-label {
+#for-director-page, #for-actor-page, #for-scheduling-page, #walla-import-page, #location-page, #script-page {
   display: none;
 }
 
-#for-director-label, #for-actor-label, #for-scheduling-label, #walla-import-label, #location-label {
+#for-director-label, #for-actor-label, #for-scheduling-label, #walla-import-label, #location-label, #script-label {
   font-size: 22px;
   font-weight: bold;
   margin-left: 15px
@@ -585,7 +585,7 @@ label {
   color: #ffffff; 
   vertical-align: top;
 }
-.location-nav {
+.script-nav {
   background-color: #ffffff;
   color: #999999; 
   margin-left: 5px !important;
