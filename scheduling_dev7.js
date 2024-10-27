@@ -493,7 +493,7 @@ async function createScript(){
     let theRowIndex = 1;
     let rowIndexes;
     for (let i = 0; i < sceneNumbers.scenes.length; i++){
-      actorWait.innerText = 'Please wait... Doing scene: ' + sceneNumbers.scenes(i) + '(' + (i + 1) + ' of ' + sceneNumbers.scenes.length + ')';
+      actorWait.innerText = 'Please wait... Doing scene: ' + sceneNumbers.scenes[i] + '(' + (i + 1) + ' of ' + sceneNumbers.scenes.length + ')';
       let sceneNumber = sceneNumbers.scenes[i]
       if (!isNaN(sceneNumber)){
         isAllNaN = false;
