@@ -610,6 +610,8 @@ async function getSceneNumberActor(){
       } else {
         display = result.join(', ');
       }
+    } else if (theChoice == scriptChoice.all){
+      display = 'All (' + result.join(',') + ')';
     }
     console.log('The results', result);
     sceneNumbers = {scenes: result, display: display}
