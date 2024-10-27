@@ -520,7 +520,7 @@ async function createScript(){
     if (isAllNaN){
       alert('Please select a scene')
     } else {
-      await showActorScript();
+      await jade_modules.operations.showActorScript()
     }
   } else {
     alert('Please select a scene')

@@ -449,7 +449,7 @@ label {
 #start-wait {
   display: block;
 }
-#for-director-page, #for-actor-page, #for-scheduling-page, #walla-import-page, #location-page {
+#for-director-page, #for-actor-page, #for-scheduling-page, #walla-import-page, #location-page, #script-page {
   display: none;
 }
 

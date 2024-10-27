@@ -70,6 +70,10 @@ let screenColours = {
   location: {
     background: '#c1f0c8',
     fontColour: '#0d3714'
+  },
+  actorScipt: {
+    background: '#ffffff',
+    fontColor: '#999999'
   }
 }
 
@@ -2606,6 +2610,8 @@ async function showForDirector(){
   wallaImportPage.style.display = 'none';
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
+  const actorScriptPage = tag('script-page');
+  actorScriptPage.style.display = 'none';
   styleScriptController('director');
   await Excel.run(async function(excel){
     let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
@@ -2627,13 +2633,37 @@ async function showWallaImportPage(){
   loadMessage.style.display = 'none';
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
+  const actorScriptPage = tag('script-page');
+  actorScriptPage.style.display = 'none';
   styleScriptController('walla');
   await Excel.run(async function(excel){
     let wallaImportSheet = excel.workbook.worksheets.getItem(wallaImportName);
     wallaImportSheet.activate();
   })
 }
-
+async function showActorScript(){
+  const mainPage = tag('main-page');
+  mainPage.style.display = 'none';
+  const forDirectorPage = tag('for-director-page');
+  forDirectorPage.style.display = 'none';
+  const forActorsPage = tag('for-actor-page');
+  forActorsPage.style.display = 'none';
+  const forSchedulingPage = tag('for-scheduling-page');
+  forSchedulingPage.style.display = 'none';
+  const wallaImportPage = tag('walla-import-page');
+  wallaImportPage.style.display = 'none';
+  let loadMessage = tag('load-message');
+  loadMessage.style.display = 'none';
+  const locationPage = tag('location-page');
+  locationPage.style.display = 'none';
+  const actorScriptPage = tag('script-page');
+  actorScriptPage.style.display = 'block';
+  styleScriptController('actorScript');
+  await Excel.run(async function(excel){
+    let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    actorScriptSheet.activate();
+  })
+}
 
 async function showMainPage(){
   console.log('Showing Main Page')
@@ -2650,6 +2680,8 @@ async function showMainPage(){
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
   const versionInfo = tag('sheet-version');
+  const actorScriptPage = tag('script-page');
+  actorScriptPage.style.display = 'none';
   styleScriptController('main')
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -2689,6 +2721,8 @@ async function showForActorsPage(){
   wallaImportPage.style.display = 'none';
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
+  const actorScriptPage = tag('script-page');
+  actorScriptPage.style.display = 'none';
   styleScriptController('actor');
   await Excel.run(async function(excel){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
@@ -2717,6 +2751,8 @@ async function showForSchedulingPage(){
   wallaImportPage.style.display = 'none';
   const locationPage = tag('location-page');
   locationPage.style.display = 'none';
+  const actorScriptPage = tag('script-page');
+  actorScriptPage.style.display = 'none';
   styleScriptController('scheduling');
   await Excel.run(async function(excel){
     let schedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
@@ -2738,6 +2774,8 @@ async function showLocation(){
   locationPage.style.display = 'block';
   const locationWait = tag('location-wait');
   locationWait.style.display = 'none';
+  const actorScriptPage = tag('script-page');
+  actorScriptPage.style.display = 'none';
   styleScriptController('location');
   await Excel.run(async function(excel){
     let locationSheet = excel.workbook.worksheets.getItem(locationSheetName);

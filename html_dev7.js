@@ -238,6 +238,17 @@ async function mainHTML(){
     <label id='location-wait'>Please wait...</label>
   </div>
 </div>
+<div id="script-page">
+  <label id='script-label'>Script</label><br/>
+  <div id="script-nav-buttons">
+    <button id="btnMainPageScript" class="script-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+    <button id="btnForDirectorPageScript" class="script-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
+    <button id="btnForActorPageScript" class="script-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
+    <button id="btnForSchedulingPageScript" class="script-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+    <button id="btnWallaImportScript" class="script-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
+    <button id="btnLocationPageScript" class="script-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/
+  </div>
+</div>
   `;
 
   await Jade.open_canvas("Script-Controller", html, true);
