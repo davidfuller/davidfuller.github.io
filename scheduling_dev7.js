@@ -484,7 +484,7 @@ async function createScript(){
   let isAllNaN = true;
   let sceneNumbers = await getSceneNumberActor();
   
-  if (sceneNumbers.length > 0){
+  if (sceneNumbers.scenes.length > 0){
     let book = await jade_modules.operations.getBook();
     let character = await getActor(forActorName);
     await topOfFirstPage(book, character);
@@ -492,9 +492,9 @@ async function createScript(){
   
     let theRowIndex = 1;
     let rowIndexes;
-    for (let i = 0; i < sceneNumbers.length; i++){
-      actorWait.innerText = 'Please wait... Doing scene: ' + (i + 1) + ' of ' + sceneNumbers.length;
-      let sceneNumber = sceneNumbers[i]
+    for (let i = 0; i < sceneNumbers.scenes.length; i++){
+      actorWait.innerText = 'Please wait... Doing scene: ' + sceneNumbers.scenes(i) + '(' + (i + 1) + ' of ' + sceneNumbers.scenes.length + ')';
+      let sceneNumber = sceneNumbers.scenes[i]
       if (!isNaN(sceneNumber)){
         isAllNaN = false;
         let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
@@ -532,24 +532,9 @@ async function createScript(){
 async function displayScenes(){
   console.log('In displayScenes');
   let theScenes = await getSceneNumberActor();
-  console.log('theScenes: ', theScenes);
-  let theChoice = getActorScriptChoice();
-  let display = ''
-  if (theChoice == scriptChoice.all){
-    display = 'All';
-  } else if (theChoice == scriptChoice.selection) {
-    if (theScenes.length == 0){
-      display = 'Nothing selected';
-    } else {
-      display = theScenes.join(', ');
-    }
-  } else {
-    display = '';
-  }
-  
-  console.log('display', display);
+  console.log('display', theScenes.display);
   let scenesDisplay = tag('actor-scene-display');
-  scenesDisplay.innerText = display;  
+  scenesDisplay.innerText = theScenes.display;  
 }
 
 function getActorScriptChoice(){
@@ -566,14 +551,29 @@ function getActorScriptChoice(){
 }
 
 async function getSceneNumberActor(){
-  let sceneNumbers = [];
+  let sceneNumbers = {};
+  let theChoice = getActorScriptChoice();
+  
   await Excel.run(async function(excel){
     const forActorSheet = excel.workbook.worksheets.getItem(forActorName);
     const sceneColumnIndex = 2;
-    let selectedRanges = excel.workbook.getSelectedRanges();
-    selectedRanges.load('address');
-    await excel.sync();
-    let myAddresses = selectedRanges.address.split(',')
+    let myAddresses = [];
+    let display = ''
+    if (theChoice == scriptChoice.all){
+      let tableRange = forActorSheet.getRange('faTable');
+      tableRange.load('address');
+      await excel.sync();
+      myAddresses[0] = tableRange.address
+      display = 'All'
+    } else if (theChoice == scriptChoice.selection){
+      let selectedRanges = excel.workbook.getSelectedRanges();
+      selectedRanges.load('address');
+      await excel.sync();
+      myAddresses = selectedRanges.address.split(',')  
+    } else {
+      return null;
+    }
+        
     let tempRange = []
     for (let i = 0; i < myAddresses.length; i++){
       tempRange[i] = forActorSheet.getRange(myAddresses[i]);
@@ -605,8 +605,15 @@ async function getSceneNumberActor(){
         }
       }
     }
+    if (theChoice == scriptChoice.selection){
+      if (result.length == 0){
+        display = 'Nothing selected'
+      } else {
+        display = result.join(', ');
+      }
+    }
     console.log('The results', result);
-    sceneNumbers = result
+    sceneNumbers = {scenes: result, display: display}
   }).catch(e => console.log('My error', e));
   return sceneNumbers;
 }
