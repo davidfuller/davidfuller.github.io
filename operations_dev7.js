@@ -883,7 +883,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
     let isProtected = await unlockIfLocked();
     //console.log('actual', actualFirstRow, actualLastRow);
     if ((actualFirstRow === undefined) || (actualFirstRow == firstRow)) {
-      doTopRow = false
+      doTopRow = true
       if ((actualLastRow === undefined)||(actualLastRow == lastRow)){
       } else {
         lastRow = actualLastRow;
