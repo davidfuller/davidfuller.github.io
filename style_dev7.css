@@ -676,6 +676,7 @@ label {
 #actor-scene-display {
   font-size: 12px;
   margin-left: 5px;
+  width: 15px;
 }
 #actor-scene-heading {
   font-size: 14px;
