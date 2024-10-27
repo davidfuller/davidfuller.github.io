@@ -896,7 +896,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
         lastRow = actualLastRow;
       }
     }
-    //console.log('firstRow: ', firstRow, "firstRestRow", firstRestRow, "lastRow", lastRow);
+    console.log('firstRow: ', firstRow, "firstRestRow", firstRestRow, "lastRow", lastRow, 'doToprow', doTopRow);
     let columnFormulae = getColumnFormulae(firstRow, firstRestRow, lastRow);
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
