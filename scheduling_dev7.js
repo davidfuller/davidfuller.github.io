@@ -611,7 +611,12 @@ async function getSceneNumberActor(){
         display = result.join(', ');
       }
     } else if (theChoice == scriptChoice.all){
-      display = 'All (' + result.join(', ') + ')';
+      if (result.length > 10){
+        display = 'All (' + result.slice(0, 9).join(', ') + ' ... ' + result.slice(-2).join(', ')
+      } else {
+        display = 'All (' + result.join(', ') + ')';
+      }
+      
     }
     console.log('The results', result);
     sceneNumbers = {scenes: result, display: display}
