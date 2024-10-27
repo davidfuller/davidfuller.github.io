@@ -5,7 +5,6 @@ async function mainCSS(){
 body {
   background-color: #d8dfe5;
   color: #46656F;
-  font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
 }
 button {
   margin-left: 5px;
@@ -518,7 +517,7 @@ label {
 }
 
 #scriptButtons, #script-nav-buttons {
-  border-color: #999999
+  border-color: #777777
 }
 
 .actor-nav{
@@ -581,12 +580,12 @@ label {
 }
 
 .script-button {
-  background-color: #999999;
+  background-color: #777777;
   color: #ffffff; 
   vertical-align: top;
 }
 .script-nav {
-  background-color: #999999;
+  background-color: #777777;
   color: #ffffff; 
   margin-left: 5px !important;
   margin-right: 0px;

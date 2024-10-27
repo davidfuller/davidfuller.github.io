@@ -73,7 +73,7 @@ let screenColours = {
   },
   actorScript: {
     background: '#ffffff',
-    fontColor: '#999999'
+    fontColor: '#777777'
   }
 }
 
@@ -2737,7 +2737,9 @@ function styleScriptController(theme){
   const scriptController = tag('Script-Controller');
   scriptController.style.backgroundColor = screenColours[theme].background;
   scriptController.style.height = '100vh';
-  scriptController.style.color = screenColours[theme].fontColour
+  console.log('Color before:', scriptController.style.color);
+  scriptController.style.color = screenColours[theme].fontColour;
+  console.log('Color after:', scriptController.style.color);
 }
 
 async function showForSchedulingPage(){
