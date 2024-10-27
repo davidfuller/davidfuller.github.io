@@ -584,8 +584,8 @@ label {
   vertical-align: top;
 }
 .script-nav {
-  background-color: #ffffff;
-  color: #999999; 
+  background-color: #999999;
+  color: #ffffff; 
   margin-left: 5px !important;
   margin-right: 0px;
   width: 95px;

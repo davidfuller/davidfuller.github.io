@@ -2642,6 +2642,7 @@ async function showWallaImportPage(){
   })
 }
 async function showActorScript(){
+  console.log('Start of show actor script')
   const mainPage = tag('main-page');
   mainPage.style.display = 'none';
   const forDirectorPage = tag('for-director-page');
@@ -2732,6 +2733,7 @@ async function showForActorsPage(){
 }
 
 function styleScriptController(theme){
+  console.log('Theme', theme, screenColours[theme]);
   const scriptController = tag('Script-Controller');
   scriptController.style.backgroundColor = screenColours[theme].background;
   scriptController.style.height = '100vh';
