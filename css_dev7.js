@@ -675,7 +675,7 @@ label {
 }
 #actor-scene-display {
   font-size: 12px;
-  margin-left: 5px;
+  margin-left: 15px;
   width: 15px;
 }
 

@@ -612,7 +612,7 @@ async function getSceneNumberActor(){
       }
     } else if (theChoice == scriptChoice.all){
       if (result.length > 10){
-        display = 'All (' + result.slice(0, 9).join(', ') + ' ... ' + result.slice(-2).join(', ')
+        display = 'All (' + result.slice(0, 7).join(', ') + ' ... ' + result.slice(-2).join(', ') + ')';
       } else {
         display = 'All (' + result.join(', ') + ')';
       }
