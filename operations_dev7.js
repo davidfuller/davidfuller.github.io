@@ -73,7 +73,7 @@ let screenColours = {
   },
   actorScript: {
     background: '#ffffff',
-    fontColour: '#777777'
+    fontColour: '#333333'
   }
 }
 

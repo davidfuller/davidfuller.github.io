@@ -517,7 +517,7 @@ label {
 }
 
 #scriptButtons, #script-nav-buttons {
-  border-color: #777777
+  border-color: #333333
 }
 
 .actor-nav{
@@ -580,12 +580,12 @@ label {
 }
 
 .script-button {
-  background-color: #777777;
+  background-color: #333333;
   color: #ffffff; 
   vertical-align: top;
 }
 .script-nav {
-  background-color: #777777;
+  background-color: #333333;
   color: #ffffff; 
   margin-left: 5px !important;
   margin-right: 0px;
