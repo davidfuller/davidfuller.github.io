@@ -677,13 +677,15 @@ label {
   font-size: 12px;
   text-indent: 0px;
   width: 15px;
-  padding-left: 10px
+  padding-left: 0px
 }
 
 #actor-scene-heading {
   font-size: 14px;
   font-weight: bold;
+  margin-left: 0px;
 }
+
 
 .row-script {
   display: flex;
