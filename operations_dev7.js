@@ -4396,7 +4396,7 @@ async function reconcileLocations(){
           result[i] = {
             location: indexes[i],
             typeCode: chapterAndScenes[j - 1],
-            match: (chapterAndScenes[j].rowIndex - indexes[i].rowIndex)
+            match: (chapterAndScenes[j - 1].rowIndex - indexes[i].rowIndex)
           }
           break;
         }
