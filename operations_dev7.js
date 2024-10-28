@@ -4276,7 +4276,7 @@ async function checkAllTheSceneBreaks(){
             }
           }
           if (first != -1){
-            for (replace = first; replace < i; replace++){
+            for (replace = first; replace < results[i].index; replace++){
               console.log('Index', results[replace].index)
               testRange.values[results[replace].index][0] = results[i].sceneLineNumberRange
             }
