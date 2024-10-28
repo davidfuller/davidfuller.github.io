@@ -4276,7 +4276,7 @@ async function checkAllTheSceneBreaks(){
             }
           }
           if (first != -1){
-            console.log('Index', replace + testRange.rowIndex, 'value', results[i].sceneLineNumberRange, 'rows', results[i].index - first);
+            console.log('Index', first + testRange.rowIndex, 'value', results[i].sceneLineNumberRange, 'rows', results[i].index - first);
             let tempRange = scriptSheet.getRangeByIndexes(first + testRange.rowIndex, sceneLineNumberRangeIndex, results[i].index - first, 1);
             tempRange.values = results[i].sceneLineNumberRange;
             await excel.sync();
