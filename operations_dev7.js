@@ -4221,6 +4221,7 @@ async function checkAllTheSceneBreaks(){
   await Excel.run(async (excel) => {
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let columnCount = numberIndex - sceneLineNumberRangeIndex + 1;
+    console.log(details.rowIndex, sceneLineNumberRangeIndex, details.rowCount, columnCount);
     let testRange = scriptSheet.getRangeByIndexes(details.rowIndex, sceneLineNumberRangeIndex, details.rowCount, columnCount);
     testRange.load('address, values');
     console.log('address:', testRange.address, 'Values: ', testRange.values);
