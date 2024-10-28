@@ -4380,7 +4380,29 @@ async function reconcileLocations(){
         }
       }
     }
+    let result = [];
     console.log('locations', indexes, 'typeCodes', chapterAndScenes);
+    for (let i = 0; i < indexes.length; i++){
+      for (let j = 0; j < chapterAndScenes.length; j++){
+        if (chapterAndScenes[j].rowIndex == indexes[i].rowIndex){
+          result[i] = {
+            location: indexes[i],
+            typeCode: chapterAndScenes[j],
+            match: 'exact'
+          }
+          break;
+        } else if (chapterAndScenes[j].rowIndex > indexes[i].rowIndex){
+          //We are using the previous scene/chapter
+          result[i] = {
+            location: indexes[i],
+            typeCode: chapterAndScenes[j - 1],
+            match: 'previous'
+          }
+          break;
+        }
+      }
+    }
+    console.log('Result ', result);
   })
   if (isProtected){
     await lockColumns();
