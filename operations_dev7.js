@@ -4277,8 +4277,8 @@ async function checkAllTheSceneBreaks(){
           }
           if (first != -1){
             for (replace = first; replace < results[i].index; replace++){
-              console.log('Index', results[replace].index)
-              testRange.values[results[replace].index][0] = results[i].sceneLineNumberRange
+              console.log('Index', replace)
+              testRange.values[replace][0] = results[i].sceneLineNumberRange
             }
             await excel.sync();
             message += '. Hopefully fixed'
