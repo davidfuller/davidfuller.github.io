@@ -4296,15 +4296,25 @@ async function copyNewText(){
     newUsedRange.load('address, rowIndex, rowCount');
     await excel.sync();
     console.log('address', newUsedRange.address, 'rowCount:', newUsedRange.rowCount)
-    newTextRowIndex = 1;
-    newTextRowCount = newUsedRange.rowCount - (newTextRowIndex - newUsedRange.rowIndex);
-    newTextColumnIndex = 0;
-    newTextColumnCount = 8;
-    newTextRange = newTextSheet.getRangeByIndexes(newTextRowIndex, newTextColumnIndex,  newTextRowCount, newTextColumnCount);
+    let newTextRowIndex = 1;
+    let newTextRowCount = newUsedRange.rowCount - (newTextRowIndex - newUsedRange.rowIndex);
+    let newTextColumnIndexOne = 0;
+    let newTextColumnCountOne = 3;
+    let newTextColumnIndexTwo = 3;
+    let newTextColumnCountTwo = 5;
+    
+    let newTextRangePartOne = newTextSheet.getRangeByIndexes(newTextRowIndex, newTextColumnIndexOne,  newTextRowCount, newTextColumnCountOne);
+    let newTextRangePartTwo = newTextSheet.getRangeByIndexes(newTextRowIndex, newTextColumnIndexTwo,  newTextRowCount, newTextColumnCountTwo);
+    
+    let myNewRangePartOne = scriptSheet.getRangeByIndexes(startRowIndexCurrent, cueIndex, 1, 1);
+    let myNewRangePartTwo = scriptSheet.getRangeByIndexes(startRowIndexCurrent, stageDirectionWallaDescriptionIndex, 1, 1);
+    
+    myNewRangePartOne.copyFrom(newTextRangePartOne, "Values");
+    myNewRangePartOne.copyFrom(newTextRangePartOne, "Formats");
 
-    let myNewRange = scriptSheet.getRangeByIndexes(startRowIndexCurrent, cueIndex, 1, 1);
-    myNewRange.copyFrom(newTextRange, "Values");
-    myNewRange.copyFrom(newTextRange, "Formats");
+    myNewRangePartTwo.copyFrom(newTextRangePartTwo, "Values");
+    myNewRangePartTwo.copyFrom(newTextRangePartTwo, "Formats");
+
     await excel.sync();
   })
   if (isProtected){
