@@ -4403,6 +4403,18 @@ async function reconcileLocations(){
       }
     }
     console.log('Result ', result);
+    duplicates = [];
+    index = -1;
+    for (let i = 1; i < result.length; i++){
+      if (result[i - 1].typeCode.rowIndex == result[i].typeCode.rowIndex){
+        index += 1
+        duplicates = {
+          first: result[i - 1],
+          second: result[i]
+        }
+      }
+    }
+    console.log('Duplicates:', duplicates);
   })
   if (isProtected){
     await lockColumns();
