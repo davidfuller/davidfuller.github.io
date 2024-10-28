@@ -4246,7 +4246,7 @@ async function checkAllTheSceneBreaks(){
     console.log('results', results)
     for (let i = 0; i < results.length; i++){
       let textBit = results[i].sceneLineNumberRange;
-      let lineValues = (textBit).substr(1, textBit.length - 1).split(' - ')
+      let lineValues = (textBit).substr(1, textBit.length - 1).split('-')
       if (lineValues.length == 2){
         let start = parseInt(lineValues[0]);
         let end = parseInt(lineValues[1]);
