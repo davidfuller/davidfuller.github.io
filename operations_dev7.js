@@ -430,10 +430,9 @@ async function getLineNoRowIndex(lineNo){
 
 async function findChapter(chapter){
   await Excel.run(async function(excel){
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
-    activeCell.load("rowIndex");
-    activeCell.load(("columnIndex"))
+    activeCell.load("rowIndex, columnIndex");
     await excel.sync()
     const startRow = activeCell.rowIndex;
     const startColumn = activeCell.columnIndex
