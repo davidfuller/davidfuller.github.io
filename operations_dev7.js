@@ -4342,3 +4342,40 @@ async function copyNewText(){
     await lockColumns();
   }
 }
+async function reconcileLocations(){
+  let details = await getFirstLastIndex();
+  let isProtected = await unlockIfLocked();
+  
+  await Excel.run(async (excel) => {
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let startRowIndex = details.rowIndex + 2;
+    let rowCount = details.rowCount - startRowIndex + 1;
+    let typeCodeRange = scriptSheet.getRangeByIndexes(startRowIndex, typeCodeIndex, rowCount, 1);
+    let locationRange = scriptSheet.getRangeByIndexes(startRowIndex, locationIndex, rowCount, 1);
+    typeCodeRange.load('values, rowIndex');
+    locationRange.load('values, rowIndex');
+    await excel.sync();
+    let indexes = [];
+    let index = - 1
+    for (let i = 0; i < locationRange.values.length; i++){
+      if (locationRange.values[i][0] != ''){
+        index += 1;
+        indexes[index] = i;
+      }
+    }
+    let chapterAndScenes = [];
+    index = -1;
+    for (let i = 0; i < typeCodeRange.values.length; i++){
+      let typeCode = typeCodeRange.values[i][0];
+      if ((typeCode == myTypes.chapter)||(typeCode == myTypes.scene)){
+        index += 1
+        chapterAndScenes[i] = i;
+      }
+    }
+    console.log('locations', indexes, 'typeCodes', chapterAndScenes);
+  })
+  if (isProtected){
+    await lockColumns();
+  }
+  
+}
