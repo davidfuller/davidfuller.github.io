@@ -4237,11 +4237,28 @@ async function checkAllTheSceneBreaks(){
           index: i,
           sceneLineNumberRange: testRange.values[i][0],
           cue: testRange.values[i][3],
+          previousCue: testRange.values[i - 1][3],
           number: testRange.values[i][4],
+          previousNumber: testRange.values[i - 1][4]
         }
       }
     }
     console.log('results', results)
+    for (let i = 0; i < results.length; i++){
+      let textBit = results[i].sceneLineNumberRange;
+      let lineValues = (textBit).substr(1, textBit.length - 1).split(' - ')
+      if (lineValues.length == 2){
+        let start = parseInt(lineValues[0]);
+        let end = parseInt(lineValues[1]);
+        if ((start == results[i].cue) && (start == results[i].number)){
+          console.log(results[i].sceneLineNumberRange + ' is good');
+        } else {
+          console.log(results[i].sceneLineNumberRange + ' does not match cue: ' + results[i].cue + ' or number: ' + results[i].number);
+        }
+      } else {
+        console.log(results[i].sceneLineNumberRange + ' is not a valid line number range');
+      }
+    }
   });
 
 }
