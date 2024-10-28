@@ -33,6 +33,7 @@ async function mainHTML(){
     <button id="btnProcessCharacterListForWordAndScene" onclick="jade_modules.scheduling.processCharacterListForWordAndScene()">Character Word Count</button>
     <button id="btnAddScneWordCount" onclick="jade_modules.scheduling.createSceneWordCountData()">Add Scene Word Count<br/>to Character List</button>
     <button id="btnCheckScenes" onclick="jade_modules.operations.checkAllTheSceneBreaks()">Check all the<br/>scene breaks</button>
+    <button id="btnCopyScenes" onclick="jade_modules.operations.copyNewText()">Copy the new text</button>
     <div class="row">
       <div class="column" id="column-add-one">
         <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>

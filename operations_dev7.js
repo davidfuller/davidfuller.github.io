@@ -4273,3 +4273,18 @@ async function checkAllTheSceneBreaks(){
     }
   });
 }
+
+async function copyNewText(){
+  let details = await getFirstLastIndex();
+  await Excel.run(async (excel) => {
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const newTextSheet = excel.workbook.worksheets.getItem('HP07') ;
+    let startRowIndexCurrent = 2;
+    let rowCount = details.rowCount - (startRowIndexCurrent - details.rowIndex);
+    let columnCount = usScriptColumnIndex - cueIndex + 1;
+    let currentRange = scriptSheet.getRangeByIndexes(startRowIndexCurrent, cueIndex, rowCount, columnCount);
+    currentRange.clear('Contents');
+    currentRange.clear('Formats');
+    await excel.sync();
+  })
+}
