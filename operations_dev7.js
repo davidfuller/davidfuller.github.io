@@ -4283,8 +4283,13 @@ async function copyNewText(){
     let rowCount = details.rowCount - (startRowIndexCurrent - details.rowIndex);
     let columnCount = usScriptColumnIndex - cueIndex + 1;
     let currentRange = scriptSheet.getRangeByIndexes(startRowIndexCurrent, cueIndex, rowCount, columnCount);
+    currentRange.columnHidden = false;
+    await excel.sync();
+    /*
+
     currentRange.clear('Contents');
     currentRange.clear('Formats');
     await excel.sync();
+    */
   })
 }
