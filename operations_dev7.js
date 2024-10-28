@@ -4244,7 +4244,7 @@ async function checkAllTheSceneBreaks(){
       }
     }
     console.log('results', results)
-    let maxGap = 10;
+    let maxGap = 30;
     for (let i = 0; i < results.length; i++){
       let textBit = results[i].sceneLineNumberRange;
       let lineValues = (textBit).substr(1, textBit.length - 1).split('-')
@@ -4276,17 +4276,13 @@ async function checkAllTheSceneBreaks(){
             }
           }
           if (first != -1){
-            for (replace = first; replace < results[i].index; replace++){
-              console.log('Index', replace + testRange.rowIndex, 'value', results[i].sceneLineNumberRange )
-              let tempRange = scriptSheet.getRangeByIndexes(replace + testRange.rowIndex, sceneLineNumberRangeIndex, 1, 1)
-              tempRange.values = [[results[i].sceneLineNumberRange]];
-              await excel.sync();
-              //testRange.values[replace][0] = results[i].sceneLineNumberRange
-            }
-            
+            console.log('Index', replace + testRange.rowIndex, 'value', results[i].sceneLineNumberRange, 'rows', results[i].index - first);
+            let tempRange = scriptSheet.getRangeByIndexes(first + testRange.rowIndex, sceneLineNumberRangeIndex, results[i].index - first, 1);
+            tempRange.values = results[i].sceneLineNumberRange;
+            await excel.sync();
             message += '. Hopefully fixed'
           } else {
-            message += '. Not within 10 rows'
+            message += '. Not within ' + maxGap + ' rows'
           }
         }
       } else {
