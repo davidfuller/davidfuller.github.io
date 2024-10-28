@@ -3833,6 +3833,9 @@ async function deleteAllSceneAndWallaBlocks(){
       }
       console.log('The Indexes',theIndexes);
       
+      if (theIndexes.length == 0){
+        break;
+      }
       
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       let thisRow = [];
