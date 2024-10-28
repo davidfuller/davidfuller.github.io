@@ -4360,7 +4360,11 @@ async function reconcileLocations(){
     for (let i = 0; i < locationRange.values.length; i++){
       if (locationRange.values[i][0] != ''){
         index += 1;
-        indexes[index] = i;
+        indexes[index] = {
+          index: i,
+          rowIndex: i + locationRange.rowIndex,
+          location: locationRange.values[i][0]
+        }
       }
     }
     let chapterAndScenes = [];
@@ -4369,7 +4373,11 @@ async function reconcileLocations(){
       let typeCode = typeCodeRange.values[i][0];
       if ((typeCode == myTypes.chapter)||(typeCode == myTypes.scene)){
         index += 1
-        chapterAndScenes[index] = i;
+        chapterAndScenes[index] = {
+          index: i,
+          rowIndex: i + typeCodeRange.rowIndex,
+          typeCode: typeCodeRange[i][0]
+        }
       }
     }
     console.log('locations', indexes, 'typeCodes', chapterAndScenes);
