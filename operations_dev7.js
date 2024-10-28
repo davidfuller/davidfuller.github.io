@@ -4388,7 +4388,7 @@ async function reconcileLocations(){
           result[i] = {
             location: indexes[i],
             typeCode: chapterAndScenes[j],
-            match: 'exact'
+            match: 0
           }
           break;
         } else if (chapterAndScenes[j].rowIndex > indexes[i].rowIndex){
@@ -4396,7 +4396,7 @@ async function reconcileLocations(){
           result[i] = {
             location: indexes[i],
             typeCode: chapterAndScenes[j - 1],
-            match: 'previous'
+            match: (chapterAndScenes[j].rowIndex - indexes[i].rowIndex)
           }
           break;
         }
@@ -4415,6 +4415,9 @@ async function reconcileLocations(){
       }
     }
     console.log('Duplicates:', duplicates);
+    for (let i = 0; i < result.length; i++){
+      
+    }
   })
   if (isProtected){
     await lockColumns();
