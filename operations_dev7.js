@@ -25,7 +25,7 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex, usScriptColumnIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
-let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, lineWordCountIndex, sceneLineNumberRangeIndex;
+let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, lineWordCountIndex, sceneLineNumberRangeIndex, chapterCalculationIndex;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
