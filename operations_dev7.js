@@ -25,7 +25,7 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
-let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, lineWordCountIndex;
+let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, lineWordCountIndex, sceneLineNumberRangeIndex;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
@@ -122,6 +122,7 @@ async function initialiseVariables(){
   numberIndex = findColumnIndex("Number");
   chapterIndex = findColumnIndex('Chapter')
   totalTakesIndex = findColumnIndex('Total Takes');
+  sceneLineNumberRangeIndex = findColumnIndex('Scene Line Number Range');
   cueIndex = findColumnIndex('Cue');
   stageDirectionWallaDescriptionIndex = findColumnIndex("Stage Direction/ Walla description") //J
 
@@ -4219,6 +4220,10 @@ async function checkAllTheSceneBreaks(){
   console.log('details', details)
   await Excel.run(async (excel) => {
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let columnCount = numberIndex - sceneLineNumberRangeIndex + 1;
+    let testRange = scriptSheet.getRangeByIndexes(details.rowIndex, sceneLineNumberRangeIndex, details.rowCount, columnCount);
+    testRange.load('address, values');
+    console.log('address:', testRange.address, 'Values: ', testRange.values);
   });
-  
+
 }
