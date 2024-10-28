@@ -528,7 +528,7 @@ async function getLineRange(excel){
 async function getChapterRange(excel){
   let details = await getFirstLastIndex();
   let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-  let range = scriptSheet.getRangeByIndexes(details.rowIndex + 2 , chapterCalculationIndex, details.rowcount = (2 - details.rowIndex), 1);
+  let range = scriptSheet.getRangeByIndexes(details.rowIndex + 2 , chapterCalculationIndex, details.rowcount - (2 - details.rowIndex), 1);
   await excel.sync();
   return range;
 }
