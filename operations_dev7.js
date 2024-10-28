@@ -4251,7 +4251,17 @@ async function checkAllTheSceneBreaks(){
         let start = parseInt(lineValues[0]);
         let end = parseInt(lineValues[1]);
         if ((start == results[i].cue) && (start == results[i].number)){
-          console.log(results[i].sceneLineNumberRange + ' is good');
+          console.log(results[i].sceneLineNumberRange + ' is good so far');
+          if (results[i].cue == results[i].previousCue){
+            console.log('============> But fails on cue')
+          } else {
+            console.log('And good on cue')
+          }
+          if (results[i].number == results[i].previousNumber){
+            console.log('============> But fails on number')
+          } else {
+            console.log('And good on number')
+          }
         } else {
           console.log(results[i].sceneLineNumberRange + ' does not match cue: ' + results[i].cue + ' or number: ' + results[i].number);
         }
