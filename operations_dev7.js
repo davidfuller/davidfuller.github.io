@@ -4291,7 +4291,21 @@ async function copyNewText(){
     currentRange.clear('Contents');
     currentRange.clear('Formats');
     await excel.sync();
-    
+
+    let newUsedRange = newTextSheet.getUsedRange();
+    newUsedRange.load('address, rowIndex, rowCount');
+    await excel.sync();
+    console.log('address', newUsedRange.address, 'rowCount:', newUsedRange.rowCount)
+    newTextRowIndex = 1;
+    newTextRowCount = newUsedRange.rowCount - (newTextRowIndex - newUsedRange.rowIndex);
+    newTextColumnIndex = 0;
+    newTextColumnCount = 8;
+    newTextRange = newTextSheet.getRangeByIndexes(newTextRowIndex, newTextColumnIndex,  newTextRowCount, newTextColumnCount);
+
+    let myNewRange = scriptSheet.getRangeByIndexes(startRowIndexCurrent, cueIndex, 1, 1);
+    myNewRange.copyFrom(newTextRange, "Values");
+    myNewRange.copyFrom(newTextRange, "Formats");
+    await excel.sync();
   })
   if (isProtected){
     await lockColumns();
