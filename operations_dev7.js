@@ -4358,7 +4358,7 @@ async function reconcileLocations(){
     let indexes = [];
     let index = - 1
     for (let i = 0; i < locationRange.values.length; i++){
-      if (locationRange.values[i][0] != ''){
+      if (locationRange.values[i][0].trim() != ''){
         index += 1;
         indexes[index] = {
           index: i,
