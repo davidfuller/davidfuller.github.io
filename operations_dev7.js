@@ -4250,25 +4250,26 @@ async function checkAllTheSceneBreaks(){
       if (lineValues.length == 2){
         let start = parseInt(lineValues[0]);
         let end = parseInt(lineValues[1]);
+        let message = '';
         if ((start == results[i].cue) && (start == results[i].number)){
-          console.log(results[i].sceneLineNumberRange + ' is good so far');
+          message = results[i].sceneLineNumberRange + ' is good so far';
           if (results[i].cue == results[i].previousCue){
-            console.log('============> But fails on cue')
+            message += ' ============> But fails on cue';
           } else {
-            console.log('And good on cue')
+            message += ' And good on cue';
           }
           if (results[i].number == results[i].previousNumber){
-            console.log('============> But fails on number')
+            message += ' ============> But fails on number';
           } else {
-            console.log('And good on number')
+            message += ' And good on number';
           }
         } else {
-          console.log(results[i].sceneLineNumberRange + ' does not match cue: ' + results[i].cue + ' or number: ' + results[i].number);
+          message += results[i].sceneLineNumberRange + ' does not match cue: ' + results[i].cue + ' or number: ' + results[i].number;
         }
       } else {
-        console.log(results[i].sceneLineNumberRange + ' is not a valid line number range');
+        message += results[i].sceneLineNumberRange + ' is not a valid line number range';
       }
+      console.log(message);
     }
   });
-
 }
