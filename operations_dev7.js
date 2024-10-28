@@ -3815,6 +3815,7 @@ function isGeneralWalla(theType){
 }
 
 async function deleteAllSceneAndWallaBlocks(){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
     for (let myDelete = 0; myDelete < 100; myDelete++){
 
@@ -3846,12 +3847,13 @@ async function deleteAllSceneAndWallaBlocks(){
         console.log('After sync');  
       }
     }
-    
-    
     const firstRowIndex = firstDataRow - 1;
     const lastRowIndex = lastDataRow - firstDataRow;
     
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 async function clearWalla(){
