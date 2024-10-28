@@ -4244,7 +4244,7 @@ async function checkAllTheSceneBreaks(){
       }
     }
     console.log('results', results)
-    let maxGap = 30;
+    let maxGap = 40;
     for (let i = 0; i < results.length; i++){
       let textBit = results[i].sceneLineNumberRange;
       let lineValues = (textBit).substr(1, textBit.length - 1).split('-')
