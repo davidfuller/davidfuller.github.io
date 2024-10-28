@@ -4223,7 +4223,7 @@ async function checkAllTheSceneBreaks(){
     let columnCount = numberIndex - sceneLineNumberRangeIndex + 1;
     console.log(details.rowIndex, sceneLineNumberRangeIndex, details.rowCount, columnCount);
     let testRange = scriptSheet.getRangeByIndexes(details.rowIndex, sceneLineNumberRangeIndex, details.rowCount, columnCount);
-    testRange.load('address, values');
+    testRange.load('address, values, rowIndex');
     await excel.sync();
     console.log('address:', testRange.address, 'Values: ', testRange.values);
     let previousValue = '';
@@ -4277,10 +4277,13 @@ async function checkAllTheSceneBreaks(){
           }
           if (first != -1){
             for (replace = first; replace < results[i].index; replace++){
-              console.log('Index', replace)
-              testRange.values[replace][0] = results[i].sceneLineNumberRange
+              console.log('Index', replace + testRange.rowIndex, 'value', results[i].sceneLineNumberRange )
+              let tempRange = scriptSheet.getRangeByIndexes(replace + testRange.rowIndex, sceneLineNumberRangeIndex, 1, 1)
+              tempRange.values = [[results[i].sceneLineNumberRange]];
+              await excel.sync();
+              //testRange.values[replace][0] = results[i].sceneLineNumberRange
             }
-            await excel.sync();
+            
             message += '. Hopefully fixed'
           } else {
             message += '. Not within 10 rows'
