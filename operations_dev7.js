@@ -4226,6 +4226,22 @@ async function checkAllTheSceneBreaks(){
     testRange.load('address, values');
     await excel.sync();
     console.log('address:', testRange.address, 'Values: ', testRange.values);
+    let previousValue = '';
+    let index = -1;
+    let results = [];
+    for (let i = 0; i < testRange.values.length; i++){
+      if (testRange.values[i][0] !== previousValue){
+        previousValue = testRange.values[i][0];
+        index += 1;
+        results[index] = {
+          index: i,
+          sceneLineNumberRange: testRange.values[i][0],
+          cue: testRange.values[i][3],
+          number: testRange.values[i][4],
+        }
+      }
+    }
+    console.log('results', results)
   });
 
 }
