@@ -4369,7 +4369,7 @@ async function reconcileLocations(){
       let typeCode = typeCodeRange.values[i][0];
       if ((typeCode == myTypes.chapter)||(typeCode == myTypes.scene)){
         index += 1
-        chapterAndScenes[i] = i;
+        chapterAndScenes[index] = i;
       }
     }
     console.log('locations', indexes, 'typeCodes', chapterAndScenes);
