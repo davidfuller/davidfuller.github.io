@@ -4268,7 +4268,8 @@ async function checkAllTheSceneBreaks(){
 
           let first = -1;
           message += results[i].sceneLineNumberRange + ' does not match cue: ' + results[i].cue + ' or number: ' + results[i].number;
-          for (let test = (i - maxGap); test < i; test++){
+          console.log('Loop start:', results[i].index - maxGap,'Loop end', results[i].index);
+          for (let test = (results[i].index - maxGap); test < results[i].index; test++){
             if ((start == results[test].cue) && (start == results[test].number)){
               first = test;
               break;
