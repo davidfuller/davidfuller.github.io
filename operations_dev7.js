@@ -470,7 +470,7 @@ async function findChapter(chapter){
       let rowOffset = 5
       let theOffsets = [-rowOffset, rowOffset, 0];
       let myTarget;
-      for (let i = 0; i theOffsets.length; i++){
+      for (let i = 0; i < theOffsets.length; i++){
         let tempRowIndex = targetRowIndex + theOffsets[i];
         console.log('i', i, 'tempRowIndex', tempRowIndex)
         if (tempRowIndex < 0){ tempRowIndex = 0};
