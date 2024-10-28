@@ -4247,10 +4247,10 @@ async function checkAllTheSceneBreaks(){
     for (let i = 0; i < results.length; i++){
       let textBit = results[i].sceneLineNumberRange;
       let lineValues = (textBit).substr(1, textBit.length - 1).split('-')
+      let message = '';
       if (lineValues.length == 2){
         let start = parseInt(lineValues[0]);
         let end = parseInt(lineValues[1]);
-        let message = '';
         if ((start == results[i].cue) && (start == results[i].number)){
           message = results[i].sceneLineNumberRange + ' is good so far';
           if (results[i].cue == results[i].previousCue){
