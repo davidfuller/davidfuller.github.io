@@ -4376,7 +4376,7 @@ async function reconcileLocations(){
         chapterAndScenes[index] = {
           index: i,
           rowIndex: i + typeCodeRange.rowIndex,
-          typeCode: typeCodeRange[i][0]
+          typeCode: typeCodeRange.values[i][0]
         }
       }
     }
