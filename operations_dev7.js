@@ -4224,6 +4224,7 @@ async function checkAllTheSceneBreaks(){
     console.log(details.rowIndex, sceneLineNumberRangeIndex, details.rowCount, columnCount);
     let testRange = scriptSheet.getRangeByIndexes(details.rowIndex, sceneLineNumberRangeIndex, details.rowCount, columnCount);
     testRange.load('address, values');
+    await excel.sync();
     console.log('address:', testRange.address, 'Values: ', testRange.values);
   });
 
