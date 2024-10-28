@@ -22,7 +22,7 @@ let wallaBlockColumns = 8;
 
 let sceneIndex, numberIndex, cueIndex, characterIndex, locationIndex, chapterIndex, lineIndex;
 let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
-let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex;
+let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex, usScriptColumnIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
 let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, lineWordCountIndex, sceneLineNumberRangeIndex;
@@ -131,7 +131,7 @@ async function initialiseVariables(){
   lineIndex = findColumnIndex('Line');
   ukScriptIndex = findColumnIndex('UK script');
   otherNotesIndex = findColumnIndex('Other notes');
-  
+  usScriptColumnIndex = findColumnIndex('US Script');  
   ukTakesIndex = findColumnIndex('UK No of takes');
   ukTakeNoIndex = findColumnIndex('UK Take No')
   ukDateIndex = findColumnIndex("UK Date Recorded");
