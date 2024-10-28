@@ -437,7 +437,7 @@ async function findChapter(chapter){
     const startRow = activeCell.rowIndex;
     const startColumn = activeCell.columnIndex
     let range = await getChapterRange(excel);
-    range.load("values");
+    range.load("values, rowIndex");
     await excel.sync();
     console.log("Chapter range");
     console.log(range.values);
@@ -466,10 +466,13 @@ async function findChapter(chapter){
       alert('Invalid Line Number');
     } else {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      let targetRowIndex = range.rowIndex + myIndex;
+      let rowOffset = 5
+      let theOffsets = [-rowOffset, rowOffset, 0];
       let myTarget;
-      for (let i = -1; i <= 1; i++){
-        let tempRowIndex = myIndex + 2 + (4 * i);
-        console.log(tempRowIndex)
+      for (let i = 0; i theOffsets.length; i++){
+        let tempRowIndex = targetRowIndex + theOffsets[i];
+        console.log('i', i, 'tempRowIndex', tempRowIndex)
         if (tempRowIndex < 0){ tempRowIndex = 0};
         myTarget = scriptSheet.getRangeByIndexes(tempRowIndex, startColumn, 1, 1);
         myTarget.select();
