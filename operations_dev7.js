@@ -4287,12 +4287,11 @@ async function copyNewText(){
     let currentRange = scriptSheet.getRangeByIndexes(startRowIndexCurrent, cueIndex, rowCount, columnCount);
     currentRange.columnHidden = false;
     await excel.sync();
-    /*
-
+    
     currentRange.clear('Contents');
     currentRange.clear('Formats');
     await excel.sync();
-    */
+    
   })
   if (isProtected){
     await lockColumns();
