@@ -4244,6 +4244,7 @@ async function checkAllTheSceneBreaks(){
       }
     }
     console.log('results', results)
+    let maxGap = 10;
     for (let i = 0; i < results.length; i++){
       let textBit = results[i].sceneLineNumberRange;
       let lineValues = (textBit).substr(1, textBit.length - 1).split('-')
@@ -4264,7 +4265,25 @@ async function checkAllTheSceneBreaks(){
             message += ' And good on number';
           }
         } else {
+
+          let first = -1;
           message += results[i].sceneLineNumberRange + ' does not match cue: ' + results[i].cue + ' or number: ' + results[i].number;
+          for (let test = (i - maxGap); test < i; test++){
+            if ((start == results[test].cue) && (start == results[test].number)){
+              first = test;
+              break;
+            }
+          }
+          if (first != -1){
+            for (replace = first; replace < i; replace++){
+              console.log('Index', results[replace].index)
+              testRange.values[results[replace].index][0] = results[i].sceneLineNumberRange
+            }
+            await excel.sync();
+            message += '. Hopefully fixed'
+          } else {
+            message += '. Not within 10 rows'
+          }
         }
       } else {
         message += results[i].sceneLineNumberRange + ' is not a valid line number range';
