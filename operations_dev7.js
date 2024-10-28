@@ -4213,3 +4213,12 @@ async function getFirstLastIndex(){
   })
   return details;
 }
+
+async function checkAllTheSceneBreaks(){
+  let details = await getFirstLastIndex();
+  console.log('details', details)
+  await Excel.run(async (excel) => {
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  });
+  
+}
