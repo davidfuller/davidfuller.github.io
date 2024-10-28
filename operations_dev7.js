@@ -4408,7 +4408,7 @@ async function reconcileLocations(){
     for (let i = 1; i < result.length; i++){
       if (result[i - 1].typeCode.rowIndex == result[i].typeCode.rowIndex){
         index += 1
-        duplicates = {
+        duplicates[index] = {
           first: result[i - 1],
           second: result[i]
         }
