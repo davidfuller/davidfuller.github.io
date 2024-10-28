@@ -4276,6 +4276,8 @@ async function checkAllTheSceneBreaks(){
 
 async function copyNewText(){
   let details = await getFirstLastIndex();
+  let isProtected = await unlockIfLocked();
+    
   await Excel.run(async (excel) => {
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const newTextSheet = excel.workbook.worksheets.getItem('HP07') ;
@@ -4292,4 +4294,7 @@ async function copyNewText(){
     await excel.sync();
     */
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
