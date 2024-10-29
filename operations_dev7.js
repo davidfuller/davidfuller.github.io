@@ -4597,7 +4597,7 @@ async function copyTextV2(){
     newUsedRange.load('values, rowIndex')
     await excel.sync();
     let myTypeCodes = typeCodeRange.values.map(x => x[0]);
-    let myCues = typeCodeRange.values.map(x => x[0]);
+    let myCues = cueRange.values.map(x => x[0]);
     console.log('current sheet types:', myTypeCodes, 'rowIndex', typeCodeRange.rowIndex);
     console.log('newData', newUsedRange.values, 'Row Index', newUsedRange.rowIndex);
 
