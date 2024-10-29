@@ -4581,3 +4581,20 @@ async function newCharacters(){
     console.log('Missing In Current: ', missingInCurrent);
   })
 }
+
+async function copyTextV2(){
+  let details = await getFirstLastIndex()
+  await Excel.run(async function(excel){ 
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const newSheet = excel.workbook.worksheets.getItem(newTextSheetName);
+    let firstRowIndex = details.rowIndex + 1;
+    let rowCount = details.rowCount - firstRowIndex + 1
+    let typeCodeRange = scriptSheet.getRangeByIndexes(details.rowIndex, typeCodeIndex, rowCount, 1);
+    typeCodeRange.load('values, rowIndex');
+    await excel.sync();
+    let myTypeCodes = typeCodeRange.values.map(x => x[0]);
+    console.log('current sheet types:', myTypeCodes, 'rowIndex', myTypeCodes.rowIndex);
+
+  })  
+}
+
