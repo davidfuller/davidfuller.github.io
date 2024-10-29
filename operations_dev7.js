@@ -3498,8 +3498,7 @@ async function mergedRowAutoHeight(excel, theSheet, theRange){
   }
 }
 async function fillChapterAndScene(){
-  typeCodeValues = await getTypeCodes();
-  addSelectList = createChapterAndSceneList(typeCodeValues);
+  addSelectList = await createSceneList();
   let chapterAddSelect = tag('chapter-scene-select');
   let selected = chapterAddSelect.selectedIndex;
   console.log('Selected index:', chapterAddSelect.selectedIndex);
@@ -3509,6 +3508,11 @@ async function fillChapterAndScene(){
     chapterAddSelect.add(new Option(addSelectList[i].display, i));
   }
   chapterAddSelect.selectedIndex = selected;
+}
+
+async function createSceneList(){
+  typeCodeValues = await getTypeCodes();
+  return createChapterAndSceneList(typeCodeValues);
 }
 
 async function createWalla(wallaData, rowIndex, doReplace, doNext){
@@ -4447,5 +4451,9 @@ async function reconcileLocations(doCorrection){
   if (isProtected){
     await lockColumns();
   }
-  
+}
+
+async function autoSceneBlockCreation(){
+  let myList = await createSceneList();
+  console.log('myList', myList);
 }

@@ -36,6 +36,7 @@ async function mainHTML(){
     <button id="btnCopyScenes" onclick="jade_modules.operations.copyNewText()">Copy the new text</button>
     <button id="btnReconcileLocation" onclick="jade_modules.operations.reconcileLocations(false)">Reconcile locations<br/>no correction</button>
     <button id="btnReconcileLocationCorrection" onclick="jade_modules.operations.reconcileLocations(true)">Reconcile locations<br/>WITH correction</button>
+    <button id="btnAutoSceneBlock" onclick="jade_modules.operations.autoSceneBlockCreation()">Auto scene block</button>
     <div class="row">
       <div class="column" id="column-add-one">
         <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
