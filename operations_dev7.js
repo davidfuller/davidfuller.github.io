@@ -4614,7 +4614,7 @@ async function copyTextV2(){
           index += 1
           startStopRowIndecies[index] = {
             startRowIndex: start + typeCodeRange.rowIndex,
-            rowCount: stop - start + 1
+            rowCount: stop - start
           }
           start = -1;
         }
