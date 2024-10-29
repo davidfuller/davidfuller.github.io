@@ -4259,7 +4259,7 @@ async function checkAllTheSceneBreaks(){
     let results = [];
     for (let i = 0; i < testRange.values.length; i++){
       if (testRange.values[i][0] !== previousValue){
-        if (testRange.vlues[i][0] != ''){
+        if (testRange.values[i][0].trim() != ''){
           previousValue = testRange.values[i][0];
           index += 1;
           results[index] = {
