@@ -4555,7 +4555,7 @@ async function newCharacters(){
           index += 1
           missingInNew[index] = currentChar
         }
-        console.log('i', i, 'Character', currentChar, 'Found:', found, 'index', index, 'missing', missingInNew);
+        //console.log('i', i, 'Character', currentChar, 'Found:', found, 'index', index, 'missing', missingInNew);
       }
     }
     console.log('Missing In New: ', missingInNew);
@@ -4575,7 +4575,7 @@ async function newCharacters(){
           index += 1
           missingInCurrent[index] = currentChar
         }
-        console.log('i', i, 'Character', currentChar, 'Found:', found, 'index', index, 'missing', missingInCurrent);
+        //console.log('i', i, 'Character', currentChar, 'Found:', found, 'index', index, 'missing', missingInCurrent);
       }
     }
     console.log('Missing In Current: ', missingInCurrent);
