@@ -4103,6 +4103,7 @@ async function fillColorLinesAndScriptedWalla(){
       lineRanges[i] = scriptSheet.getRangeByIndexes(lineIndexes[i], cueIndex, 1, columnCount);
       lineRanges[i].format.fill.clear();
       lineRanges[i].format.font.strikethrough = false;
+      lineRanges[i].format.font.color = '#000000';
       myCount += 1;
       if (myCount >= 1000){
         myCount = 0;
