@@ -4415,8 +4415,27 @@ async function reconcileLocations(){
       }
     }
     console.log('Duplicates:', duplicates);
+    let myColumnCount = otherNotesIndex - locationIndex + 1;
+    let myLocationRange = [];
+    let myIndex = -1;
+    let targetRowIndex;
     for (let i = 0; i < result.length; i++){
-      
+      if(result[i].match < -1){
+        //So we need to move the details
+        myIndex += 1
+        myLocationRange[myIndex] = scriptSheet.getRangeByIndexes(result[i].location.rowIndex, locationIndex, 1, myColumnCount);
+        if (result[i].typeCode == 'Scene'){
+          targetRowIndex = result[i].typeCode.rowIndex
+        } else {
+          targetRowIndex = result[i].typeCode.rowIndex - 1
+        }
+        myTargetRange[myIndex] = scriptSheet.getRangeByIndexes(targetRowIndex, locationIndex, 1, 1);
+        myTargetRange[myIndex].copyFrom(myLocationRange[index, 'Values']);
+        myTargetRange[myIndex].copyFrom(myLocationRange[index, 'Formats']);
+        myLocationRange[myIndex].clear('Contents');
+        myLocationRange[myIndex].clear('Formats');
+      }
+      await excel.sync();
     }
   })
   if (isProtected){
