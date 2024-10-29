@@ -4259,15 +4259,17 @@ async function checkAllTheSceneBreaks(){
     let results = [];
     for (let i = 0; i < testRange.values.length; i++){
       if (testRange.values[i][0] !== previousValue){
-        previousValue = testRange.values[i][0];
-        index += 1;
-        results[index] = {
-          index: i,
-          sceneLineNumberRange: testRange.values[i][0],
-          cue: testRange.values[i][3],
-          previousCue: testRange.values[i - 1][3],
-          number: testRange.values[i][4],
-          previousNumber: testRange.values[i - 1][4]
+        if (testRange.vlues[i][0].trim() != ''){
+          previousValue = testRange.values[i][0];
+          index += 1;
+          results[index] = {
+            index: i,
+            sceneLineNumberRange: testRange.values[i][0],
+            cue: testRange.values[i][3],
+            previousCue: testRange.values[i - 1][3],
+            number: testRange.values[i][4],
+            previousNumber: testRange.values[i - 1][4]
+          }
         }
       }
     }
