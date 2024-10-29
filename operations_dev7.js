@@ -4590,11 +4590,14 @@ async function copyTextV2(){
     let firstRowIndex = details.rowIndex + 2;
     let rowCount = details.rowCount - firstRowIndex + 1
     let typeCodeRange = scriptSheet.getRangeByIndexes(firstRowIndex, typeCodeIndex, rowCount, 1);
+    let cueRange = scriptSheet.getRangeByIndexes(firstRowIndex, cueIndex, rowCount, 1);
     typeCodeRange.load('values, rowIndex');
+    cueRange.load('values, rowIndex');
     let newUsedRange = newSheet.getUsedRange();
     newUsedRange.load('values, rowIndex')
     await excel.sync();
     let myTypeCodes = typeCodeRange.values.map(x => x[0]);
+    let myCues = typeCodeRange.values.map(x => x[0]);
     console.log('current sheet types:', myTypeCodes, 'rowIndex', typeCodeRange.rowIndex);
     console.log('newData', newUsedRange.values, 'Row Index', newUsedRange.rowIndex);
 
@@ -4620,6 +4623,26 @@ async function copyTextV2(){
       }
     }
     console.log('Start stop indecies', startStopRowIndecies)
+    let newCueIndex = 0
+
+    //for (let i = 0; i < startStopRowIndecies.length; i++){
+    for (let i = 0; i < 5; i++){
+      let index = startStopRowIndecies.startRow - typeCodeRange.rowIndex
+      let cue = {
+        value: myCues[index],
+        previousCue: myCues[index - 1],
+        nextCue: myCues[index + 1]
+      }
+
+      for (let j =0; j < newUsedRange.values.length; j++){
+        if (newUsedRange.values[j][newCueIndex] == cue.value){
+          console.log('cue:', cue.value, 'j', j)
+          break;
+        }
+      }
+
+    }
+
   })  
 }
 
