@@ -4676,7 +4676,7 @@ function getNextCue(index, theCues){
   //returns next numeric cue, or -1 if fails
   let nextCue = -1;
   let possible;
-  for (let i = index + 1; i < theCues.length){
+  for (let i = index + 1; i < theCues.length; i++){
     possible = parseInt(theCues[i])
     if (!isNaN(possible)){
       nextCue = possible;
