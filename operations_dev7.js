@@ -4434,8 +4434,8 @@ async function reconcileLocations(){
         }
         console.log(i, myIndex, 'target params', targetRowIndex, locationIndex, 1, 1);
         myTargetRange[myIndex] = scriptSheet.getRangeByIndexes(targetRowIndex, locationIndex, 1, 1);
-        myTargetRange[myIndex].copyFrom(myLocationRange[index], 'Values');
-        myTargetRange[myIndex].copyFrom(myLocationRange[index], 'Formats');
+        myTargetRange[myIndex].copyFrom(myLocationRange[myIndex], 'Values');
+        myTargetRange[myIndex].copyFrom(myLocationRange[myIndex], 'Formats');
         myLocationRange[myIndex].clear('Contents');
         myLocationRange[myIndex].clear('Formats');
       }
