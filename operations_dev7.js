@@ -4635,6 +4635,7 @@ async function copyTextV2(){
       }
 
       for (let j = 0; j < newUsedRange.values.length; j++){
+        console.log('j', j, 'newUsedRange ', newUsedRange.values[j], 'cue ', cue);
         if (newUsedRange.values[j][newCueIndex] == cue.value){
           console.log('cue:', cue.value, 'j', j)
           break;
