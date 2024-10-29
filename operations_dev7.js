@@ -3009,7 +3009,7 @@ async function goWallaScene(){
     });
   }   
 }
-/*
+
 async function doTheActualSceneBlock(chapterSceneID){
   if (!isNaN(chapterSceneID)){
     let sceneListData = addSelectList[chapterSceneID]
@@ -3208,7 +3208,7 @@ async function doTheActualSceneBlock(chapterSceneID){
     alert("Please enter a number")
   }
 }
-*/
+
 async function addSceneBlock(){
   let myWait = tag('scene-add-wait');
   myWait.style.display = 'block'
@@ -4472,9 +4472,8 @@ async function reconcileLocations(doCorrection){
   }
 }
 
-/*
+
 async function autoSceneBlockCreation(){
   let myList = await createSceneList();
   console.log('myList', myList);
 }
-  */
