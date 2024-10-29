@@ -2,6 +2,7 @@ const codeVersion = '7.1';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
+const characterListName = 'Character List';
 const newTextSheetName = 'NewText'
 const settingsSheetName = 'Settings';
 const forDirectorName = 'For Directors';
@@ -4503,7 +4504,7 @@ async function testFontColor(){
 
 async function loadNewSheetCharacters(){
   await Excel.run(async function(excel){ 
-    characterlistSheet = excel.workbook.worksheets.getItem(characterListName);
+    let characterlistSheet = excel.workbook.worksheets.getItem(characterListName);
     let characters = await getCharacters(newTextSheetName);
     console.log('the characters', characters);
     let characterRange = characterlistSheet.getRange('clNewCharacters');
