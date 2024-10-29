@@ -3264,7 +3264,7 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   theRange.format.fill.color = myFormats.purple;
   theRange.format.horizontalAlignment = 'Center';
   theRange.format.verticalAlignment = 'Top';
-  /*
+  
   let myBorders = theRange.format.borders;
   doBorder(myBorders, 'EdgeTop');
   doBorder(myBorders, 'EdgeBottom');
@@ -3272,6 +3272,7 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   doBorder(myBorders, 'EdgeRight');
   await excel.sync();
 
+  /*
   myBorders.load('items');
   await excel.sync()
   console.log('Border count', myBorders.count);
