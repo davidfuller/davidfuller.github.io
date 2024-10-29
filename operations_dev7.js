@@ -4602,8 +4602,7 @@ async function copyTextV2(){
     let stop = -1;
     let startStopRowIndecies = []
     let index = -1
-    //for (let i = 0; i < myTypeCodes.length; i++){
-    for (let i = 0; i < 100; i++){
+    for (let i = 0; i < myTypeCodes.length; i++){
       if (start == -1){
         if (codeSuitableForStart(myTypeCodes[i])){
          start = i
