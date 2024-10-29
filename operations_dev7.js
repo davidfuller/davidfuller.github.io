@@ -4529,3 +4529,32 @@ async function loadNewSheetCharacters(){
     await excel.sync();
   })  
 }
+
+async function newCharacters(){
+  await Excel.run(async function(excel){ 
+    let characterlistSheet = excel.workbook.worksheets.getItem(characterListName);
+    let currentCharacterRange = characterlistSheet.getRange('clCharacters');
+    let newCharacterRange = characterlistSheet.getRange('clNewCharacters')
+    currentCharacterRange.load('values');
+    newCharacterRange.load('values');
+    await excel.sync();
+
+    let missingInNew = [];
+    let index = -1;
+    for (let i = 0; i < currentCharacterRange.values.length; i++){
+      let currentChar = currentCharacterRange[i].values[i][0];
+      let found = false;
+      for (let j = 0; j < newCharacterRange.values.length; j++){
+        if (currentChar.toLowerCase() == newCharacterRange.values[j][0].toLowerCase()){
+          found = true;
+          break;
+        }
+        if (!found){
+          index += 1
+          missingInNew[index] = currentChar
+        }
+      }
+    }
+    console.log('Missing In New: ', missingInNew);
+  })
+}
