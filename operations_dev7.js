@@ -723,6 +723,7 @@ function dateInFormat(){
 }
 async function getDataFromSheet(sheetName, rangeName, selectTag){
   await Excel.run(async function(excel){
+    console.log('sheet', sheetName, rangeName, selectTag)
     const sheet = excel.workbook.worksheets.getItem(sheetName);
     const range = sheet.getRange(rangeName);
     range.load("values");
@@ -3269,7 +3270,7 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   doBorder(myBorders, 'EdgeLeft');
   doBorder(myBorders, 'EdgeRight');
   await excel.sync();
-  
+
   myBorders.load('items');
   await excel.sync()
   console.log('Border count', myBorders.count);
