@@ -4550,10 +4550,10 @@ async function newCharacters(){
             found = true;
             break;
           }
-          if (!found){
-            index += 1
-            missingInNew[index] = currentChar
-          }
+        }
+        if (!found){
+          index += 1
+          missingInNew[index] = currentChar
         }
         console.log('i', i, 'Character', currentChar, 'Found:', found, 'index', index, 'missing', missingInNew);
       }
