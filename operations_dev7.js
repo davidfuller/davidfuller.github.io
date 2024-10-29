@@ -4417,6 +4417,7 @@ async function reconcileLocations(){
     console.log('Duplicates:', duplicates);
     let myColumnCount = otherNotesIndex - locationIndex + 1;
     let myLocationRange = [];
+    let myTargetRange = [];
     let myIndex = -1;
     let targetRowIndex;
     for (let i = 0; i < result.length; i++){
