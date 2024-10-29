@@ -3249,14 +3249,14 @@ async function deleteSceneBlockRow(excel, rowIndex){
       await lockColumns();
     }
 }
-/*
+
 function doBorder(borders, edge){
-  let edge = borders.getItem(edge);
-  edgeTop.color = '#000000';
-  edgeTop.style = 'Continuous';
-  edgeTop.weight = 'Thin'
+  let myEdge = borders.getItem(edge);
+  myEdge.color = '#000000';
+  myEdge.style = 'Continuous';
+  myEdge.weight = 'Thin'
 }
-*/
+
 async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns){
   theRange.format.font.name = 'Courier New';
   theRange.format.font.size = 12;
