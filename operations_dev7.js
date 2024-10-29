@@ -4555,7 +4555,7 @@ async function newCharacters(){
             missingInNew[index] = currentChar
           }
         }
-        console.log('i', i, 'Character', currentChar, 'Found:', found);
+        console.log('i', i, 'Character', currentChar, 'Found:', found, 'index', index, 'missing', missingInNew);
       }
     }
     console.log('Missing In New: ', missingInNew);
