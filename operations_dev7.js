@@ -4627,15 +4627,17 @@ async function copyTextV2(){
 
     //for (let i = 0; i < startStopRowIndecies.length; i++){
     for (let i = 0; i < 5; i++){
-      let index = startStopRowIndecies.startRow - typeCodeRange.rowIndex
+      let index = startStopRowIndecies[i].startRowIndx - cueRange.rowIndex
+      
       let cue = {
         value: myCues[index],
         previousCue: myCues[index - 1],
         nextCue: myCues[index + 1]
       }
+      console.log('Index ', index, 'Cue ', cue);
 
       for (let j = 0; j < newUsedRange.values.length; j++){
-        console.log('j', j, 'newUsedRange ', newUsedRange.values[j], 'cue ', cue);
+        //console.log('j', j, 'newUsedRange ', newUsedRange.values[j], 'cue ', cue);
         if (newUsedRange.values[j][newCueIndex] == cue.value){
           console.log('cue:', cue.value, 'j', j)
           break;
