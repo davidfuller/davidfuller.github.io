@@ -4589,11 +4589,14 @@ async function copyTextV2(){
     const newSheet = excel.workbook.worksheets.getItem(newTextSheetName);
     let firstRowIndex = details.rowIndex + 1;
     let rowCount = details.rowCount - firstRowIndex + 1
-    let typeCodeRange = scriptSheet.getRangeByIndexes(details.rowIndex, typeCodeIndex, rowCount, 1);
+    let typeCodeRange = scriptSheet.getRangeByIndexes(firstRowIndex, typeCodeIndex, rowCount, 1);
     typeCodeRange.load('values, rowIndex');
+    let newUsedRange = newSheet.getUsedRange();
+    newUsedRange.load('values, rowIndex')
     await excel.sync();
     let myTypeCodes = typeCodeRange.values.map(x => x[0]);
-    console.log('current sheet types:', myTypeCodes, 'rowIndex', myTypeCodes.rowIndex);
+    console.log('current sheet types:', myTypeCodes, 'rowIndex', typeCodeRange.rowIndex);
+    console.log('newData', newUsedRange.values, 'Row Index', newUsedRange.rowIndex);
 
   })  
 }
