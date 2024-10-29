@@ -3249,14 +3249,14 @@ async function deleteSceneBlockRow(excel, rowIndex){
       await lockColumns();
     }
 }
-
+/*
 function doBorder(borders, edge){
   let edge = borders.getItem(edge);
   edgeTop.color = '#000000';
   edgeTop.style = 'Continuous';
   edgeTop.weight = 'Thin'
 }
-
+*/
 async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns){
   theRange.format.font.name = 'Courier New';
   theRange.format.font.size = 12;
@@ -3264,6 +3264,7 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   theRange.format.fill.color = myFormats.purple;
   theRange.format.horizontalAlignment = 'Center';
   theRange.format.verticalAlignment = 'Top';
+  /*
   let myBorders = theRange.format.borders;
   doBorder(myBorders, 'EdgeTop');
   doBorder(myBorders, 'EdgeBottom');
@@ -3277,6 +3278,7 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   for (let i = 0; i < myBorders.items.length; i++){
     console.log('Borders', i, myBorders.items[i].color, myBorders.items[i].id, myBorders.items[i].sideIndex, myBorders.items[i].style, myBorders.items[i].weight)
   }
+    */
   for (let i = 0; i < sceneBlockRows; i++){
     let tempRange = sheet.getRangeByIndexes(newRowIndex + i, cueColumnIndex, 1, sceneBlockColumns);
     await mergedRowAutoHeight(excel, sheet, tempRange);
