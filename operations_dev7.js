@@ -3272,14 +3272,14 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   doBorder(myBorders, 'EdgeRight');
   await excel.sync();
 
-  /*
+  
   myBorders.load('items');
   await excel.sync()
   console.log('Border count', myBorders.count);
   for (let i = 0; i < myBorders.items.length; i++){
     console.log('Borders', i, myBorders.items[i].color, myBorders.items[i].id, myBorders.items[i].sideIndex, myBorders.items[i].style, myBorders.items[i].weight)
   }
-    */
+  
   for (let i = 0; i < sceneBlockRows; i++){
     let tempRange = sheet.getRangeByIndexes(newRowIndex + i, cueColumnIndex, 1, sceneBlockColumns);
     await mergedRowAutoHeight(excel, sheet, tempRange);
