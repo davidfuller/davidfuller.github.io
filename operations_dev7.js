@@ -4598,6 +4598,7 @@ async function copyTextV2(){
     await excel.sync();
     let myTypeCodes = typeCodeRange.values.map(x => x[0]);
     let myCues = cueRange.values.map(x => x[0]);
+    let newSheetCues = newUsedRange.values.map(x => x[0]);
     console.log('current sheet types:', myTypeCodes, 'rowIndex', typeCodeRange.rowIndex);
     console.log('newData', newUsedRange.values, 'Row Index', newUsedRange.rowIndex);
 
@@ -4622,30 +4623,90 @@ async function copyTextV2(){
         }
       }
     }
-    console.log('Start stop indecies', startStopRowIndecies)
-    let newCueIndex = 0
-
+    console.log('Start stop indecies', startStopRowIndecies);
+    
+    let rowDetails = [];
+    
     //for (let i = 0; i < startStopRowIndecies.length; i++){
-    for (let i = 0; i < 4; i++){
+    for (let i = 0; i < 10; i++){
       let index = startStopRowIndecies[i].startRowIndex - cueRange.rowIndex
-      let previousIndex = index - 1;
-      if (previousIndex < 0){ previousIndex = 0}
+      
       let cue = {
         value: myCues[index],
-        previousCue: myCues[previousIndex],
-        nextCue: myCues[index + 1]
+        previousCue: getPreviousCue(index, myCues),
+        nextCue: getNextCue(index, myCues)
       }
       console.log('Index ', index, 'Cue ', cue);
-
-      for (let j = 0; j < newUsedRange.values.length; j++){
-        //console.log('j', j, 'newUsedRange ', newUsedRange.values[j], 'cue ', cue);
-        if (newUsedRange.values[j][newCueIndex] == cue.value){
-          console.log('cue:', cue, 'j', j)
-          break;
+      let newSheetRowIndex = -1;
+      let newSheetIndex = findNewSheetCue(cue, newSheetCues);
+      if (newSheetIndex != -1){
+        newSheetRowIndex = newSheetIndex + newUsedRange.rowIndex 
+        rowDetails[i] = {
+          currentRowIndex: startStopRowIndecies[i].startRowIndex,
+          newSheetRowIndex: newSheetRowIndex,
+          rowCount: startStopRowIndecies[i].rowCount
+        }
+      } else {
+        rowDetails[i] = {
+          currentRowIndex: startStopRowIndecies[i].startRowIndex,
+          newSheetRowIndex: -1,
+          rowCount: startStopRowIndecies[i].rowCount
         }
       }
     }
+    console.log('Row details', rowDetails)
   })  
+}
+
+function getPreviousCue(index, theCues){
+  //returns the previous numeric cue, or -1 if fails
+  let previousCue = -1;
+  let possible;
+  for (let i = index - 1; i >= 0; i--){
+    possible = parseInt(myCues[i])
+    if (!isNaN(possible)){
+      previousCue = possible;
+      break;
+    }
+  }
+  return previousCue; 
+}
+
+function getNextCue(index, theCues){
+  //returns next numeric cue, or -1 if fails
+  let nextCue = -1;
+  let possible;
+  for (let i = index + 1; i < theCues.length){
+    possible = parseInt(myCues[i])
+    if (!isNaN(possible)){
+      nextCue = possible;
+      break;
+    }
+  }
+  return nextCue;
+}
+
+function findNewSheetCue(theCue, newCues){
+  for (let i = 0; i < newCues.length; i++){
+    if (newCues[i] == theCue.value){
+      //found it 
+      //if cue.prev and cue.next are both not equal to cue.value then thats all that's needed
+      if ((theCue.value != theCue.previousCue) && (theCue.value != theCue.nextCue)){
+        return i;
+      } else if (theCue.value == theCue.previousCue){
+        let possible = getPreviousCue(i, newCues);
+        if (possible == theCue.value){
+          return i;
+        }
+      } else if (theCue.value == theCue.nextCue){
+        let possible = getNextCue(i, newCues)
+        if (possible == theCue.value){
+          return i;
+        }
+      }
+    }
+  }
+  return -1;
 }
 
 function codeSuitableForStart(theCode){
