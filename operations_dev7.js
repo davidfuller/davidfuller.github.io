@@ -4327,7 +4327,7 @@ async function copyNewText(){
     
   await Excel.run(async (excel) => {
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    const newTextSheet = excel.workbook.worksheets.getItem('HP07') ;
+    const newTextSheet = excel.workbook.worksheets.getItem('NewText') ;
     let startRowIndexCurrent = 2;
     let rowCount = details.rowCount - (startRowIndexCurrent - details.rowIndex);
     let columnCount = usScriptColumnIndex - cueIndex + 1;
