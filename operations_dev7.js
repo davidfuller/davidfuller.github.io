@@ -4424,12 +4424,14 @@ async function reconcileLocations(){
       if(result[i].match < -1){
         //So we need to move the details
         myIndex += 1
+        console.log(i, 'location params', result[i].location.rowIndex, locationIndex, 1, myColumnCount);
         myLocationRange[myIndex] = scriptSheet.getRangeByIndexes(result[i].location.rowIndex, locationIndex, 1, myColumnCount);
         if (result[i].typeCode == 'Scene'){
           targetRowIndex = result[i].typeCode.rowIndex
         } else {
           targetRowIndex = result[i].typeCode.rowIndex - 1
         }
+        console.log(i, 'target params', targetRowIndex, locationIndex, 1, 1);
         myTargetRange[myIndex] = scriptSheet.getRangeByIndexes(targetRowIndex, locationIndex, 1, 1);
         myTargetRange[myIndex].copyFrom(myLocationRange[index, 'Values']);
         myTargetRange[myIndex].copyFrom(myLocationRange[index, 'Formats']);
