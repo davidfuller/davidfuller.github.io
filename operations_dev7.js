@@ -722,8 +722,8 @@ function dateInFormat(){
 	return nowDate.getFullYear().toString().substring(2) + myMonth + myDay; 
 }
 async function getDataFromSheet(sheetName, rangeName, selectTag){
+  console.log('sheet', sheetName, rangeName, selectTag);
   await Excel.run(async function(excel){
-    console.log('sheet', sheetName, rangeName, selectTag)
     const sheet = excel.workbook.worksheets.getItem(sheetName);
     const range = sheet.getRange(rangeName);
     range.load("values");
