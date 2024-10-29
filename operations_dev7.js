@@ -948,7 +948,7 @@ async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
       await excel.sync(); 
     }
     if (doFullFormula){
-      console.log('Doing full formulas');
+      //console.log('Doing full formulas');
       await theFormulas((currentRowIndex + 1), (currentRowIndex + 1));
     } else {
       await correctFormulas(currentRowIndex + 1);  
@@ -4477,8 +4477,8 @@ async function reconcileLocations(doCorrection){
 
 async function autoSceneBlockCreation(){
   let myList = await createSceneList();
-  for (let i = 2; i < 5; i++){
-  //for (let i = 2; i < myList.length; i++){
+  //for (let i = 2; i < 5; i++){
+  for (let i = 2; i < myList.length; i++){
     console.log('Doing: ', i, 'of', myList.length, 'Name, ', myList[i].display)
     await doTheActualSceneBlock(i);    
   }
