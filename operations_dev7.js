@@ -4102,6 +4102,7 @@ async function fillColorLinesAndScriptedWalla(){
     for (let i = 0; i < lineIndexes.length; i++){
       lineRanges[i] = scriptSheet.getRangeByIndexes(lineIndexes[i], cueIndex, 1, columnCount);
       lineRanges[i].format.fill.clear();
+      lineRanges[i].format.font.strikethrough = false;
       myCount += 1;
       if (myCount >= 1000){
         myCount = 0;
