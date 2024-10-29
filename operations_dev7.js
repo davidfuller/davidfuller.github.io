@@ -4663,7 +4663,7 @@ function getPreviousCue(index, theCues){
   let previousCue = -1;
   let possible;
   for (let i = index - 1; i >= 0; i--){
-    possible = parseInt(myCues[i])
+    possible = parseInt(theCues[i])
     if (!isNaN(possible)){
       previousCue = possible;
       break;
@@ -4677,7 +4677,7 @@ function getNextCue(index, theCues){
   let nextCue = -1;
   let possible;
   for (let i = index + 1; i < theCues.length){
-    possible = parseInt(myCues[i])
+    possible = parseInt(theCues[i])
     if (!isNaN(possible)){
       nextCue = possible;
       break;
