@@ -3009,13 +3009,7 @@ async function goWallaScene(){
   }   
 }
 
-
-async function addSceneBlock(){
-  let myWait = tag('scene-add-wait');
-  myWait.style.display = 'block'
-  const addChapterValue = tag("chapter-scene-select").value;
-  console.log('Chapter/Scene', addChapterValue);
-  let chapterSceneID = parseInt(addChapterValue);
+async function doTheActualSceneBlock(chapterSceneID){
   if (!isNaN(chapterSceneID)){
     let sceneListData = addSelectList[chapterSceneID]
     console.log('typeCodeValues', typeCodeValues, 'addSelectList', addSelectList);
@@ -3212,6 +3206,15 @@ async function addSceneBlock(){
   } else {
     alert("Please enter a number")
   }
+}
+
+async function addSceneBlock(){
+  let myWait = tag('scene-add-wait');
+  myWait.style.display = 'block'
+  const addChapterValue = tag("chapter-scene-select").value;
+  console.log('Chapter/Scene', addChapterValue);
+  let chapterSceneID = parseInt(addChapterValue);
+  await doTheActualSceneBlock(chapterSceneID);
   await fillChapterAndScene();
   myWait.style.display = 'none';
 }
@@ -3258,7 +3261,7 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   await excel.sync()
   console.log('Border count', myBorders.count);
   for (let i = 0; i < myBorders.items.length; i++){
-    console.log(i, myBorders.items[i].color, myBorders.items[i].id, myBorders.items[i].sideIndex, myBorders.items[i].style, myBorders.items[i].weight)
+    console.log('Borders', i, myBorders.items[i].color, myBorders.items[i].id, myBorders.items[i].sideIndex, myBorders.items[i].style, myBorders.items[i].weight)
   }
   for (let i = 0; i < sceneBlockRows; i++){
     let tempRange = sheet.getRangeByIndexes(newRowIndex + i, cueColumnIndex, 1, sceneBlockColumns);
