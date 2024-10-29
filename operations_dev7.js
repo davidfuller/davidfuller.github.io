@@ -4542,7 +4542,7 @@ async function newCharacters(){
     let missingInNew = [];
     let index = -1;
     for (let i = 0; i < currentCharacterRange.values.length; i++){
-      let currentChar = currentCharacterRange[i].values[i][0];
+      let currentChar = currentCharacterRange.values[i][0];
       let found = false;
       for (let j = 0; j < newCharacterRange.values.length; j++){
         if (currentChar.toLowerCase() == newCharacterRange.values[j][0].toLowerCase()){
