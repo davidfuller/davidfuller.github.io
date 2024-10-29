@@ -3249,6 +3249,13 @@ async function deleteSceneBlockRow(excel, rowIndex){
     }
 }
 
+function doBorder(borders, edge){
+  let edge = borders.getItem(edge);
+  edgeTop.color = '#000000';
+  edgeTop.style = 'Continuous';
+  edgeTop.weight = 'Thin'
+}
+
 async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns){
   theRange.format.font.name = 'Courier New';
   theRange.format.font.size = 12;
@@ -3257,6 +3264,12 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   theRange.format.horizontalAlignment = 'Center';
   theRange.format.verticalAlignment = 'Top';
   let myBorders = theRange.format.borders;
+  doBorder(myBorders, 'EdgeTop');
+  doBorder(myBorders, 'EdgeBottom');
+  doBorder(myBorders, 'EdgeLeft');
+  doBorder(myBorders, 'EdgeRight');
+  await excel.sync();
+  
   myBorders.load('items');
   await excel.sync()
   console.log('Border count', myBorders.count);
