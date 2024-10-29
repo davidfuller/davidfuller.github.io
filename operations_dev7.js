@@ -900,7 +900,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
         lastRow = actualLastRow;
       }
     }
-    console.log('firstRow: ', firstRow, "firstRestRow", firstRestRow, "lastRow", lastRow, 'doToprow', doTopRow);
+    //console.log('firstRow: ', firstRow, "firstRestRow", firstRestRow, "lastRow", lastRow, 'doToprow', doTopRow);
     let columnFormulae = getColumnFormulae(firstRow, firstRestRow, lastRow);
     for (let columnFormula of columnFormulae){
       const columnLetter = findColumnLetter(columnFormula.columnName);
@@ -909,7 +909,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
       let myRange;
       let range;
       if (doTopRow) {
-        console.log('Doing top row');
+        //console.log('Doing top row');
         myTopRow = columnLetter + firstRow;
         topRowRange = scriptSheet.getRange(myTopRow);
         topRowRange.formulas = columnFormula.formulaFirst;
@@ -920,7 +920,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
       range.formulas = columnFormula.formulaRest;
     
       //console.log(myRange + "  " + myTopRow);
-      console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
+      //console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
       await excel.sync();
       //console.log(range.formulas + "   " + topRowRange.formulas);
     }
@@ -4479,6 +4479,7 @@ async function autoSceneBlockCreation(){
   let myList = await createSceneList();
   for (let i = 2; i < 5; i++){
   //for (let i = 2; i < myList.length; i++){
+    console.log('Doing: ', i, 'of', myList.length, 'Name, ', myList[i].display)
     await doTheActualSceneBlock(i);    
   }
 
