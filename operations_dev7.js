@@ -4559,5 +4559,25 @@ async function newCharacters(){
       }
     }
     console.log('Missing In New: ', missingInNew);
+    let missingInCurrent = [];
+    index = -1;
+    for (let i = 0; i < newCharacterRange.values.length; i++){
+      let currentChar = newCharacterRange.values[i][0];
+      if (currentChar.trim() != ''){
+        let found = false;
+        for (let j = 0; j < currentCharacterRange.values.length; j++){
+          if (currentChar.toLowerCase() == currentCharacterRange.values[j][0].toLowerCase()){
+            found = true;
+            break;
+          }
+        }
+        if (!found){
+          index += 1
+          missingInCurrent[index] = currentChar
+        }
+        console.log('i', i, 'Character', currentChar, 'Found:', found, 'index', index, 'missing', missingInCurrent);
+      }
+    }
+    console.log('Missing In Current: ', missingInCurrent);
   })
 }
