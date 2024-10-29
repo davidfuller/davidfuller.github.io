@@ -4431,7 +4431,7 @@ async function reconcileLocations(doCorrection){
           if (result[i].typeCode == 'Scene'){
             targetRowIndex = result[i].typeCode.rowIndex
           } else {
-            targetRowIndex = result[i].typeCode.rowIndex - 1
+            targetRowIndex = result[i].typeCode.rowIndex + 1
           }
           console.log(i, myIndex, 'target params', targetRowIndex, locationIndex, 1, 1);
           myTargetRange[myIndex] = scriptSheet.getRangeByIndexes(targetRowIndex, locationIndex, 1, 1);
