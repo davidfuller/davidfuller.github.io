@@ -4493,6 +4493,6 @@ async function testFontColor(){
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load('format');
     await excel.sync();
-    console.log(activeCell.format.font.color);
+    console.log(activeCell.format);
   })
 }
