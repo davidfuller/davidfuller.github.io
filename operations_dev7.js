@@ -4626,12 +4626,13 @@ async function copyTextV2(){
     let newCueIndex = 0
 
     //for (let i = 0; i < startStopRowIndecies.length; i++){
-    for (let i = 0; i < 5; i++){
+    for (let i = 0; i < 4; i++){
       let index = startStopRowIndecies[i].startRowIndex - cueRange.rowIndex
-      
+      let previousIndex = index - 1;
+      if (previousIndex < 0){ previousIndex = 0}
       let cue = {
         value: myCues[index],
-        previousCue: myCues[index - 1],
+        previousCue: myCues[previousIndex],
         nextCue: myCues[index + 1]
       }
       console.log('Index ', index, 'Cue ', cue);
@@ -4639,13 +4640,11 @@ async function copyTextV2(){
       for (let j = 0; j < newUsedRange.values.length; j++){
         //console.log('j', j, 'newUsedRange ', newUsedRange.values[j], 'cue ', cue);
         if (newUsedRange.values[j][newCueIndex] == cue.value){
-          console.log('cue:', cue.value, 'j', j)
+          console.log('cue:', cue, 'j', j)
           break;
         }
       }
-
     }
-
   })  
 }
 
