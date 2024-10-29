@@ -4616,6 +4616,7 @@ async function copyTextV2(){
             startRowIndex: start + typeCodeRange.rowIndex,
             rowCount: stop - start + 1
           }
+          start = -1;
         }
       }
     }
