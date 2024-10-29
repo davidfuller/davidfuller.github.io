@@ -4587,7 +4587,7 @@ async function copyTextV2(){
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const newSheet = excel.workbook.worksheets.getItem(newTextSheetName);
-    let firstRowIndex = details.rowIndex + 1;
+    let firstRowIndex = details.rowIndex + 2;
     let rowCount = details.rowCount - firstRowIndex + 1
     let typeCodeRange = scriptSheet.getRangeByIndexes(firstRowIndex, typeCodeIndex, rowCount, 1);
     typeCodeRange.load('values, rowIndex');
@@ -4598,6 +4598,52 @@ async function copyTextV2(){
     console.log('current sheet types:', myTypeCodes, 'rowIndex', typeCodeRange.rowIndex);
     console.log('newData', newUsedRange.values, 'Row Index', newUsedRange.rowIndex);
 
+    let start = -1;
+    let stop = -1;
+    let startStopRowIndecies = []
+    let index = -1
+    //for (let i = 0; i < myTypeCodes.length; i++){
+    for (let i = 0; i < 100; i++){
+      if (start == -1){
+        if (codeSuitableForStart(myTypeCodes[i])){
+         start = i
+        }
+      } else {
+        if (codeForcesStop(myTypeCodes[i])){
+          stop = i;
+          index += 1
+          startStopRowIndecies[index] = {
+            startRowIndex: start + typeCodeRange.rowIndex,
+            rowCount: stop - start + 1
+          }
+        }
+      }
+    }
+    console.log('Start stop indecies', startStopRowIndecies)
   })  
 }
 
+function codeSuitableForStart(theCode){
+  if ((theCode == myTypes.chapter) || (theCode == myTypes.scene) || (theCode == myTypes.line)){
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function codeForcesStop(theCode){
+  if ((theCode == myTypes.sceneBlock) || (theCode == myTypes.wallaScripted) || (theCode == myTypes.wallaBlock)){
+    return true;
+  } else {
+    return false;
+  }
+}
+
+/*
+chapter: 'Chapter',
+  scene: 'Scene',
+  line: 'Line',
+  sceneBlock: 'Scene Block',
+  wallaScripted: 'Walla Scripted',
+  wallaBlock: 'Walla Block'
+  */
