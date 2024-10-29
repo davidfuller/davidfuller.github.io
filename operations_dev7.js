@@ -4487,3 +4487,12 @@ async function autoSceneBlockCreation(){
   }
 
 }
+
+async function testFontColor(){
+  await Excel.run(async (excel) => {
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load('format');
+    await excel.sync();
+    console.log(activeCell.format.font.color);
+  })
+}
