@@ -3331,7 +3331,7 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
     let sceneNumberIndex = findColumnIndex('Scene Number');
     let otherNotesIndex = findColumnIndex('Other notes');
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    console.log ('Indexes', myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
+    //console.log ('Indexes', myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
     let myDataRange = scriptSheet.getRangeByIndexes(myRowIndex, sceneNumberIndex, 2 + numSceneBlockLines, otherNotesIndex - sceneNumberIndex + 1);
     myDataRange.load('values');
     await excel.sync();
@@ -3342,7 +3342,7 @@ async function getSceneBlockData(myRowIndex, numSceneBlockLines){
     sceneData.beasts ='';
     sceneData.otherNotes = '';
     for (let row = 0; row < myDataRange.values.length; row++){
-      console.log('Row', row);
+      //console.log('Row', row);
       if (sceneData.scene == ''){
         sceneData.scene = myDataRange.values[row][0]
       }
