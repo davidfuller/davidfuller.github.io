@@ -2,6 +2,7 @@ const codeVersion = '7.1';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
+const newTextSheetName = 'NewText'
 const settingsSheetName = 'Settings';
 const forDirectorName = 'For Directors';
 const forActorsName = 'For Actors'
@@ -1995,11 +1996,11 @@ function showAdmin(){
   }
 }
 
-async function getCharacters(){
+async function getCharacters(sheetName){
   let characters
   await Excel.run(async function(excel){
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName); 
-    let characterRange = scriptSheet.getRangeByIndexes(firstDataRow, characterIndex, lastDataRow - firstDataRow, 1);
+    sheet = excel.workbook.worksheets.getItem(sheetName); 
+    let characterRange = sheet.getRangeByIndexes(firstDataRow, characterIndex, lastDataRow - firstDataRow, 1);
     characterRange.load('values');
     await excel.sync()
     characters = characterRange.values;
@@ -4330,7 +4331,7 @@ async function copyNewText(){
     
   await Excel.run(async (excel) => {
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    const newTextSheet = excel.workbook.worksheets.getItem('NewText') ;
+    const newTextSheet = excel.workbook.worksheets.getItem(newTextSheetName) ;
     let startRowIndexCurrent = 2;
     let rowCount = details.rowCount - (startRowIndexCurrent - details.rowIndex);
     let columnCount = usScriptColumnIndex - cueIndex + 1;
@@ -4497,4 +4498,30 @@ async function testFontColor(){
     await excel.sync();
     console.log(myFont.color);
   })
+}
+
+
+async function loadNewSheetCharacters(){
+  await Excel.run(async function(excel){ 
+    characterlistSheet = excel.workbook.worksheets.getItem(characterListName);
+    let characters = await getCharacters(newTextSheetName);
+    console.log('the characters', characters);
+    let characterRange = characterlistSheet.getRange('clNewCharacters');
+    characterRange.clear("Contents");
+    characterRange.load('values');
+    await excel.sync();
+    console.log(characterRange.values);
+    characterRange.values = characters;
+    await excel.sync();
+    characterRange.removeDuplicates([0], false);
+    await excel.sync();
+    const sortFields = [
+      {
+        key: 0,
+        ascending: true
+      }
+    ]
+    characterRange.sort.apply(sortFields);
+    await excel.sync();
+  })  
 }
