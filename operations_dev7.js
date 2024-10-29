@@ -4342,7 +4342,7 @@ async function copyNewText(){
     await lockColumns();
   }
 }
-async function reconcileLocations(){
+async function reconcileLocations(doCorrection){
   let details = await getFirstLastIndex();
   let isProtected = await unlockIfLocked();
   
@@ -4415,31 +4415,33 @@ async function reconcileLocations(){
       }
     }
     console.log('Duplicates:', duplicates);
-    let myColumnCount = otherNotesIndex - locationIndex + 1;
-    let myLocationRange = [];
-    let myTargetRange = [];
-    let myIndex = -1;
-    let targetRowIndex;
-    for (let i = 0; i < result.length; i++){
-      if(result[i].match < -1){
-        //So we need to move the details
-        myIndex += 1
-        console.log('Match', result[i].match)
-        console.log(i, myIndex, 'location params', result[i].location.rowIndex, locationIndex, 1, myColumnCount);
-        myLocationRange[myIndex] = scriptSheet.getRangeByIndexes(result[i].location.rowIndex, locationIndex, 1, myColumnCount);
-        if (result[i].typeCode == 'Scene'){
-          targetRowIndex = result[i].typeCode.rowIndex
-        } else {
-          targetRowIndex = result[i].typeCode.rowIndex - 1
+    if (doCorrection){
+      let myColumnCount = otherNotesIndex - locationIndex + 1;
+      let myLocationRange = [];
+      let myTargetRange = [];
+      let myIndex = -1;
+      let targetRowIndex;
+      for (let i = 0; i < result.length; i++){
+        if(result[i].match < -1){
+          //So we need to move the details
+          myIndex += 1
+          console.log('Match', result[i].match)
+          console.log(i, myIndex, 'location params', result[i].location.rowIndex, locationIndex, 1, myColumnCount);
+          myLocationRange[myIndex] = scriptSheet.getRangeByIndexes(result[i].location.rowIndex, locationIndex, 1, myColumnCount);
+          if (result[i].typeCode == 'Scene'){
+            targetRowIndex = result[i].typeCode.rowIndex
+          } else {
+            targetRowIndex = result[i].typeCode.rowIndex - 1
+          }
+          console.log(i, myIndex, 'target params', targetRowIndex, locationIndex, 1, 1);
+          myTargetRange[myIndex] = scriptSheet.getRangeByIndexes(targetRowIndex, locationIndex, 1, 1);
+          myTargetRange[myIndex].copyFrom(myLocationRange[myIndex], 'Values');
+          myTargetRange[myIndex].copyFrom(myLocationRange[myIndex], 'Formats');
+          myLocationRange[myIndex].clear('Contents');
+          myLocationRange[myIndex].clear('Formats');
         }
-        console.log(i, myIndex, 'target params', targetRowIndex, locationIndex, 1, 1);
-        myTargetRange[myIndex] = scriptSheet.getRangeByIndexes(targetRowIndex, locationIndex, 1, 1);
-        myTargetRange[myIndex].copyFrom(myLocationRange[myIndex], 'Values');
-        myTargetRange[myIndex].copyFrom(myLocationRange[myIndex], 'Formats');
-        myLocationRange[myIndex].clear('Contents');
-        myLocationRange[myIndex].clear('Formats');
-      }
-      await excel.sync();
+        await excel.sync();
+      }  
     }
   })
   if (isProtected){

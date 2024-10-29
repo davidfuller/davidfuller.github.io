@@ -467,7 +467,7 @@ label {
 }
 
 #btnGetSchedulingInfo, #btnGetActorInfo, #btnGetDirectorInfo, #btnActorGoToLine, #btnDirectorGoToLine, #btnSchedulingGoToLine, #btnAddSceneBlock, #btnGetLocationInfo, #btnLocationGoTo, #btnGetActorText, #btnChangeFills, 
-#btnAddScneWordCount, #btnCheckScenes, #btnCopyScenes, #btnReconcileLocation {
+#btnAddScneWordCount, #btnCheckScenes, #btnCopyScenes, #btnReconcileLocation, #btnReconcileLocationCorrection {
   height: auto;
   padding: 10px;
 }
