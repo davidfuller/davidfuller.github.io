@@ -4634,7 +4634,7 @@ async function copyTextV2(){
         nextCue: myCues[index + 1]
       }
 
-      for (let j =0; j < newUsedRange.values.length; j++){
+      for (let j = 0; j < newUsedRange.values.length; j++){
         if (newUsedRange.values[j][newCueIndex] == cue.value){
           console.log('cue:', cue.value, 'j', j)
           break;
