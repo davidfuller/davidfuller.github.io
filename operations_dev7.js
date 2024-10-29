@@ -1997,11 +1997,14 @@ function showAdmin(){
   }
 }
 
-async function getCharacters(sheetName){
+async function getCharacters(sheetName, charIndex){
   let characters
+  if (charIndex === null){
+    charIndex = characterIndex;
+  }
   await Excel.run(async function(excel){
     sheet = excel.workbook.worksheets.getItem(sheetName); 
-    let characterRange = sheet.getRangeByIndexes(firstDataRow, characterIndex, lastDataRow - firstDataRow, 1);
+    let characterRange = sheet.getRangeByIndexes(firstDataRow, charIndex, lastDataRow - firstDataRow, 1);
     characterRange.load('values');
     await excel.sync()
     characters = characterRange.values;
@@ -4505,7 +4508,7 @@ async function testFontColor(){
 async function loadNewSheetCharacters(){
   await Excel.run(async function(excel){ 
     let characterlistSheet = excel.workbook.worksheets.getItem(characterListName);
-    let characters = await getCharacters(newTextSheetName);
+    let characters = await getCharacters(newTextSheetName, 2);
     console.log('the characters', characters);
     let characterRange = characterlistSheet.getRange('clNewCharacters');
     characterRange.clear("Contents");
