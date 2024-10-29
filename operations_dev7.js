@@ -4543,16 +4543,19 @@ async function newCharacters(){
     let index = -1;
     for (let i = 0; i < currentCharacterRange.values.length; i++){
       let currentChar = currentCharacterRange.values[i][0];
-      let found = false;
-      for (let j = 0; j < newCharacterRange.values.length; j++){
-        if (currentChar.toLowerCase() == newCharacterRange.values[j][0].toLowerCase()){
-          found = true;
-          break;
+      if (currentChar.trim() != ''){
+        let found = false;
+        for (let j = 0; j < newCharacterRange.values.length; j++){
+          if (currentChar.toLowerCase() == newCharacterRange.values[j][0].toLowerCase()){
+            found = true;
+            break;
+          }
+          if (!found){
+            index += 1
+            missingInNew[index] = currentChar
+          }
         }
-        if (!found){
-          index += 1
-          missingInNew[index] = currentChar
-        }
+        console.log('i', i, 'Character', currentChar, 'Found:', found);
       }
     }
     console.log('Missing In New: ', missingInNew);
