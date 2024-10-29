@@ -258,7 +258,7 @@ async function mainHTML(){
 
   await Jade.open_canvas("Script-Controller", html, true);
   console.log('Canvas open');
-  await jade_modules.operations.getDataFromSheet('Settings','studioChoice','studio-select');
+  //await jade_modules.operations.getDataFromSheet('Settings','studioChoice','studio-select');
   await jade_modules.operations.getDataFromSheet('Settings','engineerChoice','engineer-select');
   await jade_modules.operations.getColumnData('Settings', 'columnData');
   await jade_modules.operations.initialiseVariables();
