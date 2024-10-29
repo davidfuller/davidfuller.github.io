@@ -3013,8 +3013,8 @@ async function goWallaScene(){
 async function doTheActualSceneBlock(chapterSceneID){
   if (!isNaN(chapterSceneID)){
     let sceneListData = addSelectList[chapterSceneID]
-    console.log('typeCodeValues', typeCodeValues, 'addSelectList', addSelectList);
-    console.log('Item', sceneListData.display, sceneListData.rowIndex);
+    //console.log('typeCodeValues', typeCodeValues, 'addSelectList', addSelectList);
+    //console.log('Item', sceneListData.display, sceneListData.rowIndex);
     await Excel.run(async (excel) => {
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       await selectChapterCellAtRowIndex(excel, scriptSheet, addSelectList[chapterSceneID].rowIndex, (addSelectList[chapterSceneID].type == myTypes.scene))
@@ -3025,11 +3025,11 @@ async function doTheActualSceneBlock(chapterSceneID){
       let nextIndex = sceneListData.arrayIndex + 1;
       let previousIndex = sceneListData.arrayIndex - 1;
       
-      console.log('The Row Index', theRowIndex, 'nextIndex (of array)', nextIndex, 'previous', previousIndex)
+      //console.log('The Row Index', theRowIndex, 'nextIndex (of array)', nextIndex, 'previous', previousIndex)
         
       let nextRowType = typeCodeValues.typeCodes.values[nextIndex];
       let previousRowType = typeCodeValues.typeCodes.values[previousIndex];
-      console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
+      //console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
       let newRowIndex;
       sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
       if (sceneListData.type == myTypes.scene){
@@ -3038,7 +3038,7 @@ async function doTheActualSceneBlock(chapterSceneID){
           //check there are 4 of them
           let numActualSceneBlockRows = 0;
           for (i = previousIndex; i > previousIndex - 30; i--){
-            console.log(i, typeCodeValues.typeCodes.values[i]);
+            //console.log(i, typeCodeValues.typeCodes.values[i]);
             if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
               numActualSceneBlockRows += 1;
             } else {
@@ -3046,7 +3046,7 @@ async function doTheActualSceneBlock(chapterSceneID){
             }
           }
           let sceneDataArray = await getSceneBlockData(theRowIndex, numActualSceneBlockRows);
-          console.log('numActualSceneBlockRows', numActualSceneBlockRows)
+          //console.log('numActualSceneBlockRows', numActualSceneBlockRows)
           if (numActualSceneBlockRows == sceneBlockRows){
             newRowIndex = theRowIndex - sceneBlockRows;
             let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
@@ -3057,7 +3057,7 @@ async function doTheActualSceneBlock(chapterSceneID){
     
             await excel.sync();
             if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
-              console.log('Not merged')
+              //console.log('Not merged')
               myMergeRange.merge(true);
             }
             myMergeRange.values = sceneDataArray;
@@ -3065,11 +3065,11 @@ async function doTheActualSceneBlock(chapterSceneID){
             await excel.sync()
           } else if (numActualSceneBlockRows < sceneBlockRows){
             let topRowIndex = theRowIndex - numActualSceneBlockRows;
-            console.log('topRowIndex', topRowIndex);
+            //console.log('topRowIndex', topRowIndex);
             for (let i = numActualSceneBlockRows; i < sceneBlockRows; i++){
-              console.log('i', i);
+              //console.log('i', i);
               newRowIndex = await insertRowV2(topRowIndex, false, true);
-              console.log('newRowIndex', newRowIndex);
+              //console.log('newRowIndex', newRowIndex);
               let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
               newTypeRange.values = myTypes.sceneBlock;
               await excel.sync();
@@ -3084,7 +3084,7 @@ async function doTheActualSceneBlock(chapterSceneID){
             newRowIndex = theRowIndex - 1;
             console.log('newRowIndex', newRowIndex);        
             for (let i = sceneBlockRows; i < numActualSceneBlockRows; i++){
-              console.log('i', i , 'newRowIndex', newRowIndex);
+              //console.log('i', i , 'newRowIndex', newRowIndex);
               await deleteSceneBlockRow(excel, newRowIndex);
               theRowIndex -= 1;
             }
@@ -3097,7 +3097,7 @@ async function doTheActualSceneBlock(chapterSceneID){
             mergedAreas.load("cellCount");
             await excel.sync();
             if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
-              console.log('Not merged')
+              //console.log('Not merged')
               myMergeRange.merge(true);
             }
             myMergeRange.values = sceneDataArray;
@@ -3109,7 +3109,7 @@ async function doTheActualSceneBlock(chapterSceneID){
           
           for (let i = 0; i < sceneBlockRows; i++){
             newRowIndex = await insertRowV2(theRowIndex, false, true);
-            console.log('newRowIndex', newRowIndex);
+            //console.log('newRowIndex', newRowIndex);
             let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
             newTypeRange.values = myTypes.sceneBlock;
             await excel.sync();
@@ -3126,7 +3126,7 @@ async function doTheActualSceneBlock(chapterSceneID){
           let sceneDataArray = await getSceneBlockData(theRowIndex, 0);
           for (let i = 0; i < sceneBlockRows; i++){
             newRowIndex = await insertRowV2(theRowIndex + 1, false, true);
-            console.log('newRowIndex', newRowIndex);
+            //console.log('newRowIndex', newRowIndex);
             let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
             newTypeRange.values = myTypes.sceneBlock;
             await excel.sync();
@@ -3141,7 +3141,7 @@ async function doTheActualSceneBlock(chapterSceneID){
           //check there are 4 of them
           let numActualSceneBlockRows = 0;
           for (i = nextIndex; i < nextIndex + 30; i++){
-            console.log(i, typeCodeValues.typeCodes.values[i]);
+            //console.log(i, typeCodeValues.typeCodes.values[i]);
             if (typeCodeValues.typeCodes.values[i] == myTypes.sceneBlock){
               numActualSceneBlockRows += 1;
             } else {
@@ -3149,7 +3149,7 @@ async function doTheActualSceneBlock(chapterSceneID){
             }
           }
           sceneDataArray = await getSceneBlockData(theRowIndex, numActualSceneBlockRows);
-          console.log('numActualSceneBlockRows', numActualSceneBlockRows)
+          //console.log('numActualSceneBlockRows', numActualSceneBlockRows)
           if (numActualSceneBlockRows == sceneBlockRows){
             newRowIndex = theRowIndex + 1;
             let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
@@ -3159,7 +3159,7 @@ async function doTheActualSceneBlock(chapterSceneID){
             mergedAreas.load("cellCount");
             await excel.sync();
             if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
-              console.log('Not merged')
+              //console.log('Not merged')
               myMergeRange.merge(true);
             }
             myMergeRange.values = sceneDataArray;
@@ -3169,7 +3169,7 @@ async function doTheActualSceneBlock(chapterSceneID){
             for (let i = numActualSceneBlockRows; i < sceneBlockRows; i++){
               console.log('i', i);
               newRowIndex = await insertRowV2(theRowIndex + 1, false, true);
-              console.log('newRowIndex', newRowIndex);
+              //console.log('newRowIndex', newRowIndex);
               let newTypeRange = scriptSheet.getRangeByIndexes(newRowIndex, typeCodeValues.typeCodes.columnIndex, 1, 1);
               newTypeRange.values = myTypes.sceneBlock;
               await excel.sync();
@@ -3183,7 +3183,7 @@ async function doTheActualSceneBlock(chapterSceneID){
           } else if (numActualSceneBlockRows > sceneBlockRows){
             newRowIndex = theRowIndex + 1;
             for (let i = sceneBlockRows; i < numActualSceneBlockRows; i++){
-              console.log('i', i , 'newRowIndex', newRowIndex);
+              //console.log('i', i , 'newRowIndex', newRowIndex);
               await deleteSceneBlockRow(excel, newRowIndex);
             }
             let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
@@ -3193,7 +3193,7 @@ async function doTheActualSceneBlock(chapterSceneID){
             mergedAreas.load("cellCount");
             await excel.sync();
             if (!(mergedAreas.cellCount == (sceneBlockRows * sceneBlockColumns))){
-              console.log('Not merged')
+              //console.log('Not merged')
               myMergeRange.merge(true);
             }
             myMergeRange.values = sceneDataArray;
@@ -3276,9 +3276,9 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   
   myBorders.load('items');
   await excel.sync()
-  console.log('Border count', myBorders.count);
+  //console.log('Border count', myBorders.count);
   for (let i = 0; i < myBorders.items.length; i++){
-    console.log('Borders', i, myBorders.items[i].color, myBorders.items[i].id, myBorders.items[i].sideIndex, myBorders.items[i].style, myBorders.items[i].weight)
+    //console.log('Borders', i, myBorders.items[i].color, myBorders.items[i].id, myBorders.items[i].sideIndex, myBorders.items[i].style, myBorders.items[i].weight)
   }
   
   for (let i = 0; i < sceneBlockRows; i++){
@@ -3404,7 +3404,7 @@ function createChapterAndSceneList(theTypeCodeValues){
       theList[listIndex] = item;
     }
   }
-  console.log('The list', theList);
+  //console.log('The list', theList);
   return theList;
 }
 
@@ -3522,7 +3522,7 @@ async function fillChapterAndScene(){
   addSelectList = await createSceneList();
   let chapterAddSelect = tag('chapter-scene-select');
   let selected = chapterAddSelect.selectedIndex;
-  console.log('Selected index:', chapterAddSelect.selectedIndex);
+  //console.log('Selected index:', chapterAddSelect.selectedIndex);
   chapterAddSelect.innerHTML = '';
   chapterAddSelect.add(new Option('Please select', ''));
   for (let i = 0; i < addSelectList.length; i++){
@@ -4477,5 +4477,9 @@ async function reconcileLocations(doCorrection){
 
 async function autoSceneBlockCreation(){
   let myList = await createSceneList();
-  console.log('myList', myList);
+  for (let i = 2; i < 5; i++){
+  //for (let i = 2; i < myList.length; i++){
+    await doTheActualSceneBlock(i);    
+  }
+
 }
