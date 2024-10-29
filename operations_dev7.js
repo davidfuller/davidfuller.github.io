@@ -3270,6 +3270,7 @@ async function formatSceneBlock(excel, sheet, theRange, newRowIndex, cueColumnIn
   doBorder(myBorders, 'EdgeBottom');
   doBorder(myBorders, 'EdgeLeft');
   doBorder(myBorders, 'EdgeRight');
+  doBorder(myBorders, 'InsideHorizontal');
   await excel.sync();
 
   
