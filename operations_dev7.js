@@ -4808,7 +4808,7 @@ async function displayScriptDifferences(excel, differences){
     display[i] = [differences[i].currentCue, differences[i].currentCharacter, differences[i].currentScript, differences[i].newCharacter, differences[i].newScript, differences[i].characterDiff, differences[i].scriptDiff, differences[i].currentRowIndex, differences[i].newRowIndex];
   }
   let tempRange = comparisonSheet.getRangeByIndexes(tableRange.rowIndex, tableRange.columnIndex, differences.length, tableRange.columnCount);
-  tempRange.values = differences;
+  tempRange.values = display;
   await excel.sync();
 }
 
