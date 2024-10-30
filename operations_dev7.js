@@ -3246,9 +3246,7 @@ async function deleteThisRow(excel, rowIndex){
     let myRow = scriptSheet.getRangeByIndexes(rowIndex, 1, 1, 1).getEntireRow();
     let isProtected = await unlockIfLocked();
     myRow.delete("Up");
-    myRow.load('address');
     await excel.sync();
-    console.log(myRow.address);
     await correctFormulas(rowIndex);
     if (isProtected){
       await lockColumns();
@@ -4799,12 +4797,14 @@ async function deleteAllFX(){
         deleteIndexes[myIndex] = i + cueRange.rowIndex;
       }
     }
+    console.log('deleteIndexes', deleteIndexes);
     if (deleteIndexes.length > 0){
       for (i = deleteIndexes.length - 1; i >= 0; i--){
+        console.log('Deleting: ', deleteIndexes[i])
         await deleteThisRow(excel, deleteIndexes[i])
       }
     }
-    console.log('deleteIndexes', deleteIndexes);
+    
   })
   if (isProtected){
     await lockColumns();
