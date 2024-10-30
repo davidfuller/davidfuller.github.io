@@ -4609,27 +4609,26 @@ async function newCharacters(){
 
 async function displayMissingCharacters(excel, missingInNew, missingInCurrent){
   const comparisonSheet = excel.workbook.worksheets.getItem(comparisonSheetName);
-  const notInNewRange = comparisonSheet.getRange('coNotInNew');
-  notInNewRange.load('rowIndex, columnIndex');
-  notInNewRange.clear("Contents");
   
-  const notInCurrentRange = comparisonSheet.getRange('coNotInCurrent');
-  notInCurrentRange.load('rowIndex, columnIndex');
-  notInCurrentRange.clear("Contents");
+  await showArrayInRange(excel, comparisonSheet, 'coNotInNew', missingInNew);
+  await showArrayInRange(excel, comparisonSheet, 'coNotInCurrent', missingInCurrent);
   
+}
+
+async function showArrayInRange(excel, sheet, rangeName, values){
+  const range = sheet.getRange(rangeName);
+  range.load('rowIndex, columnIndex');
+  range.clear("Contents");
   await excel.sync();
   
-  let tempRange = comparisonSheet.getRangeByIndexes(notInNewRange.rowIndex, notInNewRange.columnIndex, missingInNew.length, 1);
-  let tempValues = missingInNew.map(x => [x]);
-  /*
-  for (let i = 0; i < missingInNew.length; i++){
-    tempValues[i] = [missingInNew[i]];
-  }
-  */
+  let tempRange = sheet.getRangeByIndexes(range.rowIndex, range.columnIndex, values.length, 1);
+  let tempValues = values.map(x => [x]);
+  
   tempRange.values = tempValues;
   const sortFields = [{ key: 0, ascending: true }]
   tempRange.sort.apply(sortFields);
   await excel.sync();
+  
 }
 
 async function copyTextV2(doTheCopy){
