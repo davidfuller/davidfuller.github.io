@@ -4580,7 +4580,7 @@ async function newCharacters(){
   })
 }
 
-async function copyTextV2(){
+async function copyTextV2(doTheCopy){
   let details = await getFirstLastIndex()
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -4679,7 +4679,7 @@ async function copyTextV2(){
     }
 
     console.log('No of errors: ', errors);  
-    if (errors == 0){
+    if ((errors == 0) && (doTheCopy)){
       //We can continue
       let isProtected = await unlockIfLocked();
       const cueToCharacterColumns = 3;
