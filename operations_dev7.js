@@ -4799,6 +4799,11 @@ async function deleteAllFX(){
         deleteIndexes[myIndex] = i + cueRange.rowIndex;
       }
     }
+    if (deleteIndexes.length > 0){
+      for (i = deleteIndexes.length - 1; i >= 0; i--){
+        await deleteThisRow(excel, deleteIndexes[i])
+      }
+    }
     console.log('deleteIndexes', deleteIndexes);
   })
   if (isProtected){
