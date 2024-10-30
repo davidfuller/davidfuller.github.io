@@ -4113,7 +4113,7 @@ async function fillColorLinesAndScriptedWalla(){
         chapterIndexes[myChapterIndex] = sceneAndChapterIndexes[i];
       } else if (tc == myTypes.scene){
         let found = false;
-        for (let j = thisIndex - 1; j >= thisIndex - 5; j++){
+        for (let j = thisIndex - 1; j >= thisIndex - 5; j--){
           let testIndex = sceneAndChapterIndexes[j] - theRowIndex; 
           console.log("J", j, ' typeCode ', typeCodes[testIndex], ' index ', testIndex);
           if (typeCodes[testIndex] == myTypes.chapter){
