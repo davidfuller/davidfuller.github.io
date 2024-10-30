@@ -4093,11 +4093,8 @@ async function fillColorLinesAndScriptedWalla(){
     console.log('sceneAndChapter', sceneAndChapterIndexes);
     const columnCount = otherNotesIndex - cueIndex + 1;
    
-    /*
-    await doSomeFormatting(excel, wallaScriptedIndexes, scriptSheet, columnCount, false, myFormats.wallaGreen, myFormats.black)
-    await doSomeFormatting(excel, lineIndexes, scriptSheet, columnCount, true, myFormats.white, myFormats.black)
-    */
-
+    
+    
     let sceneIndexes = []
     let chapterIndexes = []
     let mySceneIndex = -1;
@@ -4131,6 +4128,16 @@ async function fillColorLinesAndScriptedWalla(){
       }
     }
     console.log ('Scene Indexes: ', sceneIndexes, 'Chapter Indexes: ', chapterIndexes);
+
+    console.log('Doing Walla Formatting')
+    await doSomeFormatting(excel, wallaScriptedIndexes, scriptSheet, columnCount, false, myFormats.wallaGreen, myFormats.black)
+    console.log('Doing Line Formatting')
+    await doSomeFormatting(excel, lineIndexes, scriptSheet, columnCount, true, myFormats.white, myFormats.black)
+    console.log('Doing Scene Formatting')
+    await doSomeFormatting(excel, sceneIndexes, scriptSheet, columnCount, true, myFormats.white, myFormats.black)
+    console.log('Doing Chapter Formatting')
+    await doSomeFormatting(excel, chapterIndexes, scriptSheet, columnCount, false, myFormats.green, myFormats.black)
+
     if (isProtected){
       await lockColumns();
     }
