@@ -4681,6 +4681,7 @@ async function copyTextV2(){
       
       if (errors == 0){
         //We can continue
+        let isProtected = await unlockIfLocked();
         const cueToCharacterColumns = 3;
         const newStageDirectionsIndex = 3;
         const stageToUsScriptColumns = 5;
@@ -4705,6 +4706,9 @@ async function copyTextV2(){
           destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Formats", false, false);
           await excel.sync();
           console.log (i, 'Completed ', rowDetails[i].newSheetRowIndex, ' to ', rowDetails[i].currentRowIndex )
+        }
+        if (isProtected){
+          await lockColumns();
         }
       }
 
