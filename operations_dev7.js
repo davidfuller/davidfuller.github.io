@@ -4627,8 +4627,8 @@ async function copyTextV2(){
     
     let rowDetails = [];
     
-    //for (let i = 0; i < startStopRowIndecies.length; i++){
-    for (let i = 0; i < 10; i++){
+    for (let i = 0; i < startStopRowIndecies.length; i++){
+    //for (let i = 0; i < 10; i++){
       let index = startStopRowIndecies[i].startRowIndex - cueRange.rowIndex
       
       let cue = {
