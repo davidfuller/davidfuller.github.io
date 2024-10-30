@@ -1,4 +1,4 @@
-const codeVersion = '7.1';
+const codeVersion = '7.2';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -4687,11 +4687,12 @@ async function copyTextV2(){
         //for (let i = 0; i < rowDetails.length; i++){
         for (let i = 0; i < 5; i++){
           let sourceRangeCueToCharacter = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, cueToCharacterColumns);
-          let sourceRangeStageToUsScript = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newStageDirectionsIndex, rowDetails[i].rowCount, stageToUsScriptColumns);
           let destinationCueToCharacter = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, 1, 1);
-          let destinationStageToUsScript = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, stageDirectionWallaDescriptionIndex, 1, 1);
           destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Values", false, false);
           destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Formats", false, false);
+          await excel.sync();
+          let sourceRangeStageToUsScript = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newStageDirectionsIndex, rowDetails[i].rowCount, stageToUsScriptColumns);
+          let destinationStageToUsScript = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, stageDirectionWallaDescriptionIndex, 1, 1);
           destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Values", false, false);
           destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Formats", false, false);
           await excel.sync();
