@@ -4698,7 +4698,9 @@ async function copyTextV2(doTheCopy){
         destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Values", false, false);
         destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Formats", false, false);
         let sourceRangeStageToUsScript = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newStageDirectionsIndex, rowDetails[i].rowCount, stageToUsScriptColumns);
+        sourceRangeStageToUsScript.load('address');
         let destinationStageToUsScript = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, stageDirectionWallaDescriptionIndex, 1, 1);
+        destinationStageToUsScript.load('address');
         destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Values", false, false);
         destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Formats", false, false);
         await excel.sync();
