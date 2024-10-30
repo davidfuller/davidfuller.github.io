@@ -45,7 +45,9 @@ let myTypes = {
 let myFormats = {
   purple: '#f3d1f0',
   green: '#daf2d0',
-  wallaGreen: '#b5e6a2'
+  wallaGreen: '#b5e6a2',
+  black: '#000000',
+  white: '#ffffff'
 }
 
 let screenColours = {
@@ -4090,61 +4092,17 @@ async function fillColorLinesAndScriptedWalla(){
     console.log('line indexes: ', lineIndexes);
     console.log('sceneAndChapter', sceneAndChapterIndexes);
     const columnCount = otherNotesIndex - cueIndex + 1;
-    let wallaRanges = [];
-    let myBorders = [];
-    let myCount = 0;
-    for (let i = 0; i < wallaScriptedIndexes.length; i++){
-      wallaRanges[i] = scriptSheet.getRangeByIndexes(wallaScriptedIndexes[i], cueIndex, 1, columnCount);
-      wallaRanges[i].format.fill.color = myFormats.wallaGreen;
-      myBorders[i] = wallaRanges[i].format.borders;
-      
-      doBorder(myBorders[i], 'EdgeTop');
-      doBorder(myBorders[i], 'EdgeBottom');
-      doBorder(myBorders[i], 'EdgeLeft');
-      doBorder(myBorders[i], 'EdgeRight');
-      doBorder(myBorders[i], 'InsideHorizontal');
-      doBorder(myBorders[i], 'InsideVertical');
-
-      myCount += 1;
-      if (myCount >= 1000){
-        myCount = 0;
-        await excel.sync();
-      }
-    }
-
-    await excel.sync();
-    let lineRanges = [];
-    let lineBorders = []
-    myCount = 0;
-    for (let i = 0; i < lineIndexes.length; i++){
-      lineRanges[i] = scriptSheet.getRangeByIndexes(lineIndexes[i], cueIndex, 1, columnCount);
-      lineRanges[i].format.fill.clear();
-      lineRanges[i].format.font.strikethrough = false;
-      lineRanges[i].format.font.color = '#000000';
-      
-      lineBorders[i] = lineRanges[i].format.borders
-
-      doBorder(lineBorders[i], 'EdgeTop');
-      doBorder(lineBorders[i], 'EdgeBottom');
-      doBorder(lineBorders[i], 'EdgeLeft');
-      doBorder(lineBorders[i], 'EdgeRight');
-      doBorder(lineBorders[i], 'InsideHorizontal');
-      doBorder(lineBorders[i], 'InsideVertical');
-
-      myCount += 1;
-      if (myCount >= 1000){
-        myCount = 0;
-        await excel.sync();
-      }
-    }
-    await excel.sync();
-
+    
+    await doSomeFormatting(excel, wallaScriptedIndexes, scriptSheet, columnCount, false, myFormats.wallaGreen, myFormats.black)
+    await doSomeFormatting(excel, lineIndexes, scriptSheet, columnCount, true, myFormats.white, myFormats.black)
+    
     let sceneIndexes = []
     let chapterIndexes = []
     let mySceneIndex = -1;
     let myChapterIndex = -1
 
-    for (let i = 0; i < sceneAndChapterIndexes.length; i++){
+    //for (let i = 0; i < sceneAndChapterIndexes.length; i++){
+    for (let i = 0; i < 5; i++){
       let thisIndex  = sceneAndChapterIndexes[i] - theRowIndex;
       let tc = typeCodes[thisIndex];
       console.log("I", i, 'Type Code', tc, ' index ', thisIndex);
@@ -4154,18 +4112,18 @@ async function fillColorLinesAndScriptedWalla(){
       } else if (tc == myTypes.scene){
         let found = false;
         for (let j = thisIndex - 1; j >= thisIndex - 5; j++){
-          console.log("J", j, ' typeCode ', typeCodes[sceneAndChapterIndexes[j]], ' index ', sceneAndChapterIndexes[j]);
           let testIndex = sceneAndChapterIndexes[j] - theRowIndex; 
+          console.log("J", j, ' typeCode ', typeCodes[testIndex], ' index ', textIndex);
           if (typeCodes[testIndex] == myTypes.chapter){
             myChapterIndex += 1;
             chapterIndexes[myChapterIndex] = sceneAndChapterIndexes[i];
             found = true;
-            console.log('Found')
+            //console.log('Found')
             break;
           }
         }
         if (!found){
-          console.log('Not found')
+          //console.log('Not found')
           mySceneIndex += 1;
           sceneIndexes[mySceneIndex] = sceneAndChapterIndexes[i];
         }
@@ -4871,6 +4829,39 @@ async function deleteAllFX(){
     await lockColumns();
   }
 }
+
+async function doSomeFormatting(excel, theIndexes, sheet, columnCount, fillClear, fillColour, fontColour){
+  let lineRanges = [];
+  let lineBorders = []
+  let myCount = 0;
+  for (let i = 0; i < theIndexes.length; i++){
+      lineRanges[i] = sheet.getRangeByIndexes(theIndexes[i], cueIndex, 1, columnCount);
+      if (fillClear){
+        lineRanges[i].format.fill.clear();
+      } else {
+        lineRanges[i].format.fill.color = fillColour;
+      }
+      lineRanges[i].format.font.strikethrough = false;
+      lineRanges[i].format.font.color = fontColour;
+      
+      lineBorders[i] = lineRanges[i].format.borders
+
+      doBorder(lineBorders[i], 'EdgeTop');
+      doBorder(lineBorders[i], 'EdgeBottom');
+      doBorder(lineBorders[i], 'EdgeLeft');
+      doBorder(lineBorders[i], 'EdgeRight');
+      doBorder(lineBorders[i], 'InsideHorizontal');
+      doBorder(lineBorders[i], 'InsideVertical');
+
+      myCount += 1;
+      if (myCount >= 1000){
+        myCount = 0;
+        await excel.sync();
+      }
+    }
+    await excel.sync();
+}
+
 
 /*
 chapter: 'Chapter',
