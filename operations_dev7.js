@@ -4145,20 +4145,25 @@ async function fillColorLinesAndScriptedWalla(){
     let myChapterIndex = -1
 
     for (let i = 0; i < sceneAndChapterIndexes.length; i++){
-      if (typeCodes[sceneAndChapterIndexes[i]] == myTypes.chapter){
+      let tc = typeCodes[sceneAndChapterIndexes[i]];
+      console.log("I", i, 'Type Code', tc, ' index ', sceneAndChapterIndexes[i]);
+      if (tc == myTypes.chapter){
         myChapterIndex += 1;
         chapterIndexes[myChapterIndex] = sceneAndChapterIndexes[i];
-      } else if (typeCodes[sceneAndChapterIndexes[i]] == myTypes.scene){
+      } else if (tc == myTypes.scene){
         let found = false;
         for (let j = sceneAndChapterIndexes[i] - 1; j >= sceneAndChapterIndexes[i] - 5; j++){
+          console.log("J", j, ' typeCode ', typeCodes[sceneAndChapterIndexes[j]], ' index ', sceneAndChapterIndexes[j]);
           if (typeCodes[sceneAndChapterIndexes[j]] == myTypes.chapter){
             myChapterIndex += 1;
             chapterIndexes[myChapterIndex] = sceneAndChapterIndexes[i];
             found = true;
+            console.log('Found')
             break;
           }
         }
         if (!found){
+          console.log('Not found')
           mySceneIndex += 1;
           sceneIndexes[mySceneIndex] = sceneAndChapterIndexes[i];
         }
