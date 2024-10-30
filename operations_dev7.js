@@ -4607,18 +4607,28 @@ async function newCharacters(){
   })
 }
 
-async function displayMissingCharacters(excel, missingInNew){
+async function displayMissingCharacters(excel, missingInNew, missingInCurrent){
   const comparisonSheet = excel.workbook.worksheets.getItem(comparisonSheetName);
   const notInNewRange = comparisonSheet.getRange('coNotInNew');
   notInNewRange.load('rowIndex, columnIndex');
   notInNewRange.clear("Contents");
+  
+  const notInCurrentRange = comparisonSheet.getRange('coNotInCurrent');
+  notInCurrentRange.load('rowIndex, columnIndex');
+  notInCurrentRange.clear("Contents");
+  
   await excel.sync();
+  
   let tempRange = comparisonSheet.getRangeByIndexes(notInNewRange.rowIndex, notInNewRange.columnIndex, missingInNew.length, 1);
-  let tempValues = []
+  let tempValues = missingInNew.map(x => [x]);
+  /*
   for (let i = 0; i < missingInNew.length; i++){
     tempValues[i] = [missingInNew[i]];
   }
+  */
   tempRange.values = tempValues;
+  const sortFields = [{ key: 0, ascending: true }]
+  tempRange.sort.apply(sortFields);
   await excel.sync();
 }
 
