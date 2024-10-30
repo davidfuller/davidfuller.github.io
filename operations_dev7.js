@@ -4092,10 +4092,12 @@ async function fillColorLinesAndScriptedWalla(){
     console.log('line indexes: ', lineIndexes);
     console.log('sceneAndChapter', sceneAndChapterIndexes);
     const columnCount = otherNotesIndex - cueIndex + 1;
-    
+   
+    /*
     await doSomeFormatting(excel, wallaScriptedIndexes, scriptSheet, columnCount, false, myFormats.wallaGreen, myFormats.black)
     await doSomeFormatting(excel, lineIndexes, scriptSheet, columnCount, true, myFormats.white, myFormats.black)
-    
+    */
+   
     let sceneIndexes = []
     let chapterIndexes = []
     let mySceneIndex = -1;
