@@ -4656,7 +4656,8 @@ async function copyTextV2(doTheCopy){
     //so now we go through and process each of them
     let errors = 0
     const newCueIndex = 0;
-    for (let i = 0; i < rowDetails.length; i++){
+    //for (let i = 0; i < rowDetails.length; i++){
+    for (let i = 0; i < 10; i++){
       //check the cues are the same...
       let currentCue = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, rowDetails[i].rowCount, 1)
       let newCue  = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, 1);
@@ -4670,7 +4671,7 @@ async function copyTextV2(doTheCopy){
       if (currentCueValues.length == newCueValues.length){
         for (let j = 0; j < currentCueValues.length; j++){
           if(currentCueValues[j] != newCueValues[j]){
-            //console.log('Row ', j, ' is different. Current Cue: ', currentCueValues[j], 'rowIndex: ', j + currentCue.rowIndex, 'New cue: ' + newCueValues[j] + 'rowIndex: ' + j + newCue.rowIndex)
+            console.log('Row ', j, ' is different. Current Cue: ', currentCueValues[j], 'rowIndex: ', (j + currentCue.rowIndex), 'New cue: ' + newCueValues[j] + ' rowIndex: ' + (j + newCue.rowIndex))
             errors += 1
           }
         }
