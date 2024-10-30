@@ -4787,7 +4787,7 @@ async function deleteAllFX(){
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let cueRange = scriptSheet.getRangeByIndexes(details.rowIndex, cueIndex, details.rowCount, 1);
-    cueRange.load('values. rowIndex');
+    cueRange.load('values, rowIndex');
     await excel.sync();
     let cueValues = cueRange.values.map(x => x[0]);
     let deleteIndexes = [];
