@@ -4656,6 +4656,7 @@ async function copyTextV2(){
     console.log('Row details', rowDetails)
 
     //so now we go through and process each of them
+    let errors = 0
     const newCueIndex = 0;
     for (let i = 0; i < rowDetails.length; i++){
       //check the cues are the same...
@@ -4666,20 +4667,20 @@ async function copyTextV2(){
       await excel.sync();
       let currentCueValues = currentCue.values.map(x => x[0]);
       let newCueValues = newCue.values.map(x => x[0]);
-      let errors = 0
       if (currentCueValues.length == newCueValues.length){
         for (let j = 0; j < currentCueValues.length; j++){
           if(currentCueValues[j] != newCueValues[j]){
-            console.log('Row ', j, ' is different. Current Cue: ', currentCueValues[j], 'rowIndex: ', j + currentCue.rowIndex, 'New cue: ' + newCueIndex[j] + 'rowIndex: ' + j + newCue.rowIndex)
+            console.log('Row ', j, ' is different. Current Cue: ', currentCueValues[j], 'rowIndex: ', j + currentCue.rowIndex, 'New cue: ' + newCueValues[j] + 'rowIndex: ' + j + newCue.rowIndex)
             errors += 1
           }
         }
       } else {
-        console.log('Ranges are diiferent length')
+        console.log('Ranges are diiferent length');
+        errors += 1
       }
     }
 
-      
+    console.log('No of errors: ', errors);  
     if (errors == 0){
       //We can continue
       let isProtected = await unlockIfLocked();
