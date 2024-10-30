@@ -4631,7 +4631,7 @@ async function showArrayInRange(excel, sheet, rangeName, values){
   
 }
 
-async function copyTextV2(doTheCopy){
+async function copyTextV2(doTheCopy, doScriptDifferences){
   let details = await getFirstLastIndex()
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -4763,6 +4763,9 @@ async function copyTextV2(doTheCopy){
       }
     }
     console.log('Script differences: ', scriptDifferences);
+    if (doScriptDifferences){
+      await displayScriptDifferences(excel, scriptDifferences);
+    }
 
     console.log('No of errors: ', errors);  
     if ((errors == 0) && (doTheCopy)){
@@ -4790,11 +4793,23 @@ async function copyTextV2(doTheCopy){
       if (isProtected){
         await lockColumns();
       }
-      
     }
-
-
   })  
+}
+
+async function displayScriptDifferences(excel, differences){
+  let comparisonScript = excel.workbook.worksheets.getItem(comparisonSheetName);
+  let tableRange = comparisonScript.getRange('coTable');
+  tableRange.load('rowIndex, columnIndex, columnCount');
+  tableRange.clear('Contents');
+  await excel.sync();
+  let display = [];
+  for (let i = 0; i < differences.length; i++){
+    display[i] = [differences[i].currentCue, differences[i].currentCharacter, differences[i].currentScript, differences[i].newCharacter, differences[i].newScript, differences[i].characterDiff, differences[i].scriptDiff, differences[i].currentRowIndex, differences[i].newRowIndex];
+  }
+  let tempRange = comparisonSheet.getRangeByIndexes(tableRange.rowIndex, tableRange.columnIndex, differences.length, tableRange.columnCount);
+  tempRange.values = differences;
+  await excel.sync();
 }
 
 function getPreviousCue(index, theCues){

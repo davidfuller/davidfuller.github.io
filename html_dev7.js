@@ -33,8 +33,8 @@ async function mainHTML(){
     <button id="btnProcessCharacterListForWordAndScene" onclick="jade_modules.scheduling.processCharacterListForWordAndScene()">Character Word Count</button>
     <button id="btnAddScneWordCount" onclick="jade_modules.scheduling.createSceneWordCountData()">Add Scene Word Count<br/>to Character List</button>
     <button id="btnCheckScenes" onclick="jade_modules.operations.checkAllTheSceneBreaks()">Check all the<br/>scene breaks</button>
-    <button id="btnCheckCopyScenes" onclick="jade_modules.operations.copyTextV2(false)">Check the new text V2</button>
-    <button id="btnCopyScenes" onclick="jade_modules.operations.copyTextV2(true)">Copy the new text V2</button>
+    <button id="btnCheckCopyScenes" onclick="jade_modules.operations.copyTextV2(false, true)">Check the new text V2</button>
+    <button id="btnCopyScenes" onclick="jade_modules.operations.copyTextV2(true, false)">Copy the new text V2</button>
     <button id="btnDeleteFX" onclick="jade_modules.operations.deleteAllFX()">Delete all FX</button>
     <button id="btnReconcileLocation" onclick="jade_modules.operations.reconcileLocations(false)">Reconcile locations<br/>no correction</button>
     <button id="btnReconcileLocationCorrection" onclick="jade_modules.operations.reconcileLocations(true)">Reconcile locations<br/>WITH correction</button>
