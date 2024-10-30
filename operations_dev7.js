@@ -4089,24 +4089,46 @@ async function fillColorLinesAndScriptedWalla(){
     console.log('line indexes: ', lineIndexes);
     const columnCount = otherNotesIndex - cueIndex + 1;
     let wallaRanges = [];
+    let myBorders = [];
     let myCount = 0;
     for (let i = 0; i < wallaScriptedIndexes.length; i++){
       wallaRanges[i] = scriptSheet.getRangeByIndexes(wallaScriptedIndexes[i], cueIndex, 1, columnCount);
       wallaRanges[i].format.fill.color = myFormats.wallaGreen;
+      myBorders[i] = wallaRanges[i].format.borders;
+      
+      doBorder(myBorders[i], 'EdgeTop');
+      doBorder(myBorders[i], 'EdgeBottom');
+      doBorder(myBorders[i], 'EdgeLeft');
+      doBorder(myBorders[i], 'EdgeRight');
+      doBorder(myBorders[i], 'InsideHorizontal');
+      doBorder(myBorders[i], 'InsideVertical');
+
       myCount += 1;
       if (myCount >= 1000){
         myCount = 0;
         await excel.sync();
       }
     }
+
     await excel.sync();
     let lineRanges = [];
+    let lineBorders = []
     myCount = 0;
     for (let i = 0; i < lineIndexes.length; i++){
       lineRanges[i] = scriptSheet.getRangeByIndexes(lineIndexes[i], cueIndex, 1, columnCount);
       lineRanges[i].format.fill.clear();
       lineRanges[i].format.font.strikethrough = false;
       lineRanges[i].format.font.color = '#000000';
+      
+      lineBorders[i] = lineRanges[i].format.borders
+
+      doBorder(lineBorders[i], 'EdgeTop');
+      doBorder(lineBorders[i], 'EdgeBottom');
+      doBorder(lineBorders[i], 'EdgeLeft');
+      doBorder(lineBorders[i], 'EdgeRight');
+      doBorder(lineBorders[i], 'InsideHorizontal');
+      doBorder(lineBorders[i], 'InsideVertical');
+
       myCount += 1;
       if (myCount >= 1000){
         myCount = 0;
