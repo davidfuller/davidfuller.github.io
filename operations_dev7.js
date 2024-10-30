@@ -4791,7 +4791,7 @@ function codeSuitableForStart(theCode){
 }
 
 function codeForcesStop(theCode){
-  if ((theCode == myTypes.sceneBlock) || (theCode == myTypes.wallaScripted) || (theCode == myTypes.wallaBlock)){
+  if ((theCode == myTypes.sceneBlock) || (theCode == myTypes.wallaScripted) || (theCode == myTypes.wallaBlock) || (theCode == '')){
     return true;
   } else {
     return false;
