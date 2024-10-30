@@ -4610,7 +4610,7 @@ async function newCharacters(){
 async function displayMissingCharacters(excel, missingInNew){
   const comparisonSheet = excel.workbook.worksheets.getItem(comparisonSheetName);
   const notInNewRange = comparisonSheet.getRange('coNotInNew');
-  notInNewRange.load('rowInIndex, columnIndex');
+  notInNewRange.load('rowIndex, columnIndex');
   notInNewRange.clear("Contents");
   await excel.sync();
   let tempRange = comparisonSheet.getRangeByIndexes(notInNewRange.rowIndex, notInNewRange.columnIndex, missinInNew.length, 1);
