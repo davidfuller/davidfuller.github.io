@@ -4603,7 +4603,7 @@ async function newCharacters(){
       }
     }
     console.log('Missing In Current: ', missingInCurrent);
-    await displayMissingCharacters(excel, missingInNew);
+    await displayMissingCharacters(excel, missingInNew, missingInCurrent);
   })
 }
 
