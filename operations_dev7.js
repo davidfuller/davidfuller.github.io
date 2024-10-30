@@ -4615,7 +4615,7 @@ async function displayMissingCharacters(excel, missingInNew){
   await excel.sync();
   let tempRange = comparisonSheet.getRangeByIndexes(notInNewRange.rowIndex, notInNewRange.columnIndex, missinInNew.length, 1);
   let tempValues = []
-  for (let i = 0; i < missingInNew.length, i++){
+  for (let i = 0; i < missingInNew.length; i++){
     tempValues[i] = [missingInNew[i]];
   }
   tempRange.values = tempValues;
