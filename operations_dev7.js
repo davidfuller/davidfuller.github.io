@@ -4796,7 +4796,7 @@ async function deleteAllFX(){
       let myString = cueValues[i].toString();
       if (myString.endsWith("/FX")){
         myIndex += 1
-        deleteIndexes[i] = i + cueRange.rowIndex;
+        deleteIndexes[myIndex] = i + cueRange.rowIndex;
       }
     }
     console.log('deleteIndexes', deleteIndexes);
