@@ -4103,8 +4103,7 @@ async function fillColorLinesAndScriptedWalla(){
     let mySceneIndex = -1;
     let myChapterIndex = -1
 
-    //for (let i = 0; i < sceneAndChapterIndexes.length; i++){
-    for (let i = 0; i < 5; i++){
+    for (let i = 0; i < sceneAndChapterIndexes.length; i++){
       let thisIndex  = sceneAndChapterIndexes[i] - theRowIndex;
       let tc = typeCodes[thisIndex];
       console.log("I", i, 'Type Code', tc, ' index ', thisIndex);
