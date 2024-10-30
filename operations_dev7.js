@@ -3090,7 +3090,7 @@ async function doTheActualSceneBlock(chapterSceneID){
             console.log('newRowIndex', newRowIndex);        
             for (let i = sceneBlockRows; i < numActualSceneBlockRows; i++){
               //console.log('i', i , 'newRowIndex', newRowIndex);
-              await deleteSceneBlockRow(excel, newRowIndex);
+              await deleteThisRow(excel, newRowIndex);
               theRowIndex -= 1;
             }
             let topRow = theRowIndex - sceneBlockRows;
@@ -3189,7 +3189,7 @@ async function doTheActualSceneBlock(chapterSceneID){
             newRowIndex = theRowIndex + 1;
             for (let i = sceneBlockRows; i < numActualSceneBlockRows; i++){
               //console.log('i', i , 'newRowIndex', newRowIndex);
-              await deleteSceneBlockRow(excel, newRowIndex);
+              await deleteThisRow(excel, newRowIndex);
             }
             let myMergeRange = scriptSheet.getRangeByIndexes(newRowIndex, cueColumnIndex, sceneBlockRows, sceneBlockColumns);
             myMergeRange.load('address');
@@ -3241,7 +3241,7 @@ async function sortOutSceneLineNumberRange(startRow, endRow){
   })
 }
 
-async function deleteSceneBlockRow(excel, rowIndex){
+async function deleteThisRow(excel, rowIndex){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let myRow = scriptSheet.getRangeByIndexes(rowIndex, 1, 1, 1).getEntireRow();
     let isProtected = await unlockIfLocked();
@@ -4777,6 +4777,31 @@ function codeForcesStop(theCode){
     return true;
   } else {
     return false;
+  }
+}
+
+async function deleteAllFX(){
+  //Deletes all rows that have Cues that end with/FX
+  let details = await getFirstLastIndex()
+  let isProtected = await unlockIfLocked();
+  await Excel.run(async function(excel){ 
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let cueRange = scriptSheet.getRangeByIndexes(details.rowIndex, cueIndex, details.rowCount, 1);
+    cueRange.load('values. rowIndex');
+    await excel.sync();
+    let cueValues = cueRange.values.map(x => x[0]);
+    let deleteIndexes = [];
+    let myIndex = -1;
+    for (let i = 0; i < cueValues.length; i++){
+      if (cueValues[i].endsWith("/FX")){
+        myIndex += 1
+        deleteIndexes[i] = i + cueRange.rowIndex;
+      }
+    }
+    console.log('deleteIndexes', deleteIndexes);
+  })
+  if (isProtected){
+    await lockColumns();
   }
 }
 
