@@ -4688,9 +4688,7 @@ async function copyTextV2(doTheCopy){
       const cueToCharacterColumns = 3;
       const newStageDirectionsIndex = 3;
       const stageToUsScriptColumns = 5;
-      //for (let i = 0; i < rowDetails.length; i++){
-      for (let i = 0; i < 5; i++){
-        console.log(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, cueToCharacterColumns);
+      for (let i = 0; i < rowDetails.length; i++){
         let sourceRangeCueToCharacter = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, cueToCharacterColumns);
         sourceRangeCueToCharacter.load('address')
         let destinationCueToCharacter = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, 1, 1);
