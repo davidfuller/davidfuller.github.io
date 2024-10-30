@@ -4097,7 +4097,7 @@ async function fillColorLinesAndScriptedWalla(){
     await doSomeFormatting(excel, wallaScriptedIndexes, scriptSheet, columnCount, false, myFormats.wallaGreen, myFormats.black)
     await doSomeFormatting(excel, lineIndexes, scriptSheet, columnCount, true, myFormats.white, myFormats.black)
     */
-   
+
     let sceneIndexes = []
     let chapterIndexes = []
     let mySceneIndex = -1;
@@ -4115,7 +4115,7 @@ async function fillColorLinesAndScriptedWalla(){
         let found = false;
         for (let j = thisIndex - 1; j >= thisIndex - 5; j++){
           let testIndex = sceneAndChapterIndexes[j] - theRowIndex; 
-          console.log("J", j, ' typeCode ', typeCodes[testIndex], ' index ', textIndex);
+          console.log("J", j, ' typeCode ', typeCodes[testIndex], ' index ', testIndex);
           if (typeCodes[testIndex] == myTypes.chapter){
             myChapterIndex += 1;
             chapterIndexes[myChapterIndex] = sceneAndChapterIndexes[i];
