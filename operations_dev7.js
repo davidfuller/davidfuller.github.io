@@ -4688,8 +4688,14 @@ async function copyTextV2(){
         for (let i = 0; i < 5; i++){
           console.log(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, cueToCharacterColumns);
           let sourceRangeCueToCharacter = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, cueToCharacterColumns);
+          sourceRangeCueToCharacter.load('address')
           await excel.sync();
+          console.log(sourceRangeCueToCharacter.address);
+          console.log(rowDetails[i].currentRowIndex, cueIndex, 1, 1);
           let destinationCueToCharacter = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, 1, 1);
+          destinationCueToCharacter.load('address');
+          await excel.sync();
+          console.log(destinationCueToCharacter.address);
           destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Values", false, false);
           destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Formats", false, false);
           await excel.sync();
