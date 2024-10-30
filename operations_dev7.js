@@ -4707,15 +4707,31 @@ async function copyTextV2(doTheCopy){
     //so now we go through and process each of them
     let errors = 0
     const newCueIndex = 0;
+    const newCharacterIndex = 2;
+    const newScriptIndex = 4;
+    let scriptDifferences = [];
+    let diffIndex = - 1
     for (let i = 0; i < rowDetails.length; i++){
       //check the cues are the same...
       let currentCue = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, rowDetails[i].rowCount, 1)
-      let newCue  = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, 1);
-      currentCue.load('values, rowIndex')
-      newCue.load('values, rowIndex')
+      let currentCharacter = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, characterIndex, rowDetails[i].rowCount, 1);
+      let currentScript = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, ukScriptIndex, rowDetails[i].rowCount, 1);
+      let newCue= newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, 1);
+      let newCharacter = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCharacterIndex, rowDetails[i].rowCount, 1);
+      let newScript = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newScriptIndex, rowDetails[i].rowCount, 1);
+      currentCue.load('values, rowIndex');
+      currentCharacter.load('values, rowIndex');
+      currentScript.load('values, rowIndex');
+      newCue.load('values, rowIndex');
+      newCharacter.load('values, rowIndex');
+      newScript.load('values, rowIndex');
       await excel.sync();
       let currentCueValues = currentCue.values.map(x => x[0]);
       let newCueValues = newCue.values.map(x => x[0]);
+      let currentCharacterValues = currentCharacter.values.map(x => x[0]);
+      let currentScriptValues = currentScript.values.map(x => x[0]);
+      let newCharacterValues = newCharacter.values.map(x => x[0]);
+      let newScriptValues = newScript.values.map(x => x[0]);
       //console.log("I", i, 'currentCue.rowIndex', currentCue.rowIndex, 'currentCue.values', currentCueValues, 'newCue.rowIndex', newCue.rowIndex, 'newRow.values', newCueValues);
 
       if (currentCueValues.length == newCueValues.length){
@@ -4725,12 +4741,28 @@ async function copyTextV2(doTheCopy){
             console.log('Row ', j, ' is different. Current Cue: ', currentCueValues[j], 'rowIndex: ', (j + currentCue.rowIndex), 'New cue: ' + newCueValues[j] + ' rowIndex: ' + (j + newCue.rowIndex))
             errors += 1
           }
+          if ((currentCharacterValues[j] != newCharacterValues[j])||(currentScriptValues[j] != newScriptValues[j])){
+            diffIndex += 1;
+            scriptDifferences[diffIndex] = {
+              currentCue: currentCueValues[j],
+              currentRowIndex: (j + currentCue.rowIndex),
+              newCue: newCueValues[j],
+              newRowIndex: (j + newCue.rowIndex),
+              currentScript: currentScriptValues[j],
+              newScript: newScriptValues[j],
+              currentCharacter: currentCharacterValues[j],
+              newCharacter: newCharacterValues[j],
+              scriptDiff: (currentScriptValues[j] != newScriptValues[j]),
+              characterDiff: (currentCharacterValues[j] != newCharacterValues[j])
+            }
+          }
         }
       } else {
         console.log('Ranges are diiferent length');
         errors += 1
       }
     }
+    console.log('Script differences: ', scriptDifferences);
 
     console.log('No of errors: ', errors);  
     if ((errors == 0) && (doTheCopy)){
