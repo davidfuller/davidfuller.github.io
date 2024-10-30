@@ -47,7 +47,8 @@ let myFormats = {
   green: '#daf2d0',
   wallaGreen: '#b5e6a2',
   black: '#000000',
-  white: '#ffffff'
+  white: '#ffffff',
+  chapterGreen: '#00B060'
 }
 
 let screenColours = {
@@ -4136,7 +4137,7 @@ async function fillColorLinesAndScriptedWalla(){
     console.log('Doing Scene Formatting')
     await doSomeFormatting(excel, sceneIndexes, scriptSheet, columnCount, true, myFormats.white, myFormats.black)
     console.log('Doing Chapter Formatting')
-    await doSomeFormatting(excel, chapterIndexes, scriptSheet, columnCount, false, myFormats.green, myFormats.black)
+    await doSomeFormatting(excel, chapterIndexes, scriptSheet, columnCount, false, myFormats.chapterGreen, myFormats.black)
 
     if (isProtected){
       await lockColumns();
