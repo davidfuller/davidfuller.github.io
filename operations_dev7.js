@@ -4656,8 +4656,7 @@ async function copyTextV2(doTheCopy){
     //so now we go through and process each of them
     let errors = 0
     const newCueIndex = 0;
-    //for (let i = 0; i < rowDetails.length; i++){
-    for (let i = 0; i < 50; i++){
+    for (let i = 0; i < rowDetails.length; i++){
       //check the cues are the same...
       let currentCue = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, rowDetails[i].rowCount, 1)
       let newCue  = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, 1);
