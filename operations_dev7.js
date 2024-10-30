@@ -4657,7 +4657,7 @@ async function copyTextV2(doTheCopy){
     let errors = 0
     const newCueIndex = 0;
     //for (let i = 0; i < rowDetails.length; i++){
-    for (let i = 0; i < 10; i++){
+    for (let i = 0; i < 50; i++){
       //check the cues are the same...
       let currentCue = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, rowDetails[i].rowCount, 1)
       let newCue  = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, 1);
@@ -4666,11 +4666,12 @@ async function copyTextV2(doTheCopy){
       await excel.sync();
       let currentCueValues = currentCue.values.map(x => x[0]);
       let newCueValues = newCue.values.map(x => x[0]);
-      console.log("I", i, 'currentCue.rowIndex', currentCue.rowIndex, 'currentCue.values', currentCueValues, 'newCue.rowIndex', newCue.rowIndex, 'newRow.values', newCueValues);
+      //console.log("I", i, 'currentCue.rowIndex', currentCue.rowIndex, 'currentCue.values', currentCueValues, 'newCue.rowIndex', newCue.rowIndex, 'newRow.values', newCueValues);
 
       if (currentCueValues.length == newCueValues.length){
         for (let j = 0; j < currentCueValues.length; j++){
           if(currentCueValues[j] != newCueValues[j]){
+            console.log("I", i, 'currentCue.rowIndex', currentCue.rowIndex, 'currentCue.values', currentCueValues, 'newCue.rowIndex', newCue.rowIndex, 'newRow.values', newCueValues);
             console.log('Row ', j, ' is different. Current Cue: ', currentCueValues[j], 'rowIndex: ', (j + currentCue.rowIndex), 'New cue: ' + newCueValues[j] + ' rowIndex: ' + (j + newCue.rowIndex))
             errors += 1
           }
