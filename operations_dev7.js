@@ -4654,6 +4654,56 @@ async function copyTextV2(){
       }
     }
     console.log('Row details', rowDetails)
+
+    //so now we go through and process each of them
+    const newCueIndex = 0;
+    for (let i = 0; i < rowDetails.length; i++){
+      //check the cues are the same...
+      let currentCue = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, rowDetails[i].rowCount, 1)
+      let newCue  = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, 1);
+      currentCue.load('values, rowIndex')
+      newCue.load('values, rowIndex')
+      await excel.sync();
+      let currentCueValues = currentCue.values.map(x => x[0]);
+      let newCueValues = newCue.values.map(x => x[0]);
+      let errors = 0
+      if (currentCueValues.length == newCueValues.length){
+        for (let j = 0; j < currentCueValues.length; j++){
+          if(currentCueValues[j] != newCueValues[j]){
+            console.log('Row ', j, ' is different. Current Cue: ', currentCueValues[j], 'rowIndex: ', j + currentCue.rowIndex, 'New cue: ' + newCueIndex[j] + 'rowIndex: ' + j + newCue.rowIndex)
+            errors += 1
+          }
+        }
+      } else {
+        console.log('Ranges are diiferent length')
+      }
+
+      
+      if (errors == 0){
+        //We can continue
+        const cueToCharacterColumns = 3;
+        const newStageDirectionsIndex = 3;
+        const stageToUsScriptColumns = 5;
+        //for (let i = 0; i < rowDetails.length; i++){
+        for (let i = 0; i < 5; i++){
+          let sourceRangeCueToCharacter = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, cueToCharacterColumns);
+          let sourceRangeStageToUsScript = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newStageDirectionsIndex, rowDetails[i].rowCount, stageToUsScriptColumns);
+          let destinationCueToCharacter = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, 1, 1);
+          let destinationStageToUsScript = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, stageDirectionWallaDescriptionIndex, 1, 1);
+          destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Values", false, false);
+          destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Formats", false, false);
+          destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Values", false, false);
+          destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Formats", false, false);
+          await excel.sync();
+          console.log (i, 'Completed ', rowDetails[i].newSheetRowIndex, ' to ', rowDetails[i].currentRowIndex )
+        }
+      }
+
+
+
+    }
+
+
   })  
 }
 
