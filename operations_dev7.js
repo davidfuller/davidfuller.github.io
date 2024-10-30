@@ -4677,43 +4677,35 @@ async function copyTextV2(){
       } else {
         console.log('Ranges are diiferent length')
       }
+    }
 
       
-      if (errors == 0){
-        //We can continue
-        let isProtected = await unlockIfLocked();
-        const cueToCharacterColumns = 3;
-        const newStageDirectionsIndex = 3;
-        const stageToUsScriptColumns = 5;
-        //for (let i = 0; i < rowDetails.length; i++){
-        for (let i = 0; i < 5; i++){
-          console.log(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, cueToCharacterColumns);
-          let sourceRangeCueToCharacter = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, cueToCharacterColumns);
-          sourceRangeCueToCharacter.load('address')
-          await excel.sync();
-          console.log(sourceRangeCueToCharacter.address);
-          console.log(rowDetails[i].currentRowIndex, cueIndex, 1, 1);
-          let destinationCueToCharacter = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, 1, 1);
-          destinationCueToCharacter.load('address');
-          await excel.sync();
-          console.log(destinationCueToCharacter.address);
-          destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Values", false, false);
-          destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Formats", false, false);
-          await excel.sync();
-          let sourceRangeStageToUsScript = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newStageDirectionsIndex, rowDetails[i].rowCount, stageToUsScriptColumns);
-          let destinationStageToUsScript = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, stageDirectionWallaDescriptionIndex, 1, 1);
-          destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Values", false, false);
-          destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Formats", false, false);
-          await excel.sync();
-          console.log (i, 'Completed ', rowDetails[i].newSheetRowIndex, ' to ', rowDetails[i].currentRowIndex )
-        }
-        if (isProtected){
-          await lockColumns();
-        }
+    if (errors == 0){
+      //We can continue
+      let isProtected = await unlockIfLocked();
+      const cueToCharacterColumns = 3;
+      const newStageDirectionsIndex = 3;
+      const stageToUsScriptColumns = 5;
+      //for (let i = 0; i < rowDetails.length; i++){
+      for (let i = 0; i < 5; i++){
+        console.log(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, cueToCharacterColumns);
+        let sourceRangeCueToCharacter = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCueIndex, rowDetails[i].rowCount, cueToCharacterColumns);
+        sourceRangeCueToCharacter.load('address')
+        let destinationCueToCharacter = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, 1, 1);
+        destinationCueToCharacter.load('address');
+        destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Values", false, false);
+        destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Formats", false, false);
+        let sourceRangeStageToUsScript = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newStageDirectionsIndex, rowDetails[i].rowCount, stageToUsScriptColumns);
+        let destinationStageToUsScript = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, stageDirectionWallaDescriptionIndex, 1, 1);
+        destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Values", false, false);
+        destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Formats", false, false);
+        await excel.sync();
+        console.log (i, 'Completed ', sourceRangeCueToCharacter.address, ' to ', destinationCueToCharacter.address, 'and', sourceRangeStageToUsScript.address, 'to', destinationStageToUsScript.address);
       }
-
-
-
+      if (isProtected){
+        await lockColumns();
+      }
+      
     }
 
 
