@@ -4086,7 +4086,9 @@ async function fillColorLinesAndScriptedWalla(){
     console.log('theRowIndex:', theRowIndex);
     console.log('walla scripted indexes:', wallaScriptedIndexes);
     const lineIndexes = typeCodes.map((x, i) => [x, i]).filter(([x, i]) => x == myTypes.line).map(([x, i]) => i + theRowIndex);
+    const sceneAndChapterIndexes = typeCodes.map((x, i) => [x, i]).filter(([x, i]) => (x == myTypes.chapter)||(x == myTypes.scene)).map(([x, i]) => i + theRowIndex);
     console.log('line indexes: ', lineIndexes);
+    console.log('sceneAndChapter', sceneAndChapterIndexes);
     const columnCount = otherNotesIndex - cueIndex + 1;
     let wallaRanges = [];
     let myBorders = [];
@@ -4136,6 +4138,33 @@ async function fillColorLinesAndScriptedWalla(){
       }
     }
     await excel.sync();
+
+    let sceneIndexes = []
+    let chapterIndexes = []
+    let mySceneIndex = -1;
+    let myChapterIndex = -1
+
+    for (let i = 0; i < sceneAndChapterIndexes.length; i++){
+      if (typeCodes[sceneAndChapterIndexes[i]] == myTypes.chapter){
+        myChapterIndex += 1;
+        chapterIndexes[myChapterIndex] = sceneAndChapterIndexes[i];
+      } else if (typeCodes[sceneAndChapterIndexes[i]] == myTypes.scene){
+        let found = false;
+        for (let j = sceneAndChapterIndexes[i] - 1; j >= sceneAndChapterIndexes[i] - 5; j++){
+          if (typeCodes[sceneAndChapterIndexes[j]] == myTypes.chapter){
+            myChapterIndex += 1;
+            chapterIndexes[myChapterIndex] = sceneAndChapterIndexes[i];
+            found = true;
+            break;
+          }
+        }
+        if (!found){
+          mySceneIndex += 1;
+          sceneIndexes[mySceneIndex] = sceneAndChapterIndexes[i];
+        }
+      }
+    }
+    console.log ('Scene Indexes: ', sceneIndexes, 'Chapter Indexes: ', chapterIndexes);
     if (isProtected){
       await lockColumns();
     }
