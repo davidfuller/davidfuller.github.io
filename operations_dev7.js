@@ -4798,7 +4798,7 @@ async function copyTextV2(doTheCopy, doScriptDifferences){
 }
 
 async function displayScriptDifferences(excel, differences){
-  let comparisonScript = excel.workbook.worksheets.getItem(comparisonSheetName);
+  let comparisonSheet = excel.workbook.worksheets.getItem(comparisonSheetName);
   let tableRange = comparisonScript.getRange('coTable');
   tableRange.load('rowIndex, columnIndex, columnCount');
   tableRange.clear('Contents');
