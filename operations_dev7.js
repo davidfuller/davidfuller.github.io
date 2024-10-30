@@ -6,10 +6,11 @@ const characterListName = 'Character List';
 const newTextSheetName = 'NewText'
 const settingsSheetName = 'Settings';
 const forDirectorName = 'For Directors';
-const forActorsName = 'For Actors'
-const forSchedulingName = 'For Scheduling'
-const wallaImportName = 'Walla Import'
-const locationSheetName = 'Locations'
+const forActorsName = 'For Actors';
+const forSchedulingName = 'For Scheduling';
+const wallaImportName = 'Walla Import';
+const locationSheetName = 'Locations';
+const comparisonSheetName = 'Comparison';
 const columnsToLock = "A:T";
 const sceneBlockRows = 4;
 const namedCharacters = 'Named Characters - For reaction sounds and walla';
@@ -4602,7 +4603,23 @@ async function newCharacters(){
       }
     }
     console.log('Missing In Current: ', missingInCurrent);
+    await displayMissingCharacters(excel, missingInNew);
   })
+}
+
+async function displayMissingCharacters(excel, missingInNew){
+  const comparisonSheet = excel.workbook.worksheets.getItem(comparisonSheetName);
+  const notInNewRange = comparisonSheet.getRange('coNotInNew');
+  notInNewRange.load('rowInIndex, columnIndex');
+  notInNewRange.clear("Contents");
+  await excel.sync();
+  let tempRange = comparisonSheet.getRangeByIndexes(notInNewRange.rowIndex, notInNewRange.columnIndex, missinInNew.length, 1);
+  let tempValues = []
+  for (let i = 0; i < missingInNew.length, i++){
+    tempValues[i] = [missingInNew[i]];
+  }
+  tempRange.values = tempValues;
+  await excel.sync();
 }
 
 async function copyTextV2(doTheCopy){
