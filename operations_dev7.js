@@ -4788,7 +4788,7 @@ async function copyTextV2(doTheCopy, doScriptDifferences){
         destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Values", false, false);
         destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Formats", false, false);
         await excel.sync();
-        console.log (i, 'Completed ', sourceRangeCueToCharacter.address, ' to ', destinationCueToCharacter.address, 'and', sourceRangeStageToUsScript.address, 'to', destinationStageToUsScript.address);
+        console.log (i, ' of ', rowDetails.length + ' completed ', sourceRangeCueToCharacter.address, ' to ', destinationCueToCharacter.address, 'and', sourceRangeStageToUsScript.address, 'to', destinationStageToUsScript.address);
       }
       if (isProtected){
         await lockColumns();
