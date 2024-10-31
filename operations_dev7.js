@@ -4634,14 +4634,15 @@ async function showArrayInRange(excel, sheet, rangeName, values){
   range.clear("Contents");
   await excel.sync();
   
-  let tempRange = sheet.getRangeByIndexes(range.rowIndex, range.columnIndex, values.length, 1);
-  let tempValues = values.map(x => [x]);
-  
-  tempRange.values = tempValues;
-  const sortFields = [{ key: 0, ascending: true }]
-  tempRange.sort.apply(sortFields);
-  await excel.sync();
-  
+  if (values.length > 0){
+    let tempRange = sheet.getRangeByIndexes(range.rowIndex, range.columnIndex, values.length, 1);
+    let tempValues = values.map(x => [x]);
+    
+    tempRange.values = tempValues;
+    const sortFields = [{ key: 0, ascending: true }]
+    tempRange.sort.apply(sortFields);
+    await excel.sync();
+  }
 }
 
 async function copyTextV2(doTheCopy, doScriptDifferences){
