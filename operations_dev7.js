@@ -4955,6 +4955,7 @@ async function doSomeFormatting(excel, theIndexes, sheet, columnCount, fillClear
       if (myCount >= 1000){
         myCount = 0;
         await excel.sync();
+        console.log('Row ' + (i + 1) + ' of ' + theIndexes.length);
       }
     }
     await excel.sync();
