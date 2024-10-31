@@ -4618,7 +4618,7 @@ async function newCharacters(){
       }
     }
     console.log('Missing In Current: ', missingInCurrent);
-    let missingInNewWalla = missingInNewStatus(excel, missingInNew);
+    let missingInNewWalla = await missingInNewStatus(excel, missingInNew);
     await displayMissingCharacters(excel, missingInNew, missingInCurrent, missingInNewWalla);
   })
 }
@@ -4633,6 +4633,7 @@ async function missingInNewStatus(excel, missingInNew){
   await excel.sync()
   let characterValues = characterRange.values.map(x => x[0]);
   let typeCodeValues = typeCodeRange.values.map(x => x[0]);
+  console.log('Character Values', characterValues);
   result = [];
   for (let i = 0; i < missingInNew.length; i++){
     let testIndex = characterValues.findIndex(x => x == missingInNew[i]);
