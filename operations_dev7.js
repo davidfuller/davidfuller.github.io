@@ -4307,6 +4307,7 @@ async function checkAllTheSceneBreaks(){
     let maxGap = 40;
     let endMessage = []
     for (let i = 0; i < results.length; i++){
+      let hasIssue = false;
       let textBit = results[i].sceneLineNumberRange;
       let lineValues = (textBit).substr(1, textBit.length - 1).split('-')
       let message = '';
@@ -4317,17 +4318,17 @@ async function checkAllTheSceneBreaks(){
           message = results[i].sceneLineNumberRange + ' is good so far';
           if (results[i].cue == results[i].previousCue){
             message += ' ============> But fails on cue';
+            hasIssue = true;
           } else {
             message += ' And good on cue';
           }
           if (results[i].number == results[i].previousNumber){
             message += ' ============> But fails on number';
+            hasIssue = true;
           } else {
             message += ' And good on number';
           }
-          endMessage.push(message);
         } else {
-
           let first = -1;
           message += results[i].sceneLineNumberRange + ' does not match cue: ' + results[i].cue + ' or number: ' + results[i].number;
           console.log('Loop start:', results[i].index - maxGap,'Loop end', results[i].index);
@@ -4342,16 +4343,20 @@ async function checkAllTheSceneBreaks(){
             let tempRange = scriptSheet.getRangeByIndexes(first + testRange.rowIndex, sceneLineNumberRangeIndex, results[i].index - first, 1);
             tempRange.values = results[i].sceneLineNumberRange;
             await excel.sync();
+            hasIssue = true;
             message += '. Hopefully fixed'
           } else {
             message += '. Not within ' + maxGap + ' rows'
+            hasIssue = true;
           }
-          endMessage.push(message);
         }
       } else {
         message += results[i].sceneLineNumberRange + ' is not a valid line number range';
       }
       console.log(message);
+      if (hasIssue){
+        endMessage.push(message);
+      }
     }
     if (endMessage.length == 0){
       console.log('No issues');
