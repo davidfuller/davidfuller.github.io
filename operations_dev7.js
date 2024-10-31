@@ -4913,8 +4913,10 @@ async function deleteAllFX(){
     }
     console.log('deleteIndexes', deleteIndexes);
     if (deleteIndexes.length > 0){
+      let myCount = 0;
       for (i = deleteIndexes.length - 1; i >= 0; i--){
-        console.log('Deleting: ', deleteIndexes[i])
+        myCount += 1;
+        console.log('Deleting: ', myCount, ' of ', deleteIndexes.length, ': ', deleteIndexes[i])
         await deleteThisRow(excel, deleteIndexes[i])
       }
     }
