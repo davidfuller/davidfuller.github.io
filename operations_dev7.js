@@ -4737,15 +4737,10 @@ async function copyTextV2(doTheCopy, doScriptDifferences){
       let newCharacter = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCharacterIndex, rowDetails[i].rowCount, 1);
       let newScript = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newScriptIndex, rowDetails[i].rowCount, 1);
       currentCue.load('values, rowIndex');
-      await excel.sync();
       currentCharacter.load('values, rowIndex');
-      await excel.sync();
       currentScript.load('values, rowIndex');
-      await excel.sync();
       newCue.load('values, rowIndex');
-      await excel.sync();
       newCharacter.load('values, rowIndex');
-      await excel.sync();
       newScript.load('values, rowIndex');
       await excel.sync();
       let currentCueValues = currentCue.values.map(x => x[0]);
