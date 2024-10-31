@@ -4305,6 +4305,7 @@ async function checkAllTheSceneBreaks(){
     }
     console.log('results', results)
     let maxGap = 40;
+    let endMessage = []
     for (let i = 0; i < results.length; i++){
       let textBit = results[i].sceneLineNumberRange;
       let lineValues = (textBit).substr(1, textBit.length - 1).split('-')
@@ -4324,6 +4325,7 @@ async function checkAllTheSceneBreaks(){
           } else {
             message += ' And good on number';
           }
+          endMessage.push(message);
         } else {
 
           let first = -1;
@@ -4344,11 +4346,17 @@ async function checkAllTheSceneBreaks(){
           } else {
             message += '. Not within ' + maxGap + ' rows'
           }
+          endMessage.push(message);
         }
       } else {
         message += results[i].sceneLineNumberRange + ' is not a valid line number range';
       }
       console.log(message);
+    }
+    if (endMessage.length == 0){
+      console.log('No issues');
+    } else {
+      console.log(endMessage);
     }
   });
 }
