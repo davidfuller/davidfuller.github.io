@@ -4618,15 +4618,41 @@ async function newCharacters(){
       }
     }
     console.log('Missing In Current: ', missingInCurrent);
-    await displayMissingCharacters(excel, missingInNew, missingInCurrent);
+    let missingInNewWalla = missingInNewStatus(excel, missingInNew);
+    await displayMissingCharacters(excel, missingInNew, missingInCurrent, missingInNewWalla);
   })
 }
 
-async function displayMissingCharacters(excel, missingInNew, missingInCurrent){
+async function missingInNewStatus(excel, missingInNew){
+  let details = await getFirstLastIndex();
+  let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  let characterRange = scriptSheet.getRangeByIndexes(details.rowIndex, characterIndex, details.rowCount, 1);
+  let typeCodeRange = scriptSheet.getRangeByIndexes(details.rowIndex, typeCodeIndex, details.rowCount, 1);
+  characterRange.load('values');
+  typeCodeRange.load('values');
+  await excel.sync()
+  let characterValues = characterRange.values.map(x => x[0]);
+  let typeCodeValues = typeCodeRange.values.map(x => x[0]);
+  result = [];
+  for (let i = 0; i < missingInNew.length; i++){
+    let testIndex = characterValues.findIndex(x => x == missingInNew[i]);
+    if (testIndex != -1){
+      if (typeCodeValues[testIndex] = myTypes.wallaScripted){
+        result[i] = myTypes.wallaScripted;
+      } else {
+        result[i] = ''
+      }
+    }
+  }
+  return result
+}
+
+async function displayMissingCharacters(excel, missingInNew, missingInCurrent, missingInNewStatus){
   const comparisonSheet = excel.workbook.worksheets.getItem(comparisonSheetName);
   
   await showArrayInRange(excel, comparisonSheet, 'coNotInNew', missingInNew);
   await showArrayInRange(excel, comparisonSheet, 'coNotInCurrent', missingInCurrent);
+  await showArrayInRange(excel, comparisonSheet, 'coCurrentStatus', missingInNewStatus);
   
 }
 
