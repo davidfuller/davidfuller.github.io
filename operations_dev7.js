@@ -4729,6 +4729,7 @@ async function copyTextV2(doTheCopy, doScriptDifferences){
     let diffIndex = - 1
     for (let i = 0; i < rowDetails.length; i++){
       //check the cues are the same...
+      console.log('I', i, 'parameters', rowDetails[i].currentRowIndex, cueIndex, rowDetails[i].rowCount, 1);
       let currentCue = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, rowDetails[i].rowCount, 1)
       let currentCharacter = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, characterIndex, rowDetails[i].rowCount, 1);
       let currentScript = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, ukScriptIndex, rowDetails[i].rowCount, 1);
@@ -4736,10 +4737,15 @@ async function copyTextV2(doTheCopy, doScriptDifferences){
       let newCharacter = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newCharacterIndex, rowDetails[i].rowCount, 1);
       let newScript = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newScriptIndex, rowDetails[i].rowCount, 1);
       currentCue.load('values, rowIndex');
+      await excel.sync();
       currentCharacter.load('values, rowIndex');
+      await excel.sync();
       currentScript.load('values, rowIndex');
+      await excel.sync();
       newCue.load('values, rowIndex');
+      await excel.sync();
       newCharacter.load('values, rowIndex');
+      await excel.sync();
       newScript.load('values, rowIndex');
       await excel.sync();
       let currentCueValues = currentCue.values.map(x => x[0]);
