@@ -577,6 +577,16 @@ async function createSceneList(){
       }
     }
     console.log('characterData', characterData);
+    let sceneData = []
+    let theIndex = -1;
+    for (let i = 0; i < characterData.length; i++){
+      for (let j = 0; j < characterData[i].scenes.length; j++){
+        let sceneNo = characterData[i].scenes[j];
+        if((!isNaN(sceneNo)) && (sceneNo > 0)){
+          console.log(sceneNo, sceneData[sceneNo].length)
+        }
+      }
+    }
   });
 }
 
