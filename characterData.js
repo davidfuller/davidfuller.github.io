@@ -582,9 +582,11 @@ async function createSceneList(){
       for (let j = 0; j < characterData[i].scenes.length; j++){
         let sceneNo = characterData[i].scenes[j];
         if((!isNaN(sceneNo)) && (sceneNo > 0)){
-          if ((Array.isArray(sceneData[sceneNo]) && !sceneData[sceneNo].length)){
-            sceneData[sceneNo].push(characterData[i].name);
+          if (Array.isArray(sceneData[sceneNo])){
+            console.log(sceneNo, ' is array')
+            sceneData[sceneNo] = sceneData[sceneNo].concat([characterData[i].name]);
           } else {
+            console.log(sceneNo, ' is NOT array')
             sceneData[sceneNo] = [characterData[i].name];
           }
         }
