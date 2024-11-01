@@ -583,7 +583,7 @@ async function createSceneList(){
       for (let j = 0; j < characterData[i].scenes.length; j++){
         let sceneNo = characterData[i].scenes[j];
         if((!isNaN(sceneNo)) && (sceneNo > 0)){
-          console.log(sceneNo, sceneData[sceneNo].length)
+          console.log(sceneNo, Array.isArray(sceneData[sceneNo]),  !sceneData[sceneNo].length);
         }
       }
     }
