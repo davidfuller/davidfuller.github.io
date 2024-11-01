@@ -566,8 +566,10 @@ async function createSceneList(){
     let bookRange = [];
     dataRange.load('values');
     for (let i = 1; i <= 7; i++){
+      console.log('ldBook0' + i + 'SceneRange')
       bookRange[i] = linkedDataSheet.getRange('ldBook0' + i + 'SceneRange');
       bookRange[i].load('values');
+      await excel.sync();
     }
     await excel.sync();
     const dataValues = dataRange.values
