@@ -553,5 +553,17 @@ async function doSearch(){
       await whichBooks();
     }
   })
- 
 }
+
+async function createSceneList(){
+  await Excel.run(async function(excel){
+    const linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
+    let dataRange = linkedDataSheet.getRange('ldTotal');
+    dataRange.load('values');
+    await excel.sync();
+    let dataValues = dataRange.values
+    console.log(dataValues);
+  });
+}
+
+
