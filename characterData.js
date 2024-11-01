@@ -556,14 +556,39 @@ async function doSearch(){
 }
 
 async function createSceneList(){
+  const characterIndex = 0;
+  const scenesIndex = 4;
+  let characterData = []
+  let myIndex = - 1;
   await Excel.run(async function(excel){
     const linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
     let dataRange = linkedDataSheet.getRange('ldTotal');
     dataRange.load('values');
     await excel.sync();
-    let dataValues = dataRange.values
-    console.log(dataValues);
+    const dataValues = dataRange.values
+    console.log('Data Values', dataValues);
+    for (let i = 0; i < dataValues.length; i++){
+      if (dataValues[i][characterIndex].trim() != ''){
+        myIndex += 1
+        characterData = {
+          name: dataValues[i][characterIndex],
+          scenes: getSceneArray[dataValues[i][scenesIndex]]
+        }
+      }
+    }
+    console.log('characterData', characterData);
   });
+}
+
+function getSceneArray(sceneString){
+  let result = []
+  if ((sceneString == '')||(sceneString == 0)){
+    return result;
+  }
+  let scenes = sceneString.split(', ');
+  result = scenes.map(x => parseInt(x));
+  return result;
+
 }
 
 
