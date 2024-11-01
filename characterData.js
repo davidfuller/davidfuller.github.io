@@ -585,8 +585,7 @@ function getSceneArray(sceneString){
   if ((sceneString == '')||(sceneString == 0)){
     return result;
   }
-  console.log(sceneString);
-  let scenes = sceneString.split(', ');
+  let scenes = sceneString.toString().split(', ');
   result = scenes.map(x => parseInt(x));
   return result;
 
