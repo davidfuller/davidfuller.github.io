@@ -608,9 +608,31 @@ async function createSceneList(){
       }
     }
     console.log('Book Scenes', bookScenes);
+
+    let resultData = [];
+    for (let i = 1; i<= characterData.length; i++){
+      resultData[i - 1]= [i, bookFromScene(i, bookScenes), sceneData[i].join[' | '] , sceneData[i].length];
+    }
+
+    let sceneSheet = excel.workbook.worksheets.getItem('Scenes');
+    let sceneTableRange = sceneSheet.getRange('scTable');
+    sceneSheet.load('rowIndex, columnIndex, columnCount');
+    sceneTableRange.clear('Contents');
+    await excel.sync();
+    let tempRange = sceneSheet.getRangeByIndexes(sceneTableRange.rowIndex, sceneTableRange.columnIndex, resultData.length, sceneTableRange.columnCount);
+    tempRange.values = resultData;
+    await excel.sync();
   });
 }
 
+function bookFromScene(sceneNo, bookScenes){
+  for (let i = 1; i <= bookScenes.length; i++){
+    if ((sceneNo >= bookScenes[i].min) && (sceneNo <= bookScenes[i].max)){
+      return i;
+    }
+  }
+  return 0;
+}
 function getSceneArray(sceneString){
   let result = []
   if ((sceneString == '')||(sceneString == 0)){
