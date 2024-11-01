@@ -585,7 +585,7 @@ async function createSceneList(){
           if ((Array.isArray(sceneData[sceneNo]) && !sceneData[sceneNo].length)){
             sceneData[sceneNo].push(characterData[i].name);
           } else {
-            sceneData[sceneData] = [characterData[i].name];
+            sceneData[sceneNo] = [characterData[i].name];
           }
         }
       }
