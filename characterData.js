@@ -563,7 +563,12 @@ async function createSceneList(){
   await Excel.run(async function(excel){
     const linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
     let dataRange = linkedDataSheet.getRange('ldTotal');
+    let bookRange = [];
     dataRange.load('values');
+    for (let i = 1; i <= 7; i++){
+      bookRange[i] = linkedDataSheet.getRange('ldBook0' + i + 'SceneRange');
+      bookRange[i].load(values);
+    }
     await excel.sync();
     const dataValues = dataRange.values
     console.log('Data Values', dataValues);
@@ -593,6 +598,14 @@ async function createSceneList(){
       }
     }
     console.log('sceneData', sceneData);
+    let bookScenes = [];
+    for (let i = 1; i <= 7; i++){
+      bookScenes[i] = {
+        min: bookRange[i].values[0][0],
+        max: bookRange[i].values[1][0]
+      }
+    }
+    console.log('Book Scenes', bookScenes);
   });
 }
 
