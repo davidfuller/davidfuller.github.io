@@ -616,7 +616,7 @@ async function createSceneList(){
 
     let sceneSheet = excel.workbook.worksheets.getItem('Scenes');
     let sceneTableRange = sceneSheet.getRange('scTable');
-    sceneSheet.load('rowIndex, columnIndex, columnCount');
+    sceneTableRange.load('rowIndex, columnIndex, columnCount');
     sceneTableRange.clear('Contents');
     await excel.sync();
     let tempRange = sceneSheet.getRangeByIndexes(sceneTableRange.rowIndex, sceneTableRange.columnIndex, resultData.length, sceneTableRange.columnCount);
