@@ -570,9 +570,9 @@ async function createSceneList(){
     for (let i = 0; i < dataValues.length; i++){
       if (dataValues[i][characterIndex].trim() != ''){
         myIndex += 1
-        characterData = {
+        characterData[myIndex] = {
           name: dataValues[i][characterIndex],
-          scenes: getSceneArray[dataValues[i][scenesIndex]]
+          scenes: getSceneArray(dataValues[i][scenesIndex])
         }
       }
     }
