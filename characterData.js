@@ -578,16 +578,19 @@ async function createSceneList(){
     }
     console.log('characterData', characterData);
     let sceneData = []
-    let theIndex = -1;
     for (let i = 0; i < characterData.length; i++){
       for (let j = 0; j < characterData[i].scenes.length; j++){
         let sceneNo = characterData[i].scenes[j];
         if((!isNaN(sceneNo)) && (sceneNo > 0)){
-          console.log(sceneNo, Array.isArray(sceneData[sceneNo]));
-          console.log(sceneNo, Array.isArray(sceneData[sceneNo]) && !sceneData[sceneNo].length);
+          if ((Array.isArray(sceneData[sceneNo]) && !sceneData[sceneNo].length)){
+            sceneData[sceneNo].push(characterData[i].name);
+          } else {
+            sceneData[sceneData] = [characterData[i].name];
+          }
         }
       }
     }
+    console.log('sceneData', sceneData);
   });
 }
 
