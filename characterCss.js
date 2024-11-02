@@ -47,7 +47,7 @@ h2 {
   display: none;
 }
 
-#wait-message, #admin-wait-message {
+#wait-message, #admin-wait-message, #scene-wait-message {
   display: none;
   font-size: 12px;
   margin-left: 5px;
