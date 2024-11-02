@@ -1,5 +1,6 @@
 const linkedDataSheetName = 'Linked_Data';
 const characterSheetName = 'Characters';
+const sceneSheetName = 'Scenes';
 const settingsSheetName = 'Settings';
 const codeVersion = '2.1';
 function auto_exec(){
@@ -641,7 +642,25 @@ function getSceneArray(sceneString){
   let scenes = sceneString.toString().split(', ');
   result = scenes.map(x => parseInt(x));
   return result;
-
 }
 
-
+async function showScenePage(){
+  let mainPage = tag("main-page");
+  mainPage.style.display = 'none';
+  let scenePage = tag("scene-page");
+  scenePage.style.display = 'block'
+  await Excel.run(async function(excel){
+    const sceneSheet = excel.workbook.worksheets.getItem(sceneSheetName);
+    sceneSheet.activate();
+  })
+}
+async function gotoMain(){
+  let mainPage = tag("main-page");
+  mainPage.style.display = 'block';
+  let scenePage = tag("scene-page");
+  scenePage.style.display = 'none'
+  await Excel.run(async function(excel){
+    const characterSheet = excel.workbook.worksheets.getItem(characterSheetName);
+    characterSheet.activate();
+  })
+}

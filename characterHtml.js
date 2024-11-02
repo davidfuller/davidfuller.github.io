@@ -8,6 +8,7 @@ async function mainHTML(){
   <h1>Please wait...</h1>
 </div>
 <div id="main-page">
+  <button id="btnScene" onclick="jade_modules.characterdata.showScenePage()">Characters in Scenes</button>
   <button id="btnSearch" onclick="jade_modules.characterdata.doSearch()">Search</button>
   <label id="wait-message">Please wait...</label><br/>
   <a id='show-hide' onclick="jade_modules.characterdata.showAdmin()">Show/hide admin</a>
@@ -16,8 +17,12 @@ async function mainHTML(){
   <label class="section-label">Admin</label><br/>
   <button id='btnPrepare' onclick="jade_modules.characterdata.gatherData()">Make the list</button>
   <button id="btnRefresh" onclick="jade_modules.characterdata.refreshLinks()">Refresh links</button>
-  <button id="btnCreateSceneList" onclick="jade_modules.characterdata.createSceneList()">Create Scene List</button>
   <label id="admin-wait-message">Please wait...</label>
+</div>
+<div id="scene-page">
+  <button id="btnMain" onclick="jade_modules.characterdata.gotoMain()">Characters</button><br>
+  <button id="btnCreateSceneList" onclick="jade_modules.characterdata.createSceneList()">Create Scene List</button>
+  <label id="scene-wait-message">Please wait...</label>
 </div>
    `;
 
