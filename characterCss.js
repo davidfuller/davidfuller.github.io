@@ -65,6 +65,12 @@ h2 {
   font-size: 14px;
   font-weight: bold;
 }
+#character-summary {
+  height: 100vh;
+  padding: 5px;
+  background-color: #ffffb3;
+  color: #424200;
+}
   `;
   Jade.set_css(css);
   console.log('CSS done')
