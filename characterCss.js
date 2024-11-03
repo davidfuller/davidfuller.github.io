@@ -71,7 +71,7 @@ h2 {
   background-color: #ffffb3;
   color: #424200;
 }
-#btnMain {
+#btnMain, #btnCreateSceneList {
   background-color: #640000;
   color: #ffafaf;
 }
