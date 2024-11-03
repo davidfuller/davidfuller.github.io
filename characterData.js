@@ -561,6 +561,7 @@ async function createSceneList(){
   const scenesIndex = 4;
   let characterData = []
   let myIndex = - 1;
+  let whichBooks = getCheckedBooks();
   await Excel.run(async function(excel){
     const linkedDataSheet = excel.workbook.worksheets.getItem(linkedDataSheetName);
     let dataRange = linkedDataSheet.getRange('ldTotal');
@@ -624,6 +625,7 @@ async function createSceneList(){
     tempRange.values = resultData;
     await excel.sync();
   });
+  console.log('Which books', whichBooks);
 }
 
 function bookFromScene(sceneNo, bookScenes){
@@ -642,6 +644,16 @@ function getSceneArray(sceneString){
   let scenes = sceneString.toString().split(', ');
   result = scenes.map(x => parseInt(x));
   return result;
+}
+function getCheckedBooks(){
+  let result = [];
+  for (let i = 1; i <= 7; i++){
+    let chk = tag('book-' + i)
+    if (chk.checked){
+      result.push(i);
+    }
+  }
+  return result
 }
 
 async function showScenePage(){
