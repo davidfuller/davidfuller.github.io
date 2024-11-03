@@ -66,10 +66,14 @@ h2 {
   font-weight: bold;
 }
 #character-summary {
-  height: 100vh;
+  height: 100vh !important;
   padding: 5px;
   background-color: #ffffb3;
   color: #424200;
+}
+#btnMain {
+  background-color: #640000;
+  color: #ffafaf;
 }
   `;
   Jade.set_css(css);
