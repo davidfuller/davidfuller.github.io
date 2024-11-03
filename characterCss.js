@@ -46,6 +46,9 @@ h2 {
   border-style: solid;
   display: none;
 }
+#scene-page {
+  border-color: #640000;
+}
 
 #wait-message, #admin-wait-message, #scene-wait-message {
   display: none;
@@ -66,7 +69,7 @@ h2 {
   font-weight: bold;
 }
 #character-summary {
-  height: 100vh !important;
+  height: 100vh;
   padding: 5px;
   background-color: #ffffb3;
   color: #424200;

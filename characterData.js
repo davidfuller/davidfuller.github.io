@@ -645,7 +645,7 @@ function getSceneArray(sceneString){
 }
 
 async function showScenePage(){
-  const sceneBackgroundColour = '#ffafaf';
+  const sceneBackgroundColour = '#ffafaf !important';
   const sceneColour = '#640000';
   let mainPage = tag("main-page");
   mainPage.style.display = 'none';
