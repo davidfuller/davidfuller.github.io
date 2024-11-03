@@ -32,5 +32,6 @@ await jade_modules.characterdata.registerExcelEvents();
 await jade_modules.characterdata.refreshLinks();
 await jade_modules.characterdata.gatherData ();
 await jade_modules.characterdata.showMain();
+await jade_modules.characterdata.gotoMain();
 console.log("I'm here data loaded.");
 }
