@@ -612,8 +612,13 @@ async function createSceneList(){
     console.log('Book Scenes', bookScenes);
 
     let resultData = [];
+    let resultIndex = -1;
     for (let i = 1; i<= characterData.length; i++){
-      resultData[i - 1]= [i, bookFromScene(i, bookScenes), sceneData[i].join(' | ') , sceneData[i].length];
+      let bookNo = bookFromScene(i, bookScenes);
+      if (whichBooks.includes(bookNo)){
+        resultIndex += 1;
+        resultData[resultIndex]= [i, bookNo, sceneData[i].join(' | ') , sceneData[i].length];
+      }
     }
 
     let sceneSheet = excel.workbook.worksheets.getItem('Scenes');
