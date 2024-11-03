@@ -667,7 +667,7 @@ async function gotoMain(){
   let scenePage = tag("scene-page");
   scenePage.style.display = 'none'
   let characterSummary = tag('character-summary');
-  characterSummary.style.backgroundColor = sceneBackgroundColour;
+  characterSummary.style.backgroundColor = '#777777' //sceneBackgroundColour;
   characterSummary.style.color = sceneColour;
   await Excel.run(async function(excel){
     const characterSheet = excel.workbook.worksheets.getItem(characterSheetName);
