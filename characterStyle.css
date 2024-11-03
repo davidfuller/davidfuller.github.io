@@ -105,8 +105,8 @@ h2 {
   left: 1px;
   height: 10px;
   width: 10px;
-  background-color: #d8dfe5;
-  border: #46656F ;
+  background-color: #ffafaf;
+  border: #640000 ;
   border-radius: 4px;
   border-width: 2px;
   border-style: solid;
@@ -114,12 +114,12 @@ h2 {
 
 /* On mouse-over, add a grey background color */
 .container-books:hover input ~ .checkmark-books {
-  background-color: #46656F7f;
+  background-color: #640000;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container-books input:checked ~ .checkmark-books {
-  background-color: #46656F;
+  background-color: #640000;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
