@@ -645,20 +645,29 @@ function getSceneArray(sceneString){
 }
 
 async function showScenePage(){
+  const sceneBackgroundColour = '#ffafaf';
+  const sceneColour = '#640000';
   let mainPage = tag("main-page");
   mainPage.style.display = 'none';
   let scenePage = tag("scene-page");
   scenePage.style.display = 'block'
+  let characterSummary = tag('character-summary');
+  characterSummary.style.backgroundColor = sceneBackgroundColour;
+  characterSummary.style.color = sceneColour;
   await Excel.run(async function(excel){
     const sceneSheet = excel.workbook.worksheets.getItem(sceneSheetName);
     sceneSheet.activate();
   })
 }
 async function gotoMain(){
+  const sceneBackgroundColour = '#ffffb3;'
+  const sceneColour = '#424200';
   let mainPage = tag("main-page");
   mainPage.style.display = 'block';
   let scenePage = tag("scene-page");
   scenePage.style.display = 'none'
+  characterSummary.style.backgroundColor = sceneBackgroundColour;
+  characterSummary.style.color = sceneColour;
   await Excel.run(async function(excel){
     const characterSheet = excel.workbook.worksheets.getItem(characterSheetName);
     characterSheet.activate();
