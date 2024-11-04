@@ -33,7 +33,7 @@ h2 {
   font-weight: normal;
 }
 
-#admin, #scene-page, #main-navigation, #main-controls, #scene-navigation, #scene-controls {
+#admin, #main-navigation, #main-controls, #scene-navigation, #scene-controls {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
