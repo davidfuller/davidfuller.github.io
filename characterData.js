@@ -628,6 +628,9 @@ async function createSceneList(){
     await excel.sync();
     let tempRange = sceneSheet.getRangeByIndexes(sceneTableRange.rowIndex, sceneTableRange.columnIndex, resultData.length, sceneTableRange.columnCount);
     tempRange.values = resultData;
+
+    let booksRange = sceneSheet.getRange('scBooks');
+    booksRange.values = [[whichBooks.join(', ')]];
     await excel.sync();
   });
   console.log('Which books', whichBooks);
