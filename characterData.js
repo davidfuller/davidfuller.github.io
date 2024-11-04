@@ -633,7 +633,7 @@ async function createSceneList(){
     booksRange.values = [[whichBooks.join(', ')]];
 
     let numSceneRange = sceneSheet.getRange('scNumScenes');
-    numSceneRange.values [[resultData.length]];
+    numSceneRange.values = [[resultData.length]];
 
     await excel.sync();
   });
