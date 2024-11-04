@@ -4956,7 +4956,9 @@ async function deleteAllFX(){
 
 async function doSomeFormatting(excel, theIndexes, sheet, columnCount, fillClear, fillColour, fontColour){
   let lineRanges = [];
-  let lineBorders = []
+  let lineNoScriptLineRangeBefore = [];
+  let lineNoScriptLineRangeAfter = [];
+  let lineBorders = [];
   let myCount = 0;
   for (let i = 0; i < theIndexes.length; i++){
       lineRanges[i] = sheet.getRangeByIndexes(theIndexes[i], cueIndex, 1, columnCount);
