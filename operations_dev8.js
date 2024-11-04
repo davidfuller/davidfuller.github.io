@@ -4964,7 +4964,7 @@ async function doSomeFormatting(excel, theIndexes, sheet, columnCount, fillClear
       } else {
         //lineRanges[i].format.fill.color = fillColour;
       }
-      //lineRanges[i].format.font.strikethrough = false;
+      lineRanges[i].format.font.strikethrough = false;
       //lineRanges[i].format.font.color = fontColour;
       
       lineBorders[i] = lineRanges[i].format.borders
