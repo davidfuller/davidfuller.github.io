@@ -555,6 +555,8 @@ async function doSearch(){
 }
 
 async function createSceneList(){
+  let waitDisplay = tag('scene-wait-message')
+  waitDisplay.style.display = 'block';
   const characterIndex = 0;
   const scenesIndex = 4;
   let characterData = []
@@ -633,7 +635,7 @@ async function createSceneList(){
 
     await excel.sync();
   });
-  console.log('Which books', whichBooks);
+  waitDisplay.style.display = 'none';
 }
 
 function bookFromScene(sceneNo, bookScenes){
@@ -693,4 +695,11 @@ async function gotoMain(){
     const characterSheet = excel.workbook.worksheets.getItem(characterSheetName);
     characterSheet.activate();
   })
+}
+
+function selectBooks(selected){
+  for (let i = 1; i <= 7; i++){
+    let chk = tag('book-' + i)
+    chk.checked = selected
+  }
 }

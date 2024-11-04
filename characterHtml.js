@@ -33,6 +33,8 @@ async function mainHTML(){
   <div id="scene-controls">
     <button id="btnCreateSceneList" onclick="jade_modules.characterdata.createSceneList()">Create Scene List</button>
     <label id="scene-wait-message">Please wait...</label>
+    <button id="btnSelectAll" onclick="jade_modules.characterdata.selectBooks(true)">Select all books</button>
+    <button id="btnSelectNone" onclick="jade_modules.characterdata.selectBooks(false)">Select no books</button>
     <div id="book-scheckboxes">
       <label class="container-books">Book 1
         <input type="checkbox" id='book-1' checked="checked">
