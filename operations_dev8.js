@@ -4960,9 +4960,9 @@ async function doSomeFormatting(excel, theIndexes, sheet, columnCount, fillClear
   for (let i = 0; i < theIndexes.length; i++){
       lineRanges[i] = sheet.getRangeByIndexes(theIndexes[i], cueIndex, 1, columnCount);
       if (fillClear){
-        lineRanges[i].format.fill.clear();
+       //lineRanges[i].format.fill.clear();
       } else {
-        lineRanges[i].format.fill.color = fillColour;
+        //lineRanges[i].format.fill.color = fillColour;
       }
       //lineRanges[i].format.font.strikethrough = false;
       lineRanges[i].format.font.color = fontColour;
