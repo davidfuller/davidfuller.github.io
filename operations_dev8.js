@@ -24,7 +24,7 @@ let sceneBlockColumns = 9; //Can be changed in add scene block
 let wallaBlockColumns = 8;
 
 let sceneIndex, numberIndex, cueIndex, characterIndex, locationIndex, chapterIndex, lineIndex;
-let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex;
+let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex, usCueIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex, usScriptColumnIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
@@ -137,6 +137,7 @@ async function initialiseVariables(){
   lineIndex = findColumnIndex('Line');
   ukScriptIndex = findColumnIndex('UK script');
   otherNotesIndex = findColumnIndex('Other notes');
+  usCueIndex = findColumnIndex('US Cue');
   usScriptColumnIndex = findColumnIndex('US Script');  
   ukTakesIndex = findColumnIndex('UK No of takes');
   ukTakeNoIndex = findColumnIndex('UK Take No')
@@ -4959,6 +4960,8 @@ async function doSomeFormatting(excel, theIndexes, sheet, columnCount, fillClear
   let myCount = 0;
   for (let i = 0; i < theIndexes.length; i++){
       lineRanges[i] = sheet.getRangeByIndexes(theIndexes[i], cueIndex, 1, columnCount);
+      lineNoScriptLineRangeBefore[i] = sheet.getRangeByIndexes(theIndexes[i], cueIndex, 1, 5)
+      lineNoScriptLineRangeAfter[i] = sheet.getRangeByIndexes(theIndexes[i], usCueIndex, 1, 2)
       if (fillClear){
        lineRanges[i].format.fill.clear();
       } else {
@@ -4966,8 +4969,10 @@ async function doSomeFormatting(excel, theIndexes, sheet, columnCount, fillClear
       }
 
       
-      //lineRanges[i].format.font.strikethrough = false;
-      //lineRanges[i].format.font.color = fontColour;
+      lineNoScriptLineRangeBefore[i].format.font.strikethrough = false;
+      lineNoScriptLineRangeAfter[i].format.font.strikethrough = false;
+      lineNoScriptLineRangeBefore[i].format.font.color = fontColour;
+      lineNoScriptLineRangeAfter[i].format.font.color = fontColour;
       
       lineBorders[i] = lineRanges[i].format.borders
 
