@@ -609,7 +609,7 @@ async function createSceneList(){
 
     let resultData = [];
     let resultIndex = -1;
-    for (let i = 1; i<= sceneData.length; i++){
+    for (let i = 1; i < sceneData.length; i++){
       let bookNo = bookFromScene(i, bookScenes);
       if (whichBooks.includes(bookNo)){
         resultIndex += 1;
