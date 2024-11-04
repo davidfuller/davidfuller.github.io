@@ -609,11 +609,11 @@ async function createSceneList(){
 
     let resultData = [];
     let resultIndex = -1;
-    for (let i = 1; i<= characterData.length; i++){
+    for (let i = 1; i<= sceneData.length; i++){
       let bookNo = bookFromScene(i, bookScenes);
       if (whichBooks.includes(bookNo)){
         resultIndex += 1;
-        resultData[resultIndex]= [i, bookNo, sceneData[i].join(' | ') , sceneData[i].length];
+        resultData[resultIndex] = [i, bookNo, sceneData[i].join(' | ') , sceneData[i].length];
       }
     }
     console.log('result data', resultData);
