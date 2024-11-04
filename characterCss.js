@@ -44,13 +44,13 @@ h2 {
   border-radius: 5px;
   border-color: #424200;
   border-style: solid;
-  display: none;
+  display: block;
 }
 #scene-page {
   border-color: #640000;
 }
 
-#main-page {
+#main-page, #admin, #scene-page {
   display: none;
 }
 
