@@ -4988,10 +4988,7 @@ async function doSomeFormatting(excel, theIndexes, sheet, columnCount, fillClear
       myCount += 1;
       if (myCount >= 100){
         myCount = 0;
-        let tempFont = lineRanges[i].format.font
-        tempFont.load('strikethrough, color');
         await excel.sync();
-        console.log('Strikethrough', tempFont.strikethrough, 'Colour', tempFont.color)
         console.log('Row ' + (i + 1) + ' of ' + theIndexes.length);
       }
     }
