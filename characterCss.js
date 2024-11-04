@@ -33,7 +33,7 @@ h2 {
   font-weight: normal;
 }
 
-#main-page, #admin, #scene-page {
+#admin, #scene-page, #main-navigation, #main-controls {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
@@ -48,6 +48,10 @@ h2 {
 }
 #scene-page {
   border-color: #640000;
+}
+
+#main-page {
+  display: none;
 }
 
 #wait-message, #admin-wait-message, #scene-wait-message {
