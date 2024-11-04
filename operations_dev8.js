@@ -4820,14 +4820,12 @@ async function copyTextV2(doTheCopy, doScriptDifferences){
         sourceRangeCueToCharacter.load('address')
         let destinationCueToCharacter = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, cueIndex, 1, 1);
         destinationCueToCharacter.load('address');
-        destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Values", false, false);
-        destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "Formats", false, false);
+        destinationCueToCharacter.copyFrom(sourceRangeCueToCharacter, "All", false, false);
         let sourceRangeStageToUsScript = newSheet.getRangeByIndexes(rowDetails[i].newSheetRowIndex, newStageDirectionsIndex, rowDetails[i].rowCount, stageToUsScriptColumns);
         sourceRangeStageToUsScript.load('address');
         let destinationStageToUsScript = scriptSheet.getRangeByIndexes(rowDetails[i].currentRowIndex, stageDirectionWallaDescriptionIndex, 1, 1);
         destinationStageToUsScript.load('address');
-        destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Values", false, false);
-        destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "Formats", false, false);
+        destinationStageToUsScript.copyFrom(sourceRangeStageToUsScript, "All", false, false);
         await excel.sync();
         console.log (i, ' of ', rowDetails.length + ' completed ', sourceRangeCueToCharacter.address, ' to ', destinationCueToCharacter.address, 'and', sourceRangeStageToUsScript.address, 'to', destinationStageToUsScript.address);
       }
