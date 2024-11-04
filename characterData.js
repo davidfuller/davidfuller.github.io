@@ -2,7 +2,7 @@ const linkedDataSheetName = 'Linked_Data';
 const characterSheetName = 'Characters';
 const sceneSheetName = 'Scenes';
 const settingsSheetName = 'Settings';
-const codeVersion = '2.1';
+const codeVersion = '2.2';
 function auto_exec(){
   console.log('Hello');
 }
