@@ -4403,11 +4403,9 @@ async function copyNewText(){
     let myNewRangePartOne = scriptSheet.getRangeByIndexes(startRowIndexCurrent, cueIndex, 1, 1);
     let myNewRangePartTwo = scriptSheet.getRangeByIndexes(startRowIndexCurrent, stageDirectionWallaDescriptionIndex, 1, 1);
     
-    myNewRangePartOne.copyFrom(newTextRangePartOne, "Values");
-    myNewRangePartOne.copyFrom(newTextRangePartOne, "Formats");
-
-    myNewRangePartTwo.copyFrom(newTextRangePartTwo, "Values");
-    myNewRangePartTwo.copyFrom(newTextRangePartTwo, "Formats");
+    myNewRangePartOne.copyFrom(newTextRangePartOne, "All");
+    myNewRangePartTwo.copyFrom(newTextRangePartTwo, "All");
+    
 
     await excel.sync();
   })
