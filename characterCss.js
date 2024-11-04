@@ -33,7 +33,7 @@ h2 {
   font-weight: normal;
 }
 
-#admin, #scene-page, #main-navigation, #main-controls {
+#admin, #scene-page, #main-navigation, #main-controls, #scene-navigation, #scene-controls {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
@@ -46,7 +46,7 @@ h2 {
   border-style: solid;
   display: block;
 }
-#scene-page {
+#scene-page, #scene-navigation, #scene-controls {
   border-color: #640000;
 }
 
@@ -78,7 +78,7 @@ h2 {
   background-color: #ffffb3;
   color: #424200;
 }
-#btnMain, #btnCreateSceneList {
+#btnMain, #btnCreateSceneList, #btnSceneScene {
   background-color: #640000;
   color: #ffafaf;
 }
