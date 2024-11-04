@@ -78,7 +78,7 @@ h2 {
   background-color: #ffffb3;
   color: #424200;
 }
-#btnMain, #btnCreateSceneList, #btnSceneScene {
+#btnMain, #btnCreateSceneList, #btnSceneScene, #btnSelectAll, #btnSelectNone {
   background-color: #640000;
   color: #ffafaf;
 }
