@@ -1624,6 +1624,9 @@ async function hideRows(visibleType, country){
     console.log(myRange.values[0].length)
     */
     //First unhide all
+
+    let myHiddenRows = await hiddenRows(excel);
+    console.log('Hidden rows', myHiddenRows);
     scriptSheet.getUsedRange().rowHidden = false;
     myMessage.innerText = "Showing all takes";
     /*
@@ -1672,6 +1675,26 @@ async function hideRows(visibleType, country){
   if (isProtected){
     await lockColumns();
   }
+}
+
+async function hiddenRows(excel){
+  const details = await getFirstLastIndex();
+  const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  let myRows = []
+  for (let i = details.rowIndex; i <= (details.rowCount - details.rowIndex + 1); i++){
+    myRows[i] = scriptSheet.getRangeByIndexes(i, 1, 1, 1);
+    myRows[i].load('rowHidden');
+  }
+  await excel.sync();
+  let result = [];
+  let index = -1;
+  for (let i = 0; i < myRows.length; i++){
+    if (myRows[i].rowHidden){
+      index += 1;
+      result[index] = i;
+    }
+  }
+  return result;
 }
 
 async function showHideColumns(columnType){
