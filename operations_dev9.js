@@ -2852,8 +2852,17 @@ async function registerExcelEvents(){
     locationSheet.onChanged.add(handleLocation);
     locationSheet.onSelectionChanged.add(handleSelection)
     await excel.sync();
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    scriptSheet.onRowHiddenChanged.add(handleRowHide)
     console.log("Event handler successfully registered for onChanged event for four sheets.");
   }).catch(errorHandlerFunction());
+}
+
+async function handleRowHide(event){
+  await Excel.run(async (excel) => {
+    await excel.sync();
+    console.log('Row hide', event);
+  })
 }
 
 async function handleChange(event) {
