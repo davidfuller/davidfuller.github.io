@@ -1627,7 +1627,11 @@ async function hideRows(visibleType, country){
 
     let myHiddenRows = await hiddenRows(excel);
     console.log('Hidden rows', myHiddenRows);
-    scriptSheet.getUsedRange().rowHidden = false;
+    for (let i = 0; i < myHiddenRows.length; i++){
+      scriptSheet.getRangeByIndexes(myHiddenRows[i], 1, 1, 1).rowHidden = false;
+    }
+    await excel.sync();
+    //scriptSheet.getUsedRange().rowHidden = false;
     myMessage.innerText = "Showing all takes";
     /*
     let hideRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, 0, lastDataRow - 2, 1);
