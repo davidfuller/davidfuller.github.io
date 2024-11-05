@@ -1618,33 +1618,15 @@ async function hideRows(visibleType, country){
     myMessage.innerText = "Please wait...";
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     
-    /*let myRange = scriptSheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
-    myRange.load('values')
-    await excel.sync();
-    console.log(myRange.values)
-    console.log(myRange.values.length)
-    console.log(myRange.values[0].length)
-    */
-    //First unhide all
-
-    
     let tempRange = [];
     for (let i = 0; i < scriptHiddenRows.length; i++){
       tempRange[i] = scriptSheet.getRange(scriptHiddenRows[i]);
       tempRange[i].rowHidden = false;
     }
     await excel.sync();
-    //scriptSheet.getUsedRange().rowHidden = false;
-    myMessage.innerText = "Showing all takes";
-    /*
-    let hideRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, 0, lastDataRow - 2, 1);
-    hideRange.load('address');
-    hideRange.rowHidden = false;
-    await excel.sync();
-    console.log(hideRange.address);
-    */
     
-
+    myMessage.innerText = "Showing all takes";
+    
     if (visibleType == 'last'){
       for (i = 0; i < myRange.values.length; i++){
         if (myRange.values[i][0] != ""){
@@ -1663,6 +1645,8 @@ async function hideRows(visibleType, country){
     }
     
     if (visibleType == 'first'){
+
+      /*
       for (i = 0; i < myRange.values.length; i++){
         if (myRange.values[i][0] != ""){
           if (myRange.values[i][1] != 1){
@@ -1676,6 +1660,8 @@ async function hideRows(visibleType, country){
           }
         }
       }
+      */
+      await hideFirstTakes();
       myMessage.innerText = "Showing first takes"
     }
   })
@@ -1685,8 +1671,8 @@ async function hideRows(visibleType, country){
 }
 
 async function hiddenRows(){
+  const details = await getFirstLastIndex();
   await Excel.run(async function(excel){ 
-    const details = await getFirstLastIndex();
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let myRows = [];
     let address = [];
@@ -1707,6 +1693,29 @@ async function hiddenRows(){
     console.log('Hidden rows:', result)
     scriptHiddenRows = result;
   })
+}
+
+async function hideFirstTakes(){
+  const details = getFirstLastIndex();
+  await Excel.run(async function(excel){ 
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex')
+    await excel.sync();
+    let startIndex = activeCell.rowIndex - 10;
+    if (startIndex < details.rowIndex){startIndex = details.rowIndex}
+    let rowCount = 20;
+    if ((startIndex + rowCount) > details.rowCount){rowCount = details.rowCount - startIndex}
+    let myRange = scriptSheet.getRangeByIndexes(startIndex, ukTakeNoIndex, rowcount, 1);
+    myRange.load('values, rowIndex');
+    await excel.sync();
+    let myValues = myRange.values.map(x => x[0]);
+    const theRowIndex = myRange.rowIndex;
+    const takeOneIndexes = myValues.map((x, i) => [x, i]).filter(([x, i]) => x == 1).map(([x, i]) => i + theRowIndex);
+    console.log('Take One Indexes', takeOneIndexes)
+  });
+
+  
 }
 
 async function showHideColumns(columnType){
