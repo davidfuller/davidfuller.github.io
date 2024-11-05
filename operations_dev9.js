@@ -1760,9 +1760,9 @@ async function showLastTakes(){
     let index = -1;
     const theRowIndex = takesRange.rowIndex;
     for (let i = 0; i < takesRange.values.length; i++){
-      let ukTakes = takesRange.values[ukTakesArrayIndex][i];
+      let ukTakes = takesRange.values[i][ukTakesArrayIndex];
       if (ukTakes != ''){
-        let ukTakeNo = takesRange.values[ukTakeNoArrayIndex][i]
+        let ukTakeNo = takesRange.values[i][ukTakeNoArrayIndex];
         if (ukTakes != ukTakeNo){
           index += 1;
           takeLastIndexes[index] = i + theRowIndex;
