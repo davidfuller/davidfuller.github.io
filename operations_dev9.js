@@ -1712,12 +1712,12 @@ async function hideFirstTakes(){
     await excel.sync();
     let myValues = myRange.values.map(x => x[0]);
     const theRowIndex = myRange.rowIndex;
-    const takeOneIndexes = myValues.map((x, i) => [x, i]).filter(([x, i]) => (x != 1)).map(([x, i]) => i + theRowIndex);
+    const takeOneIndexes = myValues.map((x, i) => [x, i]).filter(([x, i]) => ((x != 1) && (x != ''))).map(([x, i]) => i + theRowIndex);
     console.log('Take One Indexes', takeOneIndexes)
     let hideRange = [];
     for (let i = 0; i < takeOneIndexes.length; i++){
       hideRange[i] = scriptSheet.getRangeByIndexes(takeOneIndexes[i], 1, 1, 1);
-      hideRange[i].rowHeight = true;
+      hideRange[i].rowHidden = true;
     }
     await excel.sync();
   });
