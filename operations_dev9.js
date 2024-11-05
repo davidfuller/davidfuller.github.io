@@ -1617,12 +1617,14 @@ async function hideRows(visibleType, country){
     let myMessage = tag('takeMessage')
     myMessage.innerText = "Please wait...";
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const activeCell = excel.workbook.getActiveCell();
     
     let tempRange = [];
     for (let i = 0; i < scriptHiddenRows.length; i++){
       tempRange[i] = scriptSheet.getRange(scriptHiddenRows[i]);
       tempRange[i].rowHidden = false;
     }
+    activeCell.select();
     await excel.sync();
     
     myMessage.innerText = "Showing all takes";
@@ -1700,7 +1702,7 @@ async function hideFirstTakes(){
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
-    activeCell.load('rowIndex')
+    activeCell.load('rowIndex, columnIndex')
     await excel.sync();
     let startIndex = activeCell.rowIndex - 10;
     if (startIndex < details.rowIndex){startIndex = details.rowIndex}
@@ -1716,7 +1718,7 @@ async function hideFirstTakes(){
     console.log('Take One Indexes', takeOneIndexes)
     let hideRange = [];
     for (let i = 0; i < takeOneIndexes.length; i++){
-      hideRange[i] = scriptSheet.getRangeByIndexes(takeOneIndexes[i], 1, 1, 1);
+      hideRange[i] = scriptSheet.getRangeByIndexes(takeOneIndexes[i], activeCell.columnIndex, 1, 1);
       hideRange[i].rowHidden = true;
     }
     await excel.sync();
