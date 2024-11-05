@@ -1629,8 +1629,13 @@ async function hideRows(visibleType, country){
 
     await hiddenRows(excel);
     console.log('Hidden rows', scriptHiddenRows);
+    let tempRange = [];
     for (let i = 0; i < scriptHiddenRows.length; i++){
-      scriptSheet.getRange(scriptHiddenRows[i]).rowHidden = false;
+      tempRange[i] = scriptSheet.getRange(scriptHiddenRows[i]);
+      tempRange[i].rowHidden = false;
+      if (i == 0){
+        tempRange[i].select();
+      }
     }
     await excel.sync();
     //scriptSheet.getUsedRange().rowHidden = false;
