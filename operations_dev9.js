@@ -1616,15 +1616,16 @@ async function hideRows(visibleType, country){
     let myMessage = tag('takeMessage')
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     
-    let myRange = scriptSheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
+    /*let myRange = scriptSheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
     myRange.load('values')
     await excel.sync();
     console.log(myRange.values)
     console.log(myRange.values.length)
     console.log(myRange.values[0].length)
-
+    */
     //First unhide all
     scriptSheet.getUsedRange().rowHidden = false;
+    myMessage.innerText = "Showing all takes";
     /*
     let hideRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, 0, lastDataRow - 2, 1);
     hideRange.load('address');
@@ -1632,7 +1633,7 @@ async function hideRows(visibleType, country){
     await excel.sync();
     console.log(hideRange.address);
     */
-    myMessage.innerText = "Showing all takes"
+    
 
     if (visibleType == 'last'){
       for (i = 0; i < myRange.values.length; i++){
