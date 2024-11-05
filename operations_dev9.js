@@ -2861,13 +2861,22 @@ async function registerExcelEvents(){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.onRowHiddenChanged.add(handleRowHide)
     console.log("Event handler successfully registered for onChanged event for four sheets.");
-  }).catch(errorHandlerFunction());
+  });
 }
 
 async function handleRowHide(event){
   await Excel.run(async (excel) => {
     await excel.sync();
     console.log('Row hide', event);
+    if (event.source == 'local'){
+      if(event.changeType == 'Unhidden'){
+        let index = scriptHiddenRows.findIndex(event.address);
+        if (index != -1){
+          scriptHiddenRows.splice(index, 1);
+          console.log('Index removed:', index, 'address', event.address, ' scriptHiddenRows', scriptHiddenRows);
+        }
+      }
+    }
   })
 }
 
