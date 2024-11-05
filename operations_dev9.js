@@ -1607,6 +1607,7 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
 async function hideRows(visibleType, country){
   let noOfTakesColumn;
   let takeNumberColumn;
+  let isProtected = await unlockIfLocked();
   if (country == "UK"){
     noOfTakesColumn = findColumnLetter("UK No of takes");
     takeNumberColumn = findColumnLetter("UK Take No")
@@ -1614,7 +1615,7 @@ async function hideRows(visibleType, country){
   await Excel.run(async function(excel){ 
     let myMessage = tag('takeMessage')
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let isProtected = await unlockIfLocked();
+    
     let myRange = scriptSheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
     myRange.load('values')
     await excel.sync();
@@ -1623,11 +1624,14 @@ async function hideRows(visibleType, country){
     console.log(myRange.values[0].length)
 
     //First unhide all
+    scriptSheet.getUsedRange().rowHidden = false;
+    /*
     let hideRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, 0, lastDataRow - 2, 1);
     hideRange.load('address');
     hideRange.rowHidden = false;
     await excel.sync();
     console.log(hideRange.address);
+    */
     myMessage.innerText = "Showing all takes"
 
     if (visibleType == 'last'){
@@ -1663,10 +1667,10 @@ async function hideRows(visibleType, country){
       }
       myMessage.innerText = "Showing first takes"
     }
-    if (isProtected){
-      await lockColumns();
-    }
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 async function showHideColumns(columnType){
