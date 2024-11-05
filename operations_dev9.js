@@ -2868,7 +2868,7 @@ async function handleRowHide(event){
   await Excel.run(async (excel) => {
     await excel.sync();
     console.log('Row hide', event);
-    if (event.source == 'local'){
+    if (event.source == 'Local'){
       console.log('Source:', event.source);
       if(event.changeType == 'Unhidden'){
         console.log('script Hidden Rows', scriptHiddenRows);
