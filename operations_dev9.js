@@ -1614,6 +1614,7 @@ async function hideRows(visibleType, country){
   }
   await Excel.run(async function(excel){ 
     let myMessage = tag('takeMessage')
+    myMessage.innerText = "Please waot...";
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     
     /*let myRange = scriptSheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
