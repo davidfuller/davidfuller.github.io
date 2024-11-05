@@ -2870,6 +2870,7 @@ async function handleRowHide(event){
     console.log('Row hide', event);
     if (event.source == 'local'){
       if(event.changeType == 'Unhidden'){
+        console.log('script Hidden Rows', scriptHiddenRows);
         let index = scriptHiddenRows.findIndex(event.address);
         if (index != -1){
           scriptHiddenRows.splice(index, 1);
