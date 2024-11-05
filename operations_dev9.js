@@ -1706,7 +1706,7 @@ async function hideFirstTakes(){
     if (startIndex < details.rowIndex){startIndex = details.rowIndex}
     let rowCount = 20;
     if ((startIndex + rowCount) > details.rowCount){rowCount = details.rowCount - startIndex}
-    let myRange = scriptSheet.getRangeByIndexes(startIndex, ukTakeNoIndex, rowcount, 1);
+    let myRange = scriptSheet.getRangeByIndexes(startIndex, ukTakeNoIndex, rowCount, 1);
     myRange.load('values, rowIndex');
     await excel.sync();
     let myValues = myRange.values.map(x => x[0]);
