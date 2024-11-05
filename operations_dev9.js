@@ -1616,6 +1616,8 @@ async function hideRows(visibleType, country){
   await Excel.run(async function(excel){ 
     let myMessage = tag('takeMessage')
     myMessage.innerText = "Please wait...";
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
     
@@ -1626,6 +1628,7 @@ async function hideRows(visibleType, country){
     }
     activeCell.select();
     await excel.sync();
+    app.suspendScreenUpdatingUntilNextSync();
     
     myMessage.innerText = "Showing all takes";
     
@@ -1679,6 +1682,7 @@ async function hiddenRows(){
   const details = await getFirstLastIndex();
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    
     let myRows = [];
     let address = [];
     for (let i = details.rowIndex; i <= (details.rowCount - details.rowIndex + 1); i++){
@@ -1704,9 +1708,13 @@ async function showFirstTakes(){
   const details = await getFirstLastIndex();
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex, columnIndex')
     await excel.sync();
+    
+    app.suspendScreenUpdatingUntilNextSync();
     let startIndex = activeCell.rowIndex - 10;
     if (startIndex < details.rowIndex){startIndex = details.rowIndex}
     let rowCount = 20;
@@ -1715,6 +1723,8 @@ async function showFirstTakes(){
     let takeNoRange = scriptSheet.getRangeByIndexes(startIndex, ukTakeNoIndex, rowCount, 1);
     takeNoRange.load('values, rowIndex');
     await excel.sync();
+    
+    app.suspendScreenUpdatingUntilNextSync();
     let takeNoValues = takeNoRange.values.map(x => x[0]);
     const theRowIndex = takeNoRange.rowIndex;
     const takeOneIndexes = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((x != 1) && (x != ''))).map(([x, i]) => i + theRowIndex);
@@ -1732,9 +1742,13 @@ async function showLastTakes(){
   const details = await getFirstLastIndex();
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex, columnIndex')
     await excel.sync();
+    
+    app.suspendScreenUpdatingUntilNextSync();
     let startIndex = activeCell.rowIndex - 10;
     if (startIndex < details.rowIndex){startIndex = details.rowIndex}
     let columnIndex;
@@ -1755,7 +1769,8 @@ async function showLastTakes(){
     let takesRange = scriptSheet.getRangeByIndexes(startIndex, columnIndex, rowCount, columnCount);
     takesRange.load('values, rowIndex');
     await excel.sync();
-    console.log('takesRange', takesRange.values)
+    
+    app.suspendScreenUpdatingUntilNextSync();
     let takeLastIndexes = [];
     let index = -1;
     const theRowIndex = takesRange.rowIndex;
