@@ -2867,19 +2867,19 @@ async function registerExcelEvents(){
 async function handleRowHide(event){
   await Excel.run(async (excel) => {
     await excel.sync();
-    console.log('Row hide', event);
+    //console.log('Row hide', event);
     if (event.source == 'Local'){
       if(event.changeType == 'Unhidden'){
         let index = scriptHiddenRows.findIndex(x => x == event.address);
         if (index != -1){
           scriptHiddenRows.splice(index, 1);
-          console.log('Index removed:', index, 'address', event.address, ' scriptHiddenRows', scriptHiddenRows);
+          //console.log('Index removed:', index, 'address', event.address, ' scriptHiddenRows', scriptHiddenRows);
         }
       } else if (event.changeType == 'Hidden'){
         let index = scriptHiddenRows.findIndex(x => x == event.address);
         if (index == -1){
           scriptHiddenRows.push(event.address);
-          console.log('Script Hidden Rows', scriptHiddenRows);
+          //console.log('Script Hidden Rows', scriptHiddenRows);
         }
       }
     }
