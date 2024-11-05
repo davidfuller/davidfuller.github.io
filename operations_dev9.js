@@ -1755,6 +1755,7 @@ async function showLastTakes(){
     let takesRange = scriptSheet.getRangeByIndexes(startIndex, columnIndex, rowCount, columnCount);
     takesRange.load('values, rowIndex');
     await excel.sync();
+    console.log('takesRange', takesRange.values)
     let takeLastIndexes = [];
     let index = -1;
     const theRowIndex = takesRange.rowIndex;
