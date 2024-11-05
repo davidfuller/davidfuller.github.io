@@ -2869,6 +2869,7 @@ async function handleRowHide(event){
     await excel.sync();
     console.log('Row hide', event);
     if (event.source == 'local'){
+      console.log('Source:', event.source);
       if(event.changeType == 'Unhidden'){
         console.log('script Hidden Rows', scriptHiddenRows);
         let index = scriptHiddenRows.findIndex(event.address);
