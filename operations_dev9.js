@@ -1632,9 +1632,6 @@ async function hideRows(visibleType, country){
     for (let i = 0; i < scriptHiddenRows.length; i++){
       tempRange[i] = scriptSheet.getRange(scriptHiddenRows[i]);
       tempRange[i].rowHidden = false;
-      if (i == 0){
-        tempRange[i].select();
-      }
     }
     await excel.sync();
     //scriptSheet.getUsedRange().rowHidden = false;
@@ -1691,9 +1688,11 @@ async function hiddenRows(){
   await Excel.run(async function(excel){ 
     const details = await getFirstLastIndex();
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let myRows = []
+    let myRows = [];
+    let address = [];
     for (let i = details.rowIndex; i <= (details.rowCount - details.rowIndex + 1); i++){
-      myRows[i] = scriptSheet.getRangeByIndexes(i, 1, 1, 1);
+      address[i] = (i+1).toString() + ':' + (i+1).toString();
+      myRows[i] = scriptSheet.getRange(address[i]);
       myRows[i].load('rowHidden');
     }
     await excel.sync();
@@ -1702,7 +1701,7 @@ async function hiddenRows(){
     for (let i = 0; i < myRows.length; i++){
       if (myRows[i].rowHidden){
         index += 1;
-        result[index] = (i+1).toString() + ':' + (i+1).toString();
+        result[index] = address[i];
       }
     }
     console.log('Hidden rows:', result)
