@@ -34,6 +34,7 @@ let scriptSheet;
 let sceneInput, lineNoInput, chapterInput;
 let typeCodeValues, addSelectList;
 
+let scriptHiddenRows = [];
 let myTypes = {
   chapter: 'Chapter',
   scene: 'Scene',
@@ -1614,7 +1615,7 @@ async function hideRows(visibleType, country){
   }
   await Excel.run(async function(excel){ 
     let myMessage = tag('takeMessage')
-    myMessage.innerText = "Please waot...";
+    myMessage.innerText = "Please wait...";
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     
     /*let myRange = scriptSheet.getRange(noOfTakesColumn + firstDataRow + ":" + takeNumberColumn + lastDataRow);
@@ -1626,10 +1627,10 @@ async function hideRows(visibleType, country){
     */
     //First unhide all
 
-    let myHiddenRows = await hiddenRows(excel);
-    console.log('Hidden rows', myHiddenRows);
-    for (let i = 0; i < myHiddenRows.length; i++){
-      scriptSheet.getRangeByIndexes(myHiddenRows[i], 1, 1, 1).rowHidden = false;
+    await hiddenRows(excel);
+    console.log('Hidden rows', scriptHiddenRows);
+    for (let i = 0; i < scriptHiddenRows.length; i++){
+      scriptSheet.getRangeByIndexes(scriptHiddenRows[i], 1, 1, 1).rowHidden = false;
     }
     await excel.sync();
     //scriptSheet.getUsedRange().rowHidden = false;
@@ -1699,7 +1700,7 @@ async function hiddenRows(excel){
       result[index] = i;
     }
   }
-  return result;
+  scriptHiddenRows = result;
 }
 
 async function showHideColumns(columnType){
