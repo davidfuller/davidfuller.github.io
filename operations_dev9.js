@@ -1702,7 +1702,7 @@ async function hiddenRows(excel){
   for (let i = 0; i < myRows.length; i++){
     if (myRows[i].rowHidden){
       index += 1;
-      result[index] = i.toString() + ':' + i.toString();
+      result[index] = (i+1).toString() + ':' + (i+1).toString();
     }
   }
   scriptHiddenRows = result;
