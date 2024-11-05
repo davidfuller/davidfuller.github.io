@@ -1696,7 +1696,7 @@ async function hiddenRows(){
 }
 
 async function hideFirstTakes(){
-  const details = getFirstLastIndex();
+  const details = await getFirstLastIndex();
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
