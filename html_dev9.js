@@ -274,6 +274,7 @@ async function mainHTML(){
   await jade_modules.operations.showHideColumns('all');
   await jade_modules.operations.setUpEvents();
   await jade_modules.operations.registerExcelEvents();
+  await jade_modules.operations.hiddenRows();
   await jade_modules.operations.fillChapterAndScene();
   await jade_modules.operations.showMain();
 
