@@ -5170,6 +5170,25 @@ async function gatherTakeInformation(){
       }
     }
     console.log('takeData ', takeData);
+    let theTake = 1;
+    let theLine = 1;
+    for (let i = 0; i < takeData.length; i++){
+      if (i == 0){
+        takeData[i].takeIndex = theTake
+        takeData[i].lineIndex = theLine
+      } else {
+        if (takeData[i].cue == takeData[i - 1].cue){
+          //same Take. Increment line
+          takeData[i].takeIndex = takeData[i - 1].takeIndex
+          takeData[i].lineIndex = takeData[i - 1].lineIndex + 1;
+        } else {
+          //increment Take, Reset line to 1
+          takeData[i].takeIndex = takeData[i - 1].takeIndex + 1
+          takeData[i].lineIndex = 1;
+        }
+      }
+    }
+    console.log('takeData ', takeData);
   })
   if (isProtected){
     await lockColumns();
@@ -5177,6 +5196,22 @@ async function gatherTakeInformation(){
 
 
 }
+const takeColours = [
+  {
+    name: 'blue',
+    order: 'odd',
+    firstLast: '#83cceb',
+    even: '#c0e6f5',
+    odd: '#e5f5fb'
+  },
+  {
+    name: 'orange',
+    order: 'even',
+    firstLast: '#f7c7ac',
+    even: '#fbe2d5',
+    odd: '#fdf2ed'
+  }
+]
 
 function getColumnDetails(){
   let columns = {}
