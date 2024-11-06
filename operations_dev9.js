@@ -1630,7 +1630,7 @@ async function hideRows(visibleType, country){
     myMessage.innerText = "Showing all takes";
     
     if (visibleType == 'last'){
-      await showLastTakes();
+      await showLastTakes(true);
       myMessage.innerText = "Showing last takes"
     }
     
@@ -1717,19 +1717,14 @@ async function showFirstTakes(doFull){
   });
 }
 
-async function showLastTakes(){
+async function showLastTakes(doFull){
   const details = await getFirstLastIndex();
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
-    const activeCell = excel.workbook.getActiveCell();
-    activeCell.load('rowIndex, columnIndex')
-    await excel.sync();
-    
-    app.suspendScreenUpdatingUntilNextSync();
-    let startIndex = activeCell.rowIndex - showTakesOffset;
-    if (startIndex < details.rowIndex){startIndex = details.rowIndex}
+    let takesRange;
+
     let columnIndex;
     let columnCount;
     
@@ -1742,10 +1737,23 @@ async function showLastTakes(){
     }
     let ukTakesArrayIndex = ukTakesIndex - columnIndex;
     let ukTakeNoArrayIndex = ukTakeNoIndex - columnIndex;
-    let rowCount = 2 * showTakesOffset;
-    if ((startIndex + rowCount) > details.rowCount){rowCount = details.rowCount - startIndex}
-    console.log(details.rowIndex, startIndex, columnIndex, rowCount, columnCount);
-    let takesRange = scriptSheet.getRangeByIndexes(startIndex, columnIndex, rowCount, columnCount);
+
+    if (!doFull){
+      const activeCell = excel.workbook.getActiveCell();
+      activeCell.load('rowIndex, columnIndex')
+      await excel.sync();
+      
+      app.suspendScreenUpdatingUntilNextSync();
+      let startIndex = activeCell.rowIndex - showTakesOffset;
+      if (startIndex < details.rowIndex){startIndex = details.rowIndex}
+      
+      let rowCount = 2 * showTakesOffset;
+      if ((startIndex + rowCount) > details.rowCount){rowCount = details.rowCount - startIndex}
+      console.log(details.rowIndex, startIndex, columnIndex, rowCount, columnCount);
+      takesRange = scriptSheet.getRangeByIndexes(startIndex, columnIndex, rowCount, columnCount);
+    } else {
+      takesRange = scriptSheet.getRangeByIndexes(details.rowIndex, columnIndex, details.rowCount, columnCount);
+    }
     takesRange.load('values, rowIndex');
     await excel.sync();
     
@@ -1766,7 +1774,7 @@ async function showLastTakes(){
     console.log('Take Last Indexes', takeLastIndexes)
     let hideRange = [];
     for (let i = 0; i < takeLastIndexes.length; i++){
-      hideRange[i] = scriptSheet.getRangeByIndexes(takeLastIndexes[i], activeCell.columnIndex, 1, 1);
+      hideRange[i] = scriptSheet.getRangeByIndexes(takeLastIndexes[i], 1, 1, 1);
       hideRange[i].rowHidden = true;
     }
     await excel.sync();
