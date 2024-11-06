@@ -1657,7 +1657,7 @@ async function hiddenRows(){
       myRows[i] = scriptSheet.getRange(address[i]);
       myRows[i].load('rowHidden');
       payLoadCount += 1;
-      if (payloadCount > 500){
+      if (payLoadCount > 500){
         payLoadCount = 0;
         await excel.sync();
       }
