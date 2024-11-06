@@ -1730,18 +1730,7 @@ async function showLastTakes(doFull){
     app.suspendScreenUpdatingUntilNextSync();
     let takesRange;
 
-    let columnIndex;
-    let columnCount;
-    
-    if (ukTakesIndex > ukTakeNoIndex){
-      columnIndex = ukTakeNoIndex;
-      columnCount = ukTakesIndex - ukTakeNoIndex + 1;
-    } else {
-      columnIndex = ukTakesIndex;
-      columnCount = ukTakeNoIndex - ukTakesIndex + 1; 
-    }
-    let ukTakesArrayIndex = ukTakesIndex - columnIndex;
-    let ukTakeNoArrayIndex = ukTakeNoIndex - columnIndex;
+    let col = getColumnDetails();
 
     if (!doFull){
       const activeCell = excel.workbook.getActiveCell();
@@ -1755,9 +1744,9 @@ async function showLastTakes(doFull){
       let rowCount = 2 * showTakesOffset;
       if ((startIndex + rowCount) > details.rowCount){rowCount = details.rowCount - startIndex}
       console.log(details.rowIndex, startIndex, columnIndex, rowCount, columnCount);
-      takesRange = scriptSheet.getRangeByIndexes(startIndex, columnIndex, rowCount, columnCount);
+      takesRange = scriptSheet.getRangeByIndexes(startIndex, col.columnIndex, rowCount, col.columnCount);
     } else {
-      takesRange = scriptSheet.getRangeByIndexes(details.rowIndex, columnIndex, details.rowCount, columnCount);
+      takesRange = scriptSheet.getRangeByIndexes(details.rowIndex, col.columnIndex, details.rowCount, col.columnCount);
     }
     takesRange.load('values, rowIndex');
     await excel.sync();
@@ -1767,9 +1756,9 @@ async function showLastTakes(doFull){
     let index = -1;
     const theRowIndex = takesRange.rowIndex;
     for (let i = 0; i < takesRange.values.length; i++){
-      let ukTakes = takesRange.values[i][ukTakesArrayIndex];
+      let ukTakes = takesRange.values[i][col.ukTakesArrayIndex];
       if (ukTakes != ''){
-        let ukTakeNo = takesRange.values[i][ukTakeNoArrayIndex];
+        let ukTakeNo = takesRange.values[i][col.ukTakeNoArrayIndex];
         if (ukTakes != ukTakeNo){
           index += 1;
           takeLastIndexes[index] = i + theRowIndex;
@@ -5152,3 +5141,55 @@ chapter: 'Chapter',
   wallaScripted: 'Walla Scripted',
   wallaBlock: 'Walla Block'
   */
+
+async function gatherTakeInformation(){
+  let details = await getFirstLastIndex();
+  let isProtected = await unlockIfLocked();
+  await Excel.run(async function(excel){ 
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const col = getColumnDetails();
+    let cueRange = scriptSheet.getRangeByIndexes(details.rowIndex, cueIndex, details.rowCount, 1);
+    let takesRange = scriptSheet.getRangeByIndexes(details.rowIndex, col.columnIndex, details.rowCount. col.columnCount);
+    cueRange.load('values, rowIndex');
+    takesRange.load('values, rowIndex');
+    await excel.sync();
+
+    let takeData = [];
+    for (let i = 0; i < takesRange.values.length; i++){
+      ukTakes = parseInt(takesRange.values[i][col.ukTakesArrayIndex])
+      ukTakeNo = parseInt(takesRange.values[i][col.ukTakeNoArrayIndex])
+
+      if ((!isNaN(ukTakesIndex)) && !isNaN(ukTakeNoIndex)){
+        let data = {
+          rowIndex: i + takesRange.rowIndex,
+          cue: cueRange.values[i][0],
+          ukTakes: ukTakes,
+          ukTakeNo: ukTakeNo
+        }
+        takeData.push(data)
+      }
+    }
+    console.log('takeData ', takeData);
+  })
+  if (isProtected){
+    await lockColumns();
+  }
+
+
+}
+
+function getColumnDetails(){
+  let columns = {}
+  
+  if (ukTakesIndex > ukTakeNoIndex){
+    columns.columnIndex = ukTakeNoIndex;
+    columns.columnCount = ukTakesIndex - ukTakeNoIndex + 1;
+  } else {
+    columns.columnIndex = ukTakesIndex;
+    columns.columnCount = ukTakeNoIndex - ukTakesIndex + 1; 
+  }
+  columns.ukTakesArrayIndex = ukTakesIndex - columnIndex;
+  columns.ukTakeNoArrayIndex = ukTakeNoIndex - columnIndex;
+
+  return columns;
+}
