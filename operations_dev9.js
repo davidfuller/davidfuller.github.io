@@ -5144,8 +5144,14 @@ chapter: 'Chapter',
   */
 
 async function gatherTakeInformation(){
+  const buttonTextColour = 'Coloured Takes'
+  const buttonTextClear = 'Clear Coloured Takes'
   let details = await getFirstLastIndex();
   let isProtected = await unlockIfLocked();
+  let button = tag('btnColouredTakes')
+
+  let doColour = button.innerText == buttonTextColour
+
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const col = getColumnDetails();
@@ -5192,10 +5198,20 @@ async function gatherTakeInformation(){
     let columnCount = ukRemoveFromEditIndex - columnIndex + 1;
     for (let i = 0; i < takeData.length; i++){
       tempRange[i] = scriptSheet.getRangeByIndexes(takeData[i].rowIndex, columnIndex, 1, columnCount);
-      tempRange[i].format.fill.color = takeData[i].colour;
+      if (doColour){
+        tempRange[i].format.fill.color = takeData[i].colour;
+      } else {
+        tempRange[i].format.fill.color.clear();
+      }
+      
     }
     await excel.sync();
   })
+  if (doColour){
+    button.innerText = buttonTextClear;
+  } else {
+    button.innerText = buttonTextColour;
+  }
   if (isProtected){
     await lockColumns();
   }
