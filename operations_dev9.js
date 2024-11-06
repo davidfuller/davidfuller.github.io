@@ -1620,6 +1620,7 @@ async function hideRows(visibleType, country){
     myMessage.innerText = "Please wait...";
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
     
@@ -1629,16 +1630,22 @@ async function hideRows(visibleType, country){
       tempRange[i].rowHidden = false;
     }
     await excel.sync();
-    app.suspendScreenUpdatingUntilNextSync();
+    
     
     myMessage.innerText = "Showing all takes";
     
     if (visibleType == 'last'){
+      app.suspendScreenUpdatingUntilNextSync();
+      app.suspendApiCalculationUntilNextSync();
+      myMessage.innerText = "Please wait...";
       await showLastTakes(true);
       myMessage.innerText = "Showing last takes"
     }
     
     if (visibleType == 'first'){
+      app.suspendScreenUpdatingUntilNextSync();
+      app.suspendApiCalculationUntilNextSync();
+      myMessage.innerText = "Please wait...";
       await showFirstTakes(true);
       myMessage.innerText = "Showing first takes"
     }
@@ -1692,6 +1699,7 @@ async function showFirstTakes(doFull){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
     let takeNoRange;
     if (!doFull){
       const activeCell = excel.workbook.getActiveCell();
@@ -1699,6 +1707,7 @@ async function showFirstTakes(doFull){
       await excel.sync();
       
       app.suspendScreenUpdatingUntilNextSync();
+      app.suspendApiCalculationUntilNextSync();
       let startIndex = activeCell.rowIndex - showTakesOffset;
       if (startIndex < details.rowIndex){startIndex = details.rowIndex}
       let rowCount = 2 * showTakesOffset;
@@ -1712,6 +1721,7 @@ async function showFirstTakes(doFull){
     await excel.sync();
     
     app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
     let takeNoValues = takeNoRange.values.map(x => x[0]);
     const theRowIndex = takeNoRange.rowIndex;
     const takeOneIndexes = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((x != 1) && (x != ''))).map(([x, i]) => i + theRowIndex);
@@ -1733,6 +1743,7 @@ async function showLastTakes(doFull){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
     let takesRange;
 
     let col = getColumnDetails();
@@ -1743,6 +1754,7 @@ async function showLastTakes(doFull){
       await excel.sync();
       
       app.suspendScreenUpdatingUntilNextSync();
+      app.suspendApiCalculationUntilNextSync();
       let startIndex = activeCell.rowIndex - showTakesOffset;
       if (startIndex < details.rowIndex){startIndex = details.rowIndex}
       
@@ -1757,6 +1769,7 @@ async function showLastTakes(doFull){
     await excel.sync();
     
     app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
     let takeLastIndexes = [];
     let index = -1;
     const theRowIndex = takesRange.rowIndex;
