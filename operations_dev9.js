@@ -1641,7 +1641,7 @@ async function hideRows(visibleType, country){
     await lockColumns();
   }
   let endTime = new Date().getTime();
-  console.log('Time taken:', (endTime - startTime) * 1000)
+  console.log('Time taken:', (endTime - startTime) / 1000)
 }
 
 async function hiddenRows(){
