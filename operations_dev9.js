@@ -20,6 +20,8 @@ const unnamedCharactersColon = 'Un-named Character Walla:';
 const generalWalla = 'General Walla';
 const generalWallaColon = 'General Walla:';
 const actorScriptName = 'Actor Script';
+const showTakesOffset = 20;
+
 let sceneBlockColumns = 9; //Can be changed in add scene block
 let wallaBlockColumns = 8;
 
@@ -1687,9 +1689,9 @@ async function showFirstTakes(){
     await excel.sync();
     
     app.suspendScreenUpdatingUntilNextSync();
-    let startIndex = activeCell.rowIndex - 10;
+    let startIndex = activeCell.rowIndex - showTakesOffset;
     if (startIndex < details.rowIndex){startIndex = details.rowIndex}
-    let rowCount = 20;
+    let rowCount = 2 * showTakesOffset;
     if ((startIndex + rowCount) > details.rowCount){rowCount = details.rowCount - startIndex}
     console.log(details.rowIndex, startIndex, ukTakeNoIndex, rowCount);
     let takeNoRange = scriptSheet.getRangeByIndexes(startIndex, ukTakeNoIndex, rowCount, 1);
@@ -1721,7 +1723,7 @@ async function showLastTakes(){
     await excel.sync();
     
     app.suspendScreenUpdatingUntilNextSync();
-    let startIndex = activeCell.rowIndex - 10;
+    let startIndex = activeCell.rowIndex - showTakesOffset;
     if (startIndex < details.rowIndex){startIndex = details.rowIndex}
     let columnIndex;
     let columnCount;
@@ -1735,7 +1737,7 @@ async function showLastTakes(){
     }
     let ukTakesArrayIndex = ukTakesIndex - columnIndex;
     let ukTakeNoArrayIndex = ukTakeNoIndex - columnIndex;
-    let rowCount = 20;
+    let rowCount = 2 * showTakesOffset;
     if ((startIndex + rowCount) > details.rowCount){rowCount = details.rowCount - startIndex}
     console.log(details.rowIndex, startIndex, columnIndex, rowCount, columnCount);
     let takesRange = scriptSheet.getRangeByIndexes(startIndex, columnIndex, rowCount, columnCount);
