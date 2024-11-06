@@ -1606,13 +1606,8 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
   });
 }
 async function hideRows(visibleType, country){
-  let noOfTakesColumn;
-  let takeNumberColumn;
+  let startTime = new Date().getTime();
   let isProtected = await unlockIfLocked();
-  if (country == "UK"){
-    noOfTakesColumn = findColumnLetter("UK No of takes");
-    takeNumberColumn = findColumnLetter("UK Take No")
-  }
   await Excel.run(async function(excel){ 
     let myMessage = tag('takeMessage')
     myMessage.innerText = "Please wait...";
@@ -1633,42 +1628,11 @@ async function hideRows(visibleType, country){
     myMessage.innerText = "Showing all takes";
     
     if (visibleType == 'last'){
-      /*
-      for (i = 0; i < myRange.values.length; i++){
-        if (myRange.values[i][0] != ""){
-          if (myRange.values[i][0] != myRange.values[i][1]){
-            console.log(myRange.values[i][0]);
-            console.log(myRange.values[i][1]);
-            let hideRange = scriptSheet.getRangeByIndexes(i + firstDataRow - 1, 0, 1, 1);
-            hideRange.load('address');
-            hideRange.rowHidden = true;
-            await excel.sync();
-            console.log(hideRange.address);
-          }
-        }
-      }
-      */
       await showLastTakes();
       myMessage.innerText = "Showing last takes"
     }
     
     if (visibleType == 'first'){
-
-      /*
-      for (i = 0; i < myRange.values.length; i++){
-        if (myRange.values[i][0] != ""){
-          if (myRange.values[i][1] != 1){
-            console.log(myRange.values[i][0]);
-            console.log(myRange.values[i][1]);
-            let hideRange = scriptSheet.getRangeByIndexes(i + firstDataRow - 1, 0, 1, 1);
-            hideRange.load('address');
-            hideRange.rowHidden = true;
-            await excel.sync();
-            console.log(hideRange.address);
-          }
-        }
-      }
-      */
       await showFirstTakes();
       myMessage.innerText = "Showing first takes"
     }
@@ -1676,6 +1640,8 @@ async function hideRows(visibleType, country){
   if (isProtected){
     await lockColumns();
   }
+  let endTime = new Date().getTime();
+  console.log('Time taken:', (endTime - startTime) * 1000)
 }
 
 async function hiddenRows(){
