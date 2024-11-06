@@ -26,7 +26,7 @@ let sceneBlockColumns = 9; //Can be changed in add scene block
 let wallaBlockColumns = 8;
 
 let sceneIndex, numberIndex, cueIndex, characterIndex, locationIndex, chapterIndex, lineIndex;
-let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex, usCueIndex;
+let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex, ukRemoveFromEditIndex, usCueIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex, usScriptColumnIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
@@ -148,6 +148,7 @@ async function initialiseVariables(){
   ukStudioIndex = findColumnIndex("UK Studio");
   ukEngineerIndex = findColumnIndex("UK Engineer");
   ukMarkUpIndex = findColumnIndex("UK Broadcast Assistant Markup");
+  ukRemoveFromEditIndex = findColumnIndex("UK Remove from Edit");
 
   usTakesIndex = findColumnIndex('US No of takes');
   usTakeNoIndex = findColumnIndex('US Take No');
@@ -5185,6 +5186,15 @@ async function gatherTakeInformation(){
       takeData[i] = assignColour(takeData[i]);
     }
     console.log('takeData ', takeData);
+
+    let tempRange = [];
+    let columnIndex = characterIndex;
+    let columnCount = ukRemoveFromEditIndex - columnIndex + 1;
+    for (let i = 0; i < takeData.length; i++){
+      tempRange[i] = scriptSheet.getRangeByIndexes(takeData[i].rowIndex, columnIndex, 1, columnCount);
+      tempRange[i].format.fill.color = takeData[i].colour;
+    }
+    await excel.sync();
   })
   if (isProtected){
     await lockColumns();
