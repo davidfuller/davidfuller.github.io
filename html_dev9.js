@@ -278,6 +278,7 @@ async function mainHTML(){
   await jade_modules.operations.hiddenRows();
   await jade_modules.operations.fillChapterAndScene();
   await jade_modules.operations.showMain();
+  await jade_modules.operations.gatherTakeInformation(false);
 
   console.log("I'm here data loaded. Dev5");
 }

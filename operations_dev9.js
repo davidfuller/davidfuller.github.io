@@ -5143,14 +5143,23 @@ chapter: 'Chapter',
   wallaBlock: 'Walla Block'
   */
 
-async function gatherTakeInformation(){
+async function doColourTakes(){
   const buttonTextColour = 'Coloured Takes'
   const buttonTextClear = 'Clear Coloured Takes'
+  let button = tag('btnColouredTakes')
+  let doColour = button.innerText == buttonTextColour;
+  await gatherTakeInformation(doColour);
+  if (doColour){
+    button.innerText = buttonTextClear;
+  } else {
+    button.innerText = buttonTextColour;
+  }
+}
+async function gatherTakeInformation(doColour){
+  
   let details = await getFirstLastIndex();
   let isProtected = await unlockIfLocked();
-  let button = tag('btnColouredTakes')
-
-  let doColour = button.innerText == buttonTextColour
+  
 
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -5201,19 +5210,11 @@ async function gatherTakeInformation(){
       if (doColour){
         tempRange[i].format.fill.color = takeData[i].colour;
       } else {
-        //tempRange[i].format.fill.load('color');
-        //await excel.sync();
         tempRange[i].format.fill.clear();
       }
-      
     }
     await excel.sync();
   })
-  if (doColour){
-    button.innerText = buttonTextClear;
-  } else {
-    button.innerText = buttonTextColour;
-  }
   if (isProtected){
     await lockColumns();
   }
