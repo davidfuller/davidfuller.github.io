@@ -1711,8 +1711,10 @@ async function showFirstTakes(doFull){
     console.log('Take One Indexes', takeOneIndexes)
     let hideRange = [];
     for (let i = 0; i < takeOneIndexes.length; i++){
-      hideRange[i] = scriptSheet.getRangeByIndexes(takeOneIndexes[i], 1, 1, 1);
-      hideRange[i].rowHidden = true;
+      if (takeOneIndexes[i] > 1){
+        hideRange[i] = scriptSheet.getRangeByIndexes(takeOneIndexes[i], 1, 1, 1);
+        hideRange[i].rowHidden = true;
+      }
     }
     await excel.sync();
   });
@@ -1775,8 +1777,10 @@ async function showLastTakes(doFull){
     console.log('Take Last Indexes', takeLastIndexes)
     let hideRange = [];
     for (let i = 0; i < takeLastIndexes.length; i++){
-      hideRange[i] = scriptSheet.getRangeByIndexes(takeLastIndexes[i], 1, 1, 1);
-      hideRange[i].rowHidden = true;
+      if (takeLastIndexes[i] > 1){
+        hideRange[i] = scriptSheet.getRangeByIndexes(takeLastIndexes[i], 1, 1, 1);
+        hideRange[i].rowHidden = true;
+      }
     }
     await excel.sync();
   })
