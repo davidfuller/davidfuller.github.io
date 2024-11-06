@@ -5159,7 +5159,7 @@ async function gatherTakeInformation(){
       ukTakes = parseInt(takesRange.values[i][col.ukTakesArrayIndex])
       ukTakeNo = parseInt(takesRange.values[i][col.ukTakeNoArrayIndex])
 
-      if ((!isNaN(ukTakesIndex)) && !isNaN(ukTakeNoIndex)){
+      if ((!isNaN(ukTakes)) && !isNaN(ukTakeNo)){
         let data = {
           rowIndex: i + takesRange.rowIndex,
           cue: cueRange.values[i][0],
