@@ -5169,33 +5169,41 @@ async function gatherTakeInformation(){
         takeData.push(data)
       }
     }
-    console.log('takeData ', takeData);
     let theTake = 1;
-    let theLine = 1;
     for (let i = 0; i < takeData.length; i++){
       if (i == 0){
         takeData[i].takeIndex = theTake
-        takeData[i].lineIndex = theLine
       } else {
         if (takeData[i].cue == takeData[i - 1].cue){
           //same Take. Increment line
           takeData[i].takeIndex = takeData[i - 1].takeIndex
-          takeData[i].lineIndex = takeData[i - 1].lineIndex + 1;
         } else {
           //increment Take, Reset line to 1
           takeData[i].takeIndex = takeData[i - 1].takeIndex + 1
-          takeData[i].lineIndex = 1;
         }
       }
+      takeData[i] = assignColour(takeData[i]);
     }
     console.log('takeData ', takeData);
   })
   if (isProtected){
     await lockColumns();
   }
-
-
 }
+
+function assignColour(takeData){
+  let myColour = takeColours[(takeData.takeIndex + 1) % 2]
+  if ((takeData.ukTakeNo == 1) || (takeData.ukTakeNo == takeData.ukTakes)){
+    //First or last
+    takeData.colour = myColour.firstLast;
+  } else if (takeData.ukTakeNo % 2 == 1){
+    takeData.colour = myColour.odd
+  } else {
+    takeData.colour = myColour.even
+  }
+  return takeData;
+}
+
 const takeColours = [
   {
     name: 'blue',
