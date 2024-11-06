@@ -1637,7 +1637,6 @@ async function hideRows(visibleType, country){
       await showFirstTakes(true);
       myMessage.innerText = "Showing first takes"
     }
-    await excel.sync();
     activeCell.getOffsetRange(1,0).select();
     await excel.sync();
     activeCell.select();
