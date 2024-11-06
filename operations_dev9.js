@@ -5188,8 +5188,8 @@ function getColumnDetails(){
     columns.columnIndex = ukTakesIndex;
     columns.columnCount = ukTakeNoIndex - ukTakesIndex + 1; 
   }
-  columns.ukTakesArrayIndex = ukTakesIndex - columnIndex;
-  columns.ukTakeNoArrayIndex = ukTakeNoIndex - columnIndex;
+  columns.ukTakesArrayIndex = ukTakesIndex - columns.columnIndex;
+  columns.ukTakeNoArrayIndex = ukTakeNoIndex - columns.columnIndex;
 
   return columns;
 }
