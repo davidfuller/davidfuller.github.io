@@ -1638,6 +1638,8 @@ async function hideRows(visibleType, country){
       myMessage.innerText = "Showing first takes"
     }
     await excel.sync();
+    activeCell.getOffsetRange(1,0).select();
+    await excel.sync();
     activeCell.select();
     //scriptSheet.activate();
   })
