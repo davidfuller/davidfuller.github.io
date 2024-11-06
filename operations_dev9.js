@@ -5149,7 +5149,7 @@ async function gatherTakeInformation(){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const col = getColumnDetails();
     let cueRange = scriptSheet.getRangeByIndexes(details.rowIndex, cueIndex, details.rowCount, 1);
-    let takesRange = scriptSheet.getRangeByIndexes(details.rowIndex, col.columnIndex, details.rowCount. col.columnCount);
+    let takesRange = scriptSheet.getRangeByIndexes(details.rowIndex, col.columnIndex, details.rowCount, col.columnCount);
     cueRange.load('values, rowIndex');
     takesRange.load('values, rowIndex');
     await excel.sync();
