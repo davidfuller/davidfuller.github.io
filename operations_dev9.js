@@ -5201,6 +5201,8 @@ async function gatherTakeInformation(){
       if (doColour){
         tempRange[i].format.fill.color = takeData[i].colour;
       } else {
+        tempRange[i].format.fill.load('color');
+        await excel.sync();
         tempRange[i].format.fill.color.clear();
       }
       
