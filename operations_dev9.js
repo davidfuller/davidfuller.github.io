@@ -1637,8 +1637,9 @@ async function hideRows(visibleType, country){
       await showFirstTakes(true);
       myMessage.innerText = "Showing first takes"
     }
+    await excel.sync();
     activeCell.select();
-    scriptSheet.activate();
+    //scriptSheet.activate();
   })
   if (isProtected){
     await lockColumns();
