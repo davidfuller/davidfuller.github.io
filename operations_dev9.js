@@ -1651,10 +1651,16 @@ async function hiddenRows(){
     
     let myRows = [];
     let address = [];
+    let payLoadCount = 0;
     for (let i = details.rowIndex; i <= (details.rowCount - details.rowIndex + 1); i++){
       address[i] = (i+1).toString() + ':' + (i+1).toString();
       myRows[i] = scriptSheet.getRange(address[i]);
       myRows[i].load('rowHidden');
+      payLoadCount += 1;
+      if (payloadCount > 500){
+        payLoadCount = 0;
+        await excel.sync();
+      }
     }
     await excel.sync();
     let result = [];
