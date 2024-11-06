@@ -1623,7 +1623,6 @@ async function hideRows(visibleType, country){
       tempRange[i] = scriptSheet.getRange(scriptHiddenRows[i]);
       tempRange[i].rowHidden = false;
     }
-    activeCell.select();
     await excel.sync();
     app.suspendScreenUpdatingUntilNextSync();
     
@@ -1638,6 +1637,7 @@ async function hideRows(visibleType, country){
       await showFirstTakes(true);
       myMessage.innerText = "Showing first takes"
     }
+    activeCell.select();
   })
   if (isProtected){
     await lockColumns();
