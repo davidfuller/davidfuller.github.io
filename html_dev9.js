@@ -76,7 +76,7 @@ async function mainHTML(){
     <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">All Takes</button>
     <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">First Takes</button>
     <button id='btnShowLast' onclick="jade_modules.operations.hideRows('last', 'UK')">Last Takes</button><br/>
-    <button id='btnColouredTakes' onclick="jade_modules.operations.gatherTakeInformation()">Coloured takes</button><br/>
+    <button id='btnColouredTakes' onclick="jade_modules.operations.gatherTakeInformation()">Coloured Takes</button><br/>
   </div>
   <div id="showColumns">
     <label class="section-label">Column selection:</label><span id="columnMessage">Showing all columns</span>
