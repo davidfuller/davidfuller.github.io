@@ -1077,6 +1077,8 @@ function zeroElement(value){
 async function addTakeDetails(country, doDate){
   let myAction = radioButtonChoice();
   console.log('The action: ', myAction);
+  let myWait = tag('take-wait')
+  myWait.style.display = 'block';
 
   await Excel.run(async function(excel){ 
     const activeCell = excel.workbook.getActiveCell();
@@ -1184,10 +1186,12 @@ async function addTakeDetails(country, doDate){
     console.log("Line Details")
     console.log(lineDetails);
     await doTheTidyUp(lineDetails)
+    await refreshColourTakes();
     if (isProtected){
       await lockColumns();
     } 
   });
+  myWait.style.display = 'none';
 }
 
 
@@ -5142,10 +5146,10 @@ chapter: 'Chapter',
   wallaScripted: 'Walla Scripted',
   wallaBlock: 'Walla Block'
   */
+const buttonTextColour = 'Coloured Takes'
+const buttonTextClear = 'Clear Coloured Takes'
 
 async function doColourTakes(){
-  const buttonTextColour = 'Coloured Takes'
-  const buttonTextClear = 'Clear Coloured Takes'
   let button = tag('btnColouredTakes')
   let doColour = button.innerText == buttonTextColour;
   await gatherTakeInformation(doColour);
@@ -5155,6 +5159,13 @@ async function doColourTakes(){
     button.innerText = buttonTextColour;
   }
 }
+
+async function refreshColourTakes(){
+  let button = tag('btnColouredTakes')
+  let doColour = button.innerText == buttonTextColour;
+  await gatherTakeInformation(!doColour);
+}
+
 async function gatherTakeInformation(doColour){
   
   let details = await getFirstLastIndex();
