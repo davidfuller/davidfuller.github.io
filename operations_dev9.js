@@ -1685,7 +1685,7 @@ async function showFirstTakes(doFull){
     let app = excel.workbook.application;
     app.suspendScreenUpdatingUntilNextSync();
     let takeNoRange;
-    if (doFull){
+    if (!doFull){
       const activeCell = excel.workbook.getActiveCell();
       activeCell.load('rowIndex, columnIndex')
       await excel.sync();
