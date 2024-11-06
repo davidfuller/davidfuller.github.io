@@ -1638,6 +1638,7 @@ async function hideRows(visibleType, country){
       myMessage.innerText = "Showing first takes"
     }
     activeCell.select();
+    scriptSheet.activate();
   })
   if (isProtected){
     await lockColumns();
