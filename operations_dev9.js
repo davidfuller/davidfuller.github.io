@@ -1623,7 +1623,7 @@ async function hideRows(visibleType, country){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
 
-    let combined = combineRows(scriptHiddenRows);
+    let combined = combineRowsAddresses(scriptHiddenRows);
   
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
@@ -1664,28 +1664,49 @@ async function hideRows(visibleType, country){
   console.log('Time taken:', (endTime - startTime) / 1000)
 }
 
-function combineRows(theRows, isStringArray){
+function combineRowsAddresses(theRows){
+  //Assumes theRows is an array of strings of addresses like ['5:6', '7:10', '12:12']
+  //It then combines contiguous rows e.g. ['5:10', '12:12']
   let combined = []
   if (theRows.length > 0){
-    let start, end, rowNum, prevRowNum;
+    let start, end;
     let theseRows = [];
     let index = -1;
-    let firstOne = true
+    let firstOne = true;
     for (let i = 0; i < theRows.length; i++){
-      if (isStringArray){
-        theseRows = theRows[i].split(':');
-        if (parseInt(theseRows[0] > 2)){
-          if (firstOne){
-            start = parseInt(theseRows[0])
+      theseRows = theRows[i].split(':');
+      if (parseInt(theseRows[0] > 2)){
+        if (firstOne){
+          start = parseInt(theseRows[0]);
+          end = parseInt(theseRows[1]);
+          firstOne = false;
+        } else {
+          if ((end + 1) == parseInt(theseRows[0])){
             end = parseInt(theseRows[1])
-            firstOne = false;
-          } else{
-
+          } else {
+            index += 1;
+            combined[index] = '' + start + ':' + end
+            start = parseInt(theseRows[0]);
+            end = parseInt(theseRows[1]);
           }
         }
-      } else {
-        rowNum = parseInt(theRows[i]);
       }
+    }
+  }
+  return combined;
+}
+ 
+function combineRowsNumbers(theRows){
+  //Assumes theRows is an array of row numbers like [5, 6, 7, 8, 9, 10, 12]
+  //It then combines contiguous rows as address strings e.g. ['5:10', '12:12']
+  let combined = []
+  if (theRows.length > 0){
+    let start, end;
+    let rowNum, prevRowNum;
+    let index = -1;
+    let firstOne = true;
+    for (let i = 0; i < theRows.length; i++){
+      rowNum = parseInt(theRows[i]);
       if (rowNum > 2){
         if (firstOne){
           start = rowNum;
@@ -1787,12 +1808,11 @@ async function showFirstTakes(doFull){
     const theRowIndex = takeNoRange.rowIndex;
     const takeOneIndexes = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((x != 1) && (x != ''))).map(([x, i]) => i + theRowIndex);
     console.log('Take One Indexes', takeOneIndexes)
+    let combined = combineRowsNumber(takeOneRows)
     let hideRange = [];
-    for (let i = 0; i < takeOneIndexes.length; i++){
-      if (takeOneIndexes[i] > 1){
-        hideRange[i] = scriptSheet.getRangeByIndexes(takeOneIndexes[i], 1, 1, 1);
+    for (let i = 0; i < combined.length; i++){
+        hideRange[i] = scriptSheet.getRange(combined[i]);
         hideRange[i].rowHidden = true;
-      }
     }
     await excel.sync();
   });
@@ -1845,7 +1865,7 @@ async function showLastTakes(doFull){
       }
     }
     console.log('Take Last Indexes', takeLastRows)
-    let combined = combineRows(takeLastRows, false)
+    let combined = combineRowsNumber(takeLastRows)
     let hideRange = [];
     for (let i = 0; i < combined.length; i++){
         hideRange[i] = scriptSheet.getRange(combined[i]);
