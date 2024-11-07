@@ -1623,16 +1623,16 @@ async function hideRows(visibleType, country){
     app.suspendApiCalculationUntilNextSync();
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
+    /*
     const usedRange = scriptSheet.getUsedRange();
 
     usedRange.rowHidden = false;
-    /*
+    */
     let tempRange = [];
     for (let i = 0; i < scriptHiddenRows.length; i++){
       tempRange[i] = scriptSheet.getRange(scriptHiddenRows[i]);
       tempRange[i].rowHidden = false;
     }
-    */
     await excel.sync();
     
     myMessage.innerText = "Showing all takes";
