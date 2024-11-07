@@ -1663,6 +1663,9 @@ async function hideRows(visibleType, country){
       }*/
 
       let unhideRangeArea = scriptSheet.getRange(combinedString);
+      unhideRangeArea.load('address')
+      await excel.sync();
+      console.log('address', unhideRangeArea.address)
       unhideRangeArea.rowHidden = false;
       await excel.sync();
     }
