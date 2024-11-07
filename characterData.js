@@ -729,6 +729,9 @@ function selectBooks(selected){
 }
 
 async function refreshNames(){
+  const wait = tag('all-character-wait-message')
+  wait.style.display = 'block';
   await gatherData();
   await createSceneList()
+  wait.style.display = 'none';
 }

@@ -30,7 +30,7 @@ async function mainHTML(){
   <div id="scene-navigation">
     <button id="btnMain" onclick="jade_modules.characterdata.gotoMain()">Which character in which book</button>
     <button id="btnSceneScene" onclick="jade_modules.characterdata.showScenePage()">Characters in Scenes</button>
-    <button id="btnAllCharactersScene" onclick="jade_modules.characterdata.showAllCharacters()">all Characters</button><br/>
+    <button id="btnAllCharactersScene" onclick="jade_modules.characterdata.showAllCharacters()">All Characters</button><br/>
   </div>
   <div id="scene-controls">
     <button id="btnCreateSceneList" onclick="jade_modules.characterdata.createSceneList()">Create Scene List</button><br/>
@@ -73,7 +73,7 @@ async function mainHTML(){
   <div id="all-character-navigation">
     <button id="btnMainAllChar" onclick="jade_modules.characterdata.gotoMain()">Which character in which book</button>
     <button id="btnSceneAllChar" onclick="jade_modules.characterdata.showScenePage()">Characters in Scenes</button>
-    <button id="btnAllCharactersAllChar" onclick="jade_modules.characterdata.showAllCharacters()">all Characters</button><br/>
+    <button id="btnAllCharactersAllChar" onclick="jade_modules.characterdata.showAllCharacters()">All Characters</button><br/>
   </div>
   <div id="all-character-controls">
     <button id='btnRefreshNames' onclick="jade_modules.characterdata.refreshNames()">Refresh Names</button>
