@@ -1669,7 +1669,7 @@ function combineRows(theRows, isStringArray){
   if (theRows.length > 0){
     let start, end, rowNum, prevRowNum;
     let index = -1;
-    
+    let firstOne = true
     for (let i = 0; i < theRows.length; i++){
       if (isStringArray){
         rowNum = parseInt(theRows[i].split(':')[0]);  
@@ -1677,9 +1677,10 @@ function combineRows(theRows, isStringArray){
         rowNum = parseInt(theRows[i]);
       }
       if (rowNum > 2){
-        if (i == 0){
+        if (firstOne){
           start = rowNum;
           end = start;
+          firstOne = false;
         } else {
           if ((prevRowNum + 1 == rowNum)){
             end = rowNum;
