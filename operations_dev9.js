@@ -1692,6 +1692,7 @@ function combineRowsAddresses(theRows){
           }
         }
       }
+      console.log('i', i, 'start', start, 'end', end, 'combined', combined);
     }
   }
   return combined;
