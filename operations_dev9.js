@@ -1663,15 +1663,13 @@ async function hideRows(visibleType, country){
 }
 
 function combineRows(theRows){
+  let combined = []
   if (theRows.length > 0){
-    let start;
-    let end;
-    let combined = []
+    let start, end, rowNum, prevRowNum;
     let index = -1;
-    let prevRowNum;
     
     for (let i = 0; i < theRows.length; i++){
-      let rowNum = parseInt(theRows[i].split(':')[0]);
+      rowNum = parseInt(theRows[i].split(':')[0]);
       if (i == 0){
         start = rowNum;
         end = start;
