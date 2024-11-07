@@ -1661,6 +1661,7 @@ async function hideRows(visibleType, country){
 }
 
 async function hiddenRows(){
+  const startTime = new Date.getTime();
   const details = await getFirstLastIndex();
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -1687,7 +1688,8 @@ async function hiddenRows(){
         result[index] = address[i];
       }
     }
-    console.log('Hidden rows:', result)
+    const endTime = new Date().getTime()
+    console.log('Hidden rows:', result, 'Time taken :', (endTime - startTime)/1000);
     scriptHiddenRows = result;
   })
 }
