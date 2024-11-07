@@ -893,6 +893,7 @@ async function processCharacterListForWordAndScene(){
     console.log('Characters: ', myCharacters, 'rowIndex: ', characterRange.rowIndex )
     for (let i = 0; i < myCharacters.length; i ++){
       if (myCharacters[i] != ''){
+        console.log(i, myCharacters[i]);
         let details = await getWordCountForCharacter(myCharacters[i]);
         console.log(i, 'Character: ', myCharacters[i], ' Details: ', details);
         let tempRange = characterListSheet.getRangeByIndexes(i + characterRange.rowIndex, detailsRange.columnIndex, 1, detailsRange.columnCount);
