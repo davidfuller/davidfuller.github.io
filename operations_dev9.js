@@ -1665,6 +1665,11 @@ async function hiddenRows(){
   const details = await getFirstLastIndex();
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const usedRange = scriptSheet.getUsedRange();
+
+    usedRange.load('rowHidden');
+    await excel.sync()
+    console.log('Used range row hidden', usedRange.rowHidden)
     
     let myRows = [];
     let address = [];
