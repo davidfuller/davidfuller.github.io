@@ -1667,6 +1667,7 @@ async function hideRows(visibleType, country){
 function combineRowsAddresses(theRows){
   //Assumes theRows is an array of strings of addresses like ['5:6', '7:10', '12:12']
   //It then combines contiguous rows e.g. ['5:10', '12:12']
+  console.log('Combine Addresses theRows',theRows);
   let combined = []
   if (theRows.length > 0){
     let start, end;
@@ -1808,7 +1809,7 @@ async function showFirstTakes(doFull){
     const theRowIndex = takeNoRange.rowIndex;
     const takeOneIndexes = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((x != 1) && (x != ''))).map(([x, i]) => i + theRowIndex);
     console.log('Take One Indexes', takeOneIndexes)
-    let combined = combineRowsNumber(takeOneRows)
+    let combined = combineRowsNumbers(takeOneRows)
     let hideRange = [];
     for (let i = 0; i < combined.length; i++){
         hideRange[i] = scriptSheet.getRange(combined[i]);
@@ -1865,7 +1866,7 @@ async function showLastTakes(doFull){
       }
     }
     console.log('Take Last Indexes', takeLastRows)
-    let combined = combineRowsNumber(takeLastRows)
+    let combined = combineRowsNumbers(takeLastRows)
     let hideRange = [];
     for (let i = 0; i < combined.length; i++){
         hideRange[i] = scriptSheet.getRange(combined[i]);
