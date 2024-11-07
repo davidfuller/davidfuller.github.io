@@ -893,8 +893,8 @@ async function processCharacterListForWordAndScene(){
     console.log('Characters: ', myCharacters, 'rowIndex: ', characterRange.rowIndex )
     for (let i = 0; i < myCharacters.length; i ++){
       if (myCharacters[i] != ''){
-        let details = await getWordCountForCharacter(myCharacters[i]);
-        console.log(i, 'Character: ', myCharacters[i], ' Details: ', details);
+        let character = {name: myCharacters[i], type: choiceType.list};
+        let details = await getWordCountForCharacter(character);
         let tempRange = characterListSheet.getRangeByIndexes(i + characterRange.rowIndex, detailsRange.columnIndex, 1, detailsRange.columnCount);
         tempRange.values = [[details.sceneWordCount, details.lineWordCount, details.scenes]];
       }
