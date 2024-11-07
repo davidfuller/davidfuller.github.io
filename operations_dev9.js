@@ -1651,6 +1651,9 @@ async function hideRows(visibleType, country){
       }
       prevRowNum = rowNum;
     }
+    index += 1;
+    combined[index] = '' + start + ':' + end
+
     console.log('combined', combined);
 
     for (let i = 0; i < combined.length; i++){
