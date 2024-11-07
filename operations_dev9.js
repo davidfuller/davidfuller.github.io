@@ -1691,6 +1691,7 @@ function combineRows(theRows){
     combined[index] = '' + start + ':' + end
     console.log('combined', combined);
   }
+  return combined
 }
 
 
