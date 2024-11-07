@@ -1619,13 +1619,14 @@ async function hideRows(visibleType, country){
     let myMessage = tag('takeMessage')
     myMessage.innerText = "Please wait...";
     let app = excel.workbook.application;
-    app.suspendScreenUpdatingUntilNextSync();
-    app.suspendApiCalculationUntilNextSync();
+    
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
 
     let combined = combineRows(scriptHiddenRows);
   
+    app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
     let tempRange = []; 
     for (let i = 0; i < combined.length; i++){
       tempRange[i] = scriptSheet.getRange(combined[i]);
@@ -1663,28 +1664,34 @@ async function hideRows(visibleType, country){
   console.log('Time taken:', (endTime - startTime) / 1000)
 }
 
-function combineRows(theRows){
+function combineRows(theRows, isStringArray){
   let combined = []
   if (theRows.length > 0){
     let start, end, rowNum, prevRowNum;
     let index = -1;
     
     for (let i = 0; i < theRows.length; i++){
-      rowNum = parseInt(theRows[i].split(':')[0]);
-      if (i == 0){
-        start = rowNum;
-        end = start;
+      if (isStringArray){
+        rowNum = parseInt(theRows[i].split(':')[0]);  
       } else {
-        if ((prevRowNum + 1 == rowNum)){
-          end = rowNum;
-        } else {
-          index += 1;
-          combined[index] = '' + start + ':' + end
+        rowNum = parseInt(theRows[i]);
+      }
+      if (rowNum > 2){
+        if (i == 0){
           start = rowNum;
           end = start;
+        } else {
+          if ((prevRowNum + 1 == rowNum)){
+            end = rowNum;
+          } else {
+            index += 1;
+            combined[index] = '' + start + ':' + end
+            start = rowNum;
+            end = start;
+          }
         }
+        prevRowNum = rowNum;
       }
-      prevRowNum = rowNum;
     }
     index += 1;
     combined[index] = '' + start + ':' + end
@@ -1813,7 +1820,7 @@ async function showLastTakes(doFull){
     
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
-    let takeLastIndexes = [];
+    let takeLastRows = [];
     let index = -1;
     const theRowIndex = takesRange.rowIndex;
     for (let i = 0; i < takesRange.values.length; i++){
@@ -1822,17 +1829,16 @@ async function showLastTakes(doFull){
         let ukTakeNo = takesRange.values[i][col.ukTakeNoArrayIndex];
         if (ukTakes != ukTakeNo){
           index += 1;
-          takeLastIndexes[index] = i + theRowIndex;
+          takeLastRows[index] = i + theRowIndex + 1;
         }
       }
     }
-    console.log('Take Last Indexes', takeLastIndexes)
+    console.log('Take Last Indexes', takeLastRows)
+    let combined = combineRows(takeLastRows, false)
     let hideRange = [];
-    for (let i = 0; i < takeLastIndexes.length; i++){
-      if (takeLastIndexes[i] > 1){
-        hideRange[i] = scriptSheet.getRangeByIndexes(takeLastIndexes[i], 1, 1, 1);
+    for (let i = 0; i < combined.length; i++){
+        hideRange[i] = scriptSheet.getRange(combined[i]);
         hideRange[i].rowHidden = true;
-      }
     }
     await excel.sync();
   })
