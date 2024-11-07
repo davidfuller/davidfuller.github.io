@@ -1653,8 +1653,8 @@ async function hideRows(visibleType, country){
     }
     index += 1;
     combined[index] = '' + start + ':' + end
-
-    console.log('combined', combined);
+    let combinedString = combined.join(", ")
+    console.log('combined', combined, combinedString);
 
     for (let i = 0; i < combined.length; i++){
       tempRange[i] = scriptSheet.getRange(combined[i]);
