@@ -1809,8 +1809,8 @@ async function showFirstTakes(doFull){
     app.suspendApiCalculationUntilNextSync();
     let takeNoValues = takeNoRange.values.map(x => x[0]);
     const theRowIndex = takeNoRange.rowIndex;
-    const takeOneIndexes = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((x != 1) && (x != ''))).map(([x, i]) => i + theRowIndex);
-    console.log('Take One Indexes', takeOneIndexes)
+    const takeOneRows = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((x != 1) && (x != ''))).map(([x, i]) => i + theRowIndex + 1);
+    console.log('Take One Rows', takeOneRows)
     let combined = combineRowsNumbers(takeOneRows)
     let hideRange = [];
     for (let i = 0; i < combined.length; i++){
