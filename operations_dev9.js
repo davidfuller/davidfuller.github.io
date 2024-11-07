@@ -1631,7 +1631,6 @@ async function hideRows(visibleType, country){
     }
     await excel.sync();
     
-    
     myMessage.innerText = "Showing all takes";
     
     if (visibleType == 'last'){

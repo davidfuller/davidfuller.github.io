@@ -10,7 +10,8 @@ async function mainHTML(){
 <div id="main-page">
   <div id="main-navigation">
     <button id="btnMainMain" onclick="jade_modules.characterdata.gotoMain()">Which character in which book</button>
-    <button id="btnScene" onclick="jade_modules.characterdata.showScenePage()">Characters in Scenes</button><br/>
+    <button id="btnScene" onclick="jade_modules.characterdata.showScenePage()">Characters in Scenes</button>
+    <button id="btnAllCharacters" onclick="jade_modules.characterdata.showAllCharacters()">All Characters</button><br/>
   </div>
   <div id="main-controls">
     <button id="btnSearch" onclick="jade_modules.characterdata.doSearch()">Search</button>
@@ -28,7 +29,8 @@ async function mainHTML(){
 <div id="scene-page">
   <div id="scene-navigation">
     <button id="btnMain" onclick="jade_modules.characterdata.gotoMain()">Which character in which book</button>
-    <button id="btnSceneScene" onclick="jade_modules.characterdata.showScenePage()">Characters in Scenes</button><br/>
+    <button id="btnSceneScene" onclick="jade_modules.characterdata.showScenePage()">Characters in Scenes</button>
+    <button id="btnAllCharactersScene" onclick="jade_modules.characterdata.showAllCharacters()">all Characters</button><br/>
   </div>
   <div id="scene-controls">
     <button id="btnCreateSceneList" onclick="jade_modules.characterdata.createSceneList()">Create Scene List</button><br/>
@@ -67,7 +69,17 @@ async function mainHTML(){
     </div>
   </div>
 </div>
-
+<div id="all-characters-page">
+  <div id="all-character-navigation">
+    <button id="btnMainAllChar" onclick="jade_modules.characterdata.gotoMain()">Which character in which book</button>
+    <button id="btnSceneAllChar" onclick="jade_modules.characterdata.showScenePage()">Characters in Scenes</button>
+    <button id="btnAllCharactersAllChar" onclick="jade_modules.characterdata.showAllCharacters()">all Characters</button><br/>
+  </div>
+  <div id="all-character-controls">
+    <button id='btnRefreshNames' onclick="jade_modules.characterdata.refreshNames()">Refresh Names</button>
+    <label id="all-character-wait-message">Please wait...</label>
+  </div>
+</div>
    `;
 
 await Jade.open_canvas("character-summary", html, true);

@@ -2,7 +2,8 @@ const linkedDataSheetName = 'Linked_Data';
 const characterSheetName = 'Characters';
 const sceneSheetName = 'Scenes';
 const settingsSheetName = 'Settings';
-const codeVersion = '2.2';
+const allCharacterSheetName = 'All Characters'
+const codeVersion = '2.3';
 function auto_exec(){
   console.log('Hello');
 }
@@ -666,13 +667,34 @@ function getCheckedBooks(){
   return result
 }
 
+async function showAllCharacters(){
+  const allCharsBackgroundColour = '#daf2d0';
+  const allCharsColour = '#275317';
+  let mainPage = tag("main-page");
+  mainPage.style.display = 'none';
+  let scenePage = tag("scene-page");
+  scenePage.style.display = 'none';
+  let allCharPage = tag('all-characters-page');
+  allCharPage.style.display = 'block';
+  let characterSummary = tag('character-summary');
+  characterSummary.style.backgroundColor = allCharsBackgroundColour;
+  characterSummary.style.color = allCharsColour;
+  await Excel.run(async function(excel){
+    const allCharsSheet = excel.workbook.worksheets.getItem(allCharacterSheetName);
+    allCharsSheet.activate();
+  })
+
+}
+
 async function showScenePage(){
   const sceneBackgroundColour = '#ffafaf';
   const sceneColour = '#640000';
   let mainPage = tag("main-page");
   mainPage.style.display = 'none';
   let scenePage = tag("scene-page");
-  scenePage.style.display = 'block'
+  scenePage.style.display = 'block';
+  let allCharPage = tag('all-characters-page');
+  allCharPage.style.display = 'none';
   let characterSummary = tag('character-summary');
   characterSummary.style.backgroundColor = sceneBackgroundColour;
   characterSummary.style.color = sceneColour;
@@ -687,7 +709,9 @@ async function gotoMain(){
   let mainPage = tag("main-page");
   mainPage.style.display = 'block';
   let scenePage = tag("scene-page");
-  scenePage.style.display = 'none'
+  scenePage.style.display = 'none';
+  let allCharPage = tag('all-characters-page');
+  allCharPage.style.display = 'none';
   let characterSummary = tag('character-summary');
   characterSummary.style.backgroundColor = sceneBackgroundColour;
   characterSummary.style.color = sceneColour;
@@ -702,4 +726,9 @@ function selectBooks(selected){
     let chk = tag('book-' + i)
     chk.checked = selected
   }
+}
+
+async function refreshNames(){
+  await gatherData();
+  await createSceneList()
 }
