@@ -3003,7 +3003,7 @@ async function registerExcelEvents(){
 async function handleRowHide(event){
   await Excel.run(async (excel) => {
     await excel.sync();
-    //console.log('Row hide', event);
+    console.log('Row hide', event);
     if (event.source == 'Local'){
       console.log('Local');
     } else if (event.sourece == 'Remote'){
