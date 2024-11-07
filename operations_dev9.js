@@ -1661,7 +1661,7 @@ async function hideRows(visibleType, country){
 }
 
 async function hiddenRows(){
-  const startTime = new Date.getTime();
+  const startTime = new Date().getTime();
   const details = await getFirstLastIndex();
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
