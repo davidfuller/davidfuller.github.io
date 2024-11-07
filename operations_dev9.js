@@ -1655,6 +1655,7 @@ async function hideRows(visibleType, country){
 
     for (let i = 0; i < combined.length; i++){
       tempRange[i] = scriptSheet.getRange(combined[i]);
+      tempRange[i].rowHidden = false;
     }
 
 
