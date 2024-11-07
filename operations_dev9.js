@@ -1634,32 +1634,36 @@ async function hideRows(visibleType, country){
     let combined = []
     let index = -1;
     let prevRowNum;
-    for (let i = 0; i < scriptHiddenRows.length; i++){
-      let rowNum = parseInt(scriptHiddenRows[i].split(':')[0]);
-      if (i == 0){
-        start = rowNum;
-        end = start;
-      } else {
-        if ((prevRowNum + 1 == rowNum)){
-          end = rowNum;
-        } else {
-          index += 1;
-          combined[index] = '' + start + ':' + end
+    if (scriptHiddenRows.length > 0){
+      for (let i = 0; i < scriptHiddenRows.length; i++){
+        let rowNum = parseInt(scriptHiddenRows[i].split(':')[0]);
+        if (i == 0){
           start = rowNum;
           end = start;
+        } else {
+          if ((prevRowNum + 1 == rowNum)){
+            end = rowNum;
+          } else {
+            index += 1;
+            combined[index] = '' + start + ':' + end
+            start = rowNum;
+            end = start;
+          }
         }
+        prevRowNum = rowNum;
       }
-      prevRowNum = rowNum;
+      index += 1;
+      combined[index] = '' + start + ':' + end
+      let combinedString = combined.join(", ")
+      console.log('combined', combined, combinedString);
+  
+      for (let i = 0; i < combined.length; i++){
+        tempRange[i] = scriptSheet.getRange(combined[i]);
+        tempRange[i].rowHidden = false;
+      }
+      await excel.sync();
     }
-    index += 1;
-    combined[index] = '' + start + ':' + end
-    let combinedString = combined.join(", ")
-    console.log('combined', combined, combinedString);
-
-    for (let i = 0; i < combined.length; i++){
-      tempRange[i] = scriptSheet.getRange(combined[i]);
-      tempRange[i].rowHidden = false;
-    }
+    
 
 
 
@@ -1670,7 +1674,7 @@ async function hideRows(visibleType, country){
     }
       */
 
-    await excel.sync();
+    
     
     myMessage.innerText = "Showing all takes";
     
