@@ -1652,7 +1652,11 @@ async function hideRows(visibleType, country){
       prevRowNum = rowNum;
     }
     console.log('combined', combined);
-    
+
+    for (let i = 0; i < combined.length; i++){
+      tempRange[i] = scriptSheet.range(combined[i]);
+    }
+
 
 
 
