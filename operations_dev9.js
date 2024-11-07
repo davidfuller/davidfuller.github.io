@@ -1656,11 +1656,14 @@ async function hideRows(visibleType, country){
       combined[index] = '' + start + ':' + end
       let combinedString = combined.join(", ")
       console.log('combined', combined, combinedString);
-  
+  /*
       for (let i = 0; i < combined.length; i++){
         tempRange[i] = scriptSheet.getRange(combined[i]);
         tempRange[i].rowHidden = false;
-      }
+      }*/
+
+      let unhideRangeArea = scriptSheet.getRange(combinedString);
+      unhideRangeArea.rowHidden = false;
       await excel.sync();
     }
     
