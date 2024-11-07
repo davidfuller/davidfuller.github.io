@@ -1629,10 +1629,39 @@ async function hideRows(visibleType, country){
     usedRange.rowHidden = false;
     */
     let tempRange = [];
+    let start;
+    let end;
+    let combined = []
+    let index = -1;
+    let prevRowNum;
     for (let i = 0; i < scriptHiddenRows.length; i++){
+      let rowNum = parseInt(scriptHiddenRows[i].split(':')[0]);
+      if (i == 0){
+        start = rowNum;
+        end = start;
+      } else {
+        if ((prevRowNum + 1 == rowNum)){
+          end = rowNum;
+        } else {
+          index += 1;
+          combined[index] = '' + start + ':' + end
+          start = rowNum;
+          end = start;
+        }
+      }
+      prevRowNum = rowNum;
+    }
+    console.log('combined', combined);
+    
+
+
+
+/*
       tempRange[i] = scriptSheet.getRange(scriptHiddenRows[i]);
       tempRange[i].rowHidden = false;
     }
+      */
+
     await excel.sync();
     
     myMessage.innerText = "Showing all takes";
