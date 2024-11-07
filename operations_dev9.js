@@ -1676,7 +1676,8 @@ function combineRowsAddresses(theRows){
     let firstOne = true;
     for (let i = 0; i < theRows.length; i++){
       theseRows = theRows[i].split(':');
-      if (parseInt(theseRows[0] > 2)){
+      console.log('theseRows', theseRows)
+      if (parseInt(theseRows[0]) > 2){
         if (firstOne){
           start = parseInt(theseRows[0]);
           end = parseInt(theseRows[1]);
