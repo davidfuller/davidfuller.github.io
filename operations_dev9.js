@@ -1623,59 +1623,16 @@ async function hideRows(visibleType, country){
     app.suspendApiCalculationUntilNextSync();
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const activeCell = excel.workbook.getActiveCell();
-    /*
-    const usedRange = scriptSheet.getUsedRange();
 
-    usedRange.rowHidden = false;
-    */
-    let tempRange = [];
-    let start;
-    let end;
-    let combined = []
-    let index = -1;
-    let prevRowNum;
-    if (scriptHiddenRows.length > 0){
-      for (let i = 0; i < scriptHiddenRows.length; i++){
-        let rowNum = parseInt(scriptHiddenRows[i].split(':')[0]);
-        if (i == 0){
-          start = rowNum;
-          end = start;
-        } else {
-          if ((prevRowNum + 1 == rowNum)){
-            end = rowNum;
-          } else {
-            index += 1;
-            combined[index] = '' + start + ':' + end
-            start = rowNum;
-            end = start;
-          }
-        }
-        prevRowNum = rowNum;
-      }
-      index += 1;
-      combined[index] = '' + start + ':' + end
-      console.log('combined', combined);
+    let combined = combineRows(scriptHiddenRows);
   
-      for (let i = 0; i < combined.length; i++){
-        tempRange[i] = scriptSheet.getRange(combined[i]);
-        tempRange[i].rowHidden = false;
-      }
-
-      await excel.sync();
-    }
-    
-
-
-
-
-/*
-      tempRange[i] = scriptSheet.getRange(scriptHiddenRows[i]);
+    for (let i = 0; i < combined.length; i++){
+      tempRange[i] = scriptSheet.getRange(combined[i]);
       tempRange[i].rowHidden = false;
     }
-      */
 
-    
-    
+    await excel.sync();
+  
     myMessage.innerText = "Showing all takes";
     
     if (visibleType == 'last'){
@@ -1704,6 +1661,38 @@ async function hideRows(visibleType, country){
   let endTime = new Date().getTime();
   console.log('Time taken:', (endTime - startTime) / 1000)
 }
+
+function combineRows(theRows){
+  if (theRows.length > 0){
+    let start;
+    let end;
+    let combined = []
+    let index = -1;
+    let prevRowNum;
+    
+    for (let i = 0; i < theRows.length; i++){
+      let rowNum = parseInt(theRows[i].split(':')[0]);
+      if (i == 0){
+        start = rowNum;
+        end = start;
+      } else {
+        if ((prevRowNum + 1 == rowNum)){
+          end = rowNum;
+        } else {
+          index += 1;
+          combined[index] = '' + start + ':' + end
+          start = rowNum;
+          end = start;
+        }
+      }
+      prevRowNum = rowNum;
+    }
+    index += 1;
+    combined[index] = '' + start + ':' + end
+    console.log('combined', combined);
+  }
+}
+
 
 async function hiddenRows(){
   const startTime = new Date().getTime();
