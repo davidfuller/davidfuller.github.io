@@ -87,12 +87,12 @@ async function createChapters(){
 function findCurlyQuote(character, myString){
   let index = 0
   let result = []
-  let position = myString.search(character, index)
+  let position = myString.indexOf(character, index)
   result.push(position);
   index = position + 1;
-  position = myString.search(character, index)
+  position = myString.indexOf(character, index)
   result.push(position);
-  
+
   return result;
 }
 /*
