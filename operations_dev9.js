@@ -1695,6 +1695,8 @@ function combineRowsAddresses(theRows){
       }
       //console.log('i', i, 'start', start, 'end', end, 'combined', combined);
     }
+    index += 1;
+    combined[index] = '' + start + ':' + end
   }
   console.log('combined', combined);
   return combined;
