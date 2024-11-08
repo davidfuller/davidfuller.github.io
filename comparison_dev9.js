@@ -58,7 +58,7 @@ async function createChapters(){
     console.log('chapterValues', chapterValues);
     console.log(startRowIndex, chaptersColumnIndex, chapterValues.length, 1);
     let chapterRange = pdfSheet.getRangeByIndexes(startRowIndex, chaptersColumnIndex, chapterValues.length, 1);
-    chapterRange.clear('Values');
+    chapterRange.clear('Contents');
     chapterRange.values = chapterValues;
   })
   
