@@ -35,6 +35,7 @@ async function createChapters(){
     sourceValues = sourceRange.values.map(x => x[0]);
 
     for (let i = 0; sourceValues.length; i++){
+      console.log('i', i, 'value', sourceValues[i]);
       let text = sourceValues[i].trim();
       if (text != ''){
         //Does the string include 'chapter'
