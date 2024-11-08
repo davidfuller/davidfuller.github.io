@@ -54,8 +54,12 @@ async function createChapters(){
     }
     index += 1;
     chapters[index] = textSoFar;
+    chapterValues = chapters.map(x => [x]);
+    console.log('chapterValues', chapterValues);
+    let chapterRange = pdfSheet.getRangeByIndexes(startRowIndex, chaptersColumnIndex, chapterValues.length, 1);
+    chapterRange.clear('Values');
+    chapterRange.values = chapterValues;
   })
   
-  chapterValues = chapters.map(x => [x]);
-  console.log('chapterValues', chapterValues);
+  
 }
