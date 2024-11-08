@@ -48,7 +48,7 @@ async function createChapters(){
           textSoFar = text;
         } else {
           //append to textSoFar
-          textSoFar += text
+          textSoFar = textSoFar + ' ' + text;
         }
       }
     }
