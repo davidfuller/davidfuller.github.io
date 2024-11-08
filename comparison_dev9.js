@@ -88,11 +88,12 @@ function findCurlyQuote(character, myString){
   let index = 0
   let result = []
   let position = myString.indexOf(character, index)
-  result.push(position);
-  index = position + 1;
-  position = myString.indexOf(character, index)
-  result.push(position);
-
+  while (position != -1){
+    result.push(position);
+    index = position + 1;
+    position = myString.indexOf(character, index)
+  }
+  
   return result;
 }
 /*
