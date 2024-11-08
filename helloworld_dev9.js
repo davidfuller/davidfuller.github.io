@@ -6,6 +6,8 @@ async function auto_exec(){
   console.log('After scheduling');
   await Jade.load_js("https://davidfuller.github.io/walla_import_dev9.js", "wallaimport");
   console.log('After wallaimport');
+  await Jade.load_js("https://davidfuller.github.io/comparison_dev9.js", "comparison");
+  console.log('After comparison');
   await Jade.load_js("https://davidfuller.github.io/html_dev9.js", "html");
   console.log('After html');
   await Jade.load_js("https://davidfuller.github.io/css_dev9.js", "css");
