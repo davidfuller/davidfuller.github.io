@@ -34,7 +34,7 @@ async function createChapters(){
     console.log('sourceRange', sourceRange.values)
     sourceValues = sourceRange.values.map(x => x[0]);
 
-    for (let i = 0; sourceValues.length; i++){
+    for (let i = 0; i < sourceValues.length; i++){
       console.log('i', i, 'value', sourceValues[i]);
       let text = sourceValues[i].trim();
       if (text != ''){
