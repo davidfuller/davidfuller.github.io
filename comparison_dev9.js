@@ -63,8 +63,15 @@ async function createChapters(){
     chapterRange.values = chapterValues;
 
     let myLines = chapters[0].split("\n");
+    for (let i = 0; i < myLines.length; i++){
+      if (myLines[i].startsWith("'") && (!myLines[i].startsWith["''"])){
+        myLines[i] = "'" + myLines[i];
+      }
+    }
     lineValues = myLines.map(x => [x]);
     console.log(myLines);
+
+    
 
     let lineRange = pdfSheet.getRangeByIndexes(startRowIndex, linesColumnIndex, lineValues.length, 1);
     lineRange.clear('Contents');
