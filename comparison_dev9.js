@@ -60,6 +60,10 @@ async function createChapters(){
     let chapterRange = pdfSheet.getRangeByIndexes(startRowIndex, chaptersColumnIndex, chapterValues.length, 1);
     chapterRange.clear('Contents');
     chapterRange.values = chapterValues;
+
+    let myLines = chapters[0].split("\n");
+    console.log(myLines);
+
   })
   
   
