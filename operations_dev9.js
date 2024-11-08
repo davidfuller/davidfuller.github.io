@@ -1676,7 +1676,7 @@ function combineRowsAddresses(theRows){
     let firstOne = true;
     for (let i = 0; i < theRows.length; i++){
       theseRows = theRows[i].split(':');
-      console.log('theseRows', theseRows)
+      //console.log('theseRows', theseRows)
       if (parseInt(theseRows[0]) > 2){
         if (firstOne){
           start = parseInt(theseRows[0]);
@@ -1693,9 +1693,10 @@ function combineRowsAddresses(theRows){
           }
         }
       }
-      console.log('i', i, 'start', start, 'end', end, 'combined', combined);
+      //console.log('i', i, 'start', start, 'end', end, 'combined', combined);
     }
   }
+  console.log('combined', combined);
   return combined;
 }
  
@@ -3036,11 +3037,11 @@ async function registerExcelEvents(){
 async function handleRowHide(event){
   await Excel.run(async (excel) => {
     await excel.sync();
-    console.log('Row hide', event);
+    //console.log('Row hide', event);
     if (event.source == 'Local'){
-      console.log('Local');
+      //console.log('Local');
     } else if (event.sourece == 'Remote'){
-      console.log('Remote');
+      //console.log('Remote');
     }
     
     if(event.changeType == 'Unhidden'){
