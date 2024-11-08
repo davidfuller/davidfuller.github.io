@@ -41,8 +41,10 @@ async function createChapters(){
         //Does the string include 'chapter'
         if (text.toLowerCase().includes('chapter')){
           //Finish last chapter and start new one.
-          index += 1;
-          chapters[index] = textSoFar;
+          if (textSoFar != ''){
+            index += 1;
+            chapters[index] = textSoFar;
+          }
           textSoFar = text;
         } else {
           //append to textSoFar
@@ -50,6 +52,8 @@ async function createChapters(){
         }
       }
     }
+    index += 1;
+    chapters[index] = textSoFar;
   })
   console.log('chapters', chapters);
 }
