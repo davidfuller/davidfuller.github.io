@@ -85,7 +85,15 @@ async function createChapters(){
 }
 
 function findCurlyQuote(character, myString){
-  return myString.search(character)
+  let index = 0
+  let result = []
+  let position = myString.search(character, index)
+  while (position != -1){
+    result.push(position);
+    index = position + 1;
+    position = myString.search(character, index)
+  }
+  return result;
 }
 /*
 ‘Lying there with their eyes wide open! Cold as ice! Still in their dinner things!’
