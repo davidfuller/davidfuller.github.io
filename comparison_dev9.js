@@ -67,7 +67,7 @@ async function createChapters(){
     console.log(myLines);
 
     let lineRange = pdfSheet.getRangeByIndexes(startRowIndex, linesColumnIndex, lineValues.length, 1);
-    lineRangeRange.clear('Contents');
+    lineRange.clear('Contents');
     lineRange.values = lineValues;
 
   })
