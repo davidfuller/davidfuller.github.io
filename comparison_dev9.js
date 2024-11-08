@@ -31,11 +31,11 @@ async function createChapters(){
     const sourceRange = pdfSheet.getRangeByIndexes(startRowIndex, sourceColumnIndex, rowCount, 1);
     sourceRange.load('rowIndex, values');
     await excel.sync();
-    console.log('sourceRange', sourceRange.values)
+    //console.log('sourceRange', sourceRange.values)
     sourceValues = sourceRange.values.map(x => x[0]);
 
     for (let i = 0; i < sourceValues.length; i++){
-      console.log('i', i, 'value', sourceValues[i]);
+      //console.log('i', i, 'value', sourceValues[i]);
       let text = sourceValues[i].trim();
       if (text != ''){
         //Does the string include 'chapter'
@@ -51,5 +51,5 @@ async function createChapters(){
       }
     }
   })
-  console.log('textSoFar', textSoFar);
+  console.log('chapters', chapters);
 }
