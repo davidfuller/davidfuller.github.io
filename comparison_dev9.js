@@ -55,5 +55,7 @@ async function createChapters(){
     index += 1;
     chapters[index] = textSoFar;
   })
-  console.log('chapters', chapters);
+  
+  chapterValues = chapters.map(x => [x]);
+  console.log('chapterValues', chapterValues);
 }
