@@ -1,8 +1,8 @@
 const pdfComparisonSheetName = 'PDF Comparison';
-const sourceColumnIndex = 12;
+const sourceColumnIndex = 3;
 const chaptersColumnIndex = 14;
 const startRowIndex = 10;
-const linesColumnIndex = 18;
+const linesColumnIndex = 5;
 
 async function getRowColumnDetails(){
   let details = {};
@@ -26,7 +26,7 @@ async function createChapters(){
   let chapters = [];
   let index = -1;
   textSoFar = '';
-  await Excel.run(async function(excel){ 
+  await Excel.run(async function(excel){  
     const pdfSheet = excel.workbook.worksheets.getItem(pdfComparisonSheetName);
     const rowCount = details.rowCount - details.rowIndex + 1 - startRowIndex;
     const sourceRange = pdfSheet.getRangeByIndexes(startRowIndex, sourceColumnIndex, rowCount, 1);
@@ -57,10 +57,12 @@ async function createChapters(){
     chapters[index] = textSoFar;
     chapterValues = chapters.map(x => [x]);
     console.log('chapterValues', chapterValues);
+    /*
     console.log(startRowIndex, chaptersColumnIndex, chapterValues.length, 1);
     let chapterRange = pdfSheet.getRangeByIndexes(startRowIndex, chaptersColumnIndex, chapterValues.length, 1);
     chapterRange.clear('Contents');
     chapterRange.values = chapterValues;
+*/
 
     let myLines = chapters[0].split("\n");
     for (let i = 0; i < myLines.length; i++){
