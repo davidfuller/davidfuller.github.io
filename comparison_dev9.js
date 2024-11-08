@@ -73,13 +73,20 @@ async function createChapters(){
     lineValues = myLines.map(x => [x]);
     console.log(myLines);
 
-    
-
     let lineRange = pdfSheet.getRangeByIndexes(startRowIndex, linesColumnIndex, lineValues.length, 1);
     lineRange.clear('Contents');
     lineRange.values = lineValues;
+
+    console.log('Curly opener', myLines[5], findCurlyQuote('‘', myLines[5]));
 
   })
   
   
 }
+
+function findCurlyQuote(character, myString){
+  return myString.match('/' + character +'/gm')
+}
+/*
+‘Lying there with their eyes wide open! Cold as ice! Still in their dinner things!’
+*/
