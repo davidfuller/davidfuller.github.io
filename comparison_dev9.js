@@ -1,5 +1,5 @@
 const pdfComparisonSheetName = 'PDF Comparison';
-const sourceColumnIndex = 10;
+const sourceColumnIndex = 12;
 const chaptersColumnIndex = 14;
 const startRowIndex = 10;
 const linesColumnIndex = 18;
