@@ -2,6 +2,7 @@ const pdfComparisonSheetName = 'PDF Comparison';
 const sourceColumnIndex = 10;
 const chaptersColumnIndex = 14;
 const startRowIndex = 10;
+const linesColumnIndex = 18;
 
 async function getRowColumnDetails(){
   let details = {};
@@ -62,7 +63,12 @@ async function createChapters(){
     chapterRange.values = chapterValues;
 
     let myLines = chapters[0].split("\n");
+    lineValues = myLines.map(x => [x]);
     console.log(myLines);
+
+    let lineRange = pdfSheet.getRangeByIndexes(startRowIndex, linesColumnIndex, lineValues.length, 1);
+    lineRangeRange.clear('Contents');
+    lineRange.values = lineValues;
 
   })
   
