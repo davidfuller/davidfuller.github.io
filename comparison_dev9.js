@@ -77,7 +77,7 @@ async function createChapters(){
     lineRange.clear('Contents');
     lineRange.values = lineValues;
 
-    console.log('Curly opener', myLines[5], findCurlyQuote('a', myLines[5]));
+    console.log('Curly opener', myLines[5], findCurlyQuote('‘', myLines[5]));
 
   })
   
@@ -85,7 +85,7 @@ async function createChapters(){
 }
 
 function findCurlyQuote(character, myString){
-  return myString.match('/' + character +'/gm')
+  return myString.search(character)
 }
 /*
 ‘Lying there with their eyes wide open! Cold as ice! Still in their dinner things!’
