@@ -198,7 +198,7 @@ async function displayDecision(quoteData){
   const endIndex = 5;
 
   await Excel.run(async function(excel){
-    let diplayRange = excel.workbook.worksheets.getItem('Decision').getRange('deTable');
+    let displayRange = excel.workbook.worksheets.getItem('Decision').getRange('deTable');
     displayRange.clear('Contents');
     displayRange.load('rowIndex, rowCount, columnIndex, columnCount');
     await excel.sync();
