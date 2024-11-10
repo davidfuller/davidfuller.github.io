@@ -332,5 +332,5 @@ function doSplit(original, decisions){
     item += 1;
     myLines[item] = original.substring(sortedIndexes[i], sortedIndexes[i + 1])
   }
-  return myLines;:
+  return myLines;
 }
