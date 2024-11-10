@@ -294,25 +294,30 @@ async function readDecisionData(){
     
     let original;
     for (let i = 0; i < displayRange.values.length; i++){
-      let line = displayRange.values[i][lineIndex];
+      let line = parseInt(displayRange.values[i][lineIndex]);
       console.log('line', line);
-      if (line != prevLine){
-        original = displayRange.values[i][textIndex]
-        let offset = 0;
-        let nextLine = displayRange.values[i + offset][lineIndex];
-        let myDecision = [];
-        while (nextLine == line){
-          myDecision[offset] = {
-            decision: displayRange.values[i + offset][decisionIndex],
-            start: displayRange.values[i + offset][startIndex],
-            end: displayRange.values[i + offset][endIndex]
+      if (!isNaN(line)){
+        if (line != prevLine){
+          original = displayRange.values[i][textIndex]
+          let offset = 0;
+          let nextLine = parseInt(displayRange.values[i + offset][lineIndex]);
+          let myDecision = [];
+          if (!isNaN(nextLine)){
+            while (nextLine == line){
+              myDecision[offset] = {
+                decision: displayRange.values[i + offset][decisionIndex],
+                start: displayRange.values[i + offset][startIndex],
+                end: displayRange.values[i + offset][endIndex]
+              }
+              offset += 1;
+              nextLine = parseInt(displayRange.values[i + offset][lineIndex]);
+              if (isNaN(nextLine)){break}
+            }
           }
-          offset += 1;
-          nextLine = displayRange.values[i + offset][lineIndex];
+          let tempLines = doSplit(original, myDecision);
+          myLines = myLines.concat(tempLines);
+          prevLine = line; 
         }
-        let tempLines = doSplit(original, myDecision);
-        myLines = myLines.concat(tempLines);
-        prevLine = line; 
       }
     } 
     console.log('myLines', myLines);
