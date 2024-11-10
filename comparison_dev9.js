@@ -272,3 +272,65 @@ async function displayDecision(quoteData){
   })
   
 }
+
+async function readDecisionData(){
+  const lineIndex = 0;
+  const textIndex = 1;
+  const subNoIndex = 2
+  const substringIndex = 3;
+  const startIndex = 4;
+  const endIndex = 5;
+  const decisionIndex = 6;
+
+  await Excel.run(async function(excel){
+    let displayRange = excel.workbook.worksheets.getItem('Decision').getRange('deTableDecision');
+    
+    displayRange.load('rowIndex, values');
+    await excel.sync();
+    
+    let myLines = [];
+    let index = -1;
+    let prevLine = -1;
+    
+    let original;
+    for (let i = 0; i < displayRange.values.length; i++){
+      let line = displayRange.values[i][lineIndex];
+      if (line != prevLine){
+        original = displayRange.values[i][textIndex]
+        let offset = 0;
+        let nextLine = displayRange.values[i + offset][lineIndex];
+        let myDecision = [];
+        while (nextLine == line){
+          myDecision[offset] = {
+            decision: displayRange.values[i + offset][decisionIndex],
+            start: displayRange.values[i + offset][startIndex],
+            end: displayRange.values[i + offset][endIndex]
+          }
+          offset += 1;
+          let nextLine = displayRange.values[i + offset][lineIndex];
+        }
+        let tempLines = doSplit(original, myDecision);
+        myLines = myLines.concat(tempLines);
+        prevLine = line; 
+      }
+    } 
+    console.log('myLines', myLines);
+  })
+}
+function doSplit(original, decisions){
+  let indexes = [0, original.length]
+  for (let i = 0; i < decisions.length; i++){
+    if (decisions[i].decision.toLowerCase() == 'split'){
+      indexes.push(decisions[i].start);
+      indexes.push(decisions[i].end);
+    }
+  }
+  let sortedIndexes = Array.from(new Set(indexes)).sort();
+  let item = -1;
+  let myLines = [];
+  for (let i = 0; i < (sortedIndexes.length - 1); i++){
+    item += 1;
+    myLines[item] = original.substring(sortedIndexes[i], sortedIndexes[i + 1])
+  }
+  return myLines;:
+}
