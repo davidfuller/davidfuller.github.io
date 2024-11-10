@@ -168,7 +168,7 @@ function containsApostropheWord(text, position, words){
   
   const offset = 10;
   let start = position - offset;
-  let stop = posiion + offset;
+  let stop = position + offset;
   if (start < 0){start = 0}
   if (stop >= text.length){stop = text.length}
   let test = text.substring(start, stop).toLowerCase();
