@@ -177,21 +177,29 @@ async function apostropheWords(){
     await excel.sync();
     values = range.values.map(x => x[0]).filter(x => x != '');
   })
-  return values;
+  let results = [];
+  for (let i = 0; i < values.length; i++){
+    results[i] = {
+      word: values[i],
+      position: values[i].indexOf('’'),
+      length: values[i].length
+    }
+  }
+  return results;
 }
 
 function containsApostropheWord(text, position, words){
   // text is the full line of text, position is the pos of the apostrophe.
-  // words contains the list of test apostrophe words.
+  // words contains the list of test apostrophe words and apostrophe position/length.
   
-  const offset = 10;
-  let start = position - offset;
-  let stop = position + offset;
-  if (start < 0){start = 0}
-  if (stop >= text.length){stop = text.length}
-  let test = text.substring(start, stop).toLowerCase();
+  
   for (let i = 0; i < words.length; i++){
-    if (test.includes(words[i])){
+    let start = position - words[i].position;
+    let stop = position + words[i].length;
+    if (start < 0){start = 0}
+    if (stop >= text.length){stop = text.length}
+    let test = text.substring(start, stop).toLowerCase();
+    if (test == words[i].word){
       return true;
     }
   }
