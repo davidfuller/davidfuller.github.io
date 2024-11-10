@@ -98,7 +98,11 @@ async function createChapters(){
       }
     }
     console.log('quoteData', quoteData);
-    console.log('apostrophe Words', await apostropheWords());
+    for (let i = 0; i < quoteData.length; i++){
+      if (quoteData[i].subStrings.length > 0){
+        console.log('i',i, quoteData[i].subStrings)
+      }
+    }
   })
 }
 
