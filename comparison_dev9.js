@@ -27,6 +27,7 @@ async function createChapters(){
   let chapters = [];
   let index = -1;
   textSoFar = '';
+  const apostrophes = await apostropheWords();
   await Excel.run(async function(excel){  
     const pdfSheet = excel.workbook.worksheets.getItem(pdfComparisonSheetName);
     const rowCount = details.rowCount - details.rowIndex + 1 - startRowIndex;
@@ -82,8 +83,8 @@ async function createChapters(){
     let quoteData = [];
     let quoteIndex = -1;
     for (let i = 0; i < myLines.length; i++){
-      let openQuote = findCurlyQuote('‘', myLines[i]);
-      let closeQuote = findCurlyQuote('’', myLines[i]);
+      let openQuote = findCurlyQuote('‘', myLines[i], false, apostrophes);
+      let closeQuote = findCurlyQuote('’', myLines[i], true, apostrophes);
       if ((openQuote.length > 0) || (closeQuote.length > 0)){
         quoteIndex += 1;
         let theData = {
@@ -101,12 +102,14 @@ async function createChapters(){
   })
 }
 
-function findCurlyQuote(character, myString){
+function findCurlyQuote(character, myString, doApostropheCheck, words){
   let index = 0
   let result = []
   let position = myString.indexOf(character, index)
   while (position != -1){
-    result.push(position);
+    if (containsApostropheWord(myString, position, words)){
+      result.push(position);
+    }
     index = position + 1;
     position = myString.indexOf(character, index)
   }
@@ -157,4 +160,22 @@ async function apostropheWords(){
     values = range.values.map(x => x[0]).filter(x => x != '');
   })
   return values;
+}
+
+function containsApostropheWord(text, position, words){
+  // text is the full line of text, position is the pos of the apostrophe.
+  // words contains the list of test apostrophe words.
+  
+  const offset = 10;
+  let start = position - offset;
+  let stop = posiion + offset;
+  if (start < 0){start = 0}
+  if (stop >= text.length){stop = text.length}
+  let test = text.substring(start, stop).toLowerCase();
+  for (let i = 0; i < words.length; i++){
+    if test.includes(words[i]){
+      return true;
+    }
+  }
+  return false;
 }
