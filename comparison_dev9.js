@@ -77,8 +77,6 @@ async function createChapters(){
     lineRange.clear('Contents');
     lineRange.values = lineValues;
 
-    console.log('Curly opener', myLines[5], findCurlyQuote('’', myLines[5]));
-
   })
   
   
