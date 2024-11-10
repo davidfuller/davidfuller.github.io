@@ -103,6 +103,7 @@ async function createChapters(){
         console.log('i',i, quoteData[i].subStrings)
       }
     }
+    await displayDecision(quoteData);
   })
 }
 
