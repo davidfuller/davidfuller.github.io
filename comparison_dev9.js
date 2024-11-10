@@ -80,14 +80,14 @@ async function createChapters(){
     //Now search for curly quotes within each line
     let quoteData = [];
     let quoteIndex = -1;
-    for (let i = 0; i < lineValues.length; i++){
-      let openQuote = findCurlyQuote('‘', lineValues[i]);
-      let closeQuote = findCurlyQuote('’', lineValues[i]);
+    for (let i = 0; i < myLines.length; i++){
+      let openQuote = findCurlyQuote('‘', myLines[i]);
+      let closeQuote = findCurlyQuote('’', myLines[i]);
       if ((openQuote.length > 0) || (closeQuote.length > 0)){
         quoteIndex += 1;
         let theData = {
           index: i,
-          text: lineValues[i],
+          text: myLines[i],
           openQuote: openQuote,
           closeQuote: closeQuote
         }
