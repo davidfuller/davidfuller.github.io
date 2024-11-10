@@ -154,6 +154,6 @@ async function apostropheWords(){
     const range = excel.workbook.worksheets.getItem(apostropheSheetName).getRange('apWords');
     range.load('values')
     values = range.values.map(x => x[0]).filter(x => x != '');
-  }
+  })
   return values;
 }
