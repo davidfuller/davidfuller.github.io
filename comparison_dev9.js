@@ -195,10 +195,11 @@ function containsApostropheWord(text, position, words){
   
   for (let i = 0; i < words.length; i++){
     let start = position - words[i].position;
-    let stop = position + words[i].length;
+    let stop = start + words[i].length;
     if (start < 0){start = 0}
     if (stop >= text.length){stop = text.length}
     let test = text.substring(start, stop).toLowerCase();
+    console.log()
     if (test == words[i].word){
       return true;
     }
