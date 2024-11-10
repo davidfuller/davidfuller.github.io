@@ -76,10 +76,26 @@ async function createChapters(){
     let lineRange = pdfSheet.getRangeByIndexes(startRowIndex, linesColumnIndex, lineValues.length, 1);
     lineRange.clear('Contents');
     lineRange.values = lineValues;
-
+    
+    //Now search for curly quotes within each line
+    let quoteData = [];
+    let quoteIndex = -1;
+    for (let i = 0; i < lineValues.length; i++){
+      let openQuote = findCurlyQuote('‘', lineValues[i]);
+      let closeQuote = findCurlyQuote('’', lineValues[i]);
+      if ((openQuote.length > 0) || (closeQuote.length > 0)){
+        quoteIndex += 1;
+        let theData = {
+          index: i,
+          text: lineValues[i],
+          openQuote: openQuote,
+          closeQuote: closeQuote
+        }
+        quoteData[quoteIndex] = theData;
+      }
+    }
+    console.log('quoteData', quoteData);
   })
-  
-  
 }
 
 function findCurlyQuote(character, myString){
