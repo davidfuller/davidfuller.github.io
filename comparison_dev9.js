@@ -187,3 +187,57 @@ function containsApostropheWord(text, position, words){
   }
   return false;
 }
+
+async function displayDecision(quoteData){
+  const lineIndex = 0;
+  const textIndex = 1;
+  const subNoIndex = 2
+  const substringIndex = 3;
+  const startIndex = 4;
+  const endIndex = 5;
+
+  await Excel.run(async function(excel){
+    let diplayRange = excel.workbook.worksheets.getItem('Decision').getRange('deTable');
+    displayRange.clear('Contents');
+    displayRange.load('rowIndex, rowCount, columnIndex, columnCount);
+    await excel.sync();
+    let rowIndex = -1;
+    let display = [];
+    for (let i = 0; i < quoteData.length,i++){
+      rowIndex += 1;
+      if (quoteData[i].subStrings.length > 0){
+        display[rowIndex] = [];
+        display[rowIndex][lineIndex] = i;
+        display[rowIndex][textIndex] = quoteData[i].text;
+        display[rowIndex][subNoIndex] = 0;
+        display[rowIndex][substringIndex] = quoteData[i].subStrings[0].subString;
+        display[rowIndex][startIndex] = quoteData[i].subStrings[0].start;
+        display[rowIndex][endIndex] = quoteData[i].subStrings[0].stop;
+        for (let j = 1; j < quoteData[i].subStrings.length; j++){
+          rowIndex += 1
+          display[rowIndex] = [];
+          display[rowIndex][lineIndex] = '';
+          display[rowIndex][textIndex] = '';
+          display[rowIndex][subNoIndex] = j;
+          display[rowIndex][substringIndex] = quoteData[i].subStrings[j].subString;
+          display[rowIndex][startIndex] = quoteData[i].subStrings[j].start;
+          display[rowIndex][endIndex] = quoteData[i].subStrings[j].stop;
+        }  
+      } else {
+        display[rowIndex] = [];
+        display[rowIndex][lineIndex] = i;
+        display[rowIndex][textIndex] = quoteData[i].text;
+        display[rowIndex][subNoIndex] = '';
+        display[rowIndex][substringIndex] = '';
+        display[rowIndex][startIndex] = '';
+        display[rowIndex][endIndex] = '';
+      }
+    }
+    console.log('Display', display);
+    console.log(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);
+    let tempRange = excel.workbook.worksheets.getItem('Decision').getRangeByIndexes(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);
+    tempRange.values = display;
+    
+  })
+  
+}
