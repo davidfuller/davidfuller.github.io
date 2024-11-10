@@ -107,8 +107,12 @@ function findCurlyQuote(character, myString, doApostropheCheck, words){
   let result = []
   let position = myString.indexOf(character, index)
   while (position != -1){
-    if (containsApostropheWord(myString, position, words)){
-      result.push(position);
+    if (doApostropheCheck){
+      if (!containsApostropheWord(myString, position, words)){
+        result.push(position);
+      }
+    } else {
+      result.push(position);  
     }
     index = position + 1;
     position = myString.indexOf(character, index)
