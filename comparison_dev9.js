@@ -1,4 +1,5 @@
 const pdfComparisonSheetName = 'PDF Comparison';
+const apostropheSheetName = 'Apostrophes';
 const sourceColumnIndex = 3;
 const chaptersColumnIndex = 14;
 const startRowIndex = 10;
@@ -96,6 +97,7 @@ async function createChapters(){
       }
     }
     console.log('quoteData', quoteData);
+    console.log('apostrophe Words', await apostropheWords());
   })
 }
 
@@ -138,4 +140,20 @@ function createQuoteStrings(theData){
     }
   }
   return result;
+}
+async function findCommonContractions(myText){
+  const test = ['I’m', 'You’re', 'He’s', 'She’s', 'It’s', 'We’re', 'They’re', 'Can’t', 'Don’t', 'Won’t', 'Shouldn’t', 'Wouldn’t', 'Couldn’t', 'Isn’t', 'Aren’t', 'Haven’t', 'Hasn’t', 'Hadn’t', 'Wasn’t', 'Weren’t', 'I’ve', 'didn’t']
+
+}
+//'‘Always thought he was odd,’ she told the eagerly listening villagers, after her fourth sherry. ‘Unfriendly, like. I’m sure if I’ve offered him a cuppa once, I’ve offered it a hundred times. Never wanted to mix, he didn’t.’'
+
+
+async function apostropheWords(){
+  let values = [];
+  await Excel.run(async function(excel){
+    const range = excel.workbook.worksheets.getItem(apostropheSheetName).getRange('apWords');
+    range.load('values')
+    values = range.values.map(x => x[0]).filter(x => x != '');
+  }
+  return values;
 }
