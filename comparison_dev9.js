@@ -91,6 +91,7 @@ async function createChapters(){
           openQuote: openQuote,
           closeQuote: closeQuote
         }
+        theData.subStrings = createQuoteStrings(theData);
         quoteData[quoteIndex] = theData;
       }
     }
@@ -113,3 +114,28 @@ function findCurlyQuote(character, myString){
 /*
 ‘Lying there with their eyes wide open! Cold as ice! Still in their dinner things!’
 */
+function createQuoteStrings(theData){
+  // theData includes text and openQuote and closeQuote
+  // returns an array of objects
+  //  start, stop, substring
+  
+  let result = [];
+  let index = -1;
+  
+  //loop through openQuote
+  for (let i = 0; i < theData.openQuote.length; i++){
+    //loop through closeQuote
+    for (let j = 0; j < theData.closeQuote.length; j++){
+      // if closeQuote > openQuote create substring object
+      if (theData.closeQuote[j] > theData.openQuote[i]){
+        index += 1;
+        result[index] = {
+          start: theData.openQuote[i] + 1,
+          stop: theData.closeQuote[j],
+          subString: theData.text.substring(theData.openQuote[i] + 1, theData.closeQuote[j])
+        }
+      }
+    }
+  }
+  return result;
+}
