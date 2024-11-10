@@ -173,7 +173,7 @@ function containsApostropheWord(text, position, words){
   if (stop >= text.length){stop = text.length}
   let test = text.substring(start, stop).toLowerCase();
   for (let i = 0; i < words.length; i++){
-    if test.includes(words[i]){
+    if (test.includes(words[i])){
       return true;
     }
   }
