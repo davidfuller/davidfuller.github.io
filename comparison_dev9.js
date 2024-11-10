@@ -22,19 +22,21 @@ async function getRowColumnDetails(){
   return details;
 }
 
-async function createChapters(){
+async function getChapterData(){
+  //The text is pasted into column B of PDF Comparison from the adobe conversion
+  //Some text massaging happens with result in column D (index 3)
+  // this routine takes the text from column D and turns it into text strings
+  //Splitting it into chapters. The output is a string array with a chapter per index
   const details = await getRowColumnDetails();
   let chapters = [];
   let index = -1;
   textSoFar = '';
-  const apostrophes = await apostropheWords();
   await Excel.run(async function(excel){  
     const pdfSheet = excel.workbook.worksheets.getItem(pdfComparisonSheetName);
     const rowCount = details.rowCount - details.rowIndex + 1 - startRowIndex;
     const sourceRange = pdfSheet.getRangeByIndexes(startRowIndex, sourceColumnIndex, rowCount, 1);
     sourceRange.load('rowIndex, values');
     await excel.sync();
-    //console.log('sourceRange', sourceRange.values)
     sourceValues = sourceRange.values.map(x => x[0]);
 
     for (let i = 0; i < sourceValues.length; i++){
@@ -57,63 +59,63 @@ async function createChapters(){
     }
     index += 1;
     chapters[index] = textSoFar;
-    chapterValues = chapters.map(x => [x]);
-    console.log('chapterValues', chapterValues);
-    /*
-    console.log(startRowIndex, chaptersColumnIndex, chapterValues.length, 1);
-    let chapterRange = pdfSheet.getRangeByIndexes(startRowIndex, chaptersColumnIndex, chapterValues.length, 1);
-    chapterRange.clear('Contents');
-    chapterRange.values = chapterValues;
-*/
-
-    let myLines = chapters[0].split("\n");
-    for (let i = 0; i < myLines.length; i++){
-      if (myLines[i].startsWith("'") && (!myLines[i].startsWith["''"])){
-        myLines[i] = "'" + myLines[i];
-      }
-    }
-    lineValues = myLines.map(x => [x]);
-    console.log(myLines);
-
-    let lineRange = pdfSheet.getRangeByIndexes(startRowIndex, linesColumnIndex, lineValues.length, 1);
-    lineRange.clear('Contents');
-    lineRange.values = lineValues;
-    
-    //Now search for curly quotes within each line
-    let quoteData = [];
-    let quoteIndex = -1;
-    for (let i = 0; i < myLines.length; i++){
-      let openQuote = findCurlyQuote('‘', myLines[i], false, apostrophes);
-      let closeQuote = findCurlyQuote('’', myLines[i], true, apostrophes);
-      quoteIndex += 1;
-      if ((openQuote.length > 0) || (closeQuote.length > 0)){
-        let theData = {
-          index: i,
-          text: myLines[i],
-          openQuote: openQuote,
-          closeQuote: closeQuote
-        }
-        theData.subStrings = createQuoteStrings(theData);
-        quoteData[quoteIndex] = theData;
-      } else {
-        let theData = {
-          index: i,
-          text: myLines[i],
-          openQuote: {},
-          closeQuote: {}
-          }
-        theData.subStrings = [];
-        quoteData[quoteIndex] = theData;
-      }
-    }
-    console.log('quoteData', quoteData);
-    for (let i = 0; i < quoteData.length; i++){
-      if (quoteData[i].subStrings.length > 0){
-        console.log('i',i, quoteData[i].subStrings)
-      }
-    }
-    await displayDecision(quoteData);
   })
+  return chapters  
+}
+
+function chapterToLines(theChapter){
+  // takes a chapter and splits it into lines
+  // if begins with a single ' it is doubled ''
+  // This is for excel display 
+  
+  let myLines = theChapter.split("\n");
+  for (let i = 0; i < myLines.length; i++){
+    if (myLines[i].startsWith("'") && (!myLines[i].startsWith["''"])){
+      myLines[i] = "'" + myLines[i];
+    }
+  }
+  return myLines; 
+} 
+
+function createQuoteData(myLines, apostrophes){
+  
+  //Now search for curly quotes within each line
+  let quoteData = [];
+  let quoteIndex = -1;
+  for (let i = 0; i < myLines.length; i++){
+    let openQuote = findCurlyQuote('‘', myLines[i], false, apostrophes);
+    let closeQuote = findCurlyQuote('’', myLines[i], true, apostrophes);
+    quoteIndex += 1;
+    if ((openQuote.length > 0) || (closeQuote.length > 0)){
+      let theData = {
+        index: i,
+        text: myLines[i],
+        openQuote: openQuote,
+        closeQuote: closeQuote
+      }
+      theData.subStrings = createQuoteStrings(theData);
+      quoteData[quoteIndex] = theData;
+    } else {
+      let theData = {
+        index: i,
+        text: myLines[i],
+        openQuote: {},
+        closeQuote: {}
+        }
+      theData.subStrings = [];
+      quoteData[quoteIndex] = theData;
+    }
+  }
+  return quoteData;
+  
+}
+async function createChapters(){
+  
+  const apostrophes = await apostropheWords();
+  const chapters = await getChapterData();
+  let myLines = chapterToLines(chapters[0]);
+  let quoteData = createQuoteData(myLines, apostrophes);  
+  await displayDecision(quoteData);
 }
 
 function findCurlyQuote(character, myString, doApostropheCheck, words){
@@ -245,7 +247,7 @@ async function displayDecision(quoteData){
         for (let j = 1; j < quoteData[i].subStrings.length; j++){
           rowIndex += 1
           display[rowIndex] = [];
-          display[rowIndex][lineIndex] = '';
+          display[rowIndex][lineIndex] = i;
           display[rowIndex][textIndex] = '';
           display[rowIndex][subNoIndex] = j;
           display[rowIndex][substringIndex] = quoteData[i].subStrings[j].subString;
