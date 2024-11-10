@@ -295,6 +295,7 @@ async function readDecisionData(){
     let original;
     for (let i = 0; i < displayRange.values.length; i++){
       let line = displayRange.values[i][lineIndex];
+      console.log('line', line);
       if (line != prevLine){
         original = displayRange.values[i][textIndex]
         let offset = 0;
@@ -307,7 +308,7 @@ async function readDecisionData(){
             end: displayRange.values[i + offset][endIndex]
           }
           offset += 1;
-          let nextLine = displayRange.values[i + offset][lineIndex];
+          nextLine = displayRange.values[i + offset][lineIndex];
         }
         let tempLines = doSplit(original, myDecision);
         myLines = myLines.concat(tempLines);
