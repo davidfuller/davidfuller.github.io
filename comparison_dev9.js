@@ -199,11 +199,11 @@ async function displayDecision(quoteData){
   await Excel.run(async function(excel){
     let diplayRange = excel.workbook.worksheets.getItem('Decision').getRange('deTable');
     displayRange.clear('Contents');
-    displayRange.load('rowIndex, rowCount, columnIndex, columnCount);
+    displayRange.load('rowIndex, rowCount, columnIndex, columnCount');
     await excel.sync();
     let rowIndex = -1;
     let display = [];
-    for (let i = 0; i < quoteData.length,i++){
+    for (let i = 0; i < quoteData.length; i++){
       rowIndex += 1;
       if (quoteData[i].subStrings.length > 0){
         display[rowIndex] = [];
