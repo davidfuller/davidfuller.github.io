@@ -85,8 +85,8 @@ async function createChapters(){
     for (let i = 0; i < myLines.length; i++){
       let openQuote = findCurlyQuote('‘', myLines[i], false, apostrophes);
       let closeQuote = findCurlyQuote('’', myLines[i], true, apostrophes);
+      quoteIndex += 1;
       if ((openQuote.length > 0) || (closeQuote.length > 0)){
-        quoteIndex += 1;
         let theData = {
           index: i,
           text: myLines[i],
@@ -94,6 +94,15 @@ async function createChapters(){
           closeQuote: closeQuote
         }
         theData.subStrings = createQuoteStrings(theData);
+        quoteData[quoteIndex] = theData;
+      } else {
+        let theData = {
+          index: i,
+          text: myLines[i],
+          openQuote: {},
+          closeQuote: {}
+          }
+        theData.subStrings = [];
         quoteData[quoteIndex] = theData;
       }
     }
