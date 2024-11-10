@@ -150,12 +150,22 @@ function createQuoteStrings(theData){
     //loop through closeQuote
     for (let j = 0; j < theData.closeQuote.length; j++){
       // if closeQuote > openQuote create substring object
+      let doIt = false;
       if (theData.closeQuote[j] > theData.openQuote[i]){
-        index += 1;
-        result[index] = {
-          start: theData.openQuote[i] + 1,
-          stop: theData.closeQuote[j],
-          subString: theData.text.substring(theData.openQuote[i] + 1, theData.closeQuote[j])
+        if ((i + 1) < theData.openQuote.length){
+          if (theData.openQuote[i + 1] > theData.closeQuote[j]){
+            doIt = true;
+          }
+        } else {
+          doIt = true;
+        }
+        if (doIt){
+          index += 1;
+          result[index] = {
+            start: theData.openQuote[i] + 1,
+            stop: theData.closeQuote[j],
+            subString: theData.text.substring(theData.openQuote[i] + 1, theData.closeQuote[j])
+          }
         }
       }
     }
