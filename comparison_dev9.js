@@ -86,6 +86,7 @@ function createQuoteData(myLines, apostrophes){
     let openQuote = findCurlyQuote('‘', myLines[i], false, apostrophes);
     let closeQuote = findCurlyQuote('’', myLines[i], true, apostrophes);
     quoteIndex += 1;
+    let done = false;
     if ((openQuote.length == 1) && closeQuote.length == 1){
       console.log('Zero Indexes ', openQuote[0], closeQuote[0], 'text', myLines[i])
       if ((openQuote[0] <= 1) && closeQuote[0] >= (myLines[i].length - 2)){
@@ -97,26 +98,31 @@ function createQuoteData(myLines, apostrophes){
           closeQuote: {}
           }
         theData.subStrings = [];
-        quoteData[quoteIndex] = theData;  
+        quoteData[quoteIndex] = theData;
+        done = true;
       }
-    } else if ((openQuote.length > 0) || (closeQuote.length > 0)){
-      let theData = {
-        index: i,
-        text: myLines[i],
-        openQuote: openQuote,
-        closeQuote: closeQuote
-      }
-      theData.subStrings = createQuoteStrings(theData);
-      quoteData[quoteIndex] = theData;
-    } else {
-      let theData = {
-        index: i,
-        text: myLines[i],
-        openQuote: {},
-        closeQuote: {}
+    }
+    if (!done){
+      if ((openQuote.length > 0) || (closeQuote.length > 0)){
+        console.log('Some Indexes ', openQuote, closeQuote, 'text', myLines[i])
+        let theData = {
+          index: i,
+          text: myLines[i],
+          openQuote: openQuote,
+          closeQuote: closeQuote
         }
-      theData.subStrings = [];
-      quoteData[quoteIndex] = theData;
+        theData.subStrings = createQuoteStrings(theData);
+        quoteData[quoteIndex] = theData;
+      } else {
+        let theData = {
+          index: i,
+          text: myLines[i],
+          openQuote: {},
+          closeQuote: {}
+          }
+        theData.subStrings = [];
+        quoteData[quoteIndex] = theData;
+      }
     }
   }
   return quoteData;
