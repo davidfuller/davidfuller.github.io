@@ -425,8 +425,11 @@ function removeAndTrim(theText){
 
 }
 
-async function copySheet(){
-
+async function copySheets(){
+  let chapterCompareSelect = tag('chapter-compare-select');
+  let myChapter = chapterCompareSelect.value;
+  console.log(myChapter);
+  /*
   await Excel.run(async (excel) => {
     let myWorkbook = excel.workbook;
     let decisionSheet = myWorkbook.worksheets.getItem('Decision');
@@ -439,6 +442,7 @@ async function copySheet(){
 
     console.log("'" + sampleSheet.name + "' was copied to '" + copiedSheet.name + "'")
   });
+  */
 }
 
 async function fillChapter(){

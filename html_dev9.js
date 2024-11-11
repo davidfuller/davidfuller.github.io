@@ -43,8 +43,10 @@ async function mainHTML(){
     <button id="btnLoadNewSheetCharacters" onclick="jade_modules.operations.loadNewSheetCharacters()">Load new sheet characters</button>
     <button id="btnNewCharacters" onclick="jade_modules.operations.newCharacters()">Missing characters</button>
     <button id="btnCreateChapters" onclick="jade_modules.comparison.createChapters()">Create Chapters</button>
-    <button id="btnReadDecision" onclick="jade_modules.comparison.createResult()">Create Results</button>
+    <button id="btnReadDecision" onclick="jade_modules.comparison.createResult()">Create Results</button><br/>
     <label for="chapter-compare-select">Chapter</label><select id="chapter-compare-select"><option value="">Please select chapter</option></select><br/>
+    <button id="btnArchiveComparison" onclick="jade_modules.comparison.copySheets()">Archive Comparison Sheets</button>
+    
     <div class="row">
       <div class="column" id="column-add-one">
         <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
