@@ -379,6 +379,11 @@ function doSplit(original, decisions){
     sortedIndexes.push(original.length);
   }
 
+  if (sortedIndexes[0] > 1){
+    sortedIndexes.push(0)
+    sortedIndexes = sortedIndexes.sort((a,b) => a - b);
+  }
+
   let item = -1;
   let myLines = [];
   for (let i = 0; i < (sortedIndexes.length - 1); i++){
