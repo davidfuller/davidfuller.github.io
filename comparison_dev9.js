@@ -332,7 +332,10 @@ function doSplit(original, decisions){
       indexes.push(decisions[i].end);
     }
   }
-  let sortedIndexes = Array.from(new Set(indexes)).sort();
+  console.log('indexes', indexes)
+  let duplicatesRemoved = Array.from(new Set(indexes));
+  console.log('duplicated removed', duplicatesRemoved)
+  let sortedIndexes = duplicatesRemoved.sort();
   let item = -1;
   let myLines = [];
   for (let i = 0; i < (sortedIndexes.length - 1); i++){
