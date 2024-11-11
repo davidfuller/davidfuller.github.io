@@ -501,6 +501,6 @@ async function selectResultLowestTrue(){
   })
 }
 async function correctText(){
-  let searchText = tag('search-tag');
+  let searchText = tag('search-text');
   console.log('searchText', searchText.value);
 }
