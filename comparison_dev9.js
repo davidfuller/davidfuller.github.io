@@ -324,13 +324,16 @@ async function readDecisionData(){
   })
 }
 function doSplit(original, decisions){
-  let indexes = [0, original.length]
+  let indexes = []
   console.log('decisions', decisions);
   for (let i = 0; i < decisions.length; i++){
     if (decisions[i].decision.toLowerCase() == 'split'){
       indexes.push(decisions[i].start);
       indexes.push(decisions[i].end);
     }
+  }
+  if (indexes.length == 0){
+    indexes = [0, original.length]
   }
   console.log('indexes', indexes)
   let duplicatesRemoved = Array.from(new Set(indexes));
