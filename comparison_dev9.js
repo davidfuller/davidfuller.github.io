@@ -77,7 +77,7 @@ function chapterToLines(theChapter){
   return myLines; 
 } 
 
-function createQuoteData(myLines, apostrophes){
+function createQuoteData(myLines, apostrophes, noKeeps){
   
   //Now search for curly quotes within each line
   let quoteData = [];
@@ -87,41 +87,52 @@ function createQuoteData(myLines, apostrophes){
     let closeQuote = findCurlyQuote('’', myLines[i], true, apostrophes);
     quoteIndex += 1;
     let done = false;
-    if ((openQuote.length == 1) && closeQuote.length == 1){
-      console.log('Zero Indexes ', openQuote[0], closeQuote[0], 'text', myLines[i])
-      if ((openQuote[0] <= 1) && closeQuote[0] >= (myLines[i].length - 2)){
-        console.log('Used zero index');
-        let theData = {
-          index: i,
-          text: myLines[i],
-          openQuote: {},
-          closeQuote: {}
-          }
-        theData.subStrings = [];
-        quoteData[quoteIndex] = theData;
-        done = true;
-      }
-    }
-    if (!done){
-      if ((openQuote.length > 0) || (closeQuote.length > 0)){
-        console.log('Some Indexes ', openQuote, closeQuote, 'text', myLines[i])
-        let theData = {
-          index: i,
-          text: myLines[i],
-          openQuote: openQuote,
-          closeQuote: closeQuote
+    if (noKeeps){
+      let theData = {
+        index: i,
+        text: myLines[i],
+        openQuote: {},
+        closeQuote: {}
         }
-        theData.subStrings = createQuoteStrings(theData);
-        quoteData[quoteIndex] = theData;
-      } else {
-        let theData = {
-          index: i,
-          text: myLines[i],
-          openQuote: {},
-          closeQuote: {}
+      theData.subStrings = [];
+      quoteData[quoteIndex] = theData;
+    } else {
+      if ((openQuote.length == 1) && closeQuote.length == 1){
+        console.log('Zero Indexes ', openQuote[0], closeQuote[0], 'text', myLines[i])
+        if ((openQuote[0] <= 1) && closeQuote[0] >= (myLines[i].length - 2)){
+          console.log('Used zero index');
+          let theData = {
+            index: i,
+            text: myLines[i],
+            openQuote: {},
+            closeQuote: {}
+            }
+          theData.subStrings = [];
+          quoteData[quoteIndex] = theData;
+          done = true;
+        }
+      }
+      if (!done){
+        if ((openQuote.length > 0) || (closeQuote.length > 0)){
+          console.log('Some Indexes ', openQuote, closeQuote, 'text', myLines[i])
+          let theData = {
+            index: i,
+            text: myLines[i],
+            openQuote: openQuote,
+            closeQuote: closeQuote
           }
-        theData.subStrings = [];
-        quoteData[quoteIndex] = theData;
+          theData.subStrings = createQuoteStrings(theData);
+          quoteData[quoteIndex] = theData;
+        } else {
+          let theData = {
+            index: i,
+            text: myLines[i],
+            openQuote: {},
+            closeQuote: {}
+            }
+          theData.subStrings = [];
+          quoteData[quoteIndex] = theData;
+        }
       }
     }
   }
@@ -133,14 +144,14 @@ async function createChapters(){
   const apostrophes = await apostropheWords();
   const chapters = await getChapterData();
   let myLines = chapterToLines(chapters[0]);
-  let quoteData = createQuoteData(myLines, apostrophes);  
+  let quoteData = createQuoteData(myLines, apostrophes, false);  
   await displayDecision(quoteData, true);
 }
 
 async function createResult(){
   const apostrophes = await apostropheWords();
   let myLines = await readDecisionData();
-  let quoteData = createQuoteData(myLines, apostrophes);  
+  let quoteData = createQuoteData(myLines, apostrophes, true);  
   await displayDecision(quoteData, false);
 }
 
