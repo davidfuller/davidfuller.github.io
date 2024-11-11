@@ -503,4 +503,17 @@ async function selectResultLowestTrue(){
 async function correctText(){
   let searchText = tag('search-text');
   console.log('searchText', searchText.value);
+  let mySearch = searchText.value;
+  let firstRowIndex = 9;
+  let lastRowIndex = 1300;
+  let columnIndex = 3;
+  await Excel.run(async (excel) => {
+    let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
+    let bookRange = pdfSheet.getRangeByIndex(firstRowIndex, columnIndex, (lastRowIndex - firstRowIndex + 1, 1));
+    bookRange.load('values, rowIndex');
+    await excel.sync();
+    let bookText = bookRange.values.map(x => x[0]);
+    console.log('bookText', bookText);
+  })
+  
 }
