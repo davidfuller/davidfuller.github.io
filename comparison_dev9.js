@@ -509,7 +509,7 @@ async function correctText(){
   let columnIndex = 3;
   await Excel.run(async (excel) => {
     let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
-    let bookRange = pdfSheet.getRangeByIndex(firstRowIndex, columnIndex, (lastRowIndex - firstRowIndex + 1, 1));
+    let bookRange = pdfSheet.getRangeByIndexes(firstRowIndex, columnIndex, (lastRowIndex - firstRowIndex + 1, 1));
     bookRange.load('values, rowIndex');
     await excel.sync();
     let bookText = bookRange.values.map(x => x[0]);
