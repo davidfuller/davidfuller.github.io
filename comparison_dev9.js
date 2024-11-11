@@ -89,6 +89,7 @@ function createQuoteData(myLines, apostrophes){
     if ((openQuote.length == 1) && closeQuote.length == 1){
       console.log('Zero Indexes ', openQuote[0], closeQuote[0], 'text', myLines[i])
       if ((openQuote[0] <= 1) && closeQuote[0] >= (myLines[i].length - 2)){
+        console.log('Used zero index');
         let theData = {
           index: i,
           text: myLines[i],
@@ -248,6 +249,7 @@ async function displayDecision(quoteData){
     let display = [];
     for (let i = 0; i < quoteData.length; i++){
       rowIndex += 1;
+      console.log('quotedata', quoteData[i]);
       if (quoteData[i].subStrings.length > 0){
         display[rowIndex] = [];
         display[rowIndex][lineIndex] = i;
