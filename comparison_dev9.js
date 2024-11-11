@@ -514,6 +514,16 @@ async function correctText(){
     await excel.sync();
     let bookText = bookRange.values.map(x => x[0]);
     console.log('bookText', bookText);
+    let indexes = [];
+    for (i = 0; i < bookText.length; i ++){
+      if (bookText.toLowerCase().includes(mySearch.toLowerCase())){
+        indexes.push(i);
+      }
+    }
+    console.log('indexes', indexes);
+    for (i = 0; i < indexes.length; i++){
+      console.log('element', indexes[i], 'text', bookText[indexes[i]]);
+    }
   })
   
 }
