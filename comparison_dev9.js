@@ -140,10 +140,11 @@ function createQuoteData(myLines, apostrophes, noKeeps){
   
 }
 async function createChapters(){
-  
+  let chapterCompareSelect = tag('chapter-compare-select');
+  let myChapter = chapterCompareSelect.value;
   const apostrophes = await apostropheWords();
   const chapters = await getChapterData();
-  let myLines = chapterToLines(chapters[4]);
+  let myLines = chapterToLines(chapters[myChapter - 1]);
   let quoteData = createQuoteData(myLines, apostrophes, false);  
   await displayDecision(quoteData, true);
 }
@@ -453,10 +454,7 @@ async function copySheets(){
 
     console.log("'" + resultSheet.name + "' was copied to '" + copiedSheet.name + "'")
     copiedSheet.name = resultSheet.name + ' Chapter ' + myChapter;
-
-
   });
-
 }
 
 async function fillChapter(){
@@ -482,6 +480,4 @@ async function clearDecisionAndResult(){
     keepRange.clear('Contents');
     resultTable.clear('Contents');
   })
-
-
 }
