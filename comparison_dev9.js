@@ -325,6 +325,7 @@ async function readDecisionData(){
 }
 function doSplit(original, decisions){
   let indexes = [0, original.length]
+  console.log('decisions', decisions);
   for (let i = 0; i < decisions.length; i++){
     if (decisions[i].decision.toLowerCase() == 'split'){
       indexes.push(decisions[i].start);
@@ -338,5 +339,7 @@ function doSplit(original, decisions){
     item += 1;
     myLines[item] = original.substring(sortedIndexes[i], sortedIndexes[i + 1])
   }
+  console.log('Original', original, 'sorted Indexes', sortedIndexes, 'split Lines', myLines)
+
   return myLines;
 }
