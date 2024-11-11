@@ -379,7 +379,7 @@ function doSplit(original, decisions){
     item += 1;
     myLines[item] = removeAndTrim(original.substring(sortedIndexes[i], sortedIndexes[i + 1]));
   }
-  if (myLines.length > 1){
+  if (myLines.length > 0){
     console.log('Original', original, 'sorted Indexes', sortedIndexes, 'split Lines', myLines);
   }
 
