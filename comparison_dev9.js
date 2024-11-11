@@ -373,6 +373,12 @@ function doSplit(original, decisions){
   let duplicatesRemoved = Array.from(new Set(indexes));
   //console.log('duplicated removed', duplicatesRemoved)
   let sortedIndexes = duplicatesRemoved.sort((a,b) => a - b);
+
+  if (sortedIndexes.slice(-1) < (original.length -2)){
+    //we need to add a last index
+    sortedIndexes.push(original.length);
+  }
+
   let item = -1;
   let myLines = [];
   for (let i = 0; i < (sortedIndexes.length - 1); i++){
