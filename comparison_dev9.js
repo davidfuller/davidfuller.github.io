@@ -363,7 +363,7 @@ function removeAndTrim(theText){
     temp = temp.substring(1);
     //console.log('removed first', temp)
   }
-  console.log('temp.slice(-1)', temp.slice(-1))
+  //console.log('temp.slice(-1)', temp.slice(-1))
   if (temp.slice(-1) == '‘'){
     temp = temp.slice(0, -1);
     //console.log('removed last', temp)
