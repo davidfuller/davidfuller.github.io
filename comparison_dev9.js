@@ -295,7 +295,7 @@ async function readDecisionData(){
     let original;
     for (let i = 0; i < displayRange.values.length; i++){
       let line = parseInt(displayRange.values[i][lineIndex]);
-      console.log('line', line);
+      //console.log('line', line);
       if (!isNaN(line)){
         if (line != prevLine){
           original = displayRange.values[i][textIndex]
@@ -315,6 +315,9 @@ async function readDecisionData(){
             }
           }
           let tempLines = doSplit(original, myDecision);
+          if (tempLines.length > 1){
+            console.log('line', line, 'original', original, 'the lines', tempLines);
+          }
           myLines = myLines.concat(tempLines);
           prevLine = line; 
         }
@@ -325,7 +328,7 @@ async function readDecisionData(){
 }
 function doSplit(original, decisions){
   let indexes = []
-  console.log('decisions', decisions);
+  //console.log('decisions', decisions);
   for (let i = 0; i < decisions.length; i++){
     if (decisions[i].decision.toLowerCase() == 'split'){
       indexes.push(decisions[i].start);
@@ -335,9 +338,9 @@ function doSplit(original, decisions){
   if (indexes.length == 0){
     indexes = [0, original.length]
   }
-  console.log('indexes', indexes)
+  //console.log('indexes', indexes)
   let duplicatesRemoved = Array.from(new Set(indexes));
-  console.log('duplicated removed', duplicatesRemoved)
+  //console.log('duplicated removed', duplicatesRemoved)
   let sortedIndexes = duplicatesRemoved.sort((a,b) => a - b);
   let item = -1;
   let myLines = [];
@@ -345,7 +348,9 @@ function doSplit(original, decisions){
     item += 1;
     myLines[item] = removeAndTrim(original.substring(sortedIndexes[i], sortedIndexes[i + 1]));
   }
-  console.log('Original', original, 'sorted Indexes', sortedIndexes, 'split Lines', myLines)
+  if (myLines.length > 1){
+    //console.log('Original', original, 'sorted Indexes', sortedIndexes, 'split Lines', myLines);
+  }
 
   return myLines;
 }
@@ -353,15 +358,15 @@ function doSplit(original, decisions){
 function removeAndTrim(theText){
   //removes a ’ if first character and ‘ if it's last character.
   let temp = theText.trim();
-  console.log('temp(0)', temp[0])
+  //console.log('temp(0)', temp[0])
   if (temp[0] == '’'){
     temp = temp.substring(1);
-    console.log('removed first', temp)
+    //console.log('removed first', temp)
   }
   console.log('temp.slice(-1)', temp.slice(-1))
   if (temp.slice(-1) == '‘'){
     temp = temp.slice(0, -1);
-    console.log('removed last', temp)
+    //console.log('removed last', temp)
   }
   return temp.trim();
 
