@@ -516,7 +516,7 @@ async function correctText(){
     console.log('bookText', bookText);
     let indexes = [];
     for (i = 0; i < bookText.length; i ++){
-      if (bookText.toLowerCase().includes(mySearch.toLowerCase())){
+      if (bookText[i].toLowerCase().includes(mySearch.toLowerCase())){
         indexes.push(i);
       }
     }
