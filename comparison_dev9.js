@@ -429,7 +429,7 @@ async function copySheets(){
   let chapterCompareSelect = tag('chapter-compare-select');
   let myChapter = chapterCompareSelect.value;
   console.log(myChapter);
-  /*
+  
   await Excel.run(async (excel) => {
     let myWorkbook = excel.workbook;
     let decisionSheet = myWorkbook.worksheets.getItem('Decision');
@@ -438,11 +438,12 @@ async function copySheets(){
     decisionSheet.load("name");
     copiedSheet.load("name");
 
-    await context.sync();
+    await excel.sync();
 
-    console.log("'" + sampleSheet.name + "' was copied to '" + copiedSheet.name + "'")
+    console.log("'" + decisionSheet.name + "' was copied to '" + copiedSheet.name + "'")
+    copiedSheet.name = decisionSheet.name + ' Chapter ' + myChapter;
   });
-  */
+
 }
 
 async function fillChapter(){
