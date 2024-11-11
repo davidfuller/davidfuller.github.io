@@ -309,17 +309,14 @@ async function readDecisionData(){
   const startIndex = 4;
   const endIndex = 5;
   const decisionIndex = 6;
+  let myLines = [];
 
   await Excel.run(async function(excel){
     let displayRange = excel.workbook.worksheets.getItem('Decision').getRange('deTableDecision');
     
     displayRange.load('rowIndex, values');
     await excel.sync();
-    
-    let myLines = [];
-    let index = -1;
     let prevLine = -1;
-    
     let original;
     for (let i = 0; i < displayRange.values.length; i++){
       let line = parseInt(displayRange.values[i][lineIndex]);
@@ -353,6 +350,7 @@ async function readDecisionData(){
     } 
     console.log('myLines', myLines);
   })
+  return myLines;
 }
 function doSplit(original, decisions){
   let indexes = []
