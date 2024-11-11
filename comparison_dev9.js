@@ -442,6 +442,19 @@ async function copySheets(){
 
     console.log("'" + decisionSheet.name + "' was copied to '" + copiedSheet.name + "'")
     copiedSheet.name = decisionSheet.name + ' Chapter ' + myChapter;
+
+    let resultSheet = myWorkbook.worksheets.getItem('Result');
+    copiedSheet = resultSheet.copy("End")
+
+    resultSheet.load("name");
+    copiedSheet.load("name");
+
+    await excel.sync();
+
+    console.log("'" + resultSheet.name + "' was copied to '" + copiedSheet.name + "'")
+    copiedSheet.name = resultSheet.name + ' Chapter ' + myChapter;
+
+
   });
 
 }
