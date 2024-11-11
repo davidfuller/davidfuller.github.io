@@ -143,7 +143,7 @@ async function createChapters(){
   
   const apostrophes = await apostropheWords();
   const chapters = await getChapterData();
-  let myLines = chapterToLines(chapters[3]);
+  let myLines = chapterToLines(chapters[4]);
   let quoteData = createQuoteData(myLines, apostrophes, false);  
   await displayDecision(quoteData, true);
 }
