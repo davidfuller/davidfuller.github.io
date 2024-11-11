@@ -298,7 +298,12 @@ async function displayDecision(quoteData, doDecision){
     }
     console.log('Display', display);
     console.log(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);
-    let tempRange = excel.workbook.worksheets.getItem('Decision').getRangeByIndexes(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);
+    let tempRange;
+    if (doDecision){
+      tempRange = excel.workbook.worksheets.getItem('Decision').getRangeByIndexes(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);  
+    } else {
+      tempRange = excel.workbook.worksheets.getItem('Result').getRangeByIndexes(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);
+    }
     tempRange.values = display;
   })
 }
