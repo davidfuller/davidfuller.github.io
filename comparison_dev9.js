@@ -424,3 +424,30 @@ function removeAndTrim(theText){
   return temp.trim();
 
 }
+
+async function copySheet(){
+
+  await Excel.run(async (excel) => {
+    let myWorkbook = excel.workbook;
+    let decisionSheet = myWorkbook.worksheets.getItem('Decision');
+    let copiedSheet = decisionSheet.copy("End")
+
+    decisionSheet.load("name");
+    copiedSheet.load("name");
+
+    await context.sync();
+
+    console.log("'" + sampleSheet.name + "' was copied to '" + copiedSheet.name + "'")
+  });
+}
+
+async function fillChapter(){
+  const minAndMax = await jade_modules.operations.getChapterMaxAndMin();
+  
+  let chapterCompareSelect = tag('chapter-compare-select');
+  chapterCompareSelect.innerHTML = '';
+  chapterCompareSelect.add(new Option('Please select chapter', ''));
+  for (let i = minAndMax.min; i <= minAndMax.max; i++){
+    chapterCompareSelect.add(new Option('Chapter ' + i, i));
+  }
+}

@@ -44,6 +44,7 @@ async function mainHTML(){
     <button id="btnNewCharacters" onclick="jade_modules.operations.newCharacters()">Missing characters</button>
     <button id="btnCreateChapters" onclick="jade_modules.comparison.createChapters()">Create Chapters</button>
     <button id="btnReadDecision" onclick="jade_modules.comparison.createResult()">Create Results</button>
+    <label for="chapter-compare-select">Chapter</label><select id="chapter-compare-select"><option value="">Please select chapter</option></select><br/>
     <div class="row">
       <div class="column" id="column-add-one">
         <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
@@ -282,6 +283,7 @@ async function mainHTML(){
   await jade_modules.operations.fillChapterAndScene();
   await jade_modules.operations.showMain();
   await jade_modules.operations.gatherTakeInformation(false);
+  await jade_modules.comparison.fillChapter();
 
   console.log("I'm here data loaded. Dev5");
 }
