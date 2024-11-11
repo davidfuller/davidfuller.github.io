@@ -86,7 +86,19 @@ function createQuoteData(myLines, apostrophes){
     let openQuote = findCurlyQuote('‘', myLines[i], false, apostrophes);
     let closeQuote = findCurlyQuote('’', myLines[i], true, apostrophes);
     quoteIndex += 1;
-    if ((openQuote.length > 0) || (closeQuote.length > 0)){
+    if ((openQuote.length == 1) && closeQuote.length == 1){
+      console.log('Zero Indexes ', openQuote[0], closeQuote[0], 'text', myLines[i])
+      if ((openQuote[0] <= 1) && closeQuote[0] >= (myLines[i].length - 2)){
+        let theData = {
+          index: i,
+          text: myLines[i],
+          openQuote: {},
+          closeQuote: {}
+          }
+        theData.subStrings = [];
+        quoteData[quoteIndex] = theData;  
+      }
+    } else if ((openQuote.length > 0) || (closeQuote.length > 0)){
       let theData = {
         index: i,
         text: myLines[i],
