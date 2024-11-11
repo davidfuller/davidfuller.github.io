@@ -343,9 +343,22 @@ function doSplit(original, decisions){
   let myLines = [];
   for (let i = 0; i < (sortedIndexes.length - 1); i++){
     item += 1;
-    myLines[item] = original.substring(sortedIndexes[i], sortedIndexes[i + 1])
+    myLines[item] = removeAndTrim(original.substring(sortedIndexes[i], sortedIndexes[i + 1]));
   }
   console.log('Original', original, 'sorted Indexes', sortedIndexes, 'split Lines', myLines)
 
   return myLines;
+}
+
+function removeAndTrim(theText){
+  //removes a ‘ if first character and ’ if it's last character.
+  let temp = theText.trim();
+  if (temp[0] == '‘'){
+    temp = temp.substring(1);
+  }
+  if (temp.slice(-1) == '’'){
+    temp = temp.slice(0, -1);
+  }
+  return temp.trim();
+
 }
