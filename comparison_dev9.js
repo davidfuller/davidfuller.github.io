@@ -500,3 +500,7 @@ async function selectResultLowestTrue(){
     cellToSelect.select();
   })
 }
+async function correctText(){
+  let searchText = tag('search-tag');
+  console.log('searchText', searchTag);
+}

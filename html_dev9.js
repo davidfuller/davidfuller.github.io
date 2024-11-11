@@ -48,6 +48,8 @@ async function mainHTML(){
     <button id="btnArchiveComparison" onclick="jade_modules.comparison.copySheets()">Archive Comparison Sheets</button>
     <button id="btnClearDecisionAndResult" onclick="jade_modules.comparison.clearDecisionAndResult()">Clear Decision And Result</button>
     <button id="btnSelectResultLowestTrue" onclick="jade_modules.comparison.selectResultLowestTrue()">Lowest True</button>
+    <textarea id="search-text" cols="50" rows="5"></textarea>
+    <button id="btnCorrectText" onclick="jade_modules.comparison.correctText()">Correct Text</button>
     <div class="row">
       <div class="column" id="column-add-one">
         <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
