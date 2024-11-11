@@ -46,7 +46,7 @@ async function mainHTML(){
     <button id="btnReadDecision" onclick="jade_modules.comparison.createResult()">Create Results</button><br/>
     <label for="chapter-compare-select">Chapter</label><select id="chapter-compare-select"><option value="">Please select chapter</option></select><br/>
     <button id="btnArchiveComparison" onclick="jade_modules.comparison.copySheets()">Archive Comparison Sheets</button>
-    
+    <button id="btnClearDecisionAndResult" onclick="jade_modules.comparison.clearDecisionAndResult()">Clear Decision And Result</button>
     <div class="row">
       <div class="column" id="column-add-one">
         <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>

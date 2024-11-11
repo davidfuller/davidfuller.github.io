@@ -469,3 +469,19 @@ async function fillChapter(){
     chapterCompareSelect.add(new Option('Chapter ' + i, i));
   }
 }
+
+async function clearDecisionAndResult(){
+  await Excel.run(async (excel) => {
+    let decisionSheet = excel.workbook.worksheets.getItem('Decision');
+    let resultSheet = excel.workbook.worksheets.getItem('Result');
+    let decisionTable = decisionSheet.getRange('deTable');
+    let keepRange = decisionSheet.getRange('deKeep');
+    let resultTable = resultSheet.getRange('reTable');
+
+    decisionTable.clear('Contents');
+    keepRange.clear('Contents');
+    resultTable.clear('Contents');
+  })
+
+
+}
