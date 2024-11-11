@@ -134,7 +134,14 @@ async function createChapters(){
   const chapters = await getChapterData();
   let myLines = chapterToLines(chapters[0]);
   let quoteData = createQuoteData(myLines, apostrophes);  
-  await displayDecision(quoteData);
+  await displayDecision(quoteData, true);
+}
+
+async function createResult(){
+  const apostrophes = await apostropheWords();
+  let myLines = await readDecisionData();
+  let quoteData = createQuoteData(myLines, apostrophes);  
+  await displayDecision(quoteData, false);
 }
 
 function findCurlyQuote(character, myString, doApostropheCheck, words){
@@ -238,7 +245,7 @@ function containsApostropheWord(text, position, words){
   return false;
 }
 
-async function displayDecision(quoteData){
+async function displayDecision(quoteData, doDecision){
   const lineIndex = 0;
   const textIndex = 1;
   const subNoIndex = 2
@@ -247,7 +254,12 @@ async function displayDecision(quoteData){
   const endIndex = 5;
 
   await Excel.run(async function(excel){
-    let displayRange = excel.workbook.worksheets.getItem('Decision').getRange('deTable');
+    let displayRange
+    if (doDecision){
+      displayRange = excel.workbook.worksheets.getItem('Decision').getRange('deTable');
+    } else {
+      displayRange = excel.workbook.worksheets.getItem('Result').getRange('reTable');
+    }
     displayRange.clear('Contents');
     displayRange.load('rowIndex, rowCount, columnIndex, columnCount');
     await excel.sync();
@@ -288,16 +300,12 @@ async function displayDecision(quoteData){
     console.log(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);
     let tempRange = excel.workbook.worksheets.getItem('Decision').getRangeByIndexes(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);
     tempRange.values = display;
-    
   })
-  
 }
 
 async function readDecisionData(){
   const lineIndex = 0;
   const textIndex = 1;
-  const subNoIndex = 2
-  const substringIndex = 3;
   const startIndex = 4;
   const endIndex = 5;
   const decisionIndex = 6;
