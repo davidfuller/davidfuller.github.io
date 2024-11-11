@@ -520,6 +520,12 @@ async function correctText(){
         indexes.push(i);
       }
     }
+    if (indexes.length == 1){
+      let index = bookText[indexes[i]].toLowerCase().indexOf(mySearch.toLowerCase());
+      let position = index + mySearch.length;
+      let char = bookText[indexes[i]].substr(position, 1);
+      console.log('index', index, 'position', position, 'char', char, 'area', bookText[indexes[i]].substr(position - 5, 10), 'isLF', (char == '\n');
+    }
     console.log('indexes', indexes);
     for (i = 0; i < indexes.length; i++){
       console.log('element', indexes[i], 'text', bookText[indexes[i]]);
