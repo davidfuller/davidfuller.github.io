@@ -524,7 +524,7 @@ async function correctText(){
       let index = bookText[indexes[0]].toLowerCase().indexOf(mySearch.toLowerCase());
       let position = index + mySearch.length;
       let char = bookText[indexes[0]].substr(position, 1);
-      console.log('index', index, 'position', position, 'char', char, 'area', bookText[indexes[i]].substr(position - 5, 10), 'isLF', (char == '\n'));
+      console.log('index', index, 'position', position, 'char', char, 'area', bookText[indexes[0]].substr(position - 5, 10), 'isLF', (char == '\n'));
     }
     console.log('indexes', indexes);
     for (i = 0; i < indexes.length; i++){
