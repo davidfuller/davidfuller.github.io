@@ -353,11 +353,15 @@ function doSplit(original, decisions){
 function removeAndTrim(theText){
   //removes a ‘ if first character and ’ if it's last character.
   let temp = theText.trim();
+  console.log('temp(0)', temp[0])
   if (temp[0] == '‘'){
     temp = temp.substring(1);
+    console.log('removed first', temp)
   }
+  console.log('temp.slice(-1)', temp.slice(-1))
   if (temp.slice(-1) == '’'){
     temp = temp.slice(0, -1);
+    console.log('removed last', temp)
   }
   return temp.trim();
 
