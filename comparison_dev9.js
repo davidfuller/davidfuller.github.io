@@ -481,3 +481,22 @@ async function clearDecisionAndResult(){
     resultTable.clear('Contents');
   })
 }
+
+async function selectResultLowestTrue(){
+  await Excel.run(async (excel) => {
+    let resultSheet = excel.workbook.worksheets.getItem('Result');
+    let compRange = resultSheet.getRange('reComparison');
+    compRange.load('values, rowIndex, columnIndex');
+    await excel.sync();
+    
+    let compValues = compRange.values.map(x => x[0]);
+    let highest = 0
+    for (i = 0; i < compValues.length; i++){
+      if (compValues[i]){
+        highest = i;
+      }
+    }
+    let cellToSelect = resultSheet.getRangeByIndexes(highest + compRange.rowIndex, compRange.columnIndex, 1, 1);
+    cellToSelect.select();
+  })
+}
