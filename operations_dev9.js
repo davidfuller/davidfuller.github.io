@@ -545,7 +545,15 @@ async function getChapterRange(excel){
   await excel.sync();
   return range;
 }
-
+async function getTypeCodeRange(excel){
+  let details = await getFirstLastIndex();
+  let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+  console.log('details', details);
+  console.log(details.rowIndex + 2 , typeCodeIndex, details.rowCount - (2 - details.rowIndex), 1);
+  let range = scriptSheet.getRangeByIndexes(details.rowIndex + 2 , typeCodeIndex, details.rowCount - (2 - details.rowIndex), 1);
+  await excel.sync();
+  return range;
+}
 async function getDataRange(excel){
   let range;
   let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);

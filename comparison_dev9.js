@@ -5,6 +5,15 @@ const chaptersColumnIndex = 14;
 const startRowIndex = 10;
 const linesColumnIndex = 5;
 
+const myTypes = {
+  chapter: 'Chapter',
+  scene: 'Scene',
+  line: 'Line',
+  sceneBlock: 'Scene Block',
+  wallaScripted: 'Walla Scripted',
+  wallaBlock: 'Walla Block'
+}
+
 async function getRowColumnDetails(){
   let details = {};
   await Excel.run(async function(excel){ 
@@ -645,4 +654,23 @@ async function findSearchTextInDecision(){
     }
     console.log('Found', found);
   })
+}
+async Function getLinksToTextFromChapter(){
+  let chapterCompareSelect = tag('chapter-compare-select');
+  let myChapter = parseInt(chapterCompareSelect.value);
+  console.log(myChapter);
+  await Excel.run(async (excel) => {
+    const chapterRange = await jade_modules.operations.getChapterRange(excel);
+    chapterRange.load('values, rowIndex');
+    const typeCodeRange = await jade_modules.operations.getTypeCodeRange(excel);
+    typeCodeRange.load('values, rowIndex');
+    await excel.sync();
+    let chapterRowIndexes = [];
+    for (let i = 0; i < chapterRange.values.length; i++){
+      if (chapterRange.values[i][0] == myChapter) && (typeCode)
+      
+    }
+    
+  
+  
 }
