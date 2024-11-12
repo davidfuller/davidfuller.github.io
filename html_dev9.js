@@ -52,8 +52,7 @@ async function mainHTML(){
     <button id="btnSelectResultLowestTrue" onclick="jade_modules.comparison.selectResultLowestTrue()">Lowest True</button>
     <button id="btnActiveCellTextArea" onclick="jade_modules.comparison.putSelectedCellInTextArea()">Active cell search text</button>
     <textarea id="search-text" cols="40" rows="8"></textarea>
-    <button id="btnCheckTextLf" onclick="jade_modules.comparison.correctTextReplaceLF(false)">Check Text Replace LF</button>
-    <button id="btnCorrectTextLf" onclick="jade_modules.comparison.correctTextReplaceLF(true)">Correct Text Replace LF</button>
+    <button id="btnCorrectTextLf" onclick="jade_modules.comparison.correctTextReplaceLF(true)">Replace Line-Fedd</button>
     <button id="btnCheckTextSpaceQuote" onclick="jade_modules.comparison.correctTextSpaceQuotes(false)">Check Text Space Quotes</button>
     <button id="btnCorrectTextSpaceQuote" onclick="jade_modules.comparison.correctTextSpaceQuotes(true)">Correct Text Space Quotes</button>
     <button id="btnFindDecision" onclick="jade_modules.comparison.findSearchTextInDecision()">Find text in Decision</button>

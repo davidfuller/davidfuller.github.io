@@ -553,6 +553,9 @@ async function correctTextReplaceLF(doReplace){
   
 }
 async function correctTextSpaceQuotes(doReplace){
+  if (doReplace){
+    await putSelectedCellInTextArea();
+  }
   let replaceColumnIndex = 1;
   let searchDetails = await findSearchTextInPDF();
 
