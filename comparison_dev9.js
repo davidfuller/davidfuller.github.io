@@ -509,8 +509,8 @@ async function correctTextReplaceLF(doReplace){
     let indexes = searchDetails.indexes;
     if (indexes.length == 1){
       let foundText = searchDetails.bookText[indexes[0]];
-      let index = foundText.toLowerCase().indexOf(mySearch.toLowerCase());
-      let position = index + mySearch.length;
+      let index = foundText.toLowerCase().indexOf(searchDetails.mySearch.toLowerCase());
+      let position = index + searchDetails.mySearch.length;
       let char = foundText.substr(position, 1);
       let newText;
       if (char == '\n'){
