@@ -514,6 +514,7 @@ async function correctTextReplaceLF(doReplace){
       let position = index + searchDetails.mySearch.length;
       let char = foundText.substr(position, 1);
       let newText;
+      console.log('the char', char, 'the area', foundText.substr(position - 5, 10));
       if (char == '\n'){
         newText = foundText.substring(0, position) + ' ' + foundText.substr(position + 1);
         console.log('newText', newText);
