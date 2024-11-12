@@ -324,6 +324,7 @@ async function displayDecision(quoteData, doDecision){
       tempRange = excel.workbook.worksheets.getItem('Decision').getRangeByIndexes(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);  
     } else {
       tempRange = excel.workbook.worksheets.getItem('Result').getRangeByIndexes(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);
+      excel.workbook.worksheets.getItem('Result').activate();
     }
     tempRange.values = display;
   })
