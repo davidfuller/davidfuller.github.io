@@ -514,10 +514,10 @@ async function correctTextReplaceLF(doReplace){
       let position = index + searchDetails.mySearch.length;
       let char = foundText.substr(position, 1);
       let newText;
-      console.log('the char', char, 'the area', foundText.substr(position - 5, 10));
+      //console.log('the char', char, 'the area', foundText.substr(position - 5, 10));
       if (char == '\n'){
         newText = foundText.substring(0, position) + ' ' + foundText.substr(position + 1);
-        console.log('newText', newText);
+        //console.log('newText', newText);
         //now lets put it back in the pdf sheet.
         
         let rowIndex = indexes[0] + searchDetails.rowIndex;
@@ -525,6 +525,8 @@ async function correctTextReplaceLF(doReplace){
         replaceRange.load('address');
         if (doReplace){
           replaceRange.values = [[newText]];
+        } else {
+          console.log('This looks good');
         }
         await excel.sync();
         console.log('address', replaceRange.address);
@@ -560,6 +562,8 @@ async function correctTextSpaceQuotes(doReplace){
         replaceRange.load('address');
         if (doReplace){
           replaceRange.values = [[newText]];
+        } else {
+          console.log('This looks good');
         }
         await excel.sync();
         console.log('address', replaceRange.address);
