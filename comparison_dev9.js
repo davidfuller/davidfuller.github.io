@@ -528,6 +528,10 @@ async function correctTextReplaceLF(doReplace){
         }
         await excel.sync();
         console.log('address', replaceRange.address);
+        if (doReplace){
+          await createChapters();
+          await createResult();
+        }
       }
     }
    })
@@ -559,6 +563,10 @@ async function correctTextSpaceQuotes(doReplace){
         }
         await excel.sync();
         console.log('address', replaceRange.address);
+        if (doReplace){
+          await createChapters();
+          await createResult();
+        }
       }
     }
   })
@@ -595,4 +603,14 @@ async function findSearchTextInPDF(){
     rowIndex: bookRange.rowIndex,
     mySearch: mySearch
   }
+}
+
+async function putSelectedCellInTextArea(){
+  await Excel.run(async (excel) => {
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load('values');
+    await excel.sync();
+    let searchText = tag('search-text');
+    searchText.value = activeCell.values[0][0];
+  })
 }
