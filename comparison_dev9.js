@@ -618,3 +618,31 @@ async function putSelectedCellInTextArea(){
     searchText.value = activeCell.values[0][0];
   })
 }
+
+async function findSearchTextInDecision(){
+  let searchText = tag('search-text');
+  console.log('searchText', searchText.value);
+  let mySearch = searchText.value;
+  let textArrayIndex = 1;
+  let textColumnIndex = 2;
+  await Excel.run(async (excel) => {
+    let decisionSheet = excel.workbook.worksheets.getItem('Decision');
+    let tableRange = decisionSheet.getRange('deTable');
+    tableRange.load('values, rowIndex');
+    await excel.sync();
+    let textValues = tableRange.values.map(x => x[textArrayIndex]);
+    let found = false;
+    for (let i = 0; i < textValues.length; i++){
+      if (textValues[i].toLowerCase().includes(mySearch.toLowerCase())){
+        let rowIndex = i + tableRange.rowIndex;
+        let selectedRange = decisionSheet.getRangeByIndexes(rowIndex, textColumnIndex, 1, 1);
+        selectedRange.select();
+        decisionSheet.activate();
+        await excel.sync();
+        found = true;
+        break;
+      }
+    }
+    console.log('Found', found);
+  })
+}
