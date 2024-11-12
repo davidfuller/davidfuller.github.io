@@ -542,7 +542,7 @@ async function correctTextSpaceQuotes(){
     if (indexes.length == 1){
       let foundText = searchDetails.bookText[indexes[0]];
       let index = foundText.toLowerCase().indexOf(searchDetails.mySearch.toLowerCase());
-      let position = index + mySearch.length;
+      let position = index + searchDetails.mySearch.length;
       let char = foundText.substr(position, 1);
       console.log('the char', char, 'the area', foundText.substr(position - 5, 10));
     }
