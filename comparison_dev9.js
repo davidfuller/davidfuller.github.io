@@ -655,9 +655,10 @@ async function findSearchTextInDecision(){
     console.log('Found', found);
   })
 }
-async Function getLinksToTextFromChapter(){
+async function getLinksToTextFromChapter(){
   let chapterCompareSelect = tag('chapter-compare-select');
   let myChapter = parseInt(chapterCompareSelect.value);
+  let formulaPrefix = '=Script!K'
   console.log(myChapter);
   await Excel.run(async (excel) => {
     const chapterRange = await jade_modules.operations.getChapterRange(excel);
@@ -667,10 +668,24 @@ async Function getLinksToTextFromChapter(){
     await excel.sync();
     let chapterRowIndexes = [];
     for (let i = 0; i < chapterRange.values.length; i++){
-      if (chapterRange.values[i][0] == myChapter) && (typeCode)
-      
+      if ((chapterRange.values[i][0] == myChapter) && ((typeCodeRange.value[i][0] == myTypes.line) || typeCodeRange.values[i][0] == myTypes.scene)){
+        chapterRowIndexes.push(i + chapterRange.rowIndex);
+      }
     }
+    console.log('chapterRowIndexes', chapterRowIndexes);
+    let formulas = []
+    for (let i = 0; i < chapterRowIndexes.length; i++){
+      formulas[i] = [formulaPrefix + chapterRowIndexes[i] + 1];
+    }
+    console.log('formulas', formulas);
+
+    const resultSheet = excel.workbook.worksheets.getItem('Result')
+    let scriptRange = resultSheet.getRange('reScript');
+    scriptRange.clear('Contents');
+    scriptRange.load('rowIndex, columnIndex');
+    await excel.sync();
+    let tempRange = resultSheet.getRangeByIndexes(scriptRange.rowIndex, scriptRange.columnIndex, formulas.length, 1);
+    tempRange.formulas = formulas
+  })
     
-  
-  
 }

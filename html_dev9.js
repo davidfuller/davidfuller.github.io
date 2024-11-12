@@ -47,6 +47,7 @@ async function mainHTML(){
     <label for="chapter-compare-select">Chapter</label><select id="chapter-compare-select"><option value="">Please select chapter</option></select><br/>
     <button id="btnArchiveComparison" onclick="jade_modules.comparison.copySheets()">Archive Comparison Sheets</button>
     <button id="btnClearDecisionAndResult" onclick="jade_modules.comparison.clearDecisionAndResult()">Clear Decision And Result</button>
+    <button id="btnCreateScriptLinks" onclick="jade_modules.comparison.getLinksToTextFromChapter()">Create Script Links</button>
     <button id="btnSelectResultLowestTrue" onclick="jade_modules.comparison.selectResultLowestTrue()">Lowest True</button>
     <button id="btnActiveCellTextArea" onclick="jade_modules.comparison.putSelectedCellInTextArea()">Active cell search text</button>
     <textarea id="search-text" cols="40" rows="8"></textarea>
