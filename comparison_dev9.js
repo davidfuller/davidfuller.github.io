@@ -507,6 +507,7 @@ async function correctTextReplaceLF(doReplace){
   await Excel.run(async (excel) => {
     let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
     let indexes = searchDetails.indexes;
+    console.log('indexes', indexes);
     if (indexes.length == 1){
       let foundText = searchDetails.bookText[indexes[0]];
       let index = foundText.toLowerCase().indexOf(searchDetails.mySearch.toLowerCase());
