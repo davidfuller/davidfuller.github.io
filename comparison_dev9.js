@@ -528,13 +528,16 @@ async function correctText(){
       if (char == '\n'){
         newText = bookText[indexes[0]].substring(0, position) + ' ' + bookText[indexes[0]].substr(position + 1);
         console.log('newText', newText);
+        //now lets put it back in the pdf sheet.
+        let rowIndex = indexes[0] + bookRange.rowIndex;
+        let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, columnIndex, 1, 1);
+        replaceRange.load('address');
+        await excel.sync();
+        console.log('address', replaceRange.address);
       }
-      console.log('index', index, 'position', position, 'char', char, 'area', bookText[indexes[0]].substr(position - 5, 10), 'isLF', (char == '\n'));
+      
     }
-    console.log('indexes', indexes);
-    for (i = 0; i < indexes.length; i++){
-      console.log('element', indexes[i], 'text', bookText[indexes[i]]);
-    }
+    
   })
   
 }
