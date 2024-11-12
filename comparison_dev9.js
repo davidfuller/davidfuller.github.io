@@ -531,7 +531,7 @@ async function correctTextReplaceLF(doReplace){
    })
   
 }
-async function correctTextSpaceQuotes(){
+async function correctTextSpaceQuotes(doReplace){
   let replaceColumnIndex = 1;
   let searchDetails = await findSearchTextInPDF();
 
@@ -549,6 +549,14 @@ async function correctTextSpaceQuotes(){
       if (char == ' '){
         newText = foundText.substring(0, position) + '\n' + foundText.substr(position + 1);
         console.log('newText', newText);
+        let rowIndex = indexes[0] + searchDetails.rowIndex;
+        let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
+        replaceRange.load('address');
+        if (doReplace){
+          replaceRange.values = [[newText]];
+        }
+        await excel.sync();
+        console.log('address', replaceRange.address);
       }
     }
   })
