@@ -689,6 +689,9 @@ async function getLinksToTextFromChapter(){
     await excel.sync();
     let tempRange = resultSheet.getRangeByIndexes(scriptRange.rowIndex, scriptRange.columnIndex, formulas.length, 1);
     tempRange.formulas = formulas
-  })
-    
+  })  
+}
+async function createChaptersAndResults(){
+  await createChapters();
+  await createResult();
 }
