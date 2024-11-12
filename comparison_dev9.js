@@ -107,9 +107,9 @@ function createQuoteData(myLines, apostrophes, noKeeps){
       quoteData[quoteIndex] = theData;
     } else {
       if ((openQuote.length == 1) && closeQuote.length == 1){
-        console.log('Zero Indexes ', openQuote[0], closeQuote[0], 'text', myLines[i])
+        //console.log('Zero Indexes ', openQuote[0], closeQuote[0], 'text', myLines[i])
         if ((openQuote[0] <= 1) && closeQuote[0] >= (myLines[i].length - 2)){
-          console.log('Used zero index');
+          //console.log('Used zero index');
           let theData = {
             index: i,
             text: myLines[i],
@@ -123,7 +123,7 @@ function createQuoteData(myLines, apostrophes, noKeeps){
       }
       if (!done){
         if ((openQuote.length > 0) || (closeQuote.length > 0)){
-          console.log('Some Indexes ', openQuote, closeQuote, 'text', myLines[i])
+          //console.log('Some Indexes ', openQuote, closeQuote, 'text', myLines[i])
           let theData = {
             index: i,
             text: myLines[i],
@@ -288,7 +288,7 @@ async function displayDecision(quoteData, doDecision){
     let display = [];
     for (let i = 0; i < quoteData.length; i++){
       rowIndex += 1;
-      console.log('quotedata', quoteData[i]);
+      //console.log('quotedata', quoteData[i]);
       if (quoteData[i].subStrings.length > 0){
         display[rowIndex] = [];
         display[rowIndex][lineIndex] = i;
@@ -317,8 +317,8 @@ async function displayDecision(quoteData, doDecision){
         display[rowIndex][endIndex] = '';
       }
     }
-    console.log('Display', display);
-    console.log(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);
+    //console.log('Display', display);
+    //console.log(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);
     let tempRange;
     if (doDecision){
       tempRange = excel.workbook.worksheets.getItem('Decision').getRangeByIndexes(displayRange.rowIndex, displayRange.columnIndex, display.length, displayRange.columnCount);  
@@ -368,14 +368,14 @@ async function readDecisionData(){
           }
           let tempLines = doSplit(original, myDecision);
           if (tempLines.length > 1){
-            console.log('line', line, 'original', original, 'the lines', tempLines);
+            //console.log('line', line, 'original', original, 'the lines', tempLines);
           }
           myLines = myLines.concat(tempLines);
           prevLine = line; 
         }
       }
     } 
-    console.log('myLines', myLines);
+    //console.log('myLines', myLines);
   })
   return myLines;
 }
