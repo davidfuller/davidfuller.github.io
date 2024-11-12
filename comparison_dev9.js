@@ -630,6 +630,7 @@ async function putSelectedCellInTextArea(){
 }
 
 async function findSearchTextInDecision(){
+  await putSelectedCellInTextArea();
   let searchText = tag('search-text');
   console.log('searchText', searchText.value);
   let mySearch = searchText.value;
