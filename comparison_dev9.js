@@ -667,6 +667,7 @@ async function getLinksToTextFromChapter(){
     typeCodeRange.load('values, rowIndex');
     await excel.sync();
     let chapterRowIndexes = [];
+    console.log('Chapter Range Values', chapterRange.values, 'Typecode Range values', typeCodeRange.values)
     for (let i = 0; i < chapterRange.values.length; i++){
       if ((chapterRange.values[i][0] == myChapter) && ((typeCodeRange.value[i][0] == myTypes.line) || typeCodeRange.values[i][0] == myTypes.scene)){
         chapterRowIndexes.push(i + chapterRange.rowIndex);
