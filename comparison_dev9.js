@@ -534,6 +534,7 @@ async function correctText(){
         let rowIndex = indexes[0] + bookRange.rowIndex;
         let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
         replaceRange.load('address');
+        replaceRange.values = [[newText]];
         await excel.sync();
         console.log('address', replaceRange.address);
       }
