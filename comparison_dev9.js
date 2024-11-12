@@ -511,6 +511,9 @@ async function selectResultLowestTrue(){
   })
 }
 async function correctTextReplaceLF(doReplace){
+  if (doReplace){
+    await putSelectedCellInTextArea();
+  }
   let replaceColumnIndex = 1;
   let searchDetails = await findSearchTextInPDF();
 
