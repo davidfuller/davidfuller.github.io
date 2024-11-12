@@ -558,10 +558,11 @@ async function findSearchTextInPDF(){
   let lastRowIndex = 1300;
   let columnIndex = 3;
   let bookText;
+  let bookRange;
   let indexes = [];
   await Excel.run(async (excel) => {
     let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
-    let bookRange = pdfSheet.getRangeByIndexes(firstRowIndex, columnIndex, (lastRowIndex - firstRowIndex + 1), 1);
+    bookRange = pdfSheet.getRangeByIndexes(firstRowIndex, columnIndex, (lastRowIndex - firstRowIndex + 1), 1);
     bookRange.load('values, rowIndex');
     await excel.sync();
     bookText = bookRange.values.map(x => x[0]);
