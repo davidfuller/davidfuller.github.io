@@ -507,6 +507,8 @@ async function correctText(){
   let firstRowIndex = 9;
   let lastRowIndex = 1300;
   let columnIndex = 3;
+  let replaceColumnIndex = 1;
+
   await Excel.run(async (excel) => {
     let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
     let bookRange = pdfSheet.getRangeByIndexes(firstRowIndex, columnIndex, (lastRowIndex - firstRowIndex + 1), 1);
@@ -530,7 +532,7 @@ async function correctText(){
         console.log('newText', newText);
         //now lets put it back in the pdf sheet.
         let rowIndex = indexes[0] + bookRange.rowIndex;
-        let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, columnIndex, 1, 1);
+        let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
         replaceRange.load('address');
         await excel.sync();
         console.log('address', replaceRange.address);
