@@ -542,9 +542,14 @@ async function correctTextSpaceQuotes(){
     if (indexes.length == 1){
       let foundText = searchDetails.bookText[indexes[0]];
       let index = foundText.toLowerCase().indexOf(searchDetails.mySearch.toLowerCase());
-      let position = index + searchDetails.mySearch.length;
+      let position = index + searchDetails.mySearch.length + 1; //+1 to get pat closing quote
       let char = foundText.substr(position, 1);
       console.log('the char', char, 'the area', foundText.substr(position - 5, 10));
+      let newText
+      if (char == ' '){
+        newText = foundText.substring(0, position) + '\n' + foundText.substr(position + 1);
+        console.log('newText', newText);
+      }
     }
   })
 }
