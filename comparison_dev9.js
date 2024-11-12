@@ -541,7 +541,7 @@ async function correctTextSpaceQuotes(){
     console.log('indexes', indexes);
     if (indexes.length == 1){
       let foundText = searchDetails.bookText[indexes[0]];
-      let index = foundText.toLowerCase().indexOf(mySearch.toLowerCase());
+      let index = foundText.toLowerCase().indexOf(searchDetails.mySearch.toLowerCase());
       let position = index + mySearch.length;
       let char = foundText.substr(position, 1);
       console.log('the char', char, 'the area', foundText.substr(position - 5, 10));
@@ -577,6 +577,7 @@ async function findSearchTextInPDF(){
   return {
     indexes: indexes,
     bookText: bookText,
-    rowIndex: bookRange.rowIndex
+    rowIndex: bookRange.rowIndex,
+    mySearch: mySearch
   }
 }
