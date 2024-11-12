@@ -676,7 +676,7 @@ async function getLinksToTextFromChapter(){
     console.log('chapterRowIndexes', chapterRowIndexes);
     let formulas = []
     for (let i = 0; i < chapterRowIndexes.length; i++){
-      formulas[i] = [formulaPrefix + chapterRowIndexes[i] + 1];
+      formulas[i] = [formulaPrefix + (chapterRowIndexes[i] + 1)];
     }
     console.log('formulas', formulas);
 
