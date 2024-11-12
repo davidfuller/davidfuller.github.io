@@ -67,7 +67,7 @@ function chapterToLines(theChapter){
   // takes a chapter and splits it into lines
   // if begins with a single ' it is doubled ''
   // This is for excel display 
-  
+  console
   let myLines = theChapter.split("\n");
   for (let i = 0; i < myLines.length; i++){
     if (myLines[i].startsWith("'") && (!myLines[i].startsWith["''"])){
@@ -500,7 +500,57 @@ async function selectResultLowestTrue(){
     cellToSelect.select();
   })
 }
-async function correctText(){
+async function correctTextReplaceLF(doReplace){
+  let replaceColumnIndex = 1;
+  let searchDetails = await findSearchTextInPDF();
+
+  await Excel.run(async (excel) => {
+    let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
+    let indexes = searchDetails.indexes;
+    if (indexes.length == 1){
+      let foundText = searchDetails.bookText[indexes[0]];
+      let index = foundText.toLowerCase().indexOf(mySearch.toLowerCase());
+      let position = index + mySearch.length;
+      let char = foundText.substr(position, 1);
+      let newText;
+      if (char == '\n'){
+        newText = foundText.substring(0, position) + ' ' + foundText.substr(position + 1);
+        console.log('newText', newText);
+        //now lets put it back in the pdf sheet.
+        
+        let rowIndex = indexes[0] + searchDetails.rowIndex;
+        let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
+        replaceRange.load('address');
+        if (doReplace){
+          replaceRange.values = [[newText]];
+        }
+        await excel.sync();
+        console.log('address', replaceRange.address);
+      }
+    }
+   })
+  
+}
+async function correctTextSpaceQuotes(){
+  let replaceColumnIndex = 1;
+  let searchDetails = await findSearchTextInPDF();
+
+  await Excel.run(async (excel) => {
+    let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
+    let indexes = searchDetails.indexes;
+    console.log('indexes', indexes);
+    if (indexes.length == 1){
+      let foundText = searchDetails.bookText[indexes[0]];
+      let index = foundText.toLowerCase().indexOf(mySearch.toLowerCase());
+      let position = index + mySearch.length;
+      let char = foundText.substr(position, 1);
+      console.log('the char', char, 'the area', foundText.substr(position - 5, 10));
+    }
+  })
+}
+
+async function findSearchTextInPDF(){
+  //Takes the text from the textArea and finds every occurace in the pdf book.
   let searchText = tag('search-text');
   console.log('searchText', searchText.value);
   let mySearch = searchText.value;
@@ -508,7 +558,7 @@ async function correctText(){
   let lastRowIndex = 1300;
   let columnIndex = 3;
   let replaceColumnIndex = 1;
-
+  let indexes = [];
   await Excel.run(async (excel) => {
     let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
     let bookRange = pdfSheet.getRangeByIndexes(firstRowIndex, columnIndex, (lastRowIndex - firstRowIndex + 1), 1);
@@ -516,31 +566,16 @@ async function correctText(){
     await excel.sync();
     let bookText = bookRange.values.map(x => x[0]);
     console.log('bookText', bookText);
-    let indexes = [];
+    
     for (i = 0; i < bookText.length; i ++){
       if (bookText[i].toLowerCase().includes(mySearch.toLowerCase())){
         indexes.push(i);
       }
     }
-    if (indexes.length == 1){
-      let index = bookText[indexes[0]].toLowerCase().indexOf(mySearch.toLowerCase());
-      let position = index + mySearch.length;
-      let char = bookText[indexes[0]].substr(position, 1);
-      let newText;
-      if (char == '\n'){
-        newText = bookText[indexes[0]].substring(0, position) + ' ' + bookText[indexes[0]].substr(position + 1);
-        console.log('newText', newText);
-        //now lets put it back in the pdf sheet.
-        let rowIndex = indexes[0] + bookRange.rowIndex;
-        let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
-        replaceRange.load('address');
-        replaceRange.values = [[newText]];
-        await excel.sync();
-        console.log('address', replaceRange.address);
-      }
-      
-    }
-    
   })
-  
+  return {
+    indexes: indexes,
+    bookText: bookText,
+    rowIndex: bookRange.rowIndex
+  }
 }

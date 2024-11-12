@@ -49,7 +49,9 @@ async function mainHTML(){
     <button id="btnClearDecisionAndResult" onclick="jade_modules.comparison.clearDecisionAndResult()">Clear Decision And Result</button>
     <button id="btnSelectResultLowestTrue" onclick="jade_modules.comparison.selectResultLowestTrue()">Lowest True</button>
     <textarea id="search-text" cols="50" rows="5"></textarea>
-    <button id="btnCorrectText" onclick="jade_modules.comparison.correctText()">Correct Text</button>
+    <button id="btnCorrectTextLf" onclick="jade_modules.comparison.correctTextReplaceLF(false)">Check Text Replace LF</button>
+    <button id="btnCorrectTextLf" onclick="jade_modules.comparison.correctTextReplaceLF(true)">Correct Text Replace LF</button>
+    <button id="btnCorrectTextSpaceQuote" onclick="jade_modules.comparison.correctTextSpaceQuotes()">Correct Text Space Quotes</button>
     <div class="row">
       <div class="column" id="column-add-one">
         <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
