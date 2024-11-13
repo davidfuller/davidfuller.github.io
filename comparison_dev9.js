@@ -703,6 +703,7 @@ async function createChaptersAndResults(){
 }
 
 async function findInPDF(){
+  await putSelectedCellInTextArea();
   let searchDetails = await findSearchTextInPDF();
   let results = [];
   await Excel.run(async (excel) => {
@@ -716,12 +717,14 @@ async function findInPDF(){
       if (index != -1){
         let rowIndex = indexes[0] + searchDetails.rowIndex;
         let endPosition = index + searchDetails.mySearch.length;
+        let isEnd = (endPosition == foundText.length)
         let myResult = {
           message: searchDetails.mySearch + ' found at position ' + index + ' to ' + (index + searchDetails.mySearch.length) + ' in row ' + (rowIndex + 1),
           searchText: searchDetails.mySearch,
           startPosition: index,
           endPosition: endPosition,
-          rowIndex: rowIndex
+          rowIndex: rowIndex,
+          isEnd: isEnd
         }
         results.push(myResult);
       }
