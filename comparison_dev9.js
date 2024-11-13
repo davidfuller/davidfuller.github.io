@@ -720,7 +720,7 @@ async function findInPDF(){
         let endPosition = index + searchDetails.mySearch.length;
         let isEnd = (Maths.abs(endPosition - foundText.length) < 2)
         let myResult = {
-          message: searchDetails.mySearch + ' found at position ' + index + ' to ' + (index + searchDetails.mySearch.length) + ' in row ' + (rowIndex + 1),
+          message: searchDetails.mySearch + ' found at position ' + index + ' to ' + (index + searchDetails.mySearch.length) + ' in row ' + (rowIndex + 1) + ' isEnd ' + isEnd,
           searchText: searchDetails.mySearch,
           startPosition: index,
           endPosition: endPosition,
@@ -735,8 +735,6 @@ async function findInPDF(){
       pdfSheet.activate();
       selectedCell.select();
     }
-    
-
-    console.log('Results: ', results)
+    console.log('Results: ', results.map(x => x.message));
   })
 }
