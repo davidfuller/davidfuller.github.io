@@ -718,7 +718,7 @@ async function findInPDF(){
       if (index != -1){
         let rowIndex = indexes[i] + searchDetails.rowIndex;
         let endPosition = index + searchDetails.mySearch.length;
-        let isEnd = (endPosition == foundText.length)
+        let isEnd = (Maths.abs(endPosition - foundText.length) < 2)
         let myResult = {
           message: searchDetails.mySearch + ' found at position ' + index + ' to ' + (index + searchDetails.mySearch.length) + ' in row ' + (rowIndex + 1),
           searchText: searchDetails.mySearch,
