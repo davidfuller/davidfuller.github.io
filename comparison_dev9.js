@@ -562,32 +562,37 @@ async function correctTextSpaceQuotes(doReplace){
   await Excel.run(async (excel) => {
     let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
     let indexes = searchDetails.indexes;
-    console.log('indexes', indexes);
+    //console.log('indexes', indexes);
     if (indexes.length == 1){
       let foundText = searchDetails.bookText[indexes[0]];
       let index = foundText.toLowerCase().indexOf(searchDetails.mySearch.toLowerCase());
       let position = index + searchDetails.mySearch.length + 1; //+1 to get pat closing quote
       let char = foundText.substr(position, 1);
-      console.log('the char', char, 'the area', foundText.substr(position - 5, 10));
+      //console.log('the char', char, 'the area', foundText.substr(position - 5, 10));
       let newText
       if (char == ' '){
         newText = foundText.substring(0, position) + '\n' + foundText.substr(position + 1);
-        console.log('newText', newText);
+        //console.log('newText', newText);
         let rowIndex = indexes[0] + searchDetails.rowIndex;
         let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
         replaceRange.load('address');
         if (doReplace){
+          console.log('Doing it')
           replaceRange.values = [[newText]];
         } else {
           console.log('This looks good');
         }
         await excel.sync();
-        console.log('address', replaceRange.address);
+        //console.log('address', replaceRange.address);
         if (doReplace){
           await createChapters();
           await createResult();
         }
+      } else {
+        console.log('A space was expected here, but we got:', char)
       }
+    } else {
+      console.log('Too many possibilities to accurately guess', indexes)
     }
   })
 }
