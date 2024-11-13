@@ -706,6 +706,7 @@ async function findInPDF(){
   await putSelectedCellInTextArea();
   let searchDetails = await findSearchTextInPDF();
   let results = [];
+  let columnIndex = 1;
   await Excel.run(async (excel) => {
     let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
     let indexes = searchDetails.indexes;
@@ -729,6 +730,13 @@ async function findInPDF(){
         results.push(myResult);
       }
     }
+    if (results.length > 0){
+      let selectedCell = pdfSheet.getRangeByIndexes(results[0].rowIndex, columnIndex, 1, 1);
+      pdfSheet.activate();
+      selectedCell.select();
+    }
+    
+
     console.log('Results: ', results)
   })
 }
