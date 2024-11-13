@@ -600,7 +600,7 @@ async function correctTextSpaceQuotes(doReplace){
 async function findSearchTextInPDF(){
   //Takes the text from the textArea and finds every occurace in the pdf book.
   let searchText = tag('search-text');
-  console.log('searchText', searchText.value);
+  //console.log('searchText', searchText.value);
   let mySearch = searchText.value;
   let firstRowIndex = 9;
   let lastRowIndex = 1300;
@@ -614,7 +614,7 @@ async function findSearchTextInPDF(){
     bookRange.load('values, rowIndex');
     await excel.sync();
     bookText = bookRange.values.map(x => x[0]);
-    console.log('bookText', bookText);
+    //console.log('bookText', bookText);
     
     for (i = 0; i < bookText.length; i ++){
       if (bookText[i].toLowerCase().includes(mySearch.toLowerCase())){
