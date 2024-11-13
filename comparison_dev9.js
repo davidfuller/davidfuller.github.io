@@ -715,7 +715,7 @@ async function findInPDF(){
       let foundText = searchDetails.bookText[indexes[i]];
       let index = foundText.toLowerCase().indexOf(searchDetails.mySearch.toLowerCase());
       if (index != -1){
-        let rowIndex = indexes[0] + searchDetails.rowIndex;
+        let rowIndex = indexes[i] + searchDetails.rowIndex;
         let endPosition = index + searchDetails.mySearch.length;
         let isEnd = (endPosition == foundText.length)
         let myResult = {
