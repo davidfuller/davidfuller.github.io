@@ -55,6 +55,7 @@ async function mainHTML(){
     <button id="btnCorrectTextLf" onclick="jade_modules.comparison.correctTextReplaceLF(true)">Replace Line-Feed</button>
     <button id="btnCorrectTextSpaceQuote" onclick="jade_modules.comparison.correctTextSpaceQuotes(true)">Correct Space Quotes</button>
     <button id="btnFindDecision" onclick="jade_modules.comparison.findSearchTextInDecision()">Find text in Decision</button>
+    <button id="btnFindInPDF" onclick="jade_modules.comparison.findInPDF()">Find in PDF Comparison</button>
     <div class="row">
       <div class="column" id="column-add-one">
         <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>

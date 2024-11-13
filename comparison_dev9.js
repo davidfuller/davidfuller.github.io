@@ -701,3 +701,31 @@ async function createChaptersAndResults(){
   await createChapters();
   await createResult();
 }
+
+async function findInPDF(){
+  let searchDetails = await findSearchTextInPDF();
+  let results = [];
+  await Excel.run(async (excel) => {
+    let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
+    let indexes = searchDetails.indexes;
+    console.log('indexes', indexes);
+    
+    for (let i = 0; i < indexes.length; i++){
+      let foundText = searchDetails.bookText[indexes[i]];
+      let index = foundText.toLowerCase().indexOf(searchDetails.mySearch.toLowerCase());
+      if (index != -1){
+        let rowIndex = indexes[0] + searchDetails.rowIndex;
+        let endPosition = index + searchDetails.mySearch.length;
+        let myResult = {
+          message: searchDetails.mySearch + ' found at position ' + index + ' to ' + (index + searchDetails.mySearch.length) + ' in row ' + (rowIndex + 1),
+          searchText: searchDetails.mySearch,
+          startPosition: index,
+          endPosition: endPosition,
+          rowIndex: rowIndex
+        }
+        results.push(myResult);
+      }
+    }
+    console.log('Results: ', results)
+  })
+}
