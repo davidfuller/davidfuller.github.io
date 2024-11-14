@@ -158,7 +158,7 @@ async function mainHTML(){
         <label for="engineer-select">Engineer</label>
       </div>
       <div class="column" id="column-two">
-        <input type="text" id="markup" name="markup">
+        <input type="text" id="markup" name="markup"><button id="btnDefaultMarkup" onclick="jade_modules.operations.addDefaultMarkUp()">Use Default</button>
         <select id="studio-select"><option value="">Please select</option></select><br/>
         <select id="engineer-select"><option value="">Please select</option></select>
       </div>

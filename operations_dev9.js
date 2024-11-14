@@ -5408,3 +5408,14 @@ function setDefaultRadioButton(){
   let detailsBelow = tag('radBelowDetails');
   detailsBelow.checked = true; 
 }
+
+async function addDefaultMarkUp(){
+  let markupTag = tag('markup');
+  await Excel.run(async function(excel){
+    let settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
+    let defaultMessage = settingsSheet.getRange('seDefaultMessage');
+    defaultMessage.load('values')
+    await excel.sync()
+    markupTag.value = defaultMessage.values[0][0];
+  })
+}
