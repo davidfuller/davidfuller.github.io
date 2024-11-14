@@ -172,7 +172,7 @@ label {
   font-weight: bold;
 }
 
-#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla, #btnColouredTakes {
+#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla, #btnColouredTakes, #btnShowScriptSupervisor {
   margin-left: 10px;
   margin-bottom: 5px;
   margin-top: 5px;
