@@ -5438,7 +5438,7 @@ async function addMarkUpToSelected(doReplace){
         await excel.sync();
         console.log(ranges[i].address);
         let tempRow = [];
-        for (let j = 0; j < ranges[i].rowCount; i++){
+        for (let j = 0; j < ranges[i].rowCount; j++){
           tempRow[j] = scriptSheet.getRangeByIndexes(ranges[i].rowIndex + j, 1, 1, 1);
           tempRow[j].load('rowHidden');
           await excel.sync();
