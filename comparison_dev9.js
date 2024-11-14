@@ -558,6 +558,7 @@ async function correctTextSpaceQuotes(doReplace){
   }
   let replaceColumnIndex = 1;
   let searchDetails = await findSearchTextInPDF();
+  let success = false;
 
   await Excel.run(async (excel) => {
     let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
@@ -579,6 +580,7 @@ async function correctTextSpaceQuotes(doReplace){
         if (doReplace){
           console.log('Doing it')
           replaceRange.values = [[newText]];
+          success = true;
         } else {
           console.log('This looks good');
         }
@@ -595,6 +597,8 @@ async function correctTextSpaceQuotes(doReplace){
       console.log('Too many possibilities to accurately guess', indexes)
     }
   })
+  console.log('Text Qute Space Success', success);
+  return success;
 }
 
 async function findSearchTextInPDF(){
