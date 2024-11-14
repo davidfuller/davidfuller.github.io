@@ -516,11 +516,12 @@ async function correctTextReplaceLF(doReplace){
   }
   let replaceColumnIndex = 1;
   let searchDetails = await findSearchTextInPDF();
+  let success = false;
 
   await Excel.run(async (excel) => {
     let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
     let indexes = searchDetails.indexes;
-    console.log('indexes', indexes);
+    //console.log('indexes', indexes);
     if (indexes.length == 1){
       let foundText = searchDetails.bookText[indexes[0]];
       let index = foundText.toLowerCase().indexOf(searchDetails.mySearch.toLowerCase());
@@ -537,20 +538,27 @@ async function correctTextReplaceLF(doReplace){
         let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
         replaceRange.load('address');
         if (doReplace){
+          console.log('Replace LF. Doing It');
           replaceRange.values = [[newText]];
+          success = true;
         } else {
           console.log('This looks good');
         }
         await excel.sync();
-        console.log('address', replaceRange.address);
+        //console.log('address', replaceRange.address);
         if (doReplace){
           await createChapters();
           await createResult();
         }
+      } else {
+        console.log('Replace LF. Not the expected LF', char);  
       }
+    } else {
+      console.log('Replace LF. Too many posibilities', indexes);
     }
-   })
-  
+  })
+  console.log('Replace LF success.', success);
+  return success;
 }
 async function correctTextSpaceQuotes(doReplace){
   if (doReplace){
