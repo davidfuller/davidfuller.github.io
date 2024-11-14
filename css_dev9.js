@@ -708,6 +708,11 @@ label {
   flex: 50%
 }
 
+#btnDefaultMarkup{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 11px;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')
