@@ -5435,9 +5435,9 @@ async function addMarkUpToSelected(doReplace){
       await excel.sync();
       console.log('markupCell.address',markupCell.address);
       if (doReplace){
-        markupCell.value = markUp
+        markupCell.value = [[markUp]]
       } else {
-        markupCell.value = markupCell.value + ' ' + markUp;
+        markupCell.value = [[markupCell.value + ' ' + markUp]];
       }
       await excel.sync()
     })
