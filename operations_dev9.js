@@ -5420,6 +5420,7 @@ async function addDefaultMarkUp(){
   })
 }
 async function addMarkUpToSelected(doReplace){
+  let isProtected = await unlockIfLocked();
   let markUpTag = tag('markup');
   let markUp = markUpTag.value;
   console.log('Mark Up', markUpTag.value, markUp);
@@ -5441,6 +5442,9 @@ async function addMarkUpToSelected(doReplace){
       }
       await excel.sync()
     })
+  }
+  if (isProtected){
+    await lockColumns();
   }
 }
 
