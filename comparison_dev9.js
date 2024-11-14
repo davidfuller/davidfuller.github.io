@@ -76,7 +76,6 @@ function chapterToLines(theChapter){
   // takes a chapter and splits it into lines
   // if begins with a single ' it is doubled ''
   // This is for excel display 
-  console
   let myLines = theChapter.split("\n");
   for (let i = 0; i < myLines.length; i++){
     if (myLines[i].startsWith("'") && (!myLines[i].startsWith["''"])){
@@ -258,7 +257,7 @@ function containsApostropheWord(text, position, words){
     if (start < 0){start = 0}
     if (stop >= text.length){stop = text.length}
     let test = text.substring(start, stop).toLowerCase();
-    console.log()
+    //console.log()
     if (test == words[i].word){
       return true;
     }
@@ -413,7 +412,7 @@ function doSplit(original, decisions){
     myLines[item] = removeAndTrim(original.substring(sortedIndexes[i], sortedIndexes[i + 1]));
   }
   if (myLines.length > 0){
-    console.log('Original', original, 'sorted Indexes', sortedIndexes, 'split Lines', myLines);
+    //console.log('Original', original, 'sorted Indexes', sortedIndexes, 'split Lines', myLines);
   }
 
   return myLines;
