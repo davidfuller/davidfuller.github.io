@@ -1275,7 +1275,11 @@ async function removeTake(country){
     let foundTake = 0;
     for (let i = 0; i < lineDetails.indicies.length; i++){
       if (lineDetails.indicies[i] == lineDetails.currentRowIndex){
-        foundTake = i + 1
+        if (lineDetails.totalTakes > 0){
+          foundTake = i + 1
+        } else {
+          console.log('Total takes 0');
+        }
       }
     }
     if (country == 'UK'){
@@ -1300,7 +1304,7 @@ async function removeTake(country){
       takeNoIndex = wallaTakeNoIndex;
       countryTakes = lineDetails.wallaTakes;
     }   
-    if (foundTake > 0){
+    if ((foundTake > 0) && countryTakes > 0){
       // Is this the last take for this country...
       console.log('Found take: ', foundTake);
       if (lineDetails.totalTakes == 1){
