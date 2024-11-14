@@ -162,6 +162,10 @@ async function mainHTML(){
         <select id="studio-select"><option value="">Please select</option></select><br/>
         <select id="engineer-select"><option value="">Please select</option></select>
       </div>
+      <div class="column" id="column-three">
+        <button id="btnDefaultMarkup" onclick="jade_modules.operations.addDefaultMarkUp()">Default</button>
+        <button id="btnAddMarkup" onclick="jade_modules.operations.addMarkUpToSelected()">Add</button>
+      </div>
     </div>
     <div id="fillButton">
       <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>

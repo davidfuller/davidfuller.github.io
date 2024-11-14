@@ -712,6 +712,7 @@ label {
   margin-top: 0px;
   margin-bottom: 0px;
   font-size: 11px;
+  height: 18px;
 }
 `;
   Jade.set_css(css);
