@@ -5429,6 +5429,7 @@ async function addMarkUpToSelected(doReplace){
       const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       const selectedRanges = excel.workbook.getSelectedRanges();
       selectedRanges.load('address');
+      selectedRanges.areas.load('items');
       await excel.sync();
       console.log('selectedRange address', selectedRanges.address)
       let ranges = selectedRanges.areas.items;
