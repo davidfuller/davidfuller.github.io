@@ -164,7 +164,8 @@ async function mainHTML(){
       </div>
       <div class="column" id="column-three">
         <button id="btnDefaultMarkup" onclick="jade_modules.operations.addDefaultMarkUp()">Default</button>
-        <button id="btnAddMarkup" onclick="jade_modules.operations.addMarkUpToSelected()">Add</button>
+        <button id="btnAddMarkup" onclick="jade_modules.operations.addMarkUpToSelected(false)">Add</button>
+        <button id="btnReplaceMarkup" onclick="jade_modules.operations.addMarkUpToSelected(true)">Replace</button>
       </div>
     </div>
     <div id="fillButton">

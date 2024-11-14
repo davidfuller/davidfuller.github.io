@@ -708,7 +708,7 @@ label {
   flex: 50%
 }
 
-#btnDefaultMarkup{
+#btnDefaultMarkup, #btnAddMarkup, #btnReplaceMarkup {
   margin-top: 0px;
   margin-bottom: 0px;
   font-size: 11px;

@@ -5419,3 +5419,26 @@ async function addDefaultMarkUp(){
     markupTag.value = defaultMessage.values[0][0];
   })
 }
+async function addMarkUpToSelected(doReplace){
+  let markUpTag = tag('markup');
+  let markUp = markUpTag.value;
+  if (markUp != ''){
+    await Excel.run(async function(excel){
+      const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      const activeCell = excel.workbook.getActiveCell();
+      activeCell.load('rowIndex');
+      await excel.sync();
+      let markupCell = scriptSheet.getRangeByIndexes(activeCell.rowIndex, ukMarkUpIndex, 1, 1)
+      markupCell.load('values');
+      await excel.sync();
+      if (doReplace){
+        markupCell.value = markUp
+      } else {
+        markupCell.value = markupCell.value + ' ' + markUp;
+      }
+      await excel.sync()
+    })
+  }
+}
+
+
