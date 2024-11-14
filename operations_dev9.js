@@ -1969,7 +1969,7 @@ async function showHideColumns(columnType){
     if (columnType == 'Script Supervisor'){
       let scriptIndex = range.values.findIndex(x => x[0] == 'Script Supervisor');
       console.log('scriptIndex', scriptIndex);
-      let hideScriptColumns = range.values[wallaIndex][2].split(",")
+      let hideScriptColumns = range.values[scriptIndex][2].split(",")
       console.log(hideScriptColumns);
       for (let hide of hideScriptColumns){
         let hideScriptColumnsRange = scriptSheet.getRange(hide);
