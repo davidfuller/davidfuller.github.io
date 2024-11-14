@@ -136,10 +136,10 @@ label {
 }
 
 #column-one {
-  padding: 0px;
-  margin: 0px
+  padding-left: 0px;
+  margin-left: 0px;
 }
-  
+
 .column-jump {
   padding-left: 10px;
 }
