@@ -5431,13 +5431,23 @@ async function addMarkUpToSelected(doReplace){
       selectedRanges.load('areas');
       await excel.sync();
       let areas = selectedRanges.areas
-      console.log(selectedRanges.areas);
       let ranges = areas.items;
+      let rowIndexes = [];
       for (i = 0; i < ranges.count; i++){
-        ranges[i].load('address')
-        excel.sync();
+        ranges[i].load('address', 'rowIndex', 'rowCount')
+        await excel.sync();
         console.log(ranges[i].address);
+        let tempRow = [];
+        for (let j = 0; j < ranges[i].rowCount; i++){
+          tempRow[j] = scriptSheet.getRangeByIndexes(ranges[i].rowIndex + j, 1, 1, 1);
+          tempRow[j].load('rowHidden');
+          await excel.sync();
+          if (!tempRow[j].rowHidden){
+            rowIndexes.push(ranges[i].rowIndex + j);
+          }
+        }
       }
+      console.log('Row Indexes', rowIndexes);
 
       /*
       let markupCell = scriptSheet.getRangeByIndexes(activeCell.rowIndex, ukMarkUpIndex, 1, 1)
