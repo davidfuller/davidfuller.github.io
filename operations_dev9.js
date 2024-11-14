@@ -5427,10 +5427,11 @@ async function addMarkUpToSelected(doReplace){
   if (markUp != ''){
     await Excel.run(async function(excel){
       const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-      const activeCell = excel.workbook.getActiveCell();
-      activeCell.load('rowIndex');
+      const selectedRanges = excel.workbook.getSelectedRanges();
+      selectedRanges.load('address');
       await excel.sync();
-      console.log('rowIndex', activeCell.rowIndex);
+      console.log('address', selectedRanges.address);
+      /*
       let markupCell = scriptSheet.getRangeByIndexes(activeCell.rowIndex, ukMarkUpIndex, 1, 1)
       markupCell.load('values, address');
       await excel.sync();
@@ -5441,6 +5442,7 @@ async function addMarkUpToSelected(doReplace){
         markupCell.values = [[markupCell.values + ' ' + markUp]];
       }
       await excel.sync()
+      */
     })
   }
   if (isProtected){
