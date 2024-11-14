@@ -5422,15 +5422,18 @@ async function addDefaultMarkUp(){
 async function addMarkUpToSelected(doReplace){
   let markUpTag = tag('markup');
   let markUp = markUpTag.value;
+  console.log('Mark Up', markUpTag.value, markUp);
   if (markUp != ''){
     await Excel.run(async function(excel){
       const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       const activeCell = excel.workbook.getActiveCell();
       activeCell.load('rowIndex');
       await excel.sync();
+      console.log('rowIndex', activeCell.rowIndex);
       let markupCell = scriptSheet.getRangeByIndexes(activeCell.rowIndex, ukMarkUpIndex, 1, 1)
-      markupCell.load('values');
+      markupCell.load('values, address');
       await excel.sync();
+      console.log('markupCell.address',markupCell.address);
       if (doReplace){
         markupCell.value = markUp
       } else {
