@@ -135,6 +135,11 @@ label {
   padding: 10px;
 }
 
+#column-one {
+  padding: 0px;
+  margin: 0px
+}
+  
 .column-jump {
   padding-left: 10px;
 }
