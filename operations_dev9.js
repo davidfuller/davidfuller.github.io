@@ -5403,3 +5403,8 @@ function getColumnDetails(){
 
   return columns;
 }
+
+function setDefaultRadioButton(){
+  let detailsBelow = tag('radBelowDetails');
+  detailsBelow.checked = true; 
+}
