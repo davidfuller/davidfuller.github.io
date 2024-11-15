@@ -189,14 +189,15 @@ label {
   cursor: pointer;
 }
 
-#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowTakesOnly #btnColouredTakes, #btnShowFirstOnly, #btnShowLastOnly {
+#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowTakesOnly, #btnColouredTakes, #btnShowFirstOnly, #btnShowLastOnly {
   margin-left: 10px;
   margin-bottom: 5px;
   margin-top: 5px;
   padding-left: 10px;
   padding-right: 10px;
   border: none;
-  width: 60px;
+  width: 130px;
+  height: 24px;
   border-radius: 4px;
   background-color: #46656F;
   color: #fef3df;
