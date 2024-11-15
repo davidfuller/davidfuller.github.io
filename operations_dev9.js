@@ -5480,8 +5480,6 @@ async function addMarkUpToSelected(doReplace){
       for (let i = 0; i < rowIndexes.length; i++){
         let markupCell = scriptSheet.getRangeByIndexes(rowIndexes[i], ukMarkUpIndex, 1, 1)
         markupCell.load('values, address');
-        await excel.sync();
-        console.log('markupCell.address', markupCell.address);
         if (doReplace){
           markupCell.values = [[markUp]]
         } else {
@@ -5492,9 +5490,7 @@ async function addMarkUpToSelected(doReplace){
             markupCell.values = [[current + ' ' + markUp]];
           }
         }
-        await excel.sync() 
       }
-    
     })
   }
   if (isProtected){
