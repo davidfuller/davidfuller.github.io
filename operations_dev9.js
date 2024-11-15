@@ -2022,7 +2022,12 @@ async function showHideColumns(columnType){
     }
   })  
   console.log(columnMessage.innerText, columnType);
-  columnMessage.innerText = 'Showing ' + columnType
+  if (columnType == 'Script Supervisor'){
+    columnMessage.innerText = columnType;
+  } else {
+    columnMessage.innerText = 'Showing ' + columnType;
+  }
+    
 }
 
 
