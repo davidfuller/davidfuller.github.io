@@ -110,16 +110,6 @@ async function mainHTML(){
       </div>
     </div>
   </div>
-  <div id="showTakes">
-    <label class="section-label">Take selection: </label><span id="takeMessage">Showing all takes</span><br/>
-    <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">All Takes</button>
-    <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">First Takes</button>
-    <button id='btnShowLast' onclick="jade_modules.operations.hideRows('last', 'UK')">Last Takes</button><br/>
-    <button id='btnShowTakesOnly' onclick="jade_modules.operations.hideRows('takeOnly', 'UK')">Takes Only</button>
-    <button id='btnShowFirstOnly' onclick="jade_modules.operations.hideRows('firstOnly', 'UK')">First Takes Only</button>
-    <button id='btnShowLastOnly' onclick="jade_modules.operations.hideRows('lastOnly', 'UK')">Last Takes Only</button><br/>
-    <button id='btnColouredTakes' onclick="jade_modules.operations.doColourTakes()">Coloured Takes</button><br/>
-  </div>
   <div id="showColumns">
     <label class="section-label">Column selection:</label><span id="columnMessage">Showing all columns</span>
     <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button><br/>
@@ -132,6 +122,16 @@ async function mainHTML(){
       <input type="checkbox" id='hideUnedited' checked="checked">
       <span class="checkmark3"></span>
     </label>
+  </div>  
+  <div id="showTakes">
+    <label class="section-label">Take selection: </label><span id="takeMessage">Showing all takes</span><br/>
+    <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">All Takes</button>
+    <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">First Takes</button>
+    <button id='btnShowLast' onclick="jade_modules.operations.hideRows('last', 'UK')">Last Takes</button><br/>
+    <button id='btnShowTakesOnly' onclick="jade_modules.operations.hideRows('takeOnly', 'UK')">Takes Only</button>
+    <button id='btnShowFirstOnly' onclick="jade_modules.operations.hideRows('firstOnly', 'UK')">First Takes Only</button>
+    <button id='btnShowLastOnly' onclick="jade_modules.operations.hideRows('lastOnly', 'UK')">Last Takes Only</button><br/>
+    <button id='btnColouredTakes' onclick="jade_modules.operations.doColourTakes()">Coloured Takes</button><br/>
   </div>
   <div id="dateStudioEngineer">
     <label class="section-label">Add / remove takes</label><br/>
