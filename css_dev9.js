@@ -462,7 +462,7 @@ label {
   top: 3px;
 }
 
-#show-hide, #show-hide-lock, #show-hide-filter, #show-hide-jump {
+#show-hide, #show-hide-lock, #show-hide-filter, #show-hide-jump, #show-hide-columns {
   margin-left: 5px;
   font-size: 10px;
   padding-left: 5px;
@@ -750,7 +750,7 @@ label {
   height: 18px;
 }
 
-#lock-buttons, #filter-buttons, #jump-buttons {
+#lock-buttons, #filter-buttons, #jump-buttons, #column-buttons {
   display: none; 
 }
 

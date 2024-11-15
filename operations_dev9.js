@@ -5568,3 +5568,12 @@ function showJump(){
     jumpTag.style.display = 'block';
   }
 }
+
+function showColumns(){
+  const columnTag = tag('column-buttons')
+  if (columnTag.style.display == 'block'){
+    columnTag.style.display = 'none';
+  } else {
+    columnTag.style.display = 'block';
+  }
+}
