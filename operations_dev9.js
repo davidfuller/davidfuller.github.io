@@ -5591,3 +5591,12 @@ function showTakes(){
     takesTag.style.display = 'block';
   }
 }
+
+function showAddRemove(){
+  const addRemoveTag = tag('add-remove-buttons')
+  if (addRemoveTag.style.display == 'block'){
+    addRemoveTag.style.display = 'none';
+  } else {
+    addRemoveTag.style.display = 'block';
+  }
+}
