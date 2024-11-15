@@ -5458,10 +5458,12 @@ async function addMarkUpToSelected(doReplace){
         console.log(ranges[i].address);
         let tempRow = [];
         let hidden = createListOFHiddenRows();
+        console.log('hidden', hidden)
         for (let j = 0; j < ranges[i].rowCount; j++){
           let myRow = ranges[i].rowIndex + j + 1;
+          console.log('myRow', myRow)
           if (!hidden.includes(myRow)){
-
+            console.log('Not hidden');
           
           /*
           tempRow[j] = scriptSheet.getRangeByIndexes(ranges[i].rowIndex + j, 1, 1, 1);
