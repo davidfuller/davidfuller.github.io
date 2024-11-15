@@ -753,9 +753,12 @@ label {
 #lock-buttons, #filter-buttons, #jump-buttons, #column-buttons, #takes-buttons, #add-remove-buttons {
   display: none; 
 }
-  
+
 #markup-message {
   font-size: 11px;
+  margin-left: 3px;
+  line-height: 15px;
+  display: inline-block;
 }
 `;
   Jade.set_css(css);

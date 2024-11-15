@@ -754,5 +754,8 @@ label {
 
 #markup-message {
   font-size: 11px;
+  margin-left: 3px;
+  line-height: 15px;
+  display: inline-block;
 }
 
