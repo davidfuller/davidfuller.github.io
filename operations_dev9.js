@@ -1881,6 +1881,12 @@ async function showLastTakes(doFull){
           index += 1;
           takeLastRows[index] = i + theRowIndex + 1;
         }
+      } else if (ukTakes == 0){
+        console.log('uk Takes', ukTakes, 'ukTakeNo', ukTakeNo);
+        if (ukTakes != ukTakeNo){
+          index += 1;
+          takeLastRows[index] = i + theRowIndex + 1;
+        }
       }
     }
     console.log('Take Last Indexes', takeLastRows)
