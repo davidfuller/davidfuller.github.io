@@ -177,7 +177,7 @@ label {
   font-weight: bold;
 }
 
-#btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla, #btnShowScriptSupervisor {
+#btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla, #btnShowScriptSupervisor, #btnDefaultColumn {
   margin-left: 10px;
   margin-bottom: 5px;
   margin-top: 5px;
