@@ -44,8 +44,8 @@ label {
   margin-top: 10px;
   width: 370px;
   padding-left: 10px;
-  padding-top: 10px;
-  padding-bottom: 15px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   border-width: 1px;
   border-radius: 5px;
   border-color: #46656F;
