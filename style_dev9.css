@@ -752,3 +752,7 @@ label {
   display: none; 
 }
 
+#markup-message {
+  font-size: 11px;
+}
+

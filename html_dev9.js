@@ -175,6 +175,7 @@ async function mainHTML(){
           <select id="studio-select"><option value="">Please select</option></select><br/>
           <select id="engineer-select"><option value="">Please select</option></select>
           <input type="text" id="markup" name="markup"><button id="btnDefaultMarkup" onclick="jade_modules.operations.addDefaultMarkUp()">Default</button><br/>
+          <label id="markup-message">The Add/Replace buttons allow you to add or replace text to the selected markup fields</label>
           <button id="btnAddMarkup" onclick="jade_modules.operations.addMarkUpToSelected(false)">Add</button>
           <button id="btnReplaceMarkup" onclick="jade_modules.operations.addMarkUpToSelected(true)">Replace</button>
         </div>
