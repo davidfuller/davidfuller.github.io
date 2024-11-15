@@ -163,11 +163,7 @@ async function mainHTML(){
       <div class="column" id="column-two">
         <select id="studio-select"><option value="">Please select</option></select><br/>
         <select id="engineer-select"><option value="">Please select</option></select>
-        <input type="text" id="markup" name="markup"><button id="btnDefaultMarkup" onclick="jade_modules.operations.addDefaultMarkUp()">Default</button>
-      </div>
-    </div>
-    <div class="row"></div>
-      <div class="column" id="column-three">
+        <input type="text" id="markup" name="markup"><button id="btnDefaultMarkup" onclick="jade_modules.operations.addDefaultMarkUp()">Default</button><br/>
         <button id="btnAddMarkup" onclick="jade_modules.operations.addMarkUpToSelected(false)">Add</button>
         <button id="btnReplaceMarkup" onclick="jade_modules.operations.addMarkUpToSelected(true)">Replace</button>
       </div>
