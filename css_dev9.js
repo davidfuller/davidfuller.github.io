@@ -199,7 +199,7 @@ label {
   padding-left: 10px;
   padding-right: 10px;
   border: none;
-  width: 110px;
+  width: 100px;
   height: 24px;
   border-radius: 4px;
   background-color: #46656F;
