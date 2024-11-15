@@ -5480,6 +5480,7 @@ async function addMarkUpToSelected(doReplace){
       for (let i = 0; i < rowIndexes.length; i++){
         let markupCell = scriptSheet.getRangeByIndexes(rowIndexes[i], ukMarkUpIndex, 1, 1)
         markupCell.load('values, address');
+        await excel.sync();
         if (doReplace){
           markupCell.values = [[markUp]]
         } else {
