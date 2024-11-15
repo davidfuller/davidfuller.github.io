@@ -193,7 +193,7 @@ label {
 }
 
 #btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowTakesOnly, #btnColouredTakes, #btnShowFirstOnly, #btnShowLastOnly {
-  margin-left: 10px;
+  margin-left: 5px;
   margin-bottom: 5px;
   margin-top: 5px;
   padding-left: 10px;
