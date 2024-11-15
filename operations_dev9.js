@@ -5485,7 +5485,12 @@ async function addMarkUpToSelected(doReplace){
         if (doReplace){
           markupCell.values = [[markUp]]
         } else {
-          markupCell.values = [[markupCell.values + ' ' + markUp]];
+          let current = markupCell.values[0][0].trim();
+          if (current == ''){
+            markupCell.values = [[markUp]]
+          } else {
+            markupCell.values = [[current + ' ' + markUp]];
+          }
         }
         await excel.sync() 
       }
