@@ -82,29 +82,6 @@
     <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
     <button id='btnRemoveFilter' onclick="jade_modules.operations.removeFilter()">Remove Filter</button><br/>
   </div>
-  <div id="showTakes">
-    <label class="section-label">Take selection: </label><span id="takeMessage">Showing all takes</span><br/>
-    <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">All Takes</button>
-    <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">First Takes</button>
-    <button id='btnShowLast' onclick="jade_modules.operations.hideRows('last', 'UK')">Last Takes</button><br/>
-    <button id='btnShowTakesOnly' onclick="jade_modules.operations.hideRows('takeOnly', 'UK')">Takes Only</button>
-    <button id='btnShowFirstOnly' onclick="jade_modules.operations.hideRows('firstOnly', 'UK')">First Takes Only</button>
-    <button id='btnShowLastOnly' onclick="jade_modules.operations.hideRows('lastOnly', 'UK')">Last Takes Only</button><br/>
-    <button id='btnColouredTakes' onclick="jade_modules.operations.doColourTakes()">Coloured Takes</button><br/>
-  </div>
-  <div id="showColumns">
-    <label class="section-label">Column selection:</label><span id="columnMessage">Showing all columns</span>
-    <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button><br/>
-    <button id='btnShowAll' onclick="jade_modules.operations.showHideColumns('all')">All Columns</button>
-    <button id='btnShowUK' onclick="jade_modules.operations.showHideColumns('UK Script')">UK Script</button>
-    <button id='btnShowUS' onclick="jade_modules.operations.showHideColumns('US Script')">US Script</button>
-    <button id='btnShowWalla' onclick="jade_modules.operations.showHideColumns('Walla Script')">Walla Script</button>
-    <button id='btnShowScriptSupervisor' onclick="jade_modules.operations.showHideColumns('Script Supervisor')">Script Supervisor</button>
-    <label class="container3">Always hide UK Script without dialog tags
-      <input type="checkbox" id='hideUnedited' checked="checked">
-      <span class="checkmark3"></span>
-    </label>
-  </div>
   <div id="jump">
     <label class="section-label">Jump to scene</label><br/>
     <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First scene</button>
@@ -129,6 +106,29 @@
         <span id='min-and-max-chapter'></span><br/>
       </div>
     </div>
+  </div>
+  <div id="showTakes">
+    <label class="section-label">Take selection: </label><span id="takeMessage">Showing all takes</span><br/>
+    <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">All Takes</button>
+    <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">First Takes</button>
+    <button id='btnShowLast' onclick="jade_modules.operations.hideRows('last', 'UK')">Last Takes</button><br/>
+    <button id='btnShowTakesOnly' onclick="jade_modules.operations.hideRows('takeOnly', 'UK')">Takes Only</button>
+    <button id='btnShowFirstOnly' onclick="jade_modules.operations.hideRows('firstOnly', 'UK')">First Takes Only</button>
+    <button id='btnShowLastOnly' onclick="jade_modules.operations.hideRows('lastOnly', 'UK')">Last Takes Only</button><br/>
+    <button id='btnColouredTakes' onclick="jade_modules.operations.doColourTakes()">Coloured Takes</button><br/>
+  </div>
+  <div id="showColumns">
+    <label class="section-label">Column selection:</label><span id="columnMessage">Showing all columns</span>
+    <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button><br/>
+    <button id='btnShowAll' onclick="jade_modules.operations.showHideColumns('all')">All Columns</button>
+    <button id='btnShowUK' onclick="jade_modules.operations.showHideColumns('UK Script')">UK Script</button>
+    <button id='btnShowUS' onclick="jade_modules.operations.showHideColumns('US Script')">US Script</button>
+    <button id='btnShowWalla' onclick="jade_modules.operations.showHideColumns('Walla Script')">Walla Script</button>
+    <button id='btnShowScriptSupervisor' onclick="jade_modules.operations.showHideColumns('Script Supervisor')">Script Supervisor</button>
+    <label class="container3">Always hide UK Script without dialog tags
+      <input type="checkbox" id='hideUnedited' checked="checked">
+      <span class="checkmark3"></span>
+    </label>
   </div>
   <div id="dateStudioEngineer">
     <label class="section-label">Add / remove takes</label><br/>
