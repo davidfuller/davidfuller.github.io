@@ -5544,19 +5544,18 @@ function createListOFHiddenRows(){
 function showLock(){
   const lockTag = tag('lock-buttons')
   console.log(lockTag.style.display);
-  if (lockTag.style.display == 'none'){
-    lockTag.style.display = 'block';
-  } else {
+  if (lockTag.style.display == 'block'){
     lockTag.style.display = 'none';
+  } else {
+    lockTag.style.display = 'block';
   }
 }
 
 function showFilter(){
   const filterTag = tag('filter-buttons')
-  console.log(filterTag.style.display)
-  if (filterTag.style.display == 'none'){
-    filterTag.style.display = 'block';
-  } else {
+  if (filterTag.style.display == 'block'){
     filterTag.style.display = 'none';
+  } else {
+    filterTag.style.display = 'block';
   }
 }
