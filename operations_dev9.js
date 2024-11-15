@@ -1873,16 +1873,15 @@ async function showLastTakes(doFull){
     let index = -1;
     const theRowIndex = takesRange.rowIndex;
     for (let i = 0; i < takesRange.values.length; i++){
-      let ukTakes = takesRange.values[i][col.ukTakesArrayIndex];
-      let ukTakeNo = takesRange.values[i][col.ukTakeNoArrayIndex];
+      let ukTakes = parseInt(takesRange.values[i][col.ukTakesArrayIndex]);
+      let ukTakeNo = parseInt(takesRange.values[i][col.ukTakeNoArrayIndex]);
+      console.log('uk Takes', ukTakes, 'ukTakeNo', ukTakeNo, 'row number', (i + theRowIndex + 1));
       if (ukTakes != ''){
-        console.log('uk Takes', ukTakes, 'ukTakeNo', ukTakeNo, 'row number', (i + theRowIndex + 1));
         if (ukTakes != ukTakeNo){
           index += 1;
           takeLastRows[index] = i + theRowIndex + 1;
         }
       } else if (ukTakes == 0){
-        console.log('uk Takes', ukTakes, 'ukTakeNo', ukTakeNo, 'row number', (i + theRowIndex + 1));
         index += 1;
         takeLastRows[index] = i + theRowIndex + 1;
       }
