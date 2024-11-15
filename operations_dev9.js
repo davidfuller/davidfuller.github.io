@@ -5559,3 +5559,12 @@ function showFilter(){
     filterTag.style.display = 'block';
   }
 }
+
+function showJump(){
+  const jumpTag = tag('jump-buttons')
+  if (jumpTag.style.display == 'block'){
+    jumpTag.style.display = 'none';
+  } else {
+    jumpTag.style.display = 'block';
+  }
+}
