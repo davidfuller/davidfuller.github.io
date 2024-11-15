@@ -5582,3 +5582,12 @@ function showColumns(){
     columnTag.style.display = 'block';
   }
 }
+
+function showTakes(){
+  const takesTag = tag('takes-buttons')
+  if (takesTag.style.display == 'block'){
+    takesTag.style.display = 'none';
+  } else {
+    takesTag.style.display = 'block';
+  }
+}
