@@ -1793,7 +1793,7 @@ async function hiddenRows(){
   })
 }
 
-async function showFirstTakes(doFull){
+async function showFirstTakes(firstOnly){
   const details = await getFirstLastIndex();
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -1801,22 +1801,7 @@ async function showFirstTakes(doFull){
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
     let takeNoRange;
-    if (!doFull){
-      const activeCell = excel.workbook.getActiveCell();
-      activeCell.load('rowIndex, columnIndex')
-      await excel.sync();
-      
-      app.suspendScreenUpdatingUntilNextSync();
-      app.suspendApiCalculationUntilNextSync();
-      let startIndex = activeCell.rowIndex - showTakesOffset;
-      if (startIndex < details.rowIndex){startIndex = details.rowIndex}
-      let rowCount = 2 * showTakesOffset;
-      if ((startIndex + rowCount) > details.rowCount){rowCount = details.rowCount - startIndex}
-      console.log(details.rowIndex, startIndex, ukTakeNoIndex, rowCount);
-      takeNoRange = scriptSheet.getRangeByIndexes(startIndex, ukTakeNoIndex, rowCount, 1);
-    } else {
-      takeNoRange = scriptSheet.getRangeByIndexes(details.rowIndex, ukTakeNoIndex, details.rowCount, 1);
-    }
+    takeNoRange = scriptSheet.getRangeByIndexes(details.rowIndex, ukTakeNoIndex, details.rowCount, 1);
     takeNoRange.load('values, rowIndex');
     await excel.sync();
     
@@ -1824,7 +1809,12 @@ async function showFirstTakes(doFull){
     app.suspendApiCalculationUntilNextSync();
     let takeNoValues = takeNoRange.values.map(x => x[0]);
     const theRowIndex = takeNoRange.rowIndex;
-    const takeOneRows = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((x != 1) && (x != ''))).map(([x, i]) => i + theRowIndex + 1);
+    let takeOneRows;
+    if (firstOnly){
+      takeOneRows = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((x != 1))).map(([x, i]) => i + theRowIndex + 1);
+    } else {
+      takeOneRows = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((x != 1) && (x != ''))).map(([x, i]) => i + theRowIndex + 1);
+    }
     console.log('Take One Rows', takeOneRows)
     let combined = combineRowsNumbers(takeOneRows)
     let hideRange = [];
@@ -1850,7 +1840,6 @@ async function showLastTakes(lastOnly){
     takesRange = scriptSheet.getRangeByIndexes(details.rowIndex, col.columnIndex, details.rowCount, col.columnCount);
     takesRange.load('values, rowIndex');
     await excel.sync();
-    console.log('takeRanges rowIndex', takesRange.rowIndex, 'values', takesRange.values);
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
     let takeLastRows = [];
@@ -1859,7 +1848,6 @@ async function showLastTakes(lastOnly){
     for (let i = 0; i < takesRange.values.length; i++){
       let ukTakes = parseInt(takesRange.values[i][col.ukTakesArrayIndex]);
       let ukTakeNo = parseInt(takesRange.values[i][col.ukTakeNoArrayIndex]);
-      console.log('uk Takes', ukTakes, 'ukTakeNo', ukTakeNo, 'row number', (i + theRowIndex + 1));
       if (!isNaN(ukTakes)){
         if ((ukTakes != ukTakeNo) || (ukTakes == 0)){
           index += 1;
