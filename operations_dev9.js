@@ -1649,11 +1649,11 @@ async function hideRows(visibleType, country){
   
     myMessage.innerText = "Showing all takes";
     
-    if (visibleType == 'last'){
+    if ((visibleType == 'last') || (visibleType == 'lastOnly')){
       app.suspendScreenUpdatingUntilNextSync();
       app.suspendApiCalculationUntilNextSync();
       myMessage.innerText = "Please wait...";
-      await showLastTakes(true);
+      await showLastTakes((visibleType == 'lastOnly'));
       myMessage.innerText = "Showing last takes"
     }
     
