@@ -210,6 +210,7 @@ label {
 
 #btnColouredTakes {
   width: fit-content;
+  min-width: 100px
 }
  #btnAddTakeUK, #btnRemoveTakeUK, #btnAddTakeUS, #btnRemoveTakeUS, #btnAddTakeWalla, #btnRemoveTakeWalla {
   margin-left: 4px;
