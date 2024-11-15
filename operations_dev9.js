@@ -5450,6 +5450,8 @@ async function addMarkUpToSelected(doReplace){
       let ranges = selectedRanges.areas.items;
       console.log(ranges)
       let rowIndexes = [];
+      createListOFHiddenRows();
+      /*
       for (i = 0; i < ranges.length; i++){
         ranges[i].load('address', 'rowIndex', 'rowCount')
         await excel.sync();
@@ -5478,11 +5480,46 @@ async function addMarkUpToSelected(doReplace){
         }
         await excel.sync() 
       }
+        */
     })
   }
   if (isProtected){
     await lockColumns();
   }
+}
+
+function createListOFHiddenRows(){
+  let combined = []
+  if (scriptHiddenRows.length > 0){
+    let start, end;
+    let theseRows = [];
+    let index = -1;
+    let firstOne = true;
+    for (let i = 0; i < scriptHiddenRows.length; i++){
+      theseRows = scriptHiddenRows[i].split(':');
+      //console.log('theseRows', theseRows)
+      if (parseInt(theseRows[0]) > 2){
+        if (firstOne){
+          start = parseInt(theseRows[0]);
+          end = parseInt(theseRows[1]);
+          firstOne = false;
+        } else {
+          if ((end + 1) == parseInt(theseRows[0])){
+            end = parseInt(theseRows[1])
+          } else {
+            index += 1;
+            combined[index] = {start: start, end: end}
+            start = parseInt(theseRows[0]);
+            end = parseInt(theseRows[1]);
+          }
+        }
+      }
+    }
+    index += 1;
+    combined[index] = {start: start, end: end}
+  }
+  console.log ('combined', combined)
+
 }
 
 
