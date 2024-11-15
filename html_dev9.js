@@ -13,7 +13,7 @@ async function mainHTML(){
     <button id="btnForActorPage" class="nav-button" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
     <button id="btnForSchedulingPage" class="nav-button" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
     <button id="btnWallaImport" class="nav-button" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
-    <button id="btnLocationPage" class="nav-button" onclick="jade_modules.operations.showLocation()">Location</button><br/>
+    <button id="btnLocationPage" class="nav-button" onclick="jade_modules.operations.showLocation()">Location</button>
     <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
   </div>
   <div id="admin">
