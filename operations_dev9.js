@@ -5543,6 +5543,7 @@ function createListOFHiddenRows(){
 
 function showLock(){
   const lockTag = tag('lock-buttons')
+  console.log(lockTag.style.display);
   if (lockTag.style.display == 'none'){
     lockTag.style.display = 'block';
   } else {
@@ -5552,6 +5553,7 @@ function showLock(){
 
 function showFilter(){
   const filterTag = tag('filter-buttons')
+  console.log(filterTag.style.display)
   if (filterTag.style.display == 'none'){
     filterTag.style.display = 'block';
   } else {
