@@ -5541,4 +5541,11 @@ function createListOFHiddenRows(){
   return unique;
 }
 
-
+function showLock(){
+  const lockTag = tag('lock-buttons')
+  if (lockTag.style.display == 'none'){
+    lockTag.style.display = 'block';
+  } else {
+    lockTag.style.display = 'none';
+  }
+}

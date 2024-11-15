@@ -749,6 +749,10 @@ label {
   font-size: 11px;
   height: 18px;
 }
+
+#lock-buttons {
+  display: none; 
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')

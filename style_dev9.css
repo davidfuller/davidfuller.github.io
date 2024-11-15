@@ -748,3 +748,7 @@ label {
   font-size: 11px;
   height: 18px;
 }
+#lock-buttons {
+  display: none; 
+}
+
