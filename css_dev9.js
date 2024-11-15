@@ -196,8 +196,8 @@ label {
   margin-left: 5px;
   margin-bottom: 5px;
   margin-top: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
   border: none;
   width: 100px;
   height: 24px;
@@ -207,7 +207,7 @@ label {
   font-size: 12px;
   cursor: pointer;
 }
-  
+
 #btnColouredTakes {
   width: fit-content;
 }
