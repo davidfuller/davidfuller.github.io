@@ -5519,7 +5519,14 @@ function createListOFHiddenRows(){
     combined[index] = {start: start, end: end}
   }
   console.log ('combined', combined)
-
+  let rawResults = []
+  for (let i = 0; i < combined.length; i++){
+    for (j = combined[i].start; j <= combined[i].end; j++){
+      rawResults.push(j);
+    }
+  }
+  let unique = [...new Set(rawResults)].sort((a,b) => a - b);
+  console.log('unique', unique)
 }
 
 
