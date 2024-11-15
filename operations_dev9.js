@@ -1657,11 +1657,11 @@ async function hideRows(visibleType, country){
       myMessage.innerText = "Showing last takes"
     }
     
-    if (visibleType == 'first'){
+    if ((visibleType == 'first') || (visibleType == 'firstOnly')){
       app.suspendScreenUpdatingUntilNextSync();
       app.suspendApiCalculationUntilNextSync();
       myMessage.innerText = "Please wait...";
-      await showFirstTakes(true);
+      await showFirstTakes((visibleType == 'firstOnly'));
       myMessage.innerText = "Showing first takes"
     }
     activeCell.getOffsetRange(1,0).select();
