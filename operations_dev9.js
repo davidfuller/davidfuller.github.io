@@ -1866,7 +1866,7 @@ async function showLastTakes(doFull){
     }
     takesRange.load('values, rowIndex');
     await excel.sync();
-    
+    console.log('takeRanges rowIndex', takesRange.rowIndex, 'values', takesRange.values);
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
     let takeLastRows = [];
