@@ -1664,6 +1664,15 @@ async function hideRows(visibleType, country){
       await showFirstTakes((visibleType == 'firstOnly'));
       myMessage.innerText = "Showing first takes"
     }
+
+    if (visibleType == 'takeOnly'){
+      app.suspendScreenUpdatingUntilNextSync();
+      app.suspendApiCalculationUntilNextSync();
+      myMessage.innerText = "Please wait...";
+      await showTakesOnly();
+      myMessage.innerText = "Showing takes only"
+    }
+    
     activeCell.getOffsetRange(1,0).select();
     await excel.sync();
     activeCell.select();
@@ -1817,6 +1826,36 @@ async function showFirstTakes(firstOnly){
     }
     console.log('Take One Rows', takeOneRows)
     let combined = combineRowsNumbers(takeOneRows)
+    let hideRange = [];
+    for (let i = 0; i < combined.length; i++){
+        hideRange[i] = scriptSheet.getRange(combined[i]);
+        hideRange[i].rowHidden = true;
+    }
+    await excel.sync();
+  });
+}
+
+async function showTakesOnly(){
+  const details = await getFirstLastIndex();
+  await Excel.run(async function(excel){ 
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let app = excel.workbook.application;
+    app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
+    let takeNoRange;
+    takeNoRange = scriptSheet.getRangeByIndexes(details.rowIndex, ukTakeNoIndex, details.rowCount, 1);
+    takeNoRange.load('values, rowIndex');
+    await excel.sync();
+    
+    app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
+    let takeNoValues = takeNoRange.values.map(x => x[0]);
+    const theRowIndex = takeNoRange.rowIndex;
+    
+    let takeRows = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((!isNaN(parseInt(x))) && parseInt(x) > 0)).map(([x, i]) => i + theRowIndex + 1);
+    
+    console.log('Take Rows', takeRows)
+    let combined = combineRowsNumbers(takeRows)
     let hideRange = [];
     for (let i = 0; i < combined.length; i++){
         hideRange[i] = scriptSheet.getRange(combined[i]);
