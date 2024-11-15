@@ -5549,3 +5549,12 @@ function showLock(){
     lockTag.style.display = 'none';
   }
 }
+
+function showFilter(){
+  const filterTag = tag('filter-buttons')
+  if (filterTag.style.display == 'none'){
+    filterTag.style.display = 'block';
+  } else {
+    filterTag.style.display = 'none';
+  }
+}

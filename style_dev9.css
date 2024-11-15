@@ -459,7 +459,7 @@ label {
   top: 3px;
 }
 
-#show-hide {
+#show-hide, #show-hide-lock, #show-hide-filter {
   margin-left: 5px;
   font-size: 10px;
   padding-left: 5px;
@@ -748,7 +748,7 @@ label {
   font-size: 11px;
   height: 18px;
 }
-#lock-buttons {
+#lock-buttons, #filter-buttons {
   display: none; 
 }
 

@@ -462,7 +462,7 @@ label {
   top: 3px;
 }
 
-#show-hide {
+#show-hide, #show-hide-lock, #show-hide-filter {
   margin-left: 5px;
   font-size: 10px;
   padding-left: 5px;
@@ -750,9 +750,10 @@ label {
   height: 18px;
 }
 
-#lock-buttons {
+#lock-buttons, #filter-buttons {
   display: none; 
 }
+
 `;
   Jade.set_css(css);
   console.log('CSS done')
