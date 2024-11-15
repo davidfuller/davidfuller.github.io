@@ -1874,8 +1874,9 @@ async function showLastTakes(doFull){
     const theRowIndex = takesRange.rowIndex;
     for (let i = 0; i < takesRange.values.length; i++){
       let ukTakes = takesRange.values[i][col.ukTakesArrayIndex];
+      let ukTakeNo = takesRange.values[i][col.ukTakeNoArrayIndex];
       if (ukTakes != ''){
-        let ukTakeNo = takesRange.values[i][col.ukTakeNoArrayIndex];
+        console.log('uk Takes', ukTakes, 'ukTakeNo', ukTakeNo);
         if (ukTakes != ukTakeNo){
           index += 1;
           takeLastRows[index] = i + theRowIndex + 1;
