@@ -146,7 +146,7 @@ async function mainHTML(){
   <div id="dateStudioEngineer">
     <label class="section-label">Add / remove takes</label><a id='show-hide-add-remove' onclick="jade_modules.operations.showAddRemove()">Show/hide add/remove takes</a>
     <div id="add-remove-buttons">
-      </div><label id="take-wait">Please wait...</label>
+      <label id="take-wait">Please wait...</label>
       <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true)">Add Take UK</button>
       <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button><br/>
       <button id="btnAddTakeUS" onclick="jade_modules.operations.addTakeDetails('US', true)">Add Take US</button>
