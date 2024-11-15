@@ -1672,7 +1672,7 @@ async function hideRows(visibleType, country){
       await showTakesOnly();
       myMessage.innerText = "Showing takes only"
     }
-    
+
     activeCell.getOffsetRange(1,0).select();
     await excel.sync();
     activeCell.select();
@@ -1852,7 +1852,7 @@ async function showTakesOnly(){
     let takeNoValues = takeNoRange.values.map(x => x[0]);
     const theRowIndex = takeNoRange.rowIndex;
     
-    let takeRows = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((!isNaN(parseInt(x))) && parseInt(x) > 0)).map(([x, i]) => i + theRowIndex + 1);
+    let takeRows = takeNoValues.map((x, i) => [x, i]).filter(([x, i]) => ((isNaN(parseInt(x))) || parseInt(x) == 0)).map(([x, i]) => i + theRowIndex + 1);
     
     console.log('Take Rows', takeRows)
     let combined = combineRowsNumbers(takeRows)
