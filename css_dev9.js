@@ -207,7 +207,10 @@ label {
   font-size: 12px;
   cursor: pointer;
 }
-
+  
+#btnColouredTakes {
+  width: fit-content;
+}
  #btnAddTakeUK, #btnRemoveTakeUK, #btnAddTakeUS, #btnRemoveTakeUS, #btnAddTakeWalla, #btnRemoveTakeWalla {
   margin-left: 4px;
   margin-bottom: 5px;
