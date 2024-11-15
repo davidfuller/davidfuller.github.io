@@ -5460,7 +5460,7 @@ async function addMarkUpToSelected(doReplace){
         let hidden = createListOFHiddenRows();
         for (let j = 0; j < ranges[i].rowCount; j++){
           let myRow = ranges[i].rowIndex + j + 1;
-          if (hidden.includes(myRow)){
+          if (!hidden.includes(myRow)){
 
           
           /*
