@@ -174,7 +174,7 @@ label {
   font-weight: bold;
 }
 
-#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla, #btnColouredTakes, #btnShowScriptSupervisor {
+#btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla, #btnShowScriptSupervisor {
   margin-left: 10px;
   margin-bottom: 5px;
   margin-top: 5px;
@@ -182,6 +182,21 @@ label {
   padding-right: 10px;
   border: none;
   width: fit-content;
+  border-radius: 4px;
+  background-color: #46656F;
+  color: #fef3df;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowTakesOnly #btnColouredTakes, #btnShowFirstOnly, #btnShowLastOnly {
+  margin-left: 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: none;
+  width: 60px;
   border-radius: 4px;
   background-color: #46656F;
   color: #fef3df;
