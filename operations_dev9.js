@@ -5433,6 +5433,7 @@ async function addMarkUpToSelected(doReplace){
       await excel.sync();
       console.log('selectedRange address', selectedRanges.address)
       let ranges = selectedRanges.areas.items;
+      console.log(ranges)
       let rowIndexes = [];
       for (i = 0; i < ranges.count; i++){
         ranges[i].load('address', 'rowIndex', 'rowCount')
