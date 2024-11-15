@@ -735,7 +735,7 @@ label {
   padding-left: 10px;
   padding-right: 10px;
   border: none;
-  width: 130px;
+  width: auto;
   border-radius: 4px;
   background-color: #46656F;
   color: #fef3df;
