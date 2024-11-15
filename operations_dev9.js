@@ -5443,6 +5443,8 @@ async function addMarkUpToSelected(doReplace){
   let isProtected = await unlockIfLocked();
   let markUpTag = tag('markup');
   let markUp = markUpTag.value;
+  let waitTag = tag('take-wait');
+  
   console.log('Mark Up', markUpTag.value, markUp);
   if (markUp != ''){
     await Excel.run(async function(excel){
@@ -5502,6 +5504,7 @@ async function addMarkUpToSelected(doReplace){
   if (isProtected){
     await lockColumns();
   }
+  waitTag.style.display = 'none';
 }
 
 function createListOFHiddenRows(){
