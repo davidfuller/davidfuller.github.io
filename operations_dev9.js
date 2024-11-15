@@ -5451,17 +5451,24 @@ async function addMarkUpToSelected(doReplace){
       console.log(ranges)
       let rowIndexes = [];
       createListOFHiddenRows();
-      /*
+      
       for (i = 0; i < ranges.length; i++){
         ranges[i].load('address', 'rowIndex', 'rowCount')
         await excel.sync();
         console.log(ranges[i].address);
         let tempRow = [];
+        let hidden = createListOFHiddenRows();
         for (let j = 0; j < ranges[i].rowCount; j++){
+          let myRow = ranges[i].rowIndex + j + 1;
+          if (hidden.includes(myRow)){
+
+          
+          /*
           tempRow[j] = scriptSheet.getRangeByIndexes(ranges[i].rowIndex + j, 1, 1, 1);
           tempRow[j].load('rowHidden');
           await excel.sync();
           if (!tempRow[j].rowHidden){
+          */
             rowIndexes.push(ranges[i].rowIndex + j);
           }
         }
@@ -5480,7 +5487,7 @@ async function addMarkUpToSelected(doReplace){
         }
         await excel.sync() 
       }
-        */
+    
     })
   }
   if (isProtected){
@@ -5527,6 +5534,7 @@ function createListOFHiddenRows(){
   }
   let unique = [...new Set(rawResults)].sort((a,b) => a - b);
   console.log('unique', unique)
+  return unique;
 }
 
 
