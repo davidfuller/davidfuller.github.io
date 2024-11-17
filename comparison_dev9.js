@@ -899,8 +899,12 @@ async function fixNextIssue() {
   const empty = await findEmpty();
   console.log('empty', empty)
   
-  let rowIndex
-  if (empty < redLine) {
+  let rowIndex;
+  if (empty == -1){
+    rowIndex = redLine;
+  } else if (redLine == -1){
+    rowIndex = empty;
+  } else if (empty < redLine) {
     rowIndex = empty;
   } else {
     rowIndex = redLine;
