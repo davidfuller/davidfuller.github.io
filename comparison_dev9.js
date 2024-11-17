@@ -798,7 +798,8 @@ async function findEmpty() {
         break;
       }
     }
-  })  
+  })
+  return result;
 }
 
 async function fixNextIssue() {
