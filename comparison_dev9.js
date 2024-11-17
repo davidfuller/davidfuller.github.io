@@ -570,7 +570,7 @@ async function correctTextReplaceLF(doReplace){
           await createChapters();
           await createResult();
         }
-      } else if (threeChars == '´\r\n'){
+      } else if (threeChars == '`\r\n'){
         newText = foundText.substring(0, position) + ' ' + foundText.substr(position + 3);
         let rowIndex = indexes[0] + searchDetails.rowIndex;
         let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
