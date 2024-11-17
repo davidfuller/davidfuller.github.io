@@ -621,7 +621,10 @@ async function correctTextSpaceQuotes(doReplace){
           await createResult();
         }
       } else {
-        console.log('A space was expected here, but we got:', char)
+        console.log('A space was expected here, but we got:', char);
+        for (let c = -5; c <= 5; c++){
+          console.log(c, foundText.substr(c + position, 1));
+        }
       }
     } else {
       console.log('Too many possibilities to accurately guess', indexes)
