@@ -760,7 +760,7 @@ async function findRed(){
   //returns rowIndex of first row where charDiff > 5
   let result = -1;
   await Excel.run(async (excel) => {
-    const resultSheet = excel.workbook.worksheets.getItem('Results');
+    const resultSheet = excel.workbook.worksheets.getItem('Result');
     const charDiff = resultSheet.getRange('reCharDiff');
     charDiff.load('rowIndex, values');
     await excel.sync();
