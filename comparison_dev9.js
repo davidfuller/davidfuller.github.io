@@ -14,6 +14,12 @@ const myTypes = {
   wallaBlock: 'Walla Block'
 }
 
+const IssueType = {
+  finished: 'finished',
+  fixLf: 'fix LF',
+  fixSpaceQuote: 'fix space quote'
+}
+
 async function getRowColumnDetails(){
   let details = {};
   await Excel.run(async function(excel){ 
@@ -918,19 +924,38 @@ async function fixNextIssue() {
   const empty = await findEmpty();
   console.log('empty', empty)
   
+  /*
+  finished
+  fixLf
+  fixSpaceQuote
+  */
   let rowIndex;
+  let issueType;
   if (empty == -1){
     rowIndex = redLine;
+    if (redLine == -1){
+      issue = issueType.finished;
+    } else {
+      issue = issueType.fixLf
+    }
   } else if (redLine == -1){
     rowIndex = empty;
+    issue = issueType.fixSpaceQuote;
   } else if (empty < redLine) {
     rowIndex = empty;
+    issue = issueType.fixSpaceQuote;
   } else {
     rowIndex = redLine;
+    issue = issueType.fixLf
   }
 
   if (rowIndex > -1) {
     await selectIssueCell(rowIndex);
+  }
+  
+  return {
+    rowIndex: rowIndex,
+    issue: issue
   }
 }
 
@@ -943,4 +968,30 @@ async function selectIssueCell(rowIndex){
     let selectCell = bookRange.getCell(rowIndex - bookRange.rowIndex, 0);
     selectCell.select();
   })  
+}
+
+async function comparisonLoop(){
+  //This will loop through next fixes.
+  
+  let finished = false;
+  let counter = 0;
+  let theIssue;
+  while (!finished){
+    counter += 1;
+    theIssue = await fixNextIssue()
+    if ((theIssue.issue == issueType.finished) || (theIssue.rowIndex == -1)){
+      finished = true;
+    } else if (theIssue.issue == issueType.fixLf) {
+      console.log(counter + ': Doing ' + theIssue.issue + ' on rowIndex ' + theIssue.rowIndex);
+      let success = correctTextReplaceLF(true);
+      finshed = !success; 
+    } else if (theIssue.issue == issueType.fixSpaceQuote) {
+      console.log(counter + ': Doing ' + theIssue.issue + ' on rowIndex ' + theIssue.rowIndex);
+      let success = correctTextSpaceQuotes(true);
+      finshed = !success;
+    } else {
+      console.log(counter + ': Unexpected issue: ' + theIssue.issue + ' on rowIndex ' + theIssue.rowIndex);
+      finshed = true;
+    }
+  }
 }
