@@ -551,7 +551,10 @@ async function correctTextReplaceLF(doReplace){
           await createResult();
         }
       } else {
-        console.log('Replace LF. Not the expected LF', char);  
+        console.log('Replace LF. Not the expected LF', char);
+        for (let c = -5; c <= 5; c++){
+          console.log(c, foundText.substr(position + c, 1));
+        }
       }
     } else {
       console.log('Replace LF. Too many posibilities', indexes);
