@@ -793,7 +793,7 @@ async function findRed(){
         doneCell.load('values, address');
         await excel.sync();
         console.log('donecell', doneCell.address);
-        console.log(doneCell.values)
+        console.log(doneCell.values[0][0])
         if (doneCell.values[0][0].lowerCase() != 'done'){
           result = i + charDiff.rowIndex;
           break
