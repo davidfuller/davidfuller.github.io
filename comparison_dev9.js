@@ -984,12 +984,12 @@ async function comparisonLoop(){
       finished = true;
     } else if (theIssue.issue == issueType.fixLf) {
       console.log(counter + ': Doing ' + theIssue.issue + ' on rowIndex ' + theIssue.rowIndex);
-      let success = correctTextReplaceLF(true);
+      let success = await correctTextReplaceLF(true);
       console.log('success', success)
       finshed = !success; 
     } else if (theIssue.issue == issueType.fixSpaceQuote) {
       console.log(counter + ': Doing ' + theIssue.issue + ' on rowIndex ' + theIssue.rowIndex);
-      let success = correctTextSpaceQuotes(true);
+      let success = await correctTextSpaceQuotes(true);
       finshed = !success;
     } else {
       console.log(counter + ': Unexpected issue: ' + theIssue.issue + ' on rowIndex ' + theIssue.rowIndex);
