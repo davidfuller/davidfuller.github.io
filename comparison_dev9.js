@@ -792,7 +792,7 @@ async function findEmpty() {
         await excel.sync();
         console.log('lineCell',lineCell.address);
         console.log('lineCell',lineCell.values);
-        if (isNan(parseInt(lineCell.values[0][0]))){
+        if (isNaN(parseInt(lineCell.values[0][0]))){
           result = -1;
         }
         break;
