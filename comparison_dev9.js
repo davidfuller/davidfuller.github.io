@@ -806,6 +806,7 @@ async function fixNextIssue() {
   const redLine = await findRed();
   console.log('redLine', redLine);
   const empty = await findEmpty();
+  console.log('empty', empty)
   
   let rowIndex
   if (empty < redLine) {
