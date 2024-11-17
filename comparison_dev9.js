@@ -788,8 +788,10 @@ async function findEmpty() {
         result = i + bookRange.rowIndex;
         // Check line number
         let lineCell = bookRange.getCell(result, -1);
-        lineCell.load('values')
+        lineCell.load('values, address')
         await excel.sync();
+        console.log('lineCell',lineCell.address);
+        console.log('lineCell',lineCell.values);
         if (lineCell.values[0][0].trim() == ''){
           result = -1;
         }
