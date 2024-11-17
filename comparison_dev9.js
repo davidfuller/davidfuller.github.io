@@ -601,10 +601,10 @@ async function correctTextSpaceQuotes(doReplace){
       let char = foundText.substr(position, 1);
       //console.log('the char', char, 'the area', foundText.substr(position - 5, 10));
       let newText
+      let rowIndex = indexes[0] + searchDetails.rowIndex;
       if (char == ' '){
         newText = foundText.substring(0, position) + '\n' + foundText.substr(position + 1);
         //console.log('newText', newText);
-        let rowIndex = indexes[0] + searchDetails.rowIndex;
         let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
         replaceRange.load('address');
         if (doReplace){
@@ -621,9 +621,13 @@ async function correctTextSpaceQuotes(doReplace){
           await createResult();
         }
       } else {
-        console.log('A space was expected here, but we got:', char);
-        for (let c = -5; c <= 5; c++){
-          console.log(c, foundText.substr(c + position, 1));
+        if (searchDetails.isEnds[0]){
+          success = fixEndOfCellSpaceQuotes(rowIndex)
+        } else {
+          console.log('A space was expected here, but we got:', char);
+          for (let c = -5; c <= 5; c++){
+            console.log(c, foundText.substr(c + position, 1));
+          } 
         }
       }
     } else {
@@ -631,6 +635,50 @@ async function correctTextSpaceQuotes(doReplace){
     }
   })
   console.log('Text Qute Space Success', success);
+  return success;
+}
+
+async function fixEndOfCellSpaceQuotes(rowIndex){
+  //rowIndex is the row which has the text that ends the cell
+  //Find next row with text in. (within next 10)
+  let replaceColumnIndex = 1;
+  let nextOne = -1;
+  let success = false
+  await Excel.run(async (excel) => {
+    let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
+    let testRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 10, 1);
+    testRange.load('rowIndex, values');
+    await excel.sync();
+    for (i = 1; i < testRange.values.length; i++){
+      if (testRange.values[i][0].toString().trim() != ''){
+        nextOne = i;
+        break;
+      }
+    }
+    if (nextOne != -1){
+      //find the first space
+      let firstSpace = testRange.values[nextOne][0].indexOf(' ');
+      if (firstSpace != -1){
+        //create the bitToMove
+        let bitToMove = testRange.values[nextOne][0].substring(0, firstSpace).trim();
+        //Create new texts
+        let newFirstText = (testRange.values[0][0] + '\n' + bitToMove).trim();
+        let newNextText = testRange.values[nextOne][0].substr(firstSpace).trim();
+        //
+        let firstText = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
+        let nextText = pdfSheet.getRangeByIndexes(testRange.rowIndex + nextOne, replaceColumnIndex, 1, 1)
+        firstText.values =[[newFirstText]];
+        nextText.values = [[newNextText]];
+        success = true
+        console.log('new first text', newFirstText);
+        console.log('new next text', newNextText);
+      } else {
+        console.log('Failed to find first space')
+      }
+    } else {
+      console.log('Failed to find next text')
+    }
+  })
   return success;
 }
 
@@ -645,6 +693,7 @@ async function findSearchTextInPDF(){
   let bookText;
   let bookRange;
   let indexes = [];
+  let isEnds = [];
   await Excel.run(async (excel) => {
     let pdfSheet = excel.workbook.worksheets.getItem('PDF Comparison');
     bookRange = pdfSheet.getRangeByIndexes(firstRowIndex, columnIndex, (lastRowIndex - firstRowIndex + 1), 1);
@@ -654,8 +703,16 @@ async function findSearchTextInPDF(){
     //console.log('bookText', bookText);
     
     for (i = 0; i < bookText.length; i ++){
-      if (bookText[i].toLowerCase().includes(mySearch.toLowerCase())){
+      let foundText = bookText[i];
+      let isEnd = false;
+      if (foundText.toLowerCase().includes(mySearch.toLowerCase())){
+        let index = foundText.toLowerCase().indexOf(mySearch.toLowerCase());
+        if (index != -1){
+          let endPosition = index + mySearch.length;
+          isEnd = (Math.abs(endPosition - foundText.length) < 2)
+        }
         indexes.push(i);
+        isEnds.push(isEnd);
       }
     }
   })
@@ -663,7 +720,8 @@ async function findSearchTextInPDF(){
     indexes: indexes,
     bookText: bookText,
     rowIndex: bookRange.rowIndex,
-    mySearch: mySearch
+    mySearch: mySearch,
+    isEnds: isEnds
   }
 }
 
