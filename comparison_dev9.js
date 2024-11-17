@@ -14,7 +14,7 @@ const myTypes = {
   wallaBlock: 'Walla Block'
 }
 
-const IssueType = {
+const issueType = {
   finished: 'finished',
   fixLf: 'fix LF',
   fixSpaceQuote: 'fix space quote'
@@ -930,7 +930,7 @@ async function fixNextIssue() {
   fixSpaceQuote
   */
   let rowIndex;
-  let issueType;
+  let issue;
   if (empty == -1){
     rowIndex = redLine;
     if (redLine == -1){
