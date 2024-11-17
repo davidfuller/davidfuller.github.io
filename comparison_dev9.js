@@ -794,7 +794,7 @@ async function findRed(){
         await excel.sync();
         console.log('donecell', doneCell.address);
         console.log(doneCell.values[0][0])
-        if (doneCell.values[0][0].lowerCase() != 'done'){
+        if (doneCell.values[0][0].toLocaleLowerCase() != 'done'){
           result = i + charDiff.rowIndex;
           break
         }
