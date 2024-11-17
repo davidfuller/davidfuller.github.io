@@ -528,6 +528,7 @@ async function correctTextReplaceLF(doReplace){
       let position = index + searchDetails.mySearch.length;
       let char = foundText.substr(position, 1);
       let twoChars = foundText.substr(position, 2);
+      let threeChars = foundText.substr(position, 3);
       let newText;
       //console.log('the char', char, 'the area', foundText.substr(position - 5, 10));
       if (char == '\n'){
@@ -553,6 +554,24 @@ async function correctTextReplaceLF(doReplace){
         }
       } else if (twoChars == '\r\n'){
         newText = foundText.substring(0, position) + ' ' + foundText.substr(position + 2);
+        let rowIndex = indexes[0] + searchDetails.rowIndex;
+        let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
+        replaceRange.load('address');
+        if (doReplace){
+          console.log('Replace LF. Doing It');
+          replaceRange.values = [[newText]];
+          success = true;
+        } else {
+          console.log('This looks good');
+        }
+        await excel.sync();
+        //console.log('address', replaceRange.address);
+        if (doReplace){
+          await createChapters();
+          await createResult();
+        }
+      } else if (threeChars == '´\r\n'){
+        newText = foundText.substring(0, position) + ' ' + foundText.substr(position + 3);
         let rowIndex = indexes[0] + searchDetails.rowIndex;
         let replaceRange = pdfSheet.getRangeByIndexes(rowIndex, replaceColumnIndex, 1, 1);
         replaceRange.load('address');
