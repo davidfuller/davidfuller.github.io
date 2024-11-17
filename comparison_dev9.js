@@ -755,3 +755,29 @@ async function findInPDF(){
     console.log('Results: ', results.map(x => x.message));
   })
 }
+
+async function findRed(){
+  //returns rowIndex of first row where charDiff > 5
+  let result = -1;
+  await Excel.run(async (excel) => {
+    const resultSheet = excel.workbook.worksheets.getItem('Results');
+    const charDiff = resultsSheet.getRange('reCharDiff');
+    charDiff.load('rowIndex, values');
+    await excel.sync();
+    let values = charDiff.values.map(x => x[0]);
+    for (let i = 0; i < values.length; i++){
+      if (values[i] > 5){
+        result = i + charDiff.rowIndex;
+        break
+      }
+    }
+  });
+  return result;
+}
+
+async function fixNextIssue() {
+  //finds next issue, be it red or empty line, and attepts to fix it.
+  const redLine = await findRed();
+  console.log('redLine', redLine)
+  
+}
