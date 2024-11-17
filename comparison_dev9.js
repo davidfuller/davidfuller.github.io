@@ -790,8 +790,10 @@ async function findRed(){
     for (let i = 0; i < values.length; i++){
       if (values[i] > 5){
         let doneCell = charDiff.getCell(i, 1);
-        doneCell.load('values');
+        doneCell.load('values, address');
         await excel.sync();
+        console.log('donecell', doneCell.address);
+        console.log(doneCell.values)
         if (doneCell.values[0][0].lowerCase() != 'done'){
           result = i + charDiff.rowIndex;
           break
