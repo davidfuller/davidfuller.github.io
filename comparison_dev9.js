@@ -616,19 +616,19 @@ async function correctTextSpaceQuotes(doReplace){
         }
         await excel.sync();
         //console.log('address', replaceRange.address);
-        if (doReplace){
-          await createChapters();
-          await createResult();
-        }
       } else {
-        if (searchDetails.isEnds[0]){
-          success = fixEndOfCellSpaceQuotes(rowIndex)
+        if ((searchDetails.isEnds[0]) && (doReplace)) {
+          success = await fixEndOfCellSpaceQuotes(rowIndex)
         } else {
           console.log('A space was expected here, but we got:', char);
           for (let c = -5; c <= 5; c++){
             console.log(c, foundText.substr(c + position, 1));
           } 
         }
+      }
+      if ((success) && (doReplace)){
+        await createChapters();
+        await createResult();
       }
     } else {
       console.log('Too many possibilities to accurately guess', indexes)
