@@ -814,7 +814,7 @@ async function findEmpty() {
     let values = bookRange.values.map(x => x[0]);
     for (let i = 0; i < values.length; i++){
       if (values[i].trim() == ''){
-        result = i + bookRange.rowIndex;
+        result = i + bookRange.rowIndex - 1;
         // Check line number
         let lineCell = bookRange.getCell(result, -1);
         lineCell.load('values, address')
