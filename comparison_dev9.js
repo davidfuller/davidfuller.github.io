@@ -778,6 +778,21 @@ async function findRed(){
 async function fixNextIssue() {
   //finds next issue, be it red or empty line, and attepts to fix it.
   const redLine = await findRed();
-  console.log('redLine', redLine)
+  console.log('redLine', redLine);
   
+  let rowIndex = redLine;
+  if (rowIndex > -1) {
+    await selectIssueCell(rowIndex);
+  }
+}
+
+async function selectIssueCell(rowIndex){
+  await Excel.run(async (excel) => {
+    const resultSheet = excel.workbook.worksheets.getItem('Result');
+    let bookRange = resultSheet.getRange('reBook');
+    bookRange.load('columnIndex');
+    await excel.sync();
+    let selectCell = resultSheet.getRangeByIndexes(rowIndex, bookRange.columnIndex, 1, 1);
+    selectCell.select();
+  })  
 }
