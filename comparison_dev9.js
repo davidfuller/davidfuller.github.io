@@ -825,7 +825,9 @@ async function selectIssueCell(rowIndex){
   await Excel.run(async (excel) => {
     const resultSheet = excel.workbook.worksheets.getItem('Result');
     let bookRange = resultSheet.getRange('reBook');
-    let selectCell = bookRange.getCell(rowIndex, 0);
+    bookRange.load('rowIndex');
+    await excel.sync();
+    let selectCell = bookRange.getCell(rowIndex - bookRange.rowIndex, 0);
     selectCell.select();
   })  
 }
