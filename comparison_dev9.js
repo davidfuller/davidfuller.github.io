@@ -761,7 +761,7 @@ async function findRed(){
   let result = -1;
   await Excel.run(async (excel) => {
     const resultSheet = excel.workbook.worksheets.getItem('Results');
-    const charDiff = resultsSheet.getRange('reCharDiff');
+    const charDiff = resultSheet.getRange('reCharDiff');
     charDiff.load('rowIndex, values');
     await excel.sync();
     let values = charDiff.values.map(x => x[0]);
