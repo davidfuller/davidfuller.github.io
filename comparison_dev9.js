@@ -775,12 +775,43 @@ async function findRed(){
   return result;
 }
 
+async function findEmpty() {
+  let result = -1;
+  await Excel.run(async (excel) => {
+    const resultSheet = excel.workbook.worksheets.getItem('Result');
+    let bookRange = resultSheet.getRange('reBook');
+    bookRange.load('rowIndex, values');
+    await excel.sync();
+    let values = bookRange.values.map(x => x[0]);
+    for (let i = 0; i < values.length; i++){
+      if (values[i].trim() == ''){
+        result = i + bookRange.rowIndex;
+        // Check line number
+        let lineCell = bookRange.getCell(result, -1);
+        lineCell.load('values')
+        await excel.sync();
+        if (lineCell.values[0][0].trim() == ''){
+          result = -1;
+        }
+        break;
+      }
+    }
+  })  
+}
+
 async function fixNextIssue() {
   //finds next issue, be it red or empty line, and attepts to fix it.
   const redLine = await findRed();
   console.log('redLine', redLine);
+  const empty = await findEmpty();
   
-  let rowIndex = redLine;
+  let rowIndex
+  if (empty < redLine) {
+    rowIndex = empty;
+  } else {
+    rowIndex = redLine;
+  }
+
   if (rowIndex > -1) {
     await selectIssueCell(rowIndex);
   }
@@ -790,9 +821,7 @@ async function selectIssueCell(rowIndex){
   await Excel.run(async (excel) => {
     const resultSheet = excel.workbook.worksheets.getItem('Result');
     let bookRange = resultSheet.getRange('reBook');
-    bookRange.load('columnIndex');
-    await excel.sync();
-    let selectCell = resultSheet.getRangeByIndexes(rowIndex, bookRange.columnIndex, 1, 1);
+    let selectCell = bookRange.getCell(rowIndex, 0);
     selectCell.select();
   })  
 }
