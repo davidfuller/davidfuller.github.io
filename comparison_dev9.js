@@ -978,12 +978,14 @@ async function comparisonLoop(){
   let theIssue;
   while (!finished){
     counter += 1;
+    if (counter > 10){finished = true}
     theIssue = await fixNextIssue()
     if ((theIssue.issue == issueType.finished) || (theIssue.rowIndex == -1)){
       finished = true;
     } else if (theIssue.issue == issueType.fixLf) {
       console.log(counter + ': Doing ' + theIssue.issue + ' on rowIndex ' + theIssue.rowIndex);
       let success = correctTextReplaceLF(true);
+      console.log('success', success)
       finshed = !success; 
     } else if (theIssue.issue == issueType.fixSpaceQuote) {
       console.log(counter + ': Doing ' + theIssue.issue + ' on rowIndex ' + theIssue.rowIndex);
