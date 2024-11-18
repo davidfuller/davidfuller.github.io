@@ -986,14 +986,24 @@ async function comparisonLoop(){
       console.log(counter + ': Doing ' + theIssue.issue + ' on rowIndex ' + theIssue.rowIndex);
       let success = await correctTextReplaceLF(true);
       console.log('success', success)
-      finshed = !success; 
+      finished = !success; 
     } else if (theIssue.issue == issueType.fixSpaceQuote) {
       console.log(counter + ': Doing ' + theIssue.issue + ' on rowIndex ' + theIssue.rowIndex);
       let success = await correctTextSpaceQuotes(true);
-      finshed = !success;
+      finished = !success;
     } else {
       console.log(counter + ': Unexpected issue: ' + theIssue.issue + ' on rowIndex ' + theIssue.rowIndex);
-      finshed = true;
+      finished = true;
     }
   }
+}
+
+async function autoSelectChapter(){
+  await Excel.run(async (excel) => {
+    const resultSheet = excel.workbook.worksheets.getItem('Result');
+    const chapterRange = resultSheet.getRange('reChapter');
+    chapterRange.load('values');
+    await excel.sync();
+    console.log('chapter', chapterRange.values[0][0]);
+  })
 }

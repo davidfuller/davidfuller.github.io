@@ -57,7 +57,8 @@ async function mainHTML(){
     <button id="btnFindDecision" onclick="jade_modules.comparison.findSearchTextInDecision()">Find text in Decision</button>
     <button id="btnFindInPDF" onclick="jade_modules.comparison.findInPDF()">Find in PDF Comparison</button><br/>
     <button id="btnFindNext" onclick="jade_modules.comparison.fixNextIssue()">Fix Next Issue</button>
-    <button id="btnComparisonLoop" onclick="jade_modules.comparison.comparisonLoop()">Auto Run Comparison</button>
+    <button id="btnComparisonLoop" onclick="jade_modules.comparison.comparisonLoop()">Auto Run Comparison</button><br/>
+    <button id="btnAutoChapter" onclick="jade_modules.comparison.autoSelectChapter()">Auto Chapter</button>
     <div class="row">
       <div class="column" id="column-add-one">
         <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
