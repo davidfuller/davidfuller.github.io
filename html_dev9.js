@@ -318,6 +318,7 @@ async function mainHTML(){
   await jade_modules.operations.gatherTakeInformation(false);
   await jade_modules.comparison.fillChapter();
   jade_modules.operations.setDefaultRadioButton();
+  await jade_modules.comparison.autoSelectChapter();
 
   console.log("I'm here data loaded. Dev5");
 }
