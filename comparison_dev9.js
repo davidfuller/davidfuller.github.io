@@ -1005,5 +1005,8 @@ async function autoSelectChapter(){
     chapterRange.load('values');
     await excel.sync();
     console.log('chapter', chapterRange.values[0][0]);
+    const chapter = chapterRange.values[0][0];
+    let chapterNum = jade_modules.wordtonumbers.text2num(chapter);
+    console.log('Chapter Num', chapterNum)
   })
 }
