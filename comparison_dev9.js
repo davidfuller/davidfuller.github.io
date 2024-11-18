@@ -49,7 +49,7 @@ async function getChapterData(){
   await Excel.run(async function(excel){  
     const pdfSheet = excel.workbook.worksheets.getItem(pdfComparisonSheetName);
     const rowCount = details.rowCount;
-    console.log(startRowIndex, sourceColumnIndex, rowCount, 1)
+    //console.log(startRowIndex, sourceColumnIndex, rowCount, 1)
     const sourceRange = pdfSheet.getRangeByIndexes(startRowIndex, sourceColumnIndex, rowCount, 1);
     sourceRange.load('rowIndex, values');
     await excel.sync();
