@@ -759,3 +759,7 @@ label {
   display: inline-block;
 }
 
+.compButton {
+  width: 144px;
+}
+
