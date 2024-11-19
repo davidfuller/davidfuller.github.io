@@ -2293,6 +2293,15 @@ function showAdmin(){
     admin.style.display = 'block';
   }
 }
+function showComparison(){
+  let comp = tag('comparison')
+  if (comp.style.display === 'block'){
+    comp.style.display = 'none';
+  } else {
+    comp.style.display = 'block';
+  }
+  
+}
 
 async function getCharacters(sheetName, charIndex){
   let characters
