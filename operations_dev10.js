@@ -952,7 +952,6 @@ async function theFormulas(actualFirstRow, actualLastRow){
 
 async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
   let startTime = new Date().getTime();
-  console.log('Time taken:', (endTime - startTime) / 1000)
   let newRowIndex;
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
