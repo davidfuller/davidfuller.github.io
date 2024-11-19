@@ -15,6 +15,7 @@ async function mainHTML(){
     <button id="btnWallaImport" class="nav-button" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
     <button id="btnLocationPage" class="nav-button" onclick="jade_modules.operations.showLocation()">Location</button>
     <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
+    <a id='show-hide-comparison' onclick="jade_modules.operations.showComparison()">Show/hide comparison</a>
   </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
@@ -43,6 +44,27 @@ async function mainHTML(){
     <button id="btnAutoSceneBlock" onclick="jade_modules.operations.autoSceneBlockCreation()">Auto scene block</button>
     <button id="btnLoadNewSheetCharacters" onclick="jade_modules.operations.loadNewSheetCharacters()">Load new sheet characters</button>
     <button id="btnNewCharacters" onclick="jade_modules.operations.newCharacters()">Missing characters</button>
+    <div class="row">
+      <div class="column" id="column-add-one">
+        <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
+        <label for="chapter-scene-select">Chapter/Scene</label><br/>
+        <label id='scene-add-wait'>Please wait...</label><br/>
+        <button id="btnAddWallaBlockNamed" onclick="jade_modules.operations.getSceneWallaInformation(1)">Add walla block (Named)</button>
+        <button id="btnAddWallaBlockUnnamed" onclick="jade_modules.operations.getSceneWallaInformation(2)">Add walla block (Un-named)</button>
+        <button id="btnAddWallaBlockGeneral" onclick="jade_modules.operations.getSceneWallaInformation(3)">Add walla block (General)</button>
+        <label for="walla-scene">Scene</label><br/>
+      </div>
+      <div class="column" id="column-add-two">
+        <select id="chapter-scene-select"><option value="">Please select</option></select>
+        <button id='btnGoChapterScene' onclick="jade_modules.operations.goSceneChapter()">Go</button>
+        <button id="btnRefreshList" onclick="jade_modules.operations.fillChapterAndScene()">Refresh List</button>
+        <br/>
+        <input type="text" id="walla-scene" name="walla-scene">
+        <button id='btnGoWallaScene' onclick="jade_modules.operations.goWallaScene()">Go</button>
+      </div>
+    </div>
+  </div>
+  <div id="comparison">
     <button id="btnCreateChapters" onclick="jade_modules.comparison.createChapters()">Create Chapters</button>
     <button id="btnReadDecision" onclick="jade_modules.comparison.createResult()">Create Results</button>
     <button id="btnChapterAndResult" onclick="jade_modules.comparison.createChaptersAndResults()">Chapter + Result</button><br/>
@@ -61,24 +83,6 @@ async function mainHTML(){
     <button id="btnComparisonLoop"class="compButton" onclick="jade_modules.comparison.comparisonLoop()">Auto Run Comparison</button><br/>
     <button id="btnAutoChapter" class="compButton" onclick="jade_modules.comparison.autoSelectChapter()">Auto Chapter</button>
     <button id="btnDoKeeps" class="compButton" onclick="jade_modules.comparison.doKeepsAndManuals()">Do keeps</button>
-    <div class="row">
-      <div class="column" id="column-add-one">
-        <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
-        <label for="chapter-scene-select">Chapter/Scene</label><br/>
-        <label id='scene-add-wait'>Please wait...</label><br/>
-        <button id="btnAddWallaBlockNamed" onclick="jade_modules.operations.getSceneWallaInformation(1)">Add walla block (Named)</button>
-        <button id="btnAddWallaBlockUnnamed" onclick="jade_modules.operations.getSceneWallaInformation(2)">Add walla block (Un-named)</button>
-        <button id="btnAddWallaBlockGeneral" onclick="jade_modules.operations.getSceneWallaInformation(3)">Add walla block (General)</button>
-        <label for="walla-scene">Scene</label><br/>
-      </div>
-      <div class="column" id="column-add-two">
-        <select id="chapter-scene-select"><option value="">Please select</option></select>
-        <button id='btnGoChapterScene' onclick="jade_modules.operations.goSceneChapter()">Go</button><br/>
-        <button id="btnRefreshList" onclick="jade_modules.operations.fillChapterAndScene()">Refresh List</button>
-        <input type="text" id="walla-scene" name="walla-scene">
-        <button id='btnGoWallaScene' onclick="jade_modules.operations.goWallaScene()">Go</button>
-      </div>
-    </div>
   </div>
   <div id="firstButtons">
     <label class="section-label">Lock / Unlock</label><span id="lockMessage"></span><a id='show-hide-lock' onclick="jade_modules.operations.showLock()">Show/hide lock</a>
