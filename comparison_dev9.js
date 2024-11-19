@@ -493,10 +493,12 @@ async function clearDecisionAndResult(){
     let decisionTable = decisionSheet.getRange('deTable');
     let keepRange = decisionSheet.getRange('deKeep');
     let resultTable = resultSheet.getRange('reTable');
+    let manualRange = decisionSheet.getRange('deManual');
 
     decisionTable.clear('Contents');
     keepRange.clear('Contents');
     resultTable.clear('Contents');
+    manualRange.clear('Contents');
   })
 }
 
@@ -1014,5 +1016,30 @@ async function autoSelectChapter(){
       let chapterCompareSelect = tag('chapter-compare-select');
       chapterCompareSelect.value = chapterNum;
     }
+  })
+}
+
+async function doKeepsAndManuals(){
+  await Excel.run(async (excel) => {
+    const decisionSheet = excel.workbook.worksheets.getItem('Decision');
+    let keepRange = decisionSheet.getRange('deKeep');
+    let keepCalulationRange = decisionSheet.getRange('deKeepCalculation');
+    let manualRange = decisionSheet.getRange('deManual');
+    keepCalulationRange.load('values, rowIndex');
+    manualRange.load('values, rowIndex');
+    keepRange.load('rowIndex, columnIndex');
+    keepRange.clear('contents');
+    await excel.sync();
+    let indexes = []
+    for (i = 0; i < keepCalulationRange.length; i++){
+      if (keepCalulationRange.values[i][0] == 'Keep'){
+        indexes.push(i);
+      } else if (manualRange.values[i][0] == 'Manual'){
+        indexes.push(i);
+      } else if (keepCalulationRange.values[i][0] == 'End'){
+        break;
+      }
+    }
+    console.log('Indexes', indexes);
   })
 }
