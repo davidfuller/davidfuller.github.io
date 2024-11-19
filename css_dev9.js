@@ -760,6 +760,10 @@ label {
   line-height: 15px;
   display: inline-block;
 }
+
+.compButton {
+  width: 144px;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')
