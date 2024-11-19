@@ -1083,6 +1083,7 @@ function zeroElement(value){
 }
 
 async function addTakeDetails(country, doDate){
+  const startTime = new Date().getTime();
   let myAction = radioButtonChoice();
   console.log('The action: ', myAction);
   let myWait = tag('take-wait')
@@ -1136,7 +1137,11 @@ async function addTakeDetails(country, doDate){
       let currentRowIndex = lineDetails.indicies[countryTakes - 1];
       console.log('Current Row Index');
       console.log(currentRowIndex);
-      await insertRowV2(currentRowIndex, true, false)
+      let beforeInsert = new Date().getTime();
+      console.log('Before Insert Time taken:', (beforeInsert - startTime) / 1000)
+      await insertRowV2(currentRowIndex, true, false);
+      let afterInsert = new Date().getTime();
+      console.log('Before Insert Time taken:', (afterInsert - startTime) / 1000)
       newLineIndex = currentRowIndex + 1;
       lineDetails.indicies.push(newLineIndex);
       lineDetails.totalTakes += 1;
@@ -1164,6 +1169,8 @@ async function addTakeDetails(country, doDate){
     console.log("New Line");
     console.log(newLine);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let beforeAdd = new Date().getTime();
+    console.log('Before Add Time taken:', (beforeAdd - startTime) / 1000)
     if (doDate){
       let dateRange = scriptSheet.getRangeByIndexes(newLineIndex, dateRecordedIndex, 1, 1);
       let theDate = dateInFormat();
@@ -1173,6 +1180,7 @@ async function addTakeDetails(country, doDate){
     let markUpRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
     let studioRange = scriptSheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
     let engineerRange = scriptSheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
+
     if ((myAction == 'justDate') || (myAction == 'detailsBelow')){
       markUpRange.clear("Contents");
       studioRange.clear("Contents");
@@ -1193,13 +1201,21 @@ async function addTakeDetails(country, doDate){
   
     console.log("Line Details")
     console.log(lineDetails);
+    let beforeTidyTime = new Date().getTime();
+    console.log('Before Tidy Time taken:', (beforeTidyTime - startTime) / 1000)
     await doTheTidyUp(lineDetails)
+    let afterTidyTime = new Date().getTime();
+    console.log('After Tidy Time taken:', (afterTidyTime - startTime) / 1000)
     await refreshColourTakes();
+    let afterColour = new Date().getTime();
+    console.log('After Colour Time taken:', (afterColour - startTime) / 1000)
     if (isProtected){
       await lockColumns();
     } 
   });
   myWait.style.display = 'none';
+  let endTime = new Date().getTime();
+  console.log('Time taken:', (endTime - startTime) / 1000)
 }
 
 
