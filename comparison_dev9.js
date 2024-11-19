@@ -470,6 +470,8 @@ async function copySheets(){
 
     console.log("'" + resultSheet.name + "' was copied to '" + copiedSheet.name + "'")
     copiedSheet.name = resultSheet.name + ' Chapter ' + myChapter;
+
+    resultSheet.activate();
   });
 }
 
