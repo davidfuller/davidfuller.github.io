@@ -5619,7 +5619,7 @@ async function findDuplicateLineNumbers(){
       let previousValue = parseInt(lineValues[i - 1]);
       let nextValue = parseInt(lineValues[i + 1]);
       if ((!isNaN(currentValue)) && (!isNaN(previousValue)) && (!isNaN(nextValue))){
-        if ((currentValue > 0) && (previousValue>0){
+        if ((currentValue > 0) && (previousValue>0)){
           if ((currentValue == minMax.max) && (nextValue == 0)){
             lastTest = true
           }
