@@ -1264,6 +1264,8 @@ function cleanTakes(values){
 
 async function removeTake(country){
   let markUpIndex, engineerIndex, takeNoIndex, countryTakes;
+  let myWait = tag('take-wait')
+  myWait.style.display = 'block';
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
@@ -1477,6 +1479,7 @@ async function removeTake(country){
     if (isProtected){
       await lockColumns();
     }
+    myWait.style.display = 'none';
   });
 }
 
