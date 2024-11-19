@@ -1031,15 +1031,21 @@ async function doKeepsAndManuals(){
     keepRange.clear('contents');
     await excel.sync();
     let indexes = []
-    for (i = 0; i < keepCalulationRange.values.length; i++){
+    for (let i = 0; i < keepCalulationRange.values.length; i++){
       if (keepCalulationRange.values[i][0] == 'Keep'){
-        indexes.push(i);
+        indexes.push(i + keepCalulationRange.rowIndex);
       } else if (manualRange.values[i][0] == 'Manual'){
-        indexes.push(i);
+        indexes.push(i + keepCalulationRange.rowIndex);
       } else if (keepCalulationRange.values[i][0] == 'End'){
         break;
       }
     }
     console.log('Indexes', indexes);
+    let tempRange = [];
+    for (let i = 0; i < indexes.length; i++){
+      tempRange[i] = decisionSheet.getRangeByIndexes(indexes[i], keepRange.columnIndex, 1, 1);
+      tempRange[i].values = [['Keep']];
+    }
+    await excel.sync();
   })
 }
