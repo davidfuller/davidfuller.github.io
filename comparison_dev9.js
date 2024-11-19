@@ -1033,7 +1033,9 @@ async function doKeepsAndManuals(){
     let indexes = []
     for (let i = 0; i < keepCalulationRange.values.length; i++){
       if (keepCalulationRange.values[i][0] == 'Keep'){
-        indexes.push(i + keepCalulationRange.rowIndex);
+        if (manualRange.values[i][0] != 'Override'){
+          indexes.push(i + keepCalulationRange.rowIndex);
+        }
       } else if (manualRange.values[i][0] == 'Manual'){
         indexes.push(i + keepCalulationRange.rowIndex);
       } else if (keepCalulationRange.values[i][0] == 'End'){
