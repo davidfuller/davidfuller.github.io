@@ -5603,3 +5603,31 @@ function showAddRemove(){
     addRemoveTag.style.display = 'block';
   }
 }
+
+async function findDuplicateLineNumbers(){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem('Script');
+    let lineRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, lineIndex, lastDataRow - firstDataRow, 1);
+    lineRange.load('values, rowIndex');
+    await excel.sync()
+    lineValues = lineRange.values.map(x => x[0]);
+    let minMax = await getLineNoMaxAndMin();
+    let lastTest = false
+    let indexes = [];
+    for (let i = 1; i < lineValues.length; i++){
+      let currentValue = parseInt(lineValues[i]);
+      let previousValue = parseInt(lineValues[i - 1]);
+      let nextValue = parseInt(lineValues[i + 1]);
+      if ((!isNaN(currentValue)) && (!isNaN(previousValue)) && (!isNaN(nextValue))){
+        if ((currentValue == minMax.max) && (nextValue == 0)){
+          lastTest = true
+        }
+        if (currentValue == previousValue){
+          indexes.push((i + lineRange.rowIndex));
+        }
+      }
+    }
+    console.log('indexes', indexes )
+  }) 
+  
+}
