@@ -560,6 +560,7 @@ async function correctTextReplaceLF(doReplace){
         //console.log('address', replaceRange.address);
         if (doReplace){
           await createChapters();
+          await doKeepsAndManuals();
           await createResult();
         }
       } else if ((twoChars == '\r\n') || (twoChars == '’\n')){
@@ -578,6 +579,7 @@ async function correctTextReplaceLF(doReplace){
         //console.log('address', replaceRange.address);
         if (doReplace){
           await createChapters();
+          await doKeepsAndManuals();
           await createResult();
         }
       } else if (threeChars == '’\r\n'){
@@ -596,6 +598,7 @@ async function correctTextReplaceLF(doReplace){
         //console.log('address', replaceRange.address);
         if (doReplace){
           await createChapters();
+          await doKeepsAndManuals();
           await createResult();
         }
       } else {
@@ -657,6 +660,7 @@ async function correctTextSpaceQuotes(doReplace){
       }
       if ((success) && (doReplace)){
         await createChapters();
+        await doKeepsAndManuals();
         await createResult();
       }
     } else {
@@ -828,6 +832,7 @@ async function getLinksToTextFromChapter(){
 }
 async function createChaptersAndResults(){
   await createChapters();
+  await doKeepsAndManuals();
   await createResult();
 }
 
