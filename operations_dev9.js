@@ -5619,12 +5619,17 @@ async function findDuplicateLineNumbers(){
       let previousValue = parseInt(lineValues[i - 1]);
       let nextValue = parseInt(lineValues[i + 1]);
       if ((!isNaN(currentValue)) && (!isNaN(previousValue)) && (!isNaN(nextValue))){
-        if ((currentValue == minMax.max) && (nextValue == 0)){
-          lastTest = true
+        if ((currentValue > 0) && (previousValue>0){
+          if ((currentValue == minMax.max) && (nextValue == 0)){
+            lastTest = true
+          }
+          if (currentValue == previousValue){
+            indexes.push((i + lineRange.rowIndex - 1));
+          }
         }
-        if (currentValue == previousValue){
-          indexes.push((i + lineRange.rowIndex));
-        }
+      }
+      if (lastTest){
+        break;
       }
     }
     console.log('indexes', indexes )
