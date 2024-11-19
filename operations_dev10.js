@@ -951,6 +951,8 @@ async function theFormulas(actualFirstRow, actualLastRow){
 }
 
 async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
+  let startTime = new Date().getTime();
+  console.log('Time taken:', (endTime - startTime) / 1000)
   let newRowIndex;
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -958,14 +960,22 @@ async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
     const dataRange = await getDataRange(excel);
     const myLastColumn = dataRange.getLastColumn();
     myLastColumn.load("columnindex")
+    let firstTime = new Date().getTime();
+    console.log('Before first sync Time taken:', (firstTime - startTime) / 1000)
     await excel.sync();
     const myRow = scriptSheet.getRangeByIndexes(currentRowIndex, 0, 1, myLastColumn.columnIndex+1);
     const newRow = myRow.insert("Down");
+    let secondTime = new Date().getTime();
+    console.log('Before second sync Time taken:', (secondTime - startTime) / 1000)
     await excel.sync();
     if (doCopy){
       newRow.copyFrom(myRow, "All");
+      let thirdTime = new Date().getTime();
+      console.log('Before third (copyFrom) sync Time taken:', (thirdTime - startTime) / 1000)
       await excel.sync(); 
     }
+    let fourthTime = new Date().getTime();
+    console.log('Before formula Time taken:', (fourthTime - startTime) / 1000)
     if (doFullFormula){
       //console.log('Doing full formulas');
       await theFormulas((currentRowIndex + 1), (currentRowIndex + 1));
@@ -973,9 +983,13 @@ async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
       await correctFormulas(currentRowIndex + 1);  
     }
     
+    let fifthTime = new Date().getTime();
+    console.log('After formula Time taken:', (fifthTime - startTime) / 1000)
     newRow.load('rowIndex');
     await excel.sync();
     newRowIndex = newRow.rowIndex;
+    let sixthTime = new Date().getTime();
+    console.log('After rowIndex Time taken:', (sixthTime - startTime) / 1000)
     if (isProtected){
       await lockColumns();
     }
@@ -1141,7 +1155,7 @@ async function addTakeDetails(country, doDate){
       console.log('Before Insert Time taken:', (beforeInsert - startTime) / 1000)
       await insertRowV2(currentRowIndex, true, false);
       let afterInsert = new Date().getTime();
-      console.log('Before Insert Time taken:', (afterInsert - startTime) / 1000)
+      console.log('After Insert Time taken:', (afterInsert - startTime) / 1000)
       newLineIndex = currentRowIndex + 1;
       lineDetails.indicies.push(newLineIndex);
       lineDetails.totalTakes += 1;
