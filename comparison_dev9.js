@@ -1031,7 +1031,7 @@ async function doKeepsAndManuals(){
     keepRange.clear('contents');
     await excel.sync();
     let indexes = []
-    for (i = 0; i < keepCalulationRange.length; i++){
+    for (i = 0; i < keepCalulationRange.values.length; i++){
       if (keepCalulationRange.values[i][0] == 'Keep'){
         indexes.push(i);
       } else if (manualRange.values[i][0] == 'Manual'){
