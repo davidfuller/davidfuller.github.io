@@ -1292,6 +1292,7 @@ function cleanTakes(values){
 }
 
 async function removeTake(country){
+  let startTime = new Date().getTime();
   let markUpIndex, engineerIndex, takeNoIndex, countryTakes;
   let myWait = tag('take-wait')
   myWait.style.display = 'block';
@@ -1315,35 +1316,33 @@ async function removeTake(country){
     }
     if (country == 'UK'){
       markUpIndex = ukMarkUpIndex;
-      console.log('Mark Up Index', markUpIndex);
       engineerIndex = ukEngineerIndex;
-      console.log('Engineer Index', engineerIndex);
       takeNoIndex = ukTakeNoIndex;
       countryTakes = lineDetails.ukTakes;
     } else if (country == 'US'){
       markUpIndex = usMarkUpIndex;
-      console.log('Mark Up Index', markUpIndex);
       engineerIndex = usEngineerIndex;
-      console.log('Engineer Index', engineerIndex);
       takeNoIndex = usTakeNoIndex;
       countryTakes = lineDetails.usTakes;
     } else if (country == 'Walla'){
       markUpIndex = wallaMarkUpIndex;
-      console.log('Mark Up Index', markUpIndex);
       engineerIndex = wallaEngineerIndex;
-      console.log('Engineer Index', engineerIndex);
       takeNoIndex = wallaTakeNoIndex;
       countryTakes = lineDetails.wallaTakes;
     }   
     if ((foundTake > 0) && countryTakes > 0){
       // Is this the last take for this country...
-      console.log('Found take: ', foundTake);
+      //console.log('Found take: ', foundTake);
       if (lineDetails.totalTakes == 1){
         console.log('Only 1 total takes, which we cannot delete, so we clear the relevant area')
         console.log('currentRowIndex: ', lineDetails.currentRowIndex);
         let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
         clearRange.load('address');
+        let beforeExcelSync1 = new Date().getTime();
+        console.log('Before Excel Sync 1 taken:', (beforeExcelSync1 - startTime) / 1000)
         await excel.sync();
+        let afterExcelSync1 = new Date().getTime();
+        console.log('Before Excel Sync 1 taken:', (afterExcelSync1 - startTime) / 1000)
         console.log("Clear range: ", clearRange.address)
         clearRange.clear("Contents");
         let takeNoRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, takeNoIndex, 1, 1);
@@ -1358,7 +1357,11 @@ async function removeTake(country){
         if ((lineDetails.ukTakes == 0) && (lineDetails.usTakes == 0) && (lineDetails.wallaTakes == 0)){
           lineDetails.totalTakes = 0;
         }
+        let beforeExcelSync2 = new Date().getTime();
+        console.log('Before Excel Sync 2 taken:', (beforeExcelSync2 - startTime) / 1000)
         await excel.sync();
+        let afterExcelSync2 = new Date().getTime();
+        console.log('After Excel Sync 2 taken:', (afterExcelSync2 - startTime) / 1000)
       } else {
         if (foundTake == countryTakes){
         console.log('Found take is countries final take')
@@ -1394,7 +1397,11 @@ async function removeTake(country){
               } else if (country == 'Walla') {
                 lineDetails.wallaTakes -= 1;
               }
+              let beforeExcelSync3 = new Date().getTime();
+              console.log('Before Excel Sync 3 taken:', (beforeExcelSync3 - startTime) / 1000)
               await excel.sync();
+              let afterExcelSync3 = new Date().getTime();
+              console.log('After Excel Sync 3 taken:', (afterExcelSync3 - startTime) / 1000)
             } else {
               // test country is on final take and it's the only one
               //No - Delete the row and update the total and country numbers
@@ -1403,12 +1410,22 @@ async function removeTake(country){
               scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
               let deleteRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, 0, 1, 1).getEntireRow();
               deleteRange.load('address');
+              let beforeExcelSync4 = new Date().getTime();
+              console.log('Before Excel Sync 4 taken:', (beforeExcelSync4 - startTime) / 1000)
               await excel.sync();
+              let afterExcelSync4 = new Date().getTime();
+              console.log('After Excel Sync 4 taken:', (afterExcelSync4 - startTime) / 1000)
               console.log("Delete range address: ", deleteRange.address);
               deleteRange.delete("Up");
               selectCell.select();
+              let beforeExcelSync5 = new Date().getTime();
+              console.log('Before Excel Sync 5 taken:', (beforeExcelSync5 - startTime) / 1000)
               await excel.sync();
+              let afterExcelSync5 = new Date().getTime();
+              console.log('After Excel Sync 5 taken:', (afterExcelSync5 - startTime) / 1000)
               await correctFormulas(lineDetails.currentRowIndex);
+              let afterFormulas = new Date().getTime();
+              console.log('After formulas taken:', (afterFormulas - startTime) / 1000)
               lineDetails.totalTakes = lineDetails.totalTakes - 1;
               if (country == 'UK'){
                 lineDetails.ukTakes -= 1;
@@ -1429,7 +1446,11 @@ async function removeTake(country){
             console.log('Diff: ', (engineerIndex - markUpIndex + 1));
             let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
             clearRange.load('address');
+            let beforeExcelSync6 = new Date().getTime();
+            console.log('Before Excel Sync 6 taken:', (beforeExcelSync6 - startTime) / 1000)
             await excel.sync();
+            let afterExcelSync6 = new Date().getTime();
+            console.log('After Excel Sync 6 taken:', (afterExcelSync6 - startTime) / 1000)
             console.log("Clear range: ", clearRange.address)
             clearRange.clear("Contents");
             if (country == 'UK'){
@@ -1439,7 +1460,11 @@ async function removeTake(country){
             } else if (country == 'Walla') {
               lineDetails.wallaTakes -= 1;
             }
+            let beforeExcelSync7 = new Date().getTime();
+            console.log('Before Excel Sync 7 taken:', (beforeExcelSync7 - startTime) / 1000)
             await excel.sync();
+            let afterExcelSync7 = new Date().getTime();
+            console.log('After Excel Sync 7 taken:', (afterExcelSync7 - startTime) / 1000)
           } 
         } else {
           // Test country is not the final one of UK and so....
@@ -1472,7 +1497,11 @@ async function removeTake(country){
           }
           let lastRowRange = scriptSheet.getRangeByIndexes(lastItem, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
           lastRowRange.clear("Contents");
+          let beforeExcelSync8 = new Date().getTime();
+          console.log('Before Excel Sync 8 taken:', (beforeExcelSync8 - startTime) / 1000)
           await excel.sync();
+          let afterExcelSync8 = new Date().getTime();
+          console.log('After Excel Sync 8 taken:', (afterExcelSync8 - startTime) / 1000)
           if (country == 'UK'){
             lineDetails.ukTakes -= 1;
           } else if (country == 'US') {
@@ -1487,12 +1516,22 @@ async function removeTake(country){
             let lastItem = lineDetails.indicies[lineDetails.indicies.length - 1]
             let deleteRange = scriptSheet.getRangeByIndexes(lastItem, 0, 1, 1).getEntireRow();
             deleteRange.load('address');
+            let beforeExcelSync9 = new Date().getTime();
+            console.log('Before Excel Sync 9 taken:', (beforeExcelSync9 - startTime) / 1000)
             await excel.sync();
+            let afterExcelSync9 = new Date().getTime();
+            console.log('After Excel Sync 9 taken:', (afterExcelSync9 - startTime) / 1000)
             console.log("Delete range address: ", deleteRange.address);
             deleteRange.delete("Up");
             selectCell.select();
+            let beforeExcelSync10 = new Date().getTime();
+            console.log('Before Excel Sync 10 taken:', (beforeExcelSync10 - startTime) / 1000)
             await excel.sync();
+            let afterExcelSync10 = new Date().getTime();
+            console.log('after Excel Sync 10 taken:', (afterExcelSync10 - startTime) / 1000)
             await correctFormulas(lineDetails.currentRowIndex);
+            let afterFormualas2 = new Date().getTime();
+            console.log('after Formulas 2 taken:', (afterFormualas2 - startTime) / 1000)
             lineDetails.totalTakes = lineDetails.totalTakes - 1;
             lineDetails.currentRowIndex -= 1;
             lineDetails.indicies.pop();
@@ -1504,11 +1543,15 @@ async function removeTake(country){
     }
     console.log("Line Details")
     console.log(lineDetails);
+    let beforeTidyUp = new Date().getTime();
+    console.log('Before Tidy Up taken:', (beforeTidyUp - startTime) / 1000)
     await doTheTidyUp(lineDetails)
     if (isProtected){
       await lockColumns();
     }
     myWait.style.display = 'none';
+    let endTime = new Date().getTime();
+    console.log('Remove take time:', (endTime - startTime) / 1000)
   });
 }
 
