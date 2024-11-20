@@ -1409,6 +1409,7 @@ async function removeTake(country){
               console.log('currentRowIndex: ', lineDetails.currentRowIndex);
               scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
               let deleteRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, 0, 1, 1).getEntireRow();
+              /*
               deleteRange.load('address');
               let beforeExcelSync4 = new Date().getTime();
               console.log('Before Excel Sync 4 taken:', (beforeExcelSync4 - startTime) / 1000)
@@ -1416,6 +1417,7 @@ async function removeTake(country){
               let afterExcelSync4 = new Date().getTime();
               console.log('After Excel Sync 4 taken:', (afterExcelSync4 - startTime) / 1000)
               console.log("Delete range address: ", deleteRange.address);
+              */
               deleteRange.delete("Up");
               selectCell.select();
               let beforeExcelSync5 = new Date().getTime();
