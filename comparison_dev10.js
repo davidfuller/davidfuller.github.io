@@ -20,6 +20,9 @@ const issueType = {
   fixSpaceQuote: 'fix space quote'
 }
 
+function auto_exec(){
+}
+
 async function getRowColumnDetails(){
   let details = {};
   await Excel.run(async function(excel){ 
