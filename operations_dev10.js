@@ -36,6 +36,9 @@ let scriptSheet;
 let sceneInput, lineNoInput, chapterInput;
 let typeCodeValues, addSelectList;
 
+function auto_exec(){
+}
+
 let scriptHiddenRows = [];
 let myTypes = {
   chapter: 'Chapter',
