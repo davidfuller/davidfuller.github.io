@@ -1547,7 +1547,7 @@ async function doTheTidyUp(lineDetails){
     for (let index of lineDetails.indicies){
       item += 1;
       let inLoopTime = new Date().getTime();
-      console.log(item, 'In loop Time taken:', (inLoopTime - startTime) / 1000)
+      console.log(item, 'In loop Time taken:', (inLoopTime - startTime) / 1000, 'index', index);
       let totalTakesRange = scriptSheet.getRangeByIndexes(index, totalTakesIndex, 1, 1)
       totalTakesRange.values = lineDetails.totalTakes;
       let ukTakesRange = scriptSheet.getRangeByIndexes(index, ukTakesIndex, 1, 1);
