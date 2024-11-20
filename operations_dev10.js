@@ -1046,12 +1046,12 @@ async function correctFormulas(firstRow){
 
   const columnFormulae = [
     {
-      columnName: "Start Line", //BV
+      columnName: "Start Line", //BW
       formulaRest: "=IF(" + positionMinusColumn + firstRow + "=0," + startLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + ",2," + positionMinusColumn + firstRow + "-2)))",
       columnLetter: startLineColumn
     },
     {
-      columnName: "End Line", //BX
+      columnName: "End Line", //BY
       formulaRest: "=IF(" + positionEndSqaureBracketColumn + firstRow + "=0," + endLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + "," + positionMinusColumn + firstRow + "+1," + positionEndSqaureBracketColumn + firstRow + "-" + positionMinusColumn + firstRow + "-1)))",
       columnLetter: endLineColumn
     },
@@ -1061,12 +1061,12 @@ async function correctFormulas(firstRow){
       columnLetter: sceneColumn
     },
     {
-	    columnName: "Word count to this line", //CC
+	    columnName: "Word count to this line", //CD
       formulaRest: "=IF(" + sceneColumn + firstRow + "=" + sceneColumn + (firstRow - 1) + "," + wordCountToThisLineColumn + (firstRow -1) + "+" + lineWordCountColumn + firstRow + "," + lineWordCountColumn + firstRow + ")",
       columnLetter: wordCountToThisLineColumn
   	},
     {
-      columnName: "Chapter Calculation", //CF
+      columnName: "Chapter Calculation", //CG
       formulaRest: '=VALUE(IF(' + positionChapterColumn + firstRow + '="",' + chapterCalculationColumn + (firstRow - 1) + ',MID(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '+7,99)))',
       columnLetter: chapterCalculationColumn
     },
@@ -1089,12 +1089,12 @@ async function correctFormulas(firstRow){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
     for (let columnFormula of columnFormulae){
-      const myRange = columnFormula.columnLetter + firstRow + ":" + columnFormula.columnLetter + (firstRow +1) ;
+      //const myRange = columnFormula.columnLetter + firstRow + ":" + columnFormula.columnLetter + (firstRow +1) ;
       //console.log("Range to replace: " + myRange);
-      const range = scriptSheet.getRange(myRange);
+      const range = scriptSheet.getRange(columnFormula.columnLetter + firstRow + ":" + columnFormula.columnLetter + (firstRow +1));
       //console.log("Formula: " + columnFormula.formulaRest);
-      range.formulas = columnFormula.formulaRest;
-      
+      range.formulas[0] = [columnFormula.formulaRest];
+      range.formulas[1] = [columnFormula.formulaRest];
       //console.log("Formula after sync: " + range.formulas);
     }
 
