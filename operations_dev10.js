@@ -1,3 +1,6 @@
+
+function auto_exec(){
+}
 const codeVersion = '10.0';
 const firstDataRow = 3;
 const lastDataRow = 29999;
@@ -35,9 +38,6 @@ let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
 let typeCodeValues, addSelectList;
-
-function auto_exec(){
-}
 
 let scriptHiddenRows = [];
 let myTypes = {
@@ -92,9 +92,6 @@ let screenColours = {
 let choiceType ={
   list: 'List Search',
   text: 'Text Search'
-}
-
-function auto_exec(){
 }
 
 async function showMain(){
