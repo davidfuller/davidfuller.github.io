@@ -1093,8 +1093,8 @@ async function correctFormulas(firstRow){
       //console.log("Range to replace: " + myRange);
       const range = scriptSheet.getRange(columnFormula.columnLetter + firstRow + ":" + columnFormula.columnLetter + (firstRow +1));
       //console.log("Formula: " + columnFormula.formulaRest);
-      range.formulas[0] = [columnFormula.formulaRest];
-      range.formulas[1] = [columnFormula.formulaRest];
+      range.formulas = [[columnFormula.formulaRest],[columnFormula.formulaRest]];
+      
       //console.log("Formula after sync: " + range.formulas);
     }
 
