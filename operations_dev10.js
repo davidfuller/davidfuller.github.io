@@ -1581,7 +1581,7 @@ async function doTheTidyUp(lineDetails){
     console.log('Before Excel Sync taken:', (beforeExcelSync - startTime) / 1000)
     await excel.sync();
     let afterExcelSync = new Date().getTime();
-    console.log('Before Excel Sync taken:', (afterExcelSync - startTime) / 1000)
+    console.log('After Excel Sync taken:', (afterExcelSync - startTime) / 1000)
   });
 }
 
