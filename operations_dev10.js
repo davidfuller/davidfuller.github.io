@@ -928,7 +928,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
       let myRange;
       let range;
       if (doTopRow) {
-        console.log('Doing top row');
+        //console.log('Doing top row');
         myTopRow = columnLetter + firstRow;
         topRowRange = scriptSheet.getRange(myTopRow);
         topRowRange.formulas = columnFormula.formulaFirst;
@@ -938,10 +938,10 @@ async function theFormulas(actualFirstRow, actualLastRow){
       range = scriptSheet.getRange(myRange);
       range.formulas = columnFormula.formulaRest;
     
-      console.log(myRange + "  " + myTopRow);
-      console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
+      //console.log(myRange + "  " + myTopRow);
+      //console.log(columnFormula.formulaRest + "   " + columnFormula.formulaFirst);
       await excel.sync();
-      console.log(range.formulas + "   " + topRowRange.formulas);
+      //console.log(range.formulas + "   " + topRowRange.formulas);
     }
     if (isProtected){
       await lockColumns();
