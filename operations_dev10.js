@@ -1550,52 +1550,26 @@ async function doTheTidyUp(lineDetails){
 
     for (let index of lineDetails.indicies){
       item += 1;
-      let inLoopTime = new Date().getTime();
-      console.log(item, 'In loop Time taken:', (inLoopTime - startTime) / 1000, 'index', index);
-      /*let totalTakesRange = scriptSheet.getRangeByIndexes(index, totalTakesIndex, 1, 1)
-      totalTakesRange.values = lineDetails.totalTakes;
-      let ukTakesRange = scriptSheet.getRangeByIndexes(index, ukTakesIndex, 1, 1);
-      let ukTakeNoRange = scriptSheet.getRangeByIndexes(index, ukTakeNoIndex, 1, 1);
-      ukTakesRange.values = lineDetails.ukTakes;
-      */
       let ukTakeNo;
       if (item > lineDetails.ukTakes){
-        //ukTakeNoRange.values = 'N/A';
         ukTakeNo = 'N/A';
       } else {
-        //ukTakeNoRange.values = item;
         ukTakeNo = item;
       }
       
       ukResults[item - 1] = [lineDetails.totalTakes, lineDetails.ukTakes, ukTakeNo]
-
-      /*
-      let usTakesRange = scriptSheet.getRangeByIndexes(index, usTakesIndex, 1, 1);
-      let usTakeNoRange = scriptSheet.getRangeByIndexes(index, usTakeNoIndex, 1, 1);
-      usTakesRange.values = lineDetails.usTakes;
-      */
       let usTakeNo
       if (item > lineDetails.usTakes){
-        //usTakeNoRange.values = 'N/A';
         usTakeNo = 'N/A';
       } else {
-        //usTakeNoRange.values = item;
         usTakeNo = item;
       }
 
       usResults[item - 1] = [lineDetails.usTakes, usTakeNo]
-
-      /*
-      let wallaTakesRange = scriptSheet.getRangeByIndexes(index, wallaTakesIndex, 1, 1);
-      let wallaTakeNoRange = scriptSheet.getRangeByIndexes(index, wallaTakeNoIndex, 1, 1);
-      wallaTakesRange.values = lineDetails.wallaTakes;
-      */
       let wallaTakeNo;
       if (item > lineDetails.wallaTakes){
-        //wallaTakeNoRange.values = 'N/A';
         wallaTakeNo = 'N/A';
       } else {
-        //wallaTakeNoRange.values = item;
         wallaTakeNo = item;
       }
       wallaResults[item - 1] = [lineDetails.wallaTakes, wallaTakeNo]
@@ -1606,13 +1580,13 @@ async function doTheTidyUp(lineDetails){
     ukRange.values = ukResults;
     usRange.values = usResults;
     wallaRange.values = wallaResults;
-    
+
     let beforeExcelSync = new Date().getTime();
-    console.log('Before Excel Sync taken:', (beforeExcelSync - startTime) / 1000)
+    console.log('Tidy Up Before Excel Sync taken:', (beforeExcelSync - startTime) / 1000)
     await excel.sync();
     let afterExcelSync = new Date().getTime();
-    console.log('After Excel Sync taken:', (afterExcelSync - startTime) / 1000)
-    console.log('ukResults', ukResults, "usResults", usResults, "wallaResults", wallaResults)
+    console.log('Tidy Up After Excel Sync taken:', (afterExcelSync - startTime) / 1000)
+    //console.log('ukResults', ukResults, "usResults", usResults, "wallaResults", wallaResults)
   });
 }
 
