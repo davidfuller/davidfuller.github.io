@@ -313,13 +313,13 @@ async function mainHTML(){
   await jade_modules.operations.getColumnData('Settings', 'columnData');
   await jade_modules.operations.initialiseVariables();
   await jade_modules.operations.displayMinAndMax();
-  await jade_modules.scheduling.loadReduceAndSortCharacters();
-  await jade_modules.operations.setDefaultColumnWidths();
+  //await jade_modules.scheduling.loadReduceAndSortCharacters();
+  //await jade_modules.operations.setDefaultColumnWidths();
   await jade_modules.operations.showHideColumns('all');
   await jade_modules.operations.setUpEvents();
   await jade_modules.operations.registerExcelEvents();
   await jade_modules.operations.hiddenRows();
-  await jade_modules.operations.fillChapterAndScene();
+  //await jade_modules.operations.fillChapterAndScene();
   await jade_modules.operations.showMain();
   await jade_modules.operations.gatherTakeInformation(false);
   await jade_modules.comparison.fillChapter();
