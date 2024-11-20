@@ -959,31 +959,27 @@ async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
     const dataRange = await getDataRange(excel);
     const myLastColumn = dataRange.getLastColumn();
     myLastColumn.load("columnindex")
-    let firstTime = new Date().getTime();
-    console.log('Before first sync Time taken:', (firstTime - startTime) / 1000)
     await excel.sync();
+    let firstTime = new Date().getTime();
+    console.log('Insert Preamble:', (firstTime - startTime) / 1000)
     const myRow = scriptSheet.getRangeByIndexes(currentRowIndex, 0, 1, myLastColumn.columnIndex+1);
     const newRow = myRow.insert("Down");
-    let secondTime = new Date().getTime();
-    console.log('Before second sync Time taken:', (secondTime - startTime) / 1000)
     await excel.sync();
+    let secondTime = new Date().getTime();
+    console.log('Actual Insert Row Time taken:', (secondTime - firstTime) / 1000)
     if (doCopy){
       newRow.copyFrom(myRow, "All");
       let thirdTime = new Date().getTime();
-      console.log('Before third (copyFrom) sync Time taken:', (thirdTime - startTime) / 1000)
       await excel.sync(); 
+      let afterCopyFrom = new Date().getTime();
+      console.log('Copy from time taken:', (afterCopyFrom - thirdTime) / 1000)  
     }
-    let fourthTime = new Date().getTime();
-    console.log('Before formula Time taken:', (fourthTime - startTime) / 1000)
     if (doFullFormula){
       //console.log('Doing full formulas');
       await theFormulas((currentRowIndex + 1), (currentRowIndex + 1));
     } else {
       await correctFormulas(currentRowIndex + 1);  
     }
-    
-    let fifthTime = new Date().getTime();
-    console.log('After formula Time taken:', (fifthTime - startTime) / 1000)
     newRow.load('rowIndex');
     await excel.sync();
     newRowIndex = newRow.rowIndex;
@@ -992,6 +988,8 @@ async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
     if (isProtected){
       await lockColumns();
     }
+    let endTime = new Date().getTime();
+    console.log('Complete Insert V2 Time taken:', (endTime - startTime) / 1000)
   });
   return newRowIndex;
 }
@@ -5448,7 +5446,7 @@ async function gatherTakeInformation(doColour){
       }
       takeData[i] = assignColour(takeData[i]);
     }
-    console.log('takeData ', takeData);
+    //console.log('takeData ', takeData);
 
     let tempRange = [];
     let columnIndex = characterIndex;
