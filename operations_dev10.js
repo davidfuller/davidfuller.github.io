@@ -1041,9 +1041,7 @@ async function correctFormulas(firstRow){
   const alphaLineRangeColumn = findColumnLetter('Alpha Line Range') //CJ
   const bookColumn = findColumnLetter("Book"); //CK
   
-  let afterColumnLetter = new Date().getTime();
-  console.log('After Column Letter', (afterColumnLetter - startTime) / 1000)
-
+  
   const columnFormulae = [
     {
       columnName: "Start Line", //BW
@@ -1080,29 +1078,16 @@ async function correctFormulas(firstRow){
       formulaRest: '=IF(' + positionChapterColumn + firstRow + '="",' + bookColumn + (firstRow - 1) + ',LEFT(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '-3))',
       columnLetter: bookColumn
     }
-    
   ]
 
-  let afterColumnObject = new Date().getTime();
-  console.log('After Column Object', (afterColumnObject - startTime) / 1000)
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
     for (let columnFormula of columnFormulae){
-      //const myRange = columnFormula.columnLetter + firstRow + ":" + columnFormula.columnLetter + (firstRow +1) ;
-      //console.log("Range to replace: " + myRange);
       const range = scriptSheet.getRange(columnFormula.columnLetter + firstRow + ":" + columnFormula.columnLetter + (firstRow +1));
-      //console.log("Formula: " + columnFormula.formulaRest);
       range.formulas = [[columnFormula.formulaRest],[columnFormula.formulaRest]];
-      
-      //console.log("Formula after sync: " + range.formulas);
     }
-
-    let beforeExcelSync = new Date().getTime();
-    console.log('Before Excel Sync', (beforeExcelSync - startTime) / 1000)
     await excel.sync();
-    let afterExcelSync = new Date().getTime();
-    console.log('After Excel Sync', (afterExcelSync - startTime) / 1000)
     if (isProtected){
       await lockColumns();
     }
@@ -1439,12 +1424,10 @@ async function removeTake(country){
               console.log("Delete range address: ", deleteRange.address);
               */
               deleteRange.delete("Up");
-              selectCell.select();
               let beforeExcelSync5 = new Date().getTime();
-              console.log('Before Excel Sync 5 taken:', (beforeExcelSync5 - startTime) / 1000)
               await excel.sync();
               let afterExcelSync5 = new Date().getTime();
-              console.log('After Excel Sync 5 taken:', (afterExcelSync5 - startTime) / 1000)
+              console.log('Delete row taken:', (afterExcelSync5 - beforeExcelSync5) / 1000)
               await correctFormulas(lineDetails.currentRowIndex);
               let afterFormulas = new Date().getTime();
               console.log('After formulas taken:', (afterFormulas - startTime) / 1000)
@@ -1545,7 +1528,6 @@ async function removeTake(country){
             console.log('After Excel Sync 9 taken:', (afterExcelSync9 - startTime) / 1000)
             console.log("Delete range address: ", deleteRange.address);
             deleteRange.delete("Up");
-            selectCell.select();
             let beforeExcelSync10 = new Date().getTime();
             console.log('Before Excel Sync 10 taken:', (beforeExcelSync10 - startTime) / 1000)
             await excel.sync();
@@ -1560,6 +1542,7 @@ async function removeTake(country){
           }
         }
       }
+      selectCell.select()
     } else {
       console.log('Take not found')
     }
