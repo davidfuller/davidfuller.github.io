@@ -1113,7 +1113,6 @@ async function addTakeDetails(country, doDate){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
     let lineDetails =  await findDetailsForThisLine();
-    console.log(lineDetails);
     let takeNoIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex, countryTakes;
     let newLine;
     let newLineIndex;
@@ -1144,31 +1143,22 @@ async function addTakeDetails(country, doDate){
     }
     if (lineDetails.totalTakes == 0){
       let currentRowIndex = lineDetails.indicies[0];
-      console.log('Current Row Index');
-      console.log(currentRowIndex);
       newLineIndex = currentRowIndex;
       lineDetails.totalTakes = 1;
-      console.log('Added row');
-      console.log(lineDetails);
       selectCell = activeCell.getOffsetRange(0, 0);
     } else if (lineDetails.totalTakes == countryTakes){
       let currentRowIndex = lineDetails.indicies[countryTakes - 1];
-      console.log('Current Row Index');
-      console.log(currentRowIndex);
       let beforeInsert = new Date().getTime();
-      console.log('Before Insert Time taken:', (beforeInsert - startTime) / 1000)
+      console.log('Preamble:', (beforeInsert - startTime) / 1000)
       await insertRowV2(currentRowIndex, true, false);
       let afterInsert = new Date().getTime();
-      console.log('After Insert Time taken:', (afterInsert - startTime) / 1000)
+      console.log('Insert Time taken:', (afterInsert - beforeInsert) / 1000)
       newLineIndex = currentRowIndex + 1;
       lineDetails.indicies.push(newLineIndex);
       lineDetails.totalTakes += 1;
-      console.log('Added row');
-      console.log(lineDetails);
     } else {
       newLineIndex = lineDetails.indicies[newLine - 1];
       //Need to copy from the row above
-      console.log('New Line Index: ', newLineIndex);
       scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       let newRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
       let copyRange = scriptSheet.getRangeByIndexes(newLineIndex - 1, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
@@ -1184,8 +1174,6 @@ async function addTakeDetails(country, doDate){
     } else if (country == 'Walla'){
       lineDetails.wallaTakes = newLine;
     }
-    console.log("New Line");
-    console.log(newLine);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let beforeAdd = new Date().getTime();
     console.log('Before Add Time taken:', (beforeAdd - startTime) / 1000)
@@ -1220,13 +1208,13 @@ async function addTakeDetails(country, doDate){
     console.log("Line Details")
     console.log(lineDetails);
     let beforeTidyTime = new Date().getTime();
-    console.log('Before Tidy Time taken:', (beforeTidyTime - startTime) / 1000)
+    console.log('Date taken:', (beforeTidyTime - beforeAdd) / 1000)
     await doTheTidyUp(lineDetails)
     let afterTidyTime = new Date().getTime();
-    console.log('After Tidy Time taken:', (afterTidyTime - startTime) / 1000)
+    console.log('Tidy Time taken:', (afterTidyTime - beforeTidyTime) / 1000)
     await refreshColourTakes();
     let afterColour = new Date().getTime();
-    console.log('After Colour Time taken:', (afterColour - startTime) / 1000)
+    console.log('Colour Time taken:', (afterColour - afterTidyTime) / 1000)
     if (isProtected){
       await lockColumns();
     } 
