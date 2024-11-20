@@ -1024,8 +1024,8 @@ async function deleteRow(){
   });
 }
 async function correctFormulas(firstRow){
+  let startTime = new Date().getTime();              
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
-  const sceneNumberColumn = findColumnLetter("Scene Number"); //D
   const stageDirectionWallaDescriptionColumn = findColumnLetter("Stage Direction/ Walla description") //J
   const positionMinusColumn = findColumnLetter("Position -"); //BU
   const startLineColumn = findColumnLetter("Start Line"); //BV
@@ -1041,6 +1041,9 @@ async function correctFormulas(firstRow){
   const alphaLineRangeColumn = findColumnLetter('Alpha Line Range') //CJ
   const bookColumn = findColumnLetter("Book"); //CK
   
+  let afterColumnLetter = new Date().getTime();
+  console.log('After Column Letter', (afterColumnLetter - startTime) / 1000)
+
   const columnFormulae = [
     {
       columnName: "Start Line", //BV
@@ -1072,6 +1075,9 @@ async function correctFormulas(firstRow){
     }
     
   ]
+
+  let afterColumnObject = new Date().getTime();
+  console.log('After Column Object', (afterColumnObject - startTime) / 1000)
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
@@ -1082,13 +1088,19 @@ async function correctFormulas(firstRow){
       const range = scriptSheet.getRange(myRange);
       //console.log("Formula: " + columnFormula.formulaRest);
       range.formulas = columnFormula.formulaRest;
+      let beforeExcelSync = new Date().getTime();
+      console.log(columnLetter, 'Before Excel Sync', (beforeExcelSync - startTime) / 1000)
       await excel.sync();
+      let afterExcelSync = new Date().getTime();
+      console.log(columnLetter, 'After Excel Sync', (afterExcelSync - startTime) / 1000)
       //console.log("Formula after sync: " + range.formulas);
     }
     if (isProtected){
       await lockColumns();
     }
   })
+  let endTime = new Date().getTime();
+  console.log('Formulae', (endTime - startTime) / 1000)
 }
 
 function zeroElement(value){
