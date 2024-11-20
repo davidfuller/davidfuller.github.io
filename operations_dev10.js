@@ -1095,10 +1095,10 @@ async function correctFormulas(firstRow){
       //console.log("Formula: " + columnFormula.formulaRest);
       range.formulas = columnFormula.formulaRest;
       let beforeExcelSync = new Date().getTime();
-      console.log(columnLetter, 'Before Excel Sync', (beforeExcelSync - startTime) / 1000)
+      console.log(columnFormula.columnLetter, 'Before Excel Sync', (beforeExcelSync - startTime) / 1000)
       await excel.sync();
       let afterExcelSync = new Date().getTime();
-      console.log(columnLetter, 'After Excel Sync', (afterExcelSync - startTime) / 1000)
+      console.log(columnFormula.columnLetter, 'After Excel Sync', (afterExcelSync - startTime) / 1000)
       //console.log("Formula after sync: " + range.formulas);
     }
     if (isProtected){
