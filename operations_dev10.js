@@ -1540,11 +1540,14 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
 }
 
 async function doTheTidyUp(lineDetails){
+  let startTime = new Date().getTime();
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let item = 0;
     for (let index of lineDetails.indicies){
       item += 1;
+      let inLoopTime = new Date().getTime();
+      console.log(item, 'In loop Time taken:', (inLoopTime - startTime) / 1000)
       let totalTakesRange = scriptSheet.getRangeByIndexes(index, totalTakesIndex, 1, 1)
       totalTakesRange.values = lineDetails.totalTakes;
       let ukTakesRange = scriptSheet.getRangeByIndexes(index, ukTakesIndex, 1, 1);
@@ -1574,7 +1577,11 @@ async function doTheTidyUp(lineDetails){
         wallaTakeNoRange.values = item;
       }
     }
+    let beforeExcelSync = new Date().getTime();
+    console.log('Before Excel Sync taken:', (beforeExcelSync - startTime) / 1000)
     await excel.sync();
+    let afterExcelSync = new Date().getTime();
+    console.log('Before Excel Sync taken:', (afterExcelSync - startTime) / 1000)
   });
 }
 
