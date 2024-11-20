@@ -1425,6 +1425,7 @@ async function removeTake(country){
               */
               deleteRange.delete("Up");
               let beforeExcelSync5 = new Date().getTime();
+              console.log('Preamble:', (beforeExcelSync5 - startTime) / 1000)
               await excel.sync();
               let afterExcelSync5 = new Date().getTime();
               console.log('Delete row taken:', (afterExcelSync5 - beforeExcelSync5) / 1000)
