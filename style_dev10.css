@@ -219,6 +219,7 @@ label {
   width: 130px;
   border-radius: 4px;
   background-color: #46656F;
+  border-color: #46656F;
   color: #fef3df;
   font-size: 12px;
   cursor: pointer;

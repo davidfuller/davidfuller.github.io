@@ -1106,9 +1106,13 @@ function zeroElement(value){
 
 function colourButton(theButton, isNormal){
   if (isNormal){
-    theButton.style.backgroundColor = '#46656F'
+    theButton.style.backgroundColor = '#46656F';
+    theButton.style.border = 'none';
+    theButton.style.color = '#fef3df';
   } else {
-    theButton.style.backgroundColor = '#d8dfe6'
+    theButton.style.backgroundColor = '#d8dfe6';
+    theButton.style.border = 'solid';
+    theButton.style.color = '#8BA3B1';
   }
 }
 async function addTakeDetails(country, doDate){
