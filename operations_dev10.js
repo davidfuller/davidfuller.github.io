@@ -1102,13 +1102,20 @@ function zeroElement(value){
   return value[0];
 }
 
+function colourButton(theButton, isNormal){
+  if (isNormal){
+    theButton.style.backgroundColor = '#46656F'
+  } else {
+    theButton.style.backgroundColor = '#d8dfe6'
+  }
+}
 async function addTakeDetails(country, doDate){
   const startTime = new Date().getTime();
   let myAction = radioButtonChoice();
   console.log('The action: ', myAction);
   let myWait = tag('take-wait')
   myWait.style.display = 'block';
-
+  let button;
   await Excel.run(async function(excel){ 
     const activeCell = excel.workbook.getActiveCell();
     let selectCell = activeCell.getOffsetRange(1, 0);
@@ -1119,6 +1126,8 @@ async function addTakeDetails(country, doDate){
     let newLine;
     let newLineIndex;
     if (country == 'UK'){
+      button = tag('btnAddTakeUK')
+      colourButton(button, false)
       takeNoIndex = ukTakeNoIndex;
       dateRecordedIndex = ukDateIndex;
       markUpIndex = ukMarkUpIndex;
@@ -1220,6 +1229,7 @@ async function addTakeDetails(country, doDate){
     if (isProtected){
       await lockColumns();
     } 
+    colourButton(button, true);
   });
   myWait.style.display = 'none';
   let endTime = new Date().getTime();
