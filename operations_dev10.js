@@ -1079,7 +1079,11 @@ async function correctFormulas(firstRow){
   ]
 
   await Excel.run(async function(excel){ 
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let app = excel.workbook.application;
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
+    
     let isProtected = await unlockIfLocked();
     for (let columnFormula of columnFormulae){
       const range = scriptSheet.getRange(columnFormula.columnLetter + firstRow + ":" + columnFormula.columnLetter + (firstRow +1));
