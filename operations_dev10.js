@@ -1,6 +1,8 @@
 
 function auto_exec(){
 }
+
+let doingTake = false;
 const codeVersion = '10.0';
 const firstDataRow = 3;
 const lastDataRow = 29999;
@@ -1110,6 +1112,12 @@ function colourButton(theButton, isNormal){
   }
 }
 async function addTakeDetails(country, doDate){
+  if (doingTake){
+    alert('Already doing a take. Please wait')
+    return null;
+  } else {
+    doingTake = true;
+  }
   const startTime = new Date().getTime();
   let myAction = radioButtonChoice();
   console.log('The action: ', myAction);
@@ -1234,6 +1242,7 @@ async function addTakeDetails(country, doDate){
   myWait.style.display = 'none';
   let endTime = new Date().getTime();
   console.log('Time taken:', (endTime - startTime) / 1000)
+  doingTake = false;
 }
 
 
