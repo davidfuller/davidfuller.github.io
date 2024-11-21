@@ -1122,12 +1122,16 @@ async function addTakeDetails(country, doDate){
   } else {
     doingTake = true;
   }
+  let button;
+  if (country == 'UK'){
+    button = tag('btnAddTakeUK');
+  }
+  colourButton(button, false);
   const startTime = new Date().getTime();
   let myAction = radioButtonChoice();
   console.log('The action: ', myAction);
   let myWait = tag('take-wait')
   myWait.style.display = 'block';
-  let button;
   await Excel.run(async function(excel){ 
     const activeCell = excel.workbook.getActiveCell();
     let selectCell = activeCell.getOffsetRange(1, 0);
@@ -1138,8 +1142,6 @@ async function addTakeDetails(country, doDate){
     let newLine;
     let newLineIndex;
     if (country == 'UK'){
-      button = tag('btnAddTakeUK')
-      colourButton(button, false)
       takeNoIndex = ukTakeNoIndex;
       dateRecordedIndex = ukDateIndex;
       markUpIndex = ukMarkUpIndex;
@@ -1311,6 +1313,11 @@ function cleanTakes(values){
 
 async function removeTake(country){
   let startTime = new Date().getTime();
+  let button;
+  if (country == 'UK'){
+    button = tag('btnRemoveTakeUK');
+  }
+  colourButton(button, false);
   let markUpIndex, engineerIndex, takeNoIndex, countryTakes;
   let myWait = tag('take-wait')
   myWait.style.display = 'block';
@@ -1570,7 +1577,8 @@ async function removeTake(country){
     }
     myWait.style.display = 'none';
     let endTime = new Date().getTime();
-    console.log('Remove take time:', (endTime - startTime) / 1000)
+    console.log('Remove take time:', (endTime - startTime) / 1000);
+    colourButton(button, true);
   });
 }
 
