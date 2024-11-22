@@ -1092,7 +1092,7 @@ async function dealWithCellJoin(){
     currentText = currentRange.values[0][0];
 
     theText = testRange.values.map(x => x[0]);
-    let theWord; newNext, newCurrent;
+    let theWord, newNext, newCurrent;
     for (let i = 0; i < theText.length; i++){
       let thisText = theText.trim();
       if (thisText != ''){
