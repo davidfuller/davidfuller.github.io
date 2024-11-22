@@ -1093,6 +1093,7 @@ async function dealWithCellJoin(){
 
     theText = testRange.values.map(x => x[0]);
     let theWord, newNext, newCurrent;
+    let found = false
     for (let i = 0; i < theText.length; i++){
       let thisText = theText[i].trim();
       if (thisText != ''){
@@ -1106,9 +1107,13 @@ async function dealWithCellJoin(){
           let newNextRange = pdfSheet.getRangeByIndexes(nextRowIndex, textColumn, 1, 1);
           currentRange.values = [[newCurrent]];
           newNextRange.values = [[newNext]];
+          found = true;
           break;
         }
       }
+    }
+    if (found){
+      await createChaptersAndResults()
     }
   })
 
