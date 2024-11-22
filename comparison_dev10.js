@@ -1112,6 +1112,7 @@ async function dealWithCellJoin(){
         }
       }
     }
+    await excel.sync();
     if (found){
       await createChaptersAndResults()
     }
