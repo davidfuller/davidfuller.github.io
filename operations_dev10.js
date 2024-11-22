@@ -1125,6 +1125,8 @@ async function addTakeDetails(country, doDate){
   let button;
   if (country == 'UK'){
     button = tag('btnAddTakeUK');
+  } else if (country == 'US'){
+    button = tag('btnAddTakeUS');
   }
   colourButton(button, false);
   const startTime = new Date().getTime();
