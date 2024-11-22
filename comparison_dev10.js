@@ -1068,3 +1068,46 @@ async function doKeepsFollowedByResults(){
   await createResult();
 }
 
+async function dealWithCellJoin(){
+  // Normally two cells are jpoined with a ' ', but in certain circumstances a '\n' is needed.
+  // This is achieved by taking the first word of the next cell, and removing it, and then appending 
+  // it to the end of the previous cell with a \n
+  let textColumn = 1;
+  let numRows = 10;
+  await Excel.run(async (excel) => {
+    const pdfSheet = excel.workbook.worksheets.getItem(pdfComparisonSheetName);
+    let activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex');
+    await excel.sync();
+    let rowIndex = activeCell.rowIndex;
+    let nextRowIndex;
+    
+    let currentRange = pdfSheet.getRangeByIndexes(rowIndex, textColumn, 1, 1);
+    currentRange.load('values');
+    
+    let testRange = pdfSheet.getRangeByIndexes(rowIndex + 1, textColumn, numRows, 1);
+    testRange.load('values');
+    
+    currentText = currentRange.values[0][0];
+
+    theText = testRange.values.map(x => x[0]);
+    let theWord; newNext, newCurrent;
+    for (let i = 0; i < theText.length; i++){
+      let thisText = theText.trim();
+      if (thisText != ''){
+        nextRowIndex = i + rowIndex + 1;
+        let spacePos = thisText.indexOf(' ');
+        if (spacePos != - 1){
+          theWord = thisText.substr(0, spacePos).trim();
+          newNext = thisText.substr(spacePos).trim();
+          newCurrent = (currentText + '\n' + theWord).trim();
+          console.log('theWord', theWord, 'newCurrent', newCurrent, 'newNext', newNext);
+          let newNextRange = pdfSheet.getRangeByIndexes(nextRowIndex, textColumn, 1, 1);
+          currentRange.values = [[newCurrent]];
+          newNextRange.values = [[newNext]];
+        }
+      }
+    }
+  })
+
+}
