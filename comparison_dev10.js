@@ -1106,6 +1106,7 @@ async function dealWithCellJoin(){
           let newNextRange = pdfSheet.getRangeByIndexes(nextRowIndex, textColumn, 1, 1);
           currentRange.values = [[newCurrent]];
           newNextRange.values = [[newNext]];
+          break;
         }
       }
     }
