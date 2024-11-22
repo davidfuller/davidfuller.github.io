@@ -1059,6 +1059,7 @@ async function doKeepsAndManuals(){
       tempRange[i].values = [['Keep']];
     }
     await excel.sync();
+    console.log('Keeps done')
   })
 }
 
