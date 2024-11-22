@@ -1087,6 +1087,7 @@ async function dealWithCellJoin(){
     
     let testRange = pdfSheet.getRangeByIndexes(rowIndex + 1, textColumn, numRows, 1);
     testRange.load('values');
+    await excel.sync();
     
     currentText = currentRange.values[0][0];
 
