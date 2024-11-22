@@ -82,7 +82,8 @@ async function mainHTML(){
     <button id="btnFindNext" class="compButton" onclick="jade_modules.comparison.fixNextIssue()">Fix Next Issue</button>
     <button id="btnComparisonLoop"class="compButton" onclick="jade_modules.comparison.comparisonLoop()">Auto Run Comparison</button><br/>
     <button id="btnAutoChapter" class="compButton" onclick="jade_modules.comparison.autoSelectChapter()">Auto Chapter</button>
-    <button id="btnDoKeeps" class="compButton" onclick="jade_modules.comparison.doKeepsAndManuals()">Do keeps</button>
+    <button id="btnDoKeeps" class="compButton" onclick="jade_modules.comparison.doKeepsAndManuals()">Do keeps</button><br/>
+    <button id="btnDoKeepsResults" class="compButton" onclick="jade_modules.comparison.doKeepsFollowedByResults()">Do keeps/results</button>
   </div>
   <div id="firstButtons">
     <label class="section-label">Lock / Unlock</label><span id="lockMessage"></span><a id='show-hide-lock' onclick="jade_modules.operations.showLock()">Show/hide lock</a>

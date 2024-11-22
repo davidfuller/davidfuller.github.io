@@ -1063,3 +1063,8 @@ async function doKeepsAndManuals(){
   })
 }
 
+async function doKeepsFollowedByResults(){
+  await doKeepsAndManuals();
+  await createResult();
+}
+
