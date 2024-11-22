@@ -162,7 +162,7 @@ async function createChapters(){
   let myChapter = chapterCompareSelect.value;
   const apostrophes = await apostropheWords();
   const chapters = await getChapterData();
-  console.log('Chapters', chapters);
+  //console.log('Chapters', chapters);
   let myLines = chapterToLines(chapters[myChapter - 1]);
   //console.log('myLines', myLines);
   let quoteData = createQuoteData(myLines, apostrophes, false); 
