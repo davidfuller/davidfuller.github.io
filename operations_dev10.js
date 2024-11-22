@@ -1318,6 +1318,8 @@ async function removeTake(country){
   let button;
   if (country == 'UK'){
     button = tag('btnRemoveTakeUK');
+  } else if (country = 'US'){
+    button = tag('btnRemoveTakeUS');
   }
   colourButton(button, false);
   let markUpIndex, engineerIndex, takeNoIndex, countryTakes;
