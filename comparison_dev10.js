@@ -63,7 +63,7 @@ async function getChapterData(){
       let text = sourceValues[i].trim();
       if (text != ''){
         //Does the string include 'chapter'
-        if (text.toLowerCase().includes('chapter')){
+        if (text.toLowerCase().includes('--- chapter')){
           //Finish last chapter and start new one.
           if (textSoFar != ''){
             index += 1;
