@@ -1094,7 +1094,7 @@ async function dealWithCellJoin(){
     theText = testRange.values.map(x => x[0]);
     let theWord, newNext, newCurrent;
     for (let i = 0; i < theText.length; i++){
-      let thisText = theText.trim();
+      let thisText = theText[i].trim();
       if (thisText != ''){
         nextRowIndex = i + rowIndex + 1;
         let spacePos = thisText.indexOf(' ');
