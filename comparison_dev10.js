@@ -1197,6 +1197,5 @@ async function mergeCells(){
     if (found){
       await createChaptersAndResults()
     }
-
-  
+  })
 }
