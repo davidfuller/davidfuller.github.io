@@ -4,6 +4,7 @@ const sourceColumnIndex = 3;
 const chaptersColumnIndex = 14;
 const startRowIndex = 10;
 const linesColumnIndex = 5;
+const v2Import = true;
 
 const myTypes = {
   chapter: 'Chapter',
@@ -63,7 +64,13 @@ async function getChapterData(){
       let text = sourceValues[i].trim();
       if (text != ''){
         //Does the string include 'chapter'
-        if (text.toLowerCase().includes('—chapter')){
+        let chapterTest;
+        if (v2Import){
+          chapterTest = '—chapter';
+        } else {
+          chapterTest = '— chapter';
+        }
+        if (text.toLowerCase().includes(chapterTest)){
           //Finish last chapter and start new one.
           if (textSoFar != ''){
             index += 1;
