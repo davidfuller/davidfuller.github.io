@@ -79,6 +79,7 @@ async function getChapterData(){
     index += 1;
     chapters[index] = textSoFar;
   })
+  console.log('Raw chapters', chapters);
   return chapters  
 }
 
@@ -1030,6 +1031,7 @@ async function autoSelectChapter(){
 }
 
 async function doKeepsAndManuals(){
+  let startTime = new Date().getTime();
   await Excel.run(async (excel) => {
     const decisionSheet = excel.workbook.worksheets.getItem('Decision');
     let keepRange = decisionSheet.getRange('deKeep');
@@ -1039,7 +1041,11 @@ async function doKeepsAndManuals(){
     manualRange.load('values, rowIndex');
     keepRange.load('rowIndex, columnIndex');
     keepRange.clear('contents');
+    let firstTime = new Date().getTime();
+    console.log('Before first excel sync:', (firstTime - startTime) / 1000)
     await excel.sync();
+    let afterTime = new Date().getTime();
+    console.log('After first excel sync:', (afterTime - startTime) / 1000)
     let indexes = []
     for (let i = 0; i < keepCalulationRange.values.length; i++){
       if (keepCalulationRange.values[i][0] == 'Keep'){
@@ -1053,6 +1059,8 @@ async function doKeepsAndManuals(){
       }
     }
     console.log('Indexes', indexes);
+    let endLoopTime = new Date().getTime();
+    console.log('After first loop:', (endLoopTime - startTime) / 1000)
     let tempRange = [];
     for (let i = 0; i < indexes.length; i++){
       tempRange[i] = decisionSheet.getRangeByIndexes(indexes[i], keepRange.columnIndex, 1, 1);
