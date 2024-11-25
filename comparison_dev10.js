@@ -38,6 +38,7 @@ async function getRowColumnDetails(){
       columnCount: usedRange.columnCount
     }
   })
+  console.log('details', details)
   return details;
 }
 
@@ -58,6 +59,7 @@ async function getChapterData(){
     sourceRange.load('rowIndex, values');
     await excel.sync();
     sourceValues = sourceRange.values.map(x => x[0]);
+    console.log('sourceValues', sourceValues)
 
     for (let i = 0; i < sourceValues.length; i++){
       //console.log('i', i, 'value', sourceValues[i]);
