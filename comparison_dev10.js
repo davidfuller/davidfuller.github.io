@@ -67,6 +67,7 @@ async function getChapterData(){
         tempCount = tempCount + 500;
       }
     }
+    await excel.sync();
     let sourceValues = [];
 
     for (let i = 0; i < sourceRange.length; i++){
