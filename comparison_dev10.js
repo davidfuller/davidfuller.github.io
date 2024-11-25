@@ -117,6 +117,7 @@ function chapterToLines(theChapter){
       myLines[i] = "'" + myLines[i];
     }
   }
+  console.log('myLines', myLines);
   return myLines; 
 } 
 
