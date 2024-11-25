@@ -84,7 +84,8 @@ async function mainHTML(){
     <button id="btnAutoChapter" class="compButton" onclick="jade_modules.comparison.autoSelectChapter()">Auto Chapter</button>
     <button id="btnDoKeeps" class="compButton" onclick="jade_modules.comparison.doKeepsAndManuals()">Do keeps</button><br/>
     <button id="btnDoKeepsResults" class="compButton" onclick="jade_modules.comparison.doKeepsFollowedByResults()">Do keeps/results</button>
-    <button id="btnCellJoin" class="compButton" onclick="jade_modules.comparison.dealWithCellJoin()">Cell Join</button>
+    <button id="btnCellJoin" class="compButton" onclick="jade_modules.comparison.dealWithCellJoin()">Cell Join</button><br/>
+    <button id="btnCellMerge" class="compButton" onclick="jade_modules.comparison.mergeCells()">Cell Merge</button>
   </div>
   <div id="firstButtons">
     <label class="section-label">Lock / Unlock</label><span id="lockMessage"></span><a id='show-hide-lock' onclick="jade_modules.operations.showLock()">Show/hide lock</a>

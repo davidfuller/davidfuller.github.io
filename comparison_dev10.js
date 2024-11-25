@@ -1154,5 +1154,49 @@ async function dealWithCellJoin(){
       await createChaptersAndResults()
     }
   })
+}
+async function mergeCells(){
+  let textColumn = 1;
+  let numRows = 10;
+  await Excel.run(async (excel) => {
+    const pdfSheet = excel.workbook.worksheets.getItem(pdfComparisonSheetName);
+    let activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex');
+    await excel.sync();
+    let rowIndex = activeCell.rowIndex;
+    let nextRowIndex;
+    
+    let currentRange = pdfSheet.getRangeByIndexes(rowIndex, textColumn, 1, 1);
+    currentRange.load('values');
+    
+    let testRange = pdfSheet.getRangeByIndexes(rowIndex + 1, textColumn, numRows, 1);
+    testRange.load('values');
+    await excel.sync();
+    
+    currentText = currentRange.values[0][0];
 
+    theText = testRange.values.map(x => x[0]);
+    let theLine, newNext, newCurrent;
+    let found = false
+    for (let i = 0; i < theText.length; i++){
+      let thisText = theText[i].trim();
+      if (thisText != ''){
+        nextRowIndex = i + rowIndex + 1;
+        theLine = thisText.trim();
+        newNext = '';
+        newCurrent = (currentText + ' ' + theLine).trim();
+        console.log('theLine', theLine, 'newCurrent', newCurrent, 'newNext', newNext);
+        let newNextRange = pdfSheet.getRangeByIndexes(nextRowIndex, textColumn, 1, 1);
+        currentRange.values = [[newCurrent]];
+        newNextRange.values = [[newNext]];
+        found = true;
+        break;
+      }
+    }
+    await excel.sync();
+    if (found){
+      await createChaptersAndResults()
+    }
+
+  
 }
