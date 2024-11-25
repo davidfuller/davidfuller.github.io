@@ -67,12 +67,12 @@ async function getChapterData(){
         tempCount = tempCount + 500;
       }
     }
+    let sourceValues = [];
 
     for (let i = 0; i < sourceRange.length; i++){
-      console.log(sourceRange[i].values)
+      sourceValues[i] = sourceRange[i].values[0][0];
     }
       
-    sourceValues = sourceRange.values.map(x => x[0]);
     console.log('sourceValues', sourceValues)
 
     for (let i = 0; i < sourceValues.length; i++){
