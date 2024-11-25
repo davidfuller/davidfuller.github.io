@@ -96,7 +96,11 @@ async function getChapterData(){
           textSoFar = text;
         } else {
           //append to textSoFar
-          textSoFar = textSoFar + ' ' + text;
+          if (v2Import){
+            textSoFar = textSoFar + '\n' + text;
+          } else {
+            textSoFar = textSoFar + ' ' + text;
+          }
         }
       }
     }
