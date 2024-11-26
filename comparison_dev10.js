@@ -75,7 +75,7 @@ async function getChapterData(){
       sourceValues[i] = sourceRange[i].values[0][0];
     }
       
-    //console.log('sourceValues', sourceValues)
+    console.log('sourceValues', sourceValues)
 
     for (let i = 0; i < sourceValues.length; i++){
       //console.log('i', i, 'value', sourceValues[i]);
