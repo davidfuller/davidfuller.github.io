@@ -449,6 +449,7 @@ function doSplit(original, decisions){
 
   let item = -1;
   let myLines = [];
+  console.log(sortedIndexes);
   for (let i = 0; i < (sortedIndexes.length - 1); i++){
     item += 1;
     console.log(i, 'original', original, 'sorted indexes', sortedIndexes[i], sortedIndexes[i+1]);
