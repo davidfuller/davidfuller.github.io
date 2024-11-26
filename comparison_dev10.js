@@ -1202,3 +1202,8 @@ async function mergeCells(){
     }
   })
 }
+
+async function findMergeAutorun(){
+  await findInPDF();
+  await mergeCells();
+}
