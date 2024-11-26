@@ -451,9 +451,12 @@ function doSplit(original, decisions){
   let myLines = [];
   console.log(sortedIndexes);
   for (let i = 0; i < (sortedIndexes.length - 1); i++){
-    item += 1;
+    
     console.log(i, 'original', original, 'sorted indexes', sortedIndexes[i], sortedIndexes[i+1]);
-    myLines[item] = removeAndTrim(original.substring(sortedIndexes[i], sortedIndexes[i + 1]));
+    if ((sortedIndexes[i] !== undefined) && (sortedIndexes[i + 1] !== undefined)){
+      item += 1;
+      myLines[item] = removeAndTrim(original.substring(sortedIndexes[i], sortedIndexes[i + 1]));
+    }
   }
   if (myLines.length > 0){
     //console.log('Original', original, 'sorted Indexes', sortedIndexes, 'split Lines', myLines);
