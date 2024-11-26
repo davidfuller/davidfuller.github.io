@@ -58,14 +58,15 @@ async function getChapterData(){
     //console.log(startRowIndex, sourceColumnIndex, rowCount, 1)
 
     
-    let tempCount = 5000;
+    let tempCount = 100;
     let sourceRange = [];
     for (let i = 0; i < rowCount; i++){
       sourceRange[i] = pdfSheet.getRangeByIndexes(startRowIndex + i, sourceColumnIndex, 1, 1);
       sourceRange[i].load('rowIndex, values');  
       if (i > tempCount){
         await excel.sync();
-        tempCount = tempCount + 5000;
+        tempCount = tempCount + 100;
+        console.log('After sync i:', i, sourceRange[i].values, 'rowIndex', sourceRange[i].rowIndex);
       }
     }
     await excel.sync();
