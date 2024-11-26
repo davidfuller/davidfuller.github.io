@@ -1096,6 +1096,8 @@ async function doKeepsAndManuals(){
       tempRange[i].values = [['Keep']];
     }
     await excel.sync();
+    let endTime = new Date().getTime();
+    console.log('Time taken:', (endTime - startTime) / 1000)
     console.log('Keeps done')
   })
 }
