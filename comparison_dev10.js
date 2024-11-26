@@ -102,7 +102,7 @@ async function getChapterData(){
     index += 1;
     chapters[index] = textSoFar;
   })
-  //console.log('Raw chapters', chapters);
+  console.log('Raw chapters', chapters);
   return chapters  
 }
 
@@ -116,7 +116,7 @@ function chapterToLines(theChapter){
       myLines[i] = "'" + myLines[i];
     }
   }
-  //console.log('myLines', myLines);
+  console.log('myLines', myLines);
   return myLines; 
 } 
 
