@@ -48,6 +48,7 @@ async function getChapterData(){
   // this routine takes the text from column D and turns it into text strings
   //Splitting it into chapters. The output is a string array with a chapter per index
   const details = await getRowColumnDetails();
+  let chapterText = await getComparisonChapter();
   let chapters = [];
   let index = -1;
   textSoFar = '';
@@ -81,13 +82,7 @@ async function getChapterData(){
       let text = sourceValues[i].trim();
       if (text != ''){
         //Does the string include 'chapter'
-        let chapterTest;
-        if (v2Import){
-          chapterTest = '—chapter';
-        } else {
-          chapterTest = '— chapter';
-        }
-        if (text.toLowerCase().includes(chapterTest)){
+        if (text.toLowerCase().includes(chapterText)){
           //Finish last chapter and start new one.
           if (textSoFar != ''){
             index += 1;
@@ -1212,4 +1207,17 @@ async function mergeCells(){
 async function findMergeAutorun(){
   await findInPDF();
   await mergeCells();
+}
+
+async function getComparisonChapter(){
+  //Gets the word/symbols that indicate a chapter split
+  let chapterText;
+  await Excel.run(async (excel) => {
+    const chapterTextRange = excel.workbook.worksheets.getItem('Settings').getRange('seComparisonChapter');
+    chapterTextRange.load('values');
+    await excel.sync()
+    chapterText = chapterTextRange.values[0][0]
+  }) 
+  console.log('chapterText', chapterText);
+  return chapterText;
 }
