@@ -1197,7 +1197,8 @@ async function mergeCells(){
     }
     await excel.sync();
     if (found){
-      await createChaptersAndResults()
+      await createChaptersAndResults();
+      await comparisonLoop();
     }
   })
 }
