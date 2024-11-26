@@ -756,7 +756,7 @@ async function findSearchTextInPDF(){
   //console.log('searchText', searchText.value);
   let mySearch = searchText.value;
   let firstRowIndex = 9;
-  let lastRowIndex = 1300;
+  let lastRowIndex = 12000;
   let columnIndex = 3;
   let bookText;
   let bookRange;
