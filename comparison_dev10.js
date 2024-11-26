@@ -869,7 +869,9 @@ async function createChaptersAndResults(){
   await createChapters();
   await doKeepsAndManuals();
   await createResult();
+  await comparisonLoop();
 }
+
 
 async function findInPDF(){
   await putSelectedCellInTextArea();
@@ -1199,7 +1201,6 @@ async function mergeCells(){
     await excel.sync();
     if (found){
       await createChaptersAndResults();
-      await comparisonLoop();
     }
   })
 }
