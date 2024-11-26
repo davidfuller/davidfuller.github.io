@@ -57,14 +57,14 @@ async function getChapterData(){
     //console.log(startRowIndex, sourceColumnIndex, rowCount, 1)
 
     
-    let tempCount = 500;
+    let tempCount = 5000;
     let sourceRange = [];
     for (let i = 0; i < rowCount; i++){
       sourceRange[i] = pdfSheet.getRangeByIndexes(startRowIndex + i, sourceColumnIndex, 1, 1);
       sourceRange[i].load('rowIndex, values');  
       if (i > tempCount){
         await excel.sync();
-        tempCount = tempCount + 500;
+        tempCount = tempCount + 5000;
       }
     }
     await excel.sync();
@@ -74,7 +74,7 @@ async function getChapterData(){
       sourceValues[i] = sourceRange[i].values[0][0];
     }
       
-    console.log('sourceValues', sourceValues)
+    //console.log('sourceValues', sourceValues)
 
     for (let i = 0; i < sourceValues.length; i++){
       //console.log('i', i, 'value', sourceValues[i]);
@@ -107,7 +107,7 @@ async function getChapterData(){
     index += 1;
     chapters[index] = textSoFar;
   })
-  console.log('Raw chapters', chapters);
+  //console.log('Raw chapters', chapters);
   return chapters  
 }
 
@@ -121,7 +121,7 @@ function chapterToLines(theChapter){
       myLines[i] = "'" + myLines[i];
     }
   }
-  console.log('myLines', myLines);
+  //console.log('myLines', myLines);
   return myLines; 
 } 
 
