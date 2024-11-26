@@ -1105,6 +1105,7 @@ async function doKeepsAndManuals(){
 async function doKeepsFollowedByResults(){
   await doKeepsAndManuals();
   await createResult();
+  await comparisonLoop();
 }
 
 async function dealWithCellJoin(){

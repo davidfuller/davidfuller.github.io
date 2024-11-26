@@ -83,7 +83,7 @@ async function mainHTML(){
     <button id="btnComparisonLoop"class="compButton" onclick="jade_modules.comparison.comparisonLoop()">Auto Run Comparison</button><br/>
     <button id="btnAutoChapter" class="compButton" onclick="jade_modules.comparison.autoSelectChapter()">Auto Chapter</button>
     <button id="btnDoKeeps" class="compButton" onclick="jade_modules.comparison.doKeepsAndManuals()">Do keeps</button><br/>
-    <button id="btnDoKeepsResults" class="compButton" onclick="jade_modules.comparison.doKeepsFollowedByResults()">Do keeps/results</button>
+    <button id="btnDoKeepsResults" class="compButton" onclick="jade_modules.comparison.doKeepsFollowedByResults()">Do keeps/results/Autorun</button>
     <button id="btnCellJoin" class="compButton" onclick="jade_modules.comparison.dealWithCellJoin()">Cell Join</button><br/>
     <button id="btnCellMerge" class="compButton" onclick="jade_modules.comparison.mergeCells()">Cell Merge & Autorun</button>
     <button id="btnFindMergeAutoRun" class="compButton" onclick="jade_modules.comparison.findMergeAutorun()">Find & Merge & Autorun</button>
