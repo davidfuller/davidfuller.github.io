@@ -4144,6 +4144,8 @@ async function getSceneWallaInformation(typeNo){
     await Excel.run(async (excel) => {
       const firstRowIndex = firstDataRow - 1;
       const lastRowIndex = lastDataRow - firstDataRow;
+      const firstLastDetails = await getFirstLastIndex();
+      console.log('firstLastDetails', firstLastDetails)
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       let typeOfWallaRange = scriptSheet.getRangeByIndexes(firstRowIndex, typeOfWallaIndex, lastRowIndex, 1);
       let sceneRange = scriptSheet.getRangeByIndexes(firstRowIndex, sceneIndex, lastRowIndex, 1);
@@ -4329,7 +4331,9 @@ async function fillSceneLineNumberRange(rowIndex){
         console.log('Used row below, 2 lines', sceneLineNumbers[1][0])
       }
     }
+    console.log('sceneLineNumbers', sceneLineNumbers);
     sceneLineNumberRange.values = sceneLineNumbers;
+    await excel.sync();
   })
 }
 
