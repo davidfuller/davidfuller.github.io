@@ -5879,5 +5879,5 @@ async function fillCharacterDropdown(){
 async function filterCharacter(){
   let characterSelect = tag('character-select');
   console.log('selected character', characterSelect.value);
-  
+  await filterOnCharacter(characterSelect.value);
 }
