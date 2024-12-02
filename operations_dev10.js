@@ -5852,3 +5852,21 @@ async function findDuplicateLineNumbers(){
   }) 
   
 }
+
+async function getCharacterList(){
+  //gets list of characters from range 'clChaarcters' on Character List sheet and returns as a single dimension array
+  let theList = []
+  await Excel.run(async function(excel){
+    const characterListSheet = excel.workbook.worksheets.getItem(characterlistSheet);
+    let characterListRange = characterListSheet.getRange('clCharacters');
+    characterListRange.load('values')
+    await excel.sync();
+    theList = characterListRange.values.map(x => x[0]).filter(x => x != '');
+  })
+  return theList;
+}
+
+async function fillCharacterDropdown(){
+  let theList = await getCharacterList();
+  console.log('theList', theList)
+}

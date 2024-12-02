@@ -329,8 +329,9 @@ async function mainHTML(){
   await jade_modules.comparison.fillChapter();
   jade_modules.operations.setDefaultRadioButton();
   await jade_modules.comparison.autoSelectChapter();
+  await jade_modules.operations.fillCharacterDropdown();
 
-  console.log("I'm here data loaded. Dev5");
+  console.log("I'm here data loaded. Dev10");
 }
 
  
