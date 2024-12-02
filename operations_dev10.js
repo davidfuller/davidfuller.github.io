@@ -4305,8 +4305,9 @@ async function fillSceneLineNumberRange(rowIndex){
   // Takes scene line number range from cell above unless empty in which case from below.
   await Excel.run(async (excel) => {
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let sceneLineNumberRange;
     if (rowIndex > 0){
-      let sceneLineNumberRange = scriptSheet.getRangeByIndexes(rowIndex - 1, sceneLineNumberRangeIndex, 3, 1);
+      sceneLineNumberRange = scriptSheet.getRangeByIndexes(rowIndex - 1, sceneLineNumberRangeIndex, 3, 1);
       sceneLineNumberRange.load('values');
       await excel.sync();
       let sceneLineNumbers = sceneLineNumberRange.values;
@@ -4318,7 +4319,7 @@ async function fillSceneLineNumberRange(rowIndex){
         console.log('Used row below, 3 lines', sceneLineNumbers[2][0])
       }
     } else {
-      let sceneLineNumberRange = scriptSheet.getRangeByIndexes(rowIndex, sceneLineNumberRangeIndex, 2, 1);
+      sceneLineNumberRange = scriptSheet.getRangeByIndexes(rowIndex, sceneLineNumberRangeIndex, 2, 1);
       sceneLineNumberRange.load('values');
       await excel.sync;
       let sceneLineNumbers = sceneLineNumberRange.values;
