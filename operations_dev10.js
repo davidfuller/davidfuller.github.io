@@ -18,12 +18,12 @@ const locationSheetName = 'Locations';
 const comparisonSheetName = 'Comparison';
 const columnsToLock = "A:T";
 const sceneBlockRows = 4;
-const namedCharacters = 'Named Characters - For reaction sounds and walla';
-const namedCharactersColon = 'Named Characters - For reaction sounds and walla:';
-const unnamedCharacters = 'Un-named Character Walla';
-const unnamedCharactersColon = 'Un-named Character Walla:';
-const generalWalla = 'General Walla';
-const generalWallaColon = 'General Walla:';
+const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Named Characters - For reaction sounds and walla:', 'Named Characters Reactions and Walla']
+let displayWallaName = 'Named Characters Reactions and Walla:'
+const unnamedCharacters = ['Un-named Character Walla','Un-named Character Walla:'];
+let displayWallaUnNamed = 'Un-named Character Walla:';
+const generalWalla = ['General Walla', 'General Walla:']
+let displayGeneralWalla = 'General Walla:';
 const actorScriptName = 'Actor Script';
 const showTakesOffset = 20;
 
@@ -4052,7 +4052,7 @@ async function calculateWallaCues(){
     let rowsToDo = []
     let rowIndex = -1;
     for (let i = 0; i < wallaRange.values.length; i++){
-      if ((wallaRange.values[i][1].toLowerCase() == namedCharacters.toLowerCase()) || (wallaRange.values[i][1].toLowerCase() == namedCharactersColon.toLowerCase())){
+      if (isNamedWalla(wallaRange.values[i][1])){
         rowIndex += 1;
         rowsToDo[rowIndex] = i
       }
@@ -4083,6 +4083,14 @@ function allEmpty(theArray){
     }
   }
   return true;
+}
+
+function getWallaDisplayName(wallaName){
+  let temp = wallaName.trim();
+  if (!temp.endsWith(':')){
+    temp = temp + ':';
+  }
+  return temp;
 }
 
 async function getSceneWallaInformation(typeNo){
@@ -4135,6 +4143,7 @@ async function getSceneWallaInformation(typeNo){
             if (sceneRange.values[i][0] == sceneNo){
               theIndex += 1;
               myIndecies[theIndex] = i;
+              displayWallaName = getWallaDisplayName(typeOfWallaRange.values[i][0]);
             } else if (sceneRange.values[i][0] > sceneNo){
               break;
             }
@@ -4149,6 +4158,7 @@ async function getSceneWallaInformation(typeNo){
             if (sceneRange.values[i][0] == sceneNo){
               theIndex += 1;
               myIndecies[theIndex] = i;
+              displayWallaUnNamed = getWallaDisplayName(typeOfWallaRange.values[i][0]);
             }
           } else if (sceneRange.values[i][0] > sceneNo){
               break; 
@@ -4163,6 +4173,7 @@ async function getSceneWallaInformation(typeNo){
             if (sceneRange.values[i][0] == sceneNo){
               theIndex += 1;
               myIndecies[theIndex] = i;
+              displayGeneralWalla = getWallaDisplayName(typeOfWallaRange.values[i][0]);
             }
           } else if (sceneRange.values[i][0] > sceneNo){
               break; 
@@ -4176,24 +4187,24 @@ async function getSceneWallaInformation(typeNo){
       let details = []
       if (doNamed){
         if (myIndecies.length == 0){
-          details = [namedCharactersColon + ' None'];
+          details = [displayWallaName + ' None'];
         } else {
-          details = [namedCharactersColon];
+          details = [displayWallaName];
         }
       }
       if (doUnnamed){
         if (myIndecies.length == 0){
-          details = [unnamedCharactersColon + ' None'];  
+          details = [displayWallaUnNamed + ' None'];  
         } else {
-          details = [unnamedCharactersColon];  
+          details = [displayWallaUnNamed];  
         }
       }
       
       if (doGeneral){
         if (myIndecies.length == 0){
-          details = [generalWallaColon + ' None'];  
+          details = [displayGeneralWalla + ' None'];  
         } else {
-          details = [generalWallaColon];  
+          details = [displayGeneralWalla];  
         }
       }
       let item = 0;
@@ -4255,15 +4266,30 @@ async function getSceneWallaInformation(typeNo){
   }
 }
 function isNamedWalla(theType){
-  return ((theType.trim().toLowerCase() == namedCharacters.trim().toLowerCase()) || (theType.trim().toLowerCase() == namedCharactersColon.trim().toLowerCase()));
+  for (text of namedCharacters){
+    if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
+      return true;
+    }
+  }
+  return false;
 }
 
 function isUnamedWalla(theType){
-  return ((theType.trim().toLowerCase() == unnamedCharacters.trim().toLowerCase()) || (theType.trim().toLowerCase() == unnamedCharactersColon.trim().toLowerCase()));
+  for (text of unnamedCharacters){
+    if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
+      return true;
+    }
+  }
+  return false;
 }
 
 function isGeneralWalla(theType){
-  return ((theType.trim().toLowerCase() == generalWalla.trim().toLowerCase()) || (theType.trim().toLowerCase() == generalWallaColon.trim().toLowerCase()));
+  for (text of generalWalla){
+    if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
+      return true;
+    }
+  }
+  return false;
 }
 
 async function deleteAllSceneAndWallaBlocks(){
