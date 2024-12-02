@@ -5902,7 +5902,7 @@ async function applyTakeDetails(){
       await excel.sync();
       console.log('visible ranges', visibleRanges.address);
       let theItems = visibleRanges.areas.items;
-      for (let j = 0; j < theItems.length, j++){
+      for (let j = 0; j < theItems.length; j++){
         theItems[j].load('rowIndex, rowCount');
         await excel.sync();
         console.log(j, 'the Item rowIndex', theItems[j].rowIndex, 'count', theItems[j].rowCount)
