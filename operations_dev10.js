@@ -5881,3 +5881,21 @@ async function filterCharacter(){
   console.log('selected character', characterSelect.value);
   await filterOnCharacter(characterSelect.value);
 }
+
+async function applyTakeDetails(){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const selectedRanges = excel.workbook.getSelectedRanges();
+    selectedRanges.load('address');
+    selectedRanges.areas.load('items');
+    await excel.sync();
+    console.log('selectedRange address', selectedRanges.address)
+    let ranges = selectedRanges.areas.items;
+    let rowIndexes = [];
+    for (let i = 0; i < ranges.length; i++){
+      ranges[i].load('address', 'rowIndex', 'rowCount')
+      await excel.sync();
+      console.log(i, 'range address', ranges[i].address);
+    }
+  })    
+} 
