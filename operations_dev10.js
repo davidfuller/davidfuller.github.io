@@ -5857,7 +5857,7 @@ async function getCharacterList(){
   //gets list of characters from range 'clChaarcters' on Character List sheet and returns as a single dimension array
   let theList = []
   await Excel.run(async function(excel){
-    const characterListSheet = excel.workbook.worksheets.getItem(characterlistSheet);
+    const characterListSheet = excel.workbook.worksheets.getItem('Character List');
     let characterListRange = characterListSheet.getRange('clCharacters');
     characterListRange.load('values')
     await excel.sync();
