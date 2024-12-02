@@ -53,7 +53,7 @@ async function loadReduceAndSortCharacters(){
     await excel.sync();
     characterRange.removeDuplicates([0], false);
     await excel.sync();
-    /*
+    
     const sortFields = [
       {
         key: 0,
@@ -62,7 +62,7 @@ async function loadReduceAndSortCharacters(){
     ]
     characterRange.sort.apply(sortFields);
     await excel.sync();
-    */
+    
   })  
 }
 
