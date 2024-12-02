@@ -5869,4 +5869,10 @@ async function getCharacterList(){
 async function fillCharacterDropdown(){
   let theList = await getCharacterList();
   console.log('theList', theList)
+  let characterSelect = tag('character-select');
+  characterSelect.innerHTML = '';
+  characterSelect.add(new Option('Please select', ''))
+  for (let i = 0; i < theList.length; i++){
+    characterSelect.add(new Option(theList[i], i));
+  }
 }
