@@ -978,6 +978,7 @@ async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
     }
     if (doFullFormula){
       //console.log('Doing full formulas');
+      await fillSceneLineNumberRange(currentRowIndex + 1);
       await theFormulas((currentRowIndex + 1), (currentRowIndex + 1));
     } else {
       console.log('doing correctformulas', currentRowIndex + 1);
@@ -4276,7 +4277,6 @@ async function getSceneWallaInformation(typeNo){
       if (doIt){
         let selectCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
         selectCell.select();
-        await fillSceneLineNumberRange(sceneRowIndex);
         await insertRowV2(sceneRowIndex, false, true);
         let typeCodeCell = scriptSheet.getRangeByIndexes(sceneRowIndex, typeCodeIndex, 1, 1);
         let wallaCueCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
