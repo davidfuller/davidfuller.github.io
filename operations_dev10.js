@@ -4274,6 +4274,7 @@ async function getSceneWallaInformation(typeNo){
       if (doIt){
         let selectCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
         selectCell.select();
+        await fillSceneLineNumberRange(sceneRowIndex);
         await insertRowV2(sceneRowIndex, false, true);
         let typeCodeCell = scriptSheet.getRangeByIndexes(sceneRowIndex, typeCodeIndex, 1, 1);
         let wallaCueCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
@@ -4298,6 +4299,36 @@ function isNamedWalla(theType){
     }
   }
   return false;
+}
+
+async function fillSceneLineNumberRange(rowIndex){
+  // Takes scene line number range from cell above unless empty in which case from below.
+  await Excel.run(async (excel) => {
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    if (rowIndex > 0){
+      let sceneLineNumberRange = scriptSheet.getRangeByIndexes(rowIndex - 1, sceneLineNumberRangeIndex, 3, 1);
+      sceneLineNumberRange.load('values');
+      await excel.sync;
+      let sceneLineNumbers = sceneLineNumberRange.values;
+      if (sceneLineNumbers[0][0] != ''){
+        sceneLineNumbers[1][0] = sceneLineNumbers[0][0]; 
+        console.log('Used row above', sceneLineNumbers[0][0])
+      } else if (sceneLineNumbers[2][0] != ''){
+        sceneLineNumbers[1][0] = sceneLineNumbers[2][0]; 
+        console.log('Used row below, 3 lines', sceneLineNumbers[2][0])
+      }
+    } else {
+      let sceneLineNumberRange = scriptSheet.getRangeByIndexes(rowIndex, sceneLineNumberRangeIndex, 2, 1);
+      sceneLineNumberRange.load('values');
+      await excel.sync;
+      let sceneLineNumbers = sceneLineNumberRange.values;
+      if (sceneLineNumbers[1][0] != ''){
+        sceneLineNumbers[0][0] = sceneLineNumbers[1][0]; 
+        console.log('Used row below, 2 lines', sceneLineNumbers[1][0])
+      }
+    }
+    sceneLineNumberRange.values = sceneLineNumbers;
+  })
 }
 
 function isUnamedWalla(theType){
