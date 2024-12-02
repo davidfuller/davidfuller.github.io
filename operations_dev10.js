@@ -5896,6 +5896,10 @@ async function applyTakeDetails(){
       ranges[i].load('address', 'rowIndex', 'rowCount')
       await excel.sync();
       console.log(i, 'range address', ranges[i].address);
+      let visibleRanges = ranges[i].getSpecialCells("Visible");
+      visibleRanges.load('address');
+      await excel.sync();
+      console.log('visible ranges', visibleRanges.address);
     }
   })    
 } 
