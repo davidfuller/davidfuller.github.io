@@ -4308,7 +4308,7 @@ async function fillSceneLineNumberRange(rowIndex){
     if (rowIndex > 0){
       let sceneLineNumberRange = scriptSheet.getRangeByIndexes(rowIndex - 1, sceneLineNumberRangeIndex, 3, 1);
       sceneLineNumberRange.load('values');
-      await excel.sync;
+      await excel.sync();
       let sceneLineNumbers = sceneLineNumberRange.values;
       if (sceneLineNumbers[0][0] != ''){
         sceneLineNumbers[1][0] = sceneLineNumbers[0][0]; 
