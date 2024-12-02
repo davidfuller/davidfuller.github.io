@@ -135,7 +135,7 @@ label {
   padding: 10px;
 }
 
-#column-one {
+#column-one, #column-one-character {
   padding-left: 0px;
   margin-left: 0px;
 }

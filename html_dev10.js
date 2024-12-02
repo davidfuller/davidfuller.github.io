@@ -193,6 +193,14 @@ async function mainHTML(){
           <label id="markup-message">The Add/Replace buttons allow you to add or replace text to the selected markup fields</label>
         </div>
       </div>
+      <div class="row">
+        <div class="column" id="column-one-character">
+          <label for="character-select">Character</label>
+        </div>
+        <div class="column" id="column-two-character">
+          <select id="character-select"><option value="">Please select</option></select>
+        </div>
+      </div>
       <div id="fillButton">
         <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
         <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
