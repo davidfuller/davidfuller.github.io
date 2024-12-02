@@ -980,6 +980,7 @@ async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
       //console.log('Doing full formulas');
       await theFormulas((currentRowIndex + 1), (currentRowIndex + 1));
     } else {
+      console.log('doing correctformulas', currentRowIndex + 1);
       await correctFormulas(currentRowIndex + 1);  
     }
     newRow.load('rowIndex');
@@ -3737,6 +3738,13 @@ async function formatWallaBlockCue(excel, theRange){
   theRange.format.fill.color = myFormats.green;
   theRange.format.horizontalAlignment = 'Center';
   theRange.format.verticalAlignment = 'Top';
+  let myBorders = theRange.format.borders;
+  doBorder(myBorders, 'EdgeTop');
+  doBorder(myBorders, 'EdgeBottom');
+  doBorder(myBorders, 'EdgeLeft');
+  doBorder(myBorders, 'EdgeRight');
+  doBorder(myBorders, 'InsideHorizontal');
+  doBorder(myBorders, 'InsideVertical');
   await excel.sync();
   
 }
@@ -4069,7 +4077,7 @@ async function calculateWallaCues(){
     wallaCueColumn.clear("Contents")
     await excel.sync();
 
-    let wallaNumber = 0
+    let wallaNumber = await getFirstWalla();
     let theCells = []
     for (let i = 0; i < rowsToDo.length; i++){
       wallaNumber += 1
@@ -4080,7 +4088,18 @@ async function calculateWallaCues(){
     }
     await excel.sync();
   })
+}
 
+async function getFirstWalla(){
+  let firstWalla;
+  await Excel.run(async (excel) => {
+    const settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
+    let firstWallaRange = settingsSheet.getRange('seFirstWalla');
+    firstWallaRange.load('values');
+    await excel.sync();
+    firstWalla = firstWallaRange.values[0][0];
+  })
+  return firstWalla;
 }
 
 function allEmpty(theArray){
