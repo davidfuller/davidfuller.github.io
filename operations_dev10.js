@@ -4306,11 +4306,12 @@ async function fillSceneLineNumberRange(rowIndex){
   await Excel.run(async (excel) => {
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let sceneLineNumberRange;
+    let sceneLineNumbers;
     if (rowIndex > 0){
       sceneLineNumberRange = scriptSheet.getRangeByIndexes(rowIndex - 1, sceneLineNumberRangeIndex, 3, 1);
       sceneLineNumberRange.load('values');
       await excel.sync();
-      let sceneLineNumbers = sceneLineNumberRange.values;
+      sceneLineNumbers = sceneLineNumberRange.values;
       if (sceneLineNumbers[0][0] != ''){
         sceneLineNumbers[1][0] = sceneLineNumbers[0][0]; 
         console.log('Used row above', sceneLineNumbers[0][0])
@@ -4322,7 +4323,7 @@ async function fillSceneLineNumberRange(rowIndex){
       sceneLineNumberRange = scriptSheet.getRangeByIndexes(rowIndex, sceneLineNumberRangeIndex, 2, 1);
       sceneLineNumberRange.load('values');
       await excel.sync;
-      let sceneLineNumbers = sceneLineNumberRange.values;
+      sceneLineNumbers = sceneLineNumberRange.values;
       if (sceneLineNumbers[1][0] != ''){
         sceneLineNumbers[0][0] = sceneLineNumbers[1][0]; 
         console.log('Used row below, 2 lines', sceneLineNumbers[1][0])
