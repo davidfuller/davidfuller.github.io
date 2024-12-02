@@ -3717,6 +3717,12 @@ async function formatWallaBlock(excel, sheet, theRange, newRowIndex, leftMostCol
   theRange.format.fill.color = myFormats.green;
   theRange.format.horizontalAlignment = 'Left';
   theRange.format.verticalAlignment = 'Top';
+  let myBorders = theRange.format.borders;
+  doBorder(myBorders, 'EdgeTop');
+  doBorder(myBorders, 'EdgeBottom');
+  doBorder(myBorders, 'EdgeLeft');
+  doBorder(myBorders, 'EdgeRight');
+  doBorder(myBorders, 'InsideHorizontal');
   await excel.sync()
   for (let i = 0; i < blockRows; i++){
     let tempRange = sheet.getRangeByIndexes(newRowIndex + i, leftMostColumn, 1, numColumns);
