@@ -5891,7 +5891,7 @@ async function applyTakeDetails(){
     let ranges = selectedRanges.areas.items;
     let rowDetails = [];
     for (let i = 0; i < ranges.length; i++){
-      let visibleRanges = ranges[i].range.getSpecialCellsOrNullObject("Visible");
+      let visibleRanges = ranges[i].getSpecialCellsOrNullObject("Visible");
       await excel.sync();
       if (visibleRanges.isNullObject){
         console.log('No visible cells');
