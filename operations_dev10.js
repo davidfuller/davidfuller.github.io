@@ -5904,7 +5904,7 @@ async function applyTakeDetails(country){
       for (let j = 0; j < rowDetails[i].rowCount; j++){
         myTakes[j] = [takesData.takesText];
         myDates[j] = [takesData.dateText];
-        myMarkUps[j] = [takesData.markUpText];
+        myMarkUps[j] = [takesData.markupText];
         myStudios[j] = [takesData.studioText];
         myEngineers[j] = [takesData.engineerText];
       }
