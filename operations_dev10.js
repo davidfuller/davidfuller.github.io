@@ -5897,7 +5897,7 @@ async function applyTakeDetails(country){
       studioRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.studioIndex, rowDetails[i].rowCount, 1);
       engineerRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.engineerIndex, rowDetails[i].rowCount, 1);
       for (let j = 0; j < rowDetails[i].rowCount; j++){
-        takeRanges[i].values[j][0] = takesData.takesText;
+        takesRanges[i].values[j][0] = takesData.takesText;
         dateRanges[i].values[j][0] = takesData.dateText;
         markUpRanges[i].values[j][0] = takesData.markUpIndex;
         studioRanges[i].values[j][0] = takesData.studioText;
