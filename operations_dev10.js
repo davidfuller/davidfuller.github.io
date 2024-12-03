@@ -5864,6 +5864,12 @@ async function fillCharacterDropdown(){
   for (let i = 0; i < theList.length; i++){
     characterSelect.add(new Option(theList[i], theList[i]));
   }
+  let takesSelect = tag('takes-select');
+  takesSelect.innerHTML;
+  for (let i = 0; i <= 20; i++){
+    takesSelect.add(new Option(i,i));
+  }
+
 }
 
 async function filterCharacter(){

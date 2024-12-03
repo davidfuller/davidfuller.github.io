@@ -112,7 +112,7 @@ label {
   cursor: pointer;
 }
 */
-#studio, #engineer, #studio-select, #engineer-select, #chapter-scene-select, #markup, #walla-scene, #chapter-compare-select, #character-select {
+#studio, #engineer, #studio-select, #engineer-select, #chapter-scene-select, #markup, #walla-scene, #chapter-compare-select, #character-select, #takes-select {
   width: 150px;
   background-color: #d8dfe5;
   color: #46656F;
