@@ -5903,10 +5903,32 @@ async function applyTakeDetails(){
           theItems[j].load('rowIndex, rowCount');
           await excel.sync();
           console.log('i', i, 'j', j, 'the Item rowIndex', theItems[j].rowIndex, 'count', theItems[j].rowCount)
-          rowDetails.push({rowIndex: theItems[j].rowIndex, rowCount: theItems[j].rowCount});
+          rowDetails = addToRowDetails(rowDetails, theItems[j].rowIndex, theItems[j].rowCount);
         }
       }
     }
     console.log(' ', rowDetails)
   })    
 } 
+
+function addToRowDetails(details, rowIndex, rowCount){
+  //Check is any rowIndex exists.
+  //If it does, is the rowCount the smae.
+  //If it is - do nothing. If not use the highr row count
+  //Otherwise add it to the details array
+  let done = false;
+  for (let detail of details){
+    if (detail.rowIndex == rowIndex){
+      done = true;
+      if (detail.rowCount < rowCount){
+        detail.rowCount = rowCount;
+      }
+    }
+  }
+  if (done){
+    return details;
+  } else {
+    details.push({rowIndex: rowIndex, rowCount: rowCount})
+    return details;
+  }
+}
