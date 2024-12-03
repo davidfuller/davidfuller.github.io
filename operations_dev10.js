@@ -5884,11 +5884,14 @@ async function applyTakeDetails(){
       console.log('No visible cells');
     } else {
       visibleRanges.load('address');
-      visibleRanges.areas.load('items');
+      //visibleRanges.areas.load('items');
       await excel.sync();
       console.log('visibleRanges.address', visibleRanges.address)
-      let theItems = visibleRanges.areas.items;
-      for (let j = 0; j < theItems.length; j++){
+      let myAddresses = visibleRanges.address.split(',');
+      console.log('myAddresses', myAddresses);
+      let theItems = [];
+      for (let j = 0; j < myAddresses.length; j++){
+        theItems[j] = scriptSheet.getRange(myAddresses[j])
         theItems[j].load('rowIndex, rowCount');
         await excel.sync();
         console.log('j', j, 'the Item rowIndex', theItems[j].rowIndex, 'count', theItems[j].rowCount)
