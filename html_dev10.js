@@ -207,7 +207,7 @@ async function mainHTML(){
       </div>
       <div>
         <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter Character</button>
-        <button id="btnApplyTake" onclick="jade_modules.operations.applyTakeDetails()">Apply Take</button>
+        <button id="btnApplyTakeUk" onclick="jade_modules.operations.applyTakeDetails('UK')">Apply Take UK</button>
       </div>
       <div id="fillButton">
         <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>

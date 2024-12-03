@@ -5878,7 +5878,14 @@ async function filterCharacter(){
   await filterOnCharacter(characterSelect.value);
 }
 
-async function applyTakeDetails(){
+async function applyTakeDetails(country){
+  const rowDetails = await getSelectedRowDetails();
+  const cols = takeDetailsColumnIndexes(country);
+  const takesData = getTakesData();
+  console.log('rowDetails', rowDetails, 'cols', cols, 'takesData', takesData);
+}
+
+async function getSelectedRowDetails(){
   let rowDetails = [];
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -5910,32 +5917,9 @@ async function applyTakeDetails(){
         rowDetails = addToRowDetails(rowDetails, theItem.rowIndex, theItem.rowCount);
       }
     }
-    //console.log('areaCount', selectedRanges.areaCount);
-    
-    //let rowDetails = [];
-    /*
-    let ranges = selectedRanges.areas.items;
-    let rowDetails = [];
-    for (let i = 0; i < ranges.length; i++){
-      let visibleRanges = ranges[i].getSpecialCellsOrNullObject("Visible");
-      await excel.sync();
-      if (visibleRanges.isNullObject){
-        console.log('No visible cells');
-      } else {
-        visibleRanges.areas.load('items');
-        await excel.sync();
-        let theItems = visibleRanges.areas.items;
-        for (let j = 0; j < theItems.length; j++){
-          theItems[j].load('rowIndex, rowCount');
-          await excel.sync();
-          console.log('i', i, 'j', j, 'the Item rowIndex', theItems[j].rowIndex, 'count', theItems[j].rowCount)
-          rowDetails = addToRowDetails(rowDetails, theItems[j].rowIndex, theItems[j].rowCount);
-        }
-      }
-    }
-    */
     console.log('rowDetails ', rowDetails)
-  })    
+  })  
+  return rowDetails;  
 } 
 
 function addToRowDetails(details, rowIndex, rowCount){
@@ -5958,4 +5942,38 @@ function addToRowDetails(details, rowIndex, rowCount){
     details.push({rowIndex: rowIndex, rowCount: rowCount})
     return details;
   }
+}
+function takeDetailsColumnIndexes(country){
+  let result = {};
+  if (country == 'UK'){
+    result.takeNoIndex = ukTakeNoIndex;
+    result.dateRecordedIndex = ukDateIndex;
+    result.markUpIndex = ukMarkUpIndex;
+    result.studioIndex = ukStudioIndex;
+    result.engineerIndex = ukEngineerIndex;
+    result.takesIndex = ukTakesIndex;
+  } else if (country == 'US'){
+    result.takeNoIndex = usTakeNoIndex;
+    result.dateRecordedIndex = usDateIndex;
+    result.markUpIndex = usMarkUpIndex;
+    result.studioIndex = usStudioIndex;
+    result.engineerIndex = usEngineerIndex;
+    result.takesIndex = usTakesIndex;
+  }else if (country == 'Walla'){
+    result.takeNoIndex = wallaTakeNoIndex;
+    result.dateRecordedIndex = wallaDateIndex;
+    result.markUpIndex = wallaMarkUpIndex;
+    result.studioIndex = wallaStudioIndex;
+    result.engineerIndex = wallaEngineerIndex;
+    result.takesIndex = wallaTakesIndex;
+  }
+  return result;
+}
+function getTakesData(){
+  let data = {}
+  data.studioText = tag("studio-select").value;
+  data.engineerText = tag("engineer-select").value;
+  data.markupText = tag('markup').value;
+  data.takesText = tag('takes-select').value;
+  return data;
 }
