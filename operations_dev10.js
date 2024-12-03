@@ -5877,7 +5877,6 @@ async function applyTakeDetails(){
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const selectedRanges = excel.workbook.getSelectedRanges();
-    selectedRanges.load('areaCount');
     let visibleRanges = selectedRanges.getSpecialCellsOrNullObject("Visible");
     await excel.sync();
     if (visibleRanges.isNullObject){
@@ -5900,8 +5899,9 @@ async function applyTakeDetails(){
           counter = 0;
         }
       }
+      await excel.sync();
       for (let theItem of theItems){
-        rowDetails = addToRowDetails(rowDetails, theItem.rowIndex, theItems.rowCount);
+        rowDetails = addToRowDetails(rowDetails, theItem.rowIndex, theItem.rowCount);
       }
     }
     //console.log('areaCount', selectedRanges.areaCount);
