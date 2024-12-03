@@ -5886,27 +5886,22 @@ async function applyTakeDetails(){
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const selectedRanges = excel.workbook.getSelectedRanges();
-    selectedRanges.load('address');
     selectedRanges.areas.load('items');
     await excel.sync();
-    console.log('selectedRange address', selectedRanges.address)
     let ranges = selectedRanges.areas.items;
-    let rowIndexes = [];
+    let rowDetails = [];
     for (let i = 0; i < ranges.length; i++){
-      ranges[i].load('address', 'rowIndex', 'rowCount')
-      await excel.sync();
-      console.log(i, 'range address', ranges[i].address);
       let visibleRanges = ranges[i].getSpecialCells("Visible");
-      visibleRanges.load('address');
       visibleRanges.areas.load('items');
       await excel.sync();
-      console.log('visible ranges', visibleRanges.address);
       let theItems = visibleRanges.areas.items;
       for (let j = 0; j < theItems.length; j++){
         theItems[j].load('rowIndex, rowCount');
         await excel.sync();
-        console.log(j, 'the Item rowIndex', theItems[j].rowIndex, 'count', theItems[j].rowCount)
+        console.log('i', i, 'j', j, 'the Item rowIndex', theItems[j].rowIndex, 'count', theItems[j].rowCount)
+        rowDetails.push({rowIndex: theItems[j].rowIndex, rowCount: theItems[j].rowCount});
       }
     }
+    console.log('rowDetails', rowDetails)
   })    
 } 
