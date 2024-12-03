@@ -881,6 +881,8 @@ async function highlightCharacters(sheetName, character, rowDetails){
 }
 
 async function processCharacterListForWordAndScene(){
+  let myWait = tag('character-wait');
+  myWait.style.display = 'block';
   await Excel.run(async function(excel){
     const characterListSheet = excel.workbook.worksheets.getItem(characterListName);
     let characterRange = characterListSheet.getRange('clCharacters');
@@ -900,6 +902,7 @@ async function processCharacterListForWordAndScene(){
       }
     }
   })
+  myWait.style.display = 'none';
 }
 
 async function getWordCountForCharacter(characterName){
@@ -960,6 +963,8 @@ async function getWordCountForCharacter(characterName){
 }
 
 async function createSceneWordCountData(){
+  let myWait = tag('character-wait');
+  myWait.style.display = 'block';
   await Excel.run(async function(excel){
     console.log('Starting');
     const characterListSheet = excel.workbook.worksheets.getItem(characterListName);
@@ -976,6 +981,6 @@ async function createSceneWordCountData(){
     console.log(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount)
     let displayRange = characterListSheet.getRangeByIndexes(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount);
     displayRange.values = display;
-    
   })
+  myWait.style.display = 'none';
 }
