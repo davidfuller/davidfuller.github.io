@@ -5877,9 +5877,10 @@ async function applyTakeDetails(){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const selectedRanges = excel.workbook.getSelectedRanges();
     selectedRanges.load('areaCount');
-    //selectedRanges.areas.load('items');
+    selectedRanges.load('areas');
     await excel.sync();
     console.log('areaCount', selectedRanges.areaCount);
+    console.log('areas', selectedRanges.areas);
     let rowDetails = [];
     /*
     let ranges = selectedRanges.areas.items;
