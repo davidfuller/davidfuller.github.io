@@ -5896,13 +5896,23 @@ async function applyTakeDetails(country){
       markUpRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.markUpIndex, rowDetails[i].rowCount, 1);
       studioRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.studioIndex, rowDetails[i].rowCount, 1);
       engineerRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.engineerIndex, rowDetails[i].rowCount, 1);
+      let myTakes = [];
+      let myDates = [];
+      let myMarkUps = [];
+      let myStudios = [];
+      let myEngineers = [];
       for (let j = 0; j < rowDetails[i].rowCount; j++){
-        takesRanges[i].values[j][0] = takesData.takesText;
-        dateRanges[i].values[j][0] = takesData.dateText;
-        markUpRanges[i].values[j][0] = takesData.markUpIndex;
-        studioRanges[i].values[j][0] = takesData.studioText;
-        engineerRanges[i].values[j][0] = takesData.engineerText;
+        myTakes[j] = [takesData.takesText];
+        myDates[j] = [takesData.dateText];
+        myMarkUps[j] = [takesData.markUpText];
+        myStudios[j] = [takesData.studioText];
+        myEngineers[j] = [takesData.engineerText];
       }
+      takesRanges[i].values = myTakes;
+      dateRanges[i].values = myDates;
+      markUpRanges[i].values = myMarkUps;
+      studioRanges[i].values = myStudios;
+      engineerRanges[i].values = myEngineers;
     }
     await excel.sync();
   })
