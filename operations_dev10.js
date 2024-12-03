@@ -5891,17 +5891,22 @@ async function applyTakeDetails(){
     let ranges = selectedRanges.areas.items;
     let rowDetails = [];
     for (let i = 0; i < ranges.length; i++){
-      let visibleRanges = ranges[i].getSpecialCells("Visible");
-      visibleRanges.areas.load('items');
+      let visibleRanges = ranges[i].range.getSpecialCellsOrNullObject("Visible");
       await excel.sync();
-      let theItems = visibleRanges.areas.items;
-      for (let j = 0; j < theItems.length; j++){
-        theItems[j].load('rowIndex, rowCount');
+      if (visibleRanges.isNullObject){
+        console.log('No visible cells');
+      } else {
+        visibleRanges.areas.load('items');
         await excel.sync();
-        console.log('i', i, 'j', j, 'the Item rowIndex', theItems[j].rowIndex, 'count', theItems[j].rowCount)
-        rowDetails.push({rowIndex: theItems[j].rowIndex, rowCount: theItems[j].rowCount});
+        let theItems = visibleRanges.areas.items;
+        for (let j = 0; j < theItems.length; j++){
+          theItems[j].load('rowIndex, rowCount');
+          await excel.sync();
+          console.log('i', i, 'j', j, 'the Item rowIndex', theItems[j].rowIndex, 'count', theItems[j].rowCount)
+          rowDetails.push({rowIndex: theItems[j].rowIndex, rowCount: theItems[j].rowCount});
+        }
       }
     }
-    console.log('rowDetails', rowDetails)
+    console.log(' ', rowDetails)
   })    
 } 
