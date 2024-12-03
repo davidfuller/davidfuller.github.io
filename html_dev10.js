@@ -202,6 +202,8 @@ async function mainHTML(){
           <select id="character-select"><option value="">Please select</option></select>
           <button id="btnClearFilterCharacter" onclick="jade_modules.operations.removeFilter()">Clear</button><br/>
         </div>
+      </div>
+      <div>
         <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter Character</button>
         <button id="btnApplyTake" onclick="jade_modules.operations.applyTakeDetails()">Apply Take</button>
       </div>
