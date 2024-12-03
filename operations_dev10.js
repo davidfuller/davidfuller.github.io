@@ -5873,6 +5873,7 @@ async function filterCharacter(){
 }
 
 async function applyTakeDetails(){
+  let rowDetails = [];
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const selectedRanges = excel.workbook.getSelectedRanges();
