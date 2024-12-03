@@ -5869,7 +5869,7 @@ async function fillCharacterAndTakesDropdowns(){
   for (let i = 0; i <= 20; i++){
     takesSelect.add(new Option(i,i));
   }
-  takeSelect.selectedIndex = 1;
+  takesSelect.selectedIndex = 1;
 }
 
 async function filterCharacter(){
