@@ -5890,17 +5890,22 @@ async function applyTakeDetails(){
       let myAddresses = visibleRanges.address.split(',');
       console.log('myAddresses', myAddresses);
       let theItems = [];
+      let counter = 0;
       for (let j = 0; j < myAddresses.length; j++){
         theItems[j] = scriptSheet.getRange(myAddresses[j])
         theItems[j].load('rowIndex, rowCount');
-        await excel.sync();
-        console.log('j', j, 'the Item rowIndex', theItems[j].rowIndex, 'count', theItems[j].rowCount)
-        rowDetails = addToRowDetails(rowDetails, theItems[j].rowIndex, theItems[j].rowCount);
+        counter += 1;
+        if (counter > 500){
+          await excel.sync();
+          counter = 0;
+        }
       }
-    
-      
+      for (let theItem of theItems){
+        console.log('the Item rowIndex', theItem.rowIndex, 'count', theItem.rowCount);
+        rowDetails = addToRowDetails(rowDetails, theItem.rowIndex, theItems.rowCount);
+      }
     }
-    console.log('areaCount', selectedRanges.areaCount);
+    //console.log('areaCount', selectedRanges.areaCount);
     
     //let rowDetails = [];
     /*
