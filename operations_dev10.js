@@ -5900,6 +5900,7 @@ async function applyTakeDetails(){
           counter = 0;
         }
       }
+      await excel.sync();
       for (let theItem of theItems){
         console.log('the Item rowIndex', theItem.rowIndex, 'count', theItem.rowCount);
         rowDetails = addToRowDetails(rowDetails, theItem.rowIndex, theItems.rowCount);
