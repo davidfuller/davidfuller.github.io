@@ -5883,6 +5883,29 @@ async function applyTakeDetails(country){
   const cols = takeDetailsColumnIndexes(country);
   const takesData = getTakesData();
   console.log('rowDetails', rowDetails, 'cols', cols, 'takesData', takesData);
+  let takesRanges = [];
+  let dateRanges = [];
+  let markUpRanges = [];
+  let studioRanges = [];
+  let engineerRanges = [];
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    for (let i = 0; i < rowDetails.length; i++){
+      takesRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.takesIndex, rowDetails[i].rowCount, 1);
+      dateRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.dateRecordedIndex, rowDetails[i].rowCount, 1);
+      markUpRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.markUpIndex, rowDetails[i].rowCount, 1);
+      studioRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.studioIndex, rowDetails[i].rowCount, 1);
+      engineerRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.engineerIndex, rowDetails[i].rowCount, 1);
+      for (let j = 0; j < rowDetails[i].rowCount; j++){
+        takeRanges[i].values[j][0] = takesData.takesText;
+        dateRanges[i].values[j][0] = takesData.dateText;
+        markUpRanges[i].values[j][0] = takesData.markUpIndex;
+        studioRanges[i].values[j][0] = takesData.studioText;
+        engineerRanges[i].values[j][0] = takesData.engineerText;
+      }
+    }
+    await excel.sync();
+  })
 }
 
 async function getSelectedRowDetails(){
@@ -5975,5 +5998,6 @@ function getTakesData(){
   data.engineerText = tag("engineer-select").value;
   data.markupText = tag('markup').value;
   data.takesText = tag('takes-select').value;
+  data.dateText = dateInFormat();
   return data;
 }
