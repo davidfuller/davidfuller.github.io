@@ -5876,8 +5876,12 @@ async function applyTakeDetails(){
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const selectedRanges = excel.workbook.getSelectedRanges();
-    selectedRanges.areas.load('items');
+    selectedRanges.load('areaCount');
+    //selectedRanges.areas.load('items');
     await excel.sync();
+    console.log('areaCount', selectedRanges.areaCount);
+    let rowDetails = [];
+    /*
     let ranges = selectedRanges.areas.items;
     let rowDetails = [];
     for (let i = 0; i < ranges.length; i++){
@@ -5897,7 +5901,8 @@ async function applyTakeDetails(){
         }
       }
     }
-    console.log(' ', rowDetails)
+    */
+    console.log('rowDetails ', rowDetails)
   })    
 } 
 
