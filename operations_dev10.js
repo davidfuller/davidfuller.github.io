@@ -5901,7 +5901,6 @@ async function applyTakeDetails(){
         }
       }
       for (let theItem of theItems){
-        console.log('the Item rowIndex', theItem.rowIndex, 'count', theItem.rowCount);
         rowDetails = addToRowDetails(rowDetails, theItem.rowIndex, theItems.rowCount);
       }
     }
