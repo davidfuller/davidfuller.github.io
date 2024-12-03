@@ -5865,7 +5865,7 @@ async function fillCharacterAndTakesDropdowns(){
     characterSelect.add(new Option(theList[i], theList[i]));
   }
   let takesSelect = tag('takes-select');
-  takesSelect.innerHTML;
+  takesSelect.innerHTML = '';
   for (let i = 0; i <= 20; i++){
     takesSelect.add(new Option(i,i));
   }
