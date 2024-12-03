@@ -5877,10 +5877,17 @@ async function applyTakeDetails(){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const selectedRanges = excel.workbook.getSelectedRanges();
     selectedRanges.load('areaCount');
-    selectedRanges.load('areas');
+    let visibleRanges = selectedRanges.getSpecialCellsOrNullObject("Visible");
     await excel.sync();
+    if (visibleRanges.isNullObject){
+      console.log('No visible cells');
+    } else {
+      visibleRanges.load('address');
+      await excel.sync();
+      console.log('visibleRanges.address', visibleRanges.address)
+    }
     console.log('areaCount', selectedRanges.areaCount);
-    console.log('areas', selectedRanges.areas);
+    
     let rowDetails = [];
     /*
     let ranges = selectedRanges.areas.items;
