@@ -5856,7 +5856,7 @@ async function getCharacterList(){
   return theList;
 }
 
-async function fillCharacterDropdown(){
+async function fillCharacterAndTakesDropdowns(){
   let theList = await getCharacterList();
   let characterSelect = tag('character-select');
   characterSelect.innerHTML = '';
@@ -5869,7 +5869,7 @@ async function fillCharacterDropdown(){
   for (let i = 0; i <= 20; i++){
     takesSelect.add(new Option(i,i));
   }
-
+  takeSelect.selectedIndex = 1;
 }
 
 async function filterCharacter(){

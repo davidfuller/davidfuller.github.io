@@ -181,7 +181,7 @@ async function mainHTML(){
       </label>
       <div class="row">
         <div class="column" id="column-one">
-          <label for="takes-select">No of takes</label><br/>
+          <label for="takes-select">No. takes</label><br/>
           <label for="studio-select">Studio</label><br/>
           <label for="engineer-select">Engineer</label>
           <label for="markup">Markup</label>
@@ -345,7 +345,7 @@ async function mainHTML(){
   await jade_modules.comparison.fillChapter();
   jade_modules.operations.setDefaultRadioButton();
   await jade_modules.comparison.autoSelectChapter();
-  await jade_modules.operations.fillCharacterDropdown();
+  await jade_modules.operations.fillCharacterAndTakesDropdowns();
 
   console.log("I'm here data loaded. Dev10");
 }
