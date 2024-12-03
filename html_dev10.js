@@ -199,11 +199,11 @@ async function mainHTML(){
           <label for="character-select">Character</label>
         </div>
         <div class="column" id="column-two-character">
-          <select id="character-select"><option value="">Please select</option></select><br/>
-          <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter Character</button>
-          <button id="btnApplyTake" onclick="jade_modules.operations.applyTakeDetails()">Apply Take</button>
-
+          <select id="character-select"><option value="">Please select</option></select>
+          <button id="btnClearFilterCharacter" onclick="jade_modules.operations.removeFilter()">Clear</button><br/>
         </div>
+        <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter Character</button>
+        <button id="btnApplyTake" onclick="jade_modules.operations.applyTakeDetails()">Apply Take</button>
       </div>
       <div id="fillButton">
         <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
