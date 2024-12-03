@@ -5899,7 +5899,7 @@ async function applyTakeDetails(){
     }
     console.log('areaCount', selectedRanges.areaCount);
     
-    let rowDetails = [];
+    //let rowDetails = [];
     /*
     let ranges = selectedRanges.areas.items;
     let rowDetails = [];
