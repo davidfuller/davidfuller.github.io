@@ -2435,15 +2435,20 @@ async function getCharacters(sheetName, charIndex){
   return characters;
 }
 
-async function filterOnCharacter(characterName){
+async function filterOnCharacter(characterName, includeScenes, sceneNumbers){
   await Excel.run(async function(excel){
     let myRange = await getDataRange(excel);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    const myCriteria = {
-      filterOn: Excel.FilterOn.custom,
-      criterion1: "="
+    let myCriterial
+    if (includeScenes){
+
+    } else {
+      myCriteria = {
+        filterOn: Excel.FilterOn.custom,
+        criterion1: characterName
+      }
+      scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
     }
-    scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
     await excel.sync();
   })
 }
@@ -5903,7 +5908,7 @@ async function fillCharacterAndTakesDropdowns(){
 async function filterCharacter(){
   let characterSelect = tag('character-select');
   console.log('selected character', characterSelect.value);
-  await filterOnCharacter(characterSelect.value);
+  await filterOnCharacter(characterSelect.value, false, []);
   const rowDetails = await getSelectedRowDetails(false);
   const scenes = await getScenesForRowDetails(rowDetails);
 }
