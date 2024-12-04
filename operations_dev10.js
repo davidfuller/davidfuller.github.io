@@ -6163,8 +6163,8 @@ async function getSceneBlockRows(){
           rowIndexes.push(i + typeRange.rowIndex);
         }
         let temp = {
-          rowIndex: i + typeRange.rowIndex,
-          scene: thisCue        
+          scene: scene,
+          rowIndexes: rowIndexes       
         }
         result.push(temp);
       }
