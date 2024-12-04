@@ -270,7 +270,7 @@ async function unlockIfLocked(){
 }
 
 async function selectRange(rangeAddress, doCentre){
-  const offset = 10;
+  let offset = 10;
   console.log('selectRange', rangeAddress, doCentre, offset)
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
