@@ -5941,8 +5941,10 @@ async function filterCharacter(){
   await filterOnCharacter(characterSelect.value, false, []);
   const rowDetails = await getSelectedRowDetails(false);
   const scenes = await getScenesForRowDetails(rowDetails);
+  const blockDetails = await getSceneBlockRows();
+  const blockRows = rowsForSceneBlocks(scenes, blockDetails);
   await filterOnCharacter(characterSelect.value, true, scenes);
-  await getSceneBlockRows();
+  
 }
 
 async function applyTakeDetails(country){
@@ -6172,5 +6174,14 @@ async function getSceneBlockRows(){
     result.push(temp);
     console.log('Result', result)
   }) 
+  return result;
+}
+function rowsForSceneBlocks(scenes, blockDetails){
+  let result = [];
+  for (let i = 0; i < scenes.length; i++){
+    let temp = blockDetails.find(x => x.scene == scenes[i]);
+    result = result.concat(temp.rowIndexes);
+  }
+  console.log('result rowIndexes', result);
   return result;
 }
