@@ -191,7 +191,7 @@ async function mainHTML(){
         </div>
         <div class="column" id="column-two">
           <select id="character-select"><option value="">Please select</option></select>
-          <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter Character</button>
+          <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter</button>
           <button id="btnClearFilterCharacter" onclick="jade_modules.operations.removeFilter()">Clear</button><br/>
           <select id="takes-select"><option value=""></option></select><br/>
           <select id="studio-select"><option value="">Please select</option></select><br/>

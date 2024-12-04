@@ -743,7 +743,7 @@ label {
   cursor: pointer;
 }
 
-#btnDefaultMarkup {
+#btnDefaultMarkup, #btnFilterCharacter, #btnClearFilterCharacter {
   margin-top: 0px;
   margin-bottom: 0px;
   font-size: 11px;
