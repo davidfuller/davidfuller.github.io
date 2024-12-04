@@ -6127,7 +6127,7 @@ async function getSceneBlockRows(){
     const rowCount = lastDataRow - firstDataRow + 1;
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const typeRange = scriptSheet.getRangeByIndexes(startRowIndex, typeCodeIndex, rowCount, 1);
-    typeRange.load('values', 'rowIndex');
+    typeRange.load('values, rowIndex');
     const cueRange = scriptSheet.getRangeByIndexes(startRowIndex, cueIndex, rowCount, 1);
     cueRange.load('values, rowIndex');
     await excel.sync();
