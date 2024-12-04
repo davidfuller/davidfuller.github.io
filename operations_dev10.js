@@ -269,6 +269,24 @@ async function unlockIfLocked(){
   return isProtected
 }
 
+async function selectRange(rangeAddress, doCentre){
+  const offset = 10;
+  console.log('selectRange', rangeAddress, doCentre, offset)
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let selectRange = scriptSheet.getRange(rangeAddress);
+    if (doCentre){
+      let temp = selectRange.getOffsetRange(offset,offset);
+      temp.select();
+      await excel.sync();
+      temp = selectRange.getOffsetRange(-offset,-offset);
+      temp.select();
+      await excel.sync();
+    }
+    selectRange.select();
+  })
+}
+
 async function removeFilter(){
   await Excel.run(async function(excel){
     let active = excel.workbook.getActiveCell();
@@ -283,8 +301,7 @@ async function removeFilter(){
       if (isProtected){
         await lockColumns();
       }
-      console.log('activecell address', active.address)
-      scriptSheet.getRange(active.address).select();
+      await selectRange(active.address, true);
     }  
   });
 }
