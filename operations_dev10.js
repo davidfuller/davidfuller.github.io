@@ -35,7 +35,7 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex, usScriptColumnIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
-let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, lineWordCountIndex, sceneLineNumberRangeIndex, chapterCalculationIndex;
+let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, rowIndexIndex lineWordCountIndex, sceneLineNumberRangeIndex, chapterCalculationIndex;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
@@ -176,7 +176,8 @@ async function initialiseVariables(){
   chapterCalculationIndex = findColumnIndex('Chapter Calculation');
   lineWordCountIndex = findColumnIndex('Line Word Count');
   bookIndex = findColumnIndex('Book');
-  sceneWordCountCalcIndex = findColumnIndex('Scene word count calc'); 
+  rowIndexIndex = findColumnIndex('Row Index');
+  sceneWordCountCalcIndex = findColumnIndex('Scene word count calc');
 
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -2440,7 +2441,7 @@ async function getCharacters(sheetName, charIndex){
   return characters;
 }
 
-async function filterOnCharacter(characterName, includeScenes, sceneNumbers){
+async function filterOnCharacter(characterName, includeScenes, sceneRowIndexes){
   await Excel.run(async function(excel){
     let myRange = await getDataRange(excel);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -2453,17 +2454,16 @@ async function filterOnCharacter(characterName, includeScenes, sceneNumbers){
       }
       scriptSheet.autoFilter.apply(myRange, typeCodeIndex, myTypeCrteria);
 
-      let sceneString = [];
-      for (let i = 0; i < sceneNumbers.length; i++){
-        sceneString.push((sceneNumbers[i] - 1).toString());
-        sceneString.push((sceneNumbers[i]).toString());
+      let sceneRowIndexesString = [];
+      for (let i = 0; i < sceneRowIndexes.length; i++){
+        sceneRowIndexesString.push(sceneRowIndexes[i].toString());
       }
-      console.log('sceneNumbers', sceneNumbers, sceneString);
+      console.log('sceneNumbers', sceneRowIndexes, sceneRowIndexesString);
       mySceneCriteria = {
         filterOn: Excel.FilterOn.values,
-        values: sceneString
+        values: sceneRowIndexesString
       }
-      scriptSheet.autoFilter.apply(myRange, sceneIndex, mySceneCriteria);
+      scriptSheet.autoFilter.apply(myRange, rowIndexIndex, mySceneCriteria);
       myCriteria = {
         filterOn: Excel.FilterOn.custom,
         criterion1: characterName,
