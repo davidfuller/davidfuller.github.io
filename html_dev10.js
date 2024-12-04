@@ -159,8 +159,8 @@ async function mainHTML(){
   </div>
   <div id="dateStudioEngineer">
     <label class="section-label">Add / remove takes</label><a id='show-hide-add-remove' onclick="jade_modules.operations.showAddRemove()">Show/hide add/remove takes</a>
-    <div id="hidden-old-takes"></div>
-      <div id="add-remove-buttons">
+    <div id="add-remove-buttons"></div>
+      <div id="hidden-old-takes"></div>
         <label id="take-wait">Please wait...</label>
         <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true)">Add Take UK</button>
         <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button><br/>
@@ -181,43 +181,42 @@ async function mainHTML(){
           <span class="checkmark"></span>
         </label>
       </div>
-    </div>
-  
-    <div class="row">
-      <div class="column" id="column-one">
-        <label for="takes-select">No. takes</label><br/>
-        <label for="studio-select">Studio</label><br/>
-        <label for="engineer-select">Engineer</label>
-        <label for="markup">Markup</label>
+      <div class="row">
+        <div class="column" id="column-one">
+          <label for="takes-select">No. takes</label><br/>
+          <label for="studio-select">Studio</label><br/>
+          <label for="engineer-select">Engineer</label>
+          <label for="markup">Markup</label>
+        </div>
+        <div class="column" id="column-two">
+          <select id="takes-select"><option value=""></option></select><br/>
+          <select id="studio-select"><option value="">Please select</option></select><br/>
+          <select id="engineer-select"><option value="">Please select</option></select>
+          <input type="text" id="markup" name="markup"><button id="btnDefaultMarkup" onclick="jade_modules.operations.addDefaultMarkUp()">Default</button><br/>
+          <button id="btnAddMarkup" onclick="jade_modules.operations.addMarkUpToSelected(false)">Add</button>
+          <button id="btnReplaceMarkup" onclick="jade_modules.operations.addMarkUpToSelected(true)">Replace</button><br/>
+          <label id="markup-message">The Add/Replace buttons allow you to add or replace text to the selected markup fields</label>
+        </div>
       </div>
-      <div class="column" id="column-two">
-        <select id="takes-select"><option value=""></option></select><br/>
-        <select id="studio-select"><option value="">Please select</option></select><br/>
-        <select id="engineer-select"><option value="">Please select</option></select>
-        <input type="text" id="markup" name="markup"><button id="btnDefaultMarkup" onclick="jade_modules.operations.addDefaultMarkUp()">Default</button><br/>
-        <button id="btnAddMarkup" onclick="jade_modules.operations.addMarkUpToSelected(false)">Add</button>
-        <button id="btnReplaceMarkup" onclick="jade_modules.operations.addMarkUpToSelected(true)">Replace</button><br/>
-        <label id="markup-message">The Add/Replace buttons allow you to add or replace text to the selected markup fields</label>
+      <div class="row">
+        <div class="column" id="column-one-character">
+          <label for="character-select">Character</label>
+        </div>
+        <div class="column" id="column-two-character">
+          <select id="character-select"><option value="">Please select</option></select>
+          <button id="btnClearFilterCharacter" onclick="jade_modules.operations.removeFilter()">Clear</button><br/>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="column" id="column-one-character">
-        <label for="character-select">Character</label>
+      <div>
+        <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter Character</button>
+        <button id="btnApplyTakeUk" onclick="jade_modules.operations.applyTakeDetails('UK')">Apply Take UK</button>
       </div>
-      <div class="column" id="column-two-character">
-        <select id="character-select"><option value="">Please select</option></select>
-        <button id="btnClearFilterCharacter" onclick="jade_modules.operations.removeFilter()">Clear</button><br/>
+          
+      <div id="fillButton">
+        <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
+        <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
+        <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
       </div>
-    </div>
-    <div>
-      <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter Character</button>
-      <button id="btnApplyTakeUk" onclick="jade_modules.operations.applyTakeDetails('UK')">Apply Take UK</button>
-    </div>
-        
-    <div id="fillButton">
-      <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
-      <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
-      <button id='btnFillWalla' onclick="jade_modules.operations.fill('Walla')">Fill Walla</button><br/>
     </div>
   </div>
 </div>
