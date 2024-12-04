@@ -5937,6 +5937,7 @@ async function filterCharacter(){
   const rowDetails = await getSelectedRowDetails(false);
   const scenes = await getScenesForRowDetails(rowDetails);
   await filterOnCharacter(characterSelect.value, true, scenes);
+  await getSceneBlockRows();
 }
 
 async function applyTakeDetails(country){
@@ -6117,4 +6118,39 @@ function getTakesData(){
   data.takesText = tag('takes-select').value;
   data.dateText = dateInFormat();
   return data;
+}
+
+async function getSceneBlockRows(){
+  let result = []
+  await Excel.run(async function(excel){
+    const startRowIndex = firstDataRow - 1;
+    const rowCount = lastDataRow - firstDataRow + 1;
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const typeRange = scriptSheet.getRangeByIndexes(startRowIndex, typeCodeIndex, rowCount, 1);
+    typeRange.load('values', 'rowIndex');
+    const cueRange = scriptSheet.getRangeByIndexes(startRowIndex, cueIndex, rowCount, 1);
+    cueRange.load('values, rowIndex');
+    await excel.sync();
+    types = typeRange.values.map(type => type[0]);
+    cues = cueRange.values.map(cue => cue[0]);
+    let lastCue = ''
+    let thisCue = ''
+    for (let i = 0; i < types.length; i++){
+      if (types[i] == myTypes.sceneBlock){
+        if (cues[i].toLowerCase() == 'scene'){
+          thisCue = cues[i];
+          lastCue = thisCue;
+        } else {
+          thisCue = lastCue;
+        }
+        let temp = {
+          rowIndex: i + typeRange.rowIndex,
+          scene: thisCue        
+        }
+        result.push(temp);
+      }
+    }
+    console.log('Result', result)
+  }) 
+  return result;
 }
