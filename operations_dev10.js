@@ -918,6 +918,11 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
       columnName: "Book", //CK
       formulaFirst: '=IF(' + positionChapterColumn + firstRow + '="","",LEFT(' + stageDirectionWallaDescriptionColumn + firstRow + ', ' + positionChapterColumn + firstRow + '-3))',
       formulaRest: '=IF(' + positionChapterColumn + firstRestRow + '="",' + bookColumn + firstRow + ',LEFT(' + stageDirectionWallaDescriptionColumn + firstRestRow + ',' + positionChapterColumn + firstRestRow + '-3))'
+    },
+    {
+      columnName: "Row Index", //CL
+      formulaFirst: '=ROW()-1',
+      formulaRest: '=ROW()-1'
     }
   ]
   return columnFormulae;
