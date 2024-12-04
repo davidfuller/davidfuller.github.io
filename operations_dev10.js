@@ -5995,15 +5995,22 @@ async function getScenesForRowDetails(rowDetails){
   let scenes = []
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let index = 0;
+    let tempRange =[];
     for(let row of rowDetails){
-      console.log('row', row);
-      let tempRange = scriptSheet.getRangeByIndexes(row.rowIndex, sceneIndex, row.rowCount, 1);
-      tempRange.load('values');
-      await excel.sync();
-      for (let i = 0; i < tempRange.values.length; i++){
-        let sceneNumber = parseInt(tempRange.values[i][0])
-        if (!isNaN(sceneNumber)){}
-          scenes.push(sceneNumber);
+      tempRange[index] = scriptSheet.getRangeByIndexes(row.rowIndex, sceneIndex, row.rowCount, 1);
+      tempRange[index].load('values');
+      if (index > 10000){
+        await excel.sync();
+        for (i = 0; i <= index; i++){
+          for (let j = 0; j < tempRange[i].values.length; j++){
+            let sceneNumber = parseInt(tempRange[i].values[j][0]);
+            if (!isNaN(sceneNumber)){
+              scenes.push(sceneNumber);
+            }
+          }
+        }
+        index = 0;
       }
     }
     scenes = [...new Set(scenes)].sort((a,b) => a - b);
