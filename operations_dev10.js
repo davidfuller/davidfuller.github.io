@@ -6140,6 +6140,7 @@ async function getSceneBlockRows(){
     cues = cueRange.values.map(cue => cue[0]);
     let rowIndexes = [];
     let doneFirst = false;
+    let scene;
     for (let i = 0; i < types.length; i++){
       if (types[i] == myTypes.sceneBlock){
         if (cues[i].toLowerCase().startsWith('scene')){
@@ -6162,13 +6163,13 @@ async function getSceneBlockRows(){
         } else {
           rowIndexes.push(i + typeRange.rowIndex);
         }
-        let temp = {
-          scene: scene,
-          rowIndexes: rowIndexes       
-        }
-        result.push(temp);
       }
     }
+    let temp = {
+      scene: scene,
+      rowIndexes: rowIndexes       
+    }
+    result.push(temp);
     console.log('Result', result)
   }) 
   return result;
