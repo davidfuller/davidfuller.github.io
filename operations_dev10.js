@@ -275,6 +275,13 @@ async function selectRange(rangeAddress, doCentre){
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let selectRange = scriptSheet.getRange(rangeAddress);
+    selectRange.load('rowIndex, columnIndex');
+    await excel.sync();
+    if (selectRange.rowIndex < offset){
+      offset = selectRange.rowIndex;
+    } else if (selectRange.columnIndex < offset){
+      offset = selectRange.columnIndex;
+    }
     if (doCentre){
       let temp = selectRange.getOffsetRange(offset,offset);
       temp.select();
