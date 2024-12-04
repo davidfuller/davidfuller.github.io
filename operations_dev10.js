@@ -5943,7 +5943,7 @@ async function filterCharacter(){
   const scenes = await getScenesForRowDetails(rowDetails);
   const blockDetails = await getSceneBlockRows();
   const blockRows = rowsForSceneBlocks(scenes, blockDetails);
-  await filterOnCharacter(characterSelect.value, true, scenes);
+  await filterOnCharacter(characterSelect.value, true, blockRows);
   
 }
 
