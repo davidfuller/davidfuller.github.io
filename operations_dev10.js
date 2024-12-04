@@ -2449,7 +2449,7 @@ async function filterOnCharacter(characterName, includeScenes, sceneNumbers){
       }
       scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
       mySceneCriteria = {
-        filterOn: Excel.filterOn.values,
+        filterOn: Excel.FilterOn.values,
         values: sceneNumbers
       }
       scriptSheet.autoFilter.apply(myRange, sceneIndex, mySceneCriteria);
