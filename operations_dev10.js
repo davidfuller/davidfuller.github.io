@@ -2441,7 +2441,12 @@ async function filterOnCharacter(characterName, includeScenes, sceneNumbers){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let myCriterial
     if (includeScenes){
-
+      myCriteria = {
+        filterOn: Excel.FilterOn.custom,
+        criterion1: characterName
+        criterion2: "="
+      }
+      scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
     } else {
       myCriteria = {
         filterOn: Excel.FilterOn.custom,
@@ -5911,6 +5916,7 @@ async function filterCharacter(){
   await filterOnCharacter(characterSelect.value, false, []);
   const rowDetails = await getSelectedRowDetails(false);
   const scenes = await getScenesForRowDetails(rowDetails);
+  await filterOnCharacter(characterSelect.value, true, scenes);
 }
 
 async function applyTakeDetails(country){
