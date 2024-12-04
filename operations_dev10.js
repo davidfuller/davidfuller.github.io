@@ -5910,6 +5910,7 @@ async function applyTakeDetails(country){
   const rowDetails = await getSelectedRowDetails();
   const cols = takeDetailsColumnIndexes(country);
   const takesData = getTakesData();
+  console.log('rowDetails', rowDetails)
   const scenes = await getScenesForRowDetails(rowDetails);
   console.log('rowDetails', rowDetails, 'cols', cols, 'takesData', takesData);
   let takesRanges = [];
@@ -5989,6 +5990,7 @@ async function getScenesForRowDetails(rowDetails){
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     for(let row of rowDetails){
+      console.log('row', row);
       let tempRange = scriptSheet.getRangeByIndexes(row.rowIndex, sceneIndex, row.rowCount, 1);
       tempRange.load('values');
       await excel.sync();
