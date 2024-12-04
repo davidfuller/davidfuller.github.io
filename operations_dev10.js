@@ -6138,20 +6138,29 @@ async function getSceneBlockRows(){
     await excel.sync();
     types = typeRange.values.map(type => type[0]);
     cues = cueRange.values.map(cue => cue[0]);
-    let lastCue = ''
-    let thisCue = ''
+    let rowIndexes = [];
+    let doneFirst = false;
     for (let i = 0; i < types.length; i++){
       if (types[i] == myTypes.sceneBlock){
         if (cues[i].toLowerCase().startsWith('scene')){
           let tempNum = parseInt(cues[i].substr(5));
           if (isNaN(tempNum)){
-            thisCue = lastCue;
+            rowIndexes.push(i + typeRange.rowIndex);
           } else {
-            thisCue = tempNum;
-            lastCue = thisCue;
+            if (doneFirst){
+              let temp = {
+                scene: scene,
+                rowIndexes: rowIndexes
+              }
+              result.push(temp);
+            } else {
+              doneFirst = true;
+            }
+            scene = tempNum;
+            rowIndexes = [i + typeRange.rowIndex]
           }
         } else {
-          thisCue = lastCue;
+          rowIndexes.push(i + typeRange.rowIndex);
         }
         let temp = {
           rowIndex: i + typeRange.rowIndex,
