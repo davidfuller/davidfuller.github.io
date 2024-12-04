@@ -5904,12 +5904,12 @@ async function filterCharacter(){
   let characterSelect = tag('character-select');
   console.log('selected character', characterSelect.value);
   await filterOnCharacter(characterSelect.value);
-  const rowDetails = await getSelectedRowDetails();
+  const rowDetails = await getSelectedRowDetails(false);
   const scenes = await getScenesForRowDetails(rowDetails);
 }
 
 async function applyTakeDetails(country){
-  const rowDetails = await getSelectedRowDetails();
+  const rowDetails = await getSelectedRowDetails(true);
   const cols = takeDetailsColumnIndexes(country);
   const takesData = getTakesData();
   console.log('rowDetails', rowDetails, 'cols', cols, 'takesData', takesData);
@@ -5948,12 +5948,18 @@ async function applyTakeDetails(country){
   })
 }
 
-async function getSelectedRowDetails(){
+async function getSelectedRowDetails(selectedOnly){
   let rowDetails = [];
+  let visibleRange;
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    const selectedRanges = excel.workbook.getSelectedRanges();
-    let visibleRanges = selectedRanges.getSpecialCellsOrNullObject("Visible");
+    if (selectedOnly){
+      const selectedRanges = excel.workbook.getSelectedRanges();
+      visibleRanges = selectedRanges.getSpecialCellsOrNullObject("Visible");
+    } else {
+      visibleRanges = scriptSheet.getSpecialCellsOrNullObject("Visible");
+    }
+    
     await excel.sync();
     if (visibleRanges.isNullObject){
       console.log('No visible cells');
