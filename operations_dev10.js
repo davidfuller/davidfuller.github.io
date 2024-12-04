@@ -2448,7 +2448,11 @@ async function filterOnCharacter(characterName, includeScenes, sceneNumbers){
       }
       scriptSheet.autoFilter.apply(myRange, typeCodeIndex, myTypeCrteria);
 
-      let sceneString = sceneNumbers.map(x => x.toString());
+      let sceneString = [];
+      for (let i = 0; i < sceneNumbers.length; i++){
+        sceneString.push((sceneNumbers[i] - 1).toString());
+        sceneString.push((sceneNumbers[i]).toString());
+      }
       console.log('sceneNumbers', sceneNumbers, sceneString);
       mySceneCriteria = {
         filterOn: Excel.FilterOn.values,
