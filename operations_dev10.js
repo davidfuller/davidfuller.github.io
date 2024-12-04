@@ -2439,7 +2439,7 @@ async function filterOnCharacter(characterName, includeScenes, sceneNumbers){
   await Excel.run(async function(excel){
     let myRange = await getDataRange(excel);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    
+    scriptSheet.autoFilter.remove();
     if (includeScenes){
       let testTypes = [myTypes.line, myTypes.sceneBlock]
       let myTypeCrteria = {
@@ -2447,7 +2447,7 @@ async function filterOnCharacter(characterName, includeScenes, sceneNumbers){
         values: testTypes
       }
       scriptSheet.autoFilter.apply(myRange, typeCodeIndex, myTypeCrteria);
-      
+
       let sceneString = sceneNumbers.map(x => x.toString());
       console.log('sceneNumbers', sceneNumbers, sceneString);
       mySceneCriteria = {
