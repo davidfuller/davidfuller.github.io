@@ -2441,13 +2441,15 @@ async function filterOnCharacter(characterName, includeScenes, sceneNumbers){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let myCriterial
     if (includeScenes){
-      myCriteria = {
+      /*myCriteria = {
         filterOn: Excel.FilterOn.custom,
         criterion1: characterName,
         criterion2: "=",
         operator: 'Or'
       }
       scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
+      */
+     console.log('sceneNumbers', sceneNumbers);
       mySceneCriteria = {
         filterOn: Excel.FilterOn.values,
         values: sceneNumbers
