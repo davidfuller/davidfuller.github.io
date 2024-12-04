@@ -179,12 +179,16 @@
       </div>
       <div class="row">
         <div class="column" id="column-one">
+          <label for="character-select">Character</label><br/>
           <label for="takes-select">No. takes</label><br/>
           <label for="studio-select">Studio</label><br/>
           <label for="engineer-select">Engineer</label>
           <label for="markup">Markup</label>
         </div>
         <div class="column" id="column-two">
+          <select id="character-select"><option value="">Please select</option></select>
+          <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter Character</button>
+          <button id="btnClearFilterCharacter" onclick="jade_modules.operations.removeFilter()">Clear</button><br/>
           <select id="takes-select"><option value=""></option></select><br/>
           <select id="studio-select"><option value="">Please select</option></select><br/>
           <select id="engineer-select"><option value="">Please select</option></select>
@@ -194,17 +198,7 @@
           <label id="markup-message">The Add/Replace buttons allow you to add or replace text to the selected markup fields</label>
         </div>
       </div>
-      <div class="row">
-        <div class="column" id="column-one-character">
-          <label for="character-select">Character</label>
-        </div>
-        <div class="column" id="column-two-character">
-          <select id="character-select"><option value="">Please select</option></select>
-          <button id="btnClearFilterCharacter" onclick="jade_modules.operations.removeFilter()">Clear</button><br/>
-        </div>
-      </div>
       <div>
-        <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter Character</button>
         <button id="btnApplyTakeUk" onclick="jade_modules.operations.applyTakeDetails('UK')">Apply Take UK</button>
       </div>
           
