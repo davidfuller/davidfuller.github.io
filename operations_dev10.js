@@ -5910,6 +5910,7 @@ async function applyTakeDetails(country){
   const rowDetails = await getSelectedRowDetails();
   const cols = takeDetailsColumnIndexes(country);
   const takesData = getTakesData();
+  const scenes = await getScenesForRowDetails(rowDetails);
   console.log('rowDetails', rowDetails, 'cols', cols, 'takesData', takesData);
   let takesRanges = [];
   let dateRanges = [];
@@ -5982,6 +5983,26 @@ async function getSelectedRowDetails(){
   })  
   return rowDetails;  
 } 
+
+async function getScenesForRowDetails(rowDetails){
+  let scenes = []
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    for(let row of rowDetails){
+      let tempRange = scriptSheet.getRangeByIndexes(row.rowIndex, sceneIndex, row.rowCount, 1);
+      tempRange.load('values');
+      await excel.sync();
+      for (let i = 0; i < tempRange.values.length; i++){
+        let sceneNumber = parseInt(tempRange.values[i][0])
+        if (!isNaN(sceneNumber)){}
+          scenes.push(sceneNumber);
+      }
+    }
+    scenes = [...new Set(scenes)].sort((a,b) => a - b);
+  })
+  console.log('scenes', scenes);
+  return scenes;
+}
 
 function addToRowDetails(details, rowIndex, rowCount){
   //Check is any rowIndex exists.
