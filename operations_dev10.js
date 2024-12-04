@@ -6137,7 +6137,7 @@ async function getSceneBlockRows(){
     let thisCue = ''
     for (let i = 0; i < types.length; i++){
       if (types[i] == myTypes.sceneBlock){
-        if (cues[i].toLowerCase() == 'scene'){
+        if (cues[i].toLowerCase().startsWith('scene')){
           thisCue = cues[i];
           lastCue = thisCue;
         } else {
