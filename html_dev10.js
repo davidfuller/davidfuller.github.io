@@ -185,7 +185,7 @@ async function mainHTML(){
   
     <div class="row">
       <div class="column" id="column-one">
-        <label for="takes-select">No of takes</label><br/>
+        <label for="takes-select">No. takes</label><br/>
         <label for="studio-select">Studio</label><br/>
         <label for="engineer-select">Engineer</label>
         <label for="markup">Markup</label>
@@ -211,7 +211,7 @@ async function mainHTML(){
     </div>
     <div>
       <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter Character</button>
-      <button id="btnApplyTake" onclick="jade_modules.operations.applyTakeDetails()">Apply Take</button>
+      <button id="btnApplyTakeUk" onclick="jade_modules.operations.applyTakeDetails('UK')">Apply Take UK</button>
     </div>
         
     <div id="fillButton">
@@ -349,7 +349,7 @@ async function mainHTML(){
   await jade_modules.comparison.fillChapter();
   jade_modules.operations.setDefaultRadioButton();
   await jade_modules.comparison.autoSelectChapter();
-  await jade_modules.operations.fillCharacterDropdown();
+  await jade_modules.operations.fillCharacterAndTakesDropdowns();
 
   console.log("I'm here data loaded. Dev10");
 }

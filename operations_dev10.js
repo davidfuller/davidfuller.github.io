@@ -5856,7 +5856,7 @@ async function getCharacterList(){
   return theList;
 }
 
-async function fillCharacterDropdown(){
+async function fillCharacterAndTakesDropdowns(){
   let theList = await getCharacterList();
   let characterSelect = tag('character-select');
   characterSelect.innerHTML = '';
@@ -5865,11 +5865,11 @@ async function fillCharacterDropdown(){
     characterSelect.add(new Option(theList[i], theList[i]));
   }
   let takesSelect = tag('takes-select');
-  takesSelect.innerHTML;
+  takesSelect.innerHTML = '';
   for (let i = 0; i <= 20; i++){
     takesSelect.add(new Option(i,i));
   }
-
+  takesSelect.selectedIndex = 1;
 }
 
 async function filterCharacter(){
@@ -5878,7 +5878,47 @@ async function filterCharacter(){
   await filterOnCharacter(characterSelect.value);
 }
 
-async function applyTakeDetails(){
+async function applyTakeDetails(country){
+  const rowDetails = await getSelectedRowDetails();
+  const cols = takeDetailsColumnIndexes(country);
+  const takesData = getTakesData();
+  console.log('rowDetails', rowDetails, 'cols', cols, 'takesData', takesData);
+  let takesRanges = [];
+  let dateRanges = [];
+  let markUpRanges = [];
+  let studioRanges = [];
+  let engineerRanges = [];
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    for (let i = 0; i < rowDetails.length; i++){
+      takesRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.takesIndex, rowDetails[i].rowCount, 1);
+      dateRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.dateRecordedIndex, rowDetails[i].rowCount, 1);
+      markUpRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.markUpIndex, rowDetails[i].rowCount, 1);
+      studioRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.studioIndex, rowDetails[i].rowCount, 1);
+      engineerRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.engineerIndex, rowDetails[i].rowCount, 1);
+      let myTakes = [];
+      let myDates = [];
+      let myMarkUps = [];
+      let myStudios = [];
+      let myEngineers = [];
+      for (let j = 0; j < rowDetails[i].rowCount; j++){
+        myTakes[j] = [takesData.takesText];
+        myDates[j] = [takesData.dateText];
+        myMarkUps[j] = [takesData.markupText];
+        myStudios[j] = [takesData.studioText];
+        myEngineers[j] = [takesData.engineerText];
+      }
+      takesRanges[i].values = myTakes;
+      dateRanges[i].values = myDates;
+      markUpRanges[i].values = myMarkUps;
+      studioRanges[i].values = myStudios;
+      engineerRanges[i].values = myEngineers;
+    }
+    await excel.sync();
+  })
+}
+
+async function getSelectedRowDetails(){
   let rowDetails = [];
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -5910,32 +5950,9 @@ async function applyTakeDetails(){
         rowDetails = addToRowDetails(rowDetails, theItem.rowIndex, theItem.rowCount);
       }
     }
-    //console.log('areaCount', selectedRanges.areaCount);
-    
-    //let rowDetails = [];
-    /*
-    let ranges = selectedRanges.areas.items;
-    let rowDetails = [];
-    for (let i = 0; i < ranges.length; i++){
-      let visibleRanges = ranges[i].getSpecialCellsOrNullObject("Visible");
-      await excel.sync();
-      if (visibleRanges.isNullObject){
-        console.log('No visible cells');
-      } else {
-        visibleRanges.areas.load('items');
-        await excel.sync();
-        let theItems = visibleRanges.areas.items;
-        for (let j = 0; j < theItems.length; j++){
-          theItems[j].load('rowIndex, rowCount');
-          await excel.sync();
-          console.log('i', i, 'j', j, 'the Item rowIndex', theItems[j].rowIndex, 'count', theItems[j].rowCount)
-          rowDetails = addToRowDetails(rowDetails, theItems[j].rowIndex, theItems[j].rowCount);
-        }
-      }
-    }
-    */
     console.log('rowDetails ', rowDetails)
-  })    
+  })  
+  return rowDetails;  
 } 
 
 function addToRowDetails(details, rowIndex, rowCount){
@@ -5958,4 +5975,39 @@ function addToRowDetails(details, rowIndex, rowCount){
     details.push({rowIndex: rowIndex, rowCount: rowCount})
     return details;
   }
+}
+function takeDetailsColumnIndexes(country){
+  let result = {};
+  if (country == 'UK'){
+    result.takeNoIndex = ukTakeNoIndex;
+    result.dateRecordedIndex = ukDateIndex;
+    result.markUpIndex = ukMarkUpIndex;
+    result.studioIndex = ukStudioIndex;
+    result.engineerIndex = ukEngineerIndex;
+    result.takesIndex = ukTakesIndex;
+  } else if (country == 'US'){
+    result.takeNoIndex = usTakeNoIndex;
+    result.dateRecordedIndex = usDateIndex;
+    result.markUpIndex = usMarkUpIndex;
+    result.studioIndex = usStudioIndex;
+    result.engineerIndex = usEngineerIndex;
+    result.takesIndex = usTakesIndex;
+  }else if (country == 'Walla'){
+    result.takeNoIndex = wallaTakeNoIndex;
+    result.dateRecordedIndex = wallaDateIndex;
+    result.markUpIndex = wallaMarkUpIndex;
+    result.studioIndex = wallaStudioIndex;
+    result.engineerIndex = wallaEngineerIndex;
+    result.takesIndex = wallaTakesIndex;
+  }
+  return result;
+}
+function getTakesData(){
+  let data = {}
+  data.studioText = tag("studio-select").value;
+  data.engineerText = tag("engineer-select").value;
+  data.markupText = tag('markup').value;
+  data.takesText = tag('takes-select').value;
+  data.dateText = dateInFormat();
+  return data;
 }
