@@ -5957,7 +5957,7 @@ async function getSelectedRowDetails(selectedOnly){
       const selectedRanges = excel.workbook.getSelectedRanges();
       visibleRanges = selectedRanges.getSpecialCellsOrNullObject("Visible");
     } else {
-      visibleRanges = scriptSheet.getSpecialCellsOrNullObject("Visible");
+      visibleRanges = scriptSheet.getUsedRange().getSpecialCellsOrNullObject("Visible");
     }
     
     await excel.sync();
