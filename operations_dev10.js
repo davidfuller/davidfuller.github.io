@@ -6000,7 +6000,7 @@ async function getScenesForRowDetails(rowDetails){
     for(let row of rowDetails){
       tempRange[index] = scriptSheet.getRangeByIndexes(row.rowIndex, sceneIndex, row.rowCount, 1);
       tempRange[index].load('values');
-      if (index > 10000){
+      if (index > 1000){
         await excel.sync();
         for (i = 0; i <= index; i++){
           for (let j = 0; j < tempRange[i].values.length; j++){
@@ -6011,6 +6011,15 @@ async function getScenesForRowDetails(rowDetails){
           }
         }
         index = 0;
+      }
+    }
+    await excel.sync();
+    for (i = 0; i <= index; i++){
+      for (let j = 0; j < tempRange[i].values.length; j++){
+        let sceneNumber = parseInt(tempRange[i].values[j][0]);
+        if (!isNaN(sceneNumber)){
+          scenes.push(sceneNumber);
+        }
       }
     }
     scenes = [...new Set(scenes)].sort((a,b) => a - b);
