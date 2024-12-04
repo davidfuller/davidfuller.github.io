@@ -271,8 +271,10 @@ async function unlockIfLocked(){
 
 async function removeFilter(){
   await Excel.run(async function(excel){
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let active = excel.workbook.getActiveCell();
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.autoFilter.load('enabled')
+    active.load('address');
     await excel.sync()
     if (scriptSheet.autoFilter.enabled){
       let isProtected = await unlockIfLocked();
@@ -281,6 +283,8 @@ async function removeFilter(){
       if (isProtected){
         await lockColumns();
       }
+      console.log('activecell address', active.address)
+      scriptSheet.getRange(active.address).select();
     }  
   });
 }
