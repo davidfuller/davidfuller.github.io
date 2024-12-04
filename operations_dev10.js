@@ -5904,14 +5904,14 @@ async function filterCharacter(){
   let characterSelect = tag('character-select');
   console.log('selected character', characterSelect.value);
   await filterOnCharacter(characterSelect.value);
+  const rowDetails = await getSelectedRowDetails();
+  const scenes = await getScenesForRowDetails(rowDetails);
 }
 
 async function applyTakeDetails(country){
   const rowDetails = await getSelectedRowDetails();
   const cols = takeDetailsColumnIndexes(country);
   const takesData = getTakesData();
-  console.log('rowDetails', rowDetails)
-  const scenes = await getScenesForRowDetails(rowDetails);
   console.log('rowDetails', rowDetails, 'cols', cols, 'takesData', takesData);
   let takesRanges = [];
   let dateRanges = [];
