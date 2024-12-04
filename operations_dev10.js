@@ -2452,7 +2452,7 @@ async function filterOnCharacter(characterName, includeScenes, sceneNumbers){
      console.log('sceneNumbers', sceneNumbers);
       mySceneCriteria = {
         filterOn: Excel.FilterOn.values,
-        values: sceneNumbers
+        values: ['335']
       }
       scriptSheet.autoFilter.apply(myRange, sceneIndex, mySceneCriteria);
     } else {
