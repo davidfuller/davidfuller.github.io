@@ -765,6 +765,10 @@ label {
 .compButton {
   width: 144px;
 }
+
+#hidden-old-takes {
+  display: none;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')

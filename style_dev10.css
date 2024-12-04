@@ -764,3 +764,6 @@ label {
   width: 144px;
 }
 
+#hidden-old-takes {
+  display: none;
+}
