@@ -6017,6 +6017,7 @@ async function getScenesForRowDetails(rowDetails){
     for (i = 0; i <= index; i++){
       for (let j = 0; j < tempRange[i].values.length; j++){
         let sceneNumber = parseInt(tempRange[i].values[j][0]);
+        console.log('i', i, 'j', j, 'sceneNumber', sceneNumber);
         if (!isNaN(sceneNumber)){
           scenes.push(sceneNumber);
         }
