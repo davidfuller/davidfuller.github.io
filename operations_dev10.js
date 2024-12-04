@@ -5942,7 +5942,7 @@ async function filterCharacter(){
   const rowDetails = await getSelectedRowDetails(false);
   const scenes = await getScenesForRowDetails(rowDetails);
   const blockDetails = await getSceneBlockRows();
-  const blockRows = rowsForSceneBlocks(scenes, blockDetails);
+  const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
   await filterOnCharacter(characterSelect.value, true, blockRows);
   
 }
@@ -6176,12 +6176,21 @@ async function getSceneBlockRows(){
   }) 
   return result;
 }
-function rowsForSceneBlocks(scenes, blockDetails){
+function combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails){
   let result = [];
   for (let i = 0; i < scenes.length; i++){
     let temp = blockDetails.find(x => x.scene == scenes[i]);
     result = result.concat(temp.rowIndexes);
   }
+  for (let i = 0; i < rowDetails.length; i++){
+    for (let j = 0; j < rowDetails[i].rowCount; j++){
+      let temp = rowDetails[i].rowIndex + j;
+      if (temp > 1){
+        result.push(temp);
+      }
+    }
+  }
+  result = [...new Set(result)].sort((a,b) => a - b);
   console.log('result rowIndexes', result);
   return result;
 }
