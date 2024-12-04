@@ -6011,6 +6011,8 @@ async function getScenesForRowDetails(rowDetails){
           }
         }
         index = 0;
+      } else {
+        index++;
       }
     }
     await excel.sync();
