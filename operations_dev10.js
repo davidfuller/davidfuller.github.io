@@ -6006,7 +6006,7 @@ async function filterCharacter(){
       }
     }
     console.log('Diff', diff, 'displayRowIndex', displayRowIndex);
-    console.log('active', activeDetils);
+    console.log('active', activeDetails);
     
     if (showSceneBlock){
       const blockDetails = await getSceneBlockRows();
