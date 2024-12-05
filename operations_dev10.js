@@ -5959,18 +5959,23 @@ async function setSheetView(doTemporary){
     const currentView = scriptSheet.namedSheetViews.getCount();
     await excel.sync();
     console.log('currentView', currentView.value);
+    let currentlyActiveName = null;
     if (currentView.value > 0){
       try {
         const currentName = scriptSheet.namedSheetViews.getActive();
         currentName.load('name')
         await excel.sync();
+        currentlyActiveName = currentName.name
         console.log('currentName', currentName.name);
       } catch (err){
         console.log('Error', err);
       }
-    } else if (doTemporary){
-      scriptSheet.namedSheetViews.enterTemporary();
-    } else {
+    }
+    if (doTemporary){
+      if (currentlyActiveName === null){
+        scriptSheet.namedSheetViews.enterTemporary();
+      }
+    } else if (currentlyActiveName == ''){
       scriptSheet.namedSheetViews.exit();
     }
   })
