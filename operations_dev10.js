@@ -239,6 +239,7 @@ async function unlock(){
 
 async function applyFilter(){
   /*Jade.listing:{"name":"Apply filter","description":"Applies empty filter to sheet"}*/
+  await setSheetView(true);
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
@@ -271,27 +272,31 @@ async function unlockIfLocked(){
 }
 
 async function selectRange(rangeAddress, doCentre){
-  let offset = 10;
+  let xOffset = 10;
+  let minusXOffset = 10;
+  let yOffset = 10;
+  let minusYOffset = 10
   console.log('selectRange', rangeAddress, doCentre, offset)
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let selectRange = scriptSheet.getRange(rangeAddress);
-    selectRange.load('rowIndex, columnIndex');
+    let mySelectRange = scriptSheet.getRange(rangeAddress);
+    mySelectRange.load('rowIndex, columnIndex');
     await excel.sync();
-    if (selectRange.rowIndex < offset){
-      offset = selectRange.rowIndex;
-    } else if (selectRange.columnIndex < offset){
-      offset = selectRange.columnIndex;
+    if (mySelectRange.rowIndex < minusYOffset){
+      minusYOffset = mySelectRange.rowIndex;
+    } 
+    if (mySelectRange.columnIndex < minusXOffset){
+      minusXOffset = mySelectRange.columnIndex;
     }
     if (doCentre){
-      let temp = selectRange.getOffsetRange(offset,offset);
+      let temp = mySelectRange.getOffsetRange(xOffset, yOffset);
       temp.select();
       await excel.sync();
-      temp = selectRange.getOffsetRange(-offset,-offset);
+      temp = mySelectRange.getOffsetRange(-minusXOffset, -minusYOffset);
       temp.select();
       await excel.sync();
     }
-    selectRange.select();
+    mySelectRange.select();
   })
 }
 
@@ -5947,19 +5952,23 @@ async function filterCharacter(){
   message.style.display = 'none';
   let characterSelect = tag('character-select');
   let showSceneBlock = tag('show-scene-blocks').checked;
-  console.log('selected character', characterSelect.value, 'show');
-  await setSheetView(true);
-  await filterOnCharacter(characterSelect.value, false, []);
+  if (characterSelect.value.trim() == ''){
+    message.innerText = 'Please select character'
+    message.style.display = 'block';
+  } else {
+    await setSheetView(true);
+    await filterOnCharacter(characterSelect.value, false, []);
 
-  const rowDetails = await getSelectedRowDetails(false);
-  const scenes = await getScenesForRowDetails(rowDetails);
-  const messageDetails = displayMessageCharacterFilter(scenes, rowDetails);
-  message.innerText = characterSelect.value + ' ' + messageDetails.message;
-  message.style.display = 'block';
-  if (showSceneBlock){
-    const blockDetails = await getSceneBlockRows();
-    const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
-    await filterOnCharacter(characterSelect.value, true, blockRows);  
+    const rowDetails = await getSelectedRowDetails(false);
+    const scenes = await getScenesForRowDetails(rowDetails);
+    const messageDetails = displayMessageCharacterFilter(scenes, rowDetails);
+    message.innerText = characterSelect.value + ' ' + messageDetails.message;
+    message.style.display = 'block';
+    if (showSceneBlock){
+      const blockDetails = await getSceneBlockRows();
+      const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
+      await filterOnCharacter(characterSelect.value, true, blockRows);  
+    }
   }
   wait.style.display = 'none'
 }
