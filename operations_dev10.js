@@ -290,11 +290,17 @@ async function selectRange(rangeAddress, doCentre){
     }
     if (doCentre){
       console.log('Offsets', xOffset, yOffset)
-      let temp = mySelectRange.getOffsetRange(xOffset, yOffset);
+      let myRowIndex = mySelectRange.rowIndex + xOffset
+      let myColumnIndex = mySelectRange.columnIndex + yOffset;
+      console.log('rowIndex', myRowIndex, 'columnIndex', myColumnIndex)
+      let temp = scriptSheet.getRangeByIndexes(myRowIndex, myColumnIndex, 1, 1);
       temp.select();
       await excel.sync();
       console.log('Minus Offsets', minusXOffset, minusYOffset)
-      temp = mySelectRange.getOffsetRange(-minusXOffset, -minusYOffset);
+      myRowIndex = mySelectRange.rowIndex - minusXOffset
+      myColumnIndex = mySelectRange.columnIndex + minusYOffset;
+      console.log('rowIndex', myRowIndex, 'columnIndex', myColumnIndex)
+      temp = scriptSheet.getRangeByIndexes(myRowIndex, myColumnIndex, 1, 1);
       temp.select();
       await excel.sync();
     }
