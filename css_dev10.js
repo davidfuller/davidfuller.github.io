@@ -175,6 +175,7 @@ label {
 .section-label {
   font-size: 14px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 #btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla, #btnShowScriptSupervisor, #btnDefaultColumn {
@@ -210,8 +211,9 @@ label {
 
 #btnColouredTakes {
   width: fit-content;
-  min-width: 100px
+  min-width: 100px;
 }
+
  #btnAddTakeUK, #btnRemoveTakeUK, #btnAddTakeUS, #btnRemoveTakeUS, #btnAddTakeWalla, #btnRemoveTakeWalla {
   margin-left: 4px;
   margin-bottom: 5px;
@@ -585,6 +587,7 @@ label {
   background-color: #d8dfe5;
   color: #46656F;
 }
+
 #sheet-version {
   font-size: 12px;
 }
@@ -604,6 +607,7 @@ label {
 #forDirectorButtons, #director-nav-buttons {
   border-color: #06394d;
 }
+
 #forSchedulingButtons, #scheduling-nav-buttons {
   border-color: #1d3a10;
 }
@@ -700,6 +704,7 @@ label {
   margin-left: 5px !important;
   width: 95px;
 }
+
 /* Actor Checkmark/Container */
 /* Start of checkbox stuff */
 /* Customize the label (the container) */
@@ -773,6 +778,7 @@ label {
   border-radius: 50%;
   background: white;
 }
+
 #actor-scene-display {
   font-size: 12px;
   text-indent: 0px;
@@ -785,7 +791,6 @@ label {
   font-weight: bold;
   margin-left: 0px;
 }
-
 
 .row-script {
   display: flex;

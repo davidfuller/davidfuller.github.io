@@ -34,7 +34,7 @@ label {
   margin-left: 5px;
   font-size: 12px;
 }
-/* Section formatting */  
+/* Section formatting */
 #firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, #forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons, #scriptButtons, #director-nav-buttons, #scheduling-nav-buttons, #walla-nav-buttons, #location-nav-buttons, #script-nav-buttons, #comparison {
   margin-left: 15px;
   margin-top: 10px;
@@ -147,13 +147,6 @@ label {
   flex: 60%
 }
 
-#column-jump-one {
-  flex: 5%
-}
-#column-jump-two {
-  flex: 60%
-}
-
 #column-add-one {
   flex: 65%;
   padding: 0px;
@@ -164,6 +157,12 @@ label {
   padding: 7px;
 }
 
+#column-jump-one {
+  flex: 5%
+}
+#column-jump-two {
+  flex: 60%
+}
 #takeMessage, #columnMessage, #lockMessage {
   font-size: 14px;
   margin-left: 10px;
@@ -205,6 +204,7 @@ label {
   font-size: 12px;
   cursor: pointer;
 }
+
 #btnColouredTakes {
   width: fit-content;
   min-width: 100px;
@@ -548,6 +548,7 @@ label {
 #start-wait {
   display: block;
 }
+
 #for-director-page, #for-actor-page, #for-scheduling-page, #walla-import-page, #location-page, #script-page {
   display: none;
 }
@@ -599,7 +600,7 @@ label {
   border-color: #592509;
 }
 
-#forDirectorButtons, #director-nav-buttons{
+#forDirectorButtons, #director-nav-buttons {
   border-color: #06394d;
 }
 
@@ -823,6 +824,7 @@ label {
   font-size: 11px;
   height: 18px;
 }
+
 #lock-buttons, #filter-buttons, #jump-buttons, #column-buttons, #takes-buttons, #add-remove-buttons {
   display: none; 
 }
