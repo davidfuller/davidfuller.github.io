@@ -6103,7 +6103,11 @@ async function getSelectedRowDetails(selectedOnly){
       const selectedRanges = excel.workbook.getSelectedRanges();
       visibleRanges = selectedRanges.getSpecialCellsOrNullObject("Visible");
     } else {
-      visibleRanges = scriptSheet.getUsedRange().getSpecialCellsOrNullObject("Visible");
+      let usedRange = scriptSheet.getUsedRange();
+      usedRange.load('rowIndex, rowCount');
+      await excel.sync();
+      let myRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, 1, usedRange.rowCount, 1);
+      visibleRanges = myRange.getSpecialCellsOrNullObject("Visible");
     }
     
     await excel.sync();
