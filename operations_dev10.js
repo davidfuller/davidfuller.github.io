@@ -5954,7 +5954,7 @@ async function filterCharacter(){
   const rowDetails = await getSelectedRowDetails(false);
   const scenes = await getScenesForRowDetails(rowDetails);
   const messageDetails = displayMessageCharacterFilter(scenes, rowDetails);
-  message.innerText = characterSelect + ' ' + messageDetails.message;
+  message.innerText = characterSelect.value + ' ' + messageDetails.message;
   message.style.display = 'block';
   if (showSceneBlock){
     const blockDetails = await getSceneBlockRows();
