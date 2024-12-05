@@ -5998,12 +5998,16 @@ async function filterCharacter(){
       }
     }
     console.log('Diff', diff, 'displayRowIndex', displayRowIndex);
-
+    let addressParts = activeDetails.address.split(':');
+    let theAddress = addressParts[0] + ':' + (displayRowIndex + 1);
+    console.log('theAddress', theAddress);
+    
     if (showSceneBlock){
       const blockDetails = await getSceneBlockRows();
       const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
       await filterOnCharacter(characterSelect.value, true, blockRows);  
     }
+    await selectRange(theAddress, true);
   }
   wait.style.display = 'none'
 }
