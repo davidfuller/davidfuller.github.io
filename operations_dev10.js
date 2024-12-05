@@ -276,7 +276,7 @@ async function selectRange(rangeAddress, doCentre){
   let minusXOffset = 10;
   let yOffset = 10;
   let minusYOffset = 10
-  console.log('selectRange', rangeAddress, doCentre, offset)
+  console.log('selectRange', rangeAddress, doCentre)
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let mySelectRange = scriptSheet.getRange(rangeAddress);
