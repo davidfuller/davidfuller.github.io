@@ -283,22 +283,22 @@ async function selectRange(rangeAddress, doCentre){
     mySelectRange.load('rowIndex, columnIndex');
     await excel.sync();
     if (mySelectRange.rowIndex < minusYOffset){
-      minusYOffset = mySelectRange.rowIndex - 1;
+      minusYOffset = mySelectRange.rowIndex;
     } 
     if (mySelectRange.columnIndex < minusXOffset){
-      minusXOffset = mySelectRange.columnIndex - 1;
+      minusXOffset = mySelectRange.columnIndex;
     }
     if (doCentre){
       console.log('Offsets', xOffset, yOffset)
-      let myRowIndex = mySelectRange.rowIndex + xOffset
-      let myColumnIndex = mySelectRange.columnIndex + yOffset;
+      let myRowIndex = mySelectRange.rowIndex + yOffset
+      let myColumnIndex = mySelectRange.columnIndex + xOffset;
       console.log('rowIndex', myRowIndex, 'columnIndex', myColumnIndex)
       let temp = scriptSheet.getRangeByIndexes(myRowIndex, myColumnIndex, 1, 1);
       temp.select();
       await excel.sync();
       console.log('Minus Offsets', minusXOffset, minusYOffset)
-      myRowIndex = mySelectRange.rowIndex - minusXOffset
-      myColumnIndex = mySelectRange.columnIndex + minusYOffset;
+      myRowIndex = mySelectRange.rowIndex - minusYOffset
+      myColumnIndex = mySelectRange.columnIndex + minusXOffset;
       console.log('rowIndex', myRowIndex, 'columnIndex', myColumnIndex)
       temp = scriptSheet.getRangeByIndexes(myRowIndex, myColumnIndex, 1, 1);
       temp.select();
