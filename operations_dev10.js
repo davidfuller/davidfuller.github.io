@@ -5954,7 +5954,9 @@ async function filterCharacter(){
 async function setSheetView(){
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    console.log('namedSheetViews', scriptSheet.namedSheetViews);
+    scriptSheet.namedSheetViews.load('items')
+    await excel.sync();
+    console.log('namedSheetViews', scriptSheet.namedSheetViews.items);
   })
 }
 
