@@ -5992,12 +5992,19 @@ async function setSheetView(doTemporary){
         console.log('Error', err);
       }
     }
+    console.log('Pre doTemporray currentlyActiveName', currentlyActiveName)
     if (doTemporary){
       if (currentlyActiveName === null){
+        console.log('Making view temporary')
         scriptSheet.namedSheetViews.enterTemporary();
+      } else {
+        console.log('Already in view so no change')
       }
     } else if (currentlyActiveName == ''){
+      console.log('Currently temporary view - so remove it')
       scriptSheet.namedSheetViews.exit();
+    } else {
+      console.log('Not removed due to ', currentlyActiveName)
     }
   })
 }
