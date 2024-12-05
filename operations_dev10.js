@@ -5958,8 +5958,13 @@ async function setSheetView(doTemporary){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const currentView = scriptSheet.namedSheetViews.getCount();
     await excel.sync();
-    console.log('currentView', currentView);
-    if (doTemporary){
+    console.log('currentView', currentView.value);
+    if (currentView.value > 0){
+      const currentName = scriptSheet.namedSheetViews.getActive();
+      currentName.load('name')
+      await excel.sync();
+      console.log('currentName', currentName.name);
+    } else if (doTemporary){
       scriptSheet.namedSheetViews.enterTemporary();
     } else {
       scriptSheet.namedSheetViews.exit();
