@@ -298,7 +298,7 @@ async function selectRange(rangeAddress, doCentre){
       await excel.sync();
       console.log('Minus Offsets', minusXOffset, minusYOffset)
       myRowIndex = mySelectRange.rowIndex - minusYOffset
-      myColumnIndex = mySelectRange.columnIndex + minusXOffset;
+      myColumnIndex = mySelectRange.columnIndex - minusXOffset;
       console.log('rowIndex', myRowIndex, 'columnIndex', myColumnIndex)
       temp = scriptSheet.getRangeByIndexes(myRowIndex, myColumnIndex, 1, 1);
       temp.select();
