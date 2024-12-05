@@ -313,6 +313,9 @@ async function removeFilter(){
       await selectRange(active.address, true);
     }  
   });
+  let message = tag('take-message');
+  message.innerText = '';
+  message.style.display = 'none';
 }
 
 async function findScene(offset){
@@ -5937,6 +5940,8 @@ async function fillCharacterAndTakesDropdowns(){
 }
 
 async function filterCharacter(){
+  let wait = tag('take-wait');
+  wait.style.display = 'block'
   let characterSelect = tag('character-select');
   let showSceneBlock = tag('show-scene-blocks').checked;
   console.log('selected character', characterSelect.value, 'show');
@@ -5946,10 +5951,15 @@ async function filterCharacter(){
   if (showSceneBlock){
     const rowDetails = await getSelectedRowDetails(false);
     const scenes = await getScenesForRowDetails(rowDetails);
+    const messageDetails = displayMessageCharacterFilter(scenes, rowDetails);
+    let message = tag('take-message');
+    message.innerText = messageDetails.message;
+    message.style.display = 'block';
     const blockDetails = await getSceneBlockRows();
     const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
     await filterOnCharacter(characterSelect.value, true, blockRows);  
   }
+  wait.style.display = 'none'
 }
 
 async function setSheetView(doTemporary){
@@ -6227,4 +6237,26 @@ function combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetail
   result = [...new Set(result)].sort((a,b) => a - b);
   console.log('result rowIndexes', result);
   return result;
+}
+
+function displayMessageCharacterFilter(scenes, rowIndexes){
+  const numScenes = scenes.length
+  let lines = 0
+  for (i = 0; i < rowIndexes.length; i++){
+    if (rowIndexes[i].rowIndex > 0){
+      lines = lines + rowIndexes[i].rowCount
+    }
+  }
+  let message
+  if (lines == 1){
+    message = '1 line in ';
+  } else {
+    message = lines + ' lines in ';
+  }
+  if (numScenes = 1){
+    message = message + numScenes + ' scene'
+  } else {
+    message = message + numScenes + ' scenes'
+  }
+  return { message: message, numLines: lines, numScenes: numScenes }
 }
