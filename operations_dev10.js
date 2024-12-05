@@ -309,6 +309,7 @@ async function removeFilter(){
       if (isProtected){
         await lockColumns();
       }
+      await setSheetView(false);
       await selectRange(active.address, true);
     }  
   });
@@ -5951,13 +5952,15 @@ async function filterCharacter(){
   }
 }
 
-async function setSheetView(){
+async function setSheetView(doTemporary){
+  //if doTemporary then temp view. Otherwise exit view
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    scriptSheet.namedSheetViews.enterTemporary();
-    scriptSheet.namedSheetViews.load('items');
-    await excel.sync();
-    console.log('namedSheetViews', scriptSheet.namedSheetViews.items);
+    if (doTemporary){
+      scriptSheet.namedSheetViews.enterTemporary();
+    } else {
+      scriptSheet.namedSheetViews.exit();
+    }
   })
 }
 
