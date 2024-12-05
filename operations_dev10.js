@@ -5937,14 +5937,16 @@ async function fillCharacterAndTakesDropdowns(){
 
 async function filterCharacter(){
   let characterSelect = tag('character-select');
-  console.log('selected character', characterSelect.value);
+  let showSceneBlock = tag('show-scene-blocks').checked;
+  console.log('selected character', characterSelect.value, 'show');
   await filterOnCharacter(characterSelect.value, false, []);
-  const rowDetails = await getSelectedRowDetails(false);
-  const scenes = await getScenesForRowDetails(rowDetails);
-  const blockDetails = await getSceneBlockRows();
-  const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
-  await filterOnCharacter(characterSelect.value, true, blockRows);
-  
+  if (showSceneBlock){
+    const rowDetails = await getSelectedRowDetails(false);
+    const scenes = await getScenesForRowDetails(rowDetails);
+    const blockDetails = await getSceneBlockRows();
+    const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
+    await filterOnCharacter(characterSelect.value, true, blockRows);  
+  }
 }
 
 async function applyTakeDetails(country){
