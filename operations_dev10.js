@@ -5940,7 +5940,7 @@ async function filterCharacter(){
   let characterSelect = tag('character-select');
   let showSceneBlock = tag('show-scene-blocks').checked;
   console.log('selected character', characterSelect.value, 'show');
-  await setSheetView();
+  await setSheetView(true);
   await filterOnCharacter(characterSelect.value, false, []);
 
   if (showSceneBlock){
