@@ -2458,6 +2458,19 @@ async function getCharacters(sheetName, charIndex){
   return characters;
 }
 
+async function getActiveCellDetails(){
+  let result = {}
+  await Excel.run(async function(excel){
+    let active = excel.workbook.getActiveCell();
+    active.load('address, rowIndex, columnIndex');
+    await excel.sync()
+    result.address = active.address;
+    result.rowIndex = active.rowIndex;
+    result.columnIndex = active.columnIndex;
+  })
+  return result;
+}
+
 async function filterOnCharacter(characterName, includeScenes, sceneRowIndexes){
   await Excel.run(async function(excel){
     let myRange = await getDataRange(excel);
@@ -5953,6 +5966,7 @@ async function fillCharacterAndTakesDropdowns(){
 }
 
 async function filterCharacter(){
+  let activeDetails = await getActiveCellDetails();
   let wait = tag('take-wait');
   wait.style.display = 'block'
   let message = tag('take-message');
@@ -5972,6 +5986,13 @@ async function filterCharacter(){
     const messageDetails = displayMessageCharacterFilter(scenes, rowDetails);
     message.innerText = characterSelect.value + ' ' + messageDetails.message;
     message.style.display = 'block';
+    let diff = Infinity;
+    for (let row of rowDetails){
+      let temp = Math.abs(activeDetails.rowIndex - row.rowIndex);
+      if (temp < diff){diff = temp};
+    }
+    console.log('Diff', diff);
+
     if (showSceneBlock){
       const blockDetails = await getSceneBlockRows();
       const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
