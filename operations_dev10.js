@@ -5942,19 +5942,21 @@ async function fillCharacterAndTakesDropdowns(){
 async function filterCharacter(){
   let wait = tag('take-wait');
   wait.style.display = 'block'
+  let message = tag('take-message');
+  message.innerText = '';
+  message.style.display = 'none';
   let characterSelect = tag('character-select');
   let showSceneBlock = tag('show-scene-blocks').checked;
   console.log('selected character', characterSelect.value, 'show');
   await setSheetView(true);
   await filterOnCharacter(characterSelect.value, false, []);
 
+  const rowDetails = await getSelectedRowDetails(false);
+  const scenes = await getScenesForRowDetails(rowDetails);
+  const messageDetails = displayMessageCharacterFilter(scenes, rowDetails);
+  message.innerText = characterSelect + ' ' + messageDetails.message;
+  message.style.display = 'block';
   if (showSceneBlock){
-    const rowDetails = await getSelectedRowDetails(false);
-    const scenes = await getScenesForRowDetails(rowDetails);
-    const messageDetails = displayMessageCharacterFilter(scenes, rowDetails);
-    let message = tag('take-message');
-    message.innerText = messageDetails.message;
-    message.style.display = 'block';
     const blockDetails = await getSceneBlockRows();
     const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
     await filterOnCharacter(characterSelect.value, true, blockRows);  
