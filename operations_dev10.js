@@ -6253,7 +6253,7 @@ function displayMessageCharacterFilter(scenes, rowIndexes){
   } else {
     message = lines + ' lines in ';
   }
-  if (numScenes = 1){
+  if (numScenes == 1){
     message = message + numScenes + ' scene'
   } else {
     message = message + numScenes + ' scenes'
