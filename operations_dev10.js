@@ -283,10 +283,10 @@ async function selectRange(rangeAddress, doCentre){
     mySelectRange.load('rowIndex, columnIndex');
     await excel.sync();
     if (mySelectRange.rowIndex < minusYOffset){
-      minusYOffset = mySelectRange.rowIndex;
+      minusYOffset = mySelectRange.rowIndex - 1;
     } 
     if (mySelectRange.columnIndex < minusXOffset){
-      minusXOffset = mySelectRange.columnIndex;
+      minusXOffset = mySelectRange.columnIndex - 1;
     }
     if (doCentre){
       console.log('Offsets', xOffset, yOffset)
