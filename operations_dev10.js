@@ -5987,11 +5987,17 @@ async function filterCharacter(){
     message.innerText = characterSelect.value + ' ' + messageDetails.message;
     message.style.display = 'block';
     let diff = Infinity;
+    let displayRowIndex;
     for (let row of rowDetails){
-      let temp = Math.abs(activeDetails.rowIndex - row.rowIndex);
-      if (temp < diff){diff = temp};
+      if (row.rowIndex > 0){
+        let temp = Math.abs(activeDetails.rowIndex - row.rowIndex);
+        if (temp < diff){
+          diff = temp
+          displayRowIndex = row.rowIndex
+        }
+      }
     }
-    console.log('Diff', diff);
+    console.log('Diff', diff, 'displayRowIndex', displayRowIndex);
 
     if (showSceneBlock){
       const blockDetails = await getSceneBlockRows();
