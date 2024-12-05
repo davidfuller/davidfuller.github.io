@@ -5955,7 +5955,7 @@ async function setSheetView(){
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     console.log('namedSheetViews', scriptSheet.namedSheetViews);
-  }
+  })
 }
 
 async function applyTakeDetails(country){
