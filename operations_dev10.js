@@ -5939,13 +5939,22 @@ async function filterCharacter(){
   let characterSelect = tag('character-select');
   let showSceneBlock = tag('show-scene-blocks').checked;
   console.log('selected character', characterSelect.value, 'show');
+  await setSheetView();
   await filterOnCharacter(characterSelect.value, false, []);
+
   if (showSceneBlock){
     const rowDetails = await getSelectedRowDetails(false);
     const scenes = await getScenesForRowDetails(rowDetails);
     const blockDetails = await getSceneBlockRows();
     const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
     await filterOnCharacter(characterSelect.value, true, blockRows);  
+  }
+}
+
+async function setSheetView(){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    console.log('namedSheetViews', scriptSheet.namedSheetViews);
   }
 }
 
