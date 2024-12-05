@@ -271,7 +271,7 @@ async function unlockIfLocked(){
   return isProtected
 }
 
-async function selectRange(rangeAddress, doCentre){
+async function selectRange(rangeAddress = null, doCentre, rowIndex = null, columnIndex = null){
   let xOffset = 10;
   let minusXOffset = 10;
   let yOffset = 10;
@@ -279,7 +279,15 @@ async function selectRange(rangeAddress, doCentre){
   console.log('selectRange', rangeAddress, doCentre)
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let mySelectRange = scriptSheet.getRange(rangeAddress);
+    let mySelectRange
+    if (rangeAddress !== null){
+      mySelectRange = scriptSheet.getRange(rangeAddress);
+    } else if ((rowIndex !== null) && columnIndex !== null){
+      mySelectRange = scriptSheet.getRangeByIndexes(rowIndex, columnIndex, 1, 1);
+    } else {
+      return null;
+    }
+    
     mySelectRange.load('rowIndex, columnIndex');
     await excel.sync();
     if (mySelectRange.rowIndex < minusYOffset){
@@ -5998,16 +6006,14 @@ async function filterCharacter(){
       }
     }
     console.log('Diff', diff, 'displayRowIndex', displayRowIndex);
-    let addressParts = activeDetails.address.split(':');
-    let theAddress = addressParts[0] + ':' + (displayRowIndex + 1);
-    console.log('theAddress', theAddress);
+    console.log('active', activeDetils);
     
     if (showSceneBlock){
       const blockDetails = await getSceneBlockRows();
       const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
       await filterOnCharacter(characterSelect.value, true, blockRows);  
     }
-    await selectRange(theAddress, true);
+    await selectRange(null, true, displayRowIndex, activeDetails.columnIndex);
   }
   wait.style.display = 'none'
 }
