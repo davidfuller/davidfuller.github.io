@@ -5956,6 +5956,10 @@ async function setSheetView(doTemporary){
   //if doTemporary then temp view. Otherwise exit view
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const currentView = scriptSheet.namedSheetViews.getActive();
+    currentView.load('name');
+    await excel.sync();
+    console.log('currentView', currentView.name);
     if (doTemporary){
       scriptSheet.namedSheetViews.enterTemporary();
     } else {
