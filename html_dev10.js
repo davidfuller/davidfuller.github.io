@@ -184,6 +184,7 @@ async function mainHTML(){
       <div class="row">
         <div class="column" id="column-one">
           <label for="character-select">Character</label><br/>
+          <br/>
           <label for="takes-select">No. takes</label><br/>
           <label for="studio-select">Studio</label><br/>
           <label for="engineer-select">Engineer</label>

@@ -450,7 +450,7 @@ label {
   display: block;
   position: relative;
   padding-left: 18px;
-  margin-left: 10px;
+  margin-left: 0px;
   margin-top: 5px;
   margin-bottom: 5px;
   cursor: pointer;
