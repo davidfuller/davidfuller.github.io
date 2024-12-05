@@ -158,7 +158,7 @@ async function mainHTML(){
     </div>
   </div>
   <div id="dateStudioEngineer">
-    <label class="section-label">Add / remove takes</label><a id='show-hide-add-remove' onclick="jade_modules.operations.showAddRemove()">Show/hide add/remove takes</a>
+    <label class="section-label" onclick="jade_modules.operations.showAddRemove()">Add / remove takes</label><a id='show-hide-add-remove' onclick="jade_modules.operations.showAddRemove()">Show/hide add/remove takes</a>
     <div id="add-remove-buttons">
       <div id="hidden-old-takes">
         <label id="take-wait">Please wait...</label>
