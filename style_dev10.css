@@ -370,7 +370,7 @@ label {
   transform: rotate(45deg);
 }
 /* Customize the label (the container) */
-.container3, .container4{
+.container3 {
   display: block;
   position: relative;
   padding-left: 18px;
@@ -385,7 +385,7 @@ label {
 }
 
 /* Hide the browser's default checkbox */
-.container3, .container4 input {
+.container3 input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -394,7 +394,7 @@ label {
 }
 
 /* Create a custom checkbox */
-.checkmark3, .checkmark4 {
+.checkmark3 {
   position: absolute;
   top: 0px;
   left: 1px;
@@ -440,6 +440,45 @@ label {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+/* No 4 - Show Scene block */
+.container4{
+  display: block;
+  position: relative;
+  padding-left: 18px;
+  margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container4 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark4 {
+  position: absolute;
+  top: 0px;
+  left: 1px;
+  height: 10px;
+  width: 10px;
+  background-color: #d8dfe5;
+  border: #46656F ;
+  border-radius: 4px;
+  border-width: 2px;
+  border-style: solid;
 }
 
 .container4:hover, input ~ .checkmark4 {
