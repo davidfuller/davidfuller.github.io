@@ -172,6 +172,7 @@ label {
 .section-label {
   font-size: 14px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 #btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla, #btnShowScriptSupervisor, #btnDefaultColumn {

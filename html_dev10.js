@@ -90,21 +90,21 @@ async function mainHTML(){
     <button id="btnFindMergeAutoRun" class="compButton" onclick="jade_modules.comparison.findMergeAutorun()">Find & Merge & Autorun</button>
   </div>
   <div id="firstButtons">
-    <label class="section-label">Lock / Unlock</label><span id="lockMessage"></span><a id='show-hide-lock' onclick="jade_modules.operations.showLock()">Show/hide lock</a>
+    <label class="section-label" onclick="jade_modules.operations.showLock()">Lock / Unlock</label><span id="lockMessage"></span><a id='show-hide-lock' onclick="jade_modules.operations.showLock()">Show/hide lock</a>
     <div id='lock-buttons'>
       <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
       <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
     </div>
   </div>
   <div id="filterButtons" >
-    <label class="section-label">Filtering</label><a id='show-hide-filter' onclick="jade_modules.operations.showFilter()">Show/hide filtering</a>
+    <label class="section-label" onclick="jade_modules.operations.showFilter()">Filtering</label><a id='show-hide-filter' onclick="jade_modules.operations.showFilter()">Show/hide filtering</a>
     <div id='filter-buttons'>
       <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
       <button id='btnRemoveFilter' onclick="jade_modules.operations.removeFilter()">Remove Filter</button><br/>
     </div>
   </div>
   <div id="jump">
-    <label class="section-label">Jump to scene</label><a id='show-hide-jump' onclick="jade_modules.operations.showJump()">Show/hide jumping</a>
+    <label class="section-label" onclick="jade_modules.operations.showJump()">Jump to scene</label><a id='show-hide-jump' onclick="jade_modules.operations.showJump()">Show/hide jumping</a>
     <div id="jump-buttons">
       <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First scene</button>
       <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
@@ -131,7 +131,7 @@ async function mainHTML(){
     </div>
   </div>
   <div id="showColumns">
-    <label class="section-label">Column selection:</label><span id="columnMessage">Showing all columns</span><a id='show-hide-columns' onclick="jade_modules.operations.showColumns()">Show/hide columns</a>
+    <label class="section-label" onclick="jade_modules.operations.showColumns()">Column selection:</label><span id="columnMessage">Showing all columns</span><a id='show-hide-columns' onclick="jade_modules.operations.showColumns()">Show/hide columns</a>
     <div id="column-buttons">
       <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button><br/>
       <button id='btnShowAll' onclick="jade_modules.operations.showHideColumns('all')">All Columns</button>
@@ -146,7 +146,7 @@ async function mainHTML(){
     </div>
   </div>
   <div id="showTakes">
-    <label class="section-label">Take selection: </label><span id="takeMessage">Showing all takes</span><a id='show-hide-takes' onclick="jade_modules.operations.showTakes()">Show/hide takes</a>
+    <label class="section-label" onclick="jade_modules.operations.showTakes()">Take selection: </label><span id="takeMessage">Showing all takes</span><a id='show-hide-takes' onclick="jade_modules.operations.showTakes()">Show/hide takes</a>
     <div id="takes-buttons">
       <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">All Takes</button>
       <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">First Takes</button>
