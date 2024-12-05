@@ -193,6 +193,10 @@ async function mainHTML(){
           <select id="character-select"><option value="">Please select</option></select>
           <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter</button>
           <button id="btnClearFilterCharacter" onclick="jade_modules.operations.removeFilter()">Clear</button><br/>
+          <label class="container4">Show scene blocks
+            <input type="checkbox" id='show-scene-blocks' checked="checked">
+            <span class="checkmark4"></span>
+          </label>
           <select id="takes-select"><option value=""></option></select><br/>
           <select id="studio-select"><option value="">Please select</option></select><br/>
           <select id="engineer-select"><option value="">Please select</option></select>
