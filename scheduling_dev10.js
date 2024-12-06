@@ -106,6 +106,7 @@ async function getDirectorInfo(){
 }
 
 async function getActorInformation(){
+  let usOnly = true;
   await Excel.run(async function(excel){
     let waitLabel = tag('actor-wait');
     waitLabel.style.display = 'block';
@@ -120,6 +121,17 @@ async function getActorInformation(){
     let myLocation = await jade_modules.operations.getLocations();
     console.log('Scheduling myData', myData);
     console.log('Locations', myLocation);
+    
+    let tempData = [];
+    if (usOnly){
+      for (let i = 0; i < myData.length; i++){
+        if (myData[i].usCue.trim() != ''){
+          tempData.push(myData[i])
+        }
+      }
+      myData = tempData;
+    }
+    
     
     let dataRange = forActorSheet.getRange(forActorsTableName);
     let numItems = forActorSheet.getRange(numItemsActorsName);

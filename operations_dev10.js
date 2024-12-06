@@ -4806,6 +4806,8 @@ async function getDirectorDataV2(character){
     let ukDateRecordedRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, ukDateIndex, indexDetails.rowCount, 1); 
     let lineWordCountRange  = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, lineWordCountIndex, indexDetails.rowCount, 1); 
     let sceneWordCountRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, sceneWordCountCalcIndex, indexDetails.rowCount, 1); 
+    let usCueRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, usCueIndex, indexDetails.rowCount, 1);
+    
     
     characterRange.load('values');
     sceneRange.load('values');
@@ -4814,7 +4816,9 @@ async function getDirectorDataV2(character){
     ukTakeNumRange.load('values');
     ukDateRecordedRange.load('values');
     lineWordCountRange.load('values');
-    sceneWordCountRange.load('values')
+    sceneWordCountRange.load('values');
+    usCueRange.load('values');
+    
     await excel.sync();
 
     let myIndexes = [];
@@ -4851,7 +4855,8 @@ async function getDirectorDataV2(character){
         ukTakeNum: ukTakeNumRange.values[uniqueIndexes[i]][0],
         ukDateRecorded: ukDateRecordedRange.values[uniqueIndexes[i]][0],
         lineWordCount: lineWordCountRange.values[uniqueIndexes[i]][0],
-        sceneWordCount: sceneWordCountRange.values[uniqueIndexes[i]][0]
+        sceneWordCount: sceneWordCountRange.values[uniqueIndexes[i]][0],
+        usCue: usCueRange.values[uniqueIndexes[i]][0],
       }
       myData.push(theData);    
     }
