@@ -94,13 +94,14 @@ function compareDetails(usDetails, ukDetails){
     compare[i].character = (ukDetails[index].character.trim().toLowerCase() === usDetails[i].character.trim().toLowerCase());
     compare[i].ukScript = (ukDetails[index].ukScript.trim().toLowerCase() === usDetails[i].ukScript.trim().toLowerCase());
     console.log('i', i, 'usDetails', usDetails[i], 'index', index, 'compare', compare[i]);
-    if (compare[i].character && compare[i].ukSccript){
+    if (compare[i].character && compare[i].ukScript){
       let details = {
         ukRowIndex: ukDetails.rowIndex,
         usRowIndex: usDetails.rowIndex,
         usCueColumnIndex: usScriptColumns.usCue,
         usScriptColumnIndex: usScriptColumns.usScript
       }
+      console.log('detail', details, 'i', i)
       copyDetails.push(details);
     }
   }
