@@ -6097,6 +6097,11 @@ async function applyTakeDetails(country){
 async function clearTakeDetails(country){
   const rowDetails = await getSelectedRowDetails(true);
   const cols = takeDetailsColumnIndexes(country);
+  let takesRanges = [];
+  let dateRanges = [];
+  let markUpRanges = [];
+  let studioRanges = [];
+  let engineerRanges = [];
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     for (let i = 0; i < rowDetails.length; i++){
