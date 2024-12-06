@@ -96,8 +96,8 @@ function compareDetails(usDetails, ukDetails){
     console.log('i', i, 'usDetails', usDetails[i], 'index', index, 'compare', compare[i]);
     if (compare[i].character && compare[i].ukScript){
       let details = {
-        ukRowIndex: ukDetails.rowIndex,
-        usRowIndex: usDetails.rowIndex,
+        ukRowIndex: ukDetails[index].rowIndex,
+        usRowIndex: usDetails[i].rowIndex,
         usCueColumnIndex: usScriptColumns.usCue,
         usScriptColumnIndex: usScriptColumns.usScript
       }
