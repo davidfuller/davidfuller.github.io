@@ -6094,9 +6094,30 @@ async function applyTakeDetails(country){
   })
 }
 
+async function clearTakeDetails(country){
+  const rowDetails = await getSelectedRowDetails(true);
+  const cols = takeDetailsColumnIndexes(country);
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    for (let i = 0; i < rowDetails.length; i++){
+      takesRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.takesIndex, rowDetails[i].rowCount, 1);
+      dateRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.dateRecordedIndex, rowDetails[i].rowCount, 1);
+      markUpRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.markUpIndex, rowDetails[i].rowCount, 1);
+      studioRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.studioIndex, rowDetails[i].rowCount, 1);
+      engineerRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.engineerIndex, rowDetails[i].rowCount, 1);
+      takesRanges[i].clear("Contents");
+      dateRanges[i].clear("Contents");
+      markUpRanges[i].clear("Contents");
+      studioRanges[i].clear("Contents");
+      engineerRanges[i].clear("Contents");
+    }
+    await excel.sync();
+  })
+}
+
 async function getSelectedRowDetails(selectedOnly){
   let rowDetails = [];
-  let visibleRange;
+  let visibleRanges;
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     if (selectedOnly){
