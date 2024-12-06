@@ -6439,9 +6439,17 @@ async function clearUsCueAndScript(){
     let rowCount = usedRange.rowCount - (usedRange.rowIndex + startRowIndex)
     console.log(startRowIndex, usCueIndex, rowCount, 2);
     let usRange = scriptSheet.getRangeByIndexes(startRowIndex, usCueIndex, rowCount, 2);
-    usRange.load('address, values')
+    usRange.load('address, values, rowIndex')
     await excel.sync();
-    console.log(usRange.address, usRange.values);
-    usRange.clear('Contents');
+    console.log(usRange.address, usRange.values, usRange.rowIndex);
+    for (let i = 0; i < usRange.values.length; i++){
+      if ((usRange.values[i][0] !== '') || (usRange.values[i][1] !== '')){
+        console.log(i, ' not empty');
+        let rowIndex = i + usRange.rowIndex;
+        console.log(i, rowIndex, ' not empty');
+        scriptSheet.getRangeByIndexes(rowIndex, usCueIndex, 1, 2).clear('Contents');
+        await excel.sync();
+      }
+    }
   }) 
 }
