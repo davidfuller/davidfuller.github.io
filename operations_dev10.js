@@ -6,6 +6,7 @@ const codeVersion = '10.1';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
+const usScriptName = 'US Script'
 const characterListName = 'Character List';
 const newTextSheetName = 'NewText'
 const settingsSheetName = 'Settings';
@@ -6451,4 +6452,21 @@ async function clearUsCueAndScript(){
       }
     }
   }) 
+}
+
+async function doTheCopy(copyDetails){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const usSheet = excel.workbook.worksheets.getItem(usScriptName);
+    for (let i = 0; i < copyDetails.length; i++){
+      let sourceRange = usSheet.getRangeByIndexes(copyDetails.usRowIndex, copyDetails.usCueColumnIndex, 1, 1)
+      let destinationRange = scriptSheet.getRangeByIndexes(copyDetails.ukRowIndex, usCueIndex, 1, 1)
+      destinationRange.copyFrom(sourceRange, 'All');
+      await excel.sync()
+      sourceRange = usSheet.getRangeByIndexes(copyDetails.usRowIndex, copyDetails.usScriptColumnIndex, 1, 1);
+      destinationRange = scriptSheet.getRangeByIndexes(copyDetails.ukRowIndex, usScriptColumnIndex, 1, 1);
+      destinationRange.copyFrom(sourceRange, 'All');
+      await excel.sync();
+    }
+  })
 }

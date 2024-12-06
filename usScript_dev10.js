@@ -16,7 +16,12 @@ async function usScriptAdd(){
   const rowIndexes = await getUsCueIndexes();
   const usDetails = await getUsScriptDetails(rowIndexes);
   const ukDetails = await jade_modules.operations.findUsScriptCues(usDetails);
-  compareDetails(usDetails, ukDetails);
+  const copyDetails = compareDetails(usDetails, ukDetails);
+  if (copyDetails.length == rowIndexes.length){
+    await jade_modules.operations.doTheCopy(copyDetails);
+  } else {
+    console.log('Incorrect number of copies', rowIndexes, copyDetails);
+  }
 }
 
 async function getUsCueIndexes(){
@@ -67,6 +72,7 @@ async function getUsScriptDetails(rowIndexes){
     for (let i = 0; i < cueRange.length; i++){
       //console.log('i', i, 'cue', cueRange[i].values, 'character', characterRange[i].values, 'ukScript', ukScriptRange[i].values, 'usCue', usCueRange[i].values, 'usScript', usScriptRange[i].values);
       details[i] = {
+        rowIndex: rowIndexes[i],
         cue: cueRange[i].values[0][0],
         character: characterRange[i].values[0][0],
         ukScript: ukScriptRange[i].values[0][0],
@@ -80,7 +86,7 @@ async function getUsScriptDetails(rowIndexes){
 }
 
 function compareDetails(usDetails, ukDetails){
-
+  let copyDetails = []
   let compare = []
   for (let i = 0; i < usDetails.length; i++){
     let index = ukDetails.findIndex(x => x.cue == usDetails[i].cue)
@@ -88,5 +94,15 @@ function compareDetails(usDetails, ukDetails){
     compare[i].character = (ukDetails[index].character.trim().toLowerCase() === usDetails[i].character.trim().toLowerCase());
     compare[i].ukScript = (ukDetails[index].ukScript.trim().toLowerCase() === usDetails[i].ukScript.trim().toLowerCase());
     console.log('i', i, 'usDetails', usDetails[i], 'index', index, 'compare', compare[i]);
+    if (compare[i].character && compare[i].ukSccript){
+      let details = {
+        ukRowIndex: ukDetails.rowIndex,
+        usRowIndex: usDetails.rowIndex,
+        usCueColumnIndex: usScriptColumns.usCue,
+        usScriptColumnIndex: usScriptColumns.usScript
+      }
+      copyDetails.push(details);
+    }
   }
+  return copyDetails;
 }
