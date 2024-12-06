@@ -21,7 +21,7 @@ async function getUsCueIndexes(){
     await excel.sync();
     const usCueRange = usSheet.getRangeByIndexes(usedRange.rowIndex, usScriptColumns.usCue, usedRange.rowCount, 1);
     usCueRange.load('values, rowIndex');
-    await excel.sysnc();
+    await excel.sync();
     for (let i = 0; i < usCueRange.values.length; i++){
       if (usCueRange.values[i][0].trim() != ''){
         rowIndexes.push(i + usCueRange.rowIndex);
