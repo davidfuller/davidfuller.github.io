@@ -10,6 +10,8 @@ async function auto_exec(){
   console.log('After comparison');
   await Jade.load_js("https://davidfuller.github.io/wordsToNumbers.js", "wordtonumbers");
   console.log('After wordsToNumbers');
+  await Jade.load_js("https://davidfuller.github.io/usScript_dev10.js", "usscript");
+  console.log('After usScript');
   await Jade.load_js("https://davidfuller.github.io/html_dev10.js", "html");
   console.log('After html');
   await Jade.load_js("https://davidfuller.github.io/css_dev10.js", "css");
