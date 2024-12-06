@@ -91,7 +91,7 @@ async function mainHTML(){
     <button id="btnFindMergeAutoRun" class="compButton" onclick="jade_modules.comparison.findMergeAutorun()">Find & Merge & Autorun</button>
   </div>
   <div id="us-script">
-    <button id="btnGetIds" onclick="jade_modules.usscript.getUsCueIndexes()">Get IDs</button>
+    <button id="btnAddUsScript" onclick="jade_modules.usscript.usScriptAdd()">Add US Script</button>
   </div>
   <div id="firstButtons">
     <label class="section-label" onclick="jade_modules.operations.showLock()">Lock / Unlock</label><span id="lockMessage"></span><a id='show-hide-lock' onclick="jade_modules.operations.showLock()">Show/hide lock</a>

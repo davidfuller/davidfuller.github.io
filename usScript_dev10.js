@@ -12,6 +12,10 @@ const usScriptColumns = {
   usScript: 7 //H
 }
 
+async function usScriptAdd(){
+  const rowIndexes = await getUsCueIndexes();
+  await getUsScriptDetails(rowIndexes);
+}
 async function getUsCueIndexes(){
   let rowIndexes = [];
   await Excel.run(async function(excel){
@@ -24,10 +28,41 @@ async function getUsCueIndexes(){
     await excel.sync();
     for (let i = 0; i < usCueRange.values.length; i++){
       if (usCueRange.values[i][0].trim() != ''){
-        rowIndexes.push(i + usCueRange.rowIndex);
+        let index = i + usCueRange.rowIndex;
+        if (index > 1) {
+          rowIndexes.push(i + usCueRange.rowIndex);
+        }
       }
     }
   })
   console.log('rowIndexes', rowIndexes);
   return rowIndexes;
+}
+
+async function getUsScriptDetails(rowIndexes){
+  let details = [];
+  await Excel.run(async function(excel){
+    const usSheet = excel.workbook.worksheets.getItem(usScriptName);
+    let cueRange = [];
+    let characterRange = [];
+    let ukScriptRange = [];
+    let usCueRange = [];
+    let usScriptRange = [];
+    for (let i = 0; i < rowIndexes.length; i++){
+      cueRange[i] = usSheet.getRangeByIndexes(rowIndexes[i], usScriptColumns.cue, 1, 1);
+      cueRange[i].load('values');
+      characterRange[i] = usSheet.getRangeByIndexes(rowIndexes[i], usScriptColumns.character, 1, 1);
+      characterRange[i].load('values');
+      ukScriptRange[i] = usSheet.getRangeByIndexes(rowIndexes[i], usScriptColumns.ukScript, 1, 1);
+      ukScriptRange[i].load('values');
+      usCueRange[i] = usSheet.getRangeByIndexes(rowIndexes[i], usScriptColumns.usCue, 1, 1);
+      usCueRange[i].load('values');
+      usScriptRange[i] = usSheet.getRangeByIndexes(rowIndexes[i], usScriptColumns.usScript, 1, 1);
+      usScriptRange[i].load('values');
+    }
+    await excel.sync();
+    for (let i = 0; i < cueRange.length; i++){
+      console.log('i', i, 'cue', cueRange[i].values, 'character', characterRange[i].values, 'ukScript', ukScriptRange[i].values, 'usCue', usCueRange[i].values, 'usScript', usScriptRange[i].values);
+    }
+  })
 }
