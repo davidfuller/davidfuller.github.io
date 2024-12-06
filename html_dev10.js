@@ -218,8 +218,10 @@ async function mainHTML(){
         </div>
       </div>
       <div>
-        <button id="btnApplyTakeUk" onclick="jade_modules.operations.applyTakeDetails('UK')">Apply Take UK</button><br/>
-        <button id="btnClearTakeUk" onclick="jade_modules.operations.clearTakeDetails('UK')">Clear Take UK</button>
+        <button id="btnApplyTakeUk" class="take-button" onclick="jade_modules.operations.applyTakeDetails('UK')">Apply Take UK</button>
+        <button id="btnApplyTakeUs" class="take-button" onclick="jade_modules.operations.applyTakeDetails('US')">Apply Take US</button><br/>
+        <button id="btnClearTakeUk" class="take-button" onclick="jade_modules.operations.clearTakeDetails('UK')">Clear Take UK</button>
+        <button id="btnClearTakeUs" class="take-button" onclick="jade_modules.operations.clearTakeDetails('US')">Clear Take US</button>
       </div>
           
       <div id="fillButton">

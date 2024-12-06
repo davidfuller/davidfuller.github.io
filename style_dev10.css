@@ -867,3 +867,7 @@ label {
   width: 90%;
   margin: auto;
 }
+
+.class-button {
+  width: 90px;
+}
