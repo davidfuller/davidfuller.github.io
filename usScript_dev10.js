@@ -81,9 +81,12 @@ async function getUsScriptDetails(rowIndexes){
 
 function compareDetails(usDetails, ukDetails){
 
+  let compare = []
   for (let i = 0; i < usDetails.length; i++){
     let index = ukDetails.findIndex(x => x.cue == usDetails[i].cue)
-    console.log('i', i, 'usDetails', usDetails[i], 'index', index);
+    compare[i] = {}
+    compare[i].character = (ukDetails[index].character.trim().toLowerCase() === usDetails[i].character.trim().toLowerCase());
+    compare[i].ukScript = (ukDetails[index].ukScript.trim().toLowerCase() === usDetails[i].ukScript.trim().toLowerCase());
+    console.log('i', i, 'usDetails', usDetails[i], 'index', index), 'compare', compare;
   }
-
 }
