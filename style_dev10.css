@@ -859,6 +859,8 @@ label {
   text-align: center;
   font-size: 12px;
   font-weight: bold;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 #buttons-yes-no {
