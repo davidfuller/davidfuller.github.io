@@ -873,7 +873,7 @@ label {
 }
 
 .take-button {
-  width: 100px;
+  width: 110px;
 }
 `;
   Jade.set_css(css);
