@@ -6444,7 +6444,6 @@ async function clearUsCueAndScript(){
     console.log(usRange.address, usRange.values, usRange.rowIndex);
     for (let i = 0; i < usRange.values.length; i++){
       if ((usRange.values[i][0] !== '') || (usRange.values[i][1] !== '')){
-        console.log(i, ' not empty');
         let rowIndex = i + usRange.rowIndex;
         console.log(i, rowIndex, ' not empty');
         scriptSheet.getRangeByIndexes(rowIndex, usCueIndex, 1, 2).clear('Contents');
