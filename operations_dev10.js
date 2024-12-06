@@ -6460,22 +6460,22 @@ async function doTheCopy(copyDetails){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const usSheet = excel.workbook.worksheets.getItem(usScriptName);
     for (let i = 0; i < copyDetails.length; i++){
-      let sourceRange = usSheet.getRangeByIndexes(copyDetails.usRowIndex, copyDetails.usCueColumnIndex, 1, 1);
+      let sourceRange = usSheet.getRangeByIndexes(copyDetails[i].usRowIndex, copyDetails[i].usCueColumnIndex, 1, 1);
       sourceRange.load('address')
       await excel.sync()
       console.log('Source range:', i, sourceRange.address)
-      let destinationRange = scriptSheet.getRangeByIndexes(copyDetails.ukRowIndex, usCueIndex, 1, 1)
+      let destinationRange = scriptSheet.getRangeByIndexes(copyDetails[i].ukRowIndex, usCueIndex, 1, 1)
       destinationRange.load('address')
       await excel.sync()
       console.log('Dest range:', i, destinationRange.address)
       destinationRange.copyFrom(sourceRange, 'All');
       await excel.sync()
       console.log('Copy 1 done');
-      sourceRange = usSheet.getRangeByIndexes(copyDetails.usRowIndex, copyDetails.usScriptColumnIndex, 1, 1);
+      sourceRange = usSheet.getRangeByIndexes(copyDetails[i].usRowIndex, copyDetails[i].usScriptColumnIndex, 1, 1);
       sourceRange.load('address')
       await excel.sync()
       console.log('Source range 2:', i, sourceRange.address)
-      destinationRange = scriptSheet.getRangeByIndexes(copyDetails.ukRowIndex, usScriptColumnIndex, 1, 1);
+      destinationRange = scriptSheet.getRangeByIndexes(copyDetails[i].ukRowIndex, usScriptColumnIndex, 1, 1);
       destinationRange.load('address')
       await excel.sync()
       console.log('Dest range 2:', i, destinationRange.address)
