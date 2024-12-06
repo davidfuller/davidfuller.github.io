@@ -6437,6 +6437,7 @@ async function clearUsCueAndScript(){
     await excel.sync();
     let startRowIndex = 2;
     let rowCount = usedRange.rowCount - (usedRange.rowIndex + startRowIndex)
+    console.log(startRowIndex, usCueIndex, rowCount, 2);
     let usRange = scriptSheet.getRange(startRowIndex, usCueIndex, rowCount, 2);
     usRange.clear('Contents')
   }) 
