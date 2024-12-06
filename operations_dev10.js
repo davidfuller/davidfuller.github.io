@@ -6388,3 +6388,25 @@ function displayMessageCharacterFilter(scenes, rowIndexes){
   }
   return { message: message, numLines: lines, numScenes: numScenes }
 }
+
+async function findUsScriptCues(usDetails){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const usedRange = scriptSheet.getUsedRange();
+    usedRange.load('rowIndex, rowCount');
+    await excel.sync();
+    let cueRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, cueIndex, usedRange.rowCount, 1)
+    cueRange.load('values, rowIndex');
+    await excel.sync();
+    cueValues = cueRange.values.map(x => x[0])
+    let rowIndexes = []
+    for (let i = 0; i < usDetails.length; i++){
+      let index = cueValues.indexOf(usDetails[i].cue)
+      if (index != -1){
+        rowIndexes.push(index + cueRange.rowIndex)
+      }
+    }
+    console.log('rowIndexes', rowIndexes);
+  })  
+
+}

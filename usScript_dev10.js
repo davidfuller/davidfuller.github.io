@@ -14,8 +14,10 @@ const usScriptColumns = {
 
 async function usScriptAdd(){
   const rowIndexes = await getUsCueIndexes();
-  await getUsScriptDetails(rowIndexes);
+  const details = await getUsScriptDetails(rowIndexes);
+  await jade_modules.operations.findUsScriptCues(details)
 }
+
 async function getUsCueIndexes(){
   let rowIndexes = [];
   await Excel.run(async function(excel){
@@ -62,7 +64,16 @@ async function getUsScriptDetails(rowIndexes){
     }
     await excel.sync();
     for (let i = 0; i < cueRange.length; i++){
-      console.log('i', i, 'cue', cueRange[i].values, 'character', characterRange[i].values, 'ukScript', ukScriptRange[i].values, 'usCue', usCueRange[i].values, 'usScript', usScriptRange[i].values);
+      //console.log('i', i, 'cue', cueRange[i].values, 'character', characterRange[i].values, 'ukScript', ukScriptRange[i].values, 'usCue', usCueRange[i].values, 'usScript', usScriptRange[i].values);
+      details[i] = {
+        cue: cueRange[i].values[0][0],
+        character: characterRange.values[0][0],
+        ukScript: ukScriptRange.values[0][0],
+        usCue: usCueRange.values[0][0],
+        usScript: usScriptRange.value[0][0]
+      }
     }
   })
+  console.log('details', details);
+  return details
 }
