@@ -162,6 +162,13 @@ async function mainHTML(){
     <div id="add-remove-buttons">
       <label id="take-wait">Please wait...</label>
       <label id="take-message"></label>
+      <div id="message-box">
+        <div id="message-prompt">Are you sure want to clear these takes</div>
+        <div id="buttons-yes-no">
+          <button id="message-yes" onclick="jade_modules.operations.messageYes()">Yes</button>
+          <button id="message-no" onclick="jade_modules.operations.messageNo()">No</button>
+        </div>
+      </div>
       <div id="hidden-old-takes">
         <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true)">Add Take UK</button>
         <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button><br/>
@@ -211,13 +218,6 @@ async function mainHTML(){
         </div>
       </div>
       <div>
-        <div id="message-box">
-          <div id="message-prompt">Are you sure want to clear these takes</div>
-          <div id="buttons-yes-no">
-            <button id="message-yes" onclick="jade_modules.operations.messageYes()">Yes</button>
-            <button id="message-no" onclick="jade_modules.operations.messageNo()">No</button>
-          </div>
-        </div>
         <button id="btnApplyTakeUk" onclick="jade_modules.operations.applyTakeDetails('UK')">Apply Take UK</button><br/>
         <button id="btnClearTakeUk" onclick="jade_modules.operations.clearTakeDetails('UK')">Clear Take UK</button>
       </div>

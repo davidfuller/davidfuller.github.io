@@ -41,6 +41,8 @@ let scriptSheet;
 let sceneInput, lineNoInput, chapterInput;
 let typeCodeValues, addSelectList;
 
+let globalCountry;
+
 let scriptHiddenRows = [];
 let myTypes = {
   chapter: 'Chapter',
@@ -6102,6 +6104,24 @@ async function clearTakeDetails(country){
   wait.style.display = 'block';
   let msgBox = tag('message-box');
   msgBox.style.display = 'block'
+  globalCountry = country
+}
+
+async function messageYes(){
+  let msgBox = tag('message-box');
+  msgBox.style.display = 'none';
+  await continueClearTakeDetails(globalCountry);
+}
+
+async function messageNo(){
+  let msgBox = tag('message-box');
+  msgBox.style.display = 'none';
+  let wait = tag('take-wait');
+  wait.style.display = 'none';
+}
+
+async function continueClearTakeDetails(country){
+  let wait = tag('take-wait');
   const rowDetails = await getSelectedRowDetails(true);
   const cols = takeDetailsColumnIndexes(country);
   let takesRanges = [];
@@ -6126,7 +6146,6 @@ async function clearTakeDetails(country){
     await excel.sync();
   })
   wait.style.display = 'none';
-  msgBox.style.display = 'none';
 }
 
 async function getSelectedRowDetails(selectedOnly){
