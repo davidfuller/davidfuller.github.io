@@ -16,6 +16,7 @@ async function mainHTML(){
     <button id="btnLocationPage" class="nav-button" onclick="jade_modules.operations.showLocation()">Location</button><br/>
     <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
     <a id='show-hide-comparison' onclick="jade_modules.operations.showComparison()">Show/hide comparison</a>
+    <a id='show-hide-us-script' onclick="jade_modules.operations.showUsScript()">Show/hide US Script</a>
   </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
