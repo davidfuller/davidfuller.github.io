@@ -6390,6 +6390,7 @@ function displayMessageCharacterFilter(scenes, rowIndexes){
 }
 
 async function findUsScriptCues(usDetails){
+  let details = [];
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const usedRange = scriptSheet.getUsedRange();
@@ -6407,6 +6408,23 @@ async function findUsScriptCues(usDetails){
       }
     }
     console.log('rowIndexes', rowIndexes);
+    for (let row of rowIndexes){
+      let cueRange = scriptSheet.getRangeByIndexes(row, cueIndex, 1, 1);
+      cueRange.load('values');
+      let characterRange = scriptSheet.getRangeByIndexes(row, characterIndex, 1, 1);
+      characterRange.load('values');
+      let ukScriptRange = scriptSheet.getRangeByIndexes(row, ukScriptIndex, 1, 1);
+      ukScriptRange.load('values');
+      await excel.sync()
+      let detail = {
+        rowIndex: row,
+        cue: cueRange.values[0][0],
+        character: characterRange.values[0][0],
+        ukScript: ukScriptRange.values[0][0]
+      }
+      details.push(detail)
+    }
   })  
-
+  console.log('details', details);
+  return details;
 }
