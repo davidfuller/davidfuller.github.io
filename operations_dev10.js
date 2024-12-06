@@ -6055,6 +6055,8 @@ async function setSheetView(doTemporary){
 }
 
 async function applyTakeDetails(country){
+  let wait = tag('take-wait');
+  wait.style.display = 'block';
   const rowDetails = await getSelectedRowDetails(true);
   const cols = takeDetailsColumnIndexes(country);
   const takesData = getTakesData();
@@ -6092,9 +6094,12 @@ async function applyTakeDetails(country){
     }
     await excel.sync();
   })
+  wait.style.display = 'none';
 }
 
 async function clearTakeDetails(country){
+  let wait = tag('take-wait');
+  wait.style.display = 'block';
   const rowDetails = await getSelectedRowDetails(true);
   const cols = takeDetailsColumnIndexes(country);
   let takesRanges = [];
@@ -6118,6 +6123,7 @@ async function clearTakeDetails(country){
     }
     await excel.sync();
   })
+  wait.style.display = 'none';
 }
 
 async function getSelectedRowDetails(selectedOnly){
