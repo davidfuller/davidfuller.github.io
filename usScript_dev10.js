@@ -87,6 +87,6 @@ function compareDetails(usDetails, ukDetails){
     compare[i] = {}
     compare[i].character = (ukDetails[index].character.trim().toLowerCase() === usDetails[i].character.trim().toLowerCase());
     compare[i].ukScript = (ukDetails[index].ukScript.trim().toLowerCase() === usDetails[i].ukScript.trim().toLowerCase());
-    console.log('i', i, 'usDetails', usDetails[i], 'index', index, 'compare', compare);
+    console.log('i', i, 'usDetails', usDetails[i], 'index', index, 'compare', compare[i]);
   }
 }
