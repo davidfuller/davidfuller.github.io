@@ -872,7 +872,7 @@ label {
   margin: auto;
 }
 
-.class-button {
+.take-button {
   width: 90px;
 }
 `;
