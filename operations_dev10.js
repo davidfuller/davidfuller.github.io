@@ -6100,6 +6100,8 @@ async function applyTakeDetails(country){
 async function clearTakeDetails(country){
   let wait = tag('take-wait');
   wait.style.display = 'block';
+  let msgBox = tag('message-box');
+  msgBox.style.display = 'block'
   const rowDetails = await getSelectedRowDetails(true);
   const cols = takeDetailsColumnIndexes(country);
   let takesRanges = [];
@@ -6124,6 +6126,7 @@ async function clearTakeDetails(country){
     await excel.sync();
   })
   wait.style.display = 'none';
+  msgBox.style.display = 'none';
 }
 
 async function getSelectedRowDetails(selectedOnly){

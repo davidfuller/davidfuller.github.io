@@ -851,6 +851,15 @@ label {
 #add-remove-markup {
   display: none;
 }
+
+#message-box {
+  display: none;
+  width: 80%; 
+  background-color: white;
+  border-radius: 5px;
+  border-color: #46656F;
+  border-style: solid;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')
