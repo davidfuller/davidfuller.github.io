@@ -12,6 +12,7 @@
     <button id="btnLocationPage" class="nav-button" onclick="jade_modules.operations.showLocation()">Location</button><br/>
     <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
     <a id='show-hide-comparison' onclick="jade_modules.operations.showComparison()">Show/hide comparison</a>
+    <a id='show-hide-us-script' onclick="jade_modules.operations.showUsScript()">Show/hide US Script</a>
   </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
@@ -84,6 +85,9 @@
     <button id="btnCellJoin" class="compButton" onclick="jade_modules.comparison.dealWithCellJoin()">Cell Join</button><br/>
     <button id="btnCellMerge" class="compButton" onclick="jade_modules.comparison.mergeCells()">Cell Merge & Autorun</button>
     <button id="btnFindMergeAutoRun" class="compButton" onclick="jade_modules.comparison.findMergeAutorun()">Find & Merge & Autorun</button>
+  </div>
+  <div id="us-script">
+    <button id="btnGetIds" onclick="jade_modules.usscript.getUsCueIndexes()">Get IDs</button>
   </div>
   <div id="firstButtons">
     <label class="section-label" onclick="jade_modules.operations.showLock()">Lock / Unlock</label><span id="lockMessage"></span><a id='show-hide-lock' onclick="jade_modules.operations.showLock()">Show/hide lock</a>

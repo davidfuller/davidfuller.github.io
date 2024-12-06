@@ -2,7 +2,7 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '10.0';
+const codeVersion = '10.1';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -2448,7 +2448,15 @@ function showComparison(){
   } else {
     comp.style.display = 'block';
   }
-  
+}
+
+function showUsScript(){
+  let usScript = tag('us-script')
+  if (usScript.style.display === 'block'){
+    usScript.style.display = 'none';
+  } else {
+    usScript.style.display = 'block';
+  }
 }
 
 async function getCharacters(sheetName, charIndex){

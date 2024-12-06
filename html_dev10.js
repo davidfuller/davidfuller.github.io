@@ -89,6 +89,9 @@ async function mainHTML(){
     <button id="btnCellMerge" class="compButton" onclick="jade_modules.comparison.mergeCells()">Cell Merge & Autorun</button>
     <button id="btnFindMergeAutoRun" class="compButton" onclick="jade_modules.comparison.findMergeAutorun()">Find & Merge & Autorun</button>
   </div>
+  <div id="us-script">
+    <button id="btnGetIds" onclick="jade_modules.usscript.getUsCueIndexes()">Get IDs</button>
+  </div>
   <div id="firstButtons">
     <label class="section-label" onclick="jade_modules.operations.showLock()">Lock / Unlock</label><span id="lockMessage"></span><a id='show-hide-lock' onclick="jade_modules.operations.showLock()">Show/hide lock</a>
     <div id='lock-buttons'>
