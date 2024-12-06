@@ -14,8 +14,9 @@ const usScriptColumns = {
 
 async function usScriptAdd(){
   const rowIndexes = await getUsCueIndexes();
-  const details = await getUsScriptDetails(rowIndexes);
-  await jade_modules.operations.findUsScriptCues(details)
+  const usDetails = await getUsScriptDetails(rowIndexes);
+  const ukDetails = await jade_modules.operations.findUsScriptCues(usDetails);
+  compareDetails(usDetails, ukDetails);
 }
 
 async function getUsCueIndexes(){
@@ -76,4 +77,13 @@ async function getUsScriptDetails(rowIndexes){
   })
   console.log('details', details);
   return details
+}
+
+function compareDetails(usDetails, ukDetails){
+
+  for (let i = 0; i < usDetails.length; i++){
+    let index = ukDetails.findIndex(x => x.cue == usDetails[i].cue)
+    console.log('i', i, 'usDetails', usDetails[i], 'index', index);
+  }
+
 }
