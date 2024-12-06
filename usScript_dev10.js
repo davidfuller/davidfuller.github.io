@@ -70,7 +70,7 @@ async function getUsScriptDetails(rowIndexes){
         character: characterRange[i].values[0][0],
         ukScript: ukScriptRange[i].values[0][0],
         usCue: usCueRange[i].values[0][0],
-        usScript: usScriptRange[i].value[0][0]
+        usScript: usScriptRange[i].values[0][0]
       }
     }
   })
