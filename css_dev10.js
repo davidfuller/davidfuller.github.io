@@ -871,6 +871,10 @@ label {
   width: 90%;
   margin: auto;
 }
+
+.class-button {
+  width: 90px;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')
