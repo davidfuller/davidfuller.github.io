@@ -18,6 +18,7 @@ async function usScriptAdd(){
   const ukDetails = await jade_modules.operations.findUsScriptCues(usDetails);
   const copyDetails = compareDetails(usDetails, ukDetails);
   if (copyDetails.length == rowIndexes.length){
+    console.log('Doing It')
     await jade_modules.operations.doTheCopy(copyDetails);
   } else {
     console.log('Incorrect number of copies', rowIndexes, copyDetails);
