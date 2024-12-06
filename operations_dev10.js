@@ -6455,6 +6455,7 @@ async function clearUsCueAndScript(){
 }
 
 async function doTheCopy(copyDetails){
+  console.log('copydetails',copyDetails)
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const usSheet = excel.workbook.worksheets.getItem(usScriptName);
