@@ -6428,3 +6428,16 @@ async function findUsScriptCues(usDetails){
   console.log('details', details);
   return details;
 }
+
+async function clearUsCueAndScript(){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const usedRange = scriptSheet.getUsedRange();
+    usedRange.load('rowIndex, rowCount');
+    await excel.sync();
+    let startRowIndex = 2;
+    let rowCount = usedRange.rowCount - (usedRange.rowIndex + startRowIndex)
+    let usRange = scriptSheet.getRange(startRowIndex, usCueIndex, rowCount, 2);
+    usRange.clear('Contents')
+  }) 
+}
