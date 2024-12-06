@@ -847,6 +847,10 @@ label {
 #hidden-old-takes {
   display: none;
 }
+
+#add-remove-markup {
+  display: none;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')

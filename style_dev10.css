@@ -843,3 +843,7 @@ label {
 #hidden-old-takes {
   display: none;
 }
+
+#add-remove-markup {
+  display: none;
+}
