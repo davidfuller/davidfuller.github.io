@@ -209,8 +209,10 @@
       <div>
         <div id="message-box">
           <div id="message-prompt">Are you sure want to clear these takes</div>
-          <button id="message-yes" onclick="jade_modules.operations.messageYes()">Yes</button>
-          <button id="message-no" onclick="jade_modules.operations.messageNo()">No</button>
+          <div id="buttons-yes-no">
+            <button id="message-yes" onclick="jade_modules.operations.messageYes()">Yes</button>
+            <button id="message-no" onclick="jade_modules.operations.messageNo()">No</button>
+          </div>
         </div>
         <button id="btnApplyTakeUk" onclick="jade_modules.operations.applyTakeDetails('UK')">Apply Take UK</button><br/>
         <button id="btnClearTakeUk" onclick="jade_modules.operations.clearTakeDetails('UK')">Clear Take UK</button>

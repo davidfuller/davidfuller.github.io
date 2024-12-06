@@ -859,6 +859,15 @@ label {
   border-radius: 5px;
   border-color: #46656F;
   border-style: solid;
+  margin: auto;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#buttons-yes-no {
+  width: 90%;
+  margin: auto;
 }
 `;
   Jade.set_css(css);
