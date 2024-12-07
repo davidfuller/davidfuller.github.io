@@ -4512,7 +4512,7 @@ async function clearWalla(){
 }
 
 
-async function getRowIndeciesForScene(sceneNumber){
+async function getRowIndeciesForScene(sceneNumber, usOnly){
   let myIndecies, newIndexes;
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -4533,8 +4533,24 @@ async function getRowIndeciesForScene(sceneNumber){
         newIndexes[newIndex] = myIndecies[i];
       }
     }
-    console.log('newIndexes', newIndexes)
-
+    console.log('newIndexes before', newIndexes);
+    if (usOnly){
+      let myRanges = [];
+      for (let index of newIndexes){
+        let tempRange = scriptSheet.getRangeByIndexes(index, usCueIndex, 1, 1);
+        tempRange.load('values, rowIndex');
+        myRanges.push(tempRange);
+      }
+      await excel.sync();
+      let usRanges = [];
+      for (let theRange of myRanges){
+        if (theRange.values[0][0] != ''){
+          usRanges.push(theRange.rowIndex)
+        }
+      }
+      newIndexes = usRanges;
+      console.log('newIndexes after', newIndexes);
+    }
   })
   return newIndexes;
 }
