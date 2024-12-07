@@ -112,11 +112,8 @@ async function getActorInformation(){
     let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
     const waitCell = forActorSheet.getRange('faMessage');
     waitCell.values = 'Please wait...';
-    let selectRange = forActorSheet.getRange('faSelect');
-    selectRange.load('values');
-    await excel.sync();
     
-    let usOnly = selectRange.values[0][0] != 'All';
+    let usOnly = await isUsOnly();
     let character = await getActor(forActorName);
     console.log('Character ',character.name, character.type);
     let myData = await jade_modules.operations.getDirectorDataV2(character);
@@ -494,16 +491,29 @@ async function locationGoToLine(){
   })
 }
 
+async function isUsOnly(){
+  let usOnly
+  await Excel.run(async function(excel){
+    let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
+    let selectRange = forActorSheet.getRange('faSelect');
+    selectRange.load('values');
+    await excel.sync();
+    usOnly = selectRange.values[0][0] != 'All';
+  })
+  return usOnly;
+}
+
 async function createScript(){
   let actorWait = tag('script-wait');
   actorWait.style.display = 'block';
   let isAllNaN = true;
   let sceneNumbers = await getSceneNumberActor();
+  let usOnly = await isUsOnly();
   
   if (sceneNumbers.scenes.length > 0){
     let book = await jade_modules.operations.getBook();
     let character = await getActor(forActorName);
-    await topOfFirstPage(book, character);
+    await topOfFirstPage(book, character, usOnly);
     await clearActorScriptBody();
   
     let theRowIndex = 1;
@@ -641,7 +651,7 @@ async function getSceneNumberActor(){
 }
 
 
-async function topOfFirstPage(book, character){
+async function topOfFirstPage(book, character, usOnly){
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     let bookRange = actorScriptSheet.getRange(actorScriptBookName);
@@ -653,7 +663,11 @@ async function topOfFirstPage(book, character){
       headingRange.values = [['Character: (Text Search)']]
     }
     let characterRange = actorScriptSheet.getRange(actorScriptCharacterName);
-    characterRange.values = character.name.charAt(0).toUpperCase() + character.name.slice(1);
+    if (usOnly){
+      characterRange.values = character.name.charAt(0).toUpperCase() + character.name.slice(1) + ' (US Script)';
+    } else {
+      characterRange.values = character.name.charAt(0).toUpperCase() + character.name.slice(1);
+    }
     characterRange.unmerge()
     characterRange.load('rowIndex, columnIndex')
     await excel.sync();
