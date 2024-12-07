@@ -4561,6 +4561,28 @@ async function getSceneBlockNear(index){
   let sceneBlockText = [];
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    
+    let startRowIndex = 2;
+    let rowCount = index - startRowIndex;
+    let typeCodeRange = scriptSheet.getRangeByIndexes(startRowIndex, typeCodeIndex, rowCount, 1);
+    typeCodeRange.load('values, rowIndex');
+    await excel.sync();
+    let lowestIndex;
+    for (let i = 0; i < typeCodeRange.values.length; i++){
+      if (typeCodeRange.values[i][0] == myTypes.sceneBlock){
+        lowestIndex = i;
+      }      
+    }
+    let indexes = []
+    let theIndex = -1;
+    for (let i = lowestIndex - 10; i < lowestIndex; i++){
+      if (typeCodeRange.values[i][0] == myTypes.sceneBlock){
+        theIndex += 1;
+        indexes[theIndex] = i + typeCodeRange.rowIndex; 
+      }
+    }
+    
+    /*
     console.log(index + startOffset, typeCodeIndex, endOffset - startOffset, 1)
     let startRowIndex = index + startOffset
     if (startRowIndex < 1){
@@ -4577,6 +4599,7 @@ async function getSceneBlockNear(index){
         indexes[theIndex] = i + typeCodeRange.rowIndex; 
       }
     }
+    */
     console.log('indexes', indexes);
 
     if (indexes.length > 0){
