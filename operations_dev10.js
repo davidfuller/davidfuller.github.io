@@ -4618,13 +4618,14 @@ async function getBook(){
   return book;
 }
 
-async function getActorScriptRanges(indexes, startRowIndex){
+async function getActorScriptRanges(indexes, startRowIndex, doUs){
   let rangeBounds = []
   let rangeIndex = 0;
   let actorCueColumnIndex = 0;
   let actorCharacterColumnIndex = 1;  
   let actorDirectionColumnIndex = 2;
-  let actorUkScriptColumnIndex = 3;
+  let actorScriptColumnIndex = 3;
+  let actorUsCueColumnIndex = 4;
   for (let i = 0; i < indexes.length; i++){
     if (i == 0){
       rangeBounds[rangeIndex] = {};
@@ -4659,22 +4660,34 @@ async function getActorScriptRanges(indexes, startRowIndex){
       cueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, cueIndex, rowCount, 1);
       characterRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, characterIndex, rowCount, 1);
       directionRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, stageDirectionWallaDescriptionIndex, rowCount, 1);
-      ukScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, ukScriptIndex, rowCount, 1);
-      
+      if (doUs){
+        usScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, usScriptColumnIndex, rowCount, 1);
+        usCueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, usCueIndex, rowCount, 1);
+      } else {
+        ukScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, ukScriptIndex, rowCount, 1);
+      }
       
       console.log('start row', startRowIndex)
       let actorCueRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCueColumnIndex, 1, 1);
       let actorCharacterRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCharacterColumnIndex, 1, 1);
-      let actorDirectionRange  = actorScriptSheet.getRangeByIndexes(startRowIndex, actorDirectionColumnIndex, 1, 1);
-      let actorUkScriptRange  = actorScriptSheet.getRangeByIndexes(startRowIndex, actorUkScriptColumnIndex, 1, 1);
+      let actorDirectionRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorDirectionColumnIndex, 1, 1);
+      let actorScriptRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorScriptColumnIndex, 1, 1);
+      let actorUsCueRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorUsCueColumnIndex,1, 1)
       actorCueRange.copyFrom(cueRange, 'Values', false, false);
       actorCueRange.copyFrom(cueRange, 'Formats', false, false);
       actorCharacterRange.copyFrom(characterRange, 'Values', false, false);
       actorCharacterRange.copyFrom(characterRange, 'Formats', false, false);
       actorDirectionRange.copyFrom(directionRange, 'Values', false, false);
       actorDirectionRange.copyFrom(directionRange, 'Formats', false, false);
-      actorUkScriptRange.copyFrom(ukScriptRange, 'Values', false, false);
-      actorUkScriptRange.copyFrom(ukScriptRange, 'Formats', false, false);
+      if (usOnly){
+        actorScriptRange.copyFrom(usScriptRange, 'Values', false, false);
+        actorScriptRange.copyFrom(usScriptRange, 'Formats', false, false);
+        actorUsCueRange.copyFrom(usCueRange, 'Values', false, false);
+        actorUsCueRange.copyFrom(usCueRange, 'Formats', false, false);
+      } else {
+        actorScriptRange.copyFrom(ukScriptRange, 'Values', false, false);
+        actorScriptRange.copyFrom(ukScriptRange, 'Formats', false, false);
+      }
       await excel.sync();
       startRowIndex = startRowIndex + rowCount
     }
