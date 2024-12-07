@@ -106,15 +106,17 @@ async function getDirectorInfo(){
 }
 
 async function getActorInformation(){
-  let usOnly = true;
   await Excel.run(async function(excel){
     let waitLabel = tag('actor-wait');
     waitLabel.style.display = 'block';
     let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
     const waitCell = forActorSheet.getRange('faMessage');
     waitCell.values = 'Please wait...';
+    let selectRange = forActorSheet.getRange('faSelect');
+    selectRange.load('values');
     await excel.sync();
     
+    let usOnly = selectRange.values[0][0] != 'All';
     let character = await getActor(forActorName);
     console.log('Character ',character.name, character.type);
     let myData = await jade_modules.operations.getDirectorDataV2(character);
