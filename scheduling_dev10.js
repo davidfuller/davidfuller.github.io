@@ -523,7 +523,7 @@ async function createScript(){
       let sceneNumber = sceneNumbers.scenes[i]
       if (!isNaN(sceneNumber)){
         isAllNaN = false;
-        let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
+        let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber, usOnly);
         console.log('Indexes: ', indexes);
         if (indexes.length > 0){
           let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
