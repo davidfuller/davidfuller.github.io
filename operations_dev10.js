@@ -4679,7 +4679,7 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs){
       actorCharacterRange.copyFrom(characterRange, 'Formats', false, false);
       actorDirectionRange.copyFrom(directionRange, 'Values', false, false);
       actorDirectionRange.copyFrom(directionRange, 'Formats', false, false);
-      if (usOnly){
+      if (doUs){
         actorScriptRange.copyFrom(usScriptRange, 'Values', false, false);
         actorScriptRange.copyFrom(usScriptRange, 'Formats', false, false);
         actorUsCueRange.copyFrom(usCueRange, 'Values', false, false);
