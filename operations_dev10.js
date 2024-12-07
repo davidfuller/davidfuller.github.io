@@ -4669,10 +4669,13 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs){
     if (i == 0){
       rangeBounds[rangeIndex] = {};
       rangeBounds[rangeIndex].start = indexes[i];
-    }else if (i == indexes.length -1){
-      rangeBounds[rangeIndex].end = indexes[i]
+      if (indexes.length == 1){
+        rangeBounds[rangeIndex].end = indexes[i];
+      }
+    } else if (i == indexes.length -1){
+      rangeBounds[rangeIndex].end = indexes[i];
     } else {
-      if (indexes[i] == (indexes[i-1] + 1)){
+      if (indexes[i] == (indexes[i - 1] + 1)){
         //Do Nothing
       } else {
         rangeBounds[rangeIndex].end = indexes[i - 1]
