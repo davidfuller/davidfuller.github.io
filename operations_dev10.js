@@ -4575,7 +4575,7 @@ async function getSceneBlockNear(index){
     }
     let indexes = []
     let theIndex = -1;
-    for (let i = lowestIndex - 10; i < lowestIndex; i++){
+    for (let i = lowestIndex - 10; i <= lowestIndex; i++){
       if (typeCodeRange.values[i][0] == myTypes.sceneBlock){
         theIndex += 1;
         indexes[theIndex] = i + typeCodeRange.rowIndex; 
@@ -4683,7 +4683,7 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs){
     }
   }
   let cueRange, characterRange, directionRange, ukScriptRange;
-  console.log('Rangebound length', rangeBounds.length);
+  console.log('Rangebound length', rangeBounds.length, rangeBounds);
   let rowIndexes = []
   let item = - 1;
   await Excel.run(async (excel) => {
