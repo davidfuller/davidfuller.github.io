@@ -535,7 +535,7 @@ async function createScript(){
           //give 1 row of scpace between sceneblock and script
           theRowIndex = rowDetails.nextRowIndex + 1;
           rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, theRowIndex, usOnly);
-          await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name);
+          await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name, usOnly);
           theRowIndex = rowIndexes[rowIndexes.length - 1].startRow + rowIndexes[rowIndexes.length - 1].rowCount + 1;
         } else {
           console.log('Missing scene block: ', sceneNumber)
@@ -663,15 +663,18 @@ async function topOfFirstPage(book, character, usOnly){
       headingRange.values = [['Character: (Text Search)']]
     }
     let characterRange = actorScriptSheet.getRange(actorScriptCharacterName);
+    let numColumns = 2;
     if (usOnly){
       characterRange.values = character.name.charAt(0).toUpperCase() + character.name.slice(1) + ' (US Script)';
+      numColumns = 3;
     } else {
       characterRange.values = character.name.charAt(0).toUpperCase() + character.name.slice(1);
     }
     characterRange.unmerge()
     characterRange.load('rowIndex, columnIndex')
+    
     await excel.sync();
-    let mergeRange = actorScriptSheet.getRangeByIndexes(characterRange.rowIndex, characterRange.columnIndex, 1, 2);
+    let mergeRange = actorScriptSheet.getRangeByIndexes(characterRange.rowIndex, characterRange.columnIndex, 1, numColumns);
     mergeRange.merge(true);
   })
 }
@@ -761,9 +764,9 @@ async function showActorScript(){
   })
 }
 
-async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndexes, character){
+async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndexes, character, usOnly){
   await removeBorders(sheetName);
-  await formatSceneBlocks(sheetName, sceneBlockRowIndexes);
+  await formatSceneBlocks(sheetName, sceneBlockRowIndexes, usOnly);
   await formatHeading(sheetName);
   for (let i = 0; i < scriptRowIndexes.length; i++){
     await cueColumnFontColour(sheetName, scriptRowIndexes[i]);
@@ -789,9 +792,12 @@ async function removeBorders(sheetName){
   })
 }
 
-async function formatSceneBlocks(sheetName, rowIndexes){
+async function formatSceneBlocks(sheetName, rowIndexes, usOnly){
   let firstColumn = 0;
   let columnCount = 4;
+  if (usOnly){
+    columnCount = 5;
+  }
 
   for (let i = 0; i < rowIndexes.length; i++){
     await mergeTheRow(sheetName, rowIndexes[i], 1, firstColumn, columnCount);
