@@ -504,6 +504,7 @@ async function isUsOnly(){
 }
 
 async function createScript(){
+  let startTime = new Date().getTime();
   let actorWait = tag('script-wait');
   actorWait.style.display = 'block';
   let isAllNaN = true;
@@ -553,6 +554,8 @@ async function createScript(){
   }
   actorWait.innerText = 'Please wait...'
   actorWait.style.display = 'none';
+  let endTime = new Date().getTime();
+  console.log('Complete Create Script taken:', (endTime - startTime) / 1000);
 }
 
 async function displayScenes(){
