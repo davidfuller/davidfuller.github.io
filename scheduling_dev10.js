@@ -519,7 +519,7 @@ async function createScript(){
   
     let theRowIndex = 1;
     let rowIndexes;
-    let sceneBlockRows = await getSceneBlockRows();
+    let sceneBlockRows = await jade_modules.operations.getSceneBlockRows();
     for (let i = 0; i < sceneNumbers.scenes.length; i++){
       actorWait.innerText = 'Please wait... Doing scene: ' + sceneNumbers.scenes[i] + ' (' + (i + 1) + ' of ' + sceneNumbers.scenes.length + ')';
       let sceneNumber = sceneNumbers.scenes[i]
