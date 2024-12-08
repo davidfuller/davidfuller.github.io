@@ -197,7 +197,8 @@ async function getActorInformation(){
     waitLabel.style.display = 'none';
     waitCell.values = '';
     await excel.sync();
-  })  
+  })
+  await displayScenes();
 }
 
 async function getLocationInfo(){
