@@ -3233,6 +3233,7 @@ async function showForActorsPage(){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.activate();
   })
+  jade_modules.scheduling.setDefaultIfNotSet();
   await jade_modules.scheduling.displayScenes();
 }
 

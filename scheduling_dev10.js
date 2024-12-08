@@ -569,6 +569,13 @@ async function displayScenes(){
   scenesDisplay.innerText = theScenes.display;  
 }
 
+function setDefaultIfNotSet(){
+  if (getActorsScriptChoice() == scriptChoice.none){
+    const radioAll = tag('radAllScenes');
+    radioAll.checked = true; 
+  }
+}
+
 function getActorScriptChoice(){
   const radioAll = tag('radAllScenes');
   const radioHighlighted = tag('radHighlighted');
