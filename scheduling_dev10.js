@@ -513,8 +513,8 @@ async function createScript(){
   if (sceneNumbers.scenes.length > 0){
     let book = await jade_modules.operations.getBook();
     let character = await getActor(forActorName);
-    await topOfFirstPage(book, character, usOnly);
     await clearActorScriptBody();
+    await topOfFirstPage(book, character, usOnly);  
   
     let theRowIndex = 1;
     let rowIndexes;
