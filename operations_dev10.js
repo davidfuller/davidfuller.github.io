@@ -4616,6 +4616,23 @@ async function getSceneBlockNear(index){
   return sceneBlockText;
 }
 
+async function getSceneBlockText(sceneNo, sceneBlockIndexes){
+  let sceneBlockText = [];
+  let indexes = sceneBlockIndexes.find(x => x.scene == sceneNo).rowIndexes;
+  console.log('indexes', indexes);
+  if (indexes.length > 0){
+    await Excel.run(async (excel) => {
+      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      console.log(indexes[0], cueIndex, indexes.length)
+      let sceneBlockRange= scriptSheet.getRangeByIndexes(indexes[0], cueIndex, indexes.length, 1);
+      sceneBlockRange.load('values');
+      await excel.sync();
+      sceneBlockText = sceneBlockRange.values.map(x => x[0])
+    })
+  }
+  return sceneBlockText;
+}
+
 async function getActorScriptDetails(indexes){
   let details = {};
   await Excel.run(async (excel) => {

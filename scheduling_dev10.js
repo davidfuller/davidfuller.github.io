@@ -519,6 +519,7 @@ async function createScript(){
   
     let theRowIndex = 1;
     let rowIndexes;
+    let sceneBlockRows = await getSceneBlockRows();
     for (let i = 0; i < sceneNumbers.scenes.length; i++){
       actorWait.innerText = 'Please wait... Doing scene: ' + sceneNumbers.scenes[i] + ' (' + (i + 1) + ' of ' + sceneNumbers.scenes.length + ')';
       let sceneNumber = sceneNumbers.scenes[i]
@@ -527,7 +528,8 @@ async function createScript(){
         let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber, usOnly);
         console.log('Indexes: ', indexes);
         if (indexes.length > 0){
-          let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
+          //let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
+          let sceneBlockText = await jade_modules.operations.getSceneBlockText(sceneNumber, sceneBlockRows)
           let doPageBreak = i > 0;
           let rowDetails = await putDataInActorScriptSheet(sceneBlockText, theRowIndex, doPageBreak);
           if (rowDetails.sceneBlockRowIndexes.length == 0){
