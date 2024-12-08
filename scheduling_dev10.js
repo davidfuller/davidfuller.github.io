@@ -570,7 +570,7 @@ async function displayScenes(){
 }
 
 function setDefaultIfNotSet(){
-  if (getActorsScriptChoice() == scriptChoice.none){
+  if (getActorScriptChoice() == scriptChoice.none){
     const radioAll = tag('radAllScenes');
     radioAll.checked = true; 
   }
