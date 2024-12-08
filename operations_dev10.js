@@ -3358,6 +3358,9 @@ async function handleActor(event) {
       if((event.address == 'D4') && event.source == 'Local'){
         await jade_modules.scheduling.searchCharacter();
       }
+      if((event.address == 'B6') && event.source == 'Local'){
+        await jade_modules.scheduling.searchCharacter();
+      }
   }).catch(errorHandlerFunction(e));
 }
 
