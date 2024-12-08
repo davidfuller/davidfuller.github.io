@@ -4686,22 +4686,30 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs){
   let actorScriptColumnIndex = 3;
   let actorUsCueColumnIndex = 4;
   for (let i = 0; i < indexes.length; i++){
-    if (i == 0){
-      rangeBounds[rangeIndex] = {};
-      rangeBounds[rangeIndex].start = indexes[i];
-      if (indexes.length == 1){
-        rangeBounds[rangeIndex].end = indexes[i];
+    if (doUs){
+      rangeBounds[rangeIndex] = {
+        start: indexes[i],
+        end: indexes[i]
       }
-    } else if (i == indexes.length -1){
-      rangeBounds[rangeIndex].end = indexes[i];
+      rangeIndex += 1;
     } else {
-      if (indexes[i] == (indexes[i - 1] + 1)){
-        //Do Nothing
-      } else {
-        rangeBounds[rangeIndex].end = indexes[i - 1]
-        rangeIndex += 1
+      if (i == 0){
         rangeBounds[rangeIndex] = {};
         rangeBounds[rangeIndex].start = indexes[i];
+        if (indexes.length == 1){
+          rangeBounds[rangeIndex].end = indexes[i];
+        }
+      } else if (i == indexes.length -1){
+        rangeBounds[rangeIndex].end = indexes[i];
+      } else {
+        if (indexes[i] == (indexes[i - 1] + 1)){
+          //Do Nothing
+        } else {
+          rangeBounds[rangeIndex].end = indexes[i - 1]
+          rangeIndex += 1;
+          rangeBounds[rangeIndex] = {};
+          rangeBounds[rangeIndex].start = indexes[i];
+        }
       }
     }
   }
