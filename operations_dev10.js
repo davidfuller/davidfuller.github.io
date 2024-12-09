@@ -6526,6 +6526,7 @@ async function findUsScriptCues(usDetails){
 }
 
 async function clearUsCueAndScript(){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const usedRange = scriptSheet.getUsedRange();
@@ -6546,7 +6547,10 @@ async function clearUsCueAndScript(){
         await excel.sync();
       }
     }
-  }) 
+  })
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 async function doTheCopy(copyDetails){
