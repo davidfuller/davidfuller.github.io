@@ -698,6 +698,7 @@ label {
 
 #btnActorScript {
   display: block;
+  margin-left: 0px;
 }
 
 .nav-button {
@@ -797,7 +798,7 @@ label {
 }
 
 .column-script {
-  padding: 10px;
+  padding: 5px;
 }
 
 #column-one-script {
