@@ -6554,6 +6554,7 @@ async function clearUsCueAndScript(){
 }
 
 async function doTheCopy(copyDetails){
+  let isProtected = await unlockIfLocked();
   console.log('copydetails',copyDetails)
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -6583,4 +6584,7 @@ async function doTheCopy(copyDetails){
       console.log('Copy 2 done');
     }
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
