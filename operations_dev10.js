@@ -4619,6 +4619,7 @@ async function getSceneBlockNear(index){
 
 async function getSceneBlockText(sceneNo, sceneBlockIndexes){
   let sceneBlockText = [];
+  console.log('sceneBlockIndexes', sceneBlockIndexes)
   let indexes = sceneBlockIndexes.find(x => x.scene == sceneNo).rowIndexes;
   console.log('indexes', indexes);
   if (indexes.length > 0){
