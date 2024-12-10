@@ -2492,6 +2492,9 @@ async function getActiveCellDetails(){
 async function filterOnCharacter(characterName, includeScenes, sceneRowIndexes){
   await Excel.run(async function(excel){
     let myRange = await getDataRange(excel);
+    myRange.load('address')
+    await excel.sync();
+    console.log('My Range address', myRange.address)
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.autoFilter.remove();
     if (includeScenes){
