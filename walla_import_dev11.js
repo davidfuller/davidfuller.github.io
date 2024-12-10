@@ -211,8 +211,8 @@ async function loadMultipleIntoScriptSheet(doAll){
           data.typeOfWalla = wallaTableRange.values[tableRow][typeOfWallaArrayColumn];
           data.characters =wallaTableRange.values[tableRow][characterArrayColumn];
           data.description = wallaTableRange.values[tableRow][descriptionArrayColumn];
-          data.numCharacters = wallaTableRange.values[arrayRow][numCharactersArrayColumn];
-          data.all = wallaTableRange.values[arrayRow][allArrayColumn];
+          data.numCharacters = wallaTableRange.values[tableRow][numCharactersArrayColumn];
+          data.all = wallaTableRange.values[tableRow][allArrayColumn];
           wallaData.push(data); 
         }
       }
