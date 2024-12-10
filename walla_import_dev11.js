@@ -47,7 +47,7 @@ function splitLine(theLine){
   }
   let wholeScene = thePosition.toLowerCase().indexOf('whole scene')
   for (let i = 0; i < textLines.length; i++){
-    if (thePosition.includes(textLines[i]){
+    if (thePosition.includes(textLines[i])){
       firstLine = thePosition.toLowerCase().indexOf(textLines[i])
       if (firstLine != -1){
         lineNo = parseInt(thePosition.substring(firstLine + textLines[i].length));
