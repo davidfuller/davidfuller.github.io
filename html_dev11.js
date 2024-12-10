@@ -316,6 +316,8 @@ async function mainHTML(){
   <div id="wallaImportButtons">
     <button id='btnParseSource' class="walla-button" onclick="jade_modules.wallaimport.parseSource()">Parse source text</button>
     <button id='btnLoadScript' class="walla-button" onclick="jade_modules.wallaimport.loadIntoScriptSheet()">Load into script sheet</button>
+    <button id='btnLoadAllWalla' class="walla-button" onclick="jade_modules.wallaimport.loadMultipleIntoScriptSheet(true)">Load all into script</button>
+    <button id='btnLoadSelectedWalla' class="walla-button" onclick="jade_modules.wallaimport.loadMultipleIntoScriptSheet(false)">Load selected into script</button>
     <label id='load-message'>This item is already present</label>
   </div>
 </div>
