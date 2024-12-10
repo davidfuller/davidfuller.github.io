@@ -35,6 +35,9 @@ async function parseSource(){
 */
 function splitLine(theLine){
   //first split with '-'
+  const textLines = ['lines', 'line']
+  let firstLine;
+  let lineNo = -1;
   let theSections = theLine.split('-');
   let theCharacter = theSections[0].trim();
   let individualCharacters = theCharacter.split(',')
@@ -43,10 +46,14 @@ function splitLine(theLine){
     thePosition = theSections[1].trim()
   }
   let wholeScene = thePosition.toLowerCase().indexOf('whole scene')
-  let firstLine = thePosition.toLowerCase().indexOf('line')
-  let lineNo = -1;
-  if (firstLine != -1){
-    lineNo = parseInt(thePosition.substring(firstLine + 4));
+  for (let i = 0; i < textLines.length; i++){
+    if (thePosition.includes(textLines[i]){
+      firstLine = thePosition.toLowerCase().indexOf(textLines[i])
+      if (firstLine != -1){
+        lineNo = parseInt(thePosition.substring(firstLine + textLines[i].length));
+        break;
+      }
+    }
   }
   let theRestPosition = theLine.toLowerCase().indexOf(thePosition.toLowerCase());
   let theRest = '';
