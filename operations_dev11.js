@@ -2490,6 +2490,7 @@ async function getActiveCellDetails(){
 }
 
 async function filterOnCharacter(characterName, includeScenes, sceneRowIndexes){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async function(excel){
     let myRange = await getDataRange(excel);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -2501,12 +2502,10 @@ async function filterOnCharacter(characterName, includeScenes, sceneRowIndexes){
         values: testTypes
       }
       scriptSheet.autoFilter.apply(myRange, typeCodeIndex, myTypeCrteria);
-
       let sceneRowIndexesString = [];
       for (let i = 0; i < sceneRowIndexes.length; i++){
         sceneRowIndexesString.push(sceneRowIndexes[i].toString());
       }
-      console.log('sceneNumbers', sceneRowIndexes, sceneRowIndexesString);
       mySceneCriteria = {
         filterOn: Excel.FilterOn.values,
         values: sceneRowIndexesString
@@ -2519,7 +2518,6 @@ async function filterOnCharacter(characterName, includeScenes, sceneRowIndexes){
         operator: 'Or'
       }
       scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
-
     } else {
       myCriteria = {
         filterOn: Excel.FilterOn.custom,
@@ -2529,6 +2527,9 @@ async function filterOnCharacter(characterName, includeScenes, sceneRowIndexes){
     }
     await excel.sync();
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 async function filterOnLocation(locationText){

@@ -2493,7 +2493,6 @@ async function filterOnCharacter(characterName, includeScenes, sceneRowIndexes){
   let isProtected = await unlockIfLocked();
   await Excel.run(async function(excel){
     let myRange = await getDataRange(excel);
-    myRange.load('address')
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.autoFilter.remove();
     if (includeScenes){
