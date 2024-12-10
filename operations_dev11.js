@@ -4083,6 +4083,7 @@ async function createSceneList(){
 }
 
 async function createWalla(wallaData, rowIndex, doReplace, doNext){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
     let loadMessage = tag('load-message');
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -4142,9 +4143,10 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
     firstWallaRange.select();   
     await excel.sync();
     await showMainPage();
-
   })
-
+  if (isProtected){
+    await lockColumns();
+  }
 }
 function isDataTheSame(newData, currentData){
   if (newData.length == currentData.length){
