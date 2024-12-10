@@ -4089,7 +4089,7 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
     let loadMessage = tag('load-message');
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
-    for (let i = 0; i < rowIndexes.length; i++){
+    for (let i = 0; i < wallaData.length; i++){
       let firstWallaRange = scriptSheet.getRangeByIndexes(wallaData[i].rowIndex, wallaLineRangeIndex, 1, numberColumns);
       if (i = 0){
         displayWallaRange = firstWallaRange;
