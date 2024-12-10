@@ -160,59 +160,64 @@ async function loadIntoScriptSheet(){
   })
 }
 
-async function loadMultipleIntoScriptSheet(){
-  await Excel.run(async (excel) => {
-    let loadMessage = tag('load-message');
-    loadMessage.style.display = 'none';
-    const lineNoArrayColumn = 6;
-    const lineRangeArrayColumn = 1;
-    const typeOfWallaArrayColumn = 2;
-    const characterArrayColumn = 3;
-    const descriptionArrayColumn = 4;
-    const numCharactersArrayColumn = 5;
-    const allArrayColumn = 0;
-    let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
-    let wallaTableRange = wallaSheet.getRange(wallaTableName);
-    wallaTableRange.load('rowIndex');
-    wallaTableRange.load('rowCount');
-    wallaTableRange.load('values');
-
-
-
-
-  })
-
-}
-
-
-async function getSelectedRows(){
+async function loadMultipleIntoScriptSheet(doAll){
+  const allArrayColumn = 0;
+  const lineRangeArrayColumn = 1;
+  const typeOfWallaArrayColumn = 2;
+  const characterArrayColumn = 3;
+  const descriptionArrayColumn = 4;
+  const numCharactersArrayColumn = 5;
+  const lineNoArrayColumn = 6;
+  let wallaData = [];
   await Excel.run(async (excel) => {
     const wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
-    const selectedRanges = excel.workbook.getSelectedRanges();
-    selectedRanges.load('address');
-    selectedRanges.areas.load('items');
-    await excel.sync();
-    console.log('selectedRange address', selectedRanges.address)
-    let ranges = selectedRanges.areas.items;
-    console.log(ranges)
-    let rowIndexes = [];
-    for (i = 0; i < ranges.length; i++){
-      ranges[i].load('address', 'rowIndex', 'rowCount')
-      await excel.sync();
-      console.log(ranges[i].address);
-      for (let j = 0; j < ranges[i].rowCount; j++){
-        rowIndexes.push(ranges[i].rowIndex + j);
-      }
-    }
     const wallaTableRange = wallaSheet.getRange(wallaTableName);
     wallaTableRange.load('rowIndex, rowCount, values');
     await excel.sync()
-
-    for (let i = 0; i < rowIndexes.length; i++){
+    const tableRowFirst = wallaTableRange.rowIndex;
+    const tableRowLast = wallaTableRange.rowIndex + wallaTableRange.rowCount - 1;
+    let rowIndexes = [];
+    if (doAll){
+      for (let i = tableRowFirst; i <= tableRowLast){
+        rowIndexes.push(i);
+      }
+    } else {
+      const selectedRanges = excel.workbook.getSelectedRanges();
+      selectedRanges.load('address');
+      selectedRanges.areas.load('items');
+      await excel.sync();
+      console.log('selectedRange address', selectedRanges.address)
+      let ranges = selectedRanges.areas.items;
+      console.log(ranges)
       
+      for (i = 0; i < ranges.length; i++){
+        ranges[i].load('address', 'rowIndex', 'rowCount')
+        await excel.sync();
+        console.log(ranges[i].address);
+        for (let j = 0; j < ranges[i].rowCount; j++){
+          rowIndexes.push(ranges[i].rowIndex + j);
+        }
+      }
     }
 
-
-
+    for (let i = 0; i < rowIndexes.length; i++){
+      if ((rowIndexes[i] >= tableRowFirst) && (rowIndexes[i] <= tableRowLast)){
+        let tableRow = rowIndexes[i] - tableRowFirst;
+        let lineNo = wallaTableRange.values[tableRow][lineNoArrayColumn];
+        if (lineNo > 0){
+          let data = {};
+          data.rowIndex = await jade_modules.operations.getLineNoRowIndex(lineNo);
+          data.wallaLineRange = wallaTableRange.values[tableRow][lineRangeArrayColumn];
+          data.typeOfWalla = wallaTableRange.values[tableRow][typeOfWallaArrayColumn];
+          data.characters =wallaTableRange.values[tableRow][characterArrayColumn];
+          data.description = wallaTableRange.values[tableRow][descriptionArrayColumn];
+          data.numCharacters = wallaTableRange.values[arrayRow][numCharactersArrayColumn];
+          data.all = wallaTableRange.values[arrayRow][allArrayColumn];
+          wallaData.push(data); 
+        }
+      }
+    }
+    console.log('wallaData', wallaData);
+    await jade_modules.operations.createMultipleWallas(wallaData, false, true);
   })
 }

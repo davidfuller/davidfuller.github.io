@@ -4082,7 +4082,7 @@ async function createSceneList(){
   return createChapterAndSceneList(typeCodeValues);
 }
 
-async function createMultipleWallas(wallaDataArray, rowIndexes, doReplace, doNext){
+async function createMultipleWallas(wallaData, doReplace, doNext){
   let isProtected = await unlockIfLocked();
   let displayWallaRange;
   await Excel.run(async (excel) => {
@@ -4090,17 +4090,17 @@ async function createMultipleWallas(wallaDataArray, rowIndexes, doReplace, doNex
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
     for (let i = 0; i < rowIndexes.length; i++){
-      let firstWallaRange = scriptSheet.getRangeByIndexes(rowIndexes[i], wallaLineRangeIndex, 1, numberColumns);
+      let firstWallaRange = scriptSheet.getRangeByIndexes(wallaData[i].rowIndex, wallaLineRangeIndex, 1, numberColumns);
       if (i = 0){
         displayWallaRange = firstWallaRange;
       }
-      let wallaOriginalRange = scriptSheet.getRangeByIndexes(rowIndexes[i], wallaOriginalIndex, 1 , 1);
+      let wallaOriginalRange = scriptSheet.getRangeByIndexes(wallaData[i].rowIndex, wallaOriginalIndex, 1 , 1);
       let dataArray = [
-        wallaDataArray[i].wallaLineRange,
-        wallaDataArray[i].typeOfWalla,
-        wallaDataArray[i].characters,
-        wallaDataArray[i].description,
-        wallaDataArray[i].numCharacters
+        wallaData[i].wallaLineRange,
+        wallaData[i].typeOfWalla,
+        wallaData[i].characters,
+        wallaData[i].description,
+        wallaData[i].numCharacters
       ];
       if (firstWallaRange.values[0][1] != ''){
         if (doReplace){
@@ -4109,7 +4109,7 @@ async function createMultipleWallas(wallaDataArray, rowIndexes, doReplace, doNex
         }
         if (doNext){
           if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
-            for (let i = rowIndexes[i] + 1; i < rowIndexes[i] + 100; i++){
+            for (let i = wallaData[i].rowIndex + 1; i < wallaData[i].rowIndex + 100; i++){
               console.log(i)
               firstWallaRange = scriptSheet.getRangeByIndexes(i, wallaLineRangeIndex, 1, numberColumns);
               wallaOriginalRange = scriptSheet.getRangeByIndexes(i, wallaOriginalIndex, 1 , 1)
@@ -4118,7 +4118,7 @@ async function createMultipleWallas(wallaDataArray, rowIndexes, doReplace, doNex
               console.log('Testing row: ', i, 'Row data: ', firstWallaRange.values[0]);
               if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
                 if (firstWallaRange.values[0][1] == ''){
-                  rowIndexes[i] = i;
+                  wallaData[i].rowIndex = i;
                   break;
                 }
               } else {
