@@ -4102,6 +4102,8 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
         wallaData[i].description,
         wallaData[i].numCharacters
       ];
+      firstWallaRange.load('values');
+      await excel.sync();
       if (firstWallaRange.values[0][1] != ''){
         if (doReplace){
           firstWallaRange.clear("Contents");
