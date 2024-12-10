@@ -4082,6 +4082,72 @@ async function createSceneList(){
   return createChapterAndSceneList(typeCodeValues);
 }
 
+async function createMultipleWallas(wallaDataArray, rowIndexes, doReplace, doNext){
+  let isProtected = await unlockIfLocked();
+  let displayWallaRange;
+  await Excel.run(async (excel) => {
+    let loadMessage = tag('load-message');
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
+    for (let i = 0; i < rowIndexes.length; i++){
+      let firstWallaRange = scriptSheet.getRangeByIndexes(rowIndexes[i], wallaLineRangeIndex, 1, numberColumns);
+      if (i = 0){
+        displayWallaRange = firstWallaRange;
+      }
+      let wallaOriginalRange = scriptSheet.getRangeByIndexes(rowIndexes[i], wallaOriginalIndex, 1 , 1);
+      let dataArray = [
+        wallaDataArray[i].wallaLineRange,
+        wallaDataArray[i].typeOfWalla,
+        wallaDataArray[i].characters,
+        wallaDataArray[i].description,
+        wallaDataArray[i].numCharacters
+      ];
+      if (firstWallaRange.values[0][1] != ''){
+        if (doReplace){
+          firstWallaRange.clear("Contents");
+          wallaOriginalRange.clear("Contents");
+        }
+        if (doNext){
+          if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
+            for (let i = rowIndexes[i] + 1; i < rowIndexes[i] + 100; i++){
+              console.log(i)
+              firstWallaRange = scriptSheet.getRangeByIndexes(i, wallaLineRangeIndex, 1, numberColumns);
+              wallaOriginalRange = scriptSheet.getRangeByIndexes(i, wallaOriginalIndex, 1 , 1)
+              firstWallaRange.load('values');
+              await excel.sync();
+              console.log('Testing row: ', i, 'Row data: ', firstWallaRange.values[0]);
+              if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
+                if (firstWallaRange.values[0][1] == ''){
+                  rowIndexes[i] = i;
+                  break;
+                }
+              } else {
+                console.log('Already there');
+                loadMessage.style.display = 'block'
+                return null;
+              }
+            }
+            console.log('New row index', rowIndexes[i])
+          } else {
+            console.log('Already there')
+            loadMessage.style.display = 'block'
+            return null;
+          }
+        }
+      }
+      firstWallaRange.values = [dataArray];
+      wallaOriginalRange.values = [[wallaData.all]]
+      await excel.sync();
+    }
+    displayWallaRange.select();   
+    await excel.sync();
+  })
+  await showMainPage();
+  if (isProtected){
+    await lockColumns();
+  }
+}
+
 async function createWalla(wallaData, rowIndex, doReplace, doNext){
   let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
