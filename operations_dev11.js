@@ -1,7 +1,12 @@
-const codeVersion = '9.1';
+function auto_exec(){
+}
+
+let doingTake = false;
+const codeVersion = '10.1';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
+const usScriptName = 'US Script'
 const characterListName = 'Character List';
 const newTextSheetName = 'NewText'
 const settingsSheetName = 'Settings';
@@ -13,12 +18,12 @@ const locationSheetName = 'Locations';
 const comparisonSheetName = 'Comparison';
 const columnsToLock = "A:T";
 const sceneBlockRows = 4;
-const namedCharacters = 'Named Characters - For reaction sounds and walla';
-const namedCharactersColon = 'Named Characters - For reaction sounds and walla:';
-const unnamedCharacters = 'Un-named Character Walla';
-const unnamedCharactersColon = 'Un-named Character Walla:';
-const generalWalla = 'General Walla';
-const generalWallaColon = 'General Walla:';
+const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Named Characters - For reaction sounds and walla:', 'Named Characters Reactions and Walla']
+let displayWallaName = 'Named Characters Reactions and Walla:'
+const unnamedCharacters = ['Un-named Character Walla','Un-named Character Walla:'];
+let displayWallaUnNamed = 'Un-named Character Walla:';
+const generalWalla = ['General Walla', 'General Walla:']
+let displayGeneralWalla = 'General Walla:';
 const actorScriptName = 'Actor Script';
 const showTakesOffset = 20;
 
@@ -30,11 +35,13 @@ let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, uk
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex, usScriptColumnIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
-let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, lineWordCountIndex, sceneLineNumberRangeIndex, chapterCalculationIndex;
+let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, rowIndexIndex, lineWordCountIndex, sceneLineNumberRangeIndex, chapterCalculationIndex;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
 let typeCodeValues, addSelectList;
+
+let globalCountry;
 
 let scriptHiddenRows = [];
 let myTypes = {
@@ -89,9 +96,6 @@ let screenColours = {
 let choiceType ={
   list: 'List Search',
   text: 'Text Search'
-}
-
-function auto_exec(){
 }
 
 async function showMain(){
@@ -174,7 +178,8 @@ async function initialiseVariables(){
   chapterCalculationIndex = findColumnIndex('Chapter Calculation');
   lineWordCountIndex = findColumnIndex('Line Word Count');
   bookIndex = findColumnIndex('Book');
-  sceneWordCountCalcIndex = findColumnIndex('Scene word count calc'); 
+  rowIndexIndex = findColumnIndex('Row Index');
+  sceneWordCountCalcIndex = findColumnIndex('Scene word count calc');
 
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -236,6 +241,7 @@ async function unlock(){
 
 async function applyFilter(){
   /*Jade.listing:{"name":"Apply filter","description":"Applies empty filter to sheet"}*/
+  await setSheetView(true);
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
@@ -267,10 +273,57 @@ async function unlockIfLocked(){
   return isProtected
 }
 
+async function selectRange(rangeAddress = null, doCentre, rowIndex = null, columnIndex = null){
+  let xOffset = 10;
+  let minusXOffset = 10;
+  let yOffset = 10;
+  let minusYOffset = 10
+  console.log('selectRange', rangeAddress, doCentre)
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let mySelectRange
+    if (rangeAddress !== null){
+      mySelectRange = scriptSheet.getRange(rangeAddress);
+    } else if ((rowIndex !== null) && columnIndex !== null){
+      mySelectRange = scriptSheet.getRangeByIndexes(rowIndex, columnIndex, 1, 1);
+    } else {
+      return null;
+    }
+    
+    mySelectRange.load('rowIndex, columnIndex');
+    await excel.sync();
+    if (mySelectRange.rowIndex < minusYOffset){
+      minusYOffset = mySelectRange.rowIndex;
+    } 
+    if (mySelectRange.columnIndex < minusXOffset){
+      minusXOffset = mySelectRange.columnIndex;
+    }
+    if (doCentre){
+      console.log('Offsets', xOffset, yOffset)
+      let myRowIndex = mySelectRange.rowIndex + yOffset
+      let myColumnIndex = mySelectRange.columnIndex + xOffset;
+      console.log('rowIndex', myRowIndex, 'columnIndex', myColumnIndex)
+      let temp = scriptSheet.getRangeByIndexes(myRowIndex, myColumnIndex, 1, 1);
+      temp.select();
+      await excel.sync();
+      console.log('Minus Offsets', minusXOffset, minusYOffset)
+      myRowIndex = mySelectRange.rowIndex - minusYOffset
+      myColumnIndex = mySelectRange.columnIndex - minusXOffset;
+      console.log('rowIndex', myRowIndex, 'columnIndex', myColumnIndex)
+      temp = scriptSheet.getRangeByIndexes(myRowIndex, myColumnIndex, 1, 1);
+      temp.select();
+      await excel.sync();
+    }
+    mySelectRange.select();
+  })
+}
+
 async function removeFilter(){
   await Excel.run(async function(excel){
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let active = excel.workbook.getActiveCell();
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.autoFilter.load('enabled')
+    active.load('address');
     await excel.sync()
     if (scriptSheet.autoFilter.enabled){
       let isProtected = await unlockIfLocked();
@@ -279,8 +332,13 @@ async function removeFilter(){
       if (isProtected){
         await lockColumns();
       }
+      await setSheetView(false);
+      await selectRange(active.address, true);
     }  
   });
+  let message = tag('take-message');
+  message.innerText = '';
+  message.style.display = 'none';
 }
 
 async function findScene(offset){
@@ -888,6 +946,11 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
       columnName: "Book", //CK
       formulaFirst: '=IF(' + positionChapterColumn + firstRow + '="","",LEFT(' + stageDirectionWallaDescriptionColumn + firstRow + ', ' + positionChapterColumn + firstRow + '-3))',
       formulaRest: '=IF(' + positionChapterColumn + firstRestRow + '="",' + bookColumn + firstRow + ',LEFT(' + stageDirectionWallaDescriptionColumn + firstRestRow + ',' + positionChapterColumn + firstRestRow + '-3))'
+    },
+    {
+      columnName: "Row Index", //CL
+      formulaFirst: '=ROW()-1',
+      formulaRest: '=ROW()-1'
     }
   ]
   return columnFormulae;
@@ -951,6 +1014,7 @@ async function theFormulas(actualFirstRow, actualLastRow){
 }
 
 async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
+  let startTime = new Date().getTime();
   let newRowIndex;
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -959,26 +1023,38 @@ async function insertRowV2(currentRowIndex, doCopy, doFullFormula){
     const myLastColumn = dataRange.getLastColumn();
     myLastColumn.load("columnindex")
     await excel.sync();
+    let firstTime = new Date().getTime();
+    console.log('Insert Preamble:', (firstTime - startTime) / 1000)
     const myRow = scriptSheet.getRangeByIndexes(currentRowIndex, 0, 1, myLastColumn.columnIndex+1);
     const newRow = myRow.insert("Down");
     await excel.sync();
+    let secondTime = new Date().getTime();
+    console.log('Actual Insert Row Time taken:', (secondTime - firstTime) / 1000)
     if (doCopy){
       newRow.copyFrom(myRow, "All");
+      let thirdTime = new Date().getTime();
       await excel.sync(); 
+      let afterCopyFrom = new Date().getTime();
+      console.log('Copy from time taken:', (afterCopyFrom - thirdTime) / 1000)  
     }
     if (doFullFormula){
       //console.log('Doing full formulas');
+      await fillSceneLineNumberRange(currentRowIndex);
       await theFormulas((currentRowIndex + 1), (currentRowIndex + 1));
     } else {
+      console.log('doing correctformulas', currentRowIndex + 1);
       await correctFormulas(currentRowIndex + 1);  
     }
-    
     newRow.load('rowIndex');
     await excel.sync();
     newRowIndex = newRow.rowIndex;
+    let sixthTime = new Date().getTime();
+    console.log('After rowIndex Time taken:', (sixthTime - startTime) / 1000)
     if (isProtected){
       await lockColumns();
     }
+    let endTime = new Date().getTime();
+    console.log('Complete Insert V2 Time taken:', (endTime - startTime) / 1000)
   });
   return newRowIndex;
 }
@@ -1011,8 +1087,8 @@ async function deleteRow(){
   });
 }
 async function correctFormulas(firstRow){
+  let startTime = new Date().getTime();              
   const sceneLineNumberRangeColumn = findColumnLetter("Scene Line Number Range"); //C
-  const sceneNumberColumn = findColumnLetter("Scene Number"); //D
   const stageDirectionWallaDescriptionColumn = findColumnLetter("Stage Direction/ Walla description") //J
   const positionMinusColumn = findColumnLetter("Position -"); //BU
   const startLineColumn = findColumnLetter("Start Line"); //BV
@@ -1028,73 +1104,105 @@ async function correctFormulas(firstRow){
   const alphaLineRangeColumn = findColumnLetter('Alpha Line Range') //CJ
   const bookColumn = findColumnLetter("Book"); //CK
   
+  
   const columnFormulae = [
     {
-      columnName: "Start Line", //BV
-      formulaRest: "=IF(" + positionMinusColumn + firstRow + "=0," + startLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + ",2," + positionMinusColumn + firstRow + "-2)))"
+      columnName: "Start Line", //BW
+      formulaRest: "=IF(" + positionMinusColumn + firstRow + "=0," + startLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + ",2," + positionMinusColumn + firstRow + "-2)))",
+      columnLetter: startLineColumn
     },
     {
-      columnName: "End Line", //BX
-      formulaRest: "=IF(" + positionEndSqaureBracketColumn + firstRow + "=0," + endLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + "," + positionMinusColumn + firstRow + "+1," + positionEndSqaureBracketColumn + firstRow + "-" + positionMinusColumn + firstRow + "-1)))"
+      columnName: "End Line", //BY
+      formulaRest: "=IF(" + positionEndSqaureBracketColumn + firstRow + "=0," + endLineColumn + (firstRow - 1) + ",VALUE(MID(" + sceneLineNumberRangeColumn + firstRow + "," + positionMinusColumn + firstRow + "+1," + positionEndSqaureBracketColumn + firstRow + "-" + positionMinusColumn + firstRow + "-1)))",
+      columnLetter: endLineColumn
     },
     {
       columnName: "Scene", //CB
-      formulaRest: '=IF(OR(' + sceneBordersColumn + firstRow + '="Copy",' + sceneBordersColumn + firstRow + '=""),' + sceneColumn + (firstRow - 1) + ',' + sceneColumn + (firstRow - 1) + '+1)'
+      formulaRest: '=IF(OR(' + sceneBordersColumn + firstRow + '="Copy",' + sceneBordersColumn + firstRow + '=""),' + sceneColumn + (firstRow - 1) + ',' + sceneColumn + (firstRow - 1) + '+1)',
+      columnLetter: sceneColumn
     },
     {
-	    columnName: "Word count to this line", //CC
-      formulaRest: "=IF(" + sceneColumn + firstRow + "=" + sceneColumn + (firstRow - 1) + "," + wordCountToThisLineColumn + (firstRow -1) + "+" + lineWordCountColumn + firstRow + "," + lineWordCountColumn + firstRow + ")"
-  	}    ,
+	    columnName: "Word count to this line", //CD
+      formulaRest: "=IF(" + sceneColumn + firstRow + "=" + sceneColumn + (firstRow - 1) + "," + wordCountToThisLineColumn + (firstRow -1) + "+" + lineWordCountColumn + firstRow + "," + lineWordCountColumn + firstRow + ")",
+      columnLetter: wordCountToThisLineColumn
+  	},
     {
-      columnName: "Chapter Calculation", //CF
-      formulaRest: '=VALUE(IF(' + positionChapterColumn + firstRow + '="",' + chapterCalculationColumn + (firstRow - 1) + ',MID(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '+7,99)))'
+      columnName: "Chapter Calculation", //CG
+      formulaRest: '=VALUE(IF(' + positionChapterColumn + firstRow + '="",' + chapterCalculationColumn + (firstRow - 1) + ',MID(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '+7,99)))',
+      columnLetter: chapterCalculationColumn
     },
     {
       columnName: "Scene Borders", //CI
-      formulaRest: '=IF(' + cueColumn + firstRow + '="", IF(' + sceneBordersColumn + (firstRow - 1) + '="Start",' + sceneBordersColumn + (firstRow - 1) + ',""),IF(' + alphaLineRangeColumn + firstRow + '=' + alphaLineRangeColumn + (firstRow - 1) + ',"Copy","Original"))'
+      formulaRest: '=IF(' + cueColumn + firstRow + '="", IF(' + sceneBordersColumn + (firstRow - 1) + '="Start",' + sceneBordersColumn + (firstRow - 1) + ',""),IF(' + alphaLineRangeColumn + firstRow + '=' + alphaLineRangeColumn + (firstRow - 1) + ',"Copy","Original"))',
+      columnLetter: sceneBordersColumn
     },
     {
       columnName: "Book", //CK
-      formulaRest: '=IF(' + positionChapterColumn + firstRow + '="",' + bookColumn + (firstRow - 1) + ',LEFT(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '-3))'
+      formulaRest: '=IF(' + positionChapterColumn + firstRow + '="",' + bookColumn + (firstRow - 1) + ',LEFT(' + stageDirectionWallaDescriptionColumn + firstRow + ',' + positionChapterColumn + firstRow + '-3))',
+      columnLetter: bookColumn
     }
-    
   ]
+
   await Excel.run(async function(excel){ 
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let app = excel.workbook.application;
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    app.suspendScreenUpdatingUntilNextSync();
+    app.suspendApiCalculationUntilNextSync();
+    
     let isProtected = await unlockIfLocked();
     for (let columnFormula of columnFormulae){
-      const columnLetter = findColumnLetter(columnFormula.columnName);
-      const myRange = columnLetter + firstRow + ":" + columnLetter + (firstRow +1) ;
-      //console.log("Range to replace: " + myRange);
-      const range = scriptSheet.getRange(myRange);
-      //console.log("Formula: " + columnFormula.formulaRest);
-      range.formulas = columnFormula.formulaRest;
-      await excel.sync();
-      //console.log("Formula after sync: " + range.formulas);
+      const range = scriptSheet.getRange(columnFormula.columnLetter + firstRow + ":" + columnFormula.columnLetter + (firstRow +1));
+      range.formulas = [[columnFormula.formulaRest],[columnFormula.formulaRest]];
     }
+    await excel.sync();
     if (isProtected){
       await lockColumns();
     }
   })
+  let endTime = new Date().getTime();
+  console.log('Formulae', (endTime - startTime) / 1000)
 }
 
 function zeroElement(value){
   return value[0];
 }
 
+function colourButton(theButton, isNormal){
+  if (isNormal){
+    theButton.style.backgroundColor = '#46656F';
+    theButton.style.border = 'none';
+    theButton.style.color = '#fef3df';
+  } else {
+    theButton.style.backgroundColor = '#d8dfe6';
+    theButton.style.border = 'solid';
+    theButton.style.color = '#8BA3B1';
+  }
+}
 async function addTakeDetails(country, doDate){
+  if (doingTake){
+    alert('Already doing a take. Please wait')
+    return null;
+  } else {
+    doingTake = true;
+  }
+  let button;
+  if (country == 'UK'){
+    button = tag('btnAddTakeUK');
+  } else if (country == 'US'){
+    button = tag('btnAddTakeUS');
+  }
+  colourButton(button, false);
+  const startTime = new Date().getTime();
   let myAction = radioButtonChoice();
   console.log('The action: ', myAction);
   let myWait = tag('take-wait')
   myWait.style.display = 'block';
-
   await Excel.run(async function(excel){ 
     const activeCell = excel.workbook.getActiveCell();
     let selectCell = activeCell.getOffsetRange(1, 0);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
     let lineDetails =  await findDetailsForThisLine();
-    console.log(lineDetails);
     let takeNoIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex, countryTakes;
     let newLine;
     let newLineIndex;
@@ -1125,27 +1233,22 @@ async function addTakeDetails(country, doDate){
     }
     if (lineDetails.totalTakes == 0){
       let currentRowIndex = lineDetails.indicies[0];
-      console.log('Current Row Index');
-      console.log(currentRowIndex);
       newLineIndex = currentRowIndex;
       lineDetails.totalTakes = 1;
-      console.log('Added row');
-      console.log(lineDetails);
       selectCell = activeCell.getOffsetRange(0, 0);
     } else if (lineDetails.totalTakes == countryTakes){
       let currentRowIndex = lineDetails.indicies[countryTakes - 1];
-      console.log('Current Row Index');
-      console.log(currentRowIndex);
-      await insertRowV2(currentRowIndex, true, false)
+      let beforeInsert = new Date().getTime();
+      console.log('Preamble:', (beforeInsert - startTime) / 1000)
+      await insertRowV2(currentRowIndex, true, false);
+      let afterInsert = new Date().getTime();
+      console.log('Insert Time taken:', (afterInsert - beforeInsert) / 1000)
       newLineIndex = currentRowIndex + 1;
       lineDetails.indicies.push(newLineIndex);
       lineDetails.totalTakes += 1;
-      console.log('Added row');
-      console.log(lineDetails);
     } else {
       newLineIndex = lineDetails.indicies[newLine - 1];
       //Need to copy from the row above
-      console.log('New Line Index: ', newLineIndex);
       scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       let newRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
       let copyRange = scriptSheet.getRangeByIndexes(newLineIndex - 1, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
@@ -1161,9 +1264,9 @@ async function addTakeDetails(country, doDate){
     } else if (country == 'Walla'){
       lineDetails.wallaTakes = newLine;
     }
-    console.log("New Line");
-    console.log(newLine);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let beforeAdd = new Date().getTime();
+    console.log('Before Add Time taken:', (beforeAdd - startTime) / 1000)
     if (doDate){
       let dateRange = scriptSheet.getRangeByIndexes(newLineIndex, dateRecordedIndex, 1, 1);
       let theDate = dateInFormat();
@@ -1173,6 +1276,7 @@ async function addTakeDetails(country, doDate){
     let markUpRange = scriptSheet.getRangeByIndexes(newLineIndex, markUpIndex, 1, 1);
     let studioRange = scriptSheet.getRangeByIndexes(newLineIndex, studioIndex, 1, 1);
     let engineerRange = scriptSheet.getRangeByIndexes(newLineIndex, engineerIndex, 1, 1);
+
     if ((myAction == 'justDate') || (myAction == 'detailsBelow')){
       markUpRange.clear("Contents");
       studioRange.clear("Contents");
@@ -1193,13 +1297,23 @@ async function addTakeDetails(country, doDate){
   
     console.log("Line Details")
     console.log(lineDetails);
+    let beforeTidyTime = new Date().getTime();
+    console.log('Date taken:', (beforeTidyTime - beforeAdd) / 1000)
     await doTheTidyUp(lineDetails)
+    let afterTidyTime = new Date().getTime();
+    console.log('Tidy Time taken:', (afterTidyTime - beforeTidyTime) / 1000)
     await refreshColourTakes();
+    let afterColour = new Date().getTime();
+    console.log('Colour Time taken:', (afterColour - afterTidyTime) / 1000)
     if (isProtected){
       await lockColumns();
     } 
+    colourButton(button, true);
   });
   myWait.style.display = 'none';
+  let endTime = new Date().getTime();
+  console.log('Time taken:', (endTime - startTime) / 1000)
+  doingTake = false;
 }
 
 
@@ -1263,7 +1377,17 @@ function cleanTakes(values){
 }
 
 async function removeTake(country){
+  let startTime = new Date().getTime();
+  let button;
+  if (country == 'UK'){
+    button = tag('btnRemoveTakeUK');
+  } else if (country = 'US'){
+    button = tag('btnRemoveTakeUS');
+  }
+  colourButton(button, false);
   let markUpIndex, engineerIndex, takeNoIndex, countryTakes;
+  let myWait = tag('take-wait')
+  myWait.style.display = 'block';
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
@@ -1284,35 +1408,33 @@ async function removeTake(country){
     }
     if (country == 'UK'){
       markUpIndex = ukMarkUpIndex;
-      console.log('Mark Up Index', markUpIndex);
       engineerIndex = ukEngineerIndex;
-      console.log('Engineer Index', engineerIndex);
       takeNoIndex = ukTakeNoIndex;
       countryTakes = lineDetails.ukTakes;
     } else if (country == 'US'){
       markUpIndex = usMarkUpIndex;
-      console.log('Mark Up Index', markUpIndex);
       engineerIndex = usEngineerIndex;
-      console.log('Engineer Index', engineerIndex);
       takeNoIndex = usTakeNoIndex;
       countryTakes = lineDetails.usTakes;
     } else if (country == 'Walla'){
       markUpIndex = wallaMarkUpIndex;
-      console.log('Mark Up Index', markUpIndex);
       engineerIndex = wallaEngineerIndex;
-      console.log('Engineer Index', engineerIndex);
       takeNoIndex = wallaTakeNoIndex;
       countryTakes = lineDetails.wallaTakes;
     }   
     if ((foundTake > 0) && countryTakes > 0){
       // Is this the last take for this country...
-      console.log('Found take: ', foundTake);
+      //console.log('Found take: ', foundTake);
       if (lineDetails.totalTakes == 1){
         console.log('Only 1 total takes, which we cannot delete, so we clear the relevant area')
         console.log('currentRowIndex: ', lineDetails.currentRowIndex);
         let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
         clearRange.load('address');
+        let beforeExcelSync1 = new Date().getTime();
+        console.log('Before Excel Sync 1 taken:', (beforeExcelSync1 - startTime) / 1000)
         await excel.sync();
+        let afterExcelSync1 = new Date().getTime();
+        console.log('Before Excel Sync 1 taken:', (afterExcelSync1 - startTime) / 1000)
         console.log("Clear range: ", clearRange.address)
         clearRange.clear("Contents");
         let takeNoRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, takeNoIndex, 1, 1);
@@ -1327,7 +1449,11 @@ async function removeTake(country){
         if ((lineDetails.ukTakes == 0) && (lineDetails.usTakes == 0) && (lineDetails.wallaTakes == 0)){
           lineDetails.totalTakes = 0;
         }
+        let beforeExcelSync2 = new Date().getTime();
+        console.log('Before Excel Sync 2 taken:', (beforeExcelSync2 - startTime) / 1000)
         await excel.sync();
+        let afterExcelSync2 = new Date().getTime();
+        console.log('After Excel Sync 2 taken:', (afterExcelSync2 - startTime) / 1000)
       } else {
         if (foundTake == countryTakes){
         console.log('Found take is countries final take')
@@ -1363,7 +1489,11 @@ async function removeTake(country){
               } else if (country == 'Walla') {
                 lineDetails.wallaTakes -= 1;
               }
+              let beforeExcelSync3 = new Date().getTime();
+              console.log('Before Excel Sync 3 taken:', (beforeExcelSync3 - startTime) / 1000)
               await excel.sync();
+              let afterExcelSync3 = new Date().getTime();
+              console.log('After Excel Sync 3 taken:', (afterExcelSync3 - startTime) / 1000)
             } else {
               // test country is on final take and it's the only one
               //No - Delete the row and update the total and country numbers
@@ -1371,13 +1501,24 @@ async function removeTake(country){
               console.log('currentRowIndex: ', lineDetails.currentRowIndex);
               scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
               let deleteRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, 0, 1, 1).getEntireRow();
+              /*
               deleteRange.load('address');
+              let beforeExcelSync4 = new Date().getTime();
+              console.log('Before Excel Sync 4 taken:', (beforeExcelSync4 - startTime) / 1000)
               await excel.sync();
+              let afterExcelSync4 = new Date().getTime();
+              console.log('After Excel Sync 4 taken:', (afterExcelSync4 - startTime) / 1000)
               console.log("Delete range address: ", deleteRange.address);
+              */
               deleteRange.delete("Up");
-              selectCell.select();
+              let beforeExcelSync5 = new Date().getTime();
+              console.log('Preamble:', (beforeExcelSync5 - startTime) / 1000)
               await excel.sync();
+              let afterExcelSync5 = new Date().getTime();
+              console.log('Delete row taken:', (afterExcelSync5 - beforeExcelSync5) / 1000)
               await correctFormulas(lineDetails.currentRowIndex);
+              let afterFormulas = new Date().getTime();
+              console.log('After formulas taken:', (afterFormulas - startTime) / 1000)
               lineDetails.totalTakes = lineDetails.totalTakes - 1;
               if (country == 'UK'){
                 lineDetails.ukTakes -= 1;
@@ -1398,7 +1539,11 @@ async function removeTake(country){
             console.log('Diff: ', (engineerIndex - markUpIndex + 1));
             let clearRange = scriptSheet.getRangeByIndexes(lineDetails.currentRowIndex, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
             clearRange.load('address');
+            let beforeExcelSync6 = new Date().getTime();
+            console.log('Before Excel Sync 6 taken:', (beforeExcelSync6 - startTime) / 1000)
             await excel.sync();
+            let afterExcelSync6 = new Date().getTime();
+            console.log('After Excel Sync 6 taken:', (afterExcelSync6 - startTime) / 1000)
             console.log("Clear range: ", clearRange.address)
             clearRange.clear("Contents");
             if (country == 'UK'){
@@ -1408,7 +1553,11 @@ async function removeTake(country){
             } else if (country == 'Walla') {
               lineDetails.wallaTakes -= 1;
             }
+            let beforeExcelSync7 = new Date().getTime();
+            console.log('Before Excel Sync 7 taken:', (beforeExcelSync7 - startTime) / 1000)
             await excel.sync();
+            let afterExcelSync7 = new Date().getTime();
+            console.log('After Excel Sync 7 taken:', (afterExcelSync7 - startTime) / 1000)
           } 
         } else {
           // Test country is not the final one of UK and so....
@@ -1441,7 +1590,11 @@ async function removeTake(country){
           }
           let lastRowRange = scriptSheet.getRangeByIndexes(lastItem, markUpIndex, 1, (engineerIndex - markUpIndex + 1));
           lastRowRange.clear("Contents");
+          let beforeExcelSync8 = new Date().getTime();
+          console.log('Before Excel Sync 8 taken:', (beforeExcelSync8 - startTime) / 1000)
           await excel.sync();
+          let afterExcelSync8 = new Date().getTime();
+          console.log('After Excel Sync 8 taken:', (afterExcelSync8 - startTime) / 1000)
           if (country == 'UK'){
             lineDetails.ukTakes -= 1;
           } else if (country == 'US') {
@@ -1456,27 +1609,43 @@ async function removeTake(country){
             let lastItem = lineDetails.indicies[lineDetails.indicies.length - 1]
             let deleteRange = scriptSheet.getRangeByIndexes(lastItem, 0, 1, 1).getEntireRow();
             deleteRange.load('address');
+            let beforeExcelSync9 = new Date().getTime();
+            console.log('Before Excel Sync 9 taken:', (beforeExcelSync9 - startTime) / 1000)
             await excel.sync();
+            let afterExcelSync9 = new Date().getTime();
+            console.log('After Excel Sync 9 taken:', (afterExcelSync9 - startTime) / 1000)
             console.log("Delete range address: ", deleteRange.address);
             deleteRange.delete("Up");
-            selectCell.select();
+            let beforeExcelSync10 = new Date().getTime();
+            console.log('Before Excel Sync 10 taken:', (beforeExcelSync10 - startTime) / 1000)
             await excel.sync();
+            let afterExcelSync10 = new Date().getTime();
+            console.log('after Excel Sync 10 taken:', (afterExcelSync10 - startTime) / 1000)
             await correctFormulas(lineDetails.currentRowIndex);
+            let afterFormualas2 = new Date().getTime();
+            console.log('after Formulas 2 taken:', (afterFormualas2 - startTime) / 1000)
             lineDetails.totalTakes = lineDetails.totalTakes - 1;
             lineDetails.currentRowIndex -= 1;
             lineDetails.indicies.pop();
           }
         }
       }
+      selectCell.select()
     } else {
       console.log('Take not found')
     }
     console.log("Line Details")
     console.log(lineDetails);
+    let beforeTidyUp = new Date().getTime();
+    console.log('Before Tidy Up taken:', (beforeTidyUp - startTime) / 1000)
     await doTheTidyUp(lineDetails)
     if (isProtected){
       await lockColumns();
     }
+    myWait.style.display = 'none';
+    let endTime = new Date().getTime();
+    console.log('Remove take time:', (endTime - startTime) / 1000);
+    colourButton(button, true);
   });
 }
 
@@ -1508,41 +1677,53 @@ async function getAllLinesWithThisNumber(excel, currentRowIndex){
 }
 
 async function doTheTidyUp(lineDetails){
+  let startTime = new Date().getTime();
   await Excel.run(async function(excel){ 
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let item = 0;
+    let ukResults = [];
+    let usResults = [];
+    let wallaResults = [];
+
     for (let index of lineDetails.indicies){
       item += 1;
-      let totalTakesRange = scriptSheet.getRangeByIndexes(index, totalTakesIndex, 1, 1)
-      totalTakesRange.values = lineDetails.totalTakes;
-      let ukTakesRange = scriptSheet.getRangeByIndexes(index, ukTakesIndex, 1, 1);
-      let ukTakeNoRange = scriptSheet.getRangeByIndexes(index, ukTakeNoIndex, 1, 1);
-      ukTakesRange.values = lineDetails.ukTakes;
+      let ukTakeNo;
       if (item > lineDetails.ukTakes){
-        ukTakeNoRange.values = 'N/A';
+        ukTakeNo = 'N/A';
       } else {
-        ukTakeNoRange.values = item;
+        ukTakeNo = item;
       }
       
-      let usTakesRange = scriptSheet.getRangeByIndexes(index, usTakesIndex, 1, 1);
-      let usTakeNoRange = scriptSheet.getRangeByIndexes(index, usTakeNoIndex, 1, 1);
-      usTakesRange.values = lineDetails.usTakes;
+      ukResults[item - 1] = [lineDetails.totalTakes, lineDetails.ukTakes, ukTakeNo]
+      let usTakeNo
       if (item > lineDetails.usTakes){
-        usTakeNoRange.values = 'N/A';
+        usTakeNo = 'N/A';
       } else {
-        usTakeNoRange.values = item;
+        usTakeNo = item;
       }
 
-      let wallaTakesRange = scriptSheet.getRangeByIndexes(index, wallaTakesIndex, 1, 1);
-      let wallaTakeNoRange = scriptSheet.getRangeByIndexes(index, wallaTakeNoIndex, 1, 1);
-      wallaTakesRange.values = lineDetails.wallaTakes;
+      usResults[item - 1] = [lineDetails.usTakes, usTakeNo]
+      let wallaTakeNo;
       if (item > lineDetails.wallaTakes){
-        wallaTakeNoRange.values = 'N/A';
+        wallaTakeNo = 'N/A';
       } else {
-        wallaTakeNoRange.values = item;
+        wallaTakeNo = item;
       }
+      wallaResults[item - 1] = [lineDetails.wallaTakes, wallaTakeNo]
     }
+    let ukRange = scriptSheet.getRangeByIndexes(lineDetails.indicies[0], totalTakesIndex, lineDetails.indicies.length, 3);
+    let usRange = scriptSheet.getRangeByIndexes(lineDetails.indicies[0], usTakesIndex, lineDetails.indicies.length, 2);
+    let wallaRange = scriptSheet.getRangeByIndexes(lineDetails.indicies[0], wallaTakesIndex, lineDetails.indicies.length, 2);
+    ukRange.values = ukResults;
+    usRange.values = usResults;
+    wallaRange.values = wallaResults;
+
+    let beforeExcelSync = new Date().getTime();
+    console.log('Tidy Up Before Excel Sync taken:', (beforeExcelSync - startTime) / 1000)
     await excel.sync();
+    let afterExcelSync = new Date().getTime();
+    console.log('Tidy Up After Excel Sync taken:', (afterExcelSync - startTime) / 1000)
+    //console.log('ukResults', ukResults, "usResults", usResults, "wallaResults", wallaResults)
   });
 }
 
@@ -2261,6 +2442,23 @@ function showAdmin(){
     admin.style.display = 'block';
   }
 }
+function showComparison(){
+  let comp = tag('comparison')
+  if (comp.style.display === 'block'){
+    comp.style.display = 'none';
+  } else {
+    comp.style.display = 'block';
+  }
+}
+
+function showUsScript(){
+  let usScript = tag('us-script')
+  if (usScript.style.display === 'block'){
+    usScript.style.display = 'none';
+  } else {
+    usScript.style.display = 'block';
+  }
+}
 
 async function getCharacters(sheetName, charIndex){
   let characters
@@ -2278,26 +2476,58 @@ async function getCharacters(sheetName, charIndex){
   return characters;
 }
 
-async function filterOnCharacter(characterName){
+async function getActiveCellDetails(){
+  let result = {}
+  await Excel.run(async function(excel){
+    let active = excel.workbook.getActiveCell();
+    active.load('address, rowIndex, columnIndex');
+    await excel.sync()
+    result.address = active.address;
+    result.rowIndex = active.rowIndex;
+    result.columnIndex = active.columnIndex;
+  })
+  return result;
+}
+
+async function filterOnCharacter(characterName, includeScenes, sceneRowIndexes){
   await Excel.run(async function(excel){
     let myRange = await getDataRange(excel);
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    const myCriteria = {
-      filterOn: Excel.FilterOn.custom,
-      criterion1: characterName
+    scriptSheet.autoFilter.remove();
+    if (includeScenes){
+      let testTypes = [myTypes.line, myTypes.sceneBlock]
+      let myTypeCrteria = {
+        filterOn: Excel.FilterOn.values,
+        values: testTypes
+      }
+      scriptSheet.autoFilter.apply(myRange, typeCodeIndex, myTypeCrteria);
+
+      let sceneRowIndexesString = [];
+      for (let i = 0; i < sceneRowIndexes.length; i++){
+        sceneRowIndexesString.push(sceneRowIndexes[i].toString());
+      }
+      console.log('sceneNumbers', sceneRowIndexes, sceneRowIndexesString);
+      mySceneCriteria = {
+        filterOn: Excel.FilterOn.values,
+        values: sceneRowIndexesString
+      }
+      scriptSheet.autoFilter.apply(myRange, rowIndexIndex, mySceneCriteria);
+      myCriteria = {
+        filterOn: Excel.FilterOn.custom,
+        criterion1: characterName,
+        criterion2: '=',
+        operator: 'Or'
+      }
+      scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
+
+    } else {
+      myCriteria = {
+        filterOn: Excel.FilterOn.custom,
+        criterion1: characterName
+      }
+      scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
     }
-    scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
-    myRange.load('address');
     await excel.sync();
-    console.log('My range address:', myRange.address)
-    scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let filteredRange = myRange;
-    filteredRange.load('values');
-    filteredRange.load('address')
-    await excel.sync();
-    console.log('Filtered');
-    console.log(filteredRange.address)
-    console.log(filteredRange.values);
   })
 }
 
@@ -3003,6 +3233,7 @@ async function showForActorsPage(){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
     actorsSheet.activate();
   })
+  jade_modules.scheduling.setDefaultIfNotSet();
   await jade_modules.scheduling.displayScenes();
 }
 
@@ -3126,6 +3357,9 @@ async function handleActor(event) {
         await jade_modules.scheduling.searchCharacter();
       }
       if((event.address == 'D4') && event.source == 'Local'){
+        await jade_modules.scheduling.searchCharacter();
+      }
+      if((event.address == 'B6') && event.source == 'Local'){
         await jade_modules.scheduling.searchCharacter();
       }
   }).catch(errorHandlerFunction(e));
@@ -3590,6 +3824,13 @@ async function formatWallaBlock(excel, sheet, theRange, newRowIndex, leftMostCol
   theRange.format.fill.color = myFormats.green;
   theRange.format.horizontalAlignment = 'Left';
   theRange.format.verticalAlignment = 'Top';
+  let myBorders = theRange.format.borders;
+  doBorder(myBorders, 'EdgeTop');
+  doBorder(myBorders, 'EdgeBottom');
+  doBorder(myBorders, 'EdgeLeft');
+  doBorder(myBorders, 'EdgeRight');
+  doBorder(myBorders, 'InsideHorizontal');
+  doBorder(myBorders, 'InsideVertical');
   await excel.sync()
   for (let i = 0; i < blockRows; i++){
     let tempRange = sheet.getRangeByIndexes(newRowIndex + i, leftMostColumn, 1, numColumns);
@@ -3603,6 +3844,13 @@ async function formatWallaBlockCue(excel, theRange){
   theRange.format.fill.color = myFormats.green;
   theRange.format.horizontalAlignment = 'Center';
   theRange.format.verticalAlignment = 'Top';
+  let myBorders = theRange.format.borders;
+  doBorder(myBorders, 'EdgeTop');
+  doBorder(myBorders, 'EdgeBottom');
+  doBorder(myBorders, 'EdgeLeft');
+  doBorder(myBorders, 'EdgeRight');
+  doBorder(myBorders, 'InsideHorizontal');
+  doBorder(myBorders, 'InsideVertical');
   await excel.sync();
   
 }
@@ -3925,7 +4173,7 @@ async function calculateWallaCues(){
     let rowsToDo = []
     let rowIndex = -1;
     for (let i = 0; i < wallaRange.values.length; i++){
-      if ((wallaRange.values[i][1].toLowerCase() == namedCharacters.toLowerCase()) || (wallaRange.values[i][1].toLowerCase() == namedCharactersColon.toLowerCase())){
+      if (isNamedWalla(wallaRange.values[i][1])){
         rowIndex += 1;
         rowsToDo[rowIndex] = i
       }
@@ -3935,7 +4183,7 @@ async function calculateWallaCues(){
     wallaCueColumn.clear("Contents")
     await excel.sync();
 
-    let wallaNumber = 0
+    let wallaNumber = await getFirstWalla();
     let theCells = []
     for (let i = 0; i < rowsToDo.length; i++){
       wallaNumber += 1
@@ -3946,7 +4194,18 @@ async function calculateWallaCues(){
     }
     await excel.sync();
   })
+}
 
+async function getFirstWalla(){
+  let firstWalla;
+  await Excel.run(async (excel) => {
+    const settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
+    let firstWallaRange = settingsSheet.getRange('seFirstWalla');
+    firstWallaRange.load('values');
+    await excel.sync();
+    firstWalla = firstWallaRange.values[0][0];
+  })
+  return firstWalla;
 }
 
 function allEmpty(theArray){
@@ -3956,6 +4215,14 @@ function allEmpty(theArray){
     }
   }
   return true;
+}
+
+function getWallaDisplayName(wallaName){
+  let temp = wallaName.trim();
+  if (!temp.endsWith(':')){
+    temp = temp + ':';
+  }
+  return temp;
 }
 
 async function getSceneWallaInformation(typeNo){
@@ -3983,6 +4250,8 @@ async function getSceneWallaInformation(typeNo){
     await Excel.run(async (excel) => {
       const firstRowIndex = firstDataRow - 1;
       const lastRowIndex = lastDataRow - firstDataRow;
+      const firstLastDetails = await getFirstLastIndex();
+      console.log('firstLastDetails', firstLastDetails)
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       let typeOfWallaRange = scriptSheet.getRangeByIndexes(firstRowIndex, typeOfWallaIndex, lastRowIndex, 1);
       let sceneRange = scriptSheet.getRangeByIndexes(firstRowIndex, sceneIndex, lastRowIndex, 1);
@@ -4008,6 +4277,7 @@ async function getSceneWallaInformation(typeNo){
             if (sceneRange.values[i][0] == sceneNo){
               theIndex += 1;
               myIndecies[theIndex] = i;
+              displayWallaName = getWallaDisplayName(typeOfWallaRange.values[i][0]);
             } else if (sceneRange.values[i][0] > sceneNo){
               break;
             }
@@ -4022,6 +4292,7 @@ async function getSceneWallaInformation(typeNo){
             if (sceneRange.values[i][0] == sceneNo){
               theIndex += 1;
               myIndecies[theIndex] = i;
+              displayWallaUnNamed = getWallaDisplayName(typeOfWallaRange.values[i][0]);
             }
           } else if (sceneRange.values[i][0] > sceneNo){
               break; 
@@ -4036,6 +4307,7 @@ async function getSceneWallaInformation(typeNo){
             if (sceneRange.values[i][0] == sceneNo){
               theIndex += 1;
               myIndecies[theIndex] = i;
+              displayGeneralWalla = getWallaDisplayName(typeOfWallaRange.values[i][0]);
             }
           } else if (sceneRange.values[i][0] > sceneNo){
               break; 
@@ -4049,24 +4321,24 @@ async function getSceneWallaInformation(typeNo){
       let details = []
       if (doNamed){
         if (myIndecies.length == 0){
-          details = [namedCharactersColon + ' None'];
+          details = [displayWallaName + ' None'];
         } else {
-          details = [namedCharactersColon];
+          details = [displayWallaName];
         }
       }
       if (doUnnamed){
         if (myIndecies.length == 0){
-          details = [unnamedCharactersColon + ' None'];  
+          details = [displayWallaUnNamed + ' None'];  
         } else {
-          details = [unnamedCharactersColon];  
+          details = [displayWallaUnNamed];  
         }
       }
       
       if (doGeneral){
         if (myIndecies.length == 0){
-          details = [generalWallaColon + ' None'];  
+          details = [displayGeneralWalla + ' None'];  
         } else {
-          details = [generalWallaColon];  
+          details = [displayGeneralWalla];  
         }
       }
       let item = 0;
@@ -4110,7 +4382,7 @@ async function getSceneWallaInformation(typeNo){
       if (doIt){
         let selectCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
         selectCell.select();
-        await insertRowV2(sceneRowIndex, false, false);
+        await insertRowV2(sceneRowIndex, false, true);
         let typeCodeCell = scriptSheet.getRangeByIndexes(sceneRowIndex, typeCodeIndex, 1, 1);
         let wallaCueCell = scriptSheet.getRangeByIndexes(sceneRowIndex, cueIndex, 1, 1);
         let wallaDetailsCell = scriptSheet.getRangeByIndexes(sceneRowIndex, numberIndex, 1, 1);
@@ -4128,15 +4400,64 @@ async function getSceneWallaInformation(typeNo){
   }
 }
 function isNamedWalla(theType){
-  return ((theType.trim().toLowerCase() == namedCharacters.trim().toLowerCase()) || (theType.trim().toLowerCase() == namedCharactersColon.trim().toLowerCase()));
+  for (text of namedCharacters){
+    if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
+      return true;
+    }
+  }
+  return false;
+}
+
+async function fillSceneLineNumberRange(rowIndex){
+  // Takes scene line number range from cell above unless empty in which case from below.
+  await Excel.run(async (excel) => {
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let sceneLineNumberRange;
+    let sceneLineNumbers;
+    if (rowIndex > 0){
+      sceneLineNumberRange = scriptSheet.getRangeByIndexes(rowIndex - 1, sceneLineNumberRangeIndex, 3, 1);
+      sceneLineNumberRange.load('values');
+      await excel.sync();
+      sceneLineNumbers = sceneLineNumberRange.values;
+      if (sceneLineNumbers[0][0] != ''){
+        sceneLineNumbers[1][0] = sceneLineNumbers[0][0]; 
+        console.log('Used row above', sceneLineNumbers[0][0])
+      } else if (sceneLineNumbers[2][0] != ''){
+        sceneLineNumbers[1][0] = sceneLineNumbers[2][0]; 
+        console.log('Used row below, 3 lines', sceneLineNumbers[2][0])
+      }
+    } else {
+      sceneLineNumberRange = scriptSheet.getRangeByIndexes(rowIndex, sceneLineNumberRangeIndex, 2, 1);
+      sceneLineNumberRange.load('values');
+      await excel.sync;
+      sceneLineNumbers = sceneLineNumberRange.values;
+      if (sceneLineNumbers[1][0] != ''){
+        sceneLineNumbers[0][0] = sceneLineNumbers[1][0]; 
+        console.log('Used row below, 2 lines', sceneLineNumbers[1][0])
+      }
+    }
+    console.log('sceneLineNumbers', sceneLineNumbers);
+    sceneLineNumberRange.values = sceneLineNumbers;
+    await excel.sync();
+  })
 }
 
 function isUnamedWalla(theType){
-  return ((theType.trim().toLowerCase() == unnamedCharacters.trim().toLowerCase()) || (theType.trim().toLowerCase() == unnamedCharactersColon.trim().toLowerCase()));
+  for (text of unnamedCharacters){
+    if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
+      return true;
+    }
+  }
+  return false;
 }
 
 function isGeneralWalla(theType){
-  return ((theType.trim().toLowerCase() == generalWalla.trim().toLowerCase()) || (theType.trim().toLowerCase() == generalWallaColon.trim().toLowerCase()));
+  for (text of generalWalla){
+    if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
+      return true;
+    }
+  }
+  return false;
 }
 
 async function deleteAllSceneAndWallaBlocks(){
@@ -4195,7 +4516,7 @@ async function clearWalla(){
 }
 
 
-async function getRowIndeciesForScene(sceneNumber){
+async function getRowIndeciesForScene(sceneNumber, usOnly){
   let myIndecies, newIndexes;
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -4216,8 +4537,24 @@ async function getRowIndeciesForScene(sceneNumber){
         newIndexes[newIndex] = myIndecies[i];
       }
     }
-    console.log('newIndexes', newIndexes)
-
+    console.log('newIndexes before', newIndexes);
+    if (usOnly){
+      let myRanges = [];
+      for (let index of newIndexes){
+        let tempRange = scriptSheet.getRangeByIndexes(index, usCueIndex, 1, 1);
+        tempRange.load('values, rowIndex');
+        myRanges.push(tempRange);
+      }
+      await excel.sync();
+      let usRanges = [];
+      for (let theRange of myRanges){
+        if (theRange.values[0][0] != ''){
+          usRanges.push(theRange.rowIndex)
+        }
+      }
+      newIndexes = usRanges;
+      console.log('newIndexes after', newIndexes);
+    }
   })
   return newIndexes;
 }
@@ -4228,6 +4565,28 @@ async function getSceneBlockNear(index){
   let sceneBlockText = [];
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    
+    let startRowIndex = 2;
+    let rowCount = index - startRowIndex;
+    let typeCodeRange = scriptSheet.getRangeByIndexes(startRowIndex, typeCodeIndex, rowCount, 1);
+    typeCodeRange.load('values, rowIndex');
+    await excel.sync();
+    let lowestIndex;
+    for (let i = 0; i < typeCodeRange.values.length; i++){
+      if (typeCodeRange.values[i][0] == myTypes.sceneBlock){
+        lowestIndex = i;
+      }      
+    }
+    let indexes = []
+    let theIndex = -1;
+    for (let i = lowestIndex - 10; i <= lowestIndex; i++){
+      if (typeCodeRange.values[i][0] == myTypes.sceneBlock){
+        theIndex += 1;
+        indexes[theIndex] = i + typeCodeRange.rowIndex; 
+      }
+    }
+    
+    /*
     console.log(index + startOffset, typeCodeIndex, endOffset - startOffset, 1)
     let startRowIndex = index + startOffset
     if (startRowIndex < 1){
@@ -4244,6 +4603,7 @@ async function getSceneBlockNear(index){
         indexes[theIndex] = i + typeCodeRange.rowIndex; 
       }
     }
+    */
     console.log('indexes', indexes);
 
     if (indexes.length > 0){
@@ -4254,6 +4614,24 @@ async function getSceneBlockNear(index){
       sceneBlockText = sceneBlockRange.values.map(x => x[0])
     }
   })
+  return sceneBlockText;
+}
+
+async function getSceneBlockText(sceneNo, sceneBlockIndexes){
+  let sceneBlockText = [];
+  console.log('sceneBlockIndexes', sceneBlockIndexes)
+  let indexes = sceneBlockIndexes.find(x => x.scene == sceneNo).rowIndexes;
+  console.log('indexes', indexes);
+  if (indexes.length > 0){
+    await Excel.run(async (excel) => {
+      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      console.log(indexes[0], cueIndex, indexes.length)
+      let sceneBlockRange= scriptSheet.getRangeByIndexes(indexes[0], cueIndex, indexes.length, 1);
+      sceneBlockRange.load('values');
+      await excel.sync();
+      sceneBlockText = sceneBlockRange.values.map(x => x[0])
+    })
+  }
   return sceneBlockText;
 }
 
@@ -4301,65 +4679,95 @@ async function getBook(){
   return book;
 }
 
-async function getActorScriptRanges(indexes, startRowIndex){
+async function getActorScriptRanges(indexes, startRowIndex, doUs){
   let rangeBounds = []
   let rangeIndex = 0;
   let actorCueColumnIndex = 0;
   let actorCharacterColumnIndex = 1;  
   let actorDirectionColumnIndex = 2;
-  let actorUkScriptColumnIndex = 3;
+  let actorScriptColumnIndex = 3;
+  let actorUsCueColumnIndex = 4;
   for (let i = 0; i < indexes.length; i++){
-    if (i == 0){
-      rangeBounds[rangeIndex] = {};
-      rangeBounds[rangeIndex].start = indexes[i];
-    }else if (i == indexes.length -1){
-      rangeBounds[rangeIndex].end = indexes[i]
+    if (doUs){
+      rangeBounds[rangeIndex] = {
+        start: indexes[i],
+        end: indexes[i]
+      }
+      rangeIndex += 1;
     } else {
-      if (indexes[i] == (indexes[i-1] + 1)){
-        //Do Nothing
-      } else {
-        rangeBounds[rangeIndex].end = indexes[i - 1]
-        rangeIndex += 1
+      if (i == 0){
         rangeBounds[rangeIndex] = {};
         rangeBounds[rangeIndex].start = indexes[i];
+        if (indexes.length == 1){
+          rangeBounds[rangeIndex].end = indexes[i];
+        }
+      } else if (i == indexes.length -1){
+        rangeBounds[rangeIndex].end = indexes[i];
+      } else {
+        if (indexes[i] == (indexes[i - 1] + 1)){
+          //Do Nothing
+        } else {
+          rangeBounds[rangeIndex].end = indexes[i - 1]
+          rangeIndex += 1;
+          rangeBounds[rangeIndex] = {};
+          rangeBounds[rangeIndex].start = indexes[i];
+        }
       }
     }
   }
   let cueRange, characterRange, directionRange, ukScriptRange;
-  console.log('Rangebound length', rangeBounds.length);
+  console.log('Rangebound length', rangeBounds.length, rangeBounds);
   let rowIndexes = []
   let item = - 1;
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     for (let i = 0; i< rangeBounds.length; i++){
-      let rowCount = rangeBounds[i].end - rangeBounds[i].start + 1
-      item += 1;
-      rowIndexes[item] = {
-        startRow: startRowIndex,
-        rowCount: rowCount
+      let rowCount = rangeBounds[i].end - rangeBounds[i].start + 1;
+      if (rowCount > 0){
+        item += 1;
+        rowIndexes[item] = {
+          startRow: startRowIndex,
+          rowCount: rowCount
+        }
+        cueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, cueIndex, rowCount, 1);
+        characterRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, characterIndex, rowCount, 1);
+        directionRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, stageDirectionWallaDescriptionIndex, rowCount, 1);
+        if (doUs){
+          usScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, usScriptColumnIndex, rowCount, 1);
+          usCueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, usCueIndex, rowCount, 1);
+        } else {
+          ukScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, ukScriptIndex, rowCount, 1);
+        }
+        
+        console.log('start row', startRowIndex)
+        let actorCueRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCueColumnIndex, 1, 1);
+        let actorCharacterRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCharacterColumnIndex, 1, 1);
+        let actorDirectionRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorDirectionColumnIndex, 1, 1);
+        let actorScriptRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorScriptColumnIndex, 1, 1);
+        let actorUsCueRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorUsCueColumnIndex,1, 1)
+        actorCueRange.copyFrom(cueRange, 'Values', false, false);
+        actorCueRange.copyFrom(cueRange, 'Formats', false, false);
+        actorCharacterRange.copyFrom(characterRange, 'Values', false, false);
+        actorCharacterRange.copyFrom(characterRange, 'Formats', false, false);
+        actorDirectionRange.copyFrom(directionRange, 'Values', false, false);
+        actorDirectionRange.copyFrom(directionRange, 'Formats', false, false);
+        await excel.sync();
+        if (doUs){
+          actorScriptRange.copyFrom(usScriptRange, 'Values', false, false);
+          actorScriptRange.copyFrom(usScriptRange, 'Formats', false, false);
+          await excel.sync();
+          actorUsCueRange.copyFrom(usCueRange, 'Values', false, false);
+          actorUsCueRange.copyFrom(usCueRange, 'Formats', false, false);
+        } else {
+          actorScriptRange.copyFrom(ukScriptRange, 'Values', false, false);
+          actorScriptRange.copyFrom(ukScriptRange, 'Formats', false, false);
+        }
+        await excel.sync();
+        startRowIndex = startRowIndex + rowCount;
+      } else {
+        console.log('Rowcount 0');
       }
-      cueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, cueIndex, rowCount, 1);
-      characterRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, characterIndex, rowCount, 1);
-      directionRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, stageDirectionWallaDescriptionIndex, rowCount, 1);
-      ukScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, ukScriptIndex, rowCount, 1);
-      
-      
-      console.log('start row', startRowIndex)
-      let actorCueRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCueColumnIndex, 1, 1);
-      let actorCharacterRange = actorScriptSheet.getRangeByIndexes(startRowIndex, actorCharacterColumnIndex, 1, 1);
-      let actorDirectionRange  = actorScriptSheet.getRangeByIndexes(startRowIndex, actorDirectionColumnIndex, 1, 1);
-      let actorUkScriptRange  = actorScriptSheet.getRangeByIndexes(startRowIndex, actorUkScriptColumnIndex, 1, 1);
-      actorCueRange.copyFrom(cueRange, 'Values', false, false);
-      actorCueRange.copyFrom(cueRange, 'Formats', false, false);
-      actorCharacterRange.copyFrom(characterRange, 'Values', false, false);
-      actorCharacterRange.copyFrom(characterRange, 'Formats', false, false);
-      actorDirectionRange.copyFrom(directionRange, 'Values', false, false);
-      actorDirectionRange.copyFrom(directionRange, 'Formats', false, false);
-      actorUkScriptRange.copyFrom(ukScriptRange, 'Values', false, false);
-      actorUkScriptRange.copyFrom(ukScriptRange, 'Formats', false, false);
-      await excel.sync();
-      startRowIndex = startRowIndex + rowCount
     }
   })
   console.log('Row Indexes', rowIndexes);
@@ -4489,6 +4897,8 @@ async function getDirectorDataV2(character){
     let ukDateRecordedRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, ukDateIndex, indexDetails.rowCount, 1); 
     let lineWordCountRange  = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, lineWordCountIndex, indexDetails.rowCount, 1); 
     let sceneWordCountRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, sceneWordCountCalcIndex, indexDetails.rowCount, 1); 
+    let usCueRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, usCueIndex, indexDetails.rowCount, 1);
+    
     
     characterRange.load('values');
     sceneRange.load('values');
@@ -4497,7 +4907,9 @@ async function getDirectorDataV2(character){
     ukTakeNumRange.load('values');
     ukDateRecordedRange.load('values');
     lineWordCountRange.load('values');
-    sceneWordCountRange.load('values')
+    sceneWordCountRange.load('values');
+    usCueRange.load('values');
+    
     await excel.sync();
 
     let myIndexes = [];
@@ -4534,7 +4946,8 @@ async function getDirectorDataV2(character){
         ukTakeNum: ukTakeNumRange.values[uniqueIndexes[i]][0],
         ukDateRecorded: ukDateRecordedRange.values[uniqueIndexes[i]][0],
         lineWordCount: lineWordCountRange.values[uniqueIndexes[i]][0],
-        sceneWordCount: sceneWordCountRange.values[uniqueIndexes[i]][0]
+        sceneWordCount: sceneWordCountRange.values[uniqueIndexes[i]][0],
+        usCue: usCueRange.values[uniqueIndexes[i]][0],
       }
       myData.push(theData);    
     }
@@ -5358,7 +5771,7 @@ async function gatherTakeInformation(doColour){
       }
       takeData[i] = assignColour(takeData[i]);
     }
-    console.log('takeData ', takeData);
+    //console.log('takeData ', takeData);
 
     let tempRange = [];
     let columnIndex = characterIndex;
@@ -5635,4 +6048,544 @@ async function findDuplicateLineNumbers(){
     console.log('indexes', indexes )
   }) 
   
+}
+
+async function getCharacterList(){
+  //gets list of characters from range 'clChaarcters' on Character List sheet and returns as a single dimension array
+  let theList = []
+  await Excel.run(async function(excel){
+    const characterListSheet = excel.workbook.worksheets.getItem('Character List');
+    let characterListRange = characterListSheet.getRange('clCharacters');
+    characterListRange.load('values')
+    await excel.sync();
+    theList = characterListRange.values.map(x => x[0]).filter(x => x != '');
+  })
+  return theList;
+}
+
+async function fillCharacterAndTakesDropdowns(){
+  let theList = await getCharacterList();
+  let characterSelect = tag('character-select');
+  characterSelect.innerHTML = '';
+  characterSelect.add(new Option('Please select', ''))
+  for (let i = 0; i < theList.length; i++){
+    characterSelect.add(new Option(theList[i], theList[i]));
+  }
+  let takesSelect = tag('takes-select');
+  takesSelect.innerHTML = '';
+  for (let i = 0; i <= 20; i++){
+    takesSelect.add(new Option(i,i));
+  }
+  takesSelect.selectedIndex = 1;
+}
+
+async function filterCharacter(){
+  let activeDetails = await getActiveCellDetails();
+  let wait = tag('take-wait');
+  wait.style.display = 'block'
+  let message = tag('take-message');
+  message.innerText = '';
+  message.style.display = 'none';
+  let characterSelect = tag('character-select');
+  let showSceneBlock = tag('show-scene-blocks').checked;
+  if (characterSelect.value.trim() == ''){
+    message.innerText = 'Please select character'
+    message.style.display = 'block';
+  } else {
+    await setSheetView(true);
+    await filterOnCharacter(characterSelect.value, false, []);
+
+    const rowDetails = await getSelectedRowDetails(false);
+    const scenes = await getScenesForRowDetails(rowDetails);
+    const messageDetails = displayMessageCharacterFilter(scenes, rowDetails);
+    message.innerText = characterSelect.value + ' ' + messageDetails.message;
+    message.style.display = 'block';
+    let diff = Infinity;
+    let displayRowIndex;
+    for (let row of rowDetails){
+      if (row.rowIndex > 0){
+        let temp = Math.abs(activeDetails.rowIndex - row.rowIndex);
+        if (temp < diff){
+          diff = temp
+          displayRowIndex = row.rowIndex
+        }
+      }
+    }
+    console.log('Diff', diff, 'displayRowIndex', displayRowIndex);
+    console.log('active', activeDetails);
+    
+    if (showSceneBlock){
+      const blockDetails = await getSceneBlockRows();
+      const blockRows = combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails);
+      await filterOnCharacter(characterSelect.value, true, blockRows);  
+    }
+    await selectRange(null, true, displayRowIndex, activeDetails.columnIndex);
+  }
+  wait.style.display = 'none'
+}
+
+async function setSheetView(doTemporary){
+  //if doTemporary then temp view. Otherwise exit view
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const currentView = scriptSheet.namedSheetViews.getCount();
+    await excel.sync();
+    console.log('currentView', currentView.value);
+    let currentlyActiveName = null;
+    if (currentView.value > 0){
+      try {
+        const currentName = scriptSheet.namedSheetViews.getActive();
+        currentName.load('name')
+        await excel.sync();
+        currentlyActiveName = currentName.name
+        console.log('currentName', currentName.name);
+      } catch (err){
+        console.log('Error', err);
+      }
+    }
+    console.log('Pre doTemporray currentlyActiveName', currentlyActiveName)
+    if (doTemporary){
+      if (currentlyActiveName === null){
+        console.log('Making view temporary')
+        scriptSheet.namedSheetViews.enterTemporary();
+      } else {
+        console.log('Already in view so no change')
+      }
+    } else if (currentlyActiveName == ''){
+      console.log('Currently temporary view - so remove it')
+      scriptSheet.namedSheetViews.exit();
+    } else {
+      console.log('Not removed due to ', currentlyActiveName)
+    }
+  })
+}
+
+async function applyTakeDetails(country){
+  let wait = tag('take-wait');
+  wait.style.display = 'block';
+  const rowDetails = await getSelectedRowDetails(true);
+  const cols = takeDetailsColumnIndexes(country);
+  const takesData = getTakesData();
+  console.log('rowDetails', rowDetails, 'cols', cols, 'takesData', takesData);
+  let takesRanges = [];
+  let dateRanges = [];
+  let markUpRanges = [];
+  let studioRanges = [];
+  let engineerRanges = [];
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    for (let i = 0; i < rowDetails.length; i++){
+      takesRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.takesIndex, rowDetails[i].rowCount, 1);
+      dateRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.dateRecordedIndex, rowDetails[i].rowCount, 1);
+      markUpRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.markUpIndex, rowDetails[i].rowCount, 1);
+      studioRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.studioIndex, rowDetails[i].rowCount, 1);
+      engineerRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.engineerIndex, rowDetails[i].rowCount, 1);
+      let myTakes = [];
+      let myDates = [];
+      let myMarkUps = [];
+      let myStudios = [];
+      let myEngineers = [];
+      for (let j = 0; j < rowDetails[i].rowCount; j++){
+        myTakes[j] = [takesData.takesText];
+        myDates[j] = [takesData.dateText];
+        myMarkUps[j] = [takesData.markupText];
+        myStudios[j] = [takesData.studioText];
+        myEngineers[j] = [takesData.engineerText];
+      }
+      takesRanges[i].values = myTakes;
+      dateRanges[i].values = myDates;
+      markUpRanges[i].values = myMarkUps;
+      studioRanges[i].values = myStudios;
+      engineerRanges[i].values = myEngineers;
+    }
+    await excel.sync();
+  })
+  wait.style.display = 'none';
+}
+
+async function clearTakeDetails(country){
+  let wait = tag('take-wait');
+  wait.style.display = 'block';
+  let msgBox = tag('message-box');
+  msgBox.style.display = 'block'
+  globalCountry = country
+}
+
+async function messageYes(){
+  let msgBox = tag('message-box');
+  msgBox.style.display = 'none';
+  await continueClearTakeDetails(globalCountry);
+}
+
+async function messageNo(){
+  let msgBox = tag('message-box');
+  msgBox.style.display = 'none';
+  let wait = tag('take-wait');
+  wait.style.display = 'none';
+}
+
+async function continueClearTakeDetails(country){
+  let wait = tag('take-wait');
+  const rowDetails = await getSelectedRowDetails(true);
+  const cols = takeDetailsColumnIndexes(country);
+  let takesRanges = [];
+  let dateRanges = [];
+  let markUpRanges = [];
+  let studioRanges = [];
+  let engineerRanges = [];
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    for (let i = 0; i < rowDetails.length; i++){
+      takesRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.takesIndex, rowDetails[i].rowCount, 1);
+      dateRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.dateRecordedIndex, rowDetails[i].rowCount, 1);
+      markUpRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.markUpIndex, rowDetails[i].rowCount, 1);
+      studioRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.studioIndex, rowDetails[i].rowCount, 1);
+      engineerRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.engineerIndex, rowDetails[i].rowCount, 1);
+      takesRanges[i].clear("Contents");
+      dateRanges[i].clear("Contents");
+      markUpRanges[i].clear("Contents");
+      studioRanges[i].clear("Contents");
+      engineerRanges[i].clear("Contents");
+    }
+    await excel.sync();
+  })
+  wait.style.display = 'none';
+}
+
+async function getSelectedRowDetails(selectedOnly){
+  let rowDetails = [];
+  let visibleRanges;
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    if (selectedOnly){
+      const selectedRanges = excel.workbook.getSelectedRanges();
+      visibleRanges = selectedRanges.getSpecialCellsOrNullObject("Visible");
+    } else {
+      let usedRange = scriptSheet.getUsedRange();
+      usedRange.load('rowIndex, rowCount');
+      await excel.sync();
+      let myRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, 1, usedRange.rowCount, 1);
+      visibleRanges = myRange.getSpecialCellsOrNullObject("Visible");
+    }
+    
+    await excel.sync();
+    if (visibleRanges.isNullObject){
+      console.log('No visible cells');
+    } else {
+      visibleRanges.load('address');
+      //visibleRanges.areas.load('items');
+      await excel.sync();
+      console.log('visibleRanges.address', visibleRanges.address)
+      let myAddresses = visibleRanges.address.split(',');
+      console.log('myAddresses', myAddresses);
+      let theItems = [];
+      let counter = 0;
+      for (let j = 0; j < myAddresses.length; j++){
+        theItems[j] = scriptSheet.getRange(myAddresses[j])
+        theItems[j].load('rowIndex, rowCount');
+        counter += 1;
+        if (counter > 500){
+          await excel.sync();
+          counter = 0;
+        }
+      }
+      await excel.sync();
+      for (let theItem of theItems){
+        rowDetails = addToRowDetails(rowDetails, theItem.rowIndex, theItem.rowCount);
+      }
+    }
+    console.log('rowDetails ', rowDetails)
+  })  
+  return rowDetails;  
+} 
+
+async function getScenesForRowDetails(rowDetails){
+  let scenes = []
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let index = 0;
+    let tempRange =[];
+    for(let row of rowDetails){
+      tempRange[index] = scriptSheet.getRangeByIndexes(row.rowIndex, sceneIndex, row.rowCount, 1);
+      tempRange[index].load('values');
+      if (index > 1000){
+        await excel.sync();
+        for (i = 0; i <= index; i++){
+          for (let j = 0; j < tempRange[i].values.length; j++){
+            let sceneNumber = parseInt(tempRange[i].values[j][0]);
+            if (!isNaN(sceneNumber)){
+              scenes.push(sceneNumber);
+            }
+          }
+        }
+        index = 0;
+      } else {
+        index++;
+      }
+    }
+    await excel.sync();
+    for (i = 0; i < index; i++){
+      for (let j = 0; j < tempRange[i].values.length; j++){
+        let sceneNumber = parseInt(tempRange[i].values[j][0]);
+        console.log('i', i, 'j', j, 'sceneNumber', sceneNumber);
+        if (!isNaN(sceneNumber)){
+          scenes.push(sceneNumber);
+        }
+      }
+    }
+    scenes = [...new Set(scenes)].sort((a,b) => a - b);
+  })
+  console.log('scenes', scenes);
+  return scenes;
+}
+
+function addToRowDetails(details, rowIndex, rowCount){
+  //Check is any rowIndex exists.
+  //If it does, is the rowCount the smae.
+  //If it is - do nothing. If not use the highr row count
+  //Otherwise add it to the details array
+  let done = false;
+  for (let detail of details){
+    if (detail.rowIndex == rowIndex){
+      done = true;
+      if (detail.rowCount < rowCount){
+        detail.rowCount = rowCount;
+      }
+    }
+  }
+  if (done){
+    return details;
+  } else {
+    details.push({rowIndex: rowIndex, rowCount: rowCount})
+    return details;
+  }
+}
+function takeDetailsColumnIndexes(country){
+  let result = {};
+  if (country == 'UK'){
+    result.takeNoIndex = ukTakeNoIndex;
+    result.dateRecordedIndex = ukDateIndex;
+    result.markUpIndex = ukMarkUpIndex;
+    result.studioIndex = ukStudioIndex;
+    result.engineerIndex = ukEngineerIndex;
+    result.takesIndex = ukTakesIndex;
+  } else if (country == 'US'){
+    result.takeNoIndex = usTakeNoIndex;
+    result.dateRecordedIndex = usDateIndex;
+    result.markUpIndex = usMarkUpIndex;
+    result.studioIndex = usStudioIndex;
+    result.engineerIndex = usEngineerIndex;
+    result.takesIndex = usTakesIndex;
+  }else if (country == 'Walla'){
+    result.takeNoIndex = wallaTakeNoIndex;
+    result.dateRecordedIndex = wallaDateIndex;
+    result.markUpIndex = wallaMarkUpIndex;
+    result.studioIndex = wallaStudioIndex;
+    result.engineerIndex = wallaEngineerIndex;
+    result.takesIndex = wallaTakesIndex;
+  }
+  return result;
+}
+function getTakesData(){
+  let data = {}
+  data.studioText = tag("studio-select").value;
+  data.engineerText = tag("engineer-select").value;
+  data.markupText = tag('markup').value;
+  data.takesText = tag('takes-select').value;
+  data.dateText = dateInFormat();
+  return data;
+}
+
+async function getSceneBlockRows(){
+  let result = []
+  await Excel.run(async function(excel){
+    const startRowIndex = firstDataRow - 1;
+    const rowCount = lastDataRow - firstDataRow + 1;
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const typeRange = scriptSheet.getRangeByIndexes(startRowIndex, typeCodeIndex, rowCount, 1);
+    typeRange.load('values, rowIndex');
+    const cueRange = scriptSheet.getRangeByIndexes(startRowIndex, cueIndex, rowCount, 1);
+    cueRange.load('values, rowIndex');
+    await excel.sync();
+    types = typeRange.values.map(type => type[0]);
+    cues = cueRange.values.map(cue => cue[0]);
+    let rowIndexes = [];
+    let doneFirst = false;
+    let scene;
+    for (let i = 0; i < types.length; i++){
+      if (types[i] == myTypes.sceneBlock){
+        if (cues[i].toLowerCase().startsWith('scene')){
+          let tempNum = parseInt(cues[i].substr(5));
+          if (isNaN(tempNum)){
+            rowIndexes.push(i + typeRange.rowIndex);
+          } else {
+            if (doneFirst){
+              let temp = {
+                scene: scene,
+                rowIndexes: rowIndexes
+              }
+              result.push(temp);
+            } else {
+              doneFirst = true;
+            }
+            scene = tempNum;
+            rowIndexes = [i + typeRange.rowIndex]
+          }
+        } else {
+          rowIndexes.push(i + typeRange.rowIndex);
+        }
+      }
+    }
+    let temp = {
+      scene: scene,
+      rowIndexes: rowIndexes       
+    }
+    result.push(temp);
+    console.log('Result', result)
+  }) 
+  return result;
+}
+function combineCharacterAndSceneBlockRowIndexes(scenes, blockDetails, rowDetails){
+  let result = [];
+  for (let i = 0; i < scenes.length; i++){
+    let temp = blockDetails.find(x => x.scene == scenes[i]);
+    result = result.concat(temp.rowIndexes);
+  }
+  for (let i = 0; i < rowDetails.length; i++){
+    for (let j = 0; j < rowDetails[i].rowCount; j++){
+      let temp = rowDetails[i].rowIndex + j;
+      if (temp > 1){
+        result.push(temp);
+      }
+    }
+  }
+  result = [...new Set(result)].sort((a,b) => a - b);
+  console.log('result rowIndexes', result);
+  return result;
+}
+
+function displayMessageCharacterFilter(scenes, rowIndexes){
+  const numScenes = scenes.length
+  let lines = 0
+  for (i = 0; i < rowIndexes.length; i++){
+    if (rowIndexes[i].rowIndex > 0){
+      lines = lines + rowIndexes[i].rowCount
+    }
+  }
+  let message
+  if (lines == 1){
+    message = '1 line in ';
+  } else {
+    message = lines + ' lines in ';
+  }
+  if (numScenes == 1){
+    message = message + numScenes + ' scene'
+  } else {
+    message = message + numScenes + ' scenes'
+  }
+  return { message: message, numLines: lines, numScenes: numScenes }
+}
+
+async function findUsScriptCues(usDetails){
+  let details = [];
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const usedRange = scriptSheet.getUsedRange();
+    usedRange.load('rowIndex, rowCount');
+    await excel.sync();
+    let cueRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, cueIndex, usedRange.rowCount, 1)
+    cueRange.load('values, rowIndex');
+    await excel.sync();
+    cueValues = cueRange.values.map(x => x[0])
+    let rowIndexes = []
+    for (let i = 0; i < usDetails.length; i++){
+      let index = cueValues.indexOf(usDetails[i].cue)
+      if (index != -1){
+        rowIndexes.push(index + cueRange.rowIndex)
+      }
+    }
+    console.log('rowIndexes', rowIndexes);
+    for (let row of rowIndexes){
+      let cueRange = scriptSheet.getRangeByIndexes(row, cueIndex, 1, 1);
+      cueRange.load('values');
+      let characterRange = scriptSheet.getRangeByIndexes(row, characterIndex, 1, 1);
+      characterRange.load('values');
+      let ukScriptRange = scriptSheet.getRangeByIndexes(row, ukScriptIndex, 1, 1);
+      ukScriptRange.load('values');
+      await excel.sync()
+      let detail = {
+        rowIndex: row,
+        cue: cueRange.values[0][0],
+        character: characterRange.values[0][0],
+        ukScript: ukScriptRange.values[0][0]
+      }
+      details.push(detail)
+    }
+  })  
+  console.log('details', details);
+  return details;
+}
+
+async function clearUsCueAndScript(){
+  let isProtected = await unlockIfLocked();
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const usedRange = scriptSheet.getUsedRange();
+    usedRange.load('rowIndex, rowCount');
+    await excel.sync();
+    let startRowIndex = 2;
+    let rowCount = usedRange.rowCount - (usedRange.rowIndex + startRowIndex)
+    console.log(startRowIndex, usCueIndex, rowCount, 2);
+    let usRange = scriptSheet.getRangeByIndexes(startRowIndex, usCueIndex, rowCount, 2);
+    usRange.load('address, values, rowIndex')
+    await excel.sync();
+    console.log(usRange.address, usRange.values, usRange.rowIndex);
+    for (let i = 0; i < usRange.values.length; i++){
+      if ((usRange.values[i][0] !== '') || (usRange.values[i][1] !== '')){
+        let rowIndex = i + usRange.rowIndex;
+        console.log(i, rowIndex, ' not empty');
+        scriptSheet.getRangeByIndexes(rowIndex, usCueIndex, 1, 2).clear('Contents');
+        await excel.sync();
+      }
+    }
+  })
+  if (isProtected){
+    await lockColumns();
+  }
+}
+
+async function doTheCopy(copyDetails){
+  let isProtected = await unlockIfLocked();
+  console.log('copydetails',copyDetails)
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const usSheet = excel.workbook.worksheets.getItem(usScriptName);
+    for (let i = 0; i < copyDetails.length; i++){
+      let sourceRange = usSheet.getRangeByIndexes(copyDetails[i].usRowIndex, copyDetails[i].usCueColumnIndex, 1, 1);
+      sourceRange.load('address')
+      await excel.sync()
+      console.log('Source range:', i, sourceRange.address)
+      let destinationRange = scriptSheet.getRangeByIndexes(copyDetails[i].ukRowIndex, usCueIndex, 1, 1)
+      destinationRange.load('address')
+      await excel.sync()
+      console.log('Dest range:', i, destinationRange.address)
+      destinationRange.copyFrom(sourceRange, 'All');
+      await excel.sync()
+      console.log('Copy 1 done');
+      sourceRange = usSheet.getRangeByIndexes(copyDetails[i].usRowIndex, copyDetails[i].usScriptColumnIndex, 1, 1);
+      sourceRange.load('address')
+      await excel.sync()
+      console.log('Source range 2:', i, sourceRange.address)
+      destinationRange = scriptSheet.getRangeByIndexes(copyDetails[i].ukRowIndex, usScriptColumnIndex, 1, 1);
+      destinationRange.load('address')
+      await excel.sync()
+      console.log('Dest range 2:', i, destinationRange.address)
+      destinationRange.copyFrom(sourceRange, 'All');
+      await excel.sync();
+      console.log('Copy 2 done');
+    }
+  })
+  if (isProtected){
+    await lockColumns();
+  }
 }

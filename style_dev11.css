@@ -1,7 +1,3 @@
-function auto_exec(){
-}
-async function mainCSS(){
-  const css =`
 body {
   background-color: #d8dfe5;
   color: #46656F;
@@ -39,20 +35,20 @@ label {
   font-size: 12px;
 }
 /* Section formatting */
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, #forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons, #scriptButtons, #director-nav-buttons, #scheduling-nav-buttons, #walla-nav-buttons, #location-nav-buttons, #script-nav-buttons {
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, #forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons, #scriptButtons, #director-nav-buttons, #scheduling-nav-buttons, #walla-nav-buttons, #location-nav-buttons, #script-nav-buttons, #comparison, #us-script {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
   padding-left: 10px;
-  padding-top: 10px;
-  padding-bottom: 15px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   border-width: 1px;
   border-radius: 5px;
   border-color: #46656F;
   border-style: solid;
 }
 
-#admin {
+#admin, #comparison, #us-script {
   display: none;
 }
 
@@ -112,7 +108,7 @@ label {
   cursor: pointer;
 }
 */
-#studio, #engineer, #studio-select, #engineer-select, #chapter-scene-select, #markup, #walla-scene {
+#studio, #engineer, #studio-select, #engineer-select, #chapter-scene-select, #markup, #walla-scene, #chapter-compare-select, #character-select, #takes-select {
   width: 150px;
   background-color: #d8dfe5;
   color: #46656F;
@@ -133,6 +129,11 @@ label {
 
 .column {
   padding: 10px;
+}
+
+#column-one {
+  padding-left: 0px;
+  margin-left: 0px;
 }
 
 .column-jump {
@@ -170,9 +171,10 @@ label {
 .section-label {
   font-size: 14px;
   font-weight: bold;
+  cursor: pointer;
 }
 
-#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla {
+#btnShowAll, #btnShowUK, #btnShowUS, #btnShowWalla, #btnShowScriptSupervisor, #btnDefaultColumn {
   margin-left: 10px;
   margin-bottom: 5px;
   margin-top: 5px;
@@ -187,6 +189,27 @@ label {
   cursor: pointer;
 }
 
+#btnUnhideAll, #btnShowLast, #btnShowFirst, #btnShowTakesOnly, #btnColouredTakes, #btnShowFirstOnly, #btnShowLastOnly {
+  margin-left: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border: none;
+  width: 100px;
+  height: 24px;
+  border-radius: 4px;
+  background-color: #46656F;
+  color: #fef3df;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#btnColouredTakes {
+  width: fit-content;
+  min-width: 100px;
+}
+
  #btnAddTakeUK, #btnRemoveTakeUK, #btnAddTakeUS, #btnRemoveTakeUS, #btnAddTakeWalla, #btnRemoveTakeWalla {
   margin-left: 4px;
   margin-bottom: 5px;
@@ -197,6 +220,7 @@ label {
   width: 130px;
   border-radius: 4px;
   background-color: #46656F;
+  border-color: #46656F;
   color: #fef3df;
   font-size: 12px;
   cursor: pointer;
@@ -385,7 +409,7 @@ label {
 }
 
 /* On mouse-over, add a grey background color */
-.container3:hover input ~ .checkmark3 {
+.container3:hover, input ~ .checkmark3 {
   background-color: #46656F7f;
 }
 
@@ -419,6 +443,79 @@ label {
   transform: rotate(45deg);
 }
 
+/* No 4 - Show Scene block */
+.container4{
+  display: block;
+  position: relative;
+  padding-left: 18px;
+  margin-left: 0px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container4 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark4 {
+  position: absolute;
+  top: 0px;
+  left: 1px;
+  height: 10px;
+  width: 10px;
+  background-color: #d8dfe5;
+  border: #46656F ;
+  border-radius: 4px;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.container4:hover, input ~ .checkmark4 {
+  background-color: #46656F7f;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container4 input:checked ~ .checkmark4 {
+  background-color: #46656F;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark4:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container4 input:checked ~ .checkmark4:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container4 .checkmark4:after {
+  left: 3px;
+  top: 0px;
+  width: 2px;
+  height: 6px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
 #min-and-max, #min-and-max-lineNo, #min-and-max-chapter, #add-min-and-max-chapter, .jump-label {
   font-size: 13px;
 }
@@ -437,7 +534,7 @@ label {
   top: 3px;
 }
 
-#show-hide {
+#show-hide, #show-hide-lock, #show-hide-filter, #show-hide-jump, #show-hide-columns, #show-hide-takes, #show-hide-add-remove, #show-hide-comparison , #show-hide-us-script{
   margin-left: 5px;
   font-size: 10px;
   padding-left: 5px;
@@ -472,10 +569,10 @@ label {
   padding: 10px;
 }
 
-#director-wait, #actor-wait, #scheduling-wait, #formula-wait, #scene-wait, #scene-add-wait, #load-message, #script-wait, #character-wait {
+#director-wait, #actor-wait, #scheduling-wait, #formula-wait, #scene-wait, #scene-add-wait, #load-message, #script-wait, #take-wait, #character-wait, #take-message {
   display: none;
   font-size: 15px;
-  margin-left: 15px;
+  margin-left: 5px;
 }
 #fillButton {
   display: none;
@@ -486,6 +583,7 @@ label {
   background-color: #d8dfe5;
   color: #46656F;
 }
+
 #sheet-version {
   font-size: 12px;
 }
@@ -505,6 +603,7 @@ label {
 #forDirectorButtons, #director-nav-buttons {
   border-color: #06394d;
 }
+
 #forSchedulingButtons, #scheduling-nav-buttons {
   border-color: #1d3a10;
 }
@@ -595,12 +694,14 @@ label {
 
 #btnActorScript {
   display: block;
+  margin-left: 0px;
 }
 
 .nav-button {
   margin-left: 5px !important;
   width: 95px;
 }
+
 /* Actor Checkmark/Container */
 /* Start of checkbox stuff */
 /* Customize the label (the container) */
@@ -674,6 +775,7 @@ label {
   border-radius: 50%;
   background: white;
 }
+
 #actor-scene-display {
   font-size: 12px;
   text-indent: 0px;
@@ -687,13 +789,12 @@ label {
   margin-left: 0px;
 }
 
-
 .row-script {
   display: flex;
 }
 
 .column-script {
-  padding: 10px;
+  padding: 5px;
 }
 
 #column-one-script {
@@ -703,7 +804,71 @@ label {
   flex: 50%
 }
 
-`;
-  Jade.set_css(css);
-  console.log('CSS done')
+#btnAddMarkup, #btnReplaceMarkup {
+  margin-left: 4px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: none;
+  width: auto;
+  border-radius: 4px;
+  background-color: #46656F;
+  color: #fef3df;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#btnDefaultMarkup, #btnFilterCharacter, #btnClearFilterCharacter {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 11px;
+  height: 18px;
+}
+
+#lock-buttons, #filter-buttons, #jump-buttons, #column-buttons, #takes-buttons, #add-remove-buttons {
+  display: none; 
+}
+
+#markup-message {
+  font-size: 11px;
+  margin-left: 3px;
+  line-height: 15px;
+  display: inline-block;
+}
+
+.compButton {
+  width: 144px;
+}
+
+#hidden-old-takes {
+  display: none;
+}
+
+#add-remove-markup {
+  display: none;
+}
+
+#message-box {
+  display: none;
+  width: 80%; 
+  background-color: white;
+  border-radius: 5px;
+  border-color: #46656F;
+  border-style: solid;
+  margin: auto;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+#buttons-yes-no {
+  width: 90%;
+  margin: auto;
+}
+
+.take-button {
+  width: 110px;
 }

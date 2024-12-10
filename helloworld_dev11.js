@@ -1,7 +1,21 @@
 async function auto_exec(){
-  await Jade.load_js("https://davidfuller.github.io/operations_dev.js", "operations");
-  await Jade.load_js("https://davidfuller.github.io/html_dev.js", "html");
-  await Jade.load_js("https://davidfuller.github.io/css_dev.js", "css");
+  console.log("The very beginning");
+  await Jade.load_js("https://davidfuller.github.io/operations_dev11.js", "operations");
+  console.log('After operations');
+  await Jade.load_js("https://davidfuller.github.io/scheduling_dev11.js", "scheduling");
+  console.log('After scheduling');
+  await Jade.load_js("https://davidfuller.github.io/walla_import_dev11.js", "wallaimport");
+  console.log('After wallaimport');
+  await Jade.load_js("https://davidfuller.github.io/comparison_dev11.js", "comparison");
+  console.log('After comparison');
+  await Jade.load_js("https://davidfuller.github.io/wordsToNumbers.js", "wordtonumbers");
+  console.log('After wordsToNumbers');
+  await Jade.load_js("https://davidfuller.github.io/usScript_dev11.js", "usscript");
+  console.log('After usScript');
+  await Jade.load_js("https://davidfuller.github.io/html_dev11.js", "html");
+  console.log('After html');
+  await Jade.load_js("https://davidfuller.github.io/css_dev11.js", "css");
+  console.log('After css');
   await jade_modules.css.mainCSS();
   await jade_modules.html.mainHTML();
 }

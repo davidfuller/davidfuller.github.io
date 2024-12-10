@@ -13,8 +13,10 @@ async function mainHTML(){
     <button id="btnForActorPage" class="nav-button" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
     <button id="btnForSchedulingPage" class="nav-button" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
     <button id="btnWallaImport" class="nav-button" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
-    <button id="btnLocationPage" class="nav-button" onclick="jade_modules.operations.showLocation()">Location</button>
+    <button id="btnLocationPage" class="nav-button" onclick="jade_modules.operations.showLocation()">Location</button><br/>
     <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
+    <a id='show-hide-comparison' onclick="jade_modules.operations.showComparison()">Show/hide comparison</a>
+    <a id='show-hide-us-script' onclick="jade_modules.operations.showUsScript()">Show/hide US Script</a>
   </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
@@ -44,6 +46,27 @@ async function mainHTML(){
     <button id="btnAutoSceneBlock" onclick="jade_modules.operations.autoSceneBlockCreation()">Auto scene block</button>
     <button id="btnLoadNewSheetCharacters" onclick="jade_modules.operations.loadNewSheetCharacters()">Load new sheet characters</button>
     <button id="btnNewCharacters" onclick="jade_modules.operations.newCharacters()">Missing characters</button>
+    <div class="row">
+      <div class="column" id="column-add-one">
+        <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
+        <label for="chapter-scene-select">Chapter/Scene</label><br/>
+        <label id='scene-add-wait'>Please wait...</label><br/>
+        <button id="btnAddWallaBlockNamed" onclick="jade_modules.operations.getSceneWallaInformation(1)">Add walla block (Named)</button>
+        <button id="btnAddWallaBlockUnnamed" onclick="jade_modules.operations.getSceneWallaInformation(2)">Add walla block (Un-named)</button>
+        <button id="btnAddWallaBlockGeneral" onclick="jade_modules.operations.getSceneWallaInformation(3)">Add walla block (General)</button>
+        <label for="walla-scene">Scene</label><br/>
+      </div>
+      <div class="column" id="column-add-two">
+        <select id="chapter-scene-select"><option value="">Please select</option></select>
+        <button id='btnGoChapterScene' onclick="jade_modules.operations.goSceneChapter()">Go</button>
+        <button id="btnRefreshList" onclick="jade_modules.operations.fillChapterAndScene()">Refresh List</button>
+        <br/>
+        <input type="text" id="walla-scene" name="walla-scene">
+        <button id='btnGoWallaScene' onclick="jade_modules.operations.goWallaScene()">Go</button>
+      </div>
+    </div>
+  </div>
+  <div id="comparison">
     <button id="btnCreateChapters" onclick="jade_modules.comparison.createChapters()">Create Chapters</button>
     <button id="btnReadDecision" onclick="jade_modules.comparison.createResult()">Create Results</button>
     <button id="btnChapterAndResult" onclick="jade_modules.comparison.createChaptersAndResults()">Chapter + Result</button><br/>
@@ -61,42 +84,32 @@ async function mainHTML(){
     <button id="btnFindNext" class="compButton" onclick="jade_modules.comparison.fixNextIssue()">Fix Next Issue</button>
     <button id="btnComparisonLoop"class="compButton" onclick="jade_modules.comparison.comparisonLoop()">Auto Run Comparison</button><br/>
     <button id="btnAutoChapter" class="compButton" onclick="jade_modules.comparison.autoSelectChapter()">Auto Chapter</button>
-    <button id="btnDoKeeps" class="compButton" onclick="jade_modules.comparison.doKeepsAndManuals()">Do keeps</button>
-    <div class="row">
-      <div class="column" id="column-add-one">
-        <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
-        <label for="chapter-scene-select">Chapter/Scene</label><br/>
-        <label id='scene-add-wait'>Please wait...</label><br/>
-        <button id="btnAddWallaBlockNamed" onclick="jade_modules.operations.getSceneWallaInformation(1)">Add walla block (Named)</button>
-        <button id="btnAddWallaBlockUnnamed" onclick="jade_modules.operations.getSceneWallaInformation(2)">Add walla block (Un-named)</button>
-        <button id="btnAddWallaBlockGeneral" onclick="jade_modules.operations.getSceneWallaInformation(3)">Add walla block (General)</button>
-        <label for="walla-scene">Scene</label><br/>
-      </div>
-      <div class="column" id="column-add-two">
-        <select id="chapter-scene-select"><option value="">Please select</option></select>
-        <button id='btnGoChapterScene' onclick="jade_modules.operations.goSceneChapter()">Go</button><br/>
-        <button id="btnRefreshList" onclick="jade_modules.operations.fillChapterAndScene()">Refresh List</button>
-        <input type="text" id="walla-scene" name="walla-scene">
-        <button id='btnGoWallaScene' onclick="jade_modules.operations.goWallaScene()">Go</button>
-      </div>
-    </div>
+    <button id="btnDoKeeps" class="compButton" onclick="jade_modules.comparison.doKeepsAndManuals()">Do keeps</button><br/>
+    <button id="btnDoKeepsResults" class="compButton" onclick="jade_modules.comparison.doKeepsFollowedByResults()">Keeps/Results/Autorun</button>
+    <button id="btnCellJoin" class="compButton" onclick="jade_modules.comparison.dealWithCellJoin()">Cell Join</button><br/>
+    <button id="btnCellMerge" class="compButton" onclick="jade_modules.comparison.mergeCells()">Cell Merge & Autorun</button>
+    <button id="btnFindMergeAutoRun" class="compButton" onclick="jade_modules.comparison.findMergeAutorun()">Find & Merge & Autorun</button>
+  </div>
+  <div id="us-script">
+    <button id="btnAddUsScript" onclick="jade_modules.usscript.usScriptAdd()">Add US Script</button>
+    <button id="btnClearUsCueScript" onclick="jade_modules.operations.clearUsCueAndScript()">Clear US Cue and Script</button>
   </div>
   <div id="firstButtons">
-    <label class="section-label">Lock / Unlock</label><span id="lockMessage"></span><a id='show-hide-lock' onclick="jade_modules.operations.showLock()">Show/hide lock</a>
+    <label class="section-label" onclick="jade_modules.operations.showLock()">Lock / Unlock</label><span id="lockMessage"></span><a id='show-hide-lock' onclick="jade_modules.operations.showLock()">Show/hide lock</a>
     <div id='lock-buttons'>
       <button id='btnLock' onclick="jade_modules.operations.lockColumns()">Lock sheet</button>
       <button id='btnUnlock' onclick="jade_modules.operations.unlock()">Unlock sheet</button><br/>
     </div>
   </div>
   <div id="filterButtons" >
-    <label class="section-label">Filtering</label><a id='show-hide-filter' onclick="jade_modules.operations.showFilter()">Show/hide filtering</a>
+    <label class="section-label" onclick="jade_modules.operations.showFilter()">Filtering</label><a id='show-hide-filter' onclick="jade_modules.operations.showFilter()">Show/hide filtering</a>
     <div id='filter-buttons'>
       <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
       <button id='btnRemoveFilter' onclick="jade_modules.operations.removeFilter()">Remove Filter</button><br/>
     </div>
   </div>
   <div id="jump">
-    <label class="section-label">Jump to scene</label><a id='show-hide-jump' onclick="jade_modules.operations.showJump()">Show/hide jumping</a>
+    <label class="section-label" onclick="jade_modules.operations.showJump()">Jump to scene</label><a id='show-hide-jump' onclick="jade_modules.operations.showJump()">Show/hide jumping</a>
     <div id="jump-buttons">
       <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First scene</button>
       <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
@@ -123,7 +136,7 @@ async function mainHTML(){
     </div>
   </div>
   <div id="showColumns">
-    <label class="section-label">Column selection:</label><span id="columnMessage">Showing all columns</span><a id='show-hide-columns' onclick="jade_modules.operations.showColumns()">Show/hide columns</a>
+    <label class="section-label" onclick="jade_modules.operations.showColumns()">Column selection:</label><span id="columnMessage">Showing all columns</span><a id='show-hide-columns' onclick="jade_modules.operations.showColumns()">Show/hide columns</a>
     <div id="column-buttons">
       <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button><br/>
       <button id='btnShowAll' onclick="jade_modules.operations.showHideColumns('all')">All Columns</button>
@@ -138,7 +151,7 @@ async function mainHTML(){
     </div>
   </div>
   <div id="showTakes">
-    <label class="section-label">Take selection: </label><span id="takeMessage">Showing all takes</span><a id='show-hide-takes' onclick="jade_modules.operations.showTakes()">Show/hide takes</a>
+    <label class="section-label" onclick="jade_modules.operations.showTakes()">Take selection: </label><span id="takeMessage">Showing all takes</span><a id='show-hide-takes' onclick="jade_modules.operations.showTakes()">Show/hide takes</a>
     <div id="takes-buttons">
       <button id='btnUnhideAll' onclick="jade_modules.operations.hideRows('all', 'UK')">All Takes</button>
       <button id='btnShowFirst' onclick="jade_modules.operations.hideRows('first', 'UK')">First Takes</button>
@@ -150,42 +163,74 @@ async function mainHTML(){
     </div>
   </div>
   <div id="dateStudioEngineer">
-    <label class="section-label">Add / remove takes</label><a id='show-hide-add-remove' onclick="jade_modules.operations.showAddRemove()">Show/hide add/remove takes</a>
+    <label class="section-label" onclick="jade_modules.operations.showAddRemove()">Add / remove takes</label><a id='show-hide-add-remove' onclick="jade_modules.operations.showAddRemove()">Show/hide add/remove takes</a>
     <div id="add-remove-buttons">
       <label id="take-wait">Please wait...</label>
-      <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true)">Add Take UK</button>
-      <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button><br/>
-      <button id="btnAddTakeUS" onclick="jade_modules.operations.addTakeDetails('US', true)">Add Take US</button>
-      <button id="btnRemoveTakeUS" onclick="jade_modules.operations.removeTake('US')">Remove Take US</button><br/>
-      <button id="btnAddTakeWalla" onclick="jade_modules.operations.addTakeDetails('Walla', true)">Add Take Walla</button>
-      <button id="btnRemoveTakeWalla" onclick="jade_modules.operations.removeTake('Walla')">Remove Take Walla</button><br/>
-      <label class="container">Just date
-        <input type='radio' id='radJustDate' checked="checked" name='radio'>
-        <span class="checkmark"></span>
-      </label>
-      <label class="container">Details from row above
-        <input type='radio' id='radAboveDetails' name='radio'>
-        <span class="checkmark"></span>
-      </label>
-      <label class="container">Details from the input below
-        <input type='radio' id='radBelowDetails' name='radio'>
-        <span class="checkmark"></span>
-      </label>
+      <label id="take-message"></label>
+      <div id="message-box">
+        <div id="message-prompt">Are you sure want to clear these takes</div>
+        <div id="buttons-yes-no">
+          <button id="message-yes" onclick="jade_modules.operations.messageYes()">Yes</button>
+          <button id="message-no" onclick="jade_modules.operations.messageNo()">No</button>
+        </div>
+      </div>
+      <div id="hidden-old-takes">
+        <button id="btnAddTakeUK" onclick="jade_modules.operations.addTakeDetails('UK', true)">Add Take UK</button>
+        <button id="btnRemoveTakeUK" onclick="jade_modules.operations.removeTake('UK')">Remove Take UK</button><br/>
+        <button id="btnAddTakeUS" onclick="jade_modules.operations.addTakeDetails('US', true)">Add Take US</button>
+        <button id="btnRemoveTakeUS" onclick="jade_modules.operations.removeTake('US')">Remove Take US</button><br/>
+        <button id="btnAddTakeWalla" onclick="jade_modules.operations.addTakeDetails('Walla', true)">Add Take Walla</button>
+        <button id="btnRemoveTakeWalla" onclick="jade_modules.operations.removeTake('Walla')">Remove Take Walla</button><br/>
+        <label class="container">Just date
+          <input type='radio' id='radJustDate' checked="checked" name='radio'>
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">Details from row above
+          <input type='radio' id='radAboveDetails' name='radio'>
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">Details from the input below
+          <input type='radio' id='radBelowDetails' name='radio'>
+          <span class="checkmark"></span>
+        </label>
+      </div>
       <div class="row">
         <div class="column" id="column-one">
+          <label for="character-select">Character</label><br/>
+          <br/>
+          <label for="takes-select">No. takes</label><br/>
           <label for="studio-select">Studio</label><br/>
           <label for="engineer-select">Engineer</label>
           <label for="markup">Markup</label>
         </div>
         <div class="column" id="column-two">
+          <select id="character-select"><option value="">Please select</option></select>
+          <button id="btnFilterCharacter" onclick="jade_modules.operations.filterCharacter()">Filter</button>
+          <button id="btnClearFilterCharacter" onclick="jade_modules.operations.removeFilter()">Clear</button><br/>
+          <label class="container4">Show scene blocks
+            <input type="checkbox" id='show-scene-blocks' checked="checked">
+            <span class="checkmark4"></span>
+          </label>
+          <select id="takes-select"><option value=""></option></select><br/>
           <select id="studio-select"><option value="">Please select</option></select><br/>
           <select id="engineer-select"><option value="">Please select</option></select>
           <input type="text" id="markup" name="markup"><button id="btnDefaultMarkup" onclick="jade_modules.operations.addDefaultMarkUp()">Default</button><br/>
-          <button id="btnAddMarkup" onclick="jade_modules.operations.addMarkUpToSelected(false)">Add</button>
-          <button id="btnReplaceMarkup" onclick="jade_modules.operations.addMarkUpToSelected(true)">Replace</button><br/>
-          <label id="markup-message">The Add/Replace buttons allow you to add or replace text to the selected markup fields</label>
+          <div id="add-remove-markup">
+            <button id="btnAddMarkup" onclick="jade_modules.operations.addMarkUpToSelected(false)">Add</button>
+            <button id="btnReplaceMarkup" onclick="jade_modules.operations.addMarkUpToSelected(true)">Replace</button><br/>
+            <label id="markup-message">The Add/Replace buttons allow you to add or replace text to the selected markup fields</label>
+          </div>
         </div>
       </div>
+      <div>
+        <button id="btnApplyTakeUk" class="take-button" onclick="jade_modules.operations.applyTakeDetails('UK')">Apply Take UK</button>
+        <button id="btnApplyTakeUs" class="take-button" onclick="jade_modules.operations.applyTakeDetails('US')">Apply Take US</button>
+        <button id="btnApplyTakeWalla" class="take-button" onclick="jade_modules.operations.applyTakeDetails('Walla')">Apply Take Walla</button><br/>
+        <button id="btnClearTakeUk" class="take-button" onclick="jade_modules.operations.clearTakeDetails('UK')">Clear Take UK</button>
+        <button id="btnClearTakeUs" class="take-button" onclick="jade_modules.operations.clearTakeDetails('US')">Clear Take US</button>
+        <button id="btnClearTakeWalla" class="take-button" onclick="jade_modules.operations.clearTakeDetails('Walla')">Clear Take Walla</button>
+      </div>
+          
       <div id="fillButton">
         <button id='btnFillUK' onclick="jade_modules.operations.fill('UK')">Fill UK</button>
         <button id='btnFillUS' onclick="jade_modules.operations.fill('US')">Fill US</button>
@@ -297,7 +342,7 @@ async function mainHTML(){
     <button id="btnForActorPageScript" class="script-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
     <button id="btnForSchedulingPageScript" class="script-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
     <button id="btnWallaImportScript" class="script-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
-    <button id="btnLocationPageScript" class="script-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/
+    <button id="btnLocationPageScript" class="script-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
   </div>
 </div>
   `;
@@ -322,8 +367,9 @@ async function mainHTML(){
   await jade_modules.comparison.fillChapter();
   jade_modules.operations.setDefaultRadioButton();
   await jade_modules.comparison.autoSelectChapter();
+  await jade_modules.operations.fillCharacterAndTakesDropdowns();
 
-  console.log("I'm here data loaded. Dev5");
+  console.log("I'm here data loaded. Dev10");
 }
 
  

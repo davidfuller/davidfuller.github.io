@@ -53,6 +53,7 @@ async function loadReduceAndSortCharacters(){
     await excel.sync();
     characterRange.removeDuplicates([0], false);
     await excel.sync();
+    
     const sortFields = [
       {
         key: 0,
@@ -61,6 +62,7 @@ async function loadReduceAndSortCharacters(){
     ]
     characterRange.sort.apply(sortFields);
     await excel.sync();
+    
   })  
 }
 
@@ -110,14 +112,25 @@ async function getActorInformation(){
     let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
     const waitCell = forActorSheet.getRange('faMessage');
     waitCell.values = 'Please wait...';
-    await excel.sync();
     
+    let usOnly = await isUsOnly();
     let character = await getActor(forActorName);
     console.log('Character ',character.name, character.type);
     let myData = await jade_modules.operations.getDirectorDataV2(character);
     let myLocation = await jade_modules.operations.getLocations();
     console.log('Scheduling myData', myData);
     console.log('Locations', myLocation);
+    
+    let tempData = [];
+    if (usOnly){
+      for (let i = 0; i < myData.length; i++){
+        if (myData[i].usCue.trim() != ''){
+          tempData.push(myData[i])
+        }
+      }
+      myData = tempData;
+    }
+    
     
     let dataRange = forActorSheet.getRange(forActorsTableName);
     let numItems = forActorSheet.getRange(numItemsActorsName);
@@ -184,7 +197,8 @@ async function getActorInformation(){
     waitLabel.style.display = 'none';
     waitCell.values = '';
     await excel.sync();
-  })  
+  })
+  await displayScenes();
 }
 
 async function getLocationInfo(){
@@ -478,29 +492,45 @@ async function locationGoToLine(){
   })
 }
 
+async function isUsOnly(){
+  let usOnly
+  await Excel.run(async function(excel){
+    let forActorSheet = excel.workbook.worksheets.getItem(forActorName);
+    let selectRange = forActorSheet.getRange('faSelect');
+    selectRange.load('values');
+    await excel.sync();
+    usOnly = selectRange.values[0][0] != 'All';
+  })
+  return usOnly;
+}
+
 async function createScript(){
+  let startTime = new Date().getTime();
   let actorWait = tag('script-wait');
   actorWait.style.display = 'block';
   let isAllNaN = true;
   let sceneNumbers = await getSceneNumberActor();
+  let usOnly = await isUsOnly();
   
   if (sceneNumbers.scenes.length > 0){
     let book = await jade_modules.operations.getBook();
     let character = await getActor(forActorName);
-    await topOfFirstPage(book, character);
     await clearActorScriptBody();
+    await topOfFirstPage(book, character, usOnly);  
   
     let theRowIndex = 1;
     let rowIndexes;
+    let sceneBlockRows = await jade_modules.operations.getSceneBlockRows();
     for (let i = 0; i < sceneNumbers.scenes.length; i++){
       actorWait.innerText = 'Please wait... Doing scene: ' + sceneNumbers.scenes[i] + ' (' + (i + 1) + ' of ' + sceneNumbers.scenes.length + ')';
       let sceneNumber = sceneNumbers.scenes[i]
       if (!isNaN(sceneNumber)){
         isAllNaN = false;
-        let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber);
+        let indexes = await jade_modules.operations.getRowIndeciesForScene(sceneNumber, usOnly);
         console.log('Indexes: ', indexes);
         if (indexes.length > 0){
-          let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
+          //let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
+          let sceneBlockText = await jade_modules.operations.getSceneBlockText(sceneNumber, sceneBlockRows)
           let doPageBreak = i > 0;
           let rowDetails = await putDataInActorScriptSheet(sceneBlockText, theRowIndex, doPageBreak);
           if (rowDetails.sceneBlockRowIndexes.length == 0){
@@ -508,8 +538,8 @@ async function createScript(){
           }
           //give 1 row of scpace between sceneblock and script
           theRowIndex = rowDetails.nextRowIndex + 1;
-          rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, theRowIndex);
-          await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name);
+          rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, theRowIndex, usOnly);
+          await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name, usOnly);
           theRowIndex = rowIndexes[rowIndexes.length - 1].startRow + rowIndexes[rowIndexes.length - 1].rowCount + 1;
         } else {
           console.log('Missing scene block: ', sceneNumber)
@@ -527,6 +557,8 @@ async function createScript(){
   }
   actorWait.innerText = 'Please wait...'
   actorWait.style.display = 'none';
+  let endTime = new Date().getTime();
+  console.log('Complete Create Script taken:', (endTime - startTime) / 1000);
 }
 
 async function displayScenes(){
@@ -535,6 +567,13 @@ async function displayScenes(){
   console.log('display', theScenes.display);
   let scenesDisplay = tag('actor-scene-display');
   scenesDisplay.innerText = theScenes.display;  
+}
+
+function setDefaultIfNotSet(){
+  if (getActorScriptChoice() == scriptChoice.none){
+    const radioAll = tag('radAllScenes');
+    radioAll.checked = true; 
+  }
 }
 
 function getActorScriptChoice(){
@@ -625,7 +664,7 @@ async function getSceneNumberActor(){
 }
 
 
-async function topOfFirstPage(book, character){
+async function topOfFirstPage(book, character, usOnly){
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     let bookRange = actorScriptSheet.getRange(actorScriptBookName);
@@ -637,11 +676,18 @@ async function topOfFirstPage(book, character){
       headingRange.values = [['Character: (Text Search)']]
     }
     let characterRange = actorScriptSheet.getRange(actorScriptCharacterName);
-    characterRange.values = character.name.charAt(0).toUpperCase() + character.name.slice(1);
+    let numColumns = 2;
+    if (usOnly){
+      characterRange.values = character.name.charAt(0).toUpperCase() + character.name.slice(1) + ' (US Script)';
+      numColumns = 3;
+    } else {
+      characterRange.values = character.name.charAt(0).toUpperCase() + character.name.slice(1);
+    }
     characterRange.unmerge()
     characterRange.load('rowIndex, columnIndex')
+    
     await excel.sync();
-    let mergeRange = actorScriptSheet.getRangeByIndexes(characterRange.rowIndex, characterRange.columnIndex, 1, 2);
+    let mergeRange = actorScriptSheet.getRangeByIndexes(characterRange.rowIndex, characterRange.columnIndex, 1, numColumns);
     mergeRange.merge(true);
   })
 }
@@ -731,9 +777,9 @@ async function showActorScript(){
   })
 }
 
-async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndexes, character){
+async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndexes, character, usOnly){
   await removeBorders(sheetName);
-  await formatSceneBlocks(sheetName, sceneBlockRowIndexes);
+  await formatSceneBlocks(sheetName, sceneBlockRowIndexes, usOnly);
   await formatHeading(sheetName);
   for (let i = 0; i < scriptRowIndexes.length; i++){
     await cueColumnFontColour(sheetName, scriptRowIndexes[i]);
@@ -759,9 +805,12 @@ async function removeBorders(sheetName){
   })
 }
 
-async function formatSceneBlocks(sheetName, rowIndexes){
+async function formatSceneBlocks(sheetName, rowIndexes, usOnly){
   let firstColumn = 0;
   let columnCount = 4;
+  if (usOnly){
+    columnCount = 5;
+  }
 
   for (let i = 0; i < rowIndexes.length; i++){
     await mergeTheRow(sheetName, rowIndexes[i], 1, firstColumn, columnCount);
@@ -882,7 +931,7 @@ async function highlightCharacters(sheetName, character, rowDetails){
 
 async function processCharacterListForWordAndScene(){
   let myWait = tag('character-wait');
-  myWait.style.display = 'block';
+  myWait.style.display = 'block'
   await Excel.run(async function(excel){
     const characterListSheet = excel.workbook.worksheets.getItem(characterListName);
     let characterRange = characterListSheet.getRange('clCharacters');
@@ -896,15 +945,13 @@ async function processCharacterListForWordAndScene(){
     for (let i = 0; i < myCharacters.length; i ++){
       if (myCharacters[i] != ''){
         let character = {name: myCharacters[i], type: choiceType.list};
-        console.log(i, character);
         let details = await getWordCountForCharacter(character);
-        console.log(i, 'Character: ', myCharacters[i], ' Details: ', details);
         let tempRange = characterListSheet.getRangeByIndexes(i + characterRange.rowIndex, detailsRange.columnIndex, 1, detailsRange.columnCount);
         tempRange.values = [[details.sceneWordCount, details.lineWordCount, details.scenes]];
       }
     }
   })
-  myWait.style.display = 'none';
+  myWait.style.display = 'none'
 }
 
 async function getWordCountForCharacter(characterName){
