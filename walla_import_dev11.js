@@ -178,7 +178,7 @@ async function loadMultipleIntoScriptSheet(doAll){
     const tableRowLast = wallaTableRange.rowIndex + wallaTableRange.rowCount - 1;
     let rowIndexes = [];
     if (doAll){
-      for (let i = tableRowFirst; i <= tableRowLast){
+      for (let i = tableRowFirst; i <= tableRowLast; i++){
         rowIndexes.push(i);
       }
     } else {
