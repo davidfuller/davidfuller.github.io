@@ -2,7 +2,7 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '10.1';
+const codeVersion = '10.2';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -2490,30 +2490,23 @@ async function getActiveCellDetails(){
 }
 
 async function filterOnCharacter(characterName, includeScenes, sceneRowIndexes){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async function(excel){
     let myRange = await getDataRange(excel);
     myRange.load('address')
-    await excel.sync();
-    console.log('My Range address', myRange.address)
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.autoFilter.remove();
     if (includeScenes){
-      console.log('In include scenes')
       let testTypes = [myTypes.line, myTypes.sceneBlock]
       let myTypeCrteria = {
         filterOn: Excel.FilterOn.values,
         values: testTypes
       }
-      console.log('TypeCode Index', typeCodeIndex, myTypeCrteria);
       scriptSheet.autoFilter.apply(myRange, typeCodeIndex, myTypeCrteria);
-
-      await excel.sync();
       let sceneRowIndexesString = [];
-      console.log('sceneRowIndexes', sceneRowIndexes);
       for (let i = 0; i < sceneRowIndexes.length; i++){
         sceneRowIndexesString.push(sceneRowIndexes[i].toString());
       }
-      console.log('sceneNumbers', sceneRowIndexes, sceneRowIndexesString);
       mySceneCriteria = {
         filterOn: Excel.FilterOn.values,
         values: sceneRowIndexesString
@@ -2526,18 +2519,18 @@ async function filterOnCharacter(characterName, includeScenes, sceneRowIndexes){
         operator: 'Or'
       }
       scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
-
     } else {
-      console.log('In just characterName')
       myCriteria = {
         filterOn: Excel.FilterOn.custom,
         criterion1: characterName
       }
-      console.log('character', characterIndex, myCriteria);
       scriptSheet.autoFilter.apply(myRange, characterIndex, myCriteria);
     }
     await excel.sync();
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 async function filterOnLocation(locationText){
