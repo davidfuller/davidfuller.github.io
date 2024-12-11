@@ -116,7 +116,19 @@ async function doWallaTable(typeWalla, theResults){
     console.log('Display Range rows: ', displayRange.rowCount, 'columns: ', displayRange.columnCount);
 
     displayRange.values = resultArray;
-    await excel.sync()
+    await excel.sync();
+
+    const sortFields = [
+      {
+        key: 6, //Line No
+        ascending: true
+      },
+      {
+        key: 0, // Walla Original
+        ascending: true
+      }
+    ]
+    displayRange.sort.apply(sortFields);
   })
 }
 
