@@ -4621,6 +4621,55 @@ async function deleteAllSceneAndWallaBlocks(){
   }
 }
 
+async function deleteAllWallaBlocks(){
+  await showMainPage();
+  let isProtected = await unlockIfLocked();
+  await Excel.run(async (excel) => {
+    for (let myDelete = 0; myDelete < 1000; myDelete++){
+
+      let myTypeCodes = await getTypeCodes();
+      console.log(myTypeCodes);
+      let theIndexes = [];
+      let theIndex = -1
+      for (let i = 0; i < myTypeCodes.typeCodes.values.length;i++){
+        //console.log(i, myTypeCodes.typeCodes.values[i]);
+        if (myTypeCodes.typeCodes.values[i] == myTypes.wallaBlock){
+            theIndex += 1
+            theIndexes[theIndex] = i + myTypeCodes.typeCodes.rowIndex;
+            break;
+        }
+      }
+      console.log('The Indexes',theIndexes);
+      
+      if (theIndexes.length == 0){
+        break;
+      }
+      
+      let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      let thisRow = [];
+      for (let i = 0 ; i < theIndexes.length; i++){
+        thisRow[i] = scriptSheet.getRangeByIndexes(theIndexes[i],1,1,1).getEntireRow();
+        thisRow[i].load('address');
+        thisRow[i].select();
+        await excel.sync();
+        console.log(i, 'Row address', thisRow[i].address)
+        thisRow[i].delete("Up");
+        console.log('Num: ', myDelete)
+        console.log('Before sync');
+        await excel.sync();
+        console.log('After sync');  
+      }
+    }
+    const firstRowIndex = firstDataRow - 1;
+    const lastRowIndex = lastDataRow - firstDataRow;
+    
+  })
+  if (isProtected){
+    await lockColumns();
+  }
+}
+
+
 async function clearWalla(){
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);

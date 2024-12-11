@@ -321,6 +321,7 @@ async function mainHTML(){
     <button id='btnLoadSelectedWalla' class="walla-button" onclick="jade_modules.wallaimport.loadMultipleIntoScriptSheet(false)">Load selected into script</button>
     <button id="btnWallaGoToLine" class='walla-button' onclick="jade_modules.wallaimport.showWallaLineNo()">Go to this line in script</button>
     <label id='load-message'>This item is already present</label>
+    <button id="btnClearWallaBlocks" class="walla-button" onclick="jade_modules.operations.deleteAllWallaBlocks()">Delete All Walla Blocks</button>
   </div>
 </div>
 <div id="location-page">
