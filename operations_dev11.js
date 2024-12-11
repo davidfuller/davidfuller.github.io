@@ -6686,4 +6686,5 @@ async function startUpClearHiddenRowsAndViews(){
   await unhideAllRows();
   await setSheetView(true);
   await setSheetView(false);
+  await selectRange('A3', true);
 }
