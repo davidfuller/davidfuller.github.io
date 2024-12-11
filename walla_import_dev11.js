@@ -1,6 +1,6 @@
 const wallaSheetName = 'Walla Import';
 const sourceTextRangeName = 'wiSource';
-const namedCharacters = 'Named Characters - For reaction sounds and walla';
+
 const wallaTableName = 'wiTable';
 const wallaSourceSheetName = 'Walla Script'
 const wallaSourceUKScriptColumnIndex = 9;
@@ -14,6 +14,40 @@ const tableCols ={
   numCharacters: 5,
   lineNo: 6
 }
+
+const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Named Characters - For reaction sounds and walla:', 'Named Characters Reactions and Walla']
+let displayWallaName = 'Named Characters Reactions and Walla:'
+const unnamedCharacters = ['Un-named Character Walla','Un-named Character Walla:'];
+let displayWallaUnNamed = 'Un-named Character Walla:';
+const generalWalla = ['General Walla', 'General Walla:']
+let displayGeneralWalla = 'General Walla:';
+
+function isNamedWalla(theType){
+  for (text of namedCharacters){
+    if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
+      return true;
+    }
+  }
+  return false;
+}
+function isUnamedWalla(theType){
+  for (text of unnamedCharacters){
+    if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
+      return true;
+    }
+  }
+  return false;
+}
+
+function isGeneralWalla(theType){
+  for (text of generalWalla){
+    if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
+      return true;
+    }
+  }
+  return false;
+}
+
 
 
 function auto_exec(){
@@ -263,6 +297,13 @@ async function getTheWallaSourceIndecies(){
     usedRange.load('rowIndex, rowCount');
     await excel.sync();
     console.log('rowIndex', usedRange.rowIndex, 'rowCount', usedRange.rowCount);
-
+    let scriptRange = sourceSheet.getRangeByIndexes(usedRange.rowIndex, wallaSourceUKScriptColumnIndex, usedRange.rowCount, 1)
+    scriptRange.load('values');
+    await excel.sync()
+    for (let i = 0; i < 20; i++){
+      let raw = scriptRange.values[i][0];
+      let lines = raw.split('\n');
+      console.log(i, lines[0]);
+    }
   })
 }
