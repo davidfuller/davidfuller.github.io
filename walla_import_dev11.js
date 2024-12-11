@@ -15,6 +15,13 @@ const tableCols ={
   lineNo: 6
 }
 
+const wallaTypes = {
+  named: 'named',
+  unNamed: 'unNamed',
+  general: 'general'
+}
+
+
 const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Named Characters - For reaction sounds and walla:', 'Named Characters Reactions and Walla']
 let displayWallaName = 'Named Characters Reactions and Walla:'
 const unnamedCharacters = ['Un-named Character Walla','Un-named Character Walla:'];
@@ -291,6 +298,7 @@ function isRowWithinTable(rowIndex, tableRowIndex, tableRowCount){
 }
 
 async function getTheWallaSourceIndecies(){
+  let wallaIndexes = []
   await Excel.run(async (excel) => {
     const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
     const usedRange = sourceSheet.getUsedRange();
@@ -300,10 +308,29 @@ async function getTheWallaSourceIndecies(){
     let scriptRange = sourceSheet.getRangeByIndexes(usedRange.rowIndex, wallaSourceUKScriptColumnIndex, usedRange.rowCount, 1)
     scriptRange.load('values');
     await excel.sync()
-    for (let i = 0; i < 20; i++){
+    for (let i = 0; i < 200; i++){
       let raw = scriptRange.values[i][0];
       let lines = raw.split('\n');
       console.log(i, lines[0]);
+      let wallaData
+      if (isNamedWalla(lines[0])){
+        wallaData = {
+          type: wallaTypes.named,
+          rowIndex: i + usedRange.rowIndex
+        }
+      } else if (isUnamedWalla(lines[0])){
+        wallaData = {
+          type: wallaTypes.unNamed,
+          rowIndex: i + usedRange.rowIndex
+        }
+      } else if (isGeneralWalla(lines[0])){
+        wallaData = {
+          type: wallaTypes.general,
+          rowIndex: i + usedRange.rowIndex
+        }        
+      }
+      wallaIndexes.push(wallaData);
     }
+    console.log('Walla Idndexes', wallaIndexes);
   })
 }
