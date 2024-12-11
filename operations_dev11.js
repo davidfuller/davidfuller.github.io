@@ -4657,7 +4657,8 @@ async function deleteAllWallaBlocks(){
         console.log('Num: ', myDelete)
         console.log('Before sync');
         await excel.sync();
-        console.log('After sync');  
+        console.log('After sync'); 
+        await correctFormulas(theIndexes[i]);
       }
     }
     const firstRowIndex = firstDataRow - 1;
@@ -4671,6 +4672,7 @@ async function deleteAllWallaBlocks(){
 
 
 async function clearWalla(){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let wallaOrigninalRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaOriginalIndex, lastDataRow - firstDataRow, 1);
@@ -4678,6 +4680,9 @@ async function clearWalla(){
     let wallaDetails = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaCueIndex, lastDataRow - firstDataRow, numberOfPeoplePresentIndex - wallaCueIndex + 1);
     wallaDetails.clear('Contents');
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 
