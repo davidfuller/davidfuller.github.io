@@ -4092,7 +4092,7 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
     for (let i = 0; i < wallaData.length; i++){
       console.log('Doing walla data ', i, 'of', wallaData.length)
       let firstWallaRange = scriptSheet.getRangeByIndexes(wallaData[i].rowIndex, wallaLineRangeIndex, 1, numberColumns);
-      if (i = 0){
+      if (i == 0){
         displayWallaRange = firstWallaRange;
       }
       let wallaOriginalRange = scriptSheet.getRangeByIndexes(wallaData[i].rowIndex, wallaOriginalIndex, 1 , 1);
