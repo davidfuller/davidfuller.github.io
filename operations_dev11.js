@@ -4100,6 +4100,7 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
   let dataToDo = false;
   await Excel.run(async (excel) => {
     let loadMessage = tag('load-message');
+    loadMessage.style.display = 'none';
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
     for (let i = 0; i < wallaData.length; i++){
@@ -6702,4 +6703,21 @@ async function startUpClearHiddenRowsAndViews(){
   await setSheetView(true);
   await setSheetView(false);
   await selectRange('A3', true);
+}
+async function showWallaLine(lineNo){
+  await Excel.run(async function(excel){
+    let lineNumber = parseInt(lineNo)
+    console.log('lineNumber', lineNumber);
+    if (!isNaN(lineNumber)){
+      await findLineNo(lineNumber);
+      activeCell = excel.workbook.getActiveCell();
+      activeCell.load('rowIndex');
+      await excel.sync(); 
+      const rowIndex = activeCell.rowIndex;
+      await selectRange(null, true, rowIndex, wallaLineRangeIndex);
+      await showMainPage();
+    } else {
+      alert('Not a line number');
+    }
+  })
 }
