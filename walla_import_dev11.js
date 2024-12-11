@@ -22,7 +22,7 @@ const wallaTypes = {
 }
 
 
-const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Named Characters - For reaction sounds and walla:', 'Named Characters Reactions and Walla', 'Named character walla']
+const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Named Characters - For reaction sounds and walla:', 'Named Characters Reactions and Walla', 'Named character walla', 'Named - Character & Reactions']
 let displayWallaName = 'Named Characters Reactions and Walla:'
 const unnamedCharacters = ['Un-named Character Walla','Un-named Character Walla:'];
 let displayWallaUnNamed = 'Un-named Character Walla:';
