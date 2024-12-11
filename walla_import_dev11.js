@@ -308,7 +308,7 @@ async function getTheWallaSourceIndecies(){
     let scriptRange = sourceSheet.getRangeByIndexes(usedRange.rowIndex, wallaSourceUKScriptColumnIndex, usedRange.rowCount, 1)
     scriptRange.load('values');
     await excel.sync()
-    for (let i = 0; i < 200; i++){
+    for (let i = 0; i < scriptRange.values.length; i++){
       let raw = scriptRange.values[i][0];
       let lines = raw.split('\n');
       console.log(i, lines[0]);
