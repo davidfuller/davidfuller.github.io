@@ -228,7 +228,7 @@ async function mainHTML(){
         <button id="btnApplyTakeWalla" class="take-button" onclick="jade_modules.operations.applyTakeDetails('Walla')">Apply Take Walla</button><br/>
         <button id="btnClearTakeUk" class="take-button" onclick="jade_modules.operations.clearTakeDetails('UK')">Clear Take UK</button>
         <button id="btnClearTakeUs" class="take-button" onclick="jade_modules.operations.clearTakeDetails('US')">Clear Take US</button>
-        <button id="btnClearTakeWalla" class="take-button" onclick="jade_modules.operations.clearTakeDetails('Walla')">Clear Take Walla</button><br/
+        <button id="btnClearTakeWalla" class="take-button" onclick="jade_modules.operations.clearTakeDetails('Walla')">Clear Take Walla</button><br/>
         <button id="btnUnhideAllRows" class="take-button" onclick="jade_modules.operations.unhideAllRows()">Unhide all rows</button>
       </div>
           
