@@ -4097,6 +4097,7 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
   let isProtected = await unlockIfLocked();
   let displayWallaRange;
   let myMessage = ''
+  let dataToDo = false;
   await Excel.run(async (excel) => {
     let loadMessage = tag('load-message');
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -4139,14 +4140,15 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
                   console.log('the cells is empty')
                   wallaData[i].rowIndex = j;
                   console.log('Breaking out of loop');
+                  dataToDo =true
                   break;
                 } else {
                   console.log('That cell is not empty');
                 }
               } else {
                 console.log('Already there');
+                myMessage += 'Line no: ' + wallaData[i].lineNo + ' - ' + wallaData[i].characters + ' already present. \n'
                 loadMessage.style.display = 'block'
-                return null;
               }
             }
             console.log('New row index', wallaData[i].rowIndex)
@@ -4154,20 +4156,27 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
             console.log('Already there')
             myMessage += 'Line no: ' + wallaData[i].lineNo + ' - ' + wallaData[i].characters + ' already present. \n'
             loadMessage.style.display = 'block'
-            return null;
           }
         }
+      } else {
+        dataToDo = true;
       }
-      console.log('Putting data in:', dataArray, 'Row Index', wallaData[i].rowIndex);
-      firstWallaRange.values = [dataArray];
-      console.log('Putting Original in:', wallaData[i].all, 'Row Index', wallaData[i].rowIndex);
-      wallaOriginalRange.values = [[wallaData[i].all]]
+      if (dataToDo){
+        console.log('Putting data in:', dataArray, 'Row Index', wallaData[i].rowIndex);
+        firstWallaRange.values = [dataArray];
+        console.log('Putting Original in:', wallaData[i].all, 'Row Index', wallaData[i].rowIndex);
+        wallaOriginalRange.values = [[wallaData[i].all]]
+        await excel.sync();
+      }
+    }
+    if (dataToDo){
+      displayWallaRange.select();   
       await excel.sync();
     }
-    displayWallaRange.select();   
-    await excel.sync();
   })
-  await showMainPage();
+  if (dataToDo){
+    await showMainPage();
+  }
   if (isProtected){
     await lockColumns();
   }
