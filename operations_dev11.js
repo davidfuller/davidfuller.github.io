@@ -6681,3 +6681,9 @@ async function doTheCopy(copyDetails){
     await lockColumns();
   }
 }
+
+async function startUpClearHiddenRowsAndViews(){
+  await unhideAllRows();
+  await setSheetView(true);
+  await setSheetView(false);
+}
