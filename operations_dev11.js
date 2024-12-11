@@ -4111,16 +4111,15 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
         }
         if (doNext){
           if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
-            for (let i = wallaData[i].rowIndex + 1; i < wallaData[i].rowIndex + 100; i++){
-              console.log(i)
-              firstWallaRange = scriptSheet.getRangeByIndexes(i, wallaLineRangeIndex, 1, numberColumns);
-              wallaOriginalRange = scriptSheet.getRangeByIndexes(i, wallaOriginalIndex, 1 , 1)
+            for (let j = wallaData[i].rowIndex + 1; j < wallaData[i].rowIndex + 100; j++){
+              firstWallaRange = scriptSheet.getRangeByIndexes(j, wallaLineRangeIndex, 1, numberColumns);
+              wallaOriginalRange = scriptSheet.getRangeByIndexes(j, wallaOriginalIndex, 1 , 1)
               firstWallaRange.load('values');
               await excel.sync();
-              console.log('Testing row: ', i, 'Row data: ', firstWallaRange.values[0]);
+              console.log('Testing row: ', j, 'Row data: ', firstWallaRange.values[0]);
               if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
                 if (firstWallaRange.values[0][1] == ''){
-                  wallaData[i].rowIndex = i;
+                  wallaData[i].rowIndex = j;
                   break;
                 }
               } else {
