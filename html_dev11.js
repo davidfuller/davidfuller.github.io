@@ -321,8 +321,8 @@ async function mainHTML(){
     <button id="btnWallaGoToLine" class='walla-button' onclick="jade_modules.wallaimport.showWallaLineNo()">Go to this line in script</button>
     <label id='load-message'>This item is already present</label>
     <button id="btnClearWallaBlocks" class="walla-button" onclick="jade_modules.operations.deleteAllWallaBlocks()">Delete All Walla Blocks</button>
-    <button id="btnClearWalla" onclick="jade_modules.operations.clearWalla()">Clear All Walla</button>
-    <button id="btnGetData" onclick="jade_modules.wallaimport.getTheWallaSourceIndecies()">Get Walla Data</button>
+    <button id="btnClearWalla" class="walla-button" onclick="jade_modules.operations.clearWalla()">Clear All Walla</button>
+    <button id="btnGetData" class="walla-button" onclick="jade_modules.wallaimport.getTheWallaSourceIndecies()">Get Walla Data</button>
   </div>
 </div>
 <div id="location-page">

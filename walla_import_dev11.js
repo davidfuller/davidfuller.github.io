@@ -260,9 +260,9 @@ async function getTheWallaSourceIndecies(){
   await Excel.run(async (excel) => {
     const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
     const usedRange = sourceSheet.getUsedRange();
-    usedRange.load('rowIndex', 'rowCount');
+    usedRange.load('rowIndex, rowCount');
     await excel.sync();
     console.log('rowIndex', usedRange.rowIndex, 'rowCount', usedRange.rowCount);
-    
+
   })
 }
