@@ -299,6 +299,9 @@ function isRowWithinTable(rowIndex, tableRowIndex, tableRowCount){
 
 async function getTheWallaSourceIndecies(){
   let wallaIndexes = []
+  let named = 0;
+  let unNamed = 0;
+  let general = 0;
   await Excel.run(async (excel) => {
     const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
     const usedRange = sourceSheet.getUsedRange();
@@ -318,21 +321,25 @@ async function getTheWallaSourceIndecies(){
           type: wallaTypes.named,
           rowIndex: i + usedRange.rowIndex
         }
+        named += 1;
       } else if (isUnamedWalla(lines[0])){
         wallaData = {
           type: wallaTypes.unNamed,
           rowIndex: i + usedRange.rowIndex
         }
+        unNamed += 1;
       } else if (isGeneralWalla(lines[0])){
         wallaData = {
           type: wallaTypes.general,
           rowIndex: i + usedRange.rowIndex
-        }        
+        }
+        general += 1;
       }
       if (wallaData != null){
         wallaIndexes.push(wallaData);
       }
     }
     console.log('Walla Idndexes', wallaIndexes);
+    console.log('named', named, 'unNamed', unNamed, 'general', general);
   })
 }
