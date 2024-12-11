@@ -1941,11 +1941,15 @@ function combineRowsNumbers(theRows){
 }
 
 async function unhideAllRows(){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const usedRange = scriptSheet.getUsedRange();
     usedRange.rowHidden = false;
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 async function hiddenRows(){
