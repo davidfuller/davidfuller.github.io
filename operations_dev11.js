@@ -4338,6 +4338,7 @@ function getWallaDisplayName(wallaName){
 }
 
 async function getSceneWallaInformation(typeNo){
+  let isProtected = await unlockIfLocked();
   let wallaScene = tag('walla-scene').value;
   sceneNo = parseInt(wallaScene);
   let doNamed, doUnnamed, doGeneral;
@@ -4510,6 +4511,9 @@ async function getSceneWallaInformation(typeNo){
   } else {
     alert('Enter a valid scene number')
   }
+  if (isProtected){
+    await lockColumns();
+  } 
 }
 function isNamedWalla(theType){
   for (text of namedCharacters){
