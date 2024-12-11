@@ -4096,6 +4096,7 @@ async function createSceneList(){
 async function createMultipleWallas(wallaData, doReplace, doNext){
   let isProtected = await unlockIfLocked();
   let displayWallaRange;
+  let myMessage = ''
   await Excel.run(async (excel) => {
     let loadMessage = tag('load-message');
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -4151,6 +4152,7 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
             console.log('New row index', wallaData[i].rowIndex)
           } else {
             console.log('Already there')
+            myMessage += 'Line no: ' + wallaData[i].lineNo + ' - ' + wallaData[i].characters + ' already present. \n'
             loadMessage.style.display = 'block'
             return null;
           }
@@ -4214,6 +4216,7 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
               }
             } else {
               console.log('Already there');
+              loadMessage.innerText = 'This item is already present';
               loadMessage.style.display = 'block'
               return null;
             }
@@ -4221,6 +4224,7 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
           console.log('New row index', rowIndex)
         } else {
           console.log('Already there')
+          loadMessage.innerText = 'This item is already present';
           loadMessage.style.display = 'block'
           return null;
         }

@@ -225,6 +225,7 @@ async function loadMultipleIntoScriptSheet(doAll){
           data.description = wallaTableRange.values[tableRow][descriptionArrayColumn];
           data.numCharacters = wallaTableRange.values[tableRow][numCharactersArrayColumn];
           data.all = wallaTableRange.values[tableRow][allArrayColumn];
+          data.lineNo = lineNo;
           wallaData.push(data); 
         }
       }
