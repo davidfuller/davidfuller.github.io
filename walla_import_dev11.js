@@ -312,7 +312,7 @@ async function getTheWallaSourceIndecies(){
       let raw = scriptRange.values[i][0];
       let lines = raw.split('\n');
       console.log(i, lines[0]);
-      let wallaData
+      let wallaData = null;
       if (isNamedWalla(lines[0])){
         wallaData = {
           type: wallaTypes.named,
@@ -329,7 +329,9 @@ async function getTheWallaSourceIndecies(){
           rowIndex: i + usedRange.rowIndex
         }        
       }
-      wallaIndexes.push(wallaData);
+      if (wallaData != null){
+        wallaIndexes.push(wallaData);
+      }
     }
     console.log('Walla Idndexes', wallaIndexes);
   })
