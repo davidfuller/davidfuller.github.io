@@ -341,5 +341,13 @@ async function getTheWallaSourceIndecies(){
     }
     console.log('Walla Idndexes', wallaIndexes);
     console.log('named', named, 'unNamed', unNamed, 'general', general);
+    for (i = 0; i < wallaIndexes.length; i++){
+      if (i % 3 == 0){
+        if (wallaIndexes[i].type != wallaTypes.named){
+          console.log(wallaIndexes[i].rowIndex);
+          break;
+        }
+      }
+    }
   })
 }
