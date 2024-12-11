@@ -2,7 +2,7 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '10.2';
+const codeVersion = '10.31';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -1940,6 +1940,17 @@ function combineRowsNumbers(theRows){
   return combined
 }
 
+async function unhideAllRows(){
+  let isProtected = await unlockIfLocked();
+  await Excel.run(async function(excel){ 
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const usedRange = scriptSheet.getUsedRange();
+    usedRange.rowHidden = false;
+  })
+  if (isProtected){
+    await lockColumns();
+  }
+}
 
 async function hiddenRows(){
   const startTime = new Date().getTime();
@@ -3545,6 +3556,7 @@ async function goWallaScene(){
 }
 
 async function doTheActualSceneBlock(chapterSceneID){
+  let isProtected = await unlockIfLocked();
   if (!isNaN(chapterSceneID)){
     let sceneListData = addSelectList[chapterSceneID]
     //console.log('typeCodeValues', typeCodeValues, 'addSelectList', addSelectList);
@@ -3740,6 +3752,9 @@ async function doTheActualSceneBlock(chapterSceneID){
     });
   } else {
     alert("Please enter a number")
+  }
+  if (isProtected){
+    await lockColumns();
   }
 }
 
@@ -4083,6 +4098,7 @@ async function createSceneList(){
 }
 
 async function createWalla(wallaData, rowIndex, doReplace, doNext){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
     let loadMessage = tag('load-message');
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -4142,9 +4158,10 @@ async function createWalla(wallaData, rowIndex, doReplace, doNext){
     firstWallaRange.select();   
     await excel.sync();
     await showMainPage();
-
   })
-
+  if (isProtected){
+    await lockColumns();
+  }
 }
 function isDataTheSame(newData, currentData){
   if (newData.length == currentData.length){
@@ -4163,6 +4180,7 @@ function isDataTheSame(newData, currentData){
 }
 
 async function calculateWallaCues(){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
@@ -4195,6 +4213,9 @@ async function calculateWallaCues(){
     }
     await excel.sync();
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 async function getFirstWalla(){
@@ -4227,6 +4248,7 @@ function getWallaDisplayName(wallaName){
 }
 
 async function getSceneWallaInformation(typeNo){
+  let isProtected = await unlockIfLocked();
   let wallaScene = tag('walla-scene').value;
   sceneNo = parseInt(wallaScene);
   let doNamed, doUnnamed, doGeneral;
@@ -4399,6 +4421,9 @@ async function getSceneWallaInformation(typeNo){
   } else {
     alert('Enter a valid scene number')
   }
+  if (isProtected){
+    await lockColumns();
+  } 
 }
 function isNamedWalla(theType){
   for (text of namedCharacters){
@@ -4507,6 +4532,7 @@ async function deleteAllSceneAndWallaBlocks(){
 }
 
 async function clearWalla(){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let wallaOrigninalRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaOriginalIndex, lastDataRow - firstDataRow, 1);
@@ -4514,6 +4540,9 @@ async function clearWalla(){
     let wallaDetails = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaCueIndex, lastDataRow - firstDataRow, numberOfPeoplePresentIndex - wallaCueIndex + 1);
     wallaDetails.clear('Contents');
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 
@@ -6589,4 +6618,11 @@ async function doTheCopy(copyDetails){
   if (isProtected){
     await lockColumns();
   }
+}
+
+async function startUpClearHiddenRowsAndViews(){
+  await unhideAllRows();
+  await setSheetView(true);
+  await setSheetView(false);
+  await selectRange('A3', true);
 }

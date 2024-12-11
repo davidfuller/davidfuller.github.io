@@ -3556,6 +3556,7 @@ async function goWallaScene(){
 }
 
 async function doTheActualSceneBlock(chapterSceneID){
+  let isProtected = await unlockIfLocked();
   if (!isNaN(chapterSceneID)){
     let sceneListData = addSelectList[chapterSceneID]
     //console.log('typeCodeValues', typeCodeValues, 'addSelectList', addSelectList);
@@ -3751,6 +3752,9 @@ async function doTheActualSceneBlock(chapterSceneID){
     });
   } else {
     alert("Please enter a number")
+  }
+  if (isProtected){
+    await lockColumns();
   }
 }
 
