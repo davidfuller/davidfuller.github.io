@@ -2,6 +2,9 @@ const wallaSheetName = 'Walla Import';
 const sourceTextRangeName = 'wiSource';
 const namedCharacters = 'Named Characters - For reaction sounds and walla';
 const wallaTableName = 'wiTable';
+const wallaSourceSheetName = 'Walla Script'
+const wallaSourceUKScriptColumnIndex = 9;
+
 const tableCols ={
   wallaOriginal: 0,
   lineRange: 1,
@@ -251,4 +254,15 @@ async function showWallaLineNo(){
 
 function isRowWithinTable(rowIndex, tableRowIndex, tableRowCount){
   return (rowIndex >= tableRowIndex) && (rowIndex < (tableRowIndex + tableRowCount))
+}
+
+async function getTheWallaSourceIndecies(){
+  await Excel.run(async (excel) => {
+    const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
+    const usedRange = sourceSheet.getUsedRange();
+    usedRange.load('rowIndex', 'rowCount');
+    await excel.sync();
+    console.log('rowIndex', usedRange.rowIndex, 'rowCount', usedRange.rowCount);
+    
+  })
 }
