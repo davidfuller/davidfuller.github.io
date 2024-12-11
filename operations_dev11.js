@@ -4090,6 +4090,7 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
     for (let i = 0; i < wallaData.length; i++){
+      console.log('Doing walla data ', i, 'of', wallaData.length)
       let firstWallaRange = scriptSheet.getRangeByIndexes(wallaData[i].rowIndex, wallaLineRangeIndex, 1, numberColumns);
       if (i = 0){
         displayWallaRange = firstWallaRange;
@@ -4106,11 +4107,14 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
       await excel.sync();
       if (firstWallaRange.values[0][1] != ''){
         if (doReplace){
+          console.log('Doing replace')
           firstWallaRange.clear("Contents");
           wallaOriginalRange.clear("Contents");
         }
         if (doNext){
+          console.log('Doing next')
           if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
+            console.log('The data is not the same');
             for (let j = wallaData[i].rowIndex + 1; j < wallaData[i].rowIndex + 100; j++){
               firstWallaRange = scriptSheet.getRangeByIndexes(j, wallaLineRangeIndex, 1, numberColumns);
               wallaOriginalRange = scriptSheet.getRangeByIndexes(j, wallaOriginalIndex, 1 , 1)
@@ -4118,9 +4122,14 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
               await excel.sync();
               console.log('Testing row: ', j, 'Row data: ', firstWallaRange.values[0]);
               if (!isDataTheSame(dataArray, firstWallaRange.values[0])){
+                console.log('j row data is not thr same')
                 if (firstWallaRange.values[0][1] == ''){
+                  console.log('the cells is empty')
                   wallaData[i].rowIndex = j;
+                  console.log('Breaking out of loop');
                   break;
+                } else {
+                  console.log('That cell is not empty');
                 }
               } else {
                 console.log('Already there');
