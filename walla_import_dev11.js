@@ -219,7 +219,7 @@ async function loadMultipleIntoScriptSheet(doAll){
           data.typeOfWalla = wallaTableRange.values[tableRow][tableCols.typeOfWalla];
           data.characters =wallaTableRange.values[tableRow][tableCols.character];
           data.description = wallaTableRange.values[tableRow][tableCols.description];
-          data.numCharacters = wallaTableRange.values[tableRow][numCharacters];
+          data.numCharacters = wallaTableRange.values[tableRow][tableCols.numCharacters];
           data.all = wallaTableRange.values[tableRow][tableCols.wallaOriginal];
           data.lineNo = lineNo;
           wallaData.push(data); 
