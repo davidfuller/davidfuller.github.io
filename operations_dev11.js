@@ -4147,15 +4147,17 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
                 }
               } else {
                 console.log('Already there');
-                myMessage += 'Line no: ' + wallaData[i].lineNo + ' - ' + wallaData[i].characters + ' already present. \n'
-                loadMessage.style.display = 'block'
+                myMessage += 'Line no: ' + wallaData[i].lineNo + ' - ' + wallaData[i].characters + ' already present. \n';
+                loadMessage.style.display = 'block';
+                loadMessage.innerText = myMessage;
               }
             }
             console.log('New row index', wallaData[i].rowIndex)
           } else {
             console.log('Already there')
-            myMessage += 'Line no: ' + wallaData[i].lineNo + ' - ' + wallaData[i].characters + ' already present. \n'
-            loadMessage.style.display = 'block'
+            myMessage += 'Line no: ' + wallaData[i].lineNo + ' - ' + wallaData[i].characters + ' already present. \n';
+            loadMessage.style.display = 'block';
+            loadMessage.innerText = myMessage;
           }
         }
       } else {
