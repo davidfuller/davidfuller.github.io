@@ -1940,6 +1940,13 @@ function combineRowsNumbers(theRows){
   return combined
 }
 
+async function unhideAllRows(){
+  await Excel.run(async function(excel){ 
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const usedRange = scriptSheet.getUsedRange();
+    usedRange.rowHidden = false;
+  })
+}
 
 async function hiddenRows(){
   const startTime = new Date().getTime();
