@@ -4128,7 +4128,7 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
                 return null;
               }
             }
-            console.log('New row index', rowIndexes[i])
+            console.log('New row index', wallaData[i].rowIndex)
           } else {
             console.log('Already there')
             loadMessage.style.display = 'block'
