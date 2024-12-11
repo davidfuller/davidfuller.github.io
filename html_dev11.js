@@ -28,7 +28,6 @@ async function mainHTML(){
     <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button>
     <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
     <button id="btnAddHandler" onclick="jade_modules.operations.registerExcelEvents()">Register events</button>
-    <button id="btnClearWallal" onclick="jade_modules.operations.clearWalla()">Clear Walla</button>
     <button id="btnWallaCues" onclick="jade_modules.operations.calculateWallaCues()">Create Walla Cues</button>
     <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button><br/>
     <button id="btnDeleteSceneWalla" onclick="jade_modules.operations.deleteAllSceneAndWallaBlocks()">Delete all Scene and Walla blocks</button><br/>
@@ -322,6 +321,7 @@ async function mainHTML(){
     <button id="btnWallaGoToLine" class='walla-button' onclick="jade_modules.wallaimport.showWallaLineNo()">Go to this line in script</button>
     <label id='load-message'>This item is already present</label>
     <button id="btnClearWallaBlocks" class="walla-button" onclick="jade_modules.operations.deleteAllWallaBlocks()">Delete All Walla Blocks</button>
+    <button id="btnClearWalla" onclick="jade_modules.operations.clearWalla()">Clear All Walla</button>
   </div>
 </div>
 <div id="location-page">
