@@ -6714,7 +6714,7 @@ async function showWallaLine(lineNo){
       activeCell.load('rowIndex');
       await excel.sync(); 
       const rowIndex = activeCell.rowIndex;
-      await selectRange(null, true, rowIndex, wallaLineRangeIndex);
+      await selectRange(null, true, rowIndex, typeOfWallaIndex);
       await showMainPage();
     } else {
       alert('Not a line number');
