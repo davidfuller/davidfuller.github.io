@@ -4270,6 +4270,7 @@ function isDataTheSame(newData, currentData){
 }
 
 async function calculateWallaCues(){
+  let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
@@ -4302,6 +4303,9 @@ async function calculateWallaCues(){
     }
     await excel.sync();
   })
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 async function getFirstWalla(){
