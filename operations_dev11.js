@@ -4145,8 +4145,10 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
           }
         }
       }
+      console.log('Putting data in:', dataArray, 'Row Index', wallaData[i].rowIndex);
       firstWallaRange.values = [dataArray];
-      wallaOriginalRange.values = [[wallaData.all]]
+      console.log('Putting Original in:', wallaData[i].all, 'Row Index', wallaData[i].rowIndex);
+      wallaOriginalRange.values = [[wallaData[i].all]]
       await excel.sync();
     }
     displayWallaRange.select();   
