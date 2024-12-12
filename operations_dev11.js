@@ -6789,10 +6789,15 @@ async function showWallaLine(lineNo){
 }
 
 async function actorScriptAutoRowHeight(){
+  let usedRowIndexes = await actorScriptUsedRows();
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
-    const usedRange = actorScriptSheet.getUsedRange();
-    usedRange.format.autofitRows();
+    console.log('usedRowIndexes', usedRowIndexes);
+    let tempRange = [];
+    for (let i = 0; i < usedRowIndexes.length; i++){
+      tempRange[i] = actorScriptSheet.getRangeByIndexes(usedRowIndexes[i], 1, 1, 1);
+      tempRange[i].format.autofitRows();
+    }
     //usedRange.format.useStandardHeight = true;
   })
 }
