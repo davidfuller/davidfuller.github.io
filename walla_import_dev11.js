@@ -303,6 +303,7 @@ async function getTheWallaSourceIndecies(){
   let named = 0;
   let unNamed = 0;
   let general = 0;
+  let isGood = true;
   await Excel.run(async (excel) => {
     const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
     const usedRange = sourceSheet.getUsedRange();
@@ -346,21 +347,48 @@ async function getTheWallaSourceIndecies(){
       if (i % 3 == 0){
         if (wallaIndexes[i].type != wallaTypes.named){
           console.log(i, 'Named', wallaIndexes[i].rowIndex, wallaIndexes[i].type);
+          isGood = false;
           break;
         }
       }
       if (i % 3 == 1){
         if (wallaIndexes[i].type != wallaTypes.unNamed){
           console.log(i, 'Unnamed', wallaIndexes[i].rowIndex, wallaIndexes[i].type);
+          isGood = false;
           break;
         }
       }
       if (i % 3 == 2){
         if (wallaIndexes[i].type != wallaTypes.general){
           console.log(i, 'General', wallaIndexes[i].rowIndex, wallaIndexes[i].type);
+          isGood = false;
           break;
         }
       }
     }
   })
+  if (isGood){
+    return wallaIndexes;
+  }
 }
+
+async function displayWallaIndexes(wallaIndexes){
+  await Excel.run(async (excel) => {
+    const wallaSheet = excel.workbook.worksheets.getItem(wallaImportName);
+    const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
+    indexTableRange.load('rowIndex, rowCount, columnIndex, columnCount');
+    indexTableRange.clear('Contents');
+    await excel.sync();
+    let num = 0;
+    let results = []
+    for (i = 0; i < wallaIndexes.length; i = i + 3){
+      num += 1;
+      let myRow = [num, wallaIndexes[i].rowIndex, wallaIndexes[i + 1].rowIndex, wallaIndexes[i + 2].rowIndex]
+      results.push(myRow)
+    }
+    console.log('results', results)
+    let tempRange = wallaSheet.getRangeByIndexes(indexTableRange.rowIndex, indexTableRange.columnIndex, results.length, indexTableRange.columnCount);
+    tempRange.values = results;
+  })
+}
+
