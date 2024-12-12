@@ -23,8 +23,7 @@ const wallaTypes = {
 
 
 const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Named Characters - For reaction sounds and walla:', 'Named Characters Reactions and Walla', 'Named character walla', 'Named - Character & Reactions', 
-  'Named character walla:', 'Named character walla'
-]
+  'Named character walla:', 'Named character walla']
 let displayWallaName = 'Named Characters Reactions and Walla:'
 const unnamedCharacters = ['Un-named Character Walla','Un-named Character Walla:'];
 let displayWallaUnNamed = 'Un-named Character Walla:';
@@ -346,7 +345,19 @@ async function getTheWallaSourceIndecies(){
     for (i = 0; i < wallaIndexes.length; i++){
       if (i % 3 == 0){
         if (wallaIndexes[i].type != wallaTypes.named){
-          console.log(wallaIndexes[i].rowIndex);
+          console.log('Named', wallaIndexes[i].rowIndex);
+          break;
+        }
+      }
+      if (i % 3 == 1){
+        if (wallaIndexes[i].type != wallaTypes.unNamed){
+          console.log('Unnamed', wallaIndexes[i].rowIndex);
+          break;
+        }
+      }
+      if (i % 3 == 2){
+        if (wallaIndexes[i].type != wallaTypes.general){
+          console.log('General', wallaIndexes[i].rowIndex);
           break;
         }
       }
