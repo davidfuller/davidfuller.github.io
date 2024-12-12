@@ -6835,4 +6835,5 @@ async function actorScriptUsedRows(){
     }
     console.log('usedRowIndexes', usedRowIndexes);
   })
+  return usedRowIndexes;
 }
