@@ -6806,7 +6806,7 @@ async function actorScriptChangeHeight(percent){
     await excel.sync()
     let usedRowIndexes = []
     console.log('usedRange', usedRange.values)
-    for (let i = 0; i < usedRange.values; i++){
+    for (let i = 0; i < usedRange.values.length; i++){
       if (usedRange.values[i][textColumnIndex].trim() != ''){
         usedRowIndexes.push(i + usedRange.rowIndex);
       }
