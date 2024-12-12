@@ -6789,6 +6789,8 @@ async function showWallaLine(lineNo){
 }
 
 async function actorScriptAutoRowHeight(){
+  let wait = tag('resize-wait');
+  wait.style.display = 'block';
   let usedRowIndexes = await actorScriptUsedRows();
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
@@ -6800,10 +6802,13 @@ async function actorScriptAutoRowHeight(){
     }
     //usedRange.format.useStandardHeight = true;
   })
+  wait.style.display = 'none';
 }
 
 async function actorScriptChangeHeight(percent){
   let usedRowIndexes = await actorScriptUsedRows();
+  let wait = tag('resize-wait');
+  wait.style.display = 'block';
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     console.log('usedRowIndexes', usedRowIndexes);
@@ -6826,6 +6831,7 @@ async function actorScriptChangeHeight(percent){
     }
     await excel.sync();
    })
+   wait.style.display = 'none';
 }
 
 async function actorScriptUsedRows(){
