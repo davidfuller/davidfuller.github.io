@@ -878,6 +878,9 @@ label {
 .take-button {
   width: 110px;
 }
+#btnAutoRowHeight {
+  width: 120px;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')

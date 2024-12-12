@@ -351,7 +351,7 @@ async function mainHTML(){
     <button id="btnLocationPageScript" class="script-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
   </div>
   <div id="script-control">
-    <button id="btnAutoRowHeight" class="script-nav" onclick="jade_modules.operations.actorScriptAutoRowHeight()">auto Row Height</button>
+    <button id="btnAutoRowHeight" class="script-nav" onclick="jade_modules.operations.actorScriptAutoRowHeight()">Auto Row Height</button>
   </div>
 </div>
   `;
