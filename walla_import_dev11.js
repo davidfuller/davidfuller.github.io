@@ -345,19 +345,19 @@ async function getTheWallaSourceIndecies(){
     for (i = 0; i < wallaIndexes.length; i++){
       if (i % 3 == 0){
         if (wallaIndexes[i].type != wallaTypes.named){
-          console.log('Named', wallaIndexes[i].rowIndex);
+          console.log(i, 'Named', wallaIndexes[i].rowIndex, wallaIndexes[i].type);
           break;
         }
       }
       if (i % 3 == 1){
         if (wallaIndexes[i].type != wallaTypes.unNamed){
-          console.log('Unnamed', wallaIndexes[i].rowIndex);
+          console.log(i, 'Unnamed', wallaIndexes[i].rowIndex, wallaIndexes[i].type);
           break;
         }
       }
       if (i % 3 == 2){
         if (wallaIndexes[i].type != wallaTypes.general){
-          console.log('General', wallaIndexes[i].rowIndex);
+          console.log(i, 'General', wallaIndexes[i].rowIndex, wallaIndexes[i].type);
           break;
         }
       }
