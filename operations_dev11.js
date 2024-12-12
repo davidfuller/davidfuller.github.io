@@ -6787,3 +6787,11 @@ async function showWallaLine(lineNo){
     }
   })
 }
+
+async function actorScriptAutoRowHeight(){
+  await Excel.run(async function(excel){
+    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    const usedRange = actorScriptSheet.getUsedRange();
+    usedRange.format.autofitRows();
+  })
+}

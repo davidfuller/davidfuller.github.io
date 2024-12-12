@@ -350,6 +350,9 @@ async function mainHTML(){
     <button id="btnWallaImportScript" class="script-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
     <button id="btnLocationPageScript" class="script-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
   </div>
+  <div id="script-control">
+    <button id="btnAutoRowHeight" class="script-nav" onclick="jade_modules.operations.actorScriptAutoRowHeight()">auto Row Height</button>
+  </div>
 </div>
   `;
 
