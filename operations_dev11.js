@@ -6798,13 +6798,35 @@ async function actorScriptAutoRowHeight(){
 }
 
 async function actorScriptChangeHeight(percent){
+  let usedRowIndexes = await actorScriptUsedRows();
+  await Excel.run(async function(excel){
+    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    console.log('usedRowIndexes', usedRowIndexes);
+    let tempRange = [];
+    for (let i = 0; i < usedRowIndexes.length; i++){
+      tempRange[i] = actorScriptSheet.getRangeByIndexes(usedRowIndexes[i], 1, 1, 1);
+      tempRange[i].format.load('rowHeight');
+    }
+    await excel.sync();
+    let newRowHeight = [];
+    for (let i = 0; i < usedRowIndexes.length; i++){
+      console.log('rowIndex:', usedRowIndexes[i], 'rowHeight', tempRange[i].format.rowHeight);
+      newRowHeight[i] = tempRange[i].format.rowHeight * (100 + percent)/100
+      console.log('rowIndex:', usedRowIndexes[i], 'new rowHeight', newRowHeight[i]);
+      tempRange[i].format.rowHeight = newRowHeight[i];
+    }
+    await excel.sync();
+   })
+}
+
+async function actorScriptUsedRows(){
   const textColumnIndex = 3;
+  let usedRowIndexes = [];
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     const usedRange = actorScriptSheet.getUsedRange();
     usedRange.load('values, rowIndex')
     await excel.sync()
-    let usedRowIndexes = []
     console.log('usedRange', usedRange.values)
     for (let i = 0; i < usedRange.values.length; i++){
       if (usedRange.values[i][textColumnIndex].trim() != ''){
@@ -6812,16 +6834,5 @@ async function actorScriptChangeHeight(percent){
       }
     }
     console.log('usedRowIndexes', usedRowIndexes);
-    for (let i = 0; i < usedRowIndexes.length; i++){
-      let tempRange = actorScriptSheet.getRangeByIndexes(usedRowIndexes[i], 1, 1, 1);
-      tempRange.format.load('rowHeight');
-      await excel.sync();
-      console.log('rowIndex:', usedRowIndexes[i], 'rowHeight', tempRange.format.rowHeight);
-      let newRowHeight = tempRange.format.rowHeight * (100 + percent)/100
-      console.log('rowIndex:', usedRowIndexes[i], 'new rowHeight', newRowHeight);
-      tempRange.format.rowHeight = newRowHeight;
-      await excel.sync();
-    }
-
   })
 }
