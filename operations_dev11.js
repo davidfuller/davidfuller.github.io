@@ -6812,5 +6812,12 @@ async function actorScriptChangeHeight(percent){
       }
     }
     console.log('usedRowIndexes', usedRowIndexes);
+    for (let i = 0; i < usedRowIndexes.length; i++){
+      let tempRange = actorScriptSheet.getRangeByIndexes(usedRowIndexes[i], 1, 1, 1);
+      tempRange.format.load('rowHeight');
+      await excel.sync();
+      console.log('rowIndex:', rowIndexes[i], 'rowHeight', tempRange.format.rowHeight);
+    }
+
   })
 }
