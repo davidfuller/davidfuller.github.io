@@ -6816,7 +6816,7 @@ async function actorScriptChangeHeight(percent){
       let tempRange = actorScriptSheet.getRangeByIndexes(usedRowIndexes[i], 1, 1, 1);
       tempRange.format.load('rowHeight');
       await excel.sync();
-      console.log('rowIndex:', rowIndexes[i], 'rowHeight', tempRange.format.rowHeight);
+      console.log('rowIndex:', usedRowIndexes[i], 'rowHeight', tempRange.format.rowHeight);
     }
 
   })
