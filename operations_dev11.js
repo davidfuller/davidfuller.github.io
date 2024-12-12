@@ -6792,7 +6792,7 @@ async function actorScriptAutoRowHeight(){
   await Excel.run(async function(excel){
     const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
     const usedRange = actorScriptSheet.getUsedRange();
-    //usedRange.format.autofitRows();
-    usedRange.format.useStandardHeight = true;
+    usedRange.format.autofitRows();
+    //usedRange.format.useStandardHeight = true;
   })
 }
