@@ -6819,7 +6819,7 @@ async function actorScriptChangeHeight(percent){
       console.log('rowIndex:', usedRowIndexes[i], 'rowHeight', tempRange.format.rowHeight);
       let newRowHeight = tempRange.format.rowHeight * (100 + percent)/100
       console.log('rowIndex:', usedRowIndexes[i], 'new rowHeight', newRowHeight);
-      tempRange.rowHeight = newRowHeight;
+      tempRange.format.rowHeight = newRowHeight;
       await excel.sync();
     }
 
