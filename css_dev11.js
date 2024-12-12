@@ -878,7 +878,7 @@ label {
 .take-button {
   width: 110px;
 }
-#btnAutoRowHeight, #btnIncreaseRowHeight {
+#btnAutoRowHeight, #btnIncreaseRowHeight, #btnDecreaseRowHeight {
   width: 140px;
 }
 `;
