@@ -6796,3 +6796,20 @@ async function actorScriptAutoRowHeight(){
     //usedRange.format.useStandardHeight = true;
   })
 }
+
+async function actorScriptChangeHeight(percent){
+  const textColumnIndex = 3;
+  await Excel.run(async function(excel){
+    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    const usedRange = actorScriptSheet.getUsedRange();
+    usedRange.load('values, rowIndex')
+    await excel.sync()
+    let usedRowIndexes = []
+    for (let i = 0; i < usedRange.values; i++){
+      if (usedRange.values[i][textColumnIndex].trim() != ''){
+        usedRowIndexes.push(i + usedRange.rowIndex);
+      }
+    }
+    console.log('usedRowIndexes', usedRowIndexes);
+  })
+}

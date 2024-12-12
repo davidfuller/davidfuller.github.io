@@ -352,6 +352,7 @@ async function mainHTML(){
   </div>
   <div id="script-control">
     <button id="btnAutoRowHeight" class="script-nav" onclick="jade_modules.operations.actorScriptAutoRowHeight()">Auto Row Height</button>
+    <button id="btnIncreaseRowHeight" class="script-nav" onclick="jade_modules.operations.actorScriptChangeHeight(10)">Increase Row Height</button>
   </div>
 </div>
   `;
