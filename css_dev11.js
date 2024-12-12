@@ -879,7 +879,7 @@ label {
   width: 110px;
 }
 #btnAutoRowHeight, #btnIncreaseRowHeight {
-  width: 120px;
+  width: 140px;
 }
 `;
   Jade.set_css(css);
