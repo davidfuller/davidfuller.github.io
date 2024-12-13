@@ -448,6 +448,8 @@ async function loadSelectedCellIntoTextBox(){
     indexTableRange.load('rowIndex, rowCount, columnIndex, columnCount');
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex, columnIndex, values');
+    const sourceRowIndexRange = wallaSheet.getRange('wiSourceRowIndex');
+    const rowIdRange = wallaSheet.getRange('wiSourceRowId');
     await excel.sync();
     let topRow = indexTableRange.rowIndex;
     let bottomRow = indexTableRange.rowIndex + indexTableRange.rowCount - 1;
@@ -461,8 +463,10 @@ async function loadSelectedCellIntoTextBox(){
         await excel.sync();
         console.log(testRange.values[0][0]);
         let wallaText = testRange.values[0][0];
-        let textRange = wallaSheet.getRange('wcText');
-        textRange.values = [[wallaText.trim()]];
+        let textRange = wallaSheet.getRange('wiSource');
+        textRange.values = [[wallaText.trim()]];  
+        sourceRowIndexRange.values = [[testRowIndex]];
+        rowIdRange.values = [[activeCell.rowIndex - indexTableRange.rowIndex + 1]];
       }
     } else {
       alert('Not in table');
