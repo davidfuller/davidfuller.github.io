@@ -179,6 +179,22 @@ async function doWallaTable(typeWalla, theResults){
 
     scenes = [...new Set(scenes)]
     console.log('anyNonScenes', anyNonScenes, 'scenes', scenes)
+    if ((anyNonScenes) && (scenes.length == 1)){
+      rowLineDetails = await jade_modules.operations.getRowIndexLineNoFirstLineScene(scenes[0])
+      if ((rowLineDetails.lineNo != -1) && (rowLineDetails.rowIndex != -1)){
+        for (let i = 0; i < resultArray.length; i++){
+          if (resultArray[i][6] == -1){
+            resultArray[i][6] = rowLineDetails.lineNo;
+          }
+          if (resultArray[i][7] == -1){
+            resultArray[i][7] = rowLineDetails.rowIndex;
+          }
+          if (resultArray[i][8] == -1){
+            resultArray[i][8] = scenes[0];
+          }
+        }
+      }
+    }
 
     let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
     displayRange.load('rowCount, columnCount');

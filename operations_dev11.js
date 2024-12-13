@@ -604,6 +604,42 @@ async function getSceneRange(excel){
   return range;
 }
 
+
+async function getRowIndexLineNoFirstLineScene(sceneNo){
+  let result = {rowIndex: -1, lineNo: -1};
+  let theRowIndex;
+  let theLineNo;
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const endRow = scriptSheet.getUsedRange().getLastRow();
+    endRow.load("rowIndex");
+    await excel.sync();
+    sceneRange = scriptSheet.getRangeByIndexes(2, sceneIndex, endRow.rowIndex, 1);
+    typeRange = scriptSheet.getRangeByIndexes(2, typeCodeIndex, endRow.rowIndex, 1);
+    lineRange = scriptSheet.getRangeByIndexes(2, lineIndex, endRow.rowIndex, 1);
+    sceneRange.load('rowIndex, values');
+    typeRange.load('values');
+    lineRange.load('values');
+    await excel.sync()
+    let firstIndex = sceneRange.values.findIndex(x => x[0] == sceneNo);
+    if (firstIndex != -1){
+      let theType = typeRange.values[firstIndex][0];
+      for (let i = firstIndex; i < typeRange.values.length; i++){
+        if ((theType == myTypes.scene) || (theType == myTypes.line)){
+          theRowIndex = i + sceneRange.rowIndex;
+          theLineNo = lineRange.values[i][0]
+          break;
+        }
+        theType = typeRange.values[i][0];
+      }
+    }
+  })
+  result = {rowIndex: theRowIndex, lineNo: theLineNo};
+  console.log(result);
+  return result;
+}
+
+
 async function getLineRange(excel){
   scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
   const endRow = scriptSheet.getUsedRange().getLastRow();
