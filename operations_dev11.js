@@ -623,14 +623,14 @@ async function getRowIndexLineNoFirstLineScene(sceneNo){
     await excel.sync()
     let firstIndex = sceneRange.values.findIndex(x => x[0] == sceneNo);
     if (firstIndex != -1){
-      let theType = typeRange.values[firstIndex][0];
       for (let i = firstIndex; i < typeRange.values.length; i++){
+        theType = typeRange.values[i][0];
+        console.log('i', i, 'rowIndex', i + sceneRange.rowIndex, 'theType', theType)
         if ((theType == myTypes.scene) || (theType == myTypes.line)){
           theRowIndex = i + sceneRange.rowIndex;
           theLineNo = lineRange.values[i][0]
           break;
         }
-        theType = typeRange.values[i][0];
       }
     }
   })
