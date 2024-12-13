@@ -323,6 +323,7 @@ async function mainHTML(){
     <button id="btnClearWallaBlocks" class="walla-button" onclick="jade_modules.operations.deleteAllWallaBlocks()">Delete All Walla Blocks</button>
     <button id="btnClearWalla" class="walla-button" onclick="jade_modules.operations.clearWalla()">Clear All Walla</button>
     <button id="btnGetData" class="walla-button" onclick="jade_modules.wallaimport.getTheWallaSourceIndecies()">Get Walla Data</button>
+    <button id="btnLoadDataIntoCell" class="walla-button" onclick="jade_modules.wallaimport.loadSelectedCellIntoTextBox()">Load into cell</button>
   </div>
 </div>
 <div id="location-page">

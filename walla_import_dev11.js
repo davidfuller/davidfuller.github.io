@@ -394,3 +394,29 @@ async function displayWallaIndexes(wallaIndexes){
   })
 }
 
+async function loadSelectedCellIntoTextBox(){
+  await Excel.run(async (excel) => {
+    const wallaSheet = excel.workbook.worksheets.getItem(wallaImportName);
+    const wallaSourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
+    const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
+    indexTableRange.load('rowIndex, rowCount, columnIndex, columnCount');
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndexIndex, columnIndex, value');
+    await excel.sync();
+    let topRow = activeCell.rowIndex;
+    let bottomRow = activeCell.rowIndex + activeCell.rowCount - 1;
+    let leftColumn = activeCell.columnIndex + 1 // not the first column
+    let rightColumn = activeCell.columnIndex + activeCell.columnCount - 2; //not the first column
+    if ((activeCell.rowIndex >= topRow) && (activeCell.rowIndex <= bottomRow) && (activeCell.columnIndex >= leftColumn) && (activeCell.columnIndex <= rightColumn)){
+      let testRowIndex = activeCell.values[0][0]
+      let testRange = wallaSourceSheet.getRangeByIndexes(testRowIndex, wallaSourceUKScriptColumnIndex, 1, 1);
+      testRange.load('values')
+      await excel.sync();
+      console.log(testRange.values[0][0]);
+    } else {
+      alert('Not in table');
+    }
+
+
+  })
+}
