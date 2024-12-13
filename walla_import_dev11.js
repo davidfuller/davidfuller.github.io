@@ -160,7 +160,7 @@ async function doWallaTable(typeWalla, theResults){
     for (let i = 0; i < theResults.length; i++){
       let rowAndScene = await jade_modules.operations.getLineNoRowIndexAndScene(theResults[i].line);
       console.log(i, 'rowAndScene', rowAndScene);
-      if (rowAndScene == -1){
+      if (rowAndScene.scene == -1){
         anyNonScenes = true
       } else {
         scenes.push(rowAndScene.scene)
