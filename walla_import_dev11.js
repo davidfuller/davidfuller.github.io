@@ -156,6 +156,8 @@ async function doWallaTable(typeWalla, theResults){
     console.log(typeWalla, theResults);
     let resultArray = []
     for (let i = 0; i < theResults.length; i++){
+      let rowAndScene = await jade_modules.operations.getLineNoRowIndexAndScene(theResults[i].line);
+      console.log(i, 'rowAndScene', rowAndScene);
       resultArray[i] = []
       resultArray[i][0] = theResults[i].all;
       resultArray[i][1] = theResults[i].lineRange;
