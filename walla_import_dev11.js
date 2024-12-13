@@ -4,6 +4,7 @@ const sourceTextRangeName = 'wiSource';
 const wallaTableName = 'wiTable';
 const wallaSourceSheetName = 'Walla Script'
 const wallaSourceUKScriptColumnIndex = 9;
+const wallaImportName = 'Walla Import';
 
 const tableCols ={
   wallaOriginal: 0,
