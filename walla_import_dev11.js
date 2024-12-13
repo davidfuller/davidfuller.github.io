@@ -170,7 +170,7 @@ async function doWallaTable(typeWalla, theResults){
       resultArray[i] = []
       resultArray[i][0] = theResults[i].all;
       resultArray[i][1] = theResults[i].lineRange;
-      resultArray[i][2] = typeWalla;
+      resultArray[i][2] = getDisplayWallaName(typeWalla);
       resultArray[i][3] = theResults[i].character;
       resultArray[i][4] = theResults[i].description;
       resultArray[i][5] = theResults[i].numCharacters;
@@ -330,6 +330,18 @@ async function showWallaLineNo(){
 
 function isRowWithinTable(rowIndex, tableRowIndex, tableRowCount){
   return (rowIndex >= tableRowIndex) && (rowIndex < (tableRowIndex + tableRowCount))
+}
+
+function getDisplayWallaName(theType){
+  if (isNamedWalla(theType)){
+    return displayWallaName;
+  } else if (isUnamedWalla(theType)){
+    return displayWallaUnNamed;
+  } else if (isGeneralWalla(theType)){
+    return displayGeneralWalla;
+  } else {
+    return theType;
+  }
 }
 
 async function getTheWallaSourceIndecies(){
