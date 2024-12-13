@@ -409,14 +409,17 @@ async function loadSelectedCellIntoTextBox(){
     let rightColumn = indexTableRange.columnIndex + indexTableRange.columnCount - 2; //not the first column
     if ((activeCell.rowIndex >= topRow) && (activeCell.rowIndex <= bottomRow) && (activeCell.columnIndex >= leftColumn) && (activeCell.columnIndex <= rightColumn)){
       let testRowIndex = activeCell.values[0][0]
-      let testRange = wallaSourceSheet.getRangeByIndexes(testRowIndex, wallaSourceUKScriptColumnIndex, 1, 1);
-      testRange.load('values')
-      await excel.sync();
-      console.log(testRange.values[0][0]);
+      if (!isNaN(parseInt(testRowIndex))){
+        let testRange = wallaSourceSheet.getRangeByIndexes(testRowIndex, wallaSourceUKScriptColumnIndex, 1, 1);
+        testRange.load('values')
+        await excel.sync();
+        console.log(testRange.values[0][0]);
+        let wallaText = testRange.values[0][0];
+        let textRange = wallaSheet.getRange('wcText');
+        textRange.values = [[wallaText.trim()]];
+      }
     } else {
       alert('Not in table');
     }
-
-
   })
 }
