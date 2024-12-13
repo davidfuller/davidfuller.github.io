@@ -403,10 +403,10 @@ async function loadSelectedCellIntoTextBox(){
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex, columnIndex, value');
     await excel.sync();
-    let topRow = activeCell.rowIndex;
-    let bottomRow = activeCell.rowIndex + activeCell.rowCount - 1;
-    let leftColumn = activeCell.columnIndex + 1 // not the first column
-    let rightColumn = activeCell.columnIndex + activeCell.columnCount - 2; //not the first column
+    let topRow = indexTableRange.rowIndex;
+    let bottomRow = indexTableRange.rowIndex + indexTableRange.rowCount - 1;
+    let leftColumn = indexTableRange.columnIndex + 1 // not the first column
+    let rightColumn = indexTableRange.columnIndex + indexTableRange.columnCount - 2; //not the first column
     if ((activeCell.rowIndex >= topRow) && (activeCell.rowIndex <= bottomRow) && (activeCell.columnIndex >= leftColumn) && (activeCell.columnIndex <= rightColumn)){
       let testRowIndex = activeCell.values[0][0]
       let testRange = wallaSourceSheet.getRangeByIndexes(testRowIndex, wallaSourceUKScriptColumnIndex, 1, 1);
