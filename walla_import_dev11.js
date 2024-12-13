@@ -166,6 +166,8 @@ async function doWallaTable(typeWalla, theResults){
       resultArray[i][4] = theResults[i].description;
       resultArray[i][5] = theResults[i].numCharacters;
       resultArray[i][6] = theResults[i].line;
+      resultArray[i][7] = rowAndScene.rowIndex;
+      resultArray[i][8] = rowAndScene.scene;
     }
     let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
     displayRange.load('rowCount, columnCount');
