@@ -401,7 +401,7 @@ async function loadSelectedCellIntoTextBox(){
     const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
     indexTableRange.load('rowIndex, rowCount, columnIndex, columnCount');
     const activeCell = excel.workbook.getActiveCell();
-    activeCell.load('rowIndex, columnIndex, value');
+    activeCell.load('rowIndex, columnIndex, values');
     await excel.sync();
     let topRow = indexTableRange.rowIndex;
     let bottomRow = indexTableRange.rowIndex + indexTableRange.rowCount - 1;
