@@ -155,9 +155,16 @@ async function doWallaTable(typeWalla, theResults){
     console.log(wallaTable.address, wallaTable.rowCount);
     console.log(typeWalla, theResults);
     let resultArray = []
+    let scenes = [];
+    let anyNonScenes = false;
     for (let i = 0; i < theResults.length; i++){
       let rowAndScene = await jade_modules.operations.getLineNoRowIndexAndScene(theResults[i].line);
       console.log(i, 'rowAndScene', rowAndScene);
+      if (rowAndScene == -1){
+        anyNonScenes = true
+      } else {
+        scenes.push(rowAndScene.scene)
+      }
       resultArray[i] = []
       resultArray[i][0] = theResults[i].all;
       resultArray[i][1] = theResults[i].lineRange;
@@ -169,6 +176,10 @@ async function doWallaTable(typeWalla, theResults){
       resultArray[i][7] = rowAndScene.rowIndex;
       resultArray[i][8] = rowAndScene.scene;
     }
+
+    scenes = [...new Set(scenes)]
+    console.log('anyNonScenes', anyNonScenes, 'scenes', scenes)
+
     let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
     displayRange.load('rowCount, columnCount');
     await excel.sync();
