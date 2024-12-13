@@ -368,6 +368,7 @@ async function getTheWallaSourceIndecies(){
     }
   })
   if (isGood){
+    await displayWallaIndexes(wallaIndexes);
     return wallaIndexes;
   }
 }
