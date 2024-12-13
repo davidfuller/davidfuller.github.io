@@ -219,6 +219,18 @@ async function doWallaTable(typeWalla, theResults){
       ]
       displayRange.sort.apply(sortFields);
     }
+    if (scenes.length == 1){
+      const sceneWallaIndexColumn = 4;
+      const sourceRowIdRange = wallaSheet.getRange('wiSourceRowId');
+      const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
+      sourceRowIdRange.load('values');
+      indexTableRange.load('rowIndex, columnIndex')
+      await excel.sync();
+      let sourceRowId = sourceRowIdRange.values[0][0]
+      let sceneRange = wallaSheet.getRangeByIndexes(indexTableRange.rowIdRange + sourceRowId - 1, sceneWallaIndexColumn, 1, 1)
+      sceneRange.values = [[scenes[0]]]
+    }
+
   })
 }
 
