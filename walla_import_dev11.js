@@ -13,7 +13,9 @@ const tableCols ={
   character: 3,
   description: 4,
   numCharacters: 5,
-  lineNo: 6
+  lineNo: 6,
+  rowIndex: 7,
+  scene: 8
 }
 
 const wallaTypes = {
@@ -291,7 +293,7 @@ async function loadMultipleIntoScriptSheet(doAll){
         let lineNo = wallaTableRange.values[tableRow][tableCols.lineNo];
         if (lineNo > 0){
           let data = {};
-          data.rowIndex = await jade_modules.operations.getLineNoRowIndex(lineNo);
+          data.rowIndex = wallaTableRange.values[tableRow][tableCols.rowIndex];
           data.wallaLineRange = wallaTableRange.values[tableRow][tableCols.lineRange];
           data.typeOfWalla = wallaTableRange.values[tableRow][tableCols.typeOfWalla];
           data.characters =wallaTableRange.values[tableRow][tableCols.character];
