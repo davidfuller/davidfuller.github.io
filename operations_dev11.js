@@ -484,19 +484,22 @@ async function findLineNo(lineNo){
 }
 
 async function getLineNoRowIndexAndScene(lineNo){
-  let myRowIndex;
-  await Excel.run(async function(excel){
-    let range = await getLineRange(excel);
-    let sceneRange = await getSceneRange(excel);
-    range.load("values");
-    range.load('rowIndex');
-    sceneRange.load('values');
-    await excel.sync();
-    const myIndex = range.values.findIndex(a => a[0] == (lineNo));
-    console.log(myIndex, range.rowIndex);
-    myRowIndex = myIndex + range.rowIndex;
-    myScene = sceneRange.values[myIndex][0];
-  })
+  let myRowIndex = -1;
+  let myScene = -1
+  if (lineNo > 0){
+    await Excel.run(async function(excel){
+      let range = await getLineRange(excel);
+      let sceneRange = await getSceneRange(excel);
+      range.load("values");
+      range.load('rowIndex');
+      sceneRange.load('values');
+      await excel.sync();
+      const myIndex = range.values.findIndex(a => a[0] == (lineNo));
+      console.log(myIndex, range.rowIndex);
+      myRowIndex = myIndex + range.rowIndex;
+      myScene = sceneRange.values[myIndex][0];
+    })
+  }
   return {rowIndex: myRowIndex, scene: myScene};
 }
 
