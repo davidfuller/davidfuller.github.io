@@ -228,7 +228,7 @@ async function doWallaTable(typeWalla, theResults){
       await excel.sync();
       let sourceRowId = sourceRowIdRange.values[0][0]
       console.log('sourceRow', sourceRowId, 'scenes', scenes[0]);
-      console.log(indexTableRange.rowIndex + sourceRowId - 1, indexTableRange + sceneWallaIndexColumn, 1, 1)
+      console.log(indexTableRange.rowIndex + sourceRowId - 1, indexTableRange.columnIndex + sceneWallaIndexColumn, 1, 1)
       let sceneRange = wallaSheet.getRangeByIndexes(indexTableRange.rowIndex + sourceRowId - 1, indexTableRange + sceneWallaIndexColumn, 1, 1)
       sceneRange.values = [[scenes[0]]]
     }
