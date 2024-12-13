@@ -406,7 +406,7 @@ async function loadSelectedCellIntoTextBox(){
     let topRow = indexTableRange.rowIndex;
     let bottomRow = indexTableRange.rowIndex + indexTableRange.rowCount - 1;
     let leftColumn = indexTableRange.columnIndex + 1 // not the first column
-    let rightColumn = indexTableRange.columnIndex + indexTableRange.columnCount - 2; //not the first column
+    let rightColumn = indexTableRange.columnIndex + indexTableRange.columnCount - 1; 
     if ((activeCell.rowIndex >= topRow) && (activeCell.rowIndex <= bottomRow) && (activeCell.columnIndex >= leftColumn) && (activeCell.columnIndex <= rightColumn)){
       let testRowIndex = activeCell.values[0][0]
       if (!isNaN(parseInt(testRowIndex))){
