@@ -197,27 +197,28 @@ async function doWallaTable(typeWalla, theResults){
         }
       }
     }
-
-    let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
-    displayRange.load('rowCount, columnCount');
-    await excel.sync();
-    console.log(resultArray)
-    console.log('Display Range rows: ', displayRange.rowCount, 'columns: ', displayRange.columnCount);
-
-    displayRange.values = resultArray;
-    await excel.sync();
-
-    const sortFields = [
-      {
-        key: 6, //Line No
-        ascending: true
-      },
-      {
-        key: 0, // Walla Original
-        ascending: true
-      }
-    ]
-    displayRange.sort.apply(sortFields);
+    if (resultArray.length > 0){
+      let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
+      displayRange.load('rowCount, columnCount');
+      await excel.sync();
+      console.log(resultArray)
+      console.log('Display Range rows: ', displayRange.rowCount, 'columns: ', displayRange.columnCount);
+  
+      displayRange.values = resultArray;
+      await excel.sync();
+  
+      const sortFields = [
+        {
+          key: 6, //Line No
+          ascending: true
+        },
+        {
+          key: 0, // Walla Original
+          ascending: true
+        }
+      ]
+      displayRange.sort.apply(sortFields);
+    }
   })
 }
 
