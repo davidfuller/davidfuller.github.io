@@ -471,7 +471,9 @@ async function loadSelectedCellIntoTextBox(){
     let rightColumn = indexTableRange.columnIndex + indexTableRange.columnCount - 1; 
     if ((activeCell.rowIndex >= topRow) && (activeCell.rowIndex <= bottomRow) && (activeCell.columnIndex >= leftColumn) && (activeCell.columnIndex <= rightColumn)){
       let testRowIndex = activeCell.values[0][0];
-      await loadTextBox(testRowIndex)
+      await loadTextBox(testRowIndex);
+      const rowIdRange = wallaSheet.getRange('wiSourceRowId');
+      rowIdRange.values = [[activeCell.rowIndex - indexTableRange.rowIndex + 1]];
     } else {
       alert('Not in table');
     }
@@ -485,14 +487,12 @@ async function loadTextBox(rowIndex){
       let testRange = wallaSourceSheet.getRangeByIndexes(rowIndex, wallaSourceUKScriptColumnIndex, 1, 1);
       testRange.load('values');
       const sourceRowIndexRange = wallaSheet.getRange('wiSourceRowIndex');
-      const rowIdRange = wallaSheet.getRange('wiSourceRowId');
       await excel.sync();
       console.log(testRange.values[0][0]);
       let wallaText = testRange.values[0][0];
       let textRange = wallaSheet.getRange('wiSource');
       textRange.values = [[wallaText.trim()]];  
-      sourceRowIndexRange.values = [[testRowIndex]];
-      rowIdRange.values = [[activeCell.rowIndex - indexTableRange.rowIndex + 1]];
+      sourceRowIndexRange.values = [[rowIndex]];
     }
   })
 }
