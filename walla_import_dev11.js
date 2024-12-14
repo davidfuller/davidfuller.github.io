@@ -192,8 +192,8 @@ async function doWallaTable(typeWalla, theResults){
       resultArray[0][3] = '';
       resultArray[0][4] = ''
       resultArray[0][5] = 0;
-      resultArray[0][6] = '';
-      resultArray[0][7] = ''
+      resultArray[0][6] = -1;
+      resultArray[0][7] = -1;
       resultArray[0][8] = scenes[0];
     }
 
