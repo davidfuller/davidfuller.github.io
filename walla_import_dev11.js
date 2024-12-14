@@ -496,3 +496,20 @@ async function loadTextBox(rowIndex){
     }
   })
 }
+async function loopThroughTheIndexes(){
+  await Excel.run(async (excel) => {
+    const wallaSheet = excel.workbook.worksheets.getItem(wallaImportName);
+    const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
+    indexTableRange.load('rowIndex, values');
+    await excel.sync();
+    for (let i = 0; i < indexTableRange.values.length; i++){
+      let rowIndex = indexTableRange.values[i][1];
+      console.log(i, 'rowIndex', rowIndex);
+      await loadTextBox(rowIndex);
+      const rowIdRange = wallaSheet.getRange('wiSourceRowId');
+      rowIdRange.values = [[indexTableRange.values[i][0]]];
+      await excel.sync();
+      await parseSource();
+    }
+  })
+}
