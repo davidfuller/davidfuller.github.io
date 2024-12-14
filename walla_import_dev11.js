@@ -181,10 +181,23 @@ async function doWallaTable(typeWalla, theResults){
       resultArray[i][7] = rowAndScene.rowIndex;
       resultArray[i][8] = rowAndScene.scene;
     }
+    if (results.length == 0){
+      let display = getDisplayWallaName(typeWalla);
+      scenes[0] = getScene(sourceRowId, false);
+      resultsArray[0][0] = display;
+      resultsArray[0][1] = 'Whole Scene';
+      resultsArray[0][2] = display;
+      resultsArray[0][3] = '';
+      resultsArray[0][4] = ''
+      resultsArray[0][5] = 0;
+      resultsArray[0][6] = '';
+      resultsArray[0][7] = ''
+      resultsArray[0][8] = scenes[0];
+    }
 
     scenes = [...new Set(scenes)]
     if (scenes.length == 0){
-      scenes[0] = await getPreviousScene(sourceRowId) + 1;
+      scenes[0] = await getScene(sourceRowId, true) + 1;
     }
     console.log('anyNonScenes', anyNonScenes, 'scenes', scenes)
     if ((anyNonScenes) && (scenes.length == 1)){
@@ -242,7 +255,7 @@ async function doWallaTable(typeWalla, theResults){
   })
 }
 
-async function getPreviousScene(sourceRowId){
+async function getScene(sourceRowId, doPrevious){
   let scene = -1;
   await Excel.run(async (excel) => {
     let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
@@ -251,8 +264,12 @@ async function getPreviousScene(sourceRowId){
     indexTableRange.load('rowIndex, columnIndex')
     await excel.sync();
     console.log('sourceRow', sourceRowId);
-    console.log(indexTableRange.rowIndex + sourceRowId - 2, indexTableRange.columnIndex + sceneWallaIndexColumn, 1, 1)
-    let sceneRange = wallaSheet.getRangeByIndexes(indexTableRange.rowIndex + sourceRowId - 2, indexTableRange.columnIndex + sceneWallaIndexColumn, 1, 1)
+    let theRow = indexTableRange.rowIndex + sourceRowId - 1;
+    if (doPrevious){
+      theRow = theRow - 1;
+    }
+    console.log(theRow, indexTableRange.columnIndex + sceneWallaIndexColumn, 1, 1)
+    let sceneRange = wallaSheet.getRangeByIndexes(theRow, indexTableRange.columnIndex + sceneWallaIndexColumn, 1, 1)
     sceneRange.load('values');
     await excel.sync();
     let temp = sceneRange.values[0][0];
