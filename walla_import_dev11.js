@@ -472,7 +472,7 @@ async function displayWallaIndexes(wallaIndexes){
     let results = []
     for (i = 0; i < wallaIndexes.length; i = i + 3){
       num += 1;
-      let myRow = [num, wallaIndexes[i].rowIndex, wallaIndexes[i + 1].rowIndex, wallaIndexes[i + 2].rowIndex]
+      let myRow = [num, wallaIndexes[i].rowIndex, wallaIndexes[i + 1].rowIndex, wallaIndexes[i + 2].rowIndex, '']
       results.push(myRow)
     }
     console.log('results', results)
