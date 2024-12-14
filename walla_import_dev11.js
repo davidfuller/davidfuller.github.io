@@ -225,7 +225,7 @@ async function doWallaTable(typeWalla, theResults){
       ]
       displayRange.sort.apply(sortFields);
     }
-    if (scenes.length == 1){
+    if ((scenes.length == 1) && (isNamedWalla(typeWalla))){
       const sceneWallaIndexColumn = 4;
       const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
       indexTableRange.load('rowIndex, columnIndex')
