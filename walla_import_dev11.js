@@ -184,6 +184,7 @@ async function doWallaTable(typeWalla, theResults){
     if (theResults.length == 0){
       let display = getDisplayWallaName(typeWalla);
       scenes[0] = await getScene(sourceRowId, false);
+      anyNonScenes = true;
       resultArray[0] = [];
       resultArray[0][0] = display;
       resultArray[0][1] = 'Whole Scene';
