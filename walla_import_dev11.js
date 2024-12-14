@@ -504,12 +504,14 @@ async function loopThroughTheIndexes(){
     await excel.sync();
     for (let i = 0; i < indexTableRange.values.length; i++){
       let rowIndex = indexTableRange.values[i][1];
-      console.log(i, 'rowIndex', rowIndex);
-      await loadTextBox(rowIndex);
-      const rowIdRange = wallaSheet.getRange('wiSourceRowId');
-      rowIdRange.values = [[indexTableRange.values[i][0]]];
-      await excel.sync();
-      await parseSource();
+      console.log(i, 'rowIndex', rowIndex, 'of', indexTableRange.values.length);
+      if (!isNaN(rowIndex)){
+        await loadTextBox(rowIndex);
+        const rowIdRange = wallaSheet.getRange('wiSourceRowId');
+        rowIdRange.values = [[indexTableRange.values[i][0]]];
+        await excel.sync();
+        await parseSource();
+      }
     }
   })
 }
