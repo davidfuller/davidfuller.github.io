@@ -460,33 +460,39 @@ async function displayWallaIndexes(wallaIndexes){
 async function loadSelectedCellIntoTextBox(){
   await Excel.run(async (excel) => {
     const wallaSheet = excel.workbook.worksheets.getItem(wallaImportName);
-    const wallaSourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
     const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
     indexTableRange.load('rowIndex, rowCount, columnIndex, columnCount');
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex, columnIndex, values');
-    const sourceRowIndexRange = wallaSheet.getRange('wiSourceRowIndex');
-    const rowIdRange = wallaSheet.getRange('wiSourceRowId');
     await excel.sync();
     let topRow = indexTableRange.rowIndex;
     let bottomRow = indexTableRange.rowIndex + indexTableRange.rowCount - 1;
     let leftColumn = indexTableRange.columnIndex + 1 // not the first column
     let rightColumn = indexTableRange.columnIndex + indexTableRange.columnCount - 1; 
     if ((activeCell.rowIndex >= topRow) && (activeCell.rowIndex <= bottomRow) && (activeCell.columnIndex >= leftColumn) && (activeCell.columnIndex <= rightColumn)){
-      let testRowIndex = activeCell.values[0][0]
-      if (!isNaN(parseInt(testRowIndex))){
-        let testRange = wallaSourceSheet.getRangeByIndexes(testRowIndex, wallaSourceUKScriptColumnIndex, 1, 1);
-        testRange.load('values')
-        await excel.sync();
-        console.log(testRange.values[0][0]);
-        let wallaText = testRange.values[0][0];
-        let textRange = wallaSheet.getRange('wiSource');
-        textRange.values = [[wallaText.trim()]];  
-        sourceRowIndexRange.values = [[testRowIndex]];
-        rowIdRange.values = [[activeCell.rowIndex - indexTableRange.rowIndex + 1]];
-      }
+      let testRowIndex = activeCell.values[0][0];
+      await loadTextBox(testRowIndex)
     } else {
       alert('Not in table');
+    }
+  })
+}
+async function loadTextBox(rowIndex){
+  await Excel.run(async (excel) => {
+    if (!isNaN(parseInt(rowIndex))){
+      const wallaSourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
+      const wallaSheet = excel.workbook.worksheets.getItem(wallaImportName);
+      let testRange = wallaSourceSheet.getRangeByIndexes(rowIndex, wallaSourceUKScriptColumnIndex, 1, 1);
+      testRange.load('values');
+      const sourceRowIndexRange = wallaSheet.getRange('wiSourceRowIndex');
+      const rowIdRange = wallaSheet.getRange('wiSourceRowId');
+      await excel.sync();
+      console.log(testRange.values[0][0]);
+      let wallaText = testRange.values[0][0];
+      let textRange = wallaSheet.getRange('wiSource');
+      textRange.values = [[wallaText.trim()]];  
+      sourceRowIndexRange.values = [[testRowIndex]];
+      rowIdRange.values = [[activeCell.rowIndex - indexTableRange.rowIndex + 1]];
     }
   })
 }
