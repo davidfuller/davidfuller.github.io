@@ -153,7 +153,10 @@ async function doWallaTable(typeWalla, theResults){
     let wallaTable = wallaSheet.getRange(wallaTableName);
     wallaTable.load('rowIndex, rowCount, columnIndex, columnCount, address');
     wallaTable.clear("Contents");
+    const sourceRowIdRange = wallaSheet.getRange('wiSourceRowId');
+    sourceRowIdRange.load('values');
     await excel.sync();
+    let sourceRowId = sourceRowIdRange.values[0][0];
     console.log(wallaTable.address, wallaTable.rowCount);
     console.log(typeWalla, theResults);
     let resultArray = []
@@ -180,6 +183,9 @@ async function doWallaTable(typeWalla, theResults){
     }
 
     scenes = [...new Set(scenes)]
+    if (scenes.length == 0){
+      scenes[0] = await getPreviousScene(sourceRowId) + 1;
+    }
     console.log('anyNonScenes', anyNonScenes, 'scenes', scenes)
     if ((anyNonScenes) && (scenes.length == 1)){
       rowLineDetails = await jade_modules.operations.getRowIndexLineNoFirstLineScene(scenes[0])
@@ -221,12 +227,9 @@ async function doWallaTable(typeWalla, theResults){
     }
     if (scenes.length == 1){
       const sceneWallaIndexColumn = 4;
-      const sourceRowIdRange = wallaSheet.getRange('wiSourceRowId');
       const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
-      sourceRowIdRange.load('values');
       indexTableRange.load('rowIndex, columnIndex')
       await excel.sync();
-      let sourceRowId = sourceRowIdRange.values[0][0]
       console.log('sourceRow', sourceRowId, 'scenes', scenes[0]);
       console.log(indexTableRange.rowIndex + sourceRowId - 1, indexTableRange.columnIndex + sceneWallaIndexColumn, 1, 1)
       let sceneRange = wallaSheet.getRangeByIndexes(indexTableRange.rowIndex + sourceRowId - 1, indexTableRange.columnIndex + sceneWallaIndexColumn, 1, 1)
@@ -237,6 +240,27 @@ async function doWallaTable(typeWalla, theResults){
       await excel.sync();
     }
   })
+}
+
+async function getPreviousScene(sourceRowId){
+  let scene = -1;
+  await Excel.run(async (excel) => {
+    let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
+    const sceneWallaIndexColumn = 4;
+    const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
+    indexTableRange.load('rowIndex, columnIndex')
+    await excel.sync();
+    console.log('sourceRow', sourceRowId);
+    console.log(indexTableRange.rowIndex + sourceRowId - 2, indexTableRange.columnIndex + sceneWallaIndexColumn, 1, 1)
+    let sceneRange = wallaSheet.getRangeByIndexes(indexTableRange.rowIndex + sourceRowId - 2, indexTableRange.columnIndex + sceneWallaIndexColumn, 1, 1)
+    sceneRange.load('values');
+    await excel.sync();
+    let temp = sceneRange.values[0][0];
+    if (!isNaN(parseInt(temp))){
+      scene = parseInt(temp);
+    }
+  })
+  return scene;
 }
 
 async function loadIntoScriptSheet(){
