@@ -74,9 +74,11 @@ async function parseSource(){
     let theLines = mySourceText.split('\n');
     let theResults = [];
     for (let i = 1; i < theLines.length; i++){
-      theResults[i - 1] = splitLine(theLines[i]);
+      if (theLines[i].trim() != ''){
+        theResults[i - 1] = splitLine(theLines[i]);
+      }
     }
-    console.log('theResults', theResults)
+    //console.log('theResults', theResults)
     await doWallaTable(theLines[0], theResults)
   })
 }
