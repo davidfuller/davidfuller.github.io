@@ -64,7 +64,7 @@ function isGeneralWalla(theType){
 function auto_exec(){
 }
 
-async function parseSource(){
+async function parseSource(tableRowIndex = -1){
   await Excel.run(async (excel) => {
     let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
     let sourceRange = wallaSheet.getRange(sourceTextRangeName);
@@ -79,7 +79,7 @@ async function parseSource(){
       }
     }
     //console.log('theResults', theResults)
-    await doWallaTable(theLines[0], theResults)
+    await doWallaTable(theLines[0], theResults, tableRowIndex);
   })
 }
 
@@ -149,16 +149,19 @@ function splitLine(theLine){
 
 }
 
-async function doWallaTable(typeWalla, theResults){
+async function doWallaTable(typeWalla, theResults, tableRowIndex = -1){
   await Excel.run(async (excel) => {
     let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
     let wallaTable = wallaSheet.getRange(wallaTableName);
     wallaTable.load('rowIndex, rowCount, columnIndex, columnCount, address');
     wallaTable.clear("Contents");
-    const sourceRowIdRange = wallaSheet.getRange('wiSourceRowId');
-    sourceRowIdRange.load('values');
-    await excel.sync();
-    let sourceRowId = sourceRowIdRange.values[0][0];
+    let sourceRowId = tableRowIndex;
+    if (tableRowIndex == -1){
+      const sourceRowIdRange = wallaSheet.getRange('wiSourceRowId');
+      sourceRowIdRange.load('values');
+      await excel.sync();
+      sourceRowId = sourceRowIdRange.values[0][0];
+    }
     console.log(wallaTable.address, wallaTable.rowCount);
     console.log(typeWalla, theResults);
     let resultArray = []
@@ -524,7 +527,7 @@ async function loadSelectedCellIntoTextBox(){
       await loadTextBox(testRowIndex);
       const rowIdRange = wallaSheet.getRange('wiSourceRowId');
       rowIdRange.values = [[activeCell.rowIndex - indexTableRange.rowIndex + 1]];
-      await parseSource();
+      await parseSource(testRowIndex);
     } else {
       alert('Not in table');
     }
