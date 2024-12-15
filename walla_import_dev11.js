@@ -75,7 +75,7 @@ async function parseSource(){
     let theResults = [];
     for (let i = 1; i < theLines.length; i++){
       if (theLines[i].trim() != ''){
-        theResults[i - 1] = splitLine(theLines[i]);
+        theResults.push(splitLine(theLines[i]));
       }
     }
     //console.log('theResults', theResults)
