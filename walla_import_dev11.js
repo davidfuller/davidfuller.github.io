@@ -155,6 +155,7 @@ async function doWallaTable(typeWalla, theResults, tableRowIndex = -1){
     let wallaTable = wallaSheet.getRange(wallaTableName);
     wallaTable.load('rowIndex, rowCount, columnIndex, columnCount, address');
     wallaTable.clear("Contents");
+    await excel.sync();
     let sourceRowId = tableRowIndex;
     if (tableRowIndex == -1){
       const sourceRowIdRange = wallaSheet.getRange('wiSourceRowId');
