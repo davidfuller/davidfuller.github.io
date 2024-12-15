@@ -170,6 +170,7 @@ async function doWallaTable(typeWalla, theResults){
       } else {
         scenes.push(rowAndScene.scene)
       }
+      console.log(i, 'line range', theResults[i].lineRange);
       if (theResults[i].lineRange.trim() == ''){
         theResults[i].lineRange = 'whole scene';
       }
@@ -520,6 +521,7 @@ async function loadSelectedCellIntoTextBox(){
       await loadTextBox(testRowIndex);
       const rowIdRange = wallaSheet.getRange('wiSourceRowId');
       rowIdRange.values = [[activeCell.rowIndex - indexTableRange.rowIndex + 1]];
+      await parseSource();
     } else {
       alert('Not in table');
     }
