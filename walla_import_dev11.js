@@ -527,8 +527,9 @@ async function loadSelectedCellIntoTextBox(){
       let testRowIndex = activeCell.values[0][0];
       await loadTextBox(testRowIndex);
       const rowIdRange = wallaSheet.getRange('wiSourceRowId');
-      rowIdRange.values = [[activeCell.rowIndex - indexTableRange.rowIndex + 1]];
-      await parseSource(testRowIndex);
+      let tableRowIndex = activeCell.rowIndex - indexTableRange.rowIndex + 1;
+      rowIdRange.values = [[tableRowIndex]];
+      await parseSource(tableRowIndex);
     } else {
       alert('Not in table');
     }
