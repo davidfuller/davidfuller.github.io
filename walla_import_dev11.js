@@ -544,6 +544,7 @@ async function loadTextBox(rowIndex){
       let textRange = wallaSheet.getRange('wiSource');
       textRange.values = [[wallaText.trim()]];  
       sourceRowIndexRange.values = [[rowIndex]];
+      await excel.sync();
     }
   })
 }
