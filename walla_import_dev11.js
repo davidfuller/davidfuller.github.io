@@ -170,6 +170,9 @@ async function doWallaTable(typeWalla, theResults){
       } else {
         scenes.push(rowAndScene.scene)
       }
+      if (theResults[i].lineRange.trim() == ''){
+        theResults[i].lineRange = 'whole scene';
+      }
       resultArray[i] = []
       resultArray[i][0] = theResults[i].all;
       resultArray[i][1] = theResults[i].lineRange;
@@ -334,9 +337,9 @@ async function loadMultipleIntoScriptSheet(doAll){
       selectedRanges.load('address');
       selectedRanges.areas.load('items');
       await excel.sync();
-      console.log('selectedRange address', selectedRanges.address)
+      //console.log('selectedRange address', selectedRanges.address)
       let ranges = selectedRanges.areas.items;
-      console.log(ranges)
+      //console.log(ranges)
       
       for (i = 0; i < ranges.length; i++){
         ranges[i].load('address', 'rowIndex', 'rowCount')
@@ -366,7 +369,7 @@ async function loadMultipleIntoScriptSheet(doAll){
         }
       }
     }
-    console.log('wallaData', wallaData);
+    //console.log('wallaData', wallaData);
     await jade_modules.operations.createMultipleWallas(wallaData, false, true);
   })
 }
