@@ -39,7 +39,9 @@ label {
   font-size: 12px;
 }
 /* Section formatting */
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, #forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons, #scriptButtons, #director-nav-buttons, #scheduling-nav-buttons, #walla-nav-buttons, #location-nav-buttons, #script-nav-buttons, #comparison, #us-script {
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, 
+#forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons, #scriptButtons, #director-nav-buttons, 
+#scheduling-nav-buttons, #walla-nav-buttons, #location-nav-buttons, #script-nav-buttons, #comparison, #us-script, #script-control {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
@@ -573,7 +575,7 @@ label {
   padding: 10px;
 }
 
-#director-wait, #actor-wait, #scheduling-wait, #formula-wait, #scene-wait, #scene-add-wait, #load-message, #script-wait, #take-wait, #character-wait, #take-message {
+#director-wait, #actor-wait, #scheduling-wait, #formula-wait, #scene-wait, #scene-add-wait, #load-message, #script-wait, #take-wait, #character-wait, #take-message, #resize-wait {
   display: none;
   font-size: 15px;
   margin-left: 5px;
@@ -875,6 +877,9 @@ label {
 
 .take-button {
   width: 110px;
+}
+#btnAutoRowHeight, #btnIncreaseRowHeight, #btnDecreaseRowHeight {
+  width: 140px;
 }
 `;
   Jade.set_css(css);

@@ -2,7 +2,7 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '10.31';
+const codeVersion = '10.40';
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -6625,4 +6625,69 @@ async function startUpClearHiddenRowsAndViews(){
   await setSheetView(true);
   await setSheetView(false);
   await selectRange('A3', true);
+}
+
+async function actorScriptAutoRowHeight(){
+  let wait = tag('resize-wait');
+  wait.style.display = 'block';
+  let usedRowIndexes = await actorScriptUsedRows();
+  await Excel.run(async function(excel){
+    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    console.log('usedRowIndexes', usedRowIndexes);
+    let tempRange = [];
+    for (let i = 0; i < usedRowIndexes.length; i++){
+      tempRange[i] = actorScriptSheet.getRangeByIndexes(usedRowIndexes[i], 1, 1, 1);
+      tempRange[i].format.autofitRows();
+    }
+    //usedRange.format.useStandardHeight = true;
+  })
+  wait.style.display = 'none';
+}
+
+async function actorScriptChangeHeight(percent){
+  let usedRowIndexes = await actorScriptUsedRows();
+  let wait = tag('resize-wait');
+  wait.style.display = 'block';
+  await Excel.run(async function(excel){
+    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    console.log('usedRowIndexes', usedRowIndexes);
+    let tempRange = [];
+    for (let i = 0; i < usedRowIndexes.length; i++){
+      tempRange[i] = actorScriptSheet.getRangeByIndexes(usedRowIndexes[i], 1, 1, 1);
+      tempRange[i].format.load('rowHeight');
+    }
+    await excel.sync();
+    let newRowHeight = [];
+    for (let i = 0; i < usedRowIndexes.length; i++){
+      console.log('rowIndex:', usedRowIndexes[i], 'rowHeight', tempRange[i].format.rowHeight);
+      newRowHeight[i] = tempRange[i].format.rowHeight * (100 + percent)/100
+      if (newRowHeight[i] > 408){
+        newRowHeight[i] = 408;
+      }
+      console.log('rowIndex:', usedRowIndexes[i], 'new rowHeight', newRowHeight[i]);
+
+      tempRange[i].format.rowHeight = newRowHeight[i];
+    }
+    await excel.sync();
+   })
+   wait.style.display = 'none';
+}
+
+async function actorScriptUsedRows(){
+  const textColumnIndex = 3;
+  let usedRowIndexes = [];
+  await Excel.run(async function(excel){
+    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    const usedRange = actorScriptSheet.getUsedRange();
+    usedRange.load('values, rowIndex')
+    await excel.sync()
+    console.log('usedRange', usedRange.values)
+    for (let i = 0; i < usedRange.values.length; i++){
+      if (usedRange.values[i][textColumnIndex].trim() != ''){
+        usedRowIndexes.push(i + usedRange.rowIndex);
+      }
+    }
+    console.log('usedRowIndexes', usedRowIndexes);
+  })
+  return usedRowIndexes;
 }
