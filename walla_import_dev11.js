@@ -576,10 +576,10 @@ async function loopThroughTheIndexes(){
 async function findFirstWallaOriginal(){
   await Excel.run(async (excel) => {
     const wallaSheet = excel.workbook.worksheets.getItem(wallaImportName);
-    const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
-    indexTableRange.load('values');
+    const tableRange = wallaSheet.getRange('wallaTableName');
+    tableRange.load('values');
     await excel.sync();
-    let textToSearch = indexTableRange.values[0][0];
+    let textToSearch = tableRange.values[0][0];
     if (textToSearch.trim() != ''){
       const wallaSourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
       const usedRange = wallaSourceSheet.getUsedRange();
