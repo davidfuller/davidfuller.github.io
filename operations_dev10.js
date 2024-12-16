@@ -6191,6 +6191,7 @@ async function setSheetView(doTemporary){
 }
 
 async function applyTakeDetails(country){
+  let isProtected = await unlockIfLocked();
   let wait = tag('take-wait');
   wait.style.display = 'block';
   const rowDetails = await getSelectedRowDetails(true);
@@ -6231,6 +6232,9 @@ async function applyTakeDetails(country){
     await excel.sync();
   })
   wait.style.display = 'none';
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 async function clearTakeDetails(country){
