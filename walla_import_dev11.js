@@ -572,3 +572,24 @@ async function loopThroughTheIndexes(){
     }
   })
 }
+
+async function findFirstWallaOriginal(){
+  await Excel.run(async (excel) => {
+    const wallaSheet = excel.workbook.worksheets.getItem(wallaImportName);
+    const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
+    indexTableRange.load('values');
+    await excel.sync();
+    let textToSearch = indexTableRange.values[0][0];
+    if (textToSearch.trim() != ''){
+      const wallaSourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
+      const usedRange = wallaSourceSheet.getUsedRange();
+      let found = usedRange.findOrNullObject(textToSearch);
+      await excel.sync()
+      if (!found.isNullObject){
+        wallaSourceSheet.activate();
+        found.select();
+        await excel.sync();
+      }
+    }
+  })
+}

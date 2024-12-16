@@ -325,6 +325,7 @@ async function mainHTML(){
     <button id="btnGetData" class="walla-button" onclick="jade_modules.wallaimport.getTheWallaSourceIndecies()">Get Walla Data</button>
     <button id="btnLoadDataIntoCell" class="walla-button" onclick="jade_modules.wallaimport.loadSelectedCellIntoTextBox()">Load into cell</button>
     <button id="btnLoop" class="walla-button" onclick="jade_modules.wallaimport.loopThroughTheIndexes()">Loop</button>
+    <button id="btnFindOriginal" class="walla-button" onclick="jade_modules.wallaimport.findFirstWallaOriginal()">Find walla Original</button>
   </div>
 </div>
 <div id="location-page">
