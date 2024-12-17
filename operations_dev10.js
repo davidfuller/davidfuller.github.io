@@ -2,7 +2,8 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '10.40';
+const codeVersion = '10.41';
+//10.41 Added protection to Add Take
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
