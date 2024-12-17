@@ -4714,7 +4714,9 @@ async function deleteAllWallaBlocks(showMain = true){
       for (let i = 0 ; i < theIndexes.length; i++){
         thisRow[i] = scriptSheet.getRangeByIndexes(theIndexes[i],1,1,1).getEntireRow();
         thisRow[i].load('address');
-        thisRow[i].select();
+        if (showMain){
+          thisRow[i].select();
+        }
         await excel.sync();
         console.log(i, 'Row address', thisRow[i].address)
         thisRow[i].delete("Up");
