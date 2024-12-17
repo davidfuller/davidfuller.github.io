@@ -608,8 +608,49 @@ async function completeProcess(){
   textArea.value += 'Clearing Walla Blocks from Script \n';
   await jade_modules.operations.deleteAllWallaBlocks(false);
   textArea.value += 'Getting Walla Data \n';
-  await jade_modules.wallaimport.getTheWallaSourceIndecies();
+  await getTheWallaSourceIndecies();
   textArea.value += 'Getting Scene Data \n';
-  await jade_modules.wallaimport.loopThroughTheIndexes()
+  await loopThroughTheIndexes();
+  textArea.value += 'Checking all scenes \n';
+  let good = await checkWeHaveAllScenes();
+  if (good){
+    textArea.value += 'All scenes OK \n'
+  }
   textArea.value += 'Done \n';
+}
+
+async function checkWeHaveAllScenes(){
+  let allGood = true;
+  await Excel.run(async (excel) => {
+    const sceneColumnIndex = 4;
+    const wallaSheet = excel.workbook.worksheets.getItem(wallaImportName);
+    const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
+    indexTableRange.load('rowIndex, values');
+    await excel.sync();
+    let lastValue, thisValue;
+    let allGood = true;
+    for (let i = 0; i < indexTableRange.values.length; i++){
+      if (i == 0){
+        lastValue = parseInt(indexTableRange.values[i][sceneColumnIndex]);
+      } else {
+        thisValue = parseInt(indexTableRange.values[i][sceneColumnIndex]);
+        if (!isNaN(thisValue)){
+          if (lastValue + 1 == thisValue){
+            lastValue = thisValue;
+          } else {
+            allGood = false;
+            break;
+          }
+        } else {
+          //No more scenes
+        }
+      }
+    }
+    if (allGood){
+      console.log('All present up to: ' + lastValue);
+    } else {
+      console.log('Inconsitancy at: ' + thisValue);
+    }
+  })
+  return allGood;
 }
