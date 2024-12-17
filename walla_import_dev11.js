@@ -296,19 +296,19 @@ async function doWallaTableV2(typeWalla, theResults, scene){
     wallaTable.clear("Contents");
     await excel.sync();
     
-    console.log(wallaTable.address, wallaTable.rowCount);
-    console.log(typeWalla, theResults);
+    //console.log(wallaTable.address, wallaTable.rowCount);
+    //console.log(typeWalla, theResults);
     let scenes = [];
     let anyNonScenes = false;
     for (let i = 0; i < theResults.length; i++){
       let rowAndScene = await jade_modules.operations.getLineNoRowIndexAndScene(theResults[i].line);
-      console.log(i, 'rowAndScene', rowAndScene);
+      //console.log(i, 'rowAndScene', rowAndScene);
       if (rowAndScene.scene == -1){
         anyNonScenes = true
       } else {
         scenes.push(rowAndScene.scene)
       }
-      console.log(i, 'line range', theResults[i].lineRange);
+      //console.log(i, 'line range', theResults[i].lineRange);
       if (theResults[i].lineRange.trim() == ''){
         theResults[i].lineRange = 'whole scene';
       }
@@ -325,8 +325,7 @@ async function doWallaTableV2(typeWalla, theResults, scene){
     }
     if (theResults.length == 0){
       let display = getDisplayWallaName(typeWalla);
-      scenes[0] = await getScene(sourceRowId, false);
-      console.log('sourceRowId', sourceRowId, 'scene', scenes);
+      scenes[0] = scene
       anyNonScenes = true;
       resultArray[0] = [];
       resultArray[0][0] = display;
@@ -344,7 +343,7 @@ async function doWallaTableV2(typeWalla, theResults, scene){
     if (scenes.length == 0){
       scenes[0] = scene;
     }
-    console.log('anyNonScenes', anyNonScenes, 'scenes', scenes)
+    //console.log('anyNonScenes', anyNonScenes, 'scenes', scenes)
     if ((anyNonScenes) && (scenes.length == 1)){
       rowLineDetails = await jade_modules.operations.getRowIndexLineNoFirstLineScene(scenes[0])
       if ((rowLineDetails.lineNo != -1) && (rowLineDetails.rowIndex != -1)){
@@ -365,8 +364,8 @@ async function doWallaTableV2(typeWalla, theResults, scene){
       let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
       displayRange.load('rowCount, columnCount');
       await excel.sync();
-      console.log(resultArray)
-      console.log('Display Range rows: ', displayRange.rowCount, 'columns: ', displayRange.columnCount);
+      //console.log(resultArray)
+      //console.log('Display Range rows: ', displayRange.rowCount, 'columns: ', displayRange.columnCount);
   
       displayRange.values = resultArray;
       await excel.sync();
