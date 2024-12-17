@@ -4155,7 +4155,7 @@ async function createSceneList(){
   return createChapterAndSceneList(typeCodeValues);
 }
 
-async function createMultipleWallas(wallaData, doReplace, doNext){
+async function createMultipleWallas(wallaData, doReplace, doNext, showMain = true){
   let isProtected = await unlockIfLocked();
   let displayWallaRange;
   let myMessage = ''
@@ -4239,7 +4239,7 @@ async function createMultipleWallas(wallaData, doReplace, doNext){
       await excel.sync();
     }
   })
-  if (dataToDo){
+  if (dataToDo && showMain){
     await showMainPage();
   }
   if (isProtected){

@@ -823,7 +823,7 @@ async function putDataInScript(startRow, endRow){
     indexTableRange.load('rowIndex, values');
     await excel.sync();
     for (let i = startRow; i < endRow; i++){
-      textArea.value = baseText + 'Doing row: ' + (i + 1);
+      textArea.value = baseText + 'Doing row: ' + (i + 1) + ' /n';
       let sceneNo = indexTableRange.values[i][4]
       let namedRowIndex = indexTableRange.values[i][1];
       await doTheRowIndex(namedRowIndex, sceneNo);
@@ -836,5 +836,5 @@ async function doTheRowIndex(theRowIndex, sceneNo){
   let details = parseSourceText(sourceText);
   let wallaData = await doWallaTableV2(details.typeWalla, details.theResults, sceneNo);
   console.log('wallaData', wallaData);
-  await jade_modules.operations.createMultipleWallas(wallaData, false, true);
+  await jade_modules.operations.createMultipleWallas(wallaData, false, true, false);
 }
