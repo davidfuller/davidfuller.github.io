@@ -607,5 +607,7 @@ async function completeProcess(){
   await jade_modules.operations.clearWalla();
   textArea.value += 'Clearing Walla Blocks from Script \n';
   await jade_modules.operations.deleteAllWallaBlocks(false);
+  textArea.value += 'Getting Walla Data \n';
+  jade_modules.wallaimport.getTheWallaSourceIndecies();
   textArea.value += 'Done \n';
 }
