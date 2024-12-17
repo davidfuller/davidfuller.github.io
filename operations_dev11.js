@@ -4399,10 +4399,13 @@ function getWallaDisplayName(wallaName){
   return temp;
 }
 
-async function getSceneWallaInformation(typeNo){
+async function getSceneWallaInformation(typeNo, sceneNo = -1){
   let isProtected = await unlockIfLocked();
-  let wallaScene = tag('walla-scene').value;
-  sceneNo = parseInt(wallaScene);
+  if (sceneNo == -1){
+    let wallaScene = tag('walla-scene').value;
+    sceneNo = parseInt(wallaScene);
+  }
+  
   let doNamed, doUnnamed, doGeneral;
   if (typeNo == 1){
     doNamed = true;
