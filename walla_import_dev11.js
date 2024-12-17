@@ -85,6 +85,22 @@ async function parseSource(tableRowIndex = -1){
   })
 }
 
+function parseSourceText(sourceText){
+  let mySourceText = sourceText;
+  let theLines = mySourceText.split('\n');
+  let theResults = [];
+  for (let i = 1; i < theLines.length; i++){
+    if (theLines[i].trim() != ''){
+      theResults.push(splitLine(theLines[i]));
+    }
+  }
+  return {
+    typeWalla: theLines[0],
+    theResults: theResults
+  }
+  
+}
+
 /* where to put the data
     Walla cue Number - auto calculated starting at W00001
 
@@ -266,6 +282,105 @@ async function doWallaTable(typeWalla, theResults, tableRowIndex = -1){
       console.log('address', sceneRange.address)
       sceneRange.values = [[scenes[0]]];
       await excel.sync();
+    }
+  })
+}
+
+async function doWallaTableV2(typeWalla, theResults, scene){
+  await Excel.run(async (excel) => {
+    let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
+    let wallaTable = wallaSheet.getRange(wallaTableName);
+    wallaTable.load('rowIndex, rowCount, columnIndex, columnCount, address');
+    wallaTable.clear("Contents");
+    await excel.sync();
+    
+    console.log(wallaTable.address, wallaTable.rowCount);
+    console.log(typeWalla, theResults);
+    let resultArray = []
+    let scenes = [];
+    let anyNonScenes = false;
+    for (let i = 0; i < theResults.length; i++){
+      let rowAndScene = await jade_modules.operations.getLineNoRowIndexAndScene(theResults[i].line);
+      console.log(i, 'rowAndScene', rowAndScene);
+      if (rowAndScene.scene == -1){
+        anyNonScenes = true
+      } else {
+        scenes.push(rowAndScene.scene)
+      }
+      console.log(i, 'line range', theResults[i].lineRange);
+      if (theResults[i].lineRange.trim() == ''){
+        theResults[i].lineRange = 'whole scene';
+      }
+      resultArray[i] = []
+      resultArray[i][0] = theResults[i].all;
+      resultArray[i][1] = theResults[i].lineRange;
+      resultArray[i][2] = getDisplayWallaName(typeWalla);
+      resultArray[i][3] = theResults[i].character;
+      resultArray[i][4] = theResults[i].description;
+      resultArray[i][5] = theResults[i].numCharacters;
+      resultArray[i][6] = theResults[i].line;
+      resultArray[i][7] = rowAndScene.rowIndex;
+      resultArray[i][8] = rowAndScene.scene;
+    }
+    if (theResults.length == 0){
+      let display = getDisplayWallaName(typeWalla);
+      scenes[0] = await getScene(sourceRowId, false);
+      console.log('sourceRowId', sourceRowId, 'scene', scenes);
+      anyNonScenes = true;
+      resultArray[0] = [];
+      resultArray[0][0] = display;
+      resultArray[0][1] = 'Whole Scene';
+      resultArray[0][2] = display;
+      resultArray[0][3] = '';
+      resultArray[0][4] = ''
+      resultArray[0][5] = 0;
+      resultArray[0][6] = -1;
+      resultArray[0][7] = -1;
+      resultArray[0][8] = scenes[0];
+    }
+
+    scenes = [...new Set(scenes)]
+    if (scenes.length == 0){
+      scenes[0] = scene;
+    }
+    console.log('anyNonScenes', anyNonScenes, 'scenes', scenes)
+    if ((anyNonScenes) && (scenes.length == 1)){
+      rowLineDetails = await jade_modules.operations.getRowIndexLineNoFirstLineScene(scenes[0])
+      if ((rowLineDetails.lineNo != -1) && (rowLineDetails.rowIndex != -1)){
+        for (let i = 0; i < resultArray.length; i++){
+          if (resultArray[i][6] == -1){
+            resultArray[i][6] = rowLineDetails.lineNo;
+          }
+          if (resultArray[i][7] == -1){
+            resultArray[i][7] = rowLineDetails.rowIndex;
+          }
+          if (resultArray[i][8] == -1){
+            resultArray[i][8] = scenes[0];
+          }
+        }
+      }
+    }
+    if (resultArray.length > 0){
+      let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
+      displayRange.load('rowCount, columnCount');
+      await excel.sync();
+      console.log(resultArray)
+      console.log('Display Range rows: ', displayRange.rowCount, 'columns: ', displayRange.columnCount);
+  
+      displayRange.values = resultArray;
+      await excel.sync();
+  
+      const sortFields = [
+        {
+          key: 6, //Line No
+          ascending: true
+        },
+        {
+          key: 0, // Walla Original
+          ascending: true
+        }
+      ]
+      displayRange.sort.apply(sortFields);
     }
   })
 }
@@ -538,6 +653,7 @@ async function loadSelectedCellIntoTextBox(){
   })
 }
 async function loadTextBox(rowIndex){
+  let sourceText;
   await Excel.run(async (excel) => {
     if (!isNaN(parseInt(rowIndex))){
       const wallaSourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
@@ -550,10 +666,12 @@ async function loadTextBox(rowIndex){
       let wallaText = testRange.values[0][0];
       let textRange = wallaSheet.getRange('wiSource');
       textRange.values = [[wallaText.trim()]];  
+      sourceText = wallaText.trim();
       sourceRowIndexRange.values = [[rowIndex]];
       await excel.sync();
     }
   })
+  return sourceText;
 }
 async function loopThroughTheIndexes(){
   await Excel.run(async (excel) => {
@@ -601,8 +719,9 @@ async function completeProcess(){
   progressPanel.style.display = 'block';
   let textArea = tag('walla-text');
   textArea.value = 'Starting \n';
-  const startRow = 1;
+  const startRow = 0;
   const endRow = 3;
+  /*
   textArea.value += 'Clearing Walla from Script \n';
   await jade_modules.operations.clearWalla();
   textArea.value += 'Clearing Walla Blocks from Script \n';
@@ -612,9 +731,11 @@ async function completeProcess(){
   textArea.value += 'Getting Scene Data \n';
   await loopThroughTheIndexes();
   textArea.value += 'Checking all scenes \n';
+  */
   let good = await checkWeHaveAllScenes();
   if (good){
-    textArea.value += 'All scenes OK \n'
+    textArea.value += 'All scenes OK \nDoing parsing'
+    await putDataInScript(startRow, endRow)
   }
   textArea.value += 'Done \n';
 }
@@ -653,4 +774,20 @@ async function checkWeHaveAllScenes(){
     }
   })
   return allGood;
+}
+
+async function putDataInScript(startRow, endRow){
+  await Excel.run(async (excel) => {
+    const wallaSheet = excel.workbook.worksheets.getItem(wallaImportName);
+    const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
+    indexTableRange.load('rowIndex, values');
+    await excel.sync();
+    for (let i = startRow; i < endRow; i++){
+      let sceneNo = indexTableRange.values[i][4]
+      let namedRowIndex = indexTableRange.values[i][1];
+      let sourceText = await loadTextBox(namedRowIndex);
+      let details = parseSourceText(sourceText);
+      await doWallaTableV2(details.typeWalla, details.theResults, sceneNo)
+    }
+  }) 
 }
