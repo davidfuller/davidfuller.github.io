@@ -4727,7 +4727,7 @@ async function deleteAllWallaBlocks(showMain = true){
         console.log('Before sync walla delete');
         await excel.sync();
         console.log('After sync, indexes[i]', theIndexes[i]); 
-        await correctFormulas(theIndexes[i] + 1);
+        //await correctFormulas(theIndexes[i] + 1);
       }
     }
     const firstRowIndex = firstDataRow - 1;
