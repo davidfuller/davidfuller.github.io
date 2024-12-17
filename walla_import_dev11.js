@@ -742,7 +742,7 @@ async function completeProcess(){
   let textArea = tag('walla-text');
   textArea.value = 'Starting \n';
   const startRow = 0;
-  const endRow = 3;
+  const endRow = 30;
   
   textArea.value += 'Clearing Walla from Script \n';
   await jade_modules.operations.clearWalla();
