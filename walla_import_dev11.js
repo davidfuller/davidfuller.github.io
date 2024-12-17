@@ -287,6 +287,7 @@ async function doWallaTable(typeWalla, theResults, tableRowIndex = -1){
 }
 
 async function doWallaTableV2(typeWalla, theResults, scene){
+  let wallaData = [];
   await Excel.run(async (excel) => {
     let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
     let wallaTable = wallaSheet.getRange(wallaTableName);
@@ -382,9 +383,45 @@ async function doWallaTableV2(typeWalla, theResults, scene){
       ]
       displayRange.sort.apply(sortFields);
     }
-  })
+  })  
+  for (let i = 0; i < resultArray.length; i++){
+    let lineNo = resultsArray[i][tableCols.lineNo];
+    if (lineNo > 0){
+      let data = {};
+      data.rowIndex = theResults[i][tableCols.rowIndex];
+      data.wallaLineRange = theResults[i][tableCols.lineRange];
+      data.typeOfWalla = theResults[i][tableCols.typeOfWalla];
+      data.characters = theResults[i][tableCols.character];
+      data.description = theResults[i][tableCols.description];
+      data.numCharacters = theResults[i][tableCols.numCharacters];
+      data.all = theResults[i][tableCols.wallaOriginal];
+      data.lineNo = lineNo;
+      wallaData.push(data); 
+    }
+  }
+  wallaData.sort(mySortCompare);
+  return wallaData;
 }
 
+function mySortCompare(a, b){
+  if (a.lineNo == b.lineNo){
+    if (a.all > b.all){
+      return 1
+    }
+    if (a.all < b.all){
+      return -1
+    }
+    return 0
+  } else {
+    if (a.lineNo > b.lineNo){
+      return 1
+    }
+    if (a.lineNo < b.lineNo){
+      return -1
+    }
+    return 0
+  }
+}
 async function getScene(sourceRowId, doPrevious){
   let scene = -1;
   await Excel.run(async (excel) => {
@@ -734,7 +771,7 @@ async function completeProcess(){
   */
   let good = await checkWeHaveAllScenes();
   if (good){
-    textArea.value += 'All scenes OK \nDoing parsing'
+    textArea.value += 'All scenes OK \nDoing parsing \n'
     await putDataInScript(startRow, endRow)
   }
   textArea.value += 'Done \n';
@@ -787,7 +824,8 @@ async function putDataInScript(startRow, endRow){
       let namedRowIndex = indexTableRange.values[i][1];
       let sourceText = await loadTextBox(namedRowIndex);
       let details = parseSourceText(sourceText);
-      await doWallaTableV2(details.typeWalla, details.theResults, sceneNo)
+      let wallaData = await doWallaTableV2(details.typeWalla, details.theResults, sceneNo);
+      console.log('wallaData', wallaData);
     }
   }) 
 }
