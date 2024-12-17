@@ -384,17 +384,17 @@ async function doWallaTableV2(typeWalla, theResults, scene){
       displayRange.sort.apply(sortFields);
     }
   })  
-  for (let i = 0; i < resultArray.length; i++){
+  for (let i = 0; i < resultsArray.length; i++){
     let lineNo = resultsArray[i][tableCols.lineNo];
     if (lineNo > 0){
       let data = {};
-      data.rowIndex = theResults[i][tableCols.rowIndex];
-      data.wallaLineRange = theResults[i][tableCols.lineRange];
-      data.typeOfWalla = theResults[i][tableCols.typeOfWalla];
-      data.characters = theResults[i][tableCols.character];
-      data.description = theResults[i][tableCols.description];
-      data.numCharacters = theResults[i][tableCols.numCharacters];
-      data.all = theResults[i][tableCols.wallaOriginal];
+      data.rowIndex = resultsArray[i][tableCols.rowIndex];
+      data.wallaLineRange = resultsArray[i][tableCols.lineRange];
+      data.typeOfWalla = resultsArray[i][tableCols.typeOfWalla];
+      data.characters = resultsArray[i][tableCols.character];
+      data.description = resultsArray[i][tableCols.description];
+      data.numCharacters = resultsArray[i][tableCols.numCharacters];
+      data.all = resultsArray[i][tableCols.wallaOriginal];
       data.lineNo = lineNo;
       wallaData.push(data); 
     }
