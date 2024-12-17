@@ -608,6 +608,8 @@ async function completeProcess(){
   textArea.value += 'Clearing Walla Blocks from Script \n';
   await jade_modules.operations.deleteAllWallaBlocks(false);
   textArea.value += 'Getting Walla Data \n';
-  jade_modules.wallaimport.getTheWallaSourceIndecies();
+  await jade_modules.wallaimport.getTheWallaSourceIndecies();
+  textArea.value += 'Getting Scene Data \n';
+  await jade_modules.wallaimport.loopThroughTheIndexes()
   textArea.value += 'Done \n';
 }
