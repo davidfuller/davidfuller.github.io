@@ -758,11 +758,12 @@ async function completeProcess(){
   textArea.value = 'Starting \n';
   const startRow = 0;
   const endRow = 3;
-  /*
+  
   textArea.value += 'Clearing Walla from Script \n';
   await jade_modules.operations.clearWalla();
   textArea.value += 'Clearing Walla Blocks from Script \n';
   await jade_modules.operations.deleteAllWallaBlocks(false);
+  /*
   textArea.value += 'Getting Walla Data \n';
   await getTheWallaSourceIndecies();
   textArea.value += 'Getting Scene Data \n';
@@ -826,6 +827,7 @@ async function putDataInScript(startRow, endRow){
       let details = parseSourceText(sourceText);
       let wallaData = await doWallaTableV2(details.typeWalla, details.theResults, sceneNo);
       console.log('wallaData', wallaData);
+      await jade_modules.operations.createMultipleWallas(wallaData, false, true);
     }
   }) 
 }
