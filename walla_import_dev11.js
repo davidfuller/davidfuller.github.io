@@ -34,7 +34,9 @@ const generalWalla = ['General Walla', 'General Walla:']
 let displayGeneralWalla = 'General Walla:';
 
 function isNamedWalla(theType){
+  console.log(theType)
   for (text of namedCharacters){
+    console.log(text);
     if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
       return true;
     }
