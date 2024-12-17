@@ -823,7 +823,7 @@ async function putDataInScript(startRow, endRow){
     indexTableRange.load('rowIndex, values');
     await excel.sync();
     for (let i = startRow; i < endRow; i++){
-      textArea.value = baseText + 'Doing row: ' + (i + 1) + ' /n';
+      textArea.value = baseText + 'Doing row: ' + (i + 1) + ' \n';
       let sceneNo = indexTableRange.values[i][4]
       let namedRowIndex = indexTableRange.values[i][1];
       await doTheRowIndex(namedRowIndex, sceneNo);

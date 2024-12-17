@@ -4234,7 +4234,7 @@ async function createMultipleWallas(wallaData, doReplace, doNext, showMain = tru
         await excel.sync();
       }
     }
-    if (dataToDo){
+    if (dataToDo && showMain){
       displayWallaRange.select();   
       await excel.sync();
     }
