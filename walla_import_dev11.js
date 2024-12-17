@@ -288,6 +288,7 @@ async function doWallaTable(typeWalla, theResults, tableRowIndex = -1){
 
 async function doWallaTableV2(typeWalla, theResults, scene){
   let wallaData = [];
+  let resultArray = [];
   await Excel.run(async (excel) => {
     let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
     let wallaTable = wallaSheet.getRange(wallaTableName);
@@ -297,7 +298,6 @@ async function doWallaTableV2(typeWalla, theResults, scene){
     
     console.log(wallaTable.address, wallaTable.rowCount);
     console.log(typeWalla, theResults);
-    let resultArray = []
     let scenes = [];
     let anyNonScenes = false;
     for (let i = 0; i < theResults.length; i++){
@@ -384,17 +384,17 @@ async function doWallaTableV2(typeWalla, theResults, scene){
       displayRange.sort.apply(sortFields);
     }
   })  
-  for (let i = 0; i < resultsArray.length; i++){
-    let lineNo = resultsArray[i][tableCols.lineNo];
+  for (let i = 0; i < resultArray.length; i++){
+    let lineNo = resultArray[i][tableCols.lineNo];
     if (lineNo > 0){
       let data = {};
-      data.rowIndex = resultsArray[i][tableCols.rowIndex];
-      data.wallaLineRange = resultsArray[i][tableCols.lineRange];
-      data.typeOfWalla = resultsArray[i][tableCols.typeOfWalla];
-      data.characters = resultsArray[i][tableCols.character];
-      data.description = resultsArray[i][tableCols.description];
-      data.numCharacters = resultsArray[i][tableCols.numCharacters];
-      data.all = resultsArray[i][tableCols.wallaOriginal];
+      data.rowIndex = resultArray[i][tableCols.rowIndex];
+      data.wallaLineRange = resultArray[i][tableCols.lineRange];
+      data.typeOfWalla = resultArray[i][tableCols.typeOfWalla];
+      data.characters = resultArray[i][tableCols.character];
+      data.description = resultArray[i][tableCols.description];
+      data.numCharacters = resultArray[i][tableCols.numCharacters];
+      data.all = resultArray[i][tableCols.wallaOriginal];
       data.lineNo = lineNo;
       wallaData.push(data); 
     }
