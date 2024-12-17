@@ -604,6 +604,6 @@ async function completeProcess(){
   textArea.value += 'Clearing Walla from Script \n';
   await jade_modules.operations.clearWalla();
   textArea.value += 'Clearing Walla Blocks from Script \n';
-  await jade_modules.operations.deleteAllWallaBlocks();
+  await jade_modules.operations.deleteAllWallaBlocks(false);
   textArea.value += 'Done \n';
 }

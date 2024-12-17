@@ -4682,8 +4682,10 @@ async function deleteAllSceneAndWallaBlocks(){
   }
 }
 
-async function deleteAllWallaBlocks(){
-  await showMainPage();
+async function deleteAllWallaBlocks(showMain = true){
+  if (showMain){
+    await showMainPage();
+  }
   let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
     for (let myDelete = 0; myDelete < 1000; myDelete++){
