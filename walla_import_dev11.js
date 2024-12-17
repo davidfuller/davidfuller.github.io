@@ -289,116 +289,102 @@ async function doWallaTable(typeWalla, theResults, tableRowIndex = -1){
 async function doWallaTableV2(typeWalla, theResults, scene){
   let wallaData = [];
   let resultArray = [];
-  await Excel.run(async (excel) => {
-    let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
-    let wallaTable = wallaSheet.getRange(wallaTableName);
-    wallaTable.load('rowIndex, rowCount, columnIndex, columnCount, address');
-    wallaTable.clear("Contents");
-    await excel.sync();
+  if (theResults.length > 0){
+    await Excel.run(async (excel) => {
+      let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
+      let wallaTable = wallaSheet.getRange(wallaTableName);
+      wallaTable.load('rowIndex, rowCount, columnIndex, columnCount, address');
+      wallaTable.clear("Contents");
+      await excel.sync();
+      
+      //console.log(wallaTable.address, wallaTable.rowCount);
+      //console.log(typeWalla, theResults);
+      let scenes = [];
+      let anyNonScenes = false;
+      for (let i = 0; i < theResults.length; i++){
+        let rowAndScene = await jade_modules.operations.getLineNoRowIndexAndScene(theResults[i].line);
+        //console.log(i, 'rowAndScene', rowAndScene);
+        if (rowAndScene.scene == -1){
+          anyNonScenes = true
+        } else {
+          scenes.push(rowAndScene.scene)
+        }
+        //console.log(i, 'line range', theResults[i].lineRange);
+        if (theResults[i].lineRange.trim() == ''){
+          theResults[i].lineRange = 'whole scene';
+        }
+        resultArray[i] = []
+        resultArray[i][0] = theResults[i].all;
+        resultArray[i][1] = theResults[i].lineRange;
+        resultArray[i][2] = getDisplayWallaName(typeWalla);
+        resultArray[i][3] = theResults[i].character;
+        resultArray[i][4] = theResults[i].description;
+        resultArray[i][5] = theResults[i].numCharacters;
+        resultArray[i][6] = theResults[i].line;
+        resultArray[i][7] = rowAndScene.rowIndex;
+        resultArray[i][8] = rowAndScene.scene;
+      }
+      scenes = [...new Set(scenes)]
+      if (scenes.length == 0){
+        scenes[0] = scene;
+      }
+      //console.log('anyNonScenes', anyNonScenes, 'scenes', scenes)
+      if ((anyNonScenes) && (scenes.length == 1)){
+        rowLineDetails = await jade_modules.operations.getRowIndexLineNoFirstLineScene(scenes[0])
+        if ((rowLineDetails.lineNo != -1) && (rowLineDetails.rowIndex != -1)){
+          for (let i = 0; i < resultArray.length; i++){
+            if (resultArray[i][6] == -1){
+              resultArray[i][6] = rowLineDetails.lineNo;
+            }
+            if (resultArray[i][7] == -1){
+              resultArray[i][7] = rowLineDetails.rowIndex;
+            }
+            if (resultArray[i][8] == -1){
+              resultArray[i][8] = scenes[0];
+            }
+          }
+        }
+      }
+      if (resultArray.length > 0){
+        let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
+        displayRange.load('rowCount, columnCount');
+        await excel.sync();
+        //console.log(resultArray)
+        //console.log('Display Range rows: ', displayRange.rowCount, 'columns: ', displayRange.columnCount);
     
-    //console.log(wallaTable.address, wallaTable.rowCount);
-    //console.log(typeWalla, theResults);
-    let scenes = [];
-    let anyNonScenes = false;
-    for (let i = 0; i < theResults.length; i++){
-      let rowAndScene = await jade_modules.operations.getLineNoRowIndexAndScene(theResults[i].line);
-      //console.log(i, 'rowAndScene', rowAndScene);
-      if (rowAndScene.scene == -1){
-        anyNonScenes = true
-      } else {
-        scenes.push(rowAndScene.scene)
+        displayRange.values = resultArray;
+        await excel.sync();
+    
+        const sortFields = [
+          {
+            key: 6, //Line No
+            ascending: true
+          },
+          {
+            key: 0, // Walla Original
+            ascending: true
+          }
+        ]
+        displayRange.sort.apply(sortFields);
       }
-      //console.log(i, 'line range', theResults[i].lineRange);
-      if (theResults[i].lineRange.trim() == ''){
-        theResults[i].lineRange = 'whole scene';
-      }
-      resultArray[i] = []
-      resultArray[i][0] = theResults[i].all;
-      resultArray[i][1] = theResults[i].lineRange;
-      resultArray[i][2] = getDisplayWallaName(typeWalla);
-      resultArray[i][3] = theResults[i].character;
-      resultArray[i][4] = theResults[i].description;
-      resultArray[i][5] = theResults[i].numCharacters;
-      resultArray[i][6] = theResults[i].line;
-      resultArray[i][7] = rowAndScene.rowIndex;
-      resultArray[i][8] = rowAndScene.scene;
-    }
-    if (theResults.length == 0){
-      let display = getDisplayWallaName(typeWalla);
-      scenes[0] = scene
-      anyNonScenes = true;
-      resultArray[0] = [];
-      resultArray[0][0] = display;
-      resultArray[0][1] = 'Whole Scene';
-      resultArray[0][2] = display;
-      resultArray[0][3] = '';
-      resultArray[0][4] = ''
-      resultArray[0][5] = 0;
-      resultArray[0][6] = -1;
-      resultArray[0][7] = -1;
-      resultArray[0][8] = scenes[0];
-    }
-
-    scenes = [...new Set(scenes)]
-    if (scenes.length == 0){
-      scenes[0] = scene;
-    }
-    //console.log('anyNonScenes', anyNonScenes, 'scenes', scenes)
-    if ((anyNonScenes) && (scenes.length == 1)){
-      rowLineDetails = await jade_modules.operations.getRowIndexLineNoFirstLineScene(scenes[0])
-      if ((rowLineDetails.lineNo != -1) && (rowLineDetails.rowIndex != -1)){
-        for (let i = 0; i < resultArray.length; i++){
-          if (resultArray[i][6] == -1){
-            resultArray[i][6] = rowLineDetails.lineNo;
-          }
-          if (resultArray[i][7] == -1){
-            resultArray[i][7] = rowLineDetails.rowIndex;
-          }
-          if (resultArray[i][8] == -1){
-            resultArray[i][8] = scenes[0];
-          }
-        }
+    })  
+    for (let i = 0; i < resultArray.length; i++){
+      let lineNo = resultArray[i][tableCols.lineNo];
+      if (lineNo > 0){
+        let data = {};
+        data.rowIndex = resultArray[i][tableCols.rowIndex];
+        data.wallaLineRange = resultArray[i][tableCols.lineRange];
+        data.typeOfWalla = resultArray[i][tableCols.typeOfWalla];
+        data.characters = resultArray[i][tableCols.character];
+        data.description = resultArray[i][tableCols.description];
+        data.numCharacters = resultArray[i][tableCols.numCharacters];
+        data.all = resultArray[i][tableCols.wallaOriginal];
+        data.lineNo = lineNo;
+        wallaData.push(data); 
       }
     }
-    if (resultArray.length > 0){
-      let displayRange = wallaSheet.getRangeByIndexes(wallaTable.rowIndex, wallaTable.columnIndex, resultArray.length, wallaTable.columnCount);
-      displayRange.load('rowCount, columnCount');
-      await excel.sync();
-      //console.log(resultArray)
-      //console.log('Display Range rows: ', displayRange.rowCount, 'columns: ', displayRange.columnCount);
-  
-      displayRange.values = resultArray;
-      await excel.sync();
-  
-      const sortFields = [
-        {
-          key: 6, //Line No
-          ascending: true
-        },
-        {
-          key: 0, // Walla Original
-          ascending: true
-        }
-      ]
-      displayRange.sort.apply(sortFields);
-    }
-  })  
-  for (let i = 0; i < resultArray.length; i++){
-    let lineNo = resultArray[i][tableCols.lineNo];
-    if (lineNo > 0){
-      let data = {};
-      data.rowIndex = resultArray[i][tableCols.rowIndex];
-      data.wallaLineRange = resultArray[i][tableCols.lineRange];
-      data.typeOfWalla = resultArray[i][tableCols.typeOfWalla];
-      data.characters = resultArray[i][tableCols.character];
-      data.description = resultArray[i][tableCols.description];
-      data.numCharacters = resultArray[i][tableCols.numCharacters];
-      data.all = resultArray[i][tableCols.wallaOriginal];
-      data.lineNo = lineNo;
-      wallaData.push(data); 
-    }
+    wallaData.sort(mySortCompare);
   }
-  wallaData.sort(mySortCompare);
   return wallaData;
 }
 
@@ -830,6 +816,7 @@ async function putDataInScript(startRow, endRow){
       await doTheRowIndex(unNamedRowIndex, sceneNo);
       let generalRowIndex = indexTableRange.values[i][3];
       await doTheRowIndex(generalRowIndex, sceneNo);
+      await jade_modules.operations.calculateWallaCues();
     }
   }) 
 }
@@ -839,5 +826,7 @@ async function doTheRowIndex(theRowIndex, sceneNo){
   let details = parseSourceText(sourceText);
   let wallaData = await doWallaTableV2(details.typeWalla, details.theResults, sceneNo);
   console.log('wallaData', wallaData);
-  await jade_modules.operations.createMultipleWallas(wallaData, false, true, false);
+  if (wallaData.length > 0){
+    await jade_modules.operations.createMultipleWallas(wallaData, false, true, false);
+  }
 }
