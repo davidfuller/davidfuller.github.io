@@ -815,19 +815,26 @@ async function checkWeHaveAllScenes(){
 }
 
 async function putDataInScript(startRow, endRow){
+  let textArea = tag('walla-text');
+  let baseText = textArea.value
   await Excel.run(async (excel) => {
     const wallaSheet = excel.workbook.worksheets.getItem(wallaImportName);
     const indexTableRange = wallaSheet.getRange('wiWallaIndexTable');
     indexTableRange.load('rowIndex, values');
     await excel.sync();
     for (let i = startRow; i < endRow; i++){
+      textArea.value = baseText + 'Doing row: ' + (i + 1);
       let sceneNo = indexTableRange.values[i][4]
       let namedRowIndex = indexTableRange.values[i][1];
-      let sourceText = await loadTextBox(namedRowIndex);
-      let details = parseSourceText(sourceText);
-      let wallaData = await doWallaTableV2(details.typeWalla, details.theResults, sceneNo);
-      console.log('wallaData', wallaData);
-      await jade_modules.operations.createMultipleWallas(wallaData, false, true);
+      await doTheRowIndex(namedRowIndex, sceneNo);
     }
   }) 
+}
+
+async function doTheRowIndex(theRowIndex, sceneNo){
+  let sourceText = await loadTextBox(theRowIndex);
+  let details = parseSourceText(sourceText);
+  let wallaData = await doWallaTableV2(details.typeWalla, details.theResults, sceneNo);
+  console.log('wallaData', wallaData);
+  await jade_modules.operations.createMultipleWallas(wallaData, false, true);
 }
