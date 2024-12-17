@@ -881,6 +881,12 @@ label {
 #btnAutoRowHeight, #btnIncreaseRowHeight, #btnDecreaseRowHeight {
   width: 140px;
 }
+#walla-progress {
+  display: none;
+  width: 80%;
+  border-radius: 5px;
+  border-color: #481343;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')

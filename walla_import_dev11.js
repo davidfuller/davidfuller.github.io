@@ -593,3 +593,17 @@ async function findFirstWallaOriginal(){
     }
   })
 }
+
+async function completeProcess(){
+  let progressPanel = tag('walla-progress');
+  progressPanel.style.display = 'block';
+  let textArea = tag('walla-text');
+  textArea.value = 'Starting \n';
+  const startRow = 1;
+  const endRow = 3;
+  textArea.value += 'Clearing Walla from Script \n';
+  await jade_modules.operations.clearWalla();
+  textArea.value += 'Clearing Walla Blocks from Script \n';
+  await jade_modules.operations.deleteAllWallaBlocks();
+  textArea.value += 'Done \n';
+}

@@ -2,7 +2,8 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '11.001';
+const codeVersion = '11.02';
+//11.02 isProtected on applyTakeDetails
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -6391,6 +6392,7 @@ async function setSheetView(doTemporary){
 }
 
 async function applyTakeDetails(country){
+  let isProtected = await unlockIfLocked();
   let wait = tag('take-wait');
   wait.style.display = 'block';
   const rowDetails = await getSelectedRowDetails(true);
@@ -6431,6 +6433,9 @@ async function applyTakeDetails(country){
     await excel.sync();
   })
   wait.style.display = 'none';
+  if (isProtected){
+    await lockColumns();
+  }
 }
 
 async function clearTakeDetails(country){

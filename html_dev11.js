@@ -326,6 +326,11 @@ async function mainHTML(){
     <button id="btnLoadDataIntoCell" class="walla-button" onclick="jade_modules.wallaimport.loadSelectedCellIntoTextBox()">Load into cell</button>
     <button id="btnLoop" class="walla-button" onclick="jade_modules.wallaimport.loopThroughTheIndexes()">Loop</button>
     <button id="btnFindOriginal" class="walla-button" onclick="jade_modules.wallaimport.findFirstWallaOriginal()">Find walla Original</button>
+    <button id="btnCompleteProcess" class="walla-button" onclick="jade_modules.wallaimport.completeProcess()">Complete Process</button>
+    <div id="walla-progress">
+      <label id="walla-progress-label">Walla Progress</label>
+      <textarea id="walla-text" cols="40" rows="8"></textarea>
+    </div>
   </div>
 </div>
 <div id="location-page">
