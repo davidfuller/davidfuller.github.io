@@ -827,6 +827,10 @@ async function putDataInScript(startRow, endRow){
       let sceneNo = indexTableRange.values[i][4]
       let namedRowIndex = indexTableRange.values[i][1];
       await doTheRowIndex(namedRowIndex, sceneNo);
+      let unNamedRowIndex  = indexTableRange.values[i][2];
+      await doTheRowIndex(unNamedRowIndex, sceneNo);
+      let generalRowIndex = indexTableRange.values[i][3];
+      await doTheRowIndex(generalRowIndex, sceneNo);
     }
   }) 
 }
