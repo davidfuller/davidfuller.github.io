@@ -2,9 +2,10 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '11.03';
+const codeVersion = '11.04';
 //11.02 isProtected on applyTakeDetails
 //11.03 31-35 in walla and remove the clears
+//11.04 30-35 in walla
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';

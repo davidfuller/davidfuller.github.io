@@ -741,7 +741,7 @@ async function completeProcess(){
   progressPanel.style.display = 'block';
   let textArea = tag('walla-text');
   textArea.value = 'Starting \n';
-  const startRow = 31;
+  const startRow = 30;
   const endRow = 35;
   
   /*
