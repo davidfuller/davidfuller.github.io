@@ -78,12 +78,14 @@ function auto_exec(){
 }
 
 async function parseSource(tableRowIndex = -1){
+  const replacements = await wallaReplacementWords();
+  console.log('replacements', replacements)
   await Excel.run(async (excel) => {
     let wallaSheet = excel.workbook.worksheets.getItem(wallaSheetName);
     let sourceRange = wallaSheet.getRange(sourceTextRangeName);
     sourceRange.load('values')
     await excel.sync();
-    let mySourceText = sourceRange.values[0][0];
+    let mySourceText = replaceReplacements(sourceRange.values[0][0],replacements);
     let theLines = mySourceText.split('\n');
     let theResults = [];
     for (let i = 1; i < theLines.length; i++){
@@ -887,4 +889,13 @@ async function wallaReplacementWords(){
       }
     }
   })   
+}
+
+function replaceReplacements(theLine, replacements){
+  let result = theLine;
+  for (let i = 0; i < replacements.length; i++){
+    let original = new RegExp(replacements[i].original, 'gi')
+    result = result.replace(original, replacements[i].replacement);
+  }
+  return result
 }
