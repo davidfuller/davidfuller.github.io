@@ -2,12 +2,13 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '11.06';
+const codeVersion = '11.07';
 //11.02 isProtected on applyTakeDetails
 //11.03 31-35 in walla and remove the clears
 //11.04 30-35 in walla
 //11.05 35-40 in walla
 //11.06 walla start end text boxes
+//11.07 wallacolumn source sheet based on book number
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';

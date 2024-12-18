@@ -6,6 +6,17 @@ const wallaSourceSheetName = 'Walla Script'
 const wallaSourceUKScriptColumnIndex = 9;
 const wallaImportName = 'Walla Import';
 
+const wallaSourceWallaColumn = [
+  {
+    book: 'Book 1',
+    column: 4
+  },
+  {
+    book: 'Book 4',
+    column: 9
+  }
+]
+
 const tableCols ={
   wallaOriginal: 0,
   lineRange: 1,
@@ -555,19 +566,32 @@ function getDisplayWallaName(theType){
   }
 }
 
+async function getWallaSourceWallaColumn(){
+  const book = await jade_modules.operations.getBook();
+  let wallaColumn = wallaSourceUKScriptColumnIndex;
+  for (let i = 0; i < wallaSourceWallaColumn.length; i++){
+    if (wallaSourceWallaColumn[i].book == book){
+      wallaColumn = wallaSourceWallaColumn[i].column;
+      console.log('Got walla column', wallaColumn);
+      break
+    }
+  }
+  return wallaColumn;
+}
 async function getTheWallaSourceIndecies(){
   let wallaIndexes = []
   let named = 0;
   let unNamed = 0;
   let general = 0;
   let isGood = true;
+  const wallaColumn = await getWallaSourceWallaColumn()
   await Excel.run(async (excel) => {
     const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
     const usedRange = sourceSheet.getUsedRange();
     usedRange.load('rowIndex, rowCount');
     await excel.sync();
     console.log('rowIndex', usedRange.rowIndex, 'rowCount', usedRange.rowCount);
-    let scriptRange = sourceSheet.getRangeByIndexes(usedRange.rowIndex, wallaSourceUKScriptColumnIndex, 50, 1)// usedRange.rowCount, 1)
+    let scriptRange = sourceSheet.getRangeByIndexes(usedRange.rowIndex, wallaColumn, 50, 1)// usedRange.rowCount, 1)
     scriptRange.load('values');
     await excel.sync()
     for (let i = 0; i < scriptRange.values.length; i++){
@@ -679,11 +703,12 @@ async function loadSelectedCellIntoTextBox(){
 }
 async function loadTextBox(rowIndex){
   let sourceText;
+  let wallaColumn = await getWallaSourceWallaColumn();
   await Excel.run(async (excel) => {
     if (!isNaN(parseInt(rowIndex))){
       const wallaSourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
       const wallaSheet = excel.workbook.worksheets.getItem(wallaImportName);
-      let testRange = wallaSourceSheet.getRangeByIndexes(rowIndex, wallaSourceUKScriptColumnIndex, 1, 1);
+      let testRange = wallaSourceSheet.getRangeByIndexes(rowIndex, wallaColumn, 1, 1);
       testRange.load('values');
       const sourceRowIndexRange = wallaSheet.getRange('wiSourceRowIndex');
       await excel.sync();
