@@ -87,7 +87,7 @@ async function parseSource(tableRowIndex = -1){
     let theLines = mySourceText.split('\n');
     let theResults = [];
     for (let i = 1; i < theLines.length; i++){
-      if (theLines[i].trim() != ''){
+      if ((theLines[i].trim() != '') && (theLines[i].trim().toLowerCase() != 'none')){
         theResults.push(splitLine(theLines[i]));
       }
     }
