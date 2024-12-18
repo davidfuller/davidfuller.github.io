@@ -99,6 +99,7 @@ async function parseSource(tableRowIndex = -1){
 }
 
 async function parseSourceText(sourceText){
+  console.log('sourceText', sourceText);
   let mySourceText = sourceText;
   let theLines = mySourceText.split('\n');
   let theResults = [];
