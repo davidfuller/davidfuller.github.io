@@ -162,7 +162,7 @@ function splitLine(theLine){
     lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
     lineRange = theLine.substring(theRestPosition, lastBitPosition - 2).trim() ;
   } else {
-    theDescription = 'N/A'
+    theDescription = ''
     lineRange = theRest;
   }
   
