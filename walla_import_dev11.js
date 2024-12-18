@@ -47,7 +47,7 @@ let displayGeneralWalla = 'General Walla:';
 function isNamedWalla(theType){
   console.log(theType)
   for (text of namedCharacters){
-    console.log(text);
+    //console.log(text);
     if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
       return true;
     }
@@ -150,13 +150,12 @@ function splitLine(theLine){
   
   console.log('At this point, theLine', theLine, 'thePosition', thePosition, 'wholeScene', wholeScene, 'firstLine', firstLine, 'lineNo', lineNo, 'theRestPosition', theRestPosition);
 
-
   let theRest = '';
   if (theRestPosition != -1){
     theRest = theLine.substring(theRestPosition);
   }
   console.log('theSections', theSections);
-  
+
   let lastBit = theSections[theSections.length - 1];
   
   console.log('At this point 2, theLine', theLine, 'theRest', theRest, 'lastBit', lastBit);
@@ -168,6 +167,9 @@ function splitLine(theLine){
     if ((lineNo == -1) && (wholeScene != -1)){
       theDescription = '';
       lineRange = 'whole scene'
+    } else if ((lineNo > 0) && (wholeScene == -1)){
+      theDescription = '';
+      lineRange = theRest;
     } else {
       theDescription = lastBit.trim();
       lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
