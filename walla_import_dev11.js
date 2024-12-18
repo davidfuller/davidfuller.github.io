@@ -9,7 +9,7 @@ const wallaImportName = 'Walla Import';
 const wallaSourceWallaColumn = [
   {
     book: 'Book 1',
-    column: 4
+    column: 5
   },
   {
     book: 'Book 4',
