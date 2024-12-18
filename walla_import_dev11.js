@@ -595,7 +595,7 @@ async function getTheWallaSourceIndecies(){
     scriptRange.load('values');
     await excel.sync()
     for (let i = 0; i < scriptRange.values.length; i++){
-      let raw = scriptRange.values[i][0];
+      let raw = scriptRange.values[i][0].toString();
       console.log('raw', raw)
       let lines = raw.split('\n');
       console.log(i, lines[0]);
