@@ -163,10 +163,15 @@ function splitLine(theLine){
   let lastBitPosition;
   let lineRange;
   if (isNaN(parseInt(lastBit))){
-    theDescription = lastBit.trim();
-    lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
-    lineRange = theLine.substring(theRestPosition, lastBitPosition - 2).trim() ;
-    console.log('At this point 3, theLine', theLine, 'lastBitPosition', lastBitPosition, 'theDescription', theDescription, 'lineRange', lineRange);
+    if ((lineNo == -1) && (wholeScene != -1)){
+      theDescription = '';
+      lineRange = 'whole scene'
+    } else {
+      theDescription = lastBit.trim();
+      lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
+      lineRange = theLine.substring(theRestPosition, lastBitPosition - 2).trim();
+    }
+    console.log('At this point 3, theLine', theLine, 'theDescription', theDescription, 'lineRange', lineRange);
   } else {
     theDescription = ''
     lineRange = theRest;
