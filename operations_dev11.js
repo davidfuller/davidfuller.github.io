@@ -4359,13 +4359,19 @@ async function calculateWallaCues(){
     await excel.sync();
 
     let wallaNumber = await getFirstWalla();
-    let theCells = []
+    let theCells = [];
+    let myCounter = 0;
     for (let i = 0; i < rowsToDo.length; i++){
+      myCounter += 1;
       wallaNumber += 1
       wallaCue = "W" + String(wallaNumber).padStart(5, 0);
       console.log(wallaCue)
       theCells[i] = scriptSheet.getRangeByIndexes(rowsToDo[i] + wallaRange.rowIndex, wallaCueIndex, 1, 1);
       theCells[i].values = [[wallaCue]]
+      if (myCounter > 100){
+        await excel.sync();
+        myCounter = 0;
+      }
     }
     await excel.sync();
   })
