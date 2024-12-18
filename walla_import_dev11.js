@@ -874,3 +874,17 @@ async function doTheRowIndex(theRowIndex, sceneNo){
     await jade_modules.operations.createMultipleWallas(wallaData, false, true, false);
   }
 }
+async function wallaReplacementWords(){
+  let data = [];
+  await Excel.run(async (excel) => {
+    const settingsSheet = excel.workbook.worksheets.getItem('Settings');
+    const replacementRange = settingsSheet.getRange('seWallaReplace');
+    replacementRange.load('values');
+    await excel.sync();
+    for (let i = 0; i < replacementRange.values.length; i++){
+      if (replacementRange.values[i][0] != ''){
+        data.push({original: replacementRange.values[i][0], replacement: replacementRange.values[i][1]})        
+      }
+    }
+  })   
+}
