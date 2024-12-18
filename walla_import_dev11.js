@@ -567,7 +567,7 @@ async function getTheWallaSourceIndecies(){
     usedRange.load('rowIndex, rowCount');
     await excel.sync();
     console.log('rowIndex', usedRange.rowIndex, 'rowCount', usedRange.rowCount);
-    let scriptRange = sourceSheet.getRangeByIndexes(usedRange.rowIndex, wallaSourceUKScriptColumnIndex, usedRange.rowCount, 1)
+    let scriptRange = sourceSheet.getRangeByIndexes(usedRange.rowIndex, wallaSourceUKScriptColumnIndex, 50, 1)// usedRange.rowCount, 1)
     scriptRange.load('values');
     await excel.sync()
     for (let i = 0; i < scriptRange.values.length; i++){
