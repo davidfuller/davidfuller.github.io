@@ -147,7 +147,12 @@ function splitLine(theLine){
     }
   }
   let theRestPosition = theLine.toLowerCase().indexOf(thePosition.toLowerCase());
+  if ((lineNo = -1) && (wholeScene != -1){
+    lineNo = 'whole scene'
+  }
+  
   console.log('At this point, theLine', theLine, 'thePosition', thePosition, 'wholeScene', wholeScene, 'firstLine', firstLine, 'lineNo', lineNo, 'theRestPosition', theRestPosition);
+
 
   let theRest = '';
   if (theRestPosition != -1){
