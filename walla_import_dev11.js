@@ -741,25 +741,34 @@ async function completeProcess(){
   progressPanel.style.display = 'block';
   let textArea = tag('walla-text');
   textArea.value = 'Starting \n';
-  const startRow = 35;
-  const endRow = 40;
+  let startRow = 36;
+  let endRow = 40;
   
-  /*
-  textArea.value += 'Clearing Walla from Script \n';
-  await jade_modules.operations.clearWalla();
-  textArea.value += 'Clearing Walla Blocks from Script \n';
-  await jade_modules.operations.deleteAllWallaBlocks(false);
-  
-  textArea.value += 'Getting Walla Data \n';
-  await getTheWallaSourceIndecies();
-  textArea.value += 'Getting Scene Data \n';
-  await loopThroughTheIndexes();
-  textArea.value += 'Checking all scenes \n';
-  */
-  let good = await checkWeHaveAllScenes();
-  if (good){
-    textArea.value += 'All scenes OK \nDoing parsing \n'
-    await putDataInScript(startRow, endRow)
+  let startTextBox = tag('walla-start');
+  let endTextBox = tag('walla-end');
+  let start = parseInt(startTextBox.value);
+  let end = parseInt(endTextBox.value);
+
+  if ((isNaN(start)) || (isNaN(end))){
+    textArea.value += 'Incorrect row values. Stopping \n'
+  } else {
+    /*
+    textArea.value += 'Clearing Walla from Script \n';
+    await jade_modules.operations.clearWalla();
+    textArea.value += 'Clearing Walla Blocks from Script \n';
+    await jade_modules.operations.deleteAllWallaBlocks(false);
+    
+    textArea.value += 'Getting Walla Data \n';
+    await getTheWallaSourceIndecies();
+    textArea.value += 'Getting Scene Data \n';
+    await loopThroughTheIndexes();
+    textArea.value += 'Checking all scenes \n';
+    */
+    let good = await checkWeHaveAllScenes();
+    if (good){
+      textArea.value += 'All scenes OK \nDoing parsing \n'
+      await putDataInScript(startRow, endRow)
+    }
   }
   textArea.value += 'Done \n';
 }

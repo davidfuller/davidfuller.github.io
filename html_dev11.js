@@ -327,6 +327,8 @@ async function mainHTML(){
     <button id="btnLoop" class="walla-button" onclick="jade_modules.wallaimport.loopThroughTheIndexes()">Loop</button>
     <button id="btnFindOriginal" class="walla-button" onclick="jade_modules.wallaimport.findFirstWallaOriginal()">Find walla Original</button>
     <button id="btnCompleteProcess" class="walla-button" onclick="jade_modules.wallaimport.completeProcess()">Complete Process</button>
+    <label for="walla-start">Start</label><input type="text" id="walla-start" name="walla-start">
+    <label for="walla-end">End</label><input type="text" id="walla-end" name="walla-end">
     <div id="walla-progress">
       <label id="walla-progress-label">Walla Progress</label>
       <textarea id="walla-text" cols="40" rows="8"></textarea>

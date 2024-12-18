@@ -886,6 +886,18 @@ label {
   width: 80%;
   border-radius: 5px;
   border-color: #481343;
+  background-color: #f2ceef;
+}
+
+#walla-start, #walla-end{
+  width: 150px;
+  background-color: #f2ceef;
+  color: #481343;
+  font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: #481343;
+  border-style: solid;
 }
 `;
   Jade.set_css(css);
