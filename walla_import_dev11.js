@@ -155,6 +155,8 @@ function splitLine(theLine){
   if (theRestPosition != -1){
     theRest = theLine.substring(theRestPosition);
   }
+  console.log('theSections', theSections);
+  
   let lastBit = theSections[theSections.length - 1];
   
   console.log('At this point 2, theLine', theLine, 'theRest', theRest, 'lastBit', lastBit);
