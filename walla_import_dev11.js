@@ -98,7 +98,7 @@ async function parseSource(tableRowIndex = -1){
   })
 }
 
-function parseSourceText(sourceText){
+async function parseSourceText(sourceText){
   let mySourceText = sourceText;
   let theLines = mySourceText.split('\n');
   let theResults = [];
@@ -707,6 +707,7 @@ async function loadSelectedCellIntoTextBox(){
 async function loadTextBox(rowIndex){
   let sourceText;
   let wallaColumn = await getWallaSourceWallaColumn();
+  const replacements = await wallaReplacementWords();
   await Excel.run(async (excel) => {
     if (!isNaN(parseInt(rowIndex))){
       const wallaSourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
@@ -719,7 +720,7 @@ async function loadTextBox(rowIndex){
       let wallaText = testRange.values[0][0];
       let textRange = wallaSheet.getRange('wiSource');
       textRange.values = [[wallaText.trim()]];  
-      sourceText = wallaText.trim();
+      sourceText = replaceReplacements(wallaText.trim(), replacements);
       sourceRowIndexRange.values = [[rowIndex]];
       await excel.sync();
     }
