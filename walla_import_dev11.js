@@ -166,7 +166,7 @@ function splitLine(theLine){
   let lineRange;
   if (isNaN(parseInt(lastBit))){
     if ((lineNo == -1) && (wholeScene != -1)){
-      theDescription = '';
+      theDescription = lastBit;
       lineRange = 'whole scene'
     } else if ((lineNo > 0) && (wholeScene == -1)){
       if (lastBit.trim().toLowerCase() == thePosition.trim().toLowerCase()){
