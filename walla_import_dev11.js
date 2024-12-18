@@ -890,7 +890,7 @@ async function putDataInScript(startRow, endRow){
 
 async function doTheRowIndex(theRowIndex, sceneNo){
   let sourceText = await loadTextBox(theRowIndex);
-  let details = parseSourceText(sourceText);
+  let details = await parseSourceText(sourceText);
   let wallaData = await doWallaTableV2(details.typeWalla, details.theResults, sceneNo);
   console.log('wallaData', wallaData);
   if (wallaData.length > 0){
