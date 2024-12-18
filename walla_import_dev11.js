@@ -752,6 +752,8 @@ async function completeProcess(){
   if ((isNaN(start)) || (isNaN(end))){
     textArea.value += 'Incorrect row values. Stopping \n'
   } else {
+    startRow = start;
+    endRow = end;
     /*
     textArea.value += 'Clearing Walla from Script \n';
     await jade_modules.operations.clearWalla();
