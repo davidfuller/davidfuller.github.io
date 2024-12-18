@@ -147,10 +147,7 @@ function splitLine(theLine){
     }
   }
   let theRestPosition = theLine.toLowerCase().indexOf(thePosition.toLowerCase());
-  if ((lineNo = -1) && (wholeScene != -1)){
-    lineNo = 'whole scene'
-  }
-
+  
   console.log('At this point, theLine', theLine, 'thePosition', thePosition, 'wholeScene', wholeScene, 'firstLine', firstLine, 'lineNo', lineNo, 'theRestPosition', theRestPosition);
 
 
@@ -160,6 +157,7 @@ function splitLine(theLine){
   }
   let lastBit = theSections[theSections.length - 1];
   
+  console.log('At this point 2, theLine', theLine, 'theRest', theTest, 'lastBit', lastBit);
 
   let theDescription;
   let lastBitPosition;
@@ -168,6 +166,7 @@ function splitLine(theLine){
     theDescription = lastBit.trim();
     lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
     lineRange = theLine.substring(theRestPosition, lastBitPosition - 2).trim() ;
+    console.log('At this point 3, theLine', theLine, 'lastBitPosition', lastBitPosition, 'theDescription', theDescription, 'lineRange', lineRange);
   } else {
     theDescription = ''
     lineRange = theRest;
