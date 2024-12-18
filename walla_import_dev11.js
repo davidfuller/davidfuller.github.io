@@ -888,7 +888,8 @@ async function wallaReplacementWords(){
         data.push({original: replacementRange.values[i][0], replacement: replacementRange.values[i][1]})        
       }
     }
-  })   
+  })
+  return data;
 }
 
 function replaceReplacements(theLine, replacements){
