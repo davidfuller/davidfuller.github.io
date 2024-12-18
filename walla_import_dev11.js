@@ -639,6 +639,7 @@ async function displayWallaIndexes(wallaIndexes){
     await excel.sync();
     let num = 0;
     let results = []
+    console.log('wallaIndexes', wallaIndexes)
     for (i = 0; i < wallaIndexes.length; i = i + 3){
       num += 1;
       let myRow = [num, wallaIndexes[i].rowIndex, wallaIndexes[i + 1].rowIndex, wallaIndexes[i + 2].rowIndex, '']
