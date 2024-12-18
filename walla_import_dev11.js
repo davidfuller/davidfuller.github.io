@@ -168,8 +168,8 @@ function splitLine(theLine){
       theDescription = '';
       lineRange = 'whole scene'
     } else if ((lineNo > 0) && (wholeScene == -1)){
-      theDescription = '';
-      lineRange = theRest;
+      theDescription = lastBit;
+      lineRange = thePosition;
     } else {
       theDescription = lastBit.trim();
       lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
