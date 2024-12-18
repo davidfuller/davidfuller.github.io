@@ -741,14 +741,15 @@ async function completeProcess(){
   progressPanel.style.display = 'block';
   let textArea = tag('walla-text');
   textArea.value = 'Starting \n';
-  const startRow = 0;
-  const endRow = 30;
+  const startRow = 31;
+  const endRow = 35;
   
+  /*
   textArea.value += 'Clearing Walla from Script \n';
   await jade_modules.operations.clearWalla();
   textArea.value += 'Clearing Walla Blocks from Script \n';
   await jade_modules.operations.deleteAllWallaBlocks(false);
-  /*
+  
   textArea.value += 'Getting Walla Data \n';
   await getTheWallaSourceIndecies();
   textArea.value += 'Getting Scene Data \n';
