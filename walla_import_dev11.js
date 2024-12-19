@@ -1015,6 +1015,6 @@ async function insertIntoMainScript(details){
 async function doWallaScripting(){
   const indexes = await getWallaScriptingRowIndexes();
   const details = await wallaScriptDetails(indexes);
-  await insertIntoMainScript(details);
+  await insertIntoMainScript(details.nextCue);
 }
 
