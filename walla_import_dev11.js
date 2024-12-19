@@ -986,8 +986,7 @@ async function wallaScriptDetails(indexes){
       let script = range[i].values[0][scriptValueIndex];
       let nextCue = -1;
       for (let j = 1; j < lookAhead; j++ ){
-        let test = parseInt(range[i].values[j][valueIndexes.cue])
-        console.log(j, test)
+        let test = parseInt(range[i].values[j][0])
         if (!isNaN(test)){
           nextCue = test;
           break
