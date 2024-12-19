@@ -1005,7 +1005,7 @@ async function wallaScriptDetails(indexes){
 
 async function insertIntoMainScript(details){
   const start = 0
-  const end = 1;
+  const end = 5;
   for (let i = start; i < end; i++){
     let rowIndex = await jade_modules.operations.findCueRowIndex(details[i].nextCue)
     console.log('i', i, 'rowIndex', rowIndex);
