@@ -6987,9 +6987,24 @@ async function formatWallaScripted(rowIndex){
 }
 
 async function findAllWallaScripted(){
+  let indexes = []
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const usedRange = scriptSheet.getUsedRange();
     usedRange.load('rowIndex, rowCount');
+    await excel.sync()
+    const typeCodeRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, typeCodeIndex, usedRange.rowCount, 1);
+    typeCodeRange.load('rowIndex, values');
+    await excel.sync()
+    let typeCodeValues = typeCodeRange.values.map(x => x[0]);
+    
+    for (let i = 1; i < typeCodeValues.length; i++){
+      if (typeCodeValues[i] == myTypes.wallaScripted){
+        indexes.push(i + typeCodeRange.rowIndex);
+      }
+    }
   })
+  console.log('indexes', indexes);
+  return indexes;
 }
+
