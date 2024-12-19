@@ -35,6 +35,15 @@ const wallaTypes = {
   general: 'general'
 }
 
+const wallaScriptColumns = {
+  cue: 4,
+  character: 6,
+  presentCharacters: 7,
+  stageDirection: 8,
+  ukScript: await getWallaSourceWallaColumn(),
+  columnCount: 6
+}
+
 const wallaScriptingNames = ['WALLA SCRIPTED', 'WALLA SCRIPTED LINES', 'WALLA SCRIPTED LINES - SCOLDING CARRYING ON', 'WALLA SCRIPTING', 'WALLA SCRIPTING', 'WALLA SCRIPTING - lines to lead into the scripted argument']
 
 const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Named Characters - For reaction sounds and walla:', 'Named Characters Reactions and Walla', 'Named character walla', 'Named - Character & Reactions', 
@@ -954,7 +963,24 @@ async function getWallaScriptingRowIndexes(){
   return indexes;
 }
 
+async function wallaScriptDetails(indexes){
+  let details = [];
+  await Excel.run(async (excel) => {
+    const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
+    let range = []
+    for (let i = 0; i < indexes.length; i++){
+      range[i] = sourceSheet.getRangeByIndexes(indexes[i], wallaScriptColumns.cue, 20, wallaScriptColumns.columnCount)
+      range[i].load('values');
+    }
+    await excel.sync();
+    for (let i = 0; i < indexes.length; i++){
+      console.log('rangeValues', i, range[i].values)
+    }
+  })
+}
+
 async function doWallaScripting(){
-  const indexes = getWallaScriptingRowIndexes();
+  const indexes = await getWallaScriptingRowIndexes();
+  const details = await wallaScriptDetails();
 }
 
