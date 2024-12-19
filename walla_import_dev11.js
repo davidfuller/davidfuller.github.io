@@ -40,7 +40,6 @@ const wallaScriptColumns = {
   character: 6,
   presentCharacters: 7,
   stageDirection: 8,
-  ukScript: await getWallaSourceWallaColumn(),
   columnCount: 6
 }
 
