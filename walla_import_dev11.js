@@ -964,6 +964,12 @@ async function getWallaScriptingRowIndexes(){
 
 async function wallaScriptDetails(indexes){
   let details = [];
+  let valueIndexes = {
+    character: wallaScriptColumns.character - wallaScriptColumns.cue,
+    presentCharacters: wallaScriptColumns.presentCharacters - wallaScriptColumns.cue,
+    stageDirection: wallaScriptColumns.stageDirection - wallaScriptColumns.cue,
+  }
+  let scriptValueIndex = await getWallaSourceWallaColumn() - wallaScriptColumns.cue
   await Excel.run(async (excel) => {
     const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
     let range = []
@@ -973,8 +979,18 @@ async function wallaScriptDetails(indexes){
     }
     await excel.sync();
     for (let i = 0; i < indexes.length; i++){
-      console.log('rangeValues', i, range[i].values)
+      let character = range[i].values[0][valueIndexes.character];
+      let presentCharacters = range[i].values[0][valueIndexes.presentCharacters];
+      let stageDirection  = range[i].values[0][valueIndexes.stageDirection];
+      let script = range[i].values[0][scriptValueIndex];
+      details.push({
+        character: character,
+        presentCharacters: presentCharacters,
+        stageDirection: stageDirection,
+        script: script
+      })
     }
+    console.log('details', details)
   })
 }
 
