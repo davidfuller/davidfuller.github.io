@@ -6938,7 +6938,7 @@ async function findCueRowIndex(cue){
   let rowIndex = -1;
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    const usedRange = scriptSheet.getUsedRange;
+    const usedRange = scriptSheet.getUsedRange();
     usedRange.load('rowIndex, rowCount');
     await excel.sync();
     const cueRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, cueIndex, usedRange.rowCount, 1);
