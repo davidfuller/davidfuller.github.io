@@ -980,6 +980,6 @@ async function wallaScriptDetails(indexes){
 
 async function doWallaScripting(){
   const indexes = await getWallaScriptingRowIndexes();
-  const details = await wallaScriptDetails();
+  const details = await wallaScriptDetails(indexes);
 }
 
