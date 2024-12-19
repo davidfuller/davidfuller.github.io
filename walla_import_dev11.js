@@ -964,6 +964,7 @@ async function getWallaScriptingRowIndexes(){
 
 async function wallaScriptDetails(indexes){
   let details = [];
+  const lookAhead = 20;
   let valueIndexes = {
     character: wallaScriptColumns.character - wallaScriptColumns.cue,
     presentCharacters: wallaScriptColumns.presentCharacters - wallaScriptColumns.cue,
@@ -974,7 +975,7 @@ async function wallaScriptDetails(indexes){
     const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
     let range = []
     for (let i = 0; i < indexes.length; i++){
-      range[i] = sourceSheet.getRangeByIndexes(indexes[i], wallaScriptColumns.cue, 20, wallaScriptColumns.columnCount)
+      range[i] = sourceSheet.getRangeByIndexes(indexes[i], wallaScriptColumns.cue, lookAhead, wallaScriptColumns.columnCount)
       range[i].load('values');
     }
     await excel.sync();
@@ -983,11 +984,20 @@ async function wallaScriptDetails(indexes){
       let presentCharacters = range[i].values[0][valueIndexes.presentCharacters];
       let stageDirection  = range[i].values[0][valueIndexes.stageDirection];
       let script = range[i].values[0][scriptValueIndex];
+      let nextCue = -1;
+      for (let j = 1; j < lookAhead; j++ ){
+        let test = parseInt(range[i].values[j][valueIndexes.cue])
+        if (!isNaN(test)){
+          nextCue = test;
+          break
+        }
+      }
       details.push({
         character: character,
         presentCharacters: presentCharacters,
         stageDirection: stageDirection,
-        script: script
+        script: script,
+        nextCue: nextCue
       })
     }
     console.log('details', details)
