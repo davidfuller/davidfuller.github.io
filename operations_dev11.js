@@ -6952,3 +6952,16 @@ async function findCueRowIndex(cue){
   })
   return rowIndex;
 }
+
+async function insertWallaScript(rowIndex, details){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const columnCount = ukScriptIndex - characterIndex + 1;
+    const mainDataRange = scriptSheet.getRangeByIndexes(rowIndex, characterIndex, 1, columnCount);
+    const typeCodeRange = scriptSheet.getRangeByIndexes(rowIndex, typeCodeIndex, 1, 1);
+    let mainDataArray = [details.character, details.presentCharacters, details.stageDirection, details.script];
+    mainDataRange.values = [mainDataArray];
+    typeCodeRange.values = [[myTypes.wallaScripted]]
+    await excel.sync();
+  })
+}
