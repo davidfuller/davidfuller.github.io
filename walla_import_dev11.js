@@ -1020,4 +1020,6 @@ async function doWallaScripting(){
   const details = await wallaScriptDetails(indexes);
   await insertIntoMainScript(details);
 }
-
+async function deleteAllWallaScripting(){
+  let indexes = await jade_modules.operations.findAllWallaScripted();
+}

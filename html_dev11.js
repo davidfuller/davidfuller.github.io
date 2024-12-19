@@ -333,7 +333,8 @@ async function mainHTML(){
       <label id="walla-progress-label">Walla Progress</label>
       <textarea id="walla-text" cols="40" rows="8"></textarea>
     </div>
-    <button id="btnWallaScripting" class="walla-button" onclick="jade_modules.wallaimport.doWallaScripting()">Do Walla Scripting</button><br>
+    <button id="btnWallaScripting" class="walla-button" onclick="jade_modules.wallaimport.doWallaScripting()">Do Walla Scripting</button>
+    <button id="btnDeleteAllWallaScripting" class="walla-button" onclick="jade_modules.wallaimport.deleteAllWallaScripting()">Delete All Walla Scripting</button><br>
   </div>
 </div>
 <div id="location-page">
