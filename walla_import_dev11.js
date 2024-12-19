@@ -1011,6 +1011,7 @@ async function insertIntoMainScript(details){
     console.log('i', i, 'rowIndex', rowIndex);
     let newIndex = await jade_modules.operations.insertRowV2(rowIndex, false, true)
     console.log('newIndex', newIndex);
+    await jade_modules.operations.insertWallaScript(newIndex, details[i]);
   }
 }
 
