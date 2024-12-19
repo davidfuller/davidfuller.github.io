@@ -951,14 +951,12 @@ async function getWallaScriptingRowIndexes(){
     scriptRange.load('rowIndex, values');
     await excel.sync();
     const scriptValues = scriptRange.values.map(x => x[0])
-    console.log('scriptValues', scriptValues);
     for (let i = 0; i < scriptValues.length; i++){
       if (isWallaScripted(scriptValues[i])){
         indexes.push(i + scriptRange.rowIndex);
       }
     }
   })
-  console.log('indexes', indexes);
   return indexes;
 }
 
@@ -1002,10 +1000,21 @@ async function wallaScriptDetails(indexes){
     }
     console.log('details', details)
   })
+  return details;
+}
+
+async function insertIntoMainScript(details){
+  const start = 0
+  const end = 1;
+  for (let i = start; i < end; i++){
+    let rowIndex = await jade_modules.operations.findCueRowIndex(details.nextCue)
+    console.log('i', i, 'rowIndex', rowIndex);
+  }
 }
 
 async function doWallaScripting(){
   const indexes = await getWallaScriptingRowIndexes();
   const details = await wallaScriptDetails(indexes);
+
 }
 
