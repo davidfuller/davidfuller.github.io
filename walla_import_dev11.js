@@ -1007,7 +1007,7 @@ async function insertIntoMainScript(details){
   const start = 0
   const end = 1;
   for (let i = start; i < end; i++){
-    let rowIndex = await jade_modules.operations.findCueRowIndex(details.nextCue)
+    let rowIndex = await jade_modules.operations.findCueRowIndex(details[i].nextCue)
     console.log('i', i, 'rowIndex', rowIndex);
   }
 }
@@ -1015,6 +1015,6 @@ async function insertIntoMainScript(details){
 async function doWallaScripting(){
   const indexes = await getWallaScriptingRowIndexes();
   const details = await wallaScriptDetails(indexes);
-  await insertIntoMainScript(details.nextCue);
+  await insertIntoMainScript(details);
 }
 
