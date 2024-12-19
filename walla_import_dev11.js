@@ -951,7 +951,7 @@ async function getWallaScriptingRowIndexes(){
     }
   })
   console.log('indexes', indexes);
-  return indexes()
+  return indexes;
 }
 
 async function doWallaScripting(){
