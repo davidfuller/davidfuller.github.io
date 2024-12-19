@@ -6944,6 +6944,7 @@ async function findCueRowIndex(cue){
     const cueRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, cueIndex, usedRange.rowCount, 1);
     cueRange.load('values, rowIndex');
     await excel.sync()
+    console.log('cue', cue, 'cueRange.values', cueRange.values);
     let index = cueRange.values.findIndex(a => a[0] == cue);
     if (index != -1){
       rowIndex = index + cueRange.rowIndex
