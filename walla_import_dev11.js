@@ -35,6 +35,7 @@ const wallaTypes = {
   general: 'general'
 }
 
+const wallaScriptingNames = ['WALLA SCRIPTED', 'WALLA SCRIPTED LINES', 'WALLA SCRIPTED LINES - SCOLDING CARRYING ON', 'WALLA SCRIPTING', 'WALLA SCRIPTING', 'WALLA SCRIPTING - lines to lead into the scripted argument']
 
 const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Named Characters - For reaction sounds and walla:', 'Named Characters Reactions and Walla', 'Named character walla', 'Named - Character & Reactions', 
   'Named character walla:', 'Named character walla', 'Named Characters Reactions and Walla:']
@@ -925,3 +926,35 @@ function replaceReplacements(theLine, replacements){
   }
   return result
 }
+
+function isWallaScripted(theText){
+  return wallaScriptingNames.includes(theText)
+}
+
+async function getWallaScriptingRowIndexes(){
+  let indexes = []
+  let scriptColumnIndex = await getWallaSourceWallaColumn();
+  await Excel.run(async (excel) => {
+    const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
+    const used = sourceSheet.getUsedRange();
+    used.load('rowIndex, rowCount');
+    await excel.sync();
+    const scriptRange = sourceSheet.getRangeByIndexes(used.rowIndex, scriptColumnIndex, used.rowCount, 1);
+    scriptRange.load('rowIndex, values');
+    await excel.sync();
+    const scriptValues = scriptRange.values.map(x => x[0])
+    console.log('scriptValues', scriptValues);
+    for (let i = 0; i < scriptValues.length; i++){
+      if (isWallaScripted(scriptValues[i])){
+        indexes.push(i + scriptRange.rowIndex);
+      }
+    }
+  })
+  console.log('indexes', indexes);
+  return indexes()
+}
+
+async function doWallaScripting(){
+  const indexes = getWallaScriptingRowIndexes();
+}
+
