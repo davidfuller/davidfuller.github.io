@@ -936,7 +936,7 @@ function replaceReplacements(theLine, replacements){
 }
 
 function isWallaScripted(theText){
-  return wallaScriptingNames.includes(theText)
+  return wallaScriptingNames.includes(theText.trim())
 }
 
 async function getWallaScriptingRowIndexes(){
@@ -1009,6 +1009,8 @@ async function insertIntoMainScript(details){
   for (let i = start; i < end; i++){
     let rowIndex = await jade_modules.operations.findCueRowIndex(details[i].nextCue)
     console.log('i', i, 'rowIndex', rowIndex);
+    let newIndex = await jade_modules.operations.insertRowV2(rowIndex, false, true)
+    console.log('newIndex', newIndex);
   }
 }
 
