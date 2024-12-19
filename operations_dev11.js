@@ -6963,5 +6963,25 @@ async function insertWallaScript(rowIndex, details){
     mainDataRange.values = [mainDataArray];
     typeCodeRange.values = [[myTypes.wallaScripted]]
     await excel.sync();
+    await formatWallaScripted(rowIndex);
+  })
+}
+async function formatWallaScripted(rowIndex){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const theRange = scriptSheet.getRangeByIndexes(rowIndex, cueIndex, 1, usScriptIndex - cueIndex + 1);
+    theRange.format.font.name = 'Courier New';
+    theRange.format.font.size = 12;
+    theRange.format.fill.color = myFormats.green;
+    theRange.format.horizontalAlignment = 'Left';
+    theRange.format.verticalAlignment = 'Top';
+    let myBorders = theRange.format.borders;
+    doBorder(myBorders, 'EdgeTop');
+    doBorder(myBorders, 'EdgeBottom');
+    doBorder(myBorders, 'EdgeLeft');
+    doBorder(myBorders, 'EdgeRight');
+    doBorder(myBorders, 'InsideHorizontal');
+    doBorder(myBorders, 'InsideVertical');
+    await excel.sync()
   })
 }
