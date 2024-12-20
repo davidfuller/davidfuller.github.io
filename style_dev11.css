@@ -874,11 +874,9 @@ label {
 .take-button {
   width: 110px;
 }
-
 #btnAutoRowHeight, #btnIncreaseRowHeight, #btnDecreaseRowHeight {
   width: 140px;
 }
-
 #walla-progress {
   display: none;
   width: 80%;
@@ -887,7 +885,7 @@ label {
   background-color: #f2ceef;
 }
 
-#walla-start, #walla-end{
+#walla-start, #walla-end, #walla-block-start, #walla-block-end{
   width: 50px;
   background-color: #f2ceef;
   color: #481343;

@@ -889,7 +889,7 @@ label {
   background-color: #f2ceef;
 }
 
-#walla-start, #walla-end{
+#walla-start, #walla-end, #walla-block-start, #walla-block-end{
   width: 50px;
   background-color: #f2ceef;
   color: #481343;
