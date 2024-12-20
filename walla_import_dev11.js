@@ -1022,5 +1022,5 @@ async function doWallaScripting(){
 }
 async function deleteAllWallaScripting(){
   let indexes = await jade_modules.operations.findAllWallaScripted();
-  await deleteRowsFromIndexes(indexes, true);
+  await jade_modules.operations.deleteRowsFromIndexes(indexes, true);
 }
