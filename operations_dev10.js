@@ -2,8 +2,9 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '10.41';
+const codeVersion = '10.42';
 //10.41 Added protection to Add Take
+//10.42 On add takes stopped issues with text starting with +,-,=
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -6218,11 +6219,11 @@ async function applyTakeDetails(country){
       let myStudios = [];
       let myEngineers = [];
       for (let j = 0; j < rowDetails[i].rowCount; j++){
-        myTakes[j] = [takesData.takesText];
-        myDates[j] = [takesData.dateText];
-        myMarkUps[j] = [takesData.markupText];
-        myStudios[j] = [takesData.studioText];
-        myEngineers[j] = [takesData.engineerText];
+        myTakes[j] = [filterExcelStart(takesData.takesText)];
+        myDates[j] = [filterExcelStart(takesData.dateText)];
+        myMarkUps[j] = [filterExcelStart(takesData.markupText)];
+        myStudios[j] = [filterExcelStart(takesData.studioText)];
+        myEngineers[j] = [filterExcelStart(takesData.engineerText)];
       }
       takesRanges[i].values = myTakes;
       dateRanges[i].values = myDates;
@@ -6236,6 +6237,17 @@ async function applyTakeDetails(country){
   if (isProtected){
     await lockColumns();
   }
+}
+
+function filterExcelStart(theText){
+  //if the text starts with '+', '-', '=' adds a ' at the start of the text
+  const testCharacters = ['+', '-', '='];
+  for (let char of testCharacters){
+    if (theText.startsWith(char)){
+      return "'" + theText
+    }
+  }
+  return theText;
 }
 
 async function clearTakeDetails(country){
