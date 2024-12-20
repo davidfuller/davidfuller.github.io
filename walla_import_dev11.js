@@ -915,7 +915,7 @@ async function doTheWallaBlocks(){
   let sceneEnd = parseInt(tag('walla-block-end').value);
   if ((!isNaN(sceneStart)) && (!isNaN(sceneEnd))){
     for (let sceneNo = sceneStart; sceneNo < sceneEnd; sceneNo++){
-      textArea.value = baseText + 'Doing scene: ' + (i + 1) + ' \n';
+      textArea.value = baseText + 'Doing scene: ' + sceneNo + ' \n';
       await jade_modules.operations.getSceneWallaInformation(1, sceneNo);
       await jade_modules.operations.getSceneWallaInformation(2, sceneNo);
       await jade_modules.operations.getSceneWallaInformation(3, sceneNo);
