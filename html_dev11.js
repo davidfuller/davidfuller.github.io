@@ -336,6 +336,10 @@ async function mainHTML(){
     </div>
     <button id="btnWallaScripting" class="walla-button" onclick="jade_modules.wallaimport.doWallaScripting()">Do Walla Scripting</button>
     <button id="btnDeleteAllWallaScripting" class="walla-button" onclick="jade_modules.wallaimport.deleteAllWallaScripting()">Delete All Walla Scripting</button><br>
+    <span id='walla-block-min-and-max'></span><br/>
+    <button id="btnWallaBlocks" class="walla-button" onclick="jade_modules.wallaimport.doTheWallaBlocks()">Do The Walla Blocks</button>
+    <label for="walla-block-start">Start</label><input type="text" id="walla-block-start" name="walla-block-start">
+    <label for="walla-block-end">End</label><input type="text" id="walla-block-end" name="walla-block-end">
   </div>
 </div>
 <div id="location-page">

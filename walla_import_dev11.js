@@ -901,6 +901,23 @@ async function putDataInScript(startRow, endRow){
   }) 
 }
 
+async function doTheWallaBlocks(){
+  let textArea = tag('walla-text');
+  textArea.style.display = 'block'
+  let baseText = textArea.value
+  let sceneStart = parseInt(tag('walla-block-start').value);
+  let sceneEnd = parseInt(tag('walla-block-end').value);
+  if ((!isNaN(sceneStart)) && (!isNaN(sceneEnd))){
+    for (let sceneNo = sceneStart; sceneNo < sceneEnd; sceneNo++){
+      textArea.value = baseText + 'Doing scene: ' + (i + 1) + ' \n';
+      await jade_modules.operations.getSceneWallaInformation(1, sceneNo);
+      await jade_modules.operations.getSceneWallaInformation(2, sceneNo);
+      await jade_modules.operations.getSceneWallaInformation(3, sceneNo);
+    }
+  }
+  textArea.value += 'Done!';
+}
+
 async function doTheRowIndex(theRowIndex, sceneNo){
   let sourceText = await loadTextBox(theRowIndex);
   let details = await parseSourceText(sourceText);

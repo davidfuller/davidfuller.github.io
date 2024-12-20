@@ -522,7 +522,7 @@ label {
   transform: rotate(45deg);
 }
 
-#min-and-max, #min-and-max-lineNo, #min-and-max-chapter, #add-min-and-max-chapter, .jump-label {
+#min-and-max, #min-and-max-lineNo, #min-and-max-chapter, #add-min-and-max-chapter, .jump-label, #walla-block-min-and-max {
   font-size: 13px;
 }
 

@@ -2420,6 +2420,8 @@ async function displayMinAndMax(){
   const chapterMinAndMax = await getChapterMaxAndMin();
   let chapterDisplay = tag('min-and-max-chapter');
   chapterDisplay.innerText = "(" + chapterMinAndMax.min + ".." + chapterMinAndMax.max + ")";
+  let wallaMinAndMax = tag('walla-block-min-and-max');
+  wallaMinAndMax.innerText = 'First scene: ' + minAndMax.min + ', last scene: ' + minAndMax.max;
 }
 
 async function fillSceneNumber(startRow, endRow){
