@@ -2449,7 +2449,7 @@ async function fillSceneNumber(startRow, endRow){
     borderRange.load('values');
     lineNoRange.load('values')
     await excel.sync();
-    console.log(lineNoRange.values)
+    console.log('lineNoRange.values' + lineNoRange.values)
     
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
@@ -2468,7 +2468,7 @@ async function fillSceneNumber(startRow, endRow){
       await excel.sync();
       console.log(i, 'of', borderValues.length)
     }
-
+    console.log('lineNoValues', lineNoValues)
     lineNoRange.values = lineNoValues;
     await excel.sync();
   })
