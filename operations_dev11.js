@@ -2444,8 +2444,8 @@ async function fillSceneNumber(startRow, endRow){
       endRow = lastDataRow;
     }
 
-    let borderRange = scriptSheet.getRange(sceneBordersColumn + startRow + ":" +  sceneBordersColumn + endRow);
-    let lineNoRange = scriptSheet.getRange(sceneLineNumberRangeColumn + startRow + ':' + sceneLineNumberRangeColumn + endRow);
+    let borderRange = scriptSheet.getRange(sceneBordersColumn + startRow + ":" +  sceneBordersColumn + 1000);
+    let lineNoRange = scriptSheet.getRange(sceneLineNumberRangeColumn + startRow + ':' + sceneLineNumberRangeColumn + 1000);
     borderRange.load('values');
     lineNoRange.load('values')
     await excel.sync();
@@ -2465,8 +2465,6 @@ async function fillSceneNumber(startRow, endRow){
       } else if(borderValues[i] == ''){
         lineNoValues[i][0] = '';
       }
-      await excel.sync();
-      console.log(i, 'of', borderValues.length)
     }
     console.log('lineNoValues', lineNoValues)
     lineNoRange.values = lineNoValues;
