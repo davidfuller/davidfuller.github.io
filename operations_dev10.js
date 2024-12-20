@@ -4,7 +4,7 @@ function auto_exec(){
 let doingTake = false;
 const codeVersion = '10.42';
 //10.41 Added protection to Add Take
-//10.42 On add takes stopped issues with text starting with +,-,=
+//10.42 On add takes stopped issues with text starting with +,-,= and stop add takes in column heading
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -6208,28 +6208,30 @@ async function applyTakeDetails(country){
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     for (let i = 0; i < rowDetails.length; i++){
-      takesRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.takesIndex, rowDetails[i].rowCount, 1);
-      dateRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.dateRecordedIndex, rowDetails[i].rowCount, 1);
-      markUpRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.markUpIndex, rowDetails[i].rowCount, 1);
-      studioRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.studioIndex, rowDetails[i].rowCount, 1);
-      engineerRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.engineerIndex, rowDetails[i].rowCount, 1);
-      let myTakes = [];
-      let myDates = [];
-      let myMarkUps = [];
-      let myStudios = [];
-      let myEngineers = [];
-      for (let j = 0; j < rowDetails[i].rowCount; j++){
-        myTakes[j] = [filterExcelStart(takesData.takesText)];
-        myDates[j] = [filterExcelStart(takesData.dateText)];
-        myMarkUps[j] = [filterExcelStart(takesData.markupText)];
-        myStudios[j] = [filterExcelStart(takesData.studioText)];
-        myEngineers[j] = [filterExcelStart(takesData.engineerText)];
+      if (rowDetails[i].rowIndex > 1){
+        takesRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.takesIndex, rowDetails[i].rowCount, 1);
+        dateRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.dateRecordedIndex, rowDetails[i].rowCount, 1);
+        markUpRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.markUpIndex, rowDetails[i].rowCount, 1);
+        studioRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.studioIndex, rowDetails[i].rowCount, 1);
+        engineerRanges[i] = scriptSheet.getRangeByIndexes(rowDetails[i].rowIndex, cols.engineerIndex, rowDetails[i].rowCount, 1);
+        let myTakes = [];
+        let myDates = [];
+        let myMarkUps = [];
+        let myStudios = [];
+        let myEngineers = [];
+        for (let j = 0; j < rowDetails[i].rowCount; j++){
+          myTakes[j] = [filterExcelStart(takesData.takesText)];
+          myDates[j] = [filterExcelStart(takesData.dateText)];
+          myMarkUps[j] = [filterExcelStart(takesData.markupText)];
+          myStudios[j] = [filterExcelStart(takesData.studioText)];
+          myEngineers[j] = [filterExcelStart(takesData.engineerText)];
+        }
+        takesRanges[i].values = myTakes;
+        dateRanges[i].values = myDates;
+        markUpRanges[i].values = myMarkUps;
+        studioRanges[i].values = myStudios;
+        engineerRanges[i].values = myEngineers;
       }
-      takesRanges[i].values = myTakes;
-      dateRanges[i].values = myDates;
-      markUpRanges[i].values = myMarkUps;
-      studioRanges[i].values = myStudios;
-      engineerRanges[i].values = myEngineers;
     }
     await excel.sync();
   })
