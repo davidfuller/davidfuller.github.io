@@ -2465,6 +2465,8 @@ async function fillSceneNumber(startRow, endRow){
       } else if(borderValues[i] == ''){
         lineNoValues[i][0] = '';
       }
+      await excel.sync();
+      console.log(i, 'of', borderValues.length)
     }
 
     lineNoRange.values = lineNoValues;
