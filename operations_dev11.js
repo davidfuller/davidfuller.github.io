@@ -2,7 +2,7 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '11.09';
+const codeVersion = '11.10';
 //11.02 isProtected on applyTakeDetails
 //11.03 31-35 in walla and remove the clears
 //11.04 30-35 in walla
@@ -11,6 +11,7 @@ const codeVersion = '11.09';
 //11.07 wallacolumn source sheet based on book number
 // 11.08 Replacements
 //11.09 On add takes stopped issues with text starting with +,-,= and stop add takes in column heading
+//11.10 Walla cues include script
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -4399,7 +4400,7 @@ async function calculateWallaCues(){
 
       console.log('currentScripted', currentScripted, 'scriptedFullyDone', scriptedFullyDone)
       while ((scriptedIndexes[currentScripted] <= rowsToDo[i].index) && (!scriptedFullyDone)){
-        scriptedCells[currentScripted] = scriptSheet.getRangeByIndexes(scriptedIndexes[currentScripted], CueIndex, 1, 1);
+        scriptedCells[currentScripted] = scriptSheet.getRangeByIndexes(scriptedIndexes[currentScripted], cueIndex, 1, 1);
         scriptedCells[currentScripted].values = [[wallaCue]]
         currentScripted += 1
         if (currentScripted >= scriptedIndexes.length){
