@@ -4205,7 +4205,7 @@ async function calculateWallaCues(){
     await excel.sync();
 
     let wallaNumber = await getFirstWalla();
-    let theCells = []
+    let theCells = [];
     for (let i = 0; i < rowsToDo.length; i++){
       wallaNumber += 1
       wallaCue = "W" + String(wallaNumber).padStart(5, 0);
