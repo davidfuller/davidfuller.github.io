@@ -2444,31 +2444,47 @@ async function fillSceneNumber(startRow, endRow){
       endRow = lastDataRow;
     }
 
-    let borderRange = scriptSheet.getRange(sceneBordersColumn + startRow + ":" +  sceneBordersColumn + 1000);
-    let lineNoRange = scriptSheet.getRange(sceneLineNumberRangeColumn + startRow + ':' + sceneLineNumberRangeColumn + 1000);
-    borderRange.load('values');
-    lineNoRange.load('values')
-    await excel.sync();
-    console.log('lineNoRange.values' + lineNoRange.values)
+    let increment = 1000;
+    let myStart = startRow
+    let myEnd = startRow + increment
+    notFinished = true;
+    while (notFinished){
+      if (myEnd >= endRow){
+        notFinished = false;
+      }
+      console.log('myStart', myStart, 'myEnd', myEnd, 'notFinished', notFinished)
+      let borderRange = scriptSheet.getRange(sceneBordersColumn + myStart + ":" +  sceneBordersColumn + myEnd);
+      let lineNoRange = scriptSheet.getRange(sceneLineNumberRangeColumn + myStart + ':' + sceneLineNumberRangeColumn + myEnd);
+      borderRange.load('values');
+      lineNoRange.load('values, address');
+      await excel.sync();
+      console.log('lineNoRange.values' + lineNoRange.values);
+      console.log('lineRange address', lineNoRange.address);
     
-    app.suspendScreenUpdatingUntilNextSync();
-    app.suspendApiCalculationUntilNextSync();
-    let borderValues = borderRange.values.map(x => x[0]);
-    let lineNoValues = lineNoRange.values
+      app.suspendScreenUpdatingUntilNextSync();
+      app.suspendApiCalculationUntilNextSync();
+      let borderValues = borderRange.values.map(x => x[0]);
+      let lineNoValues = lineNoRange.values
 
-    let currentLineNo = '';
-    for (let i = 0; i < borderValues.length; i++){
-      if (borderValues[i] == 'Original'){
-        currentLineNo = lineNoValues[i][0];
-      } else if (borderValues[i] == 'Copy'){
-        lineNoValues[i][0] = currentLineNo;
-      } else if(borderValues[i] == ''){
-        lineNoValues[i][0] = '';
+      let currentLineNo = '';
+      for (let i = 0; i < borderValues.length; i++){
+        if (borderValues[i] == 'Original'){
+          currentLineNo = lineNoValues[i][0];
+        } else if (borderValues[i] == 'Copy'){
+          lineNoValues[i][0] = currentLineNo;
+        } else if(borderValues[i] == ''){
+          lineNoValues[i][0] = '';
+        }
+      }
+      console.log('lineNoValues', lineNoValues)
+      lineNoRange.values = lineNoValues;
+      await excel.sync();
+      myStart = myStart + increment + 1;
+      myEnd = myStart + increment;
+      if (myEnd > endRow){
+        myEnd = endRow;
       }
     }
-    console.log('lineNoValues', lineNoValues)
-    lineNoRange.values = lineNoValues;
-    await excel.sync();
   })
   waitLabel.style.display = 'none';
 }
