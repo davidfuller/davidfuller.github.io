@@ -29,9 +29,9 @@ const sceneBlockRows = 4;
 const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Named Characters - For reaction sounds and walla:', 'Named Characters Reactions and Walla', 'Named character walla', 'Named - Character & Reactions', 
   'Named character walla:', 'Named character walla', 'Named Characters Reactions and Walla:']
 let displayWallaName = 'Named Characters Reactions and Walla:'
-const unnamedCharacters = ['Un-named Character Walla','Un-named Character Walla:'];
+const unnamedCharacters = ['Un-named Character Walla','Un-named Character Walla:', 'Un-named Character Walla: None'];
 let displayWallaUnNamed = 'Un-named Character Walla:';
-const generalWalla = ['General Walla', 'General Walla:']
+const generalWalla = ['General Walla', 'General Walla:', 'General Walla: None']
 let displayGeneralWalla = 'General Walla:';
 const actorScriptName = 'Actor Script';
 const showTakesOffset = 20;
@@ -105,6 +105,12 @@ let screenColours = {
 let choiceType ={
   list: 'List Search',
   text: 'Text Search'
+}
+
+const wallaTypes = {
+  named: 'named',
+  unNamed: 'unNamed',
+  general: 'general'
 }
 
 async function showMain(){
@@ -4353,9 +4359,21 @@ async function calculateWallaCues(){
     for (let i = 0; i < wallaRange.values.length; i++){
       if (isNamedWalla(wallaRange.values[i][1])){
         rowIndex += 1;
-        rowsToDo[rowIndex] = i
+        rowsToDo[rowIndex] = {index: i, type: wallaTypes.named}
+      }
+      if (isUnamedWalla(wallaRange.values[i][1])){
+        rowIndex += 1;
+        rowsToDo[rowIndex] = {index: i, type: wallaTypes.unNamed}
+      }
+      if (isGeneralWalla(wallaRange.values[i][1])){
+        rowIndex += 1;
+        rowsToDo[rowIndex] = {index: i, type: wallaTypes.general}
       }
     }
+
+    let scriptedIndexes = await findAllWallaScripted();
+    console.log('walla scripted indexes', scriptedIndexes);
+
     console.log('Rows to do: ', rowsToDo);
     let wallaCueColumn = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaCueIndex, (lastDataRow - firstDataRow), 1);
     wallaCueColumn.clear("Contents")
@@ -4363,13 +4381,33 @@ async function calculateWallaCues(){
 
     let wallaNumber = await getFirstWalla();
     let theCells = [];
+    let scriptedCells = [];
     let myCounter = 0;
+    let currentScripted = 0;
     for (let i = 0; i < rowsToDo.length; i++){
       myCounter += 1;
       wallaNumber += 1
       wallaCue = "W" + String(wallaNumber).padStart(5, 0);
       console.log(wallaCue)
-      theCells[i] = scriptSheet.getRangeByIndexes(rowsToDo[i] + wallaRange.rowIndex, wallaCueIndex, 1, 1);
+
+      let scriptedFullyDone;
+      if (currentScripted < scriptedIndexes.length){
+        scriptedFullyDone = false;
+      } else {
+        scriptedFullyDone = true;
+      }
+
+      console.log('currentScripted', currentScripted, 'scriptedFullyDone', scriptedFullyDone)
+      while ((scriptedIndexes[currentScripted] <= rowsToDo[i].index) && (!scriptedFullyDone)){
+        scriptedCells[currentScripted] = scriptSheet.getRangeByIndexes(scriptedIndexes[currentScripted], CueIndex, 1, 1);
+        scriptedCells[currentScripted].values = [[wallaCue]]
+        currentScripted += 1
+        if (currentScripted >= scriptedIndexes.length){
+          scriptedFullyDone = true;
+        }
+      }
+
+      theCells[i] = scriptSheet.getRangeByIndexes(rowsToDo[i].index + wallaRange.rowIndex, wallaCueIndex, 1, 1);
       theCells[i].values = [[wallaCue]]
       if (myCounter > 100){
         await excel.sync();
