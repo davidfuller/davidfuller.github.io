@@ -575,7 +575,7 @@ label {
   padding: 10px;
 }
 
-#director-wait, #actor-wait, #scheduling-wait, #formula-wait, #scene-wait, #scene-add-wait, #load-message, #script-wait, #take-wait, #character-wait, #take-message, #resize-wait {
+#director-wait, #actor-wait, #scheduling-wait, #formula-wait, #scene-wait, #scene-add-wait, #load-message, #script-wait, #take-wait, #character-wait, #take-message, #resize-wait, #walla-cues-wait {
   display: none;
   font-size: 15px;
   margin-left: 5px;
