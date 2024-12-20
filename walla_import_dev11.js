@@ -909,7 +909,8 @@ async function putDataInScript(startRow, endRow){
 
 async function doTheWallaBlocks(){
   let textArea = tag('walla-text');
-  textArea.style.display = 'block'
+  let wallaProgress = tag('walla-progress')
+  wallaProgress.style.display = 'block'
   let baseText = textArea.value
   let sceneStart = parseInt(tag('walla-block-start').value);
   let sceneEnd = parseInt(tag('walla-block-end').value);
