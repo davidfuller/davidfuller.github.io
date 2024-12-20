@@ -1028,10 +1028,10 @@ async function wallaScriptDetails(indexes){
 
 async function insertIntoMainScript(details){
   const start = 0
-  const end = 5;
+  const end = details.length;
   for (let i = start; i < end; i++){
     let rowIndex = await jade_modules.operations.findCueRowIndex(details[i].nextCue)
-    console.log('i', i, 'rowIndex', rowIndex);
+    console.log('Walla Script', i, 'of', details.length, 'rowIndex', rowIndex);
     let newIndex = await jade_modules.operations.insertRowV2(rowIndex, false, true)
     console.log('newIndex', newIndex);
     await jade_modules.operations.insertWallaScript(newIndex, details[i], true);
@@ -1042,6 +1042,7 @@ async function doWallaScripting(){
   const indexes = await getWallaScriptingRowIndexes();
   const details = await wallaScriptDetails(indexes);
   await insertIntoMainScript(details);
+  console.log('Done');
 }
 async function deleteAllWallaScripting(){
   let indexes = await jade_modules.operations.findAllWallaScripted();
