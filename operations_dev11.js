@@ -7008,3 +7008,18 @@ async function findAllWallaScripted(){
   return indexes;
 }
 
+async function deleteRowsFromIndexes(theIndexes, doSelect){
+  await Excel.run(async function(excel){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let thisRow = [];
+    for (let i = 0 ; i < theIndexes.length; i++){
+      thisRow[i] = scriptSheet.getRangeByIndexes(theIndexes[i],1,1,1).getEntireRow();
+      if (doSelect){
+        thisRow[i].select();
+      }
+      await excel.sync();
+      thisRow[i].delete("Up");
+      await excel.sync();
+    }
+  })
+}
