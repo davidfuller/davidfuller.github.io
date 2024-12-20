@@ -9,11 +9,13 @@ const wallaImportName = 'Walla Import';
 const wallaSourceWallaColumn = [
   {
     book: 'Book 1',
-    column: 5
+    column: 5,
+    scriptColumn: 9
   },
   {
     book: 'Book 4',
-    column: 9
+    column: 9,
+    scriptColumn: 9
   }
 ]
 
@@ -601,12 +603,16 @@ function getDisplayWallaName(theType){
   }
 }
 
-async function getWallaSourceWallaColumn(){
+async function getWallaSourceWallaColumn(isScript){
   const book = await jade_modules.operations.getBook();
   let wallaColumn = wallaSourceUKScriptColumnIndex;
   for (let i = 0; i < wallaSourceWallaColumn.length; i++){
     if (wallaSourceWallaColumn[i].book == book){
-      wallaColumn = wallaSourceWallaColumn[i].column;
+      if (isScript){
+        wallaColumn = wallaSourceWallaColumn[i].scriptColumn;  
+      } else {
+        wallaColumn = wallaSourceWallaColumn[i].column;
+      }
       console.log('Got walla column', wallaColumn);
       break
     }
@@ -619,7 +625,7 @@ async function getTheWallaSourceIndecies(){
   let unNamed = 0;
   let general = 0;
   let isGood = true;
-  const wallaColumn = await getWallaSourceWallaColumn()
+  const wallaColumn = await getWallaSourceWallaColumn(false)
   await Excel.run(async (excel) => {
     const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
     const usedRange = sourceSheet.getUsedRange();
@@ -739,7 +745,7 @@ async function loadSelectedCellIntoTextBox(){
 }
 async function loadTextBox(rowIndex){
   let sourceText;
-  let wallaColumn = await getWallaSourceWallaColumn();
+  let wallaColumn = await getWallaSourceWallaColumn(false);
   const replacements = await wallaReplacementWords();
   await Excel.run(async (excel) => {
     if (!isNaN(parseInt(rowIndex))){
@@ -958,7 +964,7 @@ function isWallaScripted(theText){
 
 async function getWallaScriptingRowIndexes(){
   let indexes = []
-  let scriptColumnIndex = await getWallaSourceWallaColumn();
+  let scriptColumnIndex = await getWallaSourceWallaColumn(true);
   await Excel.run(async (excel) => {
     const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
     const used = sourceSheet.getUsedRange();
@@ -985,7 +991,7 @@ async function wallaScriptDetails(indexes){
     presentCharacters: wallaScriptColumns.presentCharacters - wallaScriptColumns.cue,
     stageDirection: wallaScriptColumns.stageDirection - wallaScriptColumns.cue,
   }
-  let scriptValueIndex = await getWallaSourceWallaColumn() - wallaScriptColumns.cue
+  let scriptValueIndex = await getWallaSourceWallaColumn(true) - wallaScriptColumns.cue
   await Excel.run(async (excel) => {
     const sourceSheet = excel.workbook.worksheets.getItem(wallaSourceSheetName);
     let range = []
