@@ -4434,12 +4434,12 @@ async function calculateWallaCues(){
 
       theCells[i] = scriptSheet.getRangeByIndexes(rowsToDo[i].index + wallaRange.rowIndex, wallaCueIndex, 1, 1);
       theCells[i].values = [[wallaCue]]
-      if (myCounter > 100){
+      if (myCounter > 500){
         console.log('doing excel sync')
         let startTime = new Date().getTime();
         await excel.sync();
         let firstTime = new Date().getTime();
-        console.log('excel sync done', (firstTime - startTime) / 1000);
+        console.log('excel sync done', wallaCue, (firstTime - startTime) / 1000);
         myCounter = 0;
       }
     }
