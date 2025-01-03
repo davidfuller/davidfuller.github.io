@@ -346,7 +346,7 @@ async function doWallaTableV2(typeWalla, theResults, scene){
       await excel.sync();
       
       //console.log(wallaTable.address, wallaTable.rowCount);
-      //console.log(typeWalla, theResults);
+      console.log('typeWalla',typeWalla, 'theResults', theResults);
       let scenes = [];
       let anyNonScenes = false;
       for (let i = 0; i < theResults.length; i++){
@@ -357,7 +357,7 @@ async function doWallaTableV2(typeWalla, theResults, scene){
         } else {
           scenes.push(rowAndScene.scene)
         }
-        //console.log(i, 'line range', theResults[i].lineRange);
+        console.log(i, 'line range', theResults[i].lineRange);
         if (theResults[i].lineRange.trim() == ''){
           theResults[i].lineRange = 'whole scene';
         }
@@ -899,12 +899,13 @@ async function putDataInScript(startRow, endRow){
       await doTheRowIndex(unNamedRowIndex, sceneNo);
       let generalRowIndex = indexTableRange.values[i][3];
       await doTheRowIndex(generalRowIndex, sceneNo);
+      textArea.value += 'Calculating walla cues \n'
       await jade_modules.operations.calculateWallaCues();
-      textArea.value += 'Putting Named Character Walla row in script  \n'
+      textArea.value += 'Named Character Walla to script \n'
       await jade_modules.operations.getSceneWallaInformation(1, sceneNo);
-      textArea.value += 'Putting Un-named Character Walla row in script  \n'
+      textArea.value += 'Un-named Walla to script \n'
       await jade_modules.operations.getSceneWallaInformation(2, sceneNo);
-      textArea.value += 'Putting General Walla row in script  \n'
+      textArea.value += 'General Walla to script \n'
       await jade_modules.operations.getSceneWallaInformation(3, sceneNo);
     }
   }) 
