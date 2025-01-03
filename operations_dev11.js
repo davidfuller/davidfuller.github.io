@@ -4368,6 +4368,8 @@ async function calculateWallaCues(){
   let wait = tag('walla-cues-wait');
   wait.style.display = 'block';
   await Excel.run(async (excel) => {
+    excel.application.calculationMode = Excel.CalculationMode.manual;
+    await excel.sync();
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let numberColumns = numberOfPeoplePresentIndex - wallaLineRangeIndex + 1
     let wallaRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaLineRangeIndex, (lastDataRow - firstDataRow), numberColumns);
@@ -4443,6 +4445,7 @@ async function calculateWallaCues(){
         myCounter = 0;
       }
     }
+    excel.application.calculationMode = Excel.CalculationMode.automatic;
     await excel.sync();
   })
   if (isProtected){
@@ -7033,6 +7036,10 @@ async function findCueRowIndex(cue){
     }
   })
   return rowIndex;
+}
+
+async function findPreviousTypeLineRowIndex(rowIndex){
+  //
 }
 
 async function insertWallaScript(rowIndex, details, doSelect){
