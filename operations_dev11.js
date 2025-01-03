@@ -7219,7 +7219,7 @@ async function getLineNumberRanges(){
       for (let i = 0; i < details.length; i++){
         let index = cueRange.values.findLastIndex(a => a[0] == details[i].end);
         if (index != -1){
-          details[i].lastRowIndex = i + cueRange.rowIndex;
+          details[i].lastRowIndex = index + cueRange.rowIndex;
         }
       }
       console.log('details after lastRowIndex', details)
