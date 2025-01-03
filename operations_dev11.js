@@ -4436,8 +4436,10 @@ async function calculateWallaCues(){
       theCells[i].values = [[wallaCue]]
       if (myCounter > 100){
         console.log('doing excel sync')
+        let startTime = new Date().getTime();
         await excel.sync();
-        console.log('excel sync done')
+        let firstTime = new Date().getTime();
+        console.log('excel sync done', (firstTime - startTime) / 1000);
         myCounter = 0;
       }
     }
