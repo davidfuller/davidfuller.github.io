@@ -4786,6 +4786,7 @@ async function deleteWallaBlock(sceneNo, showMain = true){
       }
     }
     console.log('The Indexes', theIndexes);
+    /*
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let thisRow = [];
     if (theIndexes.length > 0){
@@ -4803,6 +4804,7 @@ async function deleteWallaBlock(sceneNo, showMain = true){
         console.log('After sync, indexes[i]', theIndexes[i]); 
       }
     }
+    */
   })
   if (isProtected){
     await lockColumns();
