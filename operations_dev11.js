@@ -4785,7 +4785,7 @@ async function deleteWallaBlock(sceneNo, showMain = true){
         }
       }
     }
-    console.log('The Indexes', theIndexes);
+    console.log('sceneNo', sceneNo, 'The Indexes', theIndexes);
     /*
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let thisRow = [];

@@ -898,6 +898,7 @@ async function putDataInScript(startRow, endRow){
       let sceneNo = indexTableRange.values[i][4]
 
       textArea.value += 'Clearing Walla Block from Script \n';
+      console.log('sceneNo', sceneNo);
       await jade_modules.operations.deleteWallaBlock(sceneNo, true)
 
       let namedRowIndex = indexTableRange.values[i][1];
