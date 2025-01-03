@@ -115,8 +115,11 @@ async function parseSourceText(sourceText){
   let theLines = mySourceText.split('\n');
   let theResults = [];
   for (let i = 1; i < theLines.length; i++){
-    if (theLines[i].trim() != ''){
-      theResults.push(splitLine(theLines[i]));
+    let trimmedLine = theLines[i].trim();
+    if (trimmedLine != ''){
+      if (!(trimmedLine.toLowerCase().startsWith('none'))){
+        theResults.push(splitLine(theLines[i]));
+      }
     }
   }
   return {
