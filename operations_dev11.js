@@ -7213,6 +7213,8 @@ async function getLineNumberRanges(){
       }
     }
     console.log('details', details)
+    let isGood = doConsistencyCheck(details);
+    console.log('isGood', isGood)
   })
 
 }
@@ -7224,4 +7226,20 @@ function lineNumberRangeAlreadyPresent(theArray, theData){
     }
   }
   return false;
+}
+
+function doConsistencyCheck(theArray){
+  //Runs through the array and makes sure that the end of the previous value is the start of the next value -1
+  let good = 0;
+  let bad = 0;
+  for (let i = 0; i < theArray.length - 1; i++){
+    if (theArray[i].end + 1 != theArray[i + 1].start){
+      console.log('Issue with ', i, 'previous end + 1', theArray[i].end + 1, 'next start', theArray[i + 1].start);
+      bad += 1;
+    } else {
+      good += 1;
+    }
+  }
+  console.log('Good: ', good, 'Bad:', bad);
+  return (bad == 0)
 }
