@@ -46,6 +46,7 @@ let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, us
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
 let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, rowIndexIndex, lineWordCountIndex, sceneLineNumberRangeIndex, chapterCalculationIndex;
+let startLineIndex, endLineIndex;
 let scriptSheet;
 
 let sceneInput, lineNoInput, chapterInput;
@@ -196,6 +197,9 @@ async function initialiseVariables(){
   bookIndex = findColumnIndex('Book');
   rowIndexIndex = findColumnIndex('Row Index');
   sceneWordCountCalcIndex = findColumnIndex('Scene word count calc');
+
+  startLineIndex = findColumnIndex('Start Line');
+  endLineIndex = findColumnIndex('End Line');
 
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -7178,4 +7182,46 @@ async function deleteRowsFromIndexes(theIndexes, doSelect){
       await excel.sync();
     }
   })
+}
+
+async function getLineNumberRanges(){
+  await Excel.run(async function(excel){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let usedRange = scriptSheet.getUsedRange();
+    usedRange.load('rowIndex, rowCount');
+    await excel.sync();
+    let lineNoRangeRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, sceneLineNumberRangeIndex, usedRange.rowCount, 1);
+    let startLineRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, startLineIndex, usedRange.rowCount, 1);
+    let endLineRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, endLineIndex, usedRange.rowCount, 1);
+    let cueRange= scriptSheet.getRangeByIndexes(usedRange.rowIndex, cueIndex, usedRange.rowCount, 1);
+    lineNoRangeRange.load('rowIndex, values');
+    startLineRange.load('rowIndex, values')
+    endLineRange.load('rowIndex, values')
+    cueRange.load('rowIndex, values')
+    await excel.sync();
+    let sceneLineNumberRangeValues = lineNoRangeRange.values.map(x=> x[0]);
+    let details = []
+    for (let i = 0; i < sceneLineNumberRangeValues.length; i++){
+      if ((sceneLineNumberRangeValues[i].trim() != '') &&  (sceneLineNumberRangeValues[i].trim() != 'Scene Line Number Range')){
+        let data = {};
+        data.lineNoRange = sceneLineNumberRangeValues[i].trim();
+        data.start = startLineRange.values[i][0];
+        data.end = endLineRange.values[i][0]
+        if (!lineNumberRangeAlreadyPresent(details, data)){
+          details.push(data);
+        }
+      }
+    }
+    console.log('details', details)
+  })
+
+}
+
+function lineNumberRangeAlreadyPresent(theArray, theData){
+  for (let data of theArray){
+    if (theData.lineNoRange == data.lineNoRange){
+      return true;
+    }
+  }
+  return false;
 }
