@@ -4422,7 +4422,7 @@ async function calculateWallaCues(){
       while ((scriptedIndexes[currentScripted] <= rowsToDo[i].index) && (!scriptedFullyDone)){
         scriptedCells[currentScripted] = scriptSheet.getRangeByIndexes(scriptedIndexes[currentScripted], cueIndex, 1, 1);
         scriptedCells[currentScripted].values = [[wallaCue]]
-        console.log('Doing scripted walla ', scriptedCells[currentScripted], 'walla cue', wallaCue);
+        console.log('Doing scripted walla: walla cue', wallaCue);
         wallaNumber += 1
         wallaCue = "W" + String(wallaNumber).padStart(5, 0);
         console.log(wallaCue)
@@ -4437,6 +4437,7 @@ async function calculateWallaCues(){
       if (myCounter > 100){
         console.log('doing excel sync')
         await excel.sync();
+        console.log('excel sync done')
         myCounter = 0;
       }
     }
