@@ -7215,6 +7215,15 @@ async function getLineNumberRanges(){
     console.log('details', details)
     let isGood = doConsistencyCheck(details);
     console.log('isGood', isGood)
+    if (isGood){
+      for (let i = 0; i < details.length; i++){
+        let index = cueRange.values.findLastIndex(a => a[0] == details[i].end);
+        if (index != -1){
+          details[i].lastRowIndex = i + cueRange.rowIndex;
+        }
+      }
+      console.log('details after lastRowIndex', details)
+    }
   })
 
 }
