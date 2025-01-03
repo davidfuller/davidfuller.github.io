@@ -4770,6 +4770,47 @@ async function deleteAllSceneAndWallaBlocks(){
   }
 }
 
+async function deleteWallaBlock(sceneNo, showMain = true){
+  if (showMain){
+    await showMainPage();
+  }
+  let isProtected = await unlockIfLocked();
+  await Excel.run(async (excel) => {
+    let myTypeCodes = await getTypeCodes();
+    let theIndexes = [];
+    for (let i = 0; i < myTypeCodes.scenes.values.length; i++){
+      if (myTypeCodes.scenes.values[i] == sceneNo){
+        if (myTypeCodes.typeCodes.values[i] == myTypes.wallaBlock){
+          theIndexes.push(i + myTypeCodes.scenes.rowIndex);
+        }
+      }
+    }
+    console.log('The Indexes', theIndexes);
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let thisRow = [];
+    if (theIndexes.length > 0){
+      for (let i = theIndexes.length - 1; i >= 0; i++){
+        thisRow[i] = scriptSheet.getRangeByIndexes(theIndexes[i],1,1,1).getEntireRow();
+        thisRow[i].load('address');
+        if (showMain){
+          thisRow[i].select();
+        }
+        await excel.sync();
+        console.log(i, 'Row address', thisRow[i].address)
+        thisRow[i].delete("Up");
+        console.log('Num: ', myDelete)
+        console.log('Before sync walla delete');
+        await excel.sync();
+        console.log('After sync, indexes[i]', theIndexes[i]); 
+      }
+    }
+  })
+  if (isProtected){
+    await lockColumns();
+  }
+  console.log('Delete Walla Block Done')
+}
+
 async function deleteAllWallaBlocks(showMain = true){
   if (showMain){
     await showMainPage();
@@ -7039,7 +7080,29 @@ async function findCueRowIndex(cue){
 }
 
 async function findPreviousTypeLineRowIndex(rowIndex){
-  //
+  //Takes the rowIndex and counts backwards to find the most recent 'Line' or 'Walla Scripted'
+  //Returns the rowIndex
+  let resultRowIndex = -1;
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const usedRange = scriptSheet.getUsedRange();
+    usedRange.load('rowIndex, rowCount');
+    await excel.sync();
+    const typeCodeRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, typeCodeIndex, usedRange.rowCount, 1);
+    typeCodeRange.load('values, rowIndex');
+    await excel.sync()
+
+    for (let i = rowIndex; i >= 0; i--){
+      let index = i - typeCodeRange.rowIndex;
+      let typeCode = typeCodeRange[index][0];
+      console.log('index', index, 'typeCode', typeCode)
+      if ((typeCode == myTypes.line) || (typeCode == myTypes.wallaScripted) || (typeCode == myTypes.scene)){
+        resultRowIndex = i + typeCodeRange.rowindex;
+        break;
+      }
+    }
+  })
+  return resultRowIndex;
 }
 
 async function insertWallaScript(rowIndex, details, doSelect){

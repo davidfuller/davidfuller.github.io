@@ -896,6 +896,10 @@ async function putDataInScript(startRow, endRow){
     for (let i = startRow; i < endRow; i++){
       textArea.value = baseText + 'Doing row: ' + (i + 1) + ' \n';
       let sceneNo = indexTableRange.values[i][4]
+
+      textArea.value += 'Clearing Walla Block from Script \n';
+      await jade_modules.operations.deleteWallaBlock(sceneNo, true)
+
       let namedRowIndex = indexTableRange.values[i][1];
       await doTheRowIndex(namedRowIndex, sceneNo);
       let unNamedRowIndex  = indexTableRange.values[i][2];
@@ -1039,6 +1043,7 @@ async function insertIntoMainScript(details){
   const end = details.length;
   for (let i = start; i < end; i++){
     let rowIndex = await jade_modules.operations.findCueRowIndex(details[i].nextCue)
+    rowIndex = await jade_modules.operations.findPreviousTypeLineRowIndex(rowIndex);
     console.log('Walla Script', i, 'of', details.length, 'rowIndex', rowIndex);
     let newIndex = await jade_modules.operations.insertRowV2(rowIndex, false, true)
     console.log('newIndex', newIndex);
