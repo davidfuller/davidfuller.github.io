@@ -4798,7 +4798,6 @@ async function deleteWallaBlock(sceneNo, showMain = true){
         await excel.sync();
         console.log(i, 'Row address', thisRow[i].address)
         thisRow[i].delete("Up");
-        console.log('Num: ', myDelete)
         console.log('Before sync walla delete');
         await excel.sync();
         console.log('After sync, indexes[i]', theIndexes[i]); 
