@@ -900,8 +900,11 @@ async function putDataInScript(startRow, endRow){
       let generalRowIndex = indexTableRange.values[i][3];
       await doTheRowIndex(generalRowIndex, sceneNo);
       await jade_modules.operations.calculateWallaCues();
+      textArea.value += 'Putting Named Character Walla row in script  \n'
       await jade_modules.operations.getSceneWallaInformation(1, sceneNo);
+      textArea.value += 'Putting Un-named Character Walla row in script  \n'
       await jade_modules.operations.getSceneWallaInformation(2, sceneNo);
+      textArea.value += 'Putting General Walla row in script  \n'
       await jade_modules.operations.getSceneWallaInformation(3, sceneNo);
     }
   }) 
