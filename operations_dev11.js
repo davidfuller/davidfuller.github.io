@@ -4380,7 +4380,7 @@ async function calculateWallaCues(){
     wallaRange.load('rowIndex');
     wallaRange.load('values');
     await excel.sync();
-    console.log ('rowIndex', wallaRange.rowIndex, 'values', wallaRange.values);
+    //console.log ('rowIndex', wallaRange.rowIndex, 'values', wallaRange.values);
     let rowsToDo = []
     let rowIndex = -1;
     for (let i = 0; i < wallaRange.values.length; i++){
@@ -4399,9 +4399,9 @@ async function calculateWallaCues(){
     }
 
     let scriptedIndexes = await findAllWallaScripted();
-    console.log('walla scripted indexes', scriptedIndexes);
+    //console.log('walla scripted indexes', scriptedIndexes);
 
-    console.log('Rows to do: ', rowsToDo);
+    //console.log('Rows to do: ', rowsToDo);
     let wallaCueColumn = scriptSheet.getRangeByIndexes(firstDataRow - 1, wallaCueIndex, (lastDataRow - firstDataRow), 1);
     wallaCueColumn.clear("Contents")
     await excel.sync();
@@ -4415,7 +4415,7 @@ async function calculateWallaCues(){
       myCounter += 1;
       wallaNumber += 1
       wallaCue = "W" + String(wallaNumber).padStart(5, 0);
-      console.log(wallaCue)
+      //console.log(wallaCue)
 
       let scriptedFullyDone;
       if (currentScripted < scriptedIndexes.length){
@@ -4424,14 +4424,14 @@ async function calculateWallaCues(){
         scriptedFullyDone = true;
       }
 
-      console.log('currentScripted', currentScripted, 'scriptedFullyDone', scriptedFullyDone)
+      //console.log('currentScripted', currentScripted, 'scriptedFullyDone', scriptedFullyDone)
       while ((scriptedIndexes[currentScripted] <= rowsToDo[i].index) && (!scriptedFullyDone)){
         scriptedCells[currentScripted] = scriptSheet.getRangeByIndexes(scriptedIndexes[currentScripted], cueIndex, 1, 1);
         scriptedCells[currentScripted].values = [[wallaCue]]
-        console.log('Doing scripted walla: walla cue', wallaCue);
+        //console.log('Doing scripted walla: walla cue', wallaCue);
         wallaNumber += 1
         wallaCue = "W" + String(wallaNumber).padStart(5, 0);
-        console.log(wallaCue)
+        //console.log(wallaCue)
         currentScripted += 1
         if (currentScripted >= scriptedIndexes.length){
           scriptedFullyDone = true;
@@ -4441,11 +4441,11 @@ async function calculateWallaCues(){
       theCells[i] = scriptSheet.getRangeByIndexes(rowsToDo[i].index + wallaRange.rowIndex, wallaCueIndex, 1, 1);
       theCells[i].values = [[wallaCue]]
       if (myCounter > 500){
-        console.log('doing excel sync')
+        //console.log('doing excel sync')
         let startTime = new Date().getTime();
         await excel.sync();
         let firstTime = new Date().getTime();
-        console.log('excel sync done', wallaCue, (firstTime - startTime) / 1000);
+        //console.log('excel sync done', wallaCue, (firstTime - startTime) / 1000);
         myCounter = 0;
       }
     }
@@ -4895,12 +4895,16 @@ async function clearWallaForScene(sceneNo){
         theIndexes.push(i + myTypeCodes.scenes.rowIndex);
       }
     }
+    console.log('clear theIndexes', theIndexes);
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     for (let i = 0; i < theIndexes.length; i++){
       let wallaOrigninalRange = scriptSheet.getRangeByIndexes(theIndexes[i], wallaOriginalIndex, 1, 1);
       wallaOrigninalRange.clear("Contents");
       let wallaDetails = scriptSheet.getRangeByIndexes(theIndexes[1], wallaCueIndex, 1, numberOfPeoplePresentIndex - wallaCueIndex + 1);
       wallaDetails.clear('Contents');
+      wallaDetails.select();
+      console.log('clearing rowindex', theIndexes[i]);
+      await excel.sync();
     }
   })
   if (isProtected){
