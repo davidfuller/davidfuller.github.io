@@ -4885,6 +4885,30 @@ async function clearWalla(){
   }
 }
 
+async function clearWallaForScene(sceneNo){
+  let isProtected = await unlockIfLocked();
+  await Excel.run(async (excel) => {
+    let myTypeCodes = await getTypeCodes();
+    let theIndexes = [];
+    for (let i = 0; i < myTypeCodes.scenes.values.length; i++){
+      if (myTypeCodes.scenes.values[i] == sceneNo){
+        theIndexes.push(i + myTypeCodes.scenes.rowIndex);
+      }
+    }
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    for (let i = 0; i < theIndexes.length; i++){
+      let wallaOrigninalRange = scriptSheet.getRangeByIndexes(theIndexes[i], wallaOriginalIndex, 1, 1);
+      wallaOrigninalRange.clear("Contents");
+      let wallaDetails = scriptSheet.getRangeByIndexes(theIndexes[1], wallaCueIndex, 1, numberOfPeoplePresentIndex - wallaCueIndex + 1);
+      wallaDetails.clear('Contents');
+    }
+  })
+  if (isProtected){
+    await lockColumns();
+  }
+  
+}
+
 
 async function getRowIndeciesForScene(sceneNumber, usOnly){
   let myIndecies, newIndexes;
