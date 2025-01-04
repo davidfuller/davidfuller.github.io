@@ -4776,7 +4776,7 @@ async function deleteAllSceneAndWallaBlocks(){
 
 async function deleteWallaBlock(sceneNo, showMain = true){
   if (showMain){
-    await showMainPage();
+    //await showMainPage();
   }
   let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
@@ -4813,6 +4813,7 @@ async function deleteWallaBlock(sceneNo, showMain = true){
   if (isProtected){
     await lockColumns();
   }
+  await theFormulas()
   console.log('Delete Walla Block Done')
 }
 
