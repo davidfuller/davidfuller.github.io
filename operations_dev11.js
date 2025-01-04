@@ -4790,11 +4790,11 @@ async function deleteWallaBlock(sceneNo, showMain = true){
       }
     }
     console.log('sceneNo', sceneNo, 'The Indexes', theIndexes);
-    /*
+    
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let thisRow = [];
     if (theIndexes.length > 0){
-      for (let i = theIndexes.length - 1; i >= 0; i++){
+      for (let i = theIndexes.length - 1; i >= 0; i--){
         thisRow[i] = scriptSheet.getRangeByIndexes(theIndexes[i],1,1,1).getEntireRow();
         thisRow[i].load('address');
         if (showMain){
@@ -4808,7 +4808,7 @@ async function deleteWallaBlock(sceneNo, showMain = true){
         console.log('After sync, indexes[i]', theIndexes[i]); 
       }
     }
-    */
+    
   })
   if (isProtected){
     await lockColumns();
