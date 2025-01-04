@@ -7228,9 +7228,6 @@ async function getLineNumberRanges(){
         let index = cueRange.values.findLastIndex(a => a[0] == details[i].end);
         if (index != -1){
           details[i].lastRowIndex = index + cueRange.rowIndex;
-          if (details[i].lastRowIndex > lastRowIndex){
-            lastRowIndex = details[i].lastRowIndex;
-          }
         } else {
           details[i].lastRowIndex = -1;
         }
@@ -7241,6 +7238,9 @@ async function getLineNumberRanges(){
         for (j = details[i].firstRowIndex; j <= details[i].lastRowIndex; j++){
           let index = j - lineNoRangeRange.rowIndex;
           myValues[index] = [details[i].lineNoRange];
+          if (index > lastRowIndex){
+            lastRowIndex = index;
+          }
         }
       }
       console.log('myValues', myValues, 'firstRowIndex', firstRowIndex, 'lastRowIndex', lastRowIndex);
