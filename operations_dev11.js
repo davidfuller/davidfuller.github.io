@@ -7239,8 +7239,8 @@ async function getLineNumberRanges(){
         }
       }
       console.log('myValues', myValues, 'firstRowIndex', firstRowIndex);
-      //let newRange = scriptSheet.getRangeByIndexes(firstRowIndex, sceneLineNumberRangeIndex, myValues.length, 1);
-      //newRange.values = myValues;
+      let newRange = scriptSheet.getRangeByIndexes(firstRowIndex, sceneLineNumberRangeIndex, myValues.length, 1);
+      newRange.values = myValues;
       await excel.sync();
       console.log('Done')
     }
