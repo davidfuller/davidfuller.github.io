@@ -4889,14 +4889,25 @@ async function clearWallaForScene(sceneNo){
   let isProtected = await unlockIfLocked();
   await Excel.run(async (excel) => {
     let myTypeCodes = await getTypeCodes();
-    let theIndexes = [];
+    let first = -1;
+    let last = -1;
+    //let theIndexes = [];
     for (let i = 0; i < myTypeCodes.scenes.values.length; i++){
       if (myTypeCodes.scenes.values[i] == sceneNo){
-        theIndexes.push(i + myTypeCodes.scenes.rowIndex);
+        let theIndex = i + myTypeCodes.scenes.rowIndex
+        if (first == -1){
+          first = theIndex;
+        }
+        if (theIndex > last){
+          last = theIndex;
+        }
+        //theIndexes.push(i + myTypeCodes.scenes.rowIndex);
       }
     }
-    console.log('clear theIndexes', theIndexes);
+    //console.log('clear theIndexes', theIndexes);
+    console.log('clear first', first, 'last', last);
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    /*
     for (let i = 0; i < theIndexes.length; i++){
       let wallaOrigninalRange = scriptSheet.getRangeByIndexes(theIndexes[i], wallaOriginalIndex, 1, 1);
       wallaOrigninalRange.clear("Contents");
@@ -4906,6 +4917,13 @@ async function clearWallaForScene(sceneNo){
       console.log('clearing rowindex', theIndexes[i]);
       await excel.sync();
     }
+    */
+    let wallaOriginalRange = scriptSheet.getRangeByIndexes(first, wallaOriginalIndex, last - first + 1, 1);
+    wallaOriginalRange.clear("Contents");
+    let wallaDetails = scriptSheet.getRangeByIndexes(first, wallaCueIndex, last - first + 1, numberOfPeoplePresentIndex - wallaCueIndex + 1);
+    wallaDetails.clear('Contents');
+    wallaDetails.select();
+    await excel.sync();
   })
   if (isProtected){
     await lockColumns();
