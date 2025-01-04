@@ -7214,12 +7214,21 @@ async function getLineNumberRanges(){
     }
     console.log('details', details)
     let isGood = doConsistencyCheck(details);
-    console.log('isGood', isGood)
+    console.log('isGood', isGood);
+    
     if (isGood){
+      const firstRowIndex = 2;
       for (let i = 0; i < details.length; i++){
+        if (i == 0){
+          details[i].firstRowIndex = firstRowIndex;
+        } else {
+          details[i].firstRowIndex = details[i - 1].lastRowIndex + 1;
+        }
         let index = cueRange.values.findLastIndex(a => a[0] == details[i].end);
         if (index != -1){
           details[i].lastRowIndex = index + cueRange.rowIndex;
+        } else {
+          details[i].lastRowIndex = -1;
         }
       }
       console.log('details after lastRowIndex', details)
