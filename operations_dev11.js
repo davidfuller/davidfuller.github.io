@@ -7218,7 +7218,6 @@ async function getLineNumberRanges(){
     
     if (isGood){
       const firstRowIndex = 2;
-      let lastRowIndex = -1;
       for (let i = 0; i < details.length; i++){
         if (i == 0){
           details[i].firstRowIndex = firstRowIndex;
@@ -7236,16 +7235,12 @@ async function getLineNumberRanges(){
       let myValues = [];
       for (let i = 0; i < details.length; i++){
         for (j = details[i].firstRowIndex; j <= details[i].lastRowIndex; j++){
-          let index = j - lineNoRangeRange.rowIndex;
-          myValues[index] = [details[i].lineNoRange];
-          if (index > lastRowIndex){
-            lastRowIndex = index;
-          }
+          myValues.push([details[i].lineNoRange]);
         }
       }
-      console.log('myValues', myValues, 'firstRowIndex', firstRowIndex, 'lastRowIndex', lastRowIndex);
-      let newRange = scriptSheet.getRangeByIndexes(firstRowIndex, sceneLineNumberRangeIndex, lastRowIndex - firstRowIndex + 1, 1);
-      newRange.values = myValues;
+      console.log('myValues', myValues, 'firstRowIndex', firstRowIndex);
+      //let newRange = scriptSheet.getRangeByIndexes(firstRowIndex, sceneLineNumberRangeIndex, myValues.length, 1);
+      //newRange.values = myValues;
       await excel.sync();
       console.log('Done')
     }
