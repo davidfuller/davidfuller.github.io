@@ -7235,7 +7235,7 @@ async function getLineNumberRanges(){
       let myValues = [];
       for (let i = 0; i < details.length; i++){
         for (j = details[i].firstRowIndex; j <= details[i].lastRowIndex; j++){
-          let index = j - lineNoRangeRange;
+          let index = j - lineNoRangeRange.rowIndex;
           myValues[index] = details[i].lineNoRange;
         }
       }
