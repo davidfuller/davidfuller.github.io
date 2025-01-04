@@ -4900,7 +4900,7 @@ async function clearWallaForScene(sceneNo){
     for (let i = 0; i < theIndexes.length; i++){
       let wallaOrigninalRange = scriptSheet.getRangeByIndexes(theIndexes[i], wallaOriginalIndex, 1, 1);
       wallaOrigninalRange.clear("Contents");
-      let wallaDetails = scriptSheet.getRangeByIndexes(theIndexes[1], wallaCueIndex, 1, numberOfPeoplePresentIndex - wallaCueIndex + 1);
+      let wallaDetails = scriptSheet.getRangeByIndexes(theIndexes[i], wallaCueIndex, 1, numberOfPeoplePresentIndex - wallaCueIndex + 1);
       wallaDetails.clear('Contents');
       wallaDetails.select();
       console.log('clearing rowindex', theIndexes[i]);
