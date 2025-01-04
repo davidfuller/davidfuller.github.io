@@ -7218,6 +7218,7 @@ async function getLineNumberRanges(){
     
     if (isGood){
       const firstRowIndex = 2;
+      let lastRowIndex = -1;
       for (let i = 0; i < details.length; i++){
         if (i == 0){
           details[i].firstRowIndex = firstRowIndex;
@@ -7227,6 +7228,9 @@ async function getLineNumberRanges(){
         let index = cueRange.values.findLastIndex(a => a[0] == details[i].end);
         if (index != -1){
           details[i].lastRowIndex = index + cueRange.rowIndex;
+          if (details[i].lastRowIndex > lastRowIndex){
+            lastRowIndex = details[i].lastRowIndex;
+          }
         } else {
           details[i].lastRowIndex = -1;
         }
@@ -7236,10 +7240,10 @@ async function getLineNumberRanges(){
       for (let i = 0; i < details.length; i++){
         for (j = details[i].firstRowIndex; j <= details[i].lastRowIndex; j++){
           let index = j - lineNoRangeRange.rowIndex;
-          myValues[index] = details[i].lineNoRange;
+          myValues[index] = [details[i].lineNoRange];
         }
       }
-      console.log('myValues', myValues);
+      console.log('myValues', myValues, 'firstRowIndex', firstRowIndex, 'lastRowIndex', lastRowIndex);
     }
   })
 
