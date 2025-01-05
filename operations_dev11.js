@@ -7321,3 +7321,25 @@ function doConsistencyCheck(theArray){
   console.log('Good: ', good, 'Bad:', bad);
   return (bad == 0)
 }
+
+async function getWallaCues(){
+  await Excel.run(async function(excel){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let usedRange = scriptSheet.getUsedRange();
+    usedRange.load('rowIndex, rowCount');
+    await excel.sync();
+    let wallaCueRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, wallaCueIndex, usedRange.rowCount, 1);
+    wallaCueRange.load('values, rowIndex')
+    await excel.sync();
+    let wallaCues = []
+    for (let i = 0; i < wallaCueRange.values.length; i++){
+      let thisValue = wallaCueRange.values[i][0]
+      if (thisValue.startsWith('W')){
+        wallaCues.push(thisValue);
+      }
+    }
+    console.log('wallaCues', wallaCues);
+  })
+  
+
+}
