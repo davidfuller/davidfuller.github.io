@@ -7361,6 +7361,18 @@ async function getWallaCues(){
     wallaCues.sort();
     wallaNumbers.sort((a,b) => a - b);
     console.log('wallaCues', wallaCues, 'wallaNumbers', wallaNumbers);
+    let current = wallaNumbers[0]
+    let issues = 0;
+    for (let i = 1; i < wallaNumbers.length; i++){
+      if (wallaNumbers[i] != (current + 1)){
+        console.log('Issue with ', wallaNumbers[i], 'expecting', current + 1);
+        current = wallaNumbers[i];
+        issues += 1;
+      } else {
+        current += 1;
+      }
+    }
+    console.log('issues', issues);
   })
   
 
