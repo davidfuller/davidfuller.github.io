@@ -4814,7 +4814,7 @@ async function deleteWallaBlock(sceneNo, showMain = true){
   if (isProtected){
     await lockColumns();
   }
-  textArea += "Recalculating formulae \n"
+  textArea.value += "Recalculating formulae \n"
   await theFormulas()
   console.log('Delete Walla Block Done')
 }
