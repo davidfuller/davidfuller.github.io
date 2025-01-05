@@ -7328,8 +7328,10 @@ async function getWallaCues(){
     let usedRange = scriptSheet.getUsedRange();
     usedRange.load('rowIndex, rowCount');
     await excel.sync();
+    let cueRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, cueIndex, usedRange.rowCount, 1);
     let wallaCueRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, wallaCueIndex, usedRange.rowCount, 1);
-    wallaCueRange.load('values, rowIndex')
+    cueRange.load('values, rowIndex');
+    wallaCueRange.load('values, rowIndex');
     await excel.sync();
     let wallaCues = [];
     let wallaNumbers = [];
@@ -7343,6 +7345,21 @@ async function getWallaCues(){
         }
       }
     }
+    
+    let scriptedIndexes = await findAllWallaScripted();
+    for (let i = 0; i < scriptedIndexes.length; i++){
+      let index = scriptedIndexes[i] - cueRange.rowIndex
+      let thisValue = cueRange.values[index][0];
+      if (thisValue.startsWith('W')){
+        let thisNumber = parseInt(thisValue.substr(1));
+        if (!isNaN(thisNumber)){
+          wallaCues.push(thisValue);
+          wallaNumbers.push(thisNumber);
+        }
+      }
+    }
+    wallaCues.sort();
+    wallaNumbers.sort((a,b) => a - b);
     console.log('wallaCues', wallaCues, 'wallaNumbers', wallaNumbers);
   })
   
