@@ -7148,7 +7148,7 @@ async function findPreviousTypeLineRowIndex(rowIndex){
 
     for (let i = rowIndex; i >= 0; i--){
       let index = i - typeCodeRange.rowIndex;
-      let typeCode = typeCodeRange[index][0];
+      let typeCode = typeCodeRange.values[index][0];
       console.log('index', index, 'typeCode', typeCode)
       if ((typeCode == myTypes.line) || (typeCode == myTypes.wallaScripted) || (typeCode == myTypes.scene)){
         resultRowIndex = i + typeCodeRange.rowindex;
