@@ -7331,14 +7331,19 @@ async function getWallaCues(){
     let wallaCueRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, wallaCueIndex, usedRange.rowCount, 1);
     wallaCueRange.load('values, rowIndex')
     await excel.sync();
-    let wallaCues = []
+    let wallaCues = [];
+    let wallaNumbers = [];
     for (let i = 0; i < wallaCueRange.values.length; i++){
       let thisValue = wallaCueRange.values[i][0]
       if (thisValue.startsWith('W')){
-        wallaCues.push(thisValue);
+        let thisNumber = parseInt(thisValue.substr(1));
+        if (!isNaN(thisNumber)){
+          wallaCues.push(thisValue);
+          wallaNumbers.push(thisNumber);
+        }
       }
     }
-    console.log('wallaCues', wallaCues);
+    console.log('wallaCues', wallaCues, 'wallaNumbers', wallaNumbers);
   })
   
 
