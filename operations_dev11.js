@@ -4775,6 +4775,7 @@ async function deleteAllSceneAndWallaBlocks(){
 }
 
 async function deleteWallaBlock(sceneNo, showMain = true){
+  let textArea = tag('walla-text');
   if (showMain){
     //await showMainPage();
   }
@@ -4813,6 +4814,7 @@ async function deleteWallaBlock(sceneNo, showMain = true){
   if (isProtected){
     await lockColumns();
   }
+  textArea += "Recalculating formulae \n"
   await theFormulas()
   console.log('Delete Walla Block Done')
 }
