@@ -7407,7 +7407,7 @@ async function checkWallaInCueColumn(){
     let wallaCues = [];
     let wallaNumbers = [];
     for (let i = 0; i < cueRange.values.length;i++){
-      let thisValue = cueRange.values[i][0];
+      let thisValue = cueRange.values[i][0].toString();
       console.log(thisValue)
       let splitValues = thisValue.split('\n');
       for (let j = 0; j < splitValues.length; j++){
