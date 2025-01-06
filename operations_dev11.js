@@ -7379,6 +7379,7 @@ async function getWallaCues(){
     }
     console.log('issues', issues);
     let wallaInfo = tag('walla-check-cues');
+    console.log(wallaInfo.text);
     let message = ''
     if (issues != 0){
       message +=  issues + 'issues: '
@@ -7386,7 +7387,7 @@ async function getWallaCues(){
       message += 'No issues: '
     }
     message += 'First: ' + wallaCues[0] + ' Last: ' + wallaCues[wallaCues.length - 1];
-    wallaInfo.value = message;
+    wallaInfo.text = message;
   })
   
 
