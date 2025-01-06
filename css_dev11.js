@@ -903,7 +903,7 @@ label {
 }
 
 #walla-check-cues {
-  font-size: 15px;
+  font-size: 12px;
   margin-left: 5px;
 }
 `;
