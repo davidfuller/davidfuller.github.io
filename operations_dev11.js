@@ -7378,6 +7378,15 @@ async function getWallaCues(){
       }
     }
     console.log('issues', issues);
+    let wallaInfo = tag('walla-check-cues');
+    let message = ''
+    if (issues != 0){
+      message +=  issues + 'issues: '
+    } else {
+      message += 'No issues: '
+    }
+    message += 'First: ' + wallaCues[0] + ' Last: ' + wallaCues[wallaCues.length - 1];
+    wallaInfo.value = message;
   })
   
 
