@@ -342,6 +342,7 @@ async function mainHTML(){
     <label for="walla-block-start">Start</label><input type="text" id="walla-block-start" name="walla-block-start">
     <label for="walla-block-end">End</label><input type="text" id="walla-block-end" name="walla-block-end"><br/>
     <button id="btnCheckCues" class="walla-button" onclick="jade_modules.operations.getWallaCues()">Check Walla Cues</button>
+    <label id="walla-check-cues">Click Check Walla Cues for info</label>
   </div>
 </div>
 <div id="location-page">

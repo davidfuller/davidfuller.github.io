@@ -901,6 +901,11 @@ label {
   margin: 5px;
   padding: 5px;
 }
+
+#walla-check-cues {
+  font-size: 15px;
+  margin-left: 5px;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')
