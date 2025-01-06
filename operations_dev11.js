@@ -7153,6 +7153,9 @@ async function findPreviousTypeLineRowIndex(rowIndex){
       if ((typeCode == myTypes.line) || (typeCode == myTypes.wallaScripted)){
       //if ((typeCode == myTypes.line) || (typeCode == myTypes.wallaScripted) || (typeCode == myTypes.scene)){
         resultRowIndex = i - typeCodeRange.rowIndex;
+        if (resultRowIndex != rowIndex){
+          resultRowIndex += 1'
+        }
         break;
       }
     }
