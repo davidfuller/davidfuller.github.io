@@ -7386,9 +7386,60 @@ async function getWallaCues(){
     } else {
       message += 'No issues: '
     }
-    message += 'First: ' + wallaCues[0] + ' Last: ' + wallaCues[wallaCues.length - 1];
+    message += 'First: ' + wallaCues[0] + ' Last: ' + wallaCues[wallaCues.length - 1] + '\n' + await checkWallaInCueColumn();
     wallaInfo.innerText = message;
   })
   
 
+}
+
+async function checkWallaInCueColumn(){
+  let message = '';
+  await Excel.run(async function(excel){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let usedRange = scriptSheet.getUsedRange();
+    usedRange.load('rowIndex, rowCount');
+    await excel.sync();
+    let cueRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, cueIndex, usedRange.rowCount, 1); 
+    cueRange.load('values, rowIndex');
+    await excel.sync();
+    let wallaCues = [];
+    let wallaNumbers = [];
+    for (let i = 0; i < cueRange.values.length;i++){
+      let thisValue = cueRange.values[i][0];
+      let splitValues = thisValue.split('\n');
+      for (let j = 0; j < splitValues.length; j++){
+        let testValue = splitValues[j].trim();
+        if (testValue.startsWith('W')){
+          let thisNumber = parseInt(testValue.substr(1));
+          if (!isNaN(thisNumber)){
+            wallaCues.push(testValue);
+            wallaNumbers.push(thisNumber);
+          }
+        }
+      }
+    }
+    wallaCues.sort();
+    wallaNumbers.sort((a,b) => a - b);
+    console.log('Cue col wallaCues', wallaCues, 'wallaNumbers', wallaNumbers);
+    let current = wallaNumbers[0]
+    let issues = 0;
+    for (let i = 1; i < wallaNumbers.length; i++){
+      if (wallaNumbers[i] != (current + 1)){
+        console.log('Cue col: Issue with ', wallaNumbers[i], 'expecting', current + 1);
+        current = wallaNumbers[i];
+        issues += 1;
+      } else {
+        current += 1;
+      }
+    }
+    console.log('Cue col: issues', issues);
+    if (issues != 0){
+      message +=  'Cue col: ' + issues + 'issues: '
+    } else {
+      message += 'Cue col no issues: '
+    }
+    message += 'First: ' + wallaCues[0] + ' Last: ' + wallaCues[wallaCues.length - 1];
+  })
+  return message;
 }
