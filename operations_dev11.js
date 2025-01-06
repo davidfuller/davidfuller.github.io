@@ -2,7 +2,7 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '11.10';
+const codeVersion = '11.11';
 //11.02 isProtected on applyTakeDetails
 //11.03 31-35 in walla and remove the clears
 //11.04 30-35 in walla
@@ -12,6 +12,7 @@ const codeVersion = '11.10';
 // 11.08 Replacements
 //11.09 On add takes stopped issues with text starting with +,-,= and stop add takes in column heading
 //11.10 Walla cues include script
+//11.11 Check Walla cues in all columns
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
@@ -7407,6 +7408,7 @@ async function checkWallaInCueColumn(){
     let wallaNumbers = [];
     for (let i = 0; i < cueRange.values.length;i++){
       let thisValue = cueRange.values[i][0];
+      console.log(thisValue)
       let splitValues = thisValue.split('\n');
       for (let j = 0; j < splitValues.length; j++){
         let testValue = splitValues[j].trim();
