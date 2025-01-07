@@ -539,7 +539,7 @@ async function createScript(){
           //give 1 row of scpace between sceneblock and script
           theRowIndex = rowDetails.nextRowIndex + 1;
           rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, theRowIndex, usOnly);
-          //await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name, usOnly);
+          await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name, usOnly);
           theRowIndex = rowIndexes[rowIndexes.length - 1].startRow + rowIndexes[rowIndexes.length - 1].rowCount + 1;
         } else {
           console.log('Missing scene block: ', sceneNumber)
@@ -783,8 +783,8 @@ async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndex
   await formatHeading(sheetName);
   for (let i = 0; i < scriptRowIndexes.length; i++){
     await cueColumnFontColour(sheetName, scriptRowIndexes[i]);
-    await clearScriptFill(sheetName,scriptRowIndexes[i]);
-    await clearStrikethrough(sheetName, scriptRowIndexes[i]);
+    //await clearScriptFill(sheetName,scriptRowIndexes[i]);
+    //await clearStrikethrough(sheetName, scriptRowIndexes[i]);
     await highlightCharacters(sheetName, character, scriptRowIndexes[i]);
   }
 }
