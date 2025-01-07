@@ -539,7 +539,7 @@ async function createScript(){
           //give 1 row of scpace between sceneblock and script
           theRowIndex = rowDetails.nextRowIndex + 1;
           rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, theRowIndex, usOnly);
-          await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name, usOnly);
+          //await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name, usOnly);
           theRowIndex = rowIndexes[rowIndexes.length - 1].startRow + rowIndexes[rowIndexes.length - 1].rowCount + 1;
         } else {
           console.log('Missing scene block: ', sceneNumber)
