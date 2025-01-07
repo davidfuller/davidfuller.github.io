@@ -124,7 +124,9 @@ async function parseSourceText(sourceText){
     let trimmedLine = theLines[i].trim();
     if (trimmedLine != ''){
       if (!(trimmedLine.toLowerCase().startsWith('none'))){
-        theResults.push(splitLine(theLines[i]));
+        if (!(trimmedLine.toLowerCase().startsWith('n/a'))){
+          theResults.push(splitLine(theLines[i]));
+        }
       }
     }
   }
