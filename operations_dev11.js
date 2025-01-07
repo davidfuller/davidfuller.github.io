@@ -4554,6 +4554,7 @@ async function getSceneWallaInformation(typeNo, sceneNo = -1){
         for (let i = 0; i < typeOfWallaRange.values.length; i++){
           console.log('Scene: ', sceneRange.values[i][0]);
           if (isNamedWalla(typeOfWallaRange.values[i][0])){
+            console.log(i, "found named walla")
             if (sceneRange.values[i][0] == sceneNo){
               theIndex += 1;
               myIndecies[theIndex] = i;
@@ -4561,7 +4562,10 @@ async function getSceneWallaInformation(typeNo, sceneNo = -1){
             } else if (sceneRange.values[i][0] > sceneNo){
               break;
             }
-          } 
+          }
+          if (sceneRange.values[i][0] > sceneNo){
+            break;
+          }
         }
       }
       
