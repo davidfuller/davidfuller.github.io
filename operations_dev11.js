@@ -4654,7 +4654,7 @@ async function getSceneWallaInformation(typeNo, sceneNo = -1, isFirst = false){
           if (isFirst){
             firstScene = await getFirstScene(); 
           }
-          if ((sceneRange.values[i][0] == sceneNo) || (sceneRange.value[i][0]== firstScene)){
+          if ((sceneRange.values[i][0] == sceneNo) || (sceneRange.values[i][0] == firstScene)){
             if (doNamed){
               sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 1;  
             } else if (doUnnamed){
