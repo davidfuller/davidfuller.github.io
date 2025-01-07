@@ -4599,7 +4599,7 @@ async function getSceneWallaInformation(typeNo, sceneNo = -1){
         }
       }
  
-      console.log(myIndecies, theIndex);
+      console.log('myIndecies', myIndecies, 'theIndex', theIndex);
 
       let cues = [''];
       let details = []
@@ -4640,6 +4640,7 @@ async function getSceneWallaInformation(typeNo, sceneNo = -1){
       
       let sceneRowIndex = -1; 
       let doIt = false;
+      console.log('typeCodes', typeCodeRange.values)
       for (let i = 0; i < typeCodeRange.values.length; i++){
         if (typeCodeRange.values[i][0] == myTypes.scene){
           if (sceneRange.values[i][0] == sceneNo){
