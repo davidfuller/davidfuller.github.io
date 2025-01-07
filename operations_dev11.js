@@ -7274,8 +7274,10 @@ async function getLineNumberRanges(doReplace){
         data.lineNoRange = sceneLineNumberRangeValues[i].trim();
         data.start = startLineRange.values[i][0];
         data.end = endLineRange.values[i][0]
-        if (!lineNumberRangeAlreadyPresent(details, data)){
-          details.push(data);
+        if ((data.start > 0) && data.end > 0){
+          if (!lineNumberRangeAlreadyPresent(details, data)){
+            details.push(data);
+          }
         }
       }
     }
