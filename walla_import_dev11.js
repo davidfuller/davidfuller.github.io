@@ -287,8 +287,8 @@ async function doWallaTable(typeWalla, theResults, tableRowIndex = -1){
     if (scenes.length == 0){
       scenes[0] = await getScene(sourceRowId, true) + 1;
       console.log('In doWallaTable scenes[0]', scenes[0], 'sourceRowId', sourceRowId);
-      if (scenes[0] == 0){
-        let firstScene = parseInt(await jade_modules.operations.getFirstScene());
+      if ((scenes[0] == 0) && (sourceRowId == 1)){
+        let firstScene = parseInt(await jade_modules.operations.getFirstScene()) + 1;
         console.log('In doWallaTable firstScene', firstScene);
         if (!isNaN(firstScene)){
           scenes[0] = firstScene
