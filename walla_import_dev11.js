@@ -188,21 +188,26 @@ function splitLine(theLine){
   let lineRange;
   if (isNaN(parseInt(lastBit))){
     if ((lineNo == -1) && (wholeScene != -1)){
+      console.log('I am here in first if');
       if (lastBit.trim().toLowerCase() != 'whole scene'){
-        theDescription = lastBit.trim();  
+        console.log('I am here in second if');
+        theDescription = lastBit.trim();
       } else {
+        console.log('I am here in second else');
         theDescription = '';
       }
       lineRange = 'whole scene'
     } else if ((lineNo > 0) && (wholeScene == -1)){
       if (lastBit.trim().toLowerCase() == thePosition.trim().toLowerCase()){
+        console.log('I am here in third if');
         theDescription = '';
       } else {
+        console.log('I am here in third else');
         theDescription = lastBit.trim();
       }
       lineRange = thePosition;
     } else {
-      console.log('I am here');
+      console.log('I am here in final else');
       theDescription = lastBit.trim();
       lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
       console.log('theRestPosition', theRestPosition, 'lastBitPosition', lastBitPosition);
