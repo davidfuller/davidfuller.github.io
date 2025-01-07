@@ -7309,9 +7309,13 @@ async function getLineNumberRanges(doReplace){
       }
       console.log('myValues', myValues, 'firstRowIndex', firstRowIndex);
       if (doReplace){
+        let isProtected = await unlockIfLocked();
         let newRange = scriptSheet.getRangeByIndexes(firstRowIndex, sceneLineNumberRangeIndex, myValues.length, 1);
         newRange.values = myValues;
         await excel.sync();
+        if (isProtected){
+          await lockColumns();
+        }
       }
       console.log('Done')
     }
