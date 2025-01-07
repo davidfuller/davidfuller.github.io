@@ -202,8 +202,10 @@ function splitLine(theLine){
       }
       lineRange = thePosition;
     } else {
+      console.log('I am here');
       theDescription = lastBit.trim();
       lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
+      console.log('theRestPosition', theRestPosition, 'lastBitPosition', lastBitPosition);
       lineRange = theLine.substring(theRestPosition, lastBitPosition - 2).trim();
     }
     console.log('At this point 3, theLine', theLine, 'theDescription', theDescription, 'lineRange', lineRange);
