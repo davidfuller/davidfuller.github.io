@@ -5201,8 +5201,9 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs){
           actorUsCueRange.copyFrom(usCueRange, 'Values', false, false);
           actorUsCueRange.copyFrom(usCueRange, 'Formats', false, false);
         } else {
-          actorScriptRange.copyFrom(ukScriptRange, 'Values', false, false);
-          actorScriptRange.copyFrom(ukScriptRange, 'Formats', false, false);
+          //actorScriptRange.copyFrom(ukScriptRange, 'Values', false, false);
+          //actorScriptRange.copyFrom(ukScriptRange, 'Formats', false, false);
+          actorScriptRange.copyFrom(ukScriptRange, 'All');
         }
         await excel.sync();
         startRowIndex = startRowIndex + rowCount;
