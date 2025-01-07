@@ -109,8 +109,9 @@ async function parseSource(tableRowIndex = -1){
         theResults.push(splitLine(theLines[i]));
       }
     }
-    //console.log('theResults', theResults)
+    console.log('theResults', theResults)
     await doWallaTable(theLines[0], theResults, tableRowIndex);
+    //await doWallaTableV2()
   })
 }
 
@@ -285,6 +286,14 @@ async function doWallaTable(typeWalla, theResults, tableRowIndex = -1){
     scenes = [...new Set(scenes)]
     if (scenes.length == 0){
       scenes[0] = await getScene(sourceRowId, true) + 1;
+      console.log('In doWallaTable scenes[0]', scenes[0], 'sourceRowId', sourceRowId);
+      if (scenes[0] == 0){
+        let firstScene = parseInt(await jade_modules.operations.getFirstScene());
+        console.log('In doWallaTable firstScene', firstScene);
+        if (!isNaN(firstScene)){
+          scenes[0] = firstScene
+        }
+      }
     }
     console.log('anyNonScenes', anyNonScenes, 'scenes', scenes)
     if ((anyNonScenes) && (scenes.length == 1)){

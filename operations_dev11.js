@@ -4471,6 +4471,18 @@ async function getFirstWalla(){
   return firstWalla;
 }
 
+async function getFirstScene(){
+  let firstScene;
+  await Excel.run(async (excel) => {
+    const settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
+    let firstSceneRange = settingsSheet.getRange('seFirstScene');
+    firstSceneRange.load('values');
+    await excel.sync();
+    firstScene = firstSceneRange.values[0][0];
+  })
+  return firstScene;
+}
+
 function allEmpty(theArray){
   for (let i = 0; i < theArray.length; i++){
     if (theArray[i] != ''){
