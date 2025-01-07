@@ -189,7 +189,7 @@ function splitLine(theLine){
   if (isNaN(parseInt(lastBit))){
     if ((lineNo == -1) && (wholeScene != -1)){
       if (lastBit.trim().toLowerCase() != 'whole scene'){
-        theDescription = lastBit;  
+        theDescription = lastBit.trim();  
       } else {
         theDescription = '';
       }
@@ -198,7 +198,7 @@ function splitLine(theLine){
       if (lastBit.trim().toLowerCase() == thePosition.trim().toLowerCase()){
         theDescription = '';
       } else {
-        theDescription = lastBit;
+        theDescription = lastBit.trim();
       }
       lineRange = thePosition;
     } else {
