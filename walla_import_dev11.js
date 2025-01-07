@@ -201,11 +201,15 @@ function splitLine(theLine){
       if (lastBit.trim().toLowerCase() == thePosition.trim().toLowerCase()){
         console.log('I am here in third if');
         theDescription = '';
+        lineRange = thePosition;
       } else {
         console.log('I am here in third else');
         theDescription = lastBit.trim();
+        lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
+        console.log('theRestPosition', theRestPosition, 'lastBitPosition', lastBitPosition);
+        lineRange = theLine.substring(theRestPosition, lastBitPosition - 2).trim();
       }
-      lineRange = thePosition;
+      
     } else {
       console.log('I am here in final else');
       theDescription = lastBit.trim();
