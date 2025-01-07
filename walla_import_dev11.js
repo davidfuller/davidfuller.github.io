@@ -1069,10 +1069,12 @@ async function insertIntoMainScript(details){
   }
 }
 
-async function doWallaScripting(){
+async function doWallaScripting(doInsert){
   const indexes = await getWallaScriptingRowIndexes();
   const details = await wallaScriptDetails(indexes);
-  await insertIntoMainScript(details);
+  if (doInsert){
+    await insertIntoMainScript(details);
+  }
   console.log('Done');
 }
 async function deleteAllWallaScripting(){
