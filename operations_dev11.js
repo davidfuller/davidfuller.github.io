@@ -7251,7 +7251,7 @@ async function deleteRowsFromIndexes(theIndexes, doSelect){
   })
 }
 
-async function getLineNumberRanges(){
+async function getLineNumberRanges(doReplace){
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let usedRange = scriptSheet.getUsedRange();
@@ -7306,9 +7306,11 @@ async function getLineNumberRanges(){
         }
       }
       console.log('myValues', myValues, 'firstRowIndex', firstRowIndex);
-      let newRange = scriptSheet.getRangeByIndexes(firstRowIndex, sceneLineNumberRangeIndex, myValues.length, 1);
-      newRange.values = myValues;
-      await excel.sync();
+      if (doReplace){
+        let newRange = scriptSheet.getRangeByIndexes(firstRowIndex, sceneLineNumberRangeIndex, myValues.length, 1);
+        newRange.values = myValues;
+        await excel.sync();
+      }
       console.log('Done')
     }
   })
