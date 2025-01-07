@@ -5156,7 +5156,7 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs){
       }
     }
   }
-  let cueRange, characterRange, directionRange, ukScriptRange;
+  let cueRange, characterRange, directionRange, ukScriptRange, usScriptRange, usCueRange;
   console.log('Rangebound length', rangeBounds.length, rangeBounds);
   let rowIndexes = []
   let item = - 1;
@@ -5195,14 +5195,11 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs){
         actorDirectionRange.copyFrom(directionRange, 'Formats', false, false);
         await excel.sync();
         if (doUs){
-          actorScriptRange.copyFrom(usScriptRange, 'Values', false, false);
-          actorScriptRange.copyFrom(usScriptRange, 'Formats', false, false);
+          actorScriptRange.copyFrom(usScriptRange, 'All');
           await excel.sync();
           actorUsCueRange.copyFrom(usCueRange, 'Values', false, false);
           actorUsCueRange.copyFrom(usCueRange, 'Formats', false, false);
         } else {
-          //actorScriptRange.copyFrom(ukScriptRange, 'Values', false, false);
-          //actorScriptRange.copyFrom(ukScriptRange, 'Formats', false, false);
           actorScriptRange.copyFrom(ukScriptRange, 'All');
         }
         await excel.sync();

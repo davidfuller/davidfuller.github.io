@@ -784,7 +784,7 @@ async function formatActorScript(sheetName, sceneBlockRowIndexes, scriptRowIndex
   for (let i = 0; i < scriptRowIndexes.length; i++){
     await cueColumnFontColour(sheetName, scriptRowIndexes[i]);
     await clearScriptFill(sheetName,scriptRowIndexes[i]);
-    await clearStrikethrough(sheetName, scriptRowIndexes[i]);
+    //await clearStrikethrough(sheetName, scriptRowIndexes[i]);
     await highlightCharacters(sheetName, character, scriptRowIndexes[i]);
   }
 }
