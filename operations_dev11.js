@@ -4550,6 +4550,7 @@ async function getSceneWallaInformation(typeNo, sceneNo = -1){
       let theIndex = - 1;
       
       if (doNamed){
+        console.log('Desired sceneNo', sceneNo);
         for (let i = 0; i < typeOfWallaRange.values.length; i++){
           console.log('Scene: ', sceneRange.values[i][0]);
           if (isNamedWalla(typeOfWallaRange.values[i][0])){
