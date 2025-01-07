@@ -927,11 +927,11 @@ async function putDataInScript(startRow, endRow){
       textArea.value += 'Calculating walla cues \n'
       await jade_modules.operations.calculateWallaCues();
       textArea.value += 'Named Character Walla to script \n'
-      await jade_modules.operations.getSceneWallaInformation(1, sceneNo);
+      await jade_modules.operations.getSceneWallaInformation(1, sceneNo, i == 0);
       textArea.value += 'Un-named Walla to script \n'
-      await jade_modules.operations.getSceneWallaInformation(2, sceneNo);
+      await jade_modules.operations.getSceneWallaInformation(2, sceneNo, i == 0);
       textArea.value += 'General Walla to script \n'
-      await jade_modules.operations.getSceneWallaInformation(3, sceneNo);
+      await jade_modules.operations.getSceneWallaInformation(3, sceneNo, i == 0);
     }
   }) 
 }

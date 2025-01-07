@@ -4500,7 +4500,7 @@ function getWallaDisplayName(wallaName){
   return temp;
 }
 
-async function getSceneWallaInformation(typeNo, sceneNo = -1){
+async function getSceneWallaInformation(typeNo, sceneNo = -1, isFirst = false){
   let isProtected = await unlockIfLocked();
   if (sceneNo == -1){
     let wallaScene = tag('walla-scene').value;
@@ -4650,7 +4650,11 @@ async function getSceneWallaInformation(typeNo, sceneNo = -1){
             break;
           }
         } else if (typeCodeRange.values[i][0] == myTypes.chapter){
-          if (sceneRange.values[i][0] == sceneNo){
+          let firstScene = -1
+          if (isFirst){
+            firstScene = await getFirstScene(); 
+          }
+          if ((sceneRange.values[i][0] == sceneNo) || (sceneRange.value[i][0]== firstScene)){
             if (doNamed){
               sceneRowIndex = i + typeOfWallaRange.rowIndex + sceneBlockRows + 1;  
             } else if (doUnnamed){
