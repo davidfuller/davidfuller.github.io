@@ -221,7 +221,7 @@ function splitLine(theLine){
       theDescription = lastBit.trim();
       lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
       console.log('theRestPosition', theRestPosition, 'lastBitPosition', lastBitPosition);
-      lineRange = theLine.substring(theRestPosition, lastBitPosition - 2).trim();
+      lineRange = theLine.substring(theRestPosition, lastBitPosition - 1).trim();
       if (!isNaN(parseInt(lineRange))){
         lineNo = parseInt(lineRange)
         lineRange = "Line " + lineRange
