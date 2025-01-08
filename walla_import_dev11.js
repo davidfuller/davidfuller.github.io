@@ -58,10 +58,10 @@ const wallaScriptColumns = {
 const wallaScriptingNames = ['WALLA SCRIPTED', 'WALLA SCRIPTED LINES', 'WALLA SCRIPTED LINES - SCOLDING CARRYING ON', 'WALLA SCRIPTING', 'WALLA SCRIPTING', 'WALLA SCRIPTING - lines to lead into the scripted argument']
 
 const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Named Characters - For reaction sounds and walla:', 'Named Characters Reactions and Walla', 'Named character walla', 'Named - Character & Reactions', 
-  'Named character walla:', 'Named character walla', 'Named Characters Reactions and Walla:', 'Named Characters for Reaction Sounds & Walla:', 'Named Characters for reaction sounds and Walla:', 
+  'Named character walla:', 'Named character walla', 'Named Characters Reactions and Walla:', 'Named Characters for Reaction Sounds & Walla:', 'Named Characters for reaction sounds and Walla:', 'Named Chsracters for reaction sounds and walla:', 
   'Named characters for reaction sounds and walla', 'Characters for reaction sounds and walla']
 let displayWallaName = 'Named Characters Reactions and Walla:'
-const unnamedCharacters = ['Un-named Character Walla','Un-named Character Walla:', 'Un-named Character Walla: None', 'Unnamed Character Walla:', 'Un-named characters:'];
+const unnamedCharacters = ['Un-named Character Walla','Un-named Character Walla:', 'Un-named Character Walla: None', 'Unnamed Character Walla:', 'Un-named characters:', 'Un-named character walla :'];
 let displayWallaUnNamed = 'Un-named Character Walla:';
 const generalWalla = ['General Walla', 'General Walla:', 'General Walla: None']
 let displayGeneralWalla = 'General Walla:';
