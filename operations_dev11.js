@@ -515,6 +515,7 @@ async function getLineNoRowIndexAndScene(lineNo){
       range.load('rowIndex');
       sceneRange.load('values');
       await excel.sync();
+      console.log('lineNo', lineNo)
       const myIndex = range.values.findIndex(a => a[0] == (lineNo));
       console.log(myIndex, range.rowIndex);
       myRowIndex = myIndex + range.rowIndex;
