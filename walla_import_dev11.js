@@ -18,6 +18,11 @@ const wallaSourceWallaColumn = [
     scriptColumn: 9
   },
   {
+    book: 'Book 3',
+    column: 5,
+    scriptColumn: 9
+  },
+  {
     book: 'Book 4',
     column: 9,
     scriptColumn: 9
