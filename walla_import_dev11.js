@@ -222,6 +222,10 @@ function splitLine(theLine){
       lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
       console.log('theRestPosition', theRestPosition, 'lastBitPosition', lastBitPosition);
       lineRange = theLine.substring(theRestPosition, lastBitPosition - 2).trim();
+      if (!sNaN(parseInt(lineRange)){
+        lineNo = parseInt(lineRange)
+        lineRange = "Line " + lineRange
+      }
     }
     console.log('At this point 3, theLine', theLine, 'theDescription', theDescription, 'lineRange', lineRange);
   } else {
