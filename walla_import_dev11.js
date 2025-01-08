@@ -222,7 +222,7 @@ function splitLine(theLine){
       lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
       console.log('theRestPosition', theRestPosition, 'lastBitPosition', lastBitPosition);
       lineRange = theLine.substring(theRestPosition, lastBitPosition - 2).trim();
-      if (!sNaN(parseInt(lineRange))){
+      if (!isNaN(parseInt(lineRange))){
         lineNo = parseInt(lineRange)
         lineRange = "Line " + lineRange
       }
