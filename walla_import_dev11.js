@@ -159,6 +159,7 @@ function splitLine(theLine){
   let firstLine;
   let lineNo = -1;
   let theSections = theLine.split('-');
+  // Deal with a raw line number being in first section
   if (!isNaN(parseInt(theSections[0]))){
     let tempLineNo = parseInt(theSections[0]);
     if (theSections.length > 1){
@@ -168,6 +169,17 @@ function splitLine(theLine){
       theSections[0] = "Line " + tempLineNo;
     }
   }
+  // Deal with a line number being in first section
+  for (let i = 0; i < textLines.length; i++){
+    if (theSections[0].toLowerCase().includes(textLines[i])){
+      if (theSections.length > 1){
+        theSections[0] = theSections[1];
+        theSections[1] = theSections[0];
+      }
+      break;
+    }
+  }
+
   let theCharacter = theSections[0].trim();
   let individualCharacters = theCharacter.split(',')
   let thePosition = '';
