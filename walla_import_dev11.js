@@ -162,12 +162,23 @@ function splitLine(theLine){
   // Deal with a raw line number being in first section
   console.log('Stage 1 theSections:', theSections);
   if (!isNaN(parseInt(theSections[0]))){
-    let tempLineNo = parseInt(theSections[0]);
-    if (theSections.length > 1){
-      theSections[0] = theSections[1];
-      theSections[1] = "Line " + tempLineNo;
+    if (!isNaN(parseInt(theSections[1]))){
+      let tempArray = [];
+      tempArray[0] = theSections[2]
+      tempArray[1] = "Line " + parseInt(theSections[0]) + '-' + parseInt(theSections[1]);
+      for (let i = 3; i < theSections.length; i++){
+        tempArray[i - 1] = theSections[i];
+      }
+      console.log('tempArray', tempArray, 'theSections', theSections);
+      theSections = tempArray
     } else {
-      theSections[0] = "Line " + tempLineNo;
+      let tempLineNo = parseInt(theSections[0]);
+      if (theSections.length > 1){
+        theSections[0] = theSections[1];
+        theSections[1] = "Line " + tempLineNo;
+      } else {
+        theSections[0] = "Line " + tempLineNo;
+      }
     }
   }
   console.log('Stage 2 theSections:', theSections)
