@@ -159,6 +159,7 @@ function splitLine(theLine){
   let firstLine;
   let lineNo = -1;
   let theSections = theLine.split('-');
+  let stageOneUsed = false;
   // Deal with a raw line number being in first section
   console.log('Stage 1 theSections:', theSections);
   if (!isNaN(parseInt(theSections[0]))){
@@ -170,7 +171,7 @@ function splitLine(theLine){
         tempArray[i - 1] = theSections[i];
       }
       console.log('tempArray', tempArray, 'theSections', theSections);
-      theSections = tempArray
+      theSections = tempArray;
     } else {
       let tempLineNo = parseInt(theSections[0]);
       if (theSections.length > 1){
@@ -180,17 +181,20 @@ function splitLine(theLine){
         theSections[0] = "Line " + tempLineNo;
       }
     }
+    stageOneUsed =true;
   }
-  console.log('Stage 2 theSections:', theSections)
-  // Deal with a line number being in first section
-  for (let i = 0; i < textLines.length; i++){
-    if (theSections[0].toLowerCase().includes(textLines[i])){
-      if (theSections.length > 1){
-        let theSwap = theSections[0];
-        theSections[0] = theSections[1];
-        theSections[1] = theSwap;
+  console.log('Stage 2 theSections:', theSections, 'stageOneUsed', stageOneUsed);
+  if (!stageOneUsed){
+    // Deal with a line number being in first section
+    for (let i = 0; i < textLines.length; i++){
+      if (theSections[0].toLowerCase().includes(textLines[i])){
+        if (theSections.length > 1){
+          let theSwap = theSections[0];
+          theSections[0] = theSections[1];
+          theSections[1] = theSwap;
+        }
+        break;
       }
-      break;
     }
   }
   console.log('Stage 3 theSections:', theSections)
