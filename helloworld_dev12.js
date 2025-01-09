@@ -12,7 +12,7 @@ async function auto_exec(){
   console.log('After wordsToNumbers');
   await Jade.load_js("https://davidfuller.github.io/usScript_dev12.js", "usscript");
   console.log('After usScript');
-  await Jade.load_js("https://davidfuller.github.io/actorMultiple,js", "actormultiple");
+  await Jade.load_js("https://davidfuller.github.io/actorMultiple_dev12.js", "actormultiple");
   console.log('After actormultiple');
   await Jade.load_js("https://davidfuller.github.io/html_dev12.js", "html");
   console.log('After html');
