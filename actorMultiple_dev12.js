@@ -1,3 +1,3 @@
-function auto_exec(){
+async function auto_exec(){
   console.log('Actor Multiple');
 }
