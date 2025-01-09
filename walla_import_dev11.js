@@ -211,9 +211,16 @@ function splitLine(theLine){
       } else {
         console.log('I am here in third else');
         theDescription = lastBit.trim();
-        lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
-        console.log('theRestPosition', theRestPosition, 'lastBitPosition', lastBitPosition);
-        lineRange = theLine.substring(theRestPosition, lastBitPosition - 1).trim();
+        if (theDescription == ''){
+          lineRange = theRest.trim()
+          if (lineRange.endsWith('-')){
+            lineRange = lineRange.substring(0, lineRange.length - 2).trim();
+          }
+        } else {
+          lastBitPosition = theLine.toLowerCase().indexOf(lastBit.toLowerCase());
+          console.log('theRestPosition', theRestPosition, 'lastBitPosition', lastBitPosition);
+          lineRange = theLine.substring(theRestPosition, lastBitPosition - 1).trim();
+        }
       }
       
     } else {
