@@ -159,6 +159,15 @@ function splitLine(theLine){
   let firstLine;
   let lineNo = -1;
   let theSections = theLine.split('-');
+  if (!isNaN(parseInt(theSections[0]))){
+    let tempLineNo = parseInt(theSections[0]);
+    if (theSections.length > 1){
+      theSections[0] = theSections[1];
+      theSections[1] = "Line " + tempLineNo;
+    } else {
+      theSections[0] = "Line " + tempLineNo;
+    }
+  }
   let theCharacter = theSections[0].trim();
   let individualCharacters = theCharacter.split(',')
   let thePosition = '';
@@ -184,6 +193,8 @@ function splitLine(theLine){
     theRest = theLine.substring(theRestPosition);
   }
   console.log('theSections', theSections);
+
+
 
   let lastBit = theSections[theSections.length - 1];
   
