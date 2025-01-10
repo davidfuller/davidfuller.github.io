@@ -163,7 +163,7 @@ async function tidyTable(){
     await excel.sync();
     let empty = [];
     for (let i = 0; i < tableRange.values.length; i++){
-      if (range.values[i][characterColumn] == ''){
+      if (tableRange.values[i][characterColumn] == ''){
         empty.push(i);
       }
     }
