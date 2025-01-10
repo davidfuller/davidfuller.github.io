@@ -34,8 +34,8 @@ async function addScript(){
       }
     }
     console.log('addRowNo', addRowNo)
-    let resultRange = sheet.getRangeByIndexes(addRowNo + range.rowIndex, characterColumn + range.columnIndex, 1, 3);
-    let resultArray = [[actorDetails.character, actorDetails.type, actorDetails.allUs]];
+    let resultRange = sheet.getRangeByIndexes(addRowNo + range.rowIndex, characterColumn + range.columnIndex, 1, 4);
+    let resultArray = [[actorDetails.character, actorDetails.type, actorDetails.allUs, scenes.scenes.join(', ')]];
     resultRange.values = resultArray;
   })
 }
