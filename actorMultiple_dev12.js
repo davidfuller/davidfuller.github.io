@@ -97,11 +97,19 @@ async function tableRowsToClear(){
       myRanges.push(sheet.getRange(myAddress));
     }
     for (let myRange of myRanges){
-      myRange.load('rowIndex, columnIndex');
+      myRange.load('rowIndex, columnIndex, rowCount');
     }
     await excel.sync();
-    let validRanges = []
+    let testRanges = [];
     for (let myRange of myRanges){
+      for (let i = 0; i < myRange.rowCount; i++){
+        testRanges.push(sheet.getRangeByIndexes(myRange.rowIndex + i, myRange.columnIndex, 1, 1));
+        testRanges.load('rowIndex, columnIndex');
+      }
+    }
+
+    let validRanges = []
+    for (let myRange of testRanges){
       console.log('row', myRange.rowIndex, 'column', myRange.columnIndex);
       if ((myRange.rowIndex >= tableRange.rowIndex) && (myRange.rowIndex <= tableRange.rowIndex + tableRange.rowCount -1)){
         if ((myRange.columnIndex >= tableRange.columnIndex) && (myRange.columnIndex <= tableRange.columnIndex + tableRange.columnCount -1)){
