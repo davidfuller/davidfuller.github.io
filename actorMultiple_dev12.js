@@ -140,6 +140,7 @@ async function clearRows(theRows){
     const sheet = excel.workbook.worksheets.getItem(forActorName);
     const tableRange = sheet.getRange(multiActorTableName);
     tableRange.load('rowIndex, columnIndex, rowCount, columnCount');
+    await excel.sync();
     deleteRanges = [];
     for (let theRow of theRows){
       deleteRanges.push(sheet.getRangeByIndexes(theRow + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount));
