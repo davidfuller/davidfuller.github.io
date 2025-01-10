@@ -638,7 +638,7 @@ label {
   color: #fbe2d5; 
   margin-right: 0px;
   margin-left: 5px !important;
-  width: 95px;
+  width: 100px;
 }
 
 .director-button {

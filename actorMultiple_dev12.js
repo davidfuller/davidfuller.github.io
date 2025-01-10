@@ -18,6 +18,8 @@ async function auto_exec(){
 
 async function addScript(){
   let characterColumn = getColumnNumber('Character');
+  let sceneColumn = getColumnNumber('Scene');
+  let columnCount = sceneColumn - characterColumn + 1; 
   let addRowNo = -1
   let actorDetails = await getActorDetails();
   let scenes = await jade_modules.scheduling.getSceneNumberActor();
@@ -34,7 +36,7 @@ async function addScript(){
       }
     }
     console.log('addRowNo', addRowNo)
-    let resultRange = sheet.getRangeByIndexes(addRowNo + range.rowIndex, characterColumn + range.columnIndex, 1, 4);
+    let resultRange = sheet.getRangeByIndexes(addRowNo + range.rowIndex, characterColumn + range.columnIndex, 1, columnCount);
     let resultArray = [[actorDetails.character, actorDetails.type, actorDetails.allUs, scenes.scenes.join(', ')]];
     resultRange.values = resultArray;
   })
@@ -78,6 +80,7 @@ async function getActorDetails(){
 
 async function removeScript(){
   let tableRows = await tableRowsToClear();
+  await clearRows(tableRows);
 }
 
 async function tableRowsToClear(){
@@ -127,4 +130,23 @@ async function tableRowsToClear(){
   }) 
   console.log('details', details);
   return details;
+}
+
+async function clearRows(theRows){
+  let characterColumn = getColumnNumber('Character');
+  let sceneColumn = getColumnNumber('Scene');
+  let columnCount = sceneColumn - characterColumn + 1; 
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(forActorName);
+    const tableRange = sheet.getRange(multiActorTableName);
+    tableRange.load('rowIndex, columnIndex, rowCount, columnCount');
+    deleteRanges = [];
+    for (let theRow of theRows){
+      deleteRanges.push(sheet.getRangeByIndexes(theRow + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount));
+    }
+    for (let deleteRange of deleteRanges){
+      deleteRange.clear('Contents');
+    }
+  })
+
 }
