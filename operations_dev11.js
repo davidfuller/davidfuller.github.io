@@ -2,7 +2,7 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '11.11';
+const codeVersion = '11.12';
 //11.02 isProtected on applyTakeDetails
 //11.03 31-35 in walla and remove the clears
 //11.04 30-35 in walla
@@ -13,6 +13,7 @@ const codeVersion = '11.11';
 //11.09 On add takes stopped issues with text starting with +,-,= and stop add takes in column heading
 //11.10 Walla cues include script
 //11.11 Check Walla cues in all columns
+//11.12 Remove Walla Blocks from actor script
 const firstDataRow = 3;
 const lastDataRow = 29999;
 const scriptSheetName = 'Script';
