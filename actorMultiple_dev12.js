@@ -190,9 +190,6 @@ async function tidyTable(){
             }
           }
         }
-        if (!hasNonEmpty){
-          break;
-        }
       }
       if(!hasNonEmpty){
         break;
