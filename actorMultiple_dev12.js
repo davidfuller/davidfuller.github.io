@@ -20,6 +20,8 @@ async function addScript(){
   let characterColumn = getColumnNumber('Character');
   let addRowNo = -1
   let actorDetails = await getActorDetails();
+  let scenes = await jade_modules.scheduling.getSceneNumberActor();
+  console.log('scenes', scenes);
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(forActorName);
     const range = sheet.getRange(multiActorTableName);
