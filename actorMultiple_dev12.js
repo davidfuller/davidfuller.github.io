@@ -159,30 +159,42 @@ async function tidyTable(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(forActorName);
     const tableRange = sheet.getRange(multiActorTableName);
-    tableRange.load('values, rowIndex, columnIndex, rowCount, columnCount');
-    await excel.sync();
-    let empty = [];
-    for (let i = 0; i < tableRange.values.length; i++){
-      if (tableRange.values[i][characterColumn] == ''){
-        empty.push(i);
+    let hasNonEmpty = false;
+    for (let test = 0; test < 100; test++){
+      console.log('Attempt', test);
+      tableRange.load('values, rowIndex, columnIndex, rowCount, columnCount');
+      await excel.sync();
+      let empty = [];
+      for (let i = 0; i < tableRange.values.length; i++){
+        if (tableRange.values[i][characterColumn] == ''){
+          empty.push(i);
+        }
       }
-    }
-    console.log('empty', empty)
-    for (let i = 0; i < tableRange.values.length; i++){
-      if (empty.includes(i)){
-        (console.log(i, 'is Empty'))
-        for (j = i + 1; j <tableRange.values.length; j++){
-          if (!empty.includes(j)){
-            (console.log('j', j, 'is NOT Empty'))
-            let newRange = sheet.getRangeByIndexes(i + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount);
-            let currentRange = sheet.getRangeByIndexes(j + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount)
-            newRange.copyFrom(currentRange, "values");
-            await excel.sync();
-            currentRange.clear("Contents");
-            await excel.sync();
-            break;
+      console.log('empty', empty)
+      for (let i = 0; i < tableRange.values.length; i++){
+        if (empty.includes(i)){
+          (console.log(i, 'is Empty'))
+          hasNonEmpty = false;
+          for (j = i + 1; j <tableRange.values.length; j++){
+            if (!empty.includes(j)){
+              hasNonEmpty = true;
+              (console.log('j', j, 'is NOT Empty'))
+              let newRange = sheet.getRangeByIndexes(i + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount);
+              let currentRange = sheet.getRangeByIndexes(j + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount)
+              newRange.copyFrom(currentRange, "values");
+              await excel.sync();
+              currentRange.clear("Contents");
+              await excel.sync();
+              break;
+            }
           }
         }
+        if (!hasNonEmpty){
+          break;
+        }
+      }
+      if(!hasNonEmpty){
+        break;
       }
     }
   })
