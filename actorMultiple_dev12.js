@@ -171,25 +171,42 @@ async function tidyTable(){
         }
       }
       console.log('empty', empty);
+      let finished = true;
       for (let i = 0; i < tableRange.values.length; i++){
-        console.log('i', i);
         if (empty.includes(i)){
-          (console.log(i, 'is Empty'))
-          hasNonEmpty = false;
-          for (j = i + 1; j <tableRange.values.length; j++){
+          for (let j = i + 1; j < tableRange.values.length; j++){
             if (!empty.includes(j)){
-              hasNonEmpty = true;
-              (console.log('j', j, 'is NOT Empty'))
-              let newRange = sheet.getRangeByIndexes(i + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount);
-              let currentRange = sheet.getRangeByIndexes(j + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount)
-              newRange.copyFrom(currentRange, "values");
-              await excel.sync();
-              currentRange.clear("Contents");
-              await excel.sync();
+              finished = false;
               break;
             }
           }
         }
+      }
+      if (!finished){
+        for (let i = 0; i < tableRange.values.length; i++){
+          console.log('i', i);
+          if (empty.includes(i)){
+            (console.log(i, 'is Empty'))
+            hasNonEmpty = false;
+            for (j = i + 1; j <tableRange.values.length; j++){
+              if (!empty.includes(j)){
+                hasNonEmpty = true;
+                (console.log('j', j, 'is NOT Empty'))
+                let newRange = sheet.getRangeByIndexes(i + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount);
+                let currentRange = sheet.getRangeByIndexes(j + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount)
+                newRange.copyFrom(currentRange, "values");
+                await excel.sync();
+                currentRange.clear("Contents");
+                await excel.sync();
+                break;
+              }
+            }
+          }
+        }
+      }
+      if (finished){
+        console.log('finished');
+        break;
       }
     }
   })
