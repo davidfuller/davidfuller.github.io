@@ -104,8 +104,11 @@ async function tableRowsToClear(){
     for (let myRange of myRanges){
       for (let i = 0; i < myRange.rowCount; i++){
         testRanges.push(sheet.getRangeByIndexes(myRange.rowIndex + i, myRange.columnIndex, 1, 1));
-        testRanges.load('rowIndex, columnIndex');
       }
+    }
+
+    for (let testRange of testRanges){
+      testRange.load('rowIndex, columnIndex');
     }
 
     let validRanges = []
