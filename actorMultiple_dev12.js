@@ -170,8 +170,9 @@ async function tidyTable(){
           empty.push(i);
         }
       }
-      console.log('empty', empty)
+      console.log('empty', empty);
       for (let i = 0; i < tableRange.values.length; i++){
+        console.log('i', i);
         if (empty.includes(i)){
           (console.log(i, 'is Empty'))
           hasNonEmpty = false;
