@@ -141,7 +141,7 @@ async function clearRows(theRows){
     const tableRange = sheet.getRange(multiActorTableName);
     tableRange.load('rowIndex, columnIndex, rowCount, columnCount');
     await excel.sync();
-    deleteRanges = [];
+    let deleteRanges = [];
     for (let theRow of theRows){
       deleteRanges.push(sheet.getRangeByIndexes(theRow + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount));
     }
@@ -149,5 +149,43 @@ async function clearRows(theRows){
       deleteRange.clear('Contents');
     }
   })
-
+  await tidyTable();
 }
+
+async function tidyTable(){
+  let characterColumn = getColumnNumber('Character');
+  let sceneColumn = getColumnNumber('Scene');
+  let columnCount = sceneColumn - characterColumn + 1; 
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(forActorName);
+    const tableRange = sheet.getRange(multiActorTableName);
+    tableRange.load('values, rowIndex, columnIndex, rowCount, columnCount');
+    await excel.sync();
+    let empty = [];
+    for (let i = 0; i < tableRange.values.length; i++){
+      if (range.values[i][characterColumn] == ''){
+        empty.push(i);
+      }
+    }
+    console.log('empty', empty)
+    for (let i = 0; i < tableRange.values.length; i++){
+      if (empty.includes(i)){
+        (console.log(i, 'is Empty'))
+        for (j = i + 1; j <tableRange.values.length; j++){
+          if (!empty.includes(j)){
+            (console.log('j', j, 'is NOT Empty'))
+            let newRange = sheet.getRangeByIndexes(i + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount);
+            let currentRange = sheet.getRangeByIndexes(j + tableRange.rowIndex, characterColumn + tableRange.columnIndex, 1, columnCount)
+            newRange.copyFrom(currentRange, "values");
+            await excel.sync();
+            currentRange.clear("Contents");
+            await excel.sync();
+            break;
+          }
+        }
+      }
+    }
+  })
+}
+
+
