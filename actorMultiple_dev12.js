@@ -12,8 +12,33 @@ const multiActorColumns = [
   {name: 'Scene', column: 4},
 ]
 
+const actorScriptName = [
+  { number: 1, name: 'Actor Script'},
+  { number: 2, name: 'Actor Script 2'},
+  { number: 3, name: 'Actor Script 3'},
+  { number: 4, name: 'Actor Script 4'},
+  { number: 5, name: 'Actor Script 5'},
+  { number: 6, name: 'Actor Script 6'},
+  { number: 7, name: 'Actor Script 7'},
+  { number: 8, name: 'Actor Script 8'},
+  { number: 9, name: 'Actor Script 9'},
+  { number: 10, name: 'Actor Script 10'}
+]
+
 async function auto_exec(){
   console.log('Actor Multiple');
+}
+
+function getActorSheetNameForRowIndex(rowIndex){
+  let number = rowIndex + 1;
+  let name = '';
+  for (let i = 0; i < actorScriptName.length; i++){
+    if (actorScriptName[i].number == number){
+      name = actorScriptName[i].name;
+      break;
+    }
+  }
+  return name;
 }
 
 async function addScript(){
@@ -212,4 +237,12 @@ async function tidyTable(){
   })
 }
 
+async function doMultiScript(){
+  let details = [];
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(forActorName);
+    const tableRange = sheet.getRange(multiActorTableName);
+    tableRange.load('values, rowIndex, columnIndex, rowCount, columnCount');
+    
+}
 

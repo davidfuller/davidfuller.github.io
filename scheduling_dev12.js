@@ -504,7 +504,7 @@ async function isUsOnly(){
   return usOnly;
 }
 
-async function createScript(){
+async function createScript(sheetName = 'Actor Script', isMultiScript = false){
   let startTime = new Date().getTime();
   let actorWait = tag('script-wait');
   actorWait.style.display = 'block';
