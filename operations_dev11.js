@@ -4969,7 +4969,7 @@ async function getRowIndeciesForScene(sceneNumber, usOnly){
     let typeCodeRange = scriptSheet.getRangeByIndexes(myIndecies[0], typeCodeIndex, myIndecies[myIndecies.length-1] - myIndecies[0] + 1, 1);
     typeCodeRange.load('values, rowIndex');
     await excel.sync();
-    let dodgyIndexes = typeCodeRange.values.map((x, i) => [x, i]).filter(([x, i]) => x == myTypes.sceneBlock).map(([x, i]) => i + typeCodeRange.rowIndex);
+    let dodgyIndexes = typeCodeRange.values.map((x, i) => [x, i]).filter(([x, i]) => ((x == myTypes.sceneBlock) || (x == myTypes.wallaBlock))).map(([x, i]) => i + typeCodeRange.rowIndex);
     console.log('dodgy', dodgyIndexes);
     newIndexes = [];
     let newIndex = - 1;
