@@ -90,8 +90,10 @@ async function tableRowsToClear(){
     selectedRanges.load('address');
     await excel.sync();
     let myAddresses = selectedRanges.address.split(',');
+    console.log('myAddresses', myAddresses)
     let myRanges = []
     for (let myAddress of myAddresses){
+      console.log('address', myAddress)
       myRanges.push(sheet.getRange(myAddress));
     }
     for (let myRange of myRanges){
