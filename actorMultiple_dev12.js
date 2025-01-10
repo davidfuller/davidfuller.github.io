@@ -191,9 +191,6 @@ async function tidyTable(){
           }
         }
       }
-      if(!hasNonEmpty){
-        break;
-      }
     }
   })
 }
