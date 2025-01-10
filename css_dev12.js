@@ -633,6 +633,13 @@ label {
   margin-left: 5px !important;
   width: 95px;
 }
+.actor-multi{
+  background-color: #592509;
+  color: #fbe2d5; 
+  margin-right: 0px;
+  margin-left: 5px !important;
+  width: 95px;
+}
 
 .director-button {
   color: #caedfb;

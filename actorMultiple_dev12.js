@@ -75,3 +75,41 @@ async function getActorDetails(){
   console.log('details', details);
   return details;
 }
+
+async function removeScript(){
+  let tableRows = await tableRowsToClear();
+}
+
+async function tableRowsToClear(){
+  let details = [];
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(forActorName);
+    const tableRange = sheet.getRange(multiActorTableName);
+    tableRange.load('rowIndex, columnIndex, rowCount, columnCount');
+    let selectedRanges = excel.workbook.getSelectedRanges();
+    selectedRanges.load('address');
+    await excel.sync();
+    let myAddresses = selectedRanges.address.split(',');
+    let myRanges = []
+    for (let myAddress of myAddresses){
+      myRanges.push(sheet.getRange(myAddress));
+    }
+    for (let myRange of myRanges){
+      myRange.load('rowIndex, columnIndex');
+    }
+    await excel.sync();
+    let validRanges = []
+    for (let myRange of myRanges){
+      if ((myRange.rowIndex >= tableRange.rowIndex) && (myRange.rowIndex <= tableRange.rowIndex + tableRange.rowCount -1)){
+        if ((myRange.columnIndex >= tableRange.columnIndex) && (myRange.columnIndex <= tableRange.columnIndex + tableRange.columnCount -1)){
+          validRanges.push(myRange);
+        }
+      }
+    }
+    for (let validRange of validRanges){
+      details.push(validRange.rowIndex - tableRange.rowIndex);
+    }
+  }) 
+  console.log('detils', details);
+  return details;
+}

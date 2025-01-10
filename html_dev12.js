@@ -289,7 +289,9 @@ async function mainHTML(){
     <label id='script-wait'>Please wait...</label>
   </div>
   <div id="multiActorButtons">
-    <button id="btnAddScript" class="actor-button" onclick="jade_modules.actormultiple.addScript()">Add Script</button><br/>
+    <label id="multi-message"></label><br/>
+    <button id="btnAddScript" class="actor-multi" onclick="jade_modules.actormultiple.addScript()">Add Script</button>
+    <button id="btnRemoveScript" class="actor-multi" onclick="jade_modules.actormultiple.removeScript()">Remove Selected Script(s)</button><br/>
   </div>
 </div>
 <div id="for-scheduling-page">
