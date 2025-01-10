@@ -110,7 +110,8 @@ async function tableRowsToClear(){
     for (let testRange of testRanges){
       testRange.load('rowIndex, columnIndex');
     }
-
+    await excel.sync();
+    
     let validRanges = []
     for (let myRange of testRanges){
       console.log('row', myRange.rowIndex, 'column', myRange.columnIndex);
