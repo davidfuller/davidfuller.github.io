@@ -100,6 +100,7 @@ async function tableRowsToClear(){
     await excel.sync();
     let validRanges = []
     for (let myRange of myRanges){
+      console.log('row', myRange.rowIndex, 'column', myRange.columnIndex);
       if ((myRange.rowIndex >= tableRange.rowIndex) && (myRange.rowIndex <= tableRange.rowIndex + tableRange.rowCount -1)){
         if ((myRange.columnIndex >= tableRange.columnIndex) && (myRange.columnIndex <= tableRange.columnIndex + tableRange.columnCount -1)){
           validRanges.push(myRange);
@@ -110,6 +111,6 @@ async function tableRowsToClear(){
       details.push(validRange.rowIndex - tableRange.rowIndex);
     }
   }) 
-  console.log('detils', details);
+  console.log('details', details);
   return details;
 }
