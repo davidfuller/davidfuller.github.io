@@ -239,11 +239,38 @@ async function tidyTable(){
 
 async function doMultiScript(){
   let details = [];
+  let characterColumn = getColumnNumber('Character');
+  let typeColumn = getColumnNumber('Type');
+  let allUsColumn = getColumnNumber('All/US');
+  let sceneColumn = getColumnNumber('Scene');
+  
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(forActorName);
     const tableRange = sheet.getRange(multiActorTableName);
     tableRange.load('values, rowIndex, columnIndex, rowCount, columnCount');
+    await excel.sync();
+    for (let i = 0; i < tableRange.values.length; i++){
+      let actorScript = {};
+      actorScript.character = tableRange.values[i][characterColumn].trim();
+      if (actorScript.character != ''){
+        actorScript.type = tableRange.values[i][typeColumn].trim();
+        actorScript.allUs = tableRange.values[i][allUsColumn].trim();
+        let scenesText  = tableRange.values[i][sceneColumn].trim();
+        let scenesStrings = scenesText.split(',');
+        let scenes = []
+        for (let j = 0; j < scenesStrings.length; j++){
+          if (!isNaN(parseInt(scenesStrings[j]))){
+            scenes.push(parseInt(scenesStrings[j]));
+          }
+        }
+        actorScript.scenes = {};
+        actorScript.scenes.scenes = scenes;
+        actorScript.scenes.display = scenesText;
+        actorScript.sheetName = getActorSheetNameForRowIndex(i);
+        details.push(actorScript);
+      }
+    }
   })
-
+  console.log('details', details);
 }
 
