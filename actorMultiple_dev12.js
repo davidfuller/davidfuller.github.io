@@ -243,6 +243,7 @@ async function doMultiScript(){
     const sheet = excel.workbook.worksheets.getItem(forActorName);
     const tableRange = sheet.getRange(multiActorTableName);
     tableRange.load('values, rowIndex, columnIndex, rowCount, columnCount');
-    
+  })
+
 }
 
