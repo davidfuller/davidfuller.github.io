@@ -4919,9 +4919,10 @@ async function clearWallaForScene(sceneNo){
     let first = -1;
     let last = -1;
     //let theIndexes = [];
-    console.log('myTypecodea', myTypeCodes);
+    console.log('myTypecodea', myTypeCodes, 'sceneNo', sceneNo);
     for (let i = 0; i < myTypeCodes.scenes.values.length; i++){
       if (myTypeCodes.scenes.values[i] == sceneNo){
+        console.log('my scene, i', i);
         let theIndex = i + myTypeCodes.scenes.rowIndex
         if (first == -1){
           first = theIndex;
