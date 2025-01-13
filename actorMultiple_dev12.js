@@ -311,6 +311,7 @@ async function getCurrentActorScriptSheet(){
     for (let sheet of actorScriptName){
       console.log('sheet.name', sheet.name);
       if (sheet.name == currentSheet.name){
+        console.log("I'm here", sheet.name, currentSheet.name)
         return sheet.name;
       }
     }
