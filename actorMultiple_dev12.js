@@ -302,3 +302,16 @@ async function showActorScriptFromIndex(){
   })
 }
 
+async function actorScriptAutoRowHeight(){
+  await Excel.run(async function(excel){
+    const currentSheet = excel.workbook.worksheets.getActiveWorksheet();
+    currentSheet.load('name');
+    await excel.sync();
+    for (let sheet of actorScriptName){
+      if (sheet.name == currentSheet.name){
+        await jade_modules.operations.actorScriptAutoRowHeight(sheetName);
+      }
+    }
+  })
+}
+

@@ -6646,12 +6646,12 @@ async function startUpClearHiddenRowsAndViews(){
   await selectRange('A3', true);
 }
 
-async function actorScriptAutoRowHeight(){
+async function actorScriptAutoRowHeight(sheetName = actorScriptName){
   let wait = tag('resize-wait');
   wait.style.display = 'block';
-  let usedRowIndexes = await actorScriptUsedRows();
+  let usedRowIndexes = await actorScriptUsedRows(sheetName);
   await Excel.run(async function(excel){
-    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    const actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
     console.log('usedRowIndexes', usedRowIndexes);
     let tempRange = [];
     for (let i = 0; i < usedRowIndexes.length; i++){
@@ -6692,11 +6692,11 @@ async function actorScriptChangeHeight(percent){
    wait.style.display = 'none';
 }
 
-async function actorScriptUsedRows(){
+async function actorScriptUsedRows(sheetName = actorScriptName){
   const textColumnIndex = 3;
   let usedRowIndexes = [];
   await Excel.run(async function(excel){
-    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    const actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
     const usedRange = actorScriptSheet.getUsedRange();
     usedRange.load('values, rowIndex')
     await excel.sync()
