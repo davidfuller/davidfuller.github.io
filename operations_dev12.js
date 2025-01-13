@@ -6654,9 +6654,15 @@ async function actorScriptAutoRowHeight(sheetName = actorScriptName){
     const actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
     console.log('usedRowIndexes', usedRowIndexes);
     let tempRange = [];
+    let counter = 0;
     for (let i = 0; i < usedRowIndexes.length; i++){
+      counter += 1;
       tempRange[i] = actorScriptSheet.getRangeByIndexes(usedRowIndexes[i], 1, 1, 1);
       tempRange[i].format.autofitRows();
+      if (counter > 1000){
+        counter = 0;
+        await excel.sync()
+      }
     }
     //usedRange.format.useStandardHeight = true;
   })
