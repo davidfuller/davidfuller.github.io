@@ -504,19 +504,33 @@ async function isUsOnly(){
   return usOnly;
 }
 
-async function createScript(sheetName = 'Actor Script', isMultiScript = false){
+async function createScript(sheetName = 'Actor Script', isMultiScript = false, multiScriptDetails = null){
   let startTime = new Date().getTime();
   let actorWait = tag('script-wait');
   actorWait.style.display = 'block';
   let isAllNaN = true;
-  let sceneNumbers = await getSceneNumberActor();
-  let usOnly = await isUsOnly();
+  let sceneNumbers, usOnly
+
+  if (isMultiScript){
+    sceneNumbers = multiScriptDetails.scenes;
+    usOnly = multiScriptDetails.allUs == 'US Only';
+  } else {
+    sceneNumbers = await getSceneNumberActor();
+    usOnly = await isUsOnly();
+  }
   
   if (sceneNumbers.scenes.length > 0){
     let book = await jade_modules.operations.getBook();
-    let character = await getActor(forActorName);
-    await clearActorScriptBody();
-    await topOfFirstPage(book, character, usOnly);  
+    let character = {};
+    if (isMultiScript){
+      character.name = multiScriptDetails.character;
+      character.type = multiScriptDetails.type;
+      sheetName = multiScriptDetails.sheetName
+    } else {
+      character = await getActor(forActorName);
+    }
+    await clearActorScriptBody(sheetName);    
+    await topOfFirstPage(book, character, usOnly, sheetName);  
   
     let theRowIndex = 1;
     let rowIndexes;
@@ -532,25 +546,27 @@ async function createScript(sheetName = 'Actor Script', isMultiScript = false){
           //let sceneBlockText = await jade_modules.operations.getSceneBlockNear(indexes[0]);
           let sceneBlockText = await jade_modules.operations.getSceneBlockText(sceneNumber, sceneBlockRows)
           let doPageBreak = i > 0;
-          let rowDetails = await putDataInActorScriptSheet(sceneBlockText, theRowIndex, doPageBreak);
+          let rowDetails = await putDataInActorScriptSheet(sceneBlockText, theRowIndex, doPageBreak, sheetName);
           if (rowDetails.sceneBlockRowIndexes.length == 0){
             console.log('Missing scene block (from rowDetails): ', sceneNumber)
           }
           //give 1 row of scpace between sceneblock and script
           theRowIndex = rowDetails.nextRowIndex + 1;
           rowIndexes = await jade_modules.operations.getActorScriptRanges(indexes, theRowIndex, usOnly);
-          await formatActorScript(actorScriptName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name, usOnly);
+          await formatActorScript(sheetName, rowDetails.sceneBlockRowIndexes, rowIndexes, character.name, usOnly);
           theRowIndex = rowIndexes[rowIndexes.length - 1].startRow + rowIndexes[rowIndexes.length - 1].rowCount + 1;
         } else {
           console.log('Missing scene block: ', sceneNumber)
         }
       }
     }
-    await makeChaptersBlackFont(actorScriptName, theRowIndex);
+    await makeChaptersBlackFont(sheetName, theRowIndex);
     if (isAllNaN){
       alert('Please select a scene')
     } else {
-      await jade_modules.operations.showActorScript()
+      if (!isMultiScript){
+        await jade_modules.operations.showActorScript()
+      }
     }
   } else {
     alert('Please select a scene')
@@ -664,9 +680,9 @@ async function getSceneNumberActor(){
 }
 
 
-async function topOfFirstPage(book, character, usOnly){
+async function topOfFirstPage(book, character, usOnly, sheetName){
   await Excel.run(async function(excel){
-    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    const actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
     let bookRange = actorScriptSheet.getRange(actorScriptBookName);
     bookRange.values = book;
     let headingRange = actorScriptSheet.getRange(actorScriptCharcaterHeadingName);
@@ -691,21 +707,21 @@ async function topOfFirstPage(book, character, usOnly){
     mergeRange.merge(true);
   })
 }
-async function clearActorScriptBody(){
+async function clearActorScriptBody(sheetName){
   await Excel.run(async function(excel){
-    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    const actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
     actorScriptSheet.horizontalPageBreaks.removePageBreaks();
   
     let tableRange = actorScriptSheet.getRange(actorScriptTableName);
     tableRange.clear("Contents");
     tableRange.clear("Formats");
   })
-  
 }
-async function putDataInActorScriptSheet(sceneBlock, startRowIndex, doPageBreak){
+
+async function putDataInActorScriptSheet(sceneBlock, startRowIndex, doPageBreak, sheetName){
   let rowDetails = {};
   await Excel.run(async function(excel){
-    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    const actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
     let sceneBlockColumnIndex = 0;
     console.log(startRowIndex, sceneBlockColumnIndex, sceneBlock.length, 1)
     console.log(sceneBlock);

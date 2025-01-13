@@ -272,5 +272,8 @@ async function doMultiScript(){
     }
   })
   console.log('details', details);
+  for (let i = 0; i < 1; i++){
+    await jade_modules.scheduling.createScript(details[i].sheetName, true, details[i]);
+  }
 }
 
