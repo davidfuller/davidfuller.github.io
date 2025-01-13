@@ -303,6 +303,7 @@ async function showActorScriptFromIndex(){
 }
 
 async function getCurrentActorScriptSheet(){
+  let result = ''
   await Excel.run(async function(excel){
     const currentSheet = excel.workbook.worksheets.getActiveWorksheet();
     currentSheet.load('name');
@@ -312,11 +313,12 @@ async function getCurrentActorScriptSheet(){
       console.log('sheet.name', sheet.name);
       if (sheet.name == currentSheet.name){
         console.log("I'm here", sheet.name, currentSheet.name)
-        return sheet.name;
+        result = sheet.name;
+        break;
       }
     }
   })
-  return '';    
+  return result;    
 }
 
 async function actorScriptAutoRowHeight(){
