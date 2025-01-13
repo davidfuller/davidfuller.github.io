@@ -255,7 +255,7 @@ async function doMultiScript(){
       if (actorScript.character != ''){
         actorScript.type = tableRange.values[i][typeColumn].trim();
         actorScript.allUs = tableRange.values[i][allUsColumn].trim();
-        let scenesText  = tableRange.values[i][sceneColumn].trim();
+        let scenesText  = tableRange.values[i][sceneColumn].toString().trim();
         let scenesStrings = scenesText.split(',');
         let scenes = []
         for (let j = 0; j < scenesStrings.length; j++){
