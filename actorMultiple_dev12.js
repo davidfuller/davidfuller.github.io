@@ -309,7 +309,7 @@ async function actorScriptAutoRowHeight(){
     await excel.sync();
     for (let sheet of actorScriptName){
       if (sheet.name == currentSheet.name){
-        await jade_modules.operations.actorScriptAutoRowHeight(sheetName);
+        await jade_modules.operations.actorScriptAutoRowHeight(sheet.name);
       }
     }
   })
