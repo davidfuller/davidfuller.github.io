@@ -244,6 +244,7 @@ async function doMultiScript(){
   let allUsColumn = getColumnNumber('All/US');
   let sceneColumn = getColumnNumber('Scene');
   let message = tag('multi-message');
+  let totalNumScenes = 0;
   
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(forActorName);
@@ -266,6 +267,7 @@ async function doMultiScript(){
         }
         actorScript.scenes = {};
         actorScript.scenes.scenes = scenes;
+        totalNumScenes = totalNumScenes + scenes.length
         actorScript.scenes.display = scenesText;
         actorScript.sheetName = getActorSheetNameForRowIndex(i);
         details.push(actorScript);
@@ -273,10 +275,12 @@ async function doMultiScript(){
     }
   })
   console.log('details', details);
+  let scenesDone = 0;
   for (let i = 0; i < details.length; i++){
     message.innerText = 'Doing character: ' + (i + 1) + ' of ' + details.length + ': ' + details[i].character;
-    await jade_modules.scheduling.createScript(details[i].sheetName, true, details[i]);
+    scenesDone = await jade_modules.scheduling.createScript(details[i].sheetName, true, details[i], scenesDone, totalNumScenes);
   }
+  message.innerText = 'All scripts done';
 }
 
 async function showActorScriptFromIndex(){
