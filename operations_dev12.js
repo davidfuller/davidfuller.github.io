@@ -6677,13 +6677,21 @@ async function actorScriptChangeHeight(percent, sheetName = actorScriptName){
     const actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
     console.log('usedRowIndexes', usedRowIndexes);
     let tempRange = [];
+    let counter = 0;
     for (let i = 0; i < usedRowIndexes.length; i++){
+      counter += 1;
       tempRange[i] = actorScriptSheet.getRangeByIndexes(usedRowIndexes[i], 1, 1, 1);
       tempRange[i].format.load('rowHeight');
+      if (counter > 1000){
+        await excel.sync();
+        counter = 0;
+      }
     }
     await excel.sync();
     let newRowHeight = [];
+    counter = 0;
     for (let i = 0; i < usedRowIndexes.length; i++){
+      counter += 1;
       console.log('rowIndex:', usedRowIndexes[i], 'rowHeight', tempRange[i].format.rowHeight);
       newRowHeight[i] = tempRange[i].format.rowHeight * (100 + percent)/100
       if (newRowHeight[i] > 408){
@@ -6692,6 +6700,10 @@ async function actorScriptChangeHeight(percent, sheetName = actorScriptName){
       console.log('rowIndex:', usedRowIndexes[i], 'new rowHeight', newRowHeight[i]);
 
       tempRange[i].format.rowHeight = newRowHeight[i];
+      if (counter > 1000){
+        await excel.sync();
+        counter = 0;
+      }
     }
     await excel.sync();
    })
