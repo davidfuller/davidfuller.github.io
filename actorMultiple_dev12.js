@@ -302,16 +302,30 @@ async function showActorScriptFromIndex(){
   })
 }
 
-async function actorScriptAutoRowHeight(){
+async function getCurrentActorScriptSheet(){
   await Excel.run(async function(excel){
     const currentSheet = excel.workbook.worksheets.getActiveWorksheet();
     currentSheet.load('name');
     await excel.sync();
     for (let sheet of actorScriptName){
       if (sheet.name == currentSheet.name){
-        await jade_modules.operations.actorScriptAutoRowHeight(sheet.name);
+        return sheet.name;
       }
     }
   })
+  return '';    
 }
 
+async function actorScriptAutoRowHeight(){
+  const sheetName = await getCurrentActorScriptSheet();
+  if (sheetName.trim() != ''){
+    await jade_modules.operations.actorScriptAutoRowHeight(sheetName);
+  }
+}
+
+async function actorScriptChangeHeight(percent){
+  const sheetName = await getCurrentActorScriptSheet();
+  if (sheetName.trim() != ''){
+    await jade_modules.operations.actorScriptChangeHeight(percent, sheetName);
+  }
+}

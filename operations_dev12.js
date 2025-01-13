@@ -6669,12 +6669,12 @@ async function actorScriptAutoRowHeight(sheetName = actorScriptName){
   wait.style.display = 'none';
 }
 
-async function actorScriptChangeHeight(percent){
-  let usedRowIndexes = await actorScriptUsedRows();
+async function actorScriptChangeHeight(percent, sheetName = actorScriptName){
+  let usedRowIndexes = await actorScriptUsedRows(sheetName);
   let wait = tag('resize-wait');
   wait.style.display = 'block';
   await Excel.run(async function(excel){
-    const actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    const actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
     console.log('usedRowIndexes', usedRowIndexes);
     let tempRange = [];
     for (let i = 0; i < usedRowIndexes.length; i++){

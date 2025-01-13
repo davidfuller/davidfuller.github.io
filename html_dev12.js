@@ -354,8 +354,8 @@ async function mainHTML(){
   <div id="script-control">
     <button id="btnAutoRowHeight" class="script-nav" onclick="jade_modules.actormultiple.actorScriptAutoRowHeight()">Auto Row Height</button>
     <label id='resize-wait'>Working... Please wait</label><br>
-    <button id="btnIncreaseRowHeight" class="script-nav" onclick="jade_modules.operations.actorScriptChangeHeight(10)">Increase Row Height</button>
-    <button id="btnDecreaseRowHeight" class="script-nav" onclick="jade_modules.operations.actorScriptChangeHeight(-10)">Decrease Row Height</button>
+    <button id="btnIncreaseRowHeight" class="script-nav" onclick="jade_modules.actormultiple.actorScriptChangeHeight(10)">Increase Row Height</button>
+    <button id="btnDecreaseRowHeight" class="script-nav" onclick="jade_modules.actormultiple.actorScriptChangeHeight(-10)">Decrease Row Height</button>
   </div>
 </div>
   `;
