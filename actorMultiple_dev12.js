@@ -277,3 +277,25 @@ async function doMultiScript(){
   }
 }
 
+async function showActorScriptFromIndex(){
+  await Excel.run(async function(excel){
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex, columnIndex');
+    const sheet = excel.workbook.worksheets.getItem(forActorName);
+    const tableRange = sheet.getRange(multiActorTableName);
+    tableRange.load('rowIndex, columnIndex, rowCount, columnCount');
+    console.log('row', activeCell.rowIndex, 'column', activeCell.columnIndex);
+    if ((activeCell.rowIndex >= tableRange.rowIndex) && (activeCell.rowIndex <= tableRange.rowIndex + tableRange.rowCount -1)){
+      if ((activeCell.columnIndex >= tableRange.columnIndex) && (activeCell.columnIndex <= tableRange.columnIndex + tableRange.columnCount -1)){
+        let rowIndex = activeCell.rowIndex - tableRange.rowIndex;
+        let sheetName = getActorSheetNameForRowIndex(rowIndex);
+        await jade_modules.operations.showActorScript(sheetName);
+      } else {
+        alert('Select cell in multi script table')
+      }
+    } else {
+      alert('Select cell in multi script table')
+    }
+  })
+}
+

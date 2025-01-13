@@ -3161,7 +3161,7 @@ async function showWallaImportPage(){
     wallaImportSheet.activate();
   })
 }
-async function showActorScript(){
+async function showActorScript(sheetName = actorScriptName){
   console.log('Start of show actor script')
   const mainPage = tag('main-page');
   mainPage.style.display = 'none';
@@ -3181,7 +3181,7 @@ async function showActorScript(){
   actorScriptPage.style.display = 'block';
   styleScriptController('actorScript');
   await Excel.run(async function(excel){
-    let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    let actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
     actorScriptSheet.activate();
   })
 }
