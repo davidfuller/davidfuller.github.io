@@ -243,6 +243,7 @@ async function doMultiScript(){
   let typeColumn = getColumnNumber('Type');
   let allUsColumn = getColumnNumber('All/US');
   let sceneColumn = getColumnNumber('Scene');
+  let message = tag('multi-message');
   
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(forActorName);
@@ -273,6 +274,7 @@ async function doMultiScript(){
   })
   console.log('details', details);
   for (let i = 0; i < details.length; i++){
+    message.innerText = 'Doing character: ' + (i + 1) + ' of ' + details.length + ': ' + details[i].character;
     await jade_modules.scheduling.createScript(details[i].sheetName, true, details[i]);
   }
 }
