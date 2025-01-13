@@ -318,6 +318,7 @@ async function getCurrentActorScriptSheet(){
 
 async function actorScriptAutoRowHeight(){
   const sheetName = await getCurrentActorScriptSheet();
+  console.log('sheetName', sheetName)
   if (sheetName.trim() != ''){
     await jade_modules.operations.actorScriptAutoRowHeight(sheetName);
   }
