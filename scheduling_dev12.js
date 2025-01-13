@@ -511,7 +511,7 @@ async function createScript(sheetName = 'Actor Script', isMultiScript = false, m
   let isAllNaN = true;
   let sceneNumbers, usOnly
   let message = tag('multi-message');
-  let baseMessage = message.innerText + '\n';
+  let baseMessage = message.innerText + '. ';
 
   if (isMultiScript){
     sceneNumbers = multiScriptDetails.scenes;
@@ -539,7 +539,7 @@ async function createScript(sheetName = 'Actor Script', isMultiScript = false, m
     let sceneBlockRows = await jade_modules.operations.getSceneBlockRows();
     for (let i = 0; i < sceneNumbers.scenes.length; i++){
       actorWait.innerText = 'Please wait... Doing scene: ' + sceneNumbers.scenes[i] + ' (' + (i + 1) + ' of ' + sceneNumbers.scenes.length + ')';
-      message.innerText = baseMessage + 'Doing scene: ' + (i + 1 + scenesDone) + 'of total scenes: ' + totalNumScenes;
+      message.innerText = baseMessage + 'Scene: ' + (i + 1 + scenesDone) + ' of ' + totalNumScenes;
       let sceneNumber = sceneNumbers.scenes[i]
       if (!isNaN(sceneNumber)){
         isAllNaN = false;
