@@ -307,7 +307,9 @@ async function getCurrentActorScriptSheet(){
     const currentSheet = excel.workbook.worksheets.getActiveWorksheet();
     currentSheet.load('name');
     await excel.sync();
+    console.log('currentSheet.name', currentSheet.name)
     for (let sheet of actorScriptName){
+      console.log('sheet.name', sheet.name);
       if (sheet.name == currentSheet.name){
         return sheet.name;
       }
