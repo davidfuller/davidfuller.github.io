@@ -284,6 +284,7 @@ async function showActorScriptFromIndex(){
     const sheet = excel.workbook.worksheets.getItem(forActorName);
     const tableRange = sheet.getRange(multiActorTableName);
     tableRange.load('rowIndex, columnIndex, rowCount, columnCount');
+    await excel.sync();
     console.log('row', activeCell.rowIndex, 'column', activeCell.columnIndex);
     if ((activeCell.rowIndex >= tableRange.rowIndex) && (activeCell.rowIndex <= tableRange.rowIndex + tableRange.rowCount -1)){
       if ((activeCell.columnIndex >= tableRange.columnIndex) && (activeCell.columnIndex <= tableRange.columnIndex + tableRange.columnCount -1)){
