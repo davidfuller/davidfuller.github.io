@@ -4713,7 +4713,7 @@ async function getBook(){
   return book;
 }
 
-async function getActorScriptRanges(indexes, startRowIndex, doUs){
+async function getActorScriptRanges(indexes, startRowIndex, doUs, sheetName = actorScriptName){
   let rangeBounds = []
   let rangeIndex = 0;
   let actorCueColumnIndex = 0;
@@ -4755,7 +4755,7 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs){
   let item = - 1;
   await Excel.run(async (excel) => {
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    let actorScriptSheet = excel.workbook.worksheets.getItem(actorScriptName);
+    let actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
     for (let i = 0; i< rangeBounds.length; i++){
       let rowCount = rangeBounds[i].end - rangeBounds[i].start + 1;
       if (rowCount > 0){
