@@ -23,12 +23,14 @@ async function mainHTML(){
     <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
     <label id="formula-wait">Please wait...</label>
     <button id='btnSceneCalc' onclick="jade_modules.operations.fillSceneNumber()">Scene Number</button>
-    <label id="scene-wait">Please wait...</label>
+    <label id="scene-wait">Please wait...</label><br/>
+    <button id='btnSceneCheck' onclick="jade_modules.operations.getLineNumberRanges(false)">Scene Number Check</button>
+    <button id='btnSceneCheckReplace' onclick="jade_modules.operations.getLineNumberRanges(true)">Scene Number Check with Replace</button>
     <button id='btnFindDuplicates' onclick="jade_modules.operations.findDuplicateLineNumbers()">Find Duplicates</button>
     <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button>
     <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
     <button id="btnAddHandler" onclick="jade_modules.operations.registerExcelEvents()">Register events</button>
-    <button id="btnClearWallal" onclick="jade_modules.operations.clearWalla()">Clear Walla</button>
+    <label id="walla-cues-wait">Please wait...</label>
     <button id="btnWallaCues" onclick="jade_modules.operations.calculateWallaCues()">Create Walla Cues</button>
     <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button><br/>
     <button id="btnDeleteSceneWalla" onclick="jade_modules.operations.deleteAllSceneAndWallaBlocks()">Delete all Scene and Walla blocks</button><br/>
@@ -228,7 +230,8 @@ async function mainHTML(){
         <button id="btnApplyTakeWalla" class="take-button" onclick="jade_modules.operations.applyTakeDetails('Walla')">Apply Take Walla</button><br/>
         <button id="btnClearTakeUk" class="take-button" onclick="jade_modules.operations.clearTakeDetails('UK')">Clear Take UK</button>
         <button id="btnClearTakeUs" class="take-button" onclick="jade_modules.operations.clearTakeDetails('US')">Clear Take US</button>
-        <button id="btnClearTakeWalla" class="take-button" onclick="jade_modules.operations.clearTakeDetails('Walla')">Clear Take Walla</button>
+        <button id="btnClearTakeWalla" class="take-button" onclick="jade_modules.operations.clearTakeDetails('Walla')">Clear Take Walla</button><br/>
+        <button id="btnUnhideAllRows" class="take-button" onclick="jade_modules.operations.unhideAllRows()">Unhide all rows</button>
       </div>
           
       <div id="fillButton">
@@ -328,7 +331,32 @@ async function mainHTML(){
   <div id="wallaImportButtons">
     <button id='btnParseSource' class="walla-button" onclick="jade_modules.wallaimport.parseSource()">Parse source text</button>
     <button id='btnLoadScript' class="walla-button" onclick="jade_modules.wallaimport.loadIntoScriptSheet()">Load into script sheet</button>
+    <button id='btnLoadAllWalla' class="walla-button" onclick="jade_modules.wallaimport.loadMultipleIntoScriptSheet(true)">Load all into script</button>
+    <button id='btnLoadSelectedWalla' class="walla-button" onclick="jade_modules.wallaimport.loadMultipleIntoScriptSheet(false)">Load selected into script</button>
+    <button id="btnWallaGoToLine" class='walla-button' onclick="jade_modules.wallaimport.showWallaLineNo()">Go to this line in script</button>
     <label id='load-message'>This item is already present</label>
+    <button id="btnClearWallaBlocks" class="walla-button" onclick="jade_modules.operations.deleteAllWallaBlocks()">Delete All Walla Blocks</button>
+    <button id="btnClearWalla" class="walla-button" onclick="jade_modules.operations.clearWalla()">Clear All Walla</button>
+    <button id="btnGetData" class="walla-button" onclick="jade_modules.wallaimport.getTheWallaSourceIndecies()">Get Walla Data</button>
+    <button id="btnLoadDataIntoCell" class="walla-button" onclick="jade_modules.wallaimport.loadSelectedCellIntoTextBox()">Load into cell</button>
+    <button id="btnLoop" class="walla-button" onclick="jade_modules.wallaimport.loopThroughTheIndexes()">Loop</button>
+    <button id="btnFindOriginal" class="walla-button" onclick="jade_modules.wallaimport.findFirstWallaOriginal()">Find walla Original</button><br/>
+    <button id="btnCompleteProcess" class="walla-button" onclick="jade_modules.wallaimport.completeProcess()">Complete Process</button>
+    <label for="walla-start">Start</label><input type="text" id="walla-start" name="walla-start">
+    <label for="walla-end">End</label><input type="text" id="walla-end" name="walla-end">
+    <div id="walla-progress">
+      <label id="walla-progress-label">Walla Progress</label>
+      <textarea id="walla-text" cols="40" rows="8"></textarea>
+    </div>
+    <button id="btnWallaScriptingNoInsert" class="walla-button" onclick="jade_modules.wallaimport.doWallaScripting(false)">Do Walla Scripting no Insert</button>
+    <button id="btnWallaScripting" class="walla-button" onclick="jade_modules.wallaimport.doWallaScripting(true)">Do Walla Scripting</button>
+    <button id="btnDeleteAllWallaScripting" class="walla-button" onclick="jade_modules.wallaimport.deleteAllWallaScripting()">Delete All Walla Scripting</button><br>
+    <span id='walla-block-min-and-max'></span><br/>
+    <button id="btnWallaBlocks" class="walla-button" onclick="jade_modules.wallaimport.doTheWallaBlocks()">Do The Walla Blocks</button>
+    <label for="walla-block-start">Start</label><input type="text" id="walla-block-start" name="walla-block-start">
+    <label for="walla-block-end">End</label><input type="text" id="walla-block-end" name="walla-block-end"><br/>
+    <button id="btnCheckCues" class="walla-button" onclick="jade_modules.operations.getWallaCues()">Check Walla Cues</button>
+    <label id="walla-check-cues">Click Check Walla Cues for info</label>
   </div>
 </div>
 <div id="location-page">
@@ -387,7 +415,7 @@ async function mainHTML(){
   await jade_modules.comparison.autoSelectChapter();
   await jade_modules.operations.fillCharacterAndTakesDropdowns();
 
-  console.log("I'm here data loaded. Dev12");
+  console.log("I'm here data loaded. Dev 13");
 }
 
  
