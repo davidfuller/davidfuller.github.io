@@ -61,9 +61,13 @@ async function addScript(){
       }
     }
     console.log('addRowNo', addRowNo)
-    let resultRange = sheet.getRangeByIndexes(addRowNo + range.rowIndex, characterColumn + range.columnIndex, 1, columnCount);
-    let resultArray = [[actorDetails.character, actorDetails.type, actorDetails.allUs, scenes.scenes.join(', ')]];
-    resultRange.values = resultArray;
+    if (addRowNo != -1){
+      let resultRange = sheet.getRangeByIndexes(addRowNo + range.rowIndex, characterColumn + range.columnIndex, 1, columnCount);
+      let resultArray = [[actorDetails.character, actorDetails.type, actorDetails.allUs, scenes.scenes.join(', ')]];
+      resultRange.values = resultArray;
+    } else {
+      alert('Cannot add another')
+    }
   })
 }
 
