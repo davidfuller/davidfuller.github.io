@@ -393,6 +393,34 @@ async function moveUp(){
   }
 }
 
+async function moveDown(){
+  let characterColumn = getColumnNumber('Character');
+  let sceneColumn = getColumnNumber('Scene');
+  let currentRowIndex = await getValidTableRowIndex();
+  if (currentRowIndex < 10){
+    await Excel.run(async function(excel){
+      const sheet = excel.workbook.worksheets.getItem(forActorName);
+      const tableRange = sheet.getRange(multiActorTableName);
+      tableRange.load('values, rowIndex, columnIndex, rowCount, columnCount');
+      await excel.sync();
+      let currentValues = tableRange.values;
+      let moveUpValues = []
+      for (let i = characterColumn; i <= sceneColumn; i ++){
+        moveUpValues[i] = currentValues[currentRowIndex + 1][i];
+      }
+      for (let i = characterColumn; i <= sceneColumn; i ++){
+        currentValues[currentRowIndex + 1][i] = currentValues[currentRowIndex][i];
+      }
+      for (let i = characterColumn; i <= sceneColumn; i ++){
+        currentValues[currentRowIndex][i] = moveUpValues[i];
+      }
+      console.log('currentValues', currentValues)
+      //tableRange.values = currentValues;
+      //await excel.sync;
+    })
+  }
+}
+
 async function getValidTableRowIndex(){
   let resultRowIndex = -1;
   await Excel.run(async function(excel){
