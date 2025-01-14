@@ -263,14 +263,10 @@ async function mainHTML(){
     <button id="btnWallaImport" class="actor-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
     <button id="btnLocationPage" class="actor-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
   </div>
-  <div id="multiActorButtons">
-    <label id="multi-heading">Multi Actor Scripts</label>
-    <label id="multi-message"></label><br/>
-    <button id="btnAddScript" class="actor-multi" onclick="jade_modules.actormultiple.addScript()">Add Script</button>
-    <button id="btnRemoveScript" class="actor-multi" onclick="jade_modules.actormultiple.removeScript()">Remove Selected Script(s)</button>
-    <button id="btnClearAll" class="actor-multi" onclick="jade_modules.actormultiple.clearMultiScriptTable()">Clear All Scripts</button><br/>
-    <button id="btnDoMulti" class="actor-multi" onclick="jade_modules.actormultiple.doMultiScript()">Do Multi Scripts</button><br/>
-    <button id="btnShowScript" class="actor-multi" onclick="jade_modules.actormultiple.showActorScriptFromIndex()">Show Selected Script</button><br/>
+  <div id="forActorsButtons">
+    <button id='btnGetActorInfo' class='actor-button' onclick="jade_modules.scheduling.searchCharacter()">Search Character</button>
+    <button id="btnActorGoToLine" class='actor-button' onclick="jade_modules.scheduling.actorGoToLine()">Go to this line in script<br/>(First line if multiple)</button>
+    <label id='actor-wait'>Please wait...</label>
   </div>
   <div id="scriptButtons">
     <div class="row-script">
@@ -293,9 +289,11 @@ async function mainHTML(){
     <label id='script-wait'>Please wait...</label>
   </div>
   <div id="multiActorButtons">
+    <label id="multi-heading">Multi Actor Scripts</label>
     <label id="multi-message"></label><br/>
     <button id="btnAddScript" class="actor-multi" onclick="jade_modules.actormultiple.addScript()">Add Script</button>
-    <button id="btnRemoveScript" class="actor-multi" onclick="jade_modules.actormultiple.removeScript()">Remove Selected Script(s)</button><br/>
+    <button id="btnRemoveScript" class="actor-multi" onclick="jade_modules.actormultiple.removeScript()">Remove Selected Script(s)</button>
+    <button id="btnClearAll" class="actor-multi" onclick="jade_modules.actormultiple.clearMultiScriptTable()">Clear All Scripts</button><br/>
     <button id="btnDoMulti" class="actor-multi" onclick="jade_modules.actormultiple.doMultiScript()">Do Multi Scripts</button><br/>
     <button id="btnShowScript" class="actor-multi" onclick="jade_modules.actormultiple.showActorScriptFromIndex()">Show Selected Script</button><br/>
   </div>
