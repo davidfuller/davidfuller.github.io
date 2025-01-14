@@ -289,11 +289,12 @@ async function mainHTML(){
     <label id='script-wait'>Please wait...</label>
   </div>
   <div id="multiActorButtons">
-    <label id="multi-heading">Multi Actor Scripts</label>
+    <label id="multi-heading">Multi Actor Scripts</label><br/>
     <label id="multi-message"></label><br/>
     <button id="btnAddScript" class="actor-multi" onclick="jade_modules.actormultiple.addScript()">Add Script</button>
     <button id="btnRemoveScript" class="actor-multi" onclick="jade_modules.actormultiple.removeScript()">Remove Selected Script(s)</button>
     <button id="btnClearAll" class="actor-multi" onclick="jade_modules.actormultiple.clearMultiScriptTable()">Clear All Scripts</button><br/>
+    <button id="btnMoveUp" class="actor-multi" onclick="jade_modules.actormultiple.moveUp()">Move Up</button><br/>
     <button id="btnDoMultiAll" class="actor-multi" onclick="jade_modules.actormultiple.doMultiScript(false)">Do All Multi Scripts</button>
     <button id="btnDoMultiSelected" class="actor-multi" onclick="jade_modules.actormultiple.doMultiScript(true)">Do Selected Multi Scripts</button><br/>
     <button id="btnShowScript" class="actor-multi" onclick="jade_modules.actormultiple.showActorScriptFromIndex()">Show Selected Script</button><br/>

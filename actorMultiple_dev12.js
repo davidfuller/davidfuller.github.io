@@ -364,3 +364,39 @@ async function clearMultiScriptTable(){
     clearRange.clear('Contents');
   })
 }
+
+async function moveUp(){
+  let currentRowIndex = await getValidTableRowIndex();
+  if (currentRowIndex > 0){
+    await Excel.run(async function(excel){
+      const sheet = excel.workbook.worksheets.getItem(forActorName);
+      const tableRange = sheet.getRange(multiActorTableName);
+      tableRange.load('values, rowIndex, columnIndex, rowCount, columnCount');
+      await excel.sync();
+      let currentValues = tableRange.values;
+      let moveDownValue = tableRange.values[currentRowIndex - 1];
+      currentValues[currentRowIndex - 1] = currentValues[currentRowIndex];
+      currentValues[currentRowIndex] = moveDownValue;
+      console.log('currentValues', currentValues)
+    })
+  }
+}
+
+async function getValidTableRowIndex(){
+  let resultRowIndex = -1;
+  await Excel.run(async function(excel){
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex, columnIndex');
+    const sheet = excel.workbook.worksheets.getItem(forActorName);
+    const tableRange = sheet.getRange(multiActorTableName);
+    tableRange.load('rowIndex, columnIndex, rowCount, columnCount');
+    await excel.sync();
+    console.log('row', activeCell.rowIndex, 'column', activeCell.columnIndex);
+    if ((activeCell.rowIndex >= tableRange.rowIndex) && (activeCell.rowIndex <= tableRange.rowIndex + tableRange.rowCount -1)){
+      if ((activeCell.columnIndex >= tableRange.columnIndex) && (activeCell.columnIndex <= tableRange.columnIndex + tableRange.columnCount -1)){
+        resultRowIndex = activeCell.rowIndex - tableRange.rowIndex;
+      }
+    }
+  })
+  return resultRowIndex;
+}
