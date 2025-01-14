@@ -366,6 +366,8 @@ async function clearMultiScriptTable(){
 }
 
 async function moveUp(){
+  let characterColumn = getColumnNumber('Character');
+  let sceneColumn = getColumnNumber('Scene');
   let currentRowIndex = await getValidTableRowIndex();
   if (currentRowIndex > 0){
     await Excel.run(async function(excel){
@@ -374,9 +376,16 @@ async function moveUp(){
       tableRange.load('values, rowIndex, columnIndex, rowCount, columnCount');
       await excel.sync();
       let currentValues = tableRange.values;
-      let moveDownValue = tableRange.values[currentRowIndex - 1];
-      currentValues[currentRowIndex - 1] = currentValues[currentRowIndex];
-      currentValues[currentRowIndex] = moveDownValue;
+      let moveDownValues = []
+      for (let i = characterColumn; i <= sceneColumn; i ++){
+        moveDownValues[i] = currentValues[currentRowIndex - 1][i];
+      }
+      for (let i = characterColumn; i <= sceneColumn; i ++){
+        currentValues[currentRowIndex - 1][i] = currentValues[currentRowIndex][i];
+      }
+      for (let i = characterColumn; i <= sceneColumn; i ++){
+        currentValues[currentRowIndex][i] = moveDownValues[i];
+      }
       console.log('currentValues', currentValues)
     })
   }
