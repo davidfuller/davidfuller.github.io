@@ -415,8 +415,8 @@ async function moveDown(){
         currentValues[currentRowIndex][i] = moveUpValues[i];
       }
       console.log('currentValues', currentValues)
-      //tableRange.values = currentValues;
-      //await excel.sync;
+      tableRange.values = currentValues;
+      await excel.sync;
     })
   }
 }
