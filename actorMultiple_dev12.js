@@ -339,3 +339,16 @@ async function actorScriptChangeHeight(percent){
     await jade_modules.operations.actorScriptChangeHeight(percent, sheetName);
   }
 }
+
+async function clearMultiScriptTable(){
+  let characterColumn = getColumnNumber('Character');
+  let sceneColumn = getColumnNumber('Scene');
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(forActorName);
+    const table = sheet.geRange(multiActorTableName);
+    table.load('rowIndex, rowCount, columnIndex');
+    await excel.sync();
+    const clearRange = sheet.getRangeByIndexes(table.rowIndex, table.columnIndex + characterColumn, table.rowCount, sceneColumn - characterColumn + 1);
+    clearRange.clear('Contents');
+  })
+}
