@@ -345,7 +345,7 @@ async function clearMultiScriptTable(){
   let sceneColumn = getColumnNumber('Scene');
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(forActorName);
-    const table = sheet.geRange(multiActorTableName);
+    const table = sheet.getRange(multiActorTableName);
     table.load('rowIndex, rowCount, columnIndex');
     await excel.sync();
     const clearRange = sheet.getRangeByIndexes(table.rowIndex, table.columnIndex + characterColumn, table.rowCount, sceneColumn - characterColumn + 1);
