@@ -104,11 +104,11 @@ async function getActorDetails(){
 }
 
 async function removeScript(){
-  let tableRows = await tableRowsToClear();
+  let tableRows = await selectedTableRows();
   await clearRows(tableRows);
 }
 
-async function tableRowsToClear(){
+async function selectedTableRows(){
   let details = [];
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(forActorName);
@@ -237,7 +237,7 @@ async function tidyTable(){
   })
 }
 
-async function doMultiScript(){
+async function doMultiScript(doSelected = false){
   let details = [];
   let characterColumn = getColumnNumber('Character');
   let typeColumn = getColumnNumber('Type');
@@ -245,6 +245,10 @@ async function doMultiScript(){
   let sceneColumn = getColumnNumber('Scene');
   let message = tag('multi-message');
   let totalNumScenes = 0;
+  let rowsToDo = []
+  if (doSelected){
+    rowsToDo = await selectedTableRows();
+  }
   
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(forActorName);
@@ -252,25 +256,33 @@ async function doMultiScript(){
     tableRange.load('values, rowIndex, columnIndex, rowCount, columnCount');
     await excel.sync();
     for (let i = 0; i < tableRange.values.length; i++){
-      let actorScript = {};
-      actorScript.character = tableRange.values[i][characterColumn].trim();
-      if (actorScript.character != ''){
-        actorScript.type = tableRange.values[i][typeColumn].trim();
-        actorScript.allUs = tableRange.values[i][allUsColumn].trim();
-        let scenesText  = tableRange.values[i][sceneColumn].toString().trim();
-        let scenesStrings = scenesText.split(',');
-        let scenes = []
-        for (let j = 0; j < scenesStrings.length; j++){
-          if (!isNaN(parseInt(scenesStrings[j]))){
-            scenes.push(parseInt(scenesStrings[j]));
+      let doIt;
+      if (doSelected){
+        doIt = rowsToDo.includes(i);
+      } else {
+        doIt = true;
+      }
+      if (doIt){
+        let actorScript = {};
+        actorScript.character = tableRange.values[i][characterColumn].trim();
+        if (actorScript.character != ''){
+          actorScript.type = tableRange.values[i][typeColumn].trim();
+          actorScript.allUs = tableRange.values[i][allUsColumn].trim();
+          let scenesText  = tableRange.values[i][sceneColumn].toString().trim();
+          let scenesStrings = scenesText.split(',');
+          let scenes = []
+          for (let j = 0; j < scenesStrings.length; j++){
+            if (!isNaN(parseInt(scenesStrings[j]))){
+              scenes.push(parseInt(scenesStrings[j]));
+            }
           }
+          actorScript.scenes = {};
+          actorScript.scenes.scenes = scenes;
+          totalNumScenes = totalNumScenes + scenes.length
+          actorScript.scenes.display = scenesText;
+          actorScript.sheetName = getActorSheetNameForRowIndex(i);
+          details.push(actorScript);
         }
-        actorScript.scenes = {};
-        actorScript.scenes.scenes = scenes;
-        totalNumScenes = totalNumScenes + scenes.length
-        actorScript.scenes.display = scenesText;
-        actorScript.sheetName = getActorSheetNameForRowIndex(i);
-        details.push(actorScript);
       }
     }
   })

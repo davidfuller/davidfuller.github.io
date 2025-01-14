@@ -294,7 +294,8 @@ async function mainHTML(){
     <button id="btnAddScript" class="actor-multi" onclick="jade_modules.actormultiple.addScript()">Add Script</button>
     <button id="btnRemoveScript" class="actor-multi" onclick="jade_modules.actormultiple.removeScript()">Remove Selected Script(s)</button>
     <button id="btnClearAll" class="actor-multi" onclick="jade_modules.actormultiple.clearMultiScriptTable()">Clear All Scripts</button><br/>
-    <button id="btnDoMulti" class="actor-multi" onclick="jade_modules.actormultiple.doMultiScript()">Do Multi Scripts</button><br/>
+    <button id="btnDoMultiAll" class="actor-multi" onclick="jade_modules.actormultiple.doMultiScript(false)">Do All Multi Scripts</button>
+    <button id="btnDoMultiSelected" class="actor-multi" onclick="jade_modules.actormultiple.doMultiScript(true)">Do Selected Multi Scripts</button><br/>
     <button id="btnShowScript" class="actor-multi" onclick="jade_modules.actormultiple.showActorScriptFromIndex()">Show Selected Script</button><br/>
   </div>
 </div>
