@@ -1063,7 +1063,7 @@ function replaceReplacements(theLine, replacements){
 }
 
 function isWallaScripted(theText){
-  return wallaScriptingNames.includes(theText.trim())
+  return wallaScriptingNames.includes(theText.toString().trim())
 }
 
 async function getWallaScriptingRowIndexes(){
