@@ -194,7 +194,7 @@ function splitLine(theLine){
     // Deal with a line number being in first section
     for (let i = 0; i < textLines.length; i++){
       if (theSections[0].toLowerCase().includes(textLines[i])){
-        if (!(theSections(0).toLowerCase().includes('emmeline vance'))){
+        if (!(theSections[0].toLowerCase().includes('emmeline vance'))){
           if (theSections.length > 1){
             let theSwap = theSections[0];
             theSections[0] = theSections[1];
