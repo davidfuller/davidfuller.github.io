@@ -84,7 +84,7 @@ const generalWalla = ['General Walla', 'General Walla:', 'General Walla: None']
 let displayGeneralWalla = 'General Walla:';
 
 function isNamedWalla(theType){
-  console.log(theType)
+  console.log(theType);
   for (text of namedCharacters){
     //console.log(text);
     if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
@@ -94,11 +94,15 @@ function isNamedWalla(theType){
   return false;
 }
 function isUnamedWalla(theType){
+  console.log(theType);
   for (text of unnamedCharacters){
+    console.log(text);
     if (theType.trim().toLowerCase() == text.trim().toLowerCase()){
+      console.log('found');
       return true;
     }
   }
+  console.log('NOT found');
   return false;
 }
 
