@@ -78,7 +78,7 @@ const namedCharacters = ['Named Characters - For reaction sounds and walla', 'Na
   'Named characters for reaction sounds and walla', 'Characters for reaction sounds and walla', 'Named characters for. reaction sounds and walla:', 'Named- Characters for reaction sounds and walla:']
 let displayWallaName = 'Named Characters Reactions and Walla:'
 const unnamedCharacters = ['Un-named Character Walla','Un-named Character Walla:', 'Un-named Character Walla: None', 'Unnamed Character Walla:', 'Un-named characters:', 'Un-named character walla :', 'Un-named character walla : none', 
-	'Un-named characters: none', 'UNamed- Characters walla:'];
+	'Un-named characters: none', 'UNamed- Characters walla:', 'UNamed- Characters walla:'];
 let displayWallaUnNamed = 'Un-named Character Walla:';
 const generalWalla = ['General Walla', 'General Walla:', 'General Walla: None']
 let displayGeneralWalla = 'General Walla:';
