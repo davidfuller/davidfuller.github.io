@@ -7536,7 +7536,7 @@ async function fundDuplicateCues(){
         if (cues.includes(temp)){
           let details = {
             cue: temp,
-            rowIndex: i + cueRange.rowIndex;
+            rowIndex: i + cueRange.rowIndex
           }
           duplicates.push(details)
         }
