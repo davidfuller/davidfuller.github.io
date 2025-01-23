@@ -372,7 +372,8 @@ async function clearMultiScriptTable(){
 async function moveUp(){
   let characterColumn = getColumnNumber('Character');
   let sceneColumn = getColumnNumber('Scene');
-  let currentRowIndex = await getValidTableRowIndex();
+  let currentCellIndexes = await getValidTableCellIndexes();
+  let currentRowIndex = currentCellIndexes.tableRowIndex;
   if (currentRowIndex > 0){
     await Excel.run(async function(excel){
       const sheet = excel.workbook.worksheets.getItem(forActorName);
@@ -392,6 +393,8 @@ async function moveUp(){
       }
       console.log('currentValues', currentValues)
       tableRange.values = currentValues;
+      let selectCell = sheet.getRangeByIndexes(currentCellIndexes.absoluteRowIndex - 1, currentCellIndexes.absoluteColumnIndex, 1, 1);
+      selectCell.select;
       await excel.sync;
     })
   }
@@ -400,7 +403,8 @@ async function moveUp(){
 async function moveDown(){
   let characterColumn = getColumnNumber('Character');
   let sceneColumn = getColumnNumber('Scene');
-  let currentRowIndex = await getValidTableRowIndex();
+  let currentCellIndexes = await getValidTableCellIndexes();
+  let currentRowIndex = currentCellIndexes.tableRowIndex;
   if (currentRowIndex < 10){
     await Excel.run(async function(excel){
       const sheet = excel.workbook.worksheets.getItem(forActorName);
@@ -420,13 +424,19 @@ async function moveDown(){
       }
       console.log('currentValues', currentValues)
       tableRange.values = currentValues;
+      let selectCell = sheet.getRangeByIndexes(currentCellIndexes.absoluteRowIndex + 1, currentCellIndexes.absoluteColumnIndex, 1, 1);
+      selectCell.select;
       await excel.sync;
     })
   }
 }
 
-async function getValidTableRowIndex(){
-  let resultRowIndex = -1;
+async function getValidTableCellIndexes(){
+  let resultCellIndexes = {
+    tableRowIndex: - 1,
+    absoluteRowIndex: -1,
+    absoluteColumnIndex: -1
+  };
   await Excel.run(async function(excel){
     const activeCell = excel.workbook.getActiveCell();
     activeCell.load('rowIndex, columnIndex');
@@ -437,11 +447,15 @@ async function getValidTableRowIndex(){
     console.log('row', activeCell.rowIndex, 'column', activeCell.columnIndex);
     if ((activeCell.rowIndex >= tableRange.rowIndex) && (activeCell.rowIndex <= tableRange.rowIndex + tableRange.rowCount -1)){
       if ((activeCell.columnIndex >= tableRange.columnIndex) && (activeCell.columnIndex <= tableRange.columnIndex + tableRange.columnCount -1)){
-        resultRowIndex = activeCell.rowIndex - tableRange.rowIndex;
+        resultCellIndexes = {
+          tableRowIndex: activeCell.rowIndex - tableRange.rowIndex,
+          absoluteRowIndex: activeCell.rowIndex,
+          absoluteColumnIndex: activeCell.columnIndex
+        }
       }
     }
   })
-  return resultRowIndex;
+  return resultCellIndexes;
 }
 
 function isActorSheet(sheetName){
