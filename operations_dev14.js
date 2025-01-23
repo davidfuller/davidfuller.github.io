@@ -3256,7 +3256,7 @@ async function showWallaImportPage(){
     wallaImportSheet.activate();
   })
 }
-async function showActorScript(sheetName = actorScriptName){
+async function showActorScript(sheetName = actorScriptName, activateSheet = true){
   console.log('Start of show actor script')
   const mainPage = tag('main-page');
   mainPage.style.display = 'none';
@@ -3275,10 +3275,12 @@ async function showActorScript(sheetName = actorScriptName){
   const actorScriptPage = tag('script-page');
   actorScriptPage.style.display = 'block';
   styleScriptController('actorScript');
-  await Excel.run(async function(excel){
-    let actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
-    actorScriptSheet.activate();
-  })
+  if (activateSheet){
+    await Excel.run(async function(excel){
+      let actorScriptSheet = excel.workbook.worksheets.getItem(sheetName);
+      actorScriptSheet.activate();
+    })
+  }
 }
 
 async function showMainPage(){
@@ -3526,6 +3528,9 @@ async function handleSheetActivate(event){
     console.log('Active worksheet', thisWorkSheet.name);
     const actorSheet = jade_modules.actormultiple.isActorSheet(thisWorkSheet.name);
     console.log('Actor sheet', actorSheet)
+    if (actorSheet){
+      await showActorScript(sheetName, false);
+    }
     //await jade_modules.scheduling.displayScenes();
   }).catch(errorHandlerFunction(e))
 }
