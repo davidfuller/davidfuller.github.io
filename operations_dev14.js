@@ -3520,7 +3520,7 @@ async function handleSheetActivate(event){
   await Excel.run(async (excel) => {
     await excel.sync();
     console.log('sheetActivate', event);
-    const thisWorkSheet = excel.workbook.getActiveWorksheet();
+    const thisWorkSheet = excel.workbook.worksheets.getActiveWorksheet();
     thisWorkSheet.load('name');
     await excel.sync();
     console.log('Active worksheet', thisWorkSheet.name);
