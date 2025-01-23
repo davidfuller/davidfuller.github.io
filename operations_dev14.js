@@ -3524,6 +3524,8 @@ async function handleSheetActivate(event){
     thisWorkSheet.load('name');
     await excel.sync();
     console.log('Active worksheet', thisWorkSheet.name);
+    const actorSheet = jade_modules.actormultiple.isActorSheet(thisWorkSheet.name);
+    console.log('Actor sheet', actorSheet)
     //await jade_modules.scheduling.displayScenes();
   }).catch(errorHandlerFunction(e))
 }
