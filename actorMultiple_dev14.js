@@ -394,7 +394,7 @@ async function moveUp(){
       console.log('currentValues', currentValues)
       tableRange.values = currentValues;
       let selectCell = sheet.getRangeByIndexes(currentCellIndexes.absoluteRowIndex - 1, currentCellIndexes.absoluteColumnIndex, 1, 1);
-      selectCell.select;
+      selectCell.select();
       await excel.sync;
     })
   }
@@ -424,7 +424,6 @@ async function moveDown(){
       }
       console.log('currentValues', currentValues)
       tableRange.values = currentValues;
-      console.log('currentCellIndexes', currentCellIndexes);
       let selectCell = sheet.getRangeByIndexes(currentCellIndexes.absoluteRowIndex + 1, currentCellIndexes.absoluteColumnIndex, 1, 1);
       selectCell.select();
       await excel.sync;
