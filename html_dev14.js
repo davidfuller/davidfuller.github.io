@@ -67,8 +67,8 @@ async function mainHTML(){
         <button id='btnGoWallaScene' onclick="jade_modules.operations.goWallaScene()">Go</button>
       </div>
     </div>
+    <button id="btnFindDuplicateCues" onclick="jade_modules.operations.fundDuplicateCues()"">Find Duplicate Cues</button>
   </div>
-  <button id="btnFindDuplicateCues" onclick="jade_modules.operations.fundDuplicateCues()"">Find Duplicate Cues</button>
   <div id="comparison">
     <button id="btnCreateChapters" onclick="jade_modules.comparison.createChapters()">Create Chapters</button>
     <button id="btnReadDecision" onclick="jade_modules.comparison.createResult()">Create Results</button>
