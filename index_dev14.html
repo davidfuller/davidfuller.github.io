@@ -1,7 +1,3 @@
-function auto_exec(){
-}
-async function mainHTML(){
-  const html = `
 <h1>MuVi2 Script Controller</h1>
 <h2 id="sheet-version"></h2>
 <div id='start-wait'>
@@ -67,8 +63,8 @@ async function mainHTML(){
         <button id='btnGoWallaScene' onclick="jade_modules.operations.goWallaScene()">Go</button>
       </div>
     </div>
+    <button id="btnFindDuplicateCues" onclick="jade_modules.operations.fundDuplicateCues()"">Find Duplicate Cues</button>
   </div>
-  <button id="btnFindDuplicateCues" onclick="jade_modules.operations.fundDuplicateCues()"">Find Duplicate Cues</button>
   <div id="comparison">
     <button id="btnCreateChapters" onclick="jade_modules.comparison.createChapters()">Create Chapters</button>
     <button id="btnReadDecision" onclick="jade_modules.comparison.createResult()">Create Results</button>
@@ -355,7 +351,7 @@ async function mainHTML(){
     <span id='walla-block-min-and-max'></span><br/>
     <button id="btnWallaBlocks" class="walla-button" onclick="jade_modules.wallaimport.doTheWallaBlocks()">Do The Walla Blocks</button>
     <label for="walla-block-start">Start</label><input type="text" id="walla-block-start" name="walla-block-start">
-    <label for="walla-block-end">End</label><input type="text" id="walla-block-end" name="walla-block-end"><br/>
+    <label for="walla-block-end">End</label><input type="text" id="walla-block-end" name="walla-block-end"><br>
     <button id="btnCheckCues" class="walla-button" onclick="jade_modules.operations.getWallaCues()">Check Walla Cues</button>
     <label id="walla-check-cues">Click Check Walla Cues for info</label>
   </div>
@@ -392,31 +388,3 @@ async function mainHTML(){
     <button id="btnDecreaseRowHeight" class="script-nav" onclick="jade_modules.actormultiple.actorScriptChangeHeight(-10)">Decrease Row Height</button>
   </div>
 </div>
-  `;
-
-  await Jade.open_canvas("Script-Controller", html, true);
-  console.log('Canvas open');
-  await jade_modules.operations.startUpClearHiddenRowsAndViews();
-  await jade_modules.operations.getDataFromSheet('Settings','studioChoice','studio-select');
-  await jade_modules.operations.getDataFromSheet('Settings','engineerChoice','engineer-select');
-  await jade_modules.operations.getColumnData('Settings', 'columnData');
-  await jade_modules.operations.initialiseVariables();
-  await jade_modules.operations.displayMinAndMax();
-  await jade_modules.scheduling.loadReduceAndSortCharacters();
-  await jade_modules.operations.setDefaultColumnWidths();
-  await jade_modules.operations.showHideColumns('all');
-  await jade_modules.operations.setUpEvents();
-  await jade_modules.operations.registerExcelEvents();
-  await jade_modules.operations.hiddenRows();
-  await jade_modules.operations.fillChapterAndScene();
-  await jade_modules.operations.showMain();
-  await jade_modules.operations.gatherTakeInformation(false);
-  await jade_modules.comparison.fillChapter();
-  jade_modules.operations.setDefaultRadioButton();
-  await jade_modules.comparison.autoSelectChapter();
-  await jade_modules.operations.fillCharacterAndTakesDropdowns();
-
-  console.log("I'm here data loaded. Dev 14");
-}
-
- 

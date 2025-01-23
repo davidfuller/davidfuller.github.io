@@ -7518,3 +7518,32 @@ async function checkWallaInCueColumn(){
   })
   return message;
 }
+
+async function fundDuplicateCues(){
+  let cues = [];
+  let duplicates = [];
+  await Excel.run(async function(excel){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let usedRange = scriptSheet.getUsedRange();
+    usedRange.load('rowIndex, rowCount');
+    await excel.sync();
+    let cueRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, cueIndex, usedRange.rowCount, 1); 
+    cueRange.load('values, rowIndex');
+    await excel.sync();
+    for (let i = 0; i < cueRange.values.length; i++){
+      let temp = parseInt(cueRange.values[i][0]);
+      if (!isNaN(temp)){
+        if (cues.includes(temp)){
+          let details = {
+            cue: temp,
+            rowIndex: i + cueRange.rowIndex;
+          }
+          duplicates.push(details)
+        }
+        cues.push(temp);
+      }
+    }
+  })
+  console.log ('cues', cues);
+  console.log('duplicates', duplicates);
+}
