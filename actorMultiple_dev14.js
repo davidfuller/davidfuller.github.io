@@ -405,7 +405,7 @@ async function moveDown(){
   let sceneColumn = getColumnNumber('Scene');
   let currentCellIndexes = await getValidTableCellIndexes();
   let currentRowIndex = currentCellIndexes.tableRowIndex;
-  if (currentRowIndex < 10){
+  if (currentRowIndex < 9){
     await Excel.run(async function(excel){
       const sheet = excel.workbook.worksheets.getItem(forActorName);
       const tableRange = sheet.getRange(multiActorTableName);
