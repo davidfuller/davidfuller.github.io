@@ -3529,7 +3529,7 @@ async function handleSheetActivate(event){
     const actorSheet = jade_modules.actormultiple.isActorSheet(thisWorkSheet.name);
     console.log('Actor sheet', actorSheet)
     if (actorSheet){
-      await showActorScript(sheetName, false);
+      await showActorScript(thisWorkSheet.name, false);
     }
     //await jade_modules.scheduling.displayScenes();
   }).catch(errorHandlerFunction(e))
