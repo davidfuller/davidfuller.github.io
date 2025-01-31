@@ -2,6 +2,7 @@ function auto_exec(){
 }
 
 const characterListSheetName = 'Character List';
+const characterRangeName = 'clCharacters'
 
 async function doTheFullTest(){
   let messages = [];
@@ -29,13 +30,28 @@ async function doTheFullTest(){
   messages.push(addMessage('Unhiding character List Sheet'));
   await unHide(characterListSheetName);
 
-  //character word count
+  //check the list
+  messages.push(addMessage('Checking Characters'));
+  let issues = checkCharacters()
 
-  messages.push(addMessage('Doing character word count'))
-  await jade_modules.scheduling.processCharacterListForWordAndScene();
-  
-  messages.push(addMessage('Doing scene word count'))
-  await jade_modules.scheduling.createSceneWordCountData()
+  if (issues != -1){
+    messages.push(addMessage('Character issue before word count at:' + issues));
+  } else {
+    //character word count
+    messages.push(addMessage('Doing character word count'))
+    await jade_modules.scheduling.processCharacterListForWordAndScene();
+    
+    messages.push(addMessage('Doing scene word count'))
+    await jade_modules.scheduling.createSceneWordCountData()
+
+    messages.push(addMessage('Checking Characters after counts'));
+    issues = checkCharacters()
+    if (issues != -1){
+      messages.push(addMessage('Character issue after word count at:' + issues));
+    } else {
+      messages.push(addMessage('No character issues after word count'));
+    }
+  }
 
   //hide character list
   messages.push(addMessage('Hiding character List Sheet'));
@@ -64,4 +80,31 @@ async function hide(sheetName){
     const sheet = excel.workbook.worksheets.getItem(sheetName);
     sheet.visibility = 'Hidden';
   });
+}
+
+async function checkCharacters(){
+  let issue = -1;
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(characterListSheetName);
+    const range = sheet.getRange(characterRangeName);
+    range.load('values');
+    await excel.sync();
+    
+    let foundSpace = false
+    for (let i = 0; i < range.values.length; i++){
+      let thisValue = range.values[i][0].toString();
+      if (!foundSpace){
+        if (thisValue.trim() == ''){
+          foundSpace = true;
+          console.log('Found space at', i);
+        } else if (thisValue.trim() != ''){
+          issue = i
+          console.log('Issue at', i);
+          break;
+        }
+      }
+    }
+  });
+  return issue;
+
 }
