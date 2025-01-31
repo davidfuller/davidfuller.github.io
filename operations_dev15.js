@@ -6613,8 +6613,9 @@ async function setSheetView(doTemporary){
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const currentViews = scriptSheet.namedSheetViews;
+    currentViews.load('items');
     await excel.sync();
-    console.log('currentView', currentViews);
+    console.log('currentView', currentViews.items);
     let currentlyActiveName = null;
     let numViews = currentViews.getCount();
     await excel.sync();
