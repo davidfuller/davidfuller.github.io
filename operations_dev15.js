@@ -6618,8 +6618,8 @@ async function setSheetView(doTemporary){
     let currentlyActiveName = null;
     let numViews = currentViews.getCount();
     await excel.sync();
-    console.log('numViews', numViews)
-    if (numViews > 0){
+    console.log('numViews', numViews.value)
+    if (numViews.value > 0){
       try {
         const currentName = currentViews.getActive();
         currentName.load('name')
