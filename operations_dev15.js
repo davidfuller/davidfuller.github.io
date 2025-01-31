@@ -6608,6 +6608,15 @@ async function filterCharacter(){
   wait.style.display = 'none'
 }
 
+
+async function exitSheetView(){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const currentViews = scriptSheet.namedSheetViews;
+    currentViews.exit();
+  })
+}
+
 async function setSheetView(doTemporary){
   //if doTemporary then temp view. Otherwise exit view
   await Excel.run(async function(excel){

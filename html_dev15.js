@@ -110,6 +110,7 @@ async function mainHTML(){
     <div id='filter-buttons'>
       <button id='btnFilter' onclick="jade_modules.operations.applyFilter()">Apply Filter</button>
       <button id='btnRemoveFilter' onclick="jade_modules.operations.removeFilter()">Remove Filter</button><br/>
+      <button id='btnExitSheetView' onclick="jade_modules.operations.exitSheetView()">Exit Sheet View</button><br/>
     </div>
   </div>
   <div id="jump">
