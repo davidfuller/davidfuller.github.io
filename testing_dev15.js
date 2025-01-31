@@ -29,6 +29,10 @@ async function doTheFullTest(){
   messages.push(addMessage('Unhiding character List Sheet'));
   await unHide(characterListSheetName);
 
+  //character word count
+
+  messages.push(addMessage('Doing character word count'))
+  await jade_modules.scheduling.processCharacterListForWordAndScene();
 
   //hide character list
   messages.push(addMessage('Hiding character List Sheet'));
