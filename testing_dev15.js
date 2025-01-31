@@ -40,7 +40,7 @@ async function doTheFullTest(){
   //hide character list
   messages.push(addMessage('Hiding character List Sheet'));
   await hide(characterListSheetName);
-  console.log(messages)
+  console.log('messages', messages)
 }
 
 
