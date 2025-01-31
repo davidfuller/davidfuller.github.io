@@ -32,7 +32,7 @@ async function doTheFullTest(){
 
   //check the list
   messages.push(addMessage('Checking Characters'));
-  let issues = checkCharacters()
+  let issues = await checkCharacters()
 
   if (issues != -1){
     messages.push(addMessage('Character issue before word count at:' + issues));
@@ -45,7 +45,7 @@ async function doTheFullTest(){
     await jade_modules.scheduling.createSceneWordCountData()
 
     messages.push(addMessage('Checking Characters after counts'));
-    issues = checkCharacters()
+    issues = await checkCharacters()
     if (issues != -1){
       messages.push(addMessage('Character issue after word count at:' + issues));
     } else {
