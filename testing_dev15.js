@@ -1,6 +1,8 @@
 function auto_exec(){
 }
 
+const characterListSheetName = 'Character List';
+
 async function doTheFullTest(){
   let messages = [];
   messages.push(addMessage('Start of test'));
@@ -23,6 +25,10 @@ async function doTheFullTest(){
     messages.push(addMessage('Sheet is un-filtered'));
   }
 
+  //unhide character list
+  await unHide(characterListSheetName);
+
+
   console.log(messages)
 }
 
@@ -32,4 +38,11 @@ function addMessage(message){
   result.time = new Date();
   result.message = message;
   return result;
+}
+
+async function unHide(sheetName){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(sheetName);
+    sheet.visibility = 'Visible';
+  });
 }
