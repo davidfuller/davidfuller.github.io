@@ -6619,7 +6619,7 @@ async function exitSheetView(){
 }
 
 async function temporarySheetView(){
-  if (Office.context.requirements.isSupported("excelApiOnline", "1.1")){
+  if (Excel.context.requirements.isSupported("excelApiOnline", "1.1")){
     await Excel.run(async function(excel){
       const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       const currentViews = scriptSheet.namedSheetViews;
