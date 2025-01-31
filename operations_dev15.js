@@ -6612,13 +6612,16 @@ async function setSheetView(doTemporary){
   //if doTemporary then temp view. Otherwise exit view
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    const currentView = scriptSheet.namedSheetViews.getCount();
+    const currentViews = scriptSheet.namedSheetViews;
     await excel.sync();
-    console.log('currentView', currentView.value);
+    console.log('currentView', currentViews);
     let currentlyActiveName = null;
-    if (currentView.value > 0){
+    let numViews = currentViews.getCount();
+    console.log('numViews', numViews)
+    await excel.sync();
+    if (numViews > 0){
       try {
-        const currentName = scriptSheet.namedSheetViews.getActive();
+        const currentName = currentViews.getActive();
         currentName.load('name')
         await excel.sync();
         currentlyActiveName = currentName.name
@@ -6632,7 +6635,7 @@ async function setSheetView(doTemporary){
       if (currentlyActiveName === null){
         console.log('Making view temporary')
         try {
-          scriptSheet.namedSheetViews.enterTemporary();
+          currentViews.enterTemporary();
           await excel.sync();
         } catch (err) {
           console.log('Error in namedSheetViews.enterTemporary()', err)
@@ -6642,7 +6645,7 @@ async function setSheetView(doTemporary){
       }
     } else if (currentlyActiveName == ''){
       console.log('Currently temporary view - so remove it')
-      scriptSheet.namedSheetViews.exit();
+      currentViews.exit();
     } else {
       console.log('Not removed due to ', currentlyActiveName)
     }
