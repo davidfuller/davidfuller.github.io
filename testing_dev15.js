@@ -93,7 +93,6 @@ async function checkCharacters(){
     let foundSpace = false
     for (let i = 0; i < range.values.length; i++){
       let thisValue = range.values[i][0].toString();
-      console.log(i, thisValue)
       if (!foundSpace){
         if (thisValue.trim() == ''){
           foundSpace = true;
