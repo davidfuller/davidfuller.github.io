@@ -26,6 +26,7 @@ async function doTheFullTest(){
   }
 
   //unhide character list
+  messages.push(addMessage('Unhiding character List Sheet'));
   await unHide(characterListSheetName);
 
 
