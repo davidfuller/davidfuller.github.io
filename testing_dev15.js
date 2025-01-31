@@ -98,10 +98,11 @@ async function checkCharacters(){
         if (thisValue.trim() == ''){
           foundSpace = true;
           console.log('Found space at', i);
-        } else if (thisValue.trim() != ''){
-          issue = i
-          console.log('Issue at', i);
         }
+      } else if (thisValue.trim() != ''){
+        issue = i
+        console.log('Issue at', i);
+        break;
       }
     }
   });
