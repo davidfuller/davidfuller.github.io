@@ -370,6 +370,19 @@ async function removeFilter(){
   message.style.display = 'none';
 }
 
+async function isFiltered(){
+  let filtered = false;
+  await Excel.run(async function(excel){
+    let active = excel.workbook.getActiveCell();
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    scriptSheet.autoFilter.load('enabled')
+    active.load('address');
+    await excel.sync()
+    filtered = scriptSheet.autoFilter.enabled
+  });
+  return filtered;
+}
+
 async function findScene(offset){
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);

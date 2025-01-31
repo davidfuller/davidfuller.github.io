@@ -11,7 +11,16 @@ async function doTheFullTest(){
   } else {
     messages.push(addMessage('Sheet is unlocked, locking now'));
     await jade_modules.operations.lockColumns();
-    messages.push(addMessage('Sheet is locked'));
+    messages.push(addMessage  ('Sheet is locked'));
+  }
+
+  //unfilter the sheet
+  if (await jade_modules.operations.isFiltered()){
+    messages.push(addMessage('Sheet is filtered, un-filtering now'));
+    await jade_modules.operations.removeFilter();
+    messages.push(addMessage('Sheet un-filtered'));
+  } else {
+    messages.push(addMessage('Sheet is un-filtered'));
   }
 
   console.log(messages)
