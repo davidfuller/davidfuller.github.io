@@ -30,6 +30,9 @@ async function doTheFullTest(){
   await unHide(characterListSheetName);
 
 
+  //hide character list
+  messages.push(addMessage('Hiding character List Sheet'));
+  await hide(characterListSheetName);
   console.log(messages)
 }
 
@@ -45,5 +48,13 @@ async function unHide(sheetName){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(sheetName);
     sheet.visibility = 'Visible';
+    sheet.activate();
+  });
+}
+
+async function hide(sheetName){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(sheetName);
+    sheet.visibility = 'Hidden';
   });
 }
