@@ -33,6 +33,9 @@ async function doTheFullTest(){
 
   messages.push(addMessage('Doing character word count'))
   await jade_modules.scheduling.processCharacterListForWordAndScene();
+  
+  messages.push(addMessage('Doing scene word count'))
+  await jade_modules.scheduling.createSceneWordCountData()
 
   //hide character list
   messages.push(addMessage('Hiding character List Sheet'));
