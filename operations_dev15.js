@@ -6619,17 +6619,21 @@ async function exitSheetView(){
 }
 
 async function temporarySheetView(){
-  await Excel.run(async function(excel){
-    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    const currentViews = scriptSheet.namedSheetViews;
-    console.log('Making view temporary')
-    try {
-      currentViews.enterTemporary();
-      await excel.sync();
-    } catch (err) {
-      console.log('Error in namedSheetViews.enterTemporary()', err)
-    }
-  })
+  if (Office.context.requirements.isSupported("excelApiOnline", "1.1")){
+    await Excel.run(async function(excel){
+      const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+      const currentViews = scriptSheet.namedSheetViews;
+      console.log('Making view temporary')
+      try {
+        currentViews.enterTemporary();
+        await excel.sync();
+      } catch (err) {
+        console.log('Error in namedSheetViews.enterTemporary()', err)
+      }
+    })
+  } else {
+    console.log('Web only command');
+  }
 }
 
 async function setSheetView(doTemporary){
