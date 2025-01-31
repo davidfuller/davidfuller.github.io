@@ -265,7 +265,8 @@ async function unlock(){
 
 async function applyFilter(){
   /*Jade.listing:{"name":"Apply filter","description":"Applies empty filter to sheet"}*/
-  await setSheetView(true);
+  //await setSheetView(true);
+  await temporarySheetView();
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let isProtected = await unlockIfLocked();
@@ -6617,6 +6618,20 @@ async function exitSheetView(){
   })
 }
 
+async function temporarySheetView(){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const currentViews = scriptSheet.namedSheetViews;
+    console.log('Making view temporary')
+    try {
+      currentViews.enterTemporary();
+      await excel.sync();
+    } catch (err) {
+      console.log('Error in namedSheetViews.enterTemporary()', err)
+    }
+  })
+}
+
 async function setSheetView(doTemporary){
   //if doTemporary then temp view. Otherwise exit view
   await Excel.run(async function(excel){
@@ -7111,8 +7126,8 @@ async function doTheCopy(copyDetails){
 
 async function startUpClearHiddenRowsAndViews(){
   await unhideAllRows();
-  await setSheetView(true);
-  await setSheetView(false);
+  await temporarySheetView();
+  await exitSheetView();
   await selectRange('A3', true);
 }
 async function showWallaLine(lineNo){
