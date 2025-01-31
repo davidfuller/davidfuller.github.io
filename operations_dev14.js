@@ -6613,7 +6613,12 @@ async function setSheetView(doTemporary){
     if (doTemporary){
       if (currentlyActiveName === null){
         console.log('Making view temporary')
-        scriptSheet.namedSheetViews.enterTemporary();
+        try {
+          scriptSheet.namedSheetViews.enterTemporary();
+          await excel.sync();
+        } catch (err) {
+          console.log('Error in namedSheetViews.enterTemporary()', err)
+        }
       } else {
         console.log('Already in view so no change')
       }
