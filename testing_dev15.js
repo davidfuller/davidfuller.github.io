@@ -5,6 +5,9 @@ const characterListSheetName = 'Character List';
 const characterRangeName = 'clCharacters'
 const logSheetName = 'log';
 const logRangeName = 'lgTable';
+const settingsSheetName = 'Settings';
+const versionRangeName = 'seVersion';
+const dateRangeName = 'seDate';
 
 async function doTheFullTest(){
   let messages = [];
@@ -59,6 +62,10 @@ async function doTheFullTest(){
   messages.push(addMessage('Hiding character List Sheet'));
   await hide(characterListSheetName);
 
+  //update settings
+  messages.push(addMessage('Updating settings in sheet'));
+  await upDateSettings();
+  
   await insertMessages(1, messages);
   console.log('messages', messages)
 }
@@ -154,4 +161,66 @@ function jsDateToExcelDate(jsDate){
   //takes javascript a Date object to an excel number
   let returnDateTime = 25569.0 + ((jsDate.getTime()-(jsDate.getTimezoneOffset() * 60 * 1000)) / (1000 * 60 * 60 * 24));
   return returnDateTime
+}
+
+function createSpreadsheetDate(){
+  // If before 17:59 use today. After 18.00 uses tomorrow
+  //If Saturday or Sunday, use Monday
+  const currentTime = new Date();
+  let hour = currentTime.getHours();
+  let newDate;
+  if (hour < 16){
+    newDate = currentDate;
+  } else {
+    newDate = addDays(currentDate, 1);
+  }
+  console.log('newDate first', newDate);
+  let day = newDate.getDay();
+  if (day == 6){
+    //Saturday
+    newDate = addDays(newDate, 2);// Monday
+  }
+  if (day == 0){
+    //Sunday
+    newDate = addDays(newDate, 1);// Monday
+  }
+  console.log('newDate second', newDate);
+  return newDate;
+}
+
+function addDays(date, days) {
+  const newDate = new Date(date);
+  newDate.setDate(date.getDate() + days);
+  return newDate;
+}
+
+async function upDateSettings(){
+  await Excel.run(async function(excel){
+    //getColumnRange
+    const sheet = excel.workbook.worksheets.getItem(settingsSheetName);
+    sheet.activate();
+    const versionRange = sheet.getRange(versionRangeName);
+    const dateRange = sheet.getRange(dateRangeName);
+
+    versionRange.load('values');
+    await excel.sync();
+
+    let oldVersion = versionRange.values[0][0]
+    let digits = oldVersion.split('.');
+    console.log('oldVersion', oldVersion, 'digits', digits)
+    if (digits.length == 3){
+      if (!isNaN(parseInt(digits[2]))){
+        let newDigit = parseInt(digits(2)) + 1;
+        if (newDigit < 10 {
+          newDigit = '0' + newDigit
+        }
+        let newDigits = digits[0] + '.' + digits[1] + '.' + newDigit;
+        console.log('newDigits', newDigits);
+        versionRange.values = [[newDigits]];
+        await excel.sync();
+      }
+    }
+    let newDate = createSpreadsheetDate();
+    dateRange.values = [[jsDateToExcelDate(newDate)]];
+  })  
 }
