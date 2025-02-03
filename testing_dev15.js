@@ -129,7 +129,17 @@ async function insertMessages(columnNo, messages){
     console.log('address:', targetRange.address);
 
     //clearColumn
+    targetRange.clear('Contents')
+
     //getTargetRange
+    const targetValueRange = sheet.getRangeByIndexes(range.rowIndex, column, messages.length, 2)
+    myValues = []
+    for (let i = 0; i < messages.length; i++){
+      myValues[i]= [messages.time, messages.message];
+    }
     //insert Data
+    targetValueRange.values = myValues;
+    console.log('myValues', myValues);
+    await excel.sync()
   })
 }
