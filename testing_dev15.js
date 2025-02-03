@@ -135,7 +135,7 @@ async function insertMessages(columnNo, messages){
     const targetValueRange = sheet.getRangeByIndexes(range.rowIndex, column, messages.length, 2)
     myValues = []
     for (let i = 0; i < messages.length; i++){
-      myValues[i]= [messages.time, messages.message];
+      myValues[i]= [messages[i].time, messages[i].message];
     }
     //insert Data
     targetValueRange.values = myValues;
