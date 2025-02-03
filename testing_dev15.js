@@ -65,7 +65,7 @@ async function doTheFullTest(){
   //update settings
   messages.push(addMessage('Updating settings in sheet'));
   await upDateSettings();
-  
+
   await insertMessages(1, messages);
   console.log('messages', messages)
 }
@@ -211,7 +211,7 @@ async function upDateSettings(){
     if (digits.length == 3){
       if (!isNaN(parseInt(digits[2]))){
         let newDigit = parseInt(digits(2)) + 1;
-        if (newDigit < 10 {
+        if (newDigit < 10) {
           newDigit = '0' + newDigit
         }
         let newDigits = digits[0] + '.' + digits[1] + '.' + newDigit;
