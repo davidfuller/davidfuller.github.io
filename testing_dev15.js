@@ -170,9 +170,9 @@ function createSpreadsheetDate(){
   let hour = currentTime.getHours();
   let newDate;
   if (hour < 16){
-    newDate = currentDate;
+    newDate = currentTime;
   } else {
-    newDate = addDays(currentDate, 1);
+    newDate = addDays(currentTime, 1);
   }
   console.log('newDate first', newDate);
   let day = newDate.getDay();
