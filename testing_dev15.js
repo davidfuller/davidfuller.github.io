@@ -210,7 +210,7 @@ async function upDateSettings(){
     console.log('oldVersion', oldVersion, 'digits', digits)
     if (digits.length == 3){
       if (!isNaN(parseInt(digits[2]))){
-        let newDigit = parseInt(digits(2)) + 1;
+        let newDigit = parseInt(digits[2]) + 1;
         if (newDigit < 10) {
           newDigit = '0' + newDigit
         }
