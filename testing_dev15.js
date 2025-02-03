@@ -3,6 +3,8 @@ function auto_exec(){
 
 const characterListSheetName = 'Character List';
 const characterRangeName = 'clCharacters'
+const logSheetName = 'log';
+const logRangeName = 'lgTable';
 
 async function doTheFullTest(){
   let messages = [];
@@ -56,6 +58,8 @@ async function doTheFullTest(){
   //hide character list
   messages.push(addMessage('Hiding character List Sheet'));
   await hide(characterListSheetName);
+
+  await insertMessages(1, messages);
   console.log('messages', messages)
 }
 
@@ -107,4 +111,25 @@ async function checkCharacters(){
   });
   return issue;
 
+}
+
+async function insertMessages(columnNo, messages){
+  await Excel.run(async function(excel){
+    //getColumnRange
+    const sheet = excel.workbook.worksheets.getItem(logSheetName);
+    const range = sheet.getRange(logRangeName);
+    range.load('rowIndex, rowCount, columnIndex');
+    await excel.sync();
+
+    let column = range.columnIndex + 2 * (columnNo - 1);
+    const targetRange = sheet.getRangeByIndexes(range.rowIndex, column, range.rowCount, 2);
+    targetRange.load('address');
+    await excel.sync;
+
+    console.log('address:', targetRange.address);
+
+    //clearColumn
+    //getTargetRange
+    //insert Data
+  })
 }
