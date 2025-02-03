@@ -124,7 +124,7 @@ async function insertMessages(columnNo, messages){
     let column = range.columnIndex + 2 * (columnNo - 1);
     const targetRange = sheet.getRangeByIndexes(range.rowIndex, column, range.rowCount, 2);
     targetRange.load('address');
-    await excel.sync;
+    await excel.sync();
 
     console.log('address:', targetRange.address);
 
