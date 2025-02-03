@@ -153,5 +153,5 @@ function excelDateToJSDate(excelDate){
 function jsDateToExcelDate(jsDate){
   //takes javascript a Date object to an excel number
   let returnDateTime = 25569.0 + ((jsDate.getTime()-(jsDate.getTimezoneOffset() * 60 * 1000)) / (1000 * 60 * 60 * 24));
-  return Math.floor(returnDateTime)
+  return returnDateTime
 }
