@@ -136,11 +136,22 @@ async function insertMessages(columnNo, messages){
     myValues = []
     for (let i = 0; i < messages.length; i++){
       console.log(i, messages[i]);
-      myValues[i] = [messages[i].time, messages[i].message];
+      myValues[i] = [jsDateToExcelDate(messages[i].time), messages[i].message];
     }
     //insert Data
     console.log('myValues', myValues);
     targetValueRange.values = myValues;
     await excel.sync();
   })
+}
+
+function excelDateToJSDate(excelDate){
+  //takes a number and return javascript Date object
+  return new Date(Math.round((excelDate - 25569) * 86400 * 1000));
+}
+
+function jsDateToExcelDate(jsDate){
+  //takes javascript a Date object to an excel number
+  let returnDateTime = 25569.0 + ((jsDate.getTime()-(jsDate.getTimezoneOffset() * 60 * 1000)) / (1000 * 60 * 60 * 24));
+  return Math.floor(returnDateTime)
 }
