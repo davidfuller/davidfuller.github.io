@@ -7586,7 +7586,7 @@ async function checkWallaInCueColumn(){
     }
     message += 'First: ' + wallaCues[0] + ' Last: ' + wallaCues[wallaCues.length - 1];
   })
-  return {first: wallaCues[0], last: wallaCues[wallaCues.length - 1], message: message};
+  return {first: wallaCues[0], last: wallaCues[wallaCues.length - 1], message: message, issues: issues};
 }
 
 async function fundDuplicateCues(){
