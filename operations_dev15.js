@@ -3345,6 +3345,7 @@ async function showMainPage(){
     }
   })
   await putCodeVersionInSettings();
+  await putSceneMinMaxInSettings();
 }
 async function showForActorsPage(){
   const mainPage = tag('main-page');
@@ -7609,5 +7610,16 @@ async function putCodeVersionInSettings(){
     const settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName)
     let codeRange = settingsSheet.getRange('seCode');
     codeRange.values = [[codeVersion]];
+  })
+}
+
+async function putSceneMinMaxInSettings(){
+  await Excel.run(async function(excel){
+    const settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName)
+    let sceneFirst = settingsSheet.getRange('seSceneFirst');
+    let sceneLast = settingsSheet.getRange('seSceneLast');
+    let minMax = await getSceneMaxAndMin();
+    sceneFirst.values = [[minMax.min]];
+    sceneLast.values = [[minMax.max]];
   })
 }
