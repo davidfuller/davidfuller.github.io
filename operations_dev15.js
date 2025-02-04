@@ -7540,6 +7540,7 @@ async function getWallaCues(){
 async function checkWallaInCueColumn(){
   let message = '';
   let wallaCues = [];
+  let issues = 0;
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let usedRange = scriptSheet.getUsedRange();
@@ -7568,7 +7569,7 @@ async function checkWallaInCueColumn(){
     wallaNumbers.sort((a,b) => a - b);
     console.log('Cue col wallaCues', wallaCues, 'wallaNumbers', wallaNumbers);
     let current = wallaNumbers[0]
-    let issues = 0;
+    
     for (let i = 1; i < wallaNumbers.length; i++){
       if (wallaNumbers[i] != (current + 1)){
         console.log('Cue col: Issue with ', wallaNumbers[i], 'expecting', current + 1);
