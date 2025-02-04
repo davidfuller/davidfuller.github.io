@@ -69,7 +69,7 @@ async function doTheFullTest(){
   //checkWalla
   messages.push(addMessage('Checking Walla Cues'));
   let wallaDetails = await jade_modules.operations.getWallaCues();
-  messages.push(addMessage((wallaDetails.issues + wallaDetails.cueColumnIssues) + ' Walla cues issues'));
+  messages.push(addMessage((wallaDetails.wallaIssues + wallaDetails.cueColumnIssues) + ' Walla cues issues'));
 
   await insertMessages(1, messages);
   console.log('messages', messages)
