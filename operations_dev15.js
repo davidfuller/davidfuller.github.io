@@ -7643,6 +7643,6 @@ async function putWallaMinMaxInSettings(wallaFirstValue, wallaLastValue){
     let wallaFirst = settingsSheet.getRange('seWallaFirst');
     let wallaLast = settingsSheet.getRange('seWallaLast');
     wallaFirst.values = [[wallaFirstValue]];
-    cueLast.values = [[wallaLastValue]];
+    wallaLast.values = [[wallaLastValue]];
   })
 }
