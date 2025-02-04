@@ -7520,6 +7520,7 @@ async function getWallaCues(){
     }
     message += 'First: ' + wallaCues[0] + ' Last: ' + wallaCues[wallaCues.length - 1] + '\n' + await checkWallaInCueColumn();
     wallaInfo.innerText = message;
+    await putWallaMinMaxInSettings(wallaCues[0], wallaCues[wallaCues.length - 1]);
   })
   
 
@@ -7631,7 +7632,17 @@ async function putCueMinMaxInSettings(){
     let cueFirst = settingsSheet.getRange('seCueFirst');
     let cueLast = settingsSheet.getRange('seCueLast');
     let minMax = await getLineNoMaxAndMin();
-    cueFirst.values = [[minMax.min + 1]];
+    cueFirst.values = [[minMax.min]];
     cueLast.values = [[minMax.max]];
+  })
+}
+
+async function putWallaMinMaxInSettings(wallaFirstValue, wallaLastValue){
+  await Excel.run(async function(excel){
+    const settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName)
+    let wallaFirst = settingsSheet.getRange('seWallaFirst');
+    let wallaLast = settingsSheet.getRange('seWallaLast');
+    wallaFirst.values = [[wallaFirstValue]];
+    cueLast.values = [[wallaLastValue]];
   })
 }
