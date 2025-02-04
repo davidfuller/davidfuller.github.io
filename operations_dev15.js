@@ -7460,6 +7460,7 @@ function doConsistencyCheck(theArray){
 }
 
 async function getWallaCues(){
+  let wallaDetails = {}
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let usedRange = scriptSheet.getUsedRange();
@@ -7521,7 +7522,6 @@ async function getWallaCues(){
     let wallaInCueColumnDetails = await checkWallaInCueColumn();
     message += 'First: ' + wallaCues[0] + ' Last: ' + wallaCues[wallaCues.length - 1] + '\n' + wallaInCueColumnDetails.message;
     wallaInfo.innerText = message;
-    let wallaDetails = {}
     
     wallaDetails.firstCue = wallaCues[0];
     wallaDetails.lastCue = wallaCues[wallaCues.length - 1];
@@ -7531,9 +7531,9 @@ async function getWallaCues(){
     wallaDetails.cueColumnIssues = wallaInCueColumnDetails.issues;
 
     await putWallaMinMaxInSettings(wallaDetails.firstCue, wallaDetails.lastCue);
-    return wallaDetails;
+    
   })
-  
+  return wallaDetails;
 
 }
 
