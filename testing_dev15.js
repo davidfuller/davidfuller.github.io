@@ -66,6 +66,11 @@ async function doTheFullTest(){
   messages.push(addMessage('Updating settings in sheet'));
   await upDateSettings();
 
+  //checkWalla
+  messages.push(addMessage('Checking Walla Cues'));
+  let wallaDetails = await jade_modules.operations.getWallaCues();
+  messages.push(addMessage((wallaDetails.issues + wallaDetails.cueColumnIssues) + ' Walla cues issues'));
+
   await insertMessages(1, messages);
   console.log('messages', messages)
 }

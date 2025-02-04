@@ -7518,9 +7518,20 @@ async function getWallaCues(){
     } else {
       message += 'No issues: '
     }
-    message += 'First: ' + wallaCues[0] + ' Last: ' + wallaCues[wallaCues.length - 1] + '\n' + await checkWallaInCueColumn();
+    let wallaInCueColumnDetails = await checkWallaInCueColumn();
+    message += 'First: ' + wallaCues[0] + ' Last: ' + wallaCues[wallaCues.length - 1] + '\n' + wallaInCueColumnDetails.message;
     wallaInfo.innerText = message;
-    await putWallaMinMaxInSettings(wallaCues[0], wallaCues[wallaCues.length - 1]);
+    let wallaDetails = {}
+    
+    wallaDetails.firstCue = wallaCues[0];
+    wallaDetails.lastCue = wallaCues[wallaCues.length - 1];
+    wallaDetails.wallaIssues = issues;
+    wallaDetails.firstCueColumnCue = wallaInCueColumnDetails.first;
+    wallaDetails.lastCueColumnCue = wallaInCueColumnDetails.last;
+    wallaDetails.cueColumnIssues = wallaInCueColumnDetails.issues;
+
+    await putWallaMinMaxInSettings(wallaDetails.firstCue, wallaDetails.lastCue);
+    return wallaDetails;
   })
   
 
@@ -7528,6 +7539,7 @@ async function getWallaCues(){
 
 async function checkWallaInCueColumn(){
   let message = '';
+  let wallaCues = [];
   await Excel.run(async function(excel){
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let usedRange = scriptSheet.getUsedRange();
@@ -7536,7 +7548,6 @@ async function checkWallaInCueColumn(){
     let cueRange = scriptSheet.getRangeByIndexes(usedRange.rowIndex, cueIndex, usedRange.rowCount, 1); 
     cueRange.load('values, rowIndex');
     await excel.sync();
-    let wallaCues = [];
     let wallaNumbers = [];
     for (let i = 0; i < cueRange.values.length;i++){
       let thisValue = cueRange.values[i][0].toString();
@@ -7575,7 +7586,7 @@ async function checkWallaInCueColumn(){
     }
     message += 'First: ' + wallaCues[0] + ' Last: ' + wallaCues[wallaCues.length - 1];
   })
-  return message;
+  return {first: wallaCues[0], last: wallaCues[wallaCues.length - 1], message: message};
 }
 
 async function fundDuplicateCues(){
