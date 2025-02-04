@@ -3344,6 +3344,7 @@ async function showMainPage(){
       protectionText.innerText = 'Sheet unlocked'
     }
   })
+  await putCodeVersionInSettings();
 }
 async function showForActorsPage(){
   const mainPage = tag('main-page');
@@ -7601,4 +7602,12 @@ async function fundDuplicateCues(){
   })
   console.log ('cues', cues);
   console.log('duplicates', duplicates);
+}
+
+async function putCodeVersionInSettings(){
+  await Excel.run(async function(excel){
+    const settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName)
+    let codeRange = settingsSheet.getRange('seCode');
+    codeRange.values = [[codeVersion]];
+  })
 }
