@@ -173,7 +173,7 @@ function jsDateToExcelDate(jsDate){
 }
 
 function createSpreadsheetDate(){
-  // If before 17:59 use today. After 18.00 uses tomorrow
+  // If before 16:59 use today. After 17.00 uses tomorrow
   //If Saturday or Sunday, use Monday
   const currentTime = new Date();
   let hour = currentTime.getHours();
