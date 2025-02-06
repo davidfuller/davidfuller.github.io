@@ -72,6 +72,8 @@ async function doTheFullTest(){
   console.log('wallaDetails', wallaDetails);
   messages.push(addMessage((wallaDetails.wallaIssues + wallaDetails.cueColumnIssues) + ' Walla cues issues'));
 
+  await moveMessages();
+
   await insertMessages(1, messages);
   console.log('messages', messages)
 }
@@ -154,6 +156,7 @@ async function insertMessages(columnNo, messages){
     //insert Data
     console.log('myValues', myValues);
     targetValueRange.values = myValues;
+    sheet.activate();
     await excel.sync();
   })
 }
@@ -229,4 +232,22 @@ async function upDateSettings(){
     let newDate = createSpreadsheetDate();
     dateRange.values = [[jsDateToExcelDate(newDate)]];
   })  
+}
+async function moveMessages(){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(logSheetName);
+    const range = sheet.getRange(logRangeName);
+    range.load('rowIndex, rowCount, columnIndex');
+    await excel.sync();
+    for (let columnNo = 10; columnNo > 0; columnNo--){
+      //getColumnRange
+      let columnTarget = range.columnIndex + 2 * (columnNo - 1);
+      const targetRange = sheet.getRangeByIndexes(range.rowIndex, columnTarget, range.rowCount, 2);
+      const sourceRange = sheet.getRangeByIndexes(range.rowIndex, columnTarget - 2, range.rowCount, 2);
+      targetRange.load('address');
+      sourceRange.load('address');
+      await excel.sync();
+      console.log('target address:', targetRange.address, 'source address', sourceRange.address);
+    }
+  })
 }
