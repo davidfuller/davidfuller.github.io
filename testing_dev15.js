@@ -239,7 +239,7 @@ async function moveMessages(){
     const range = sheet.getRange(logRangeName);
     range.load('rowIndex, rowCount, columnIndex');
     await excel.sync();
-    for (let columnNo = 10; columnNo > 0; columnNo--){
+    for (let columnNo = 10; columnNo > 1; columnNo--){
       //getColumnRange
       let columnTarget = range.columnIndex + 2 * (columnNo - 1);
       const targetRange = sheet.getRangeByIndexes(range.rowIndex, columnTarget, range.rowCount, 2);
@@ -248,6 +248,7 @@ async function moveMessages(){
       sourceRange.load('address');
       await excel.sync();
       console.log('target address:', targetRange.address, 'source address', sourceRange.address);
+      targetRange.copyFrom(sourceRange, "values");
     }
   })
 }
