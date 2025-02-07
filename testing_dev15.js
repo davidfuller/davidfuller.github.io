@@ -270,5 +270,8 @@ async function checkForActorConditionalFormatting(){
     characterTextSearchRange.load('conditionalFormats');
     await excel.sync();
     console.log('conditional formats', characterTextSearchRange.conditionalFormats.toJSON());
+    let items = characterTextSearchRange.conditionalFormats.items
+    await excel.sync()
+    console.log('items', items);
   })
 }
