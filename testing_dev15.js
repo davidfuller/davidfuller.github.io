@@ -261,3 +261,9 @@ async function moveMessages(){
     }
   })
 }
+
+async function checkForActorConditionalFormatting(){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(logSheetName);
+  })
+}
