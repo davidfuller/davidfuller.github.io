@@ -8,6 +8,7 @@ const logRangeName = 'lgTable';
 const settingsSheetName = 'Settings';
 const versionRangeName = 'seVersion';
 const dateRangeName = 'seDate';
+const forActorSheetName = 'For Actors'
 
 async function doTheFullTest(){
   let messages = [];
@@ -264,6 +265,10 @@ async function moveMessages(){
 
 async function checkForActorConditionalFormatting(){
   await Excel.run(async function(excel){
-    const sheet = excel.workbook.worksheets.getItem(logSheetName);
+    const sheet = excel.workbook.worksheets.getItem(forActorSheetName);
+    let characterTextSearchRange = sheet.getRange('faTextSearch');
+    characterTextSearchRange.load('conditionalFormats');
+    await excel.sync();
+    console.log('conditional formats', characterTextSearchRange.conditionalFormats);
   })
 }

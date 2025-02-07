@@ -273,6 +273,7 @@ async function mainHTML(){
   <div id="forActorsButtons">
     <button id='btnGetActorInfo' class='actor-button' onclick="jade_modules.scheduling.searchCharacter()">Search Character</button>
     <button id="btnActorGoToLine" class='actor-button' onclick="jade_modules.scheduling.actorGoToLine()">Go to this line in script<br/>(First line if multiple)</button>
+    <button id="btnConditionalFormatting" class="actor-button" onclick="jade_modules.testing.checkForActorConditionalFormatting()">Conditional Formatting</button>
     <label id='actor-wait'>Please wait...</label>
   </div>
   <div id="scriptButtons">
