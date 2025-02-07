@@ -6529,7 +6529,7 @@ async function findDuplicateLineNumbers(){
           }
           if (currentValue == previousValue){
             console.log('currentRaw', currentRaw, 'previousRaw', previousRaw);
-            if(currentRaw.trim() == previousRaw.trim()){
+            if(currentRaw.toString().trim() == previousRaw.toString().trim()){
               indexes.push((i + lineRange.rowIndex - 1));
             }
             
