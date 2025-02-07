@@ -279,5 +279,8 @@ async function checkForActorConditionalFormatting(){
     items[0].custom.load('format, rule')
     await excel.sync();
     console.log('format', items[0].custom.format.toJSON(), 'rule', items[0].custom.rule.toJSON());
+    items[0].custom.format.load('fill');
+    await excel.sync();
+    console.log('fill', items[0].custom.format.fill.toJSON());
   })
 }
