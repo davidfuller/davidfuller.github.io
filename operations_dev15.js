@@ -6516,16 +6516,22 @@ async function findDuplicateLineNumbers(){
     let lastTest = false
     let indexes = [];
     for (let i = 1; i < lineValues.length; i++){
-      let currentValue = parseInt(lineValues[i]);
-      let previousValue = parseInt(lineValues[i - 1]);
-      let nextValue = parseInt(lineValues[i + 1]);
+      let currentRaw = lineValues[i];
+      let previousRaw = lineValues[i - 1];
+      let nextRaw = lineValues[i + 1];
+      let currentValue = parseInt(currentRaw);
+      let previousValue = parseInt(previousRaw);
+      let nextValue = parseInt(nextRaw);
       if ((!isNaN(currentValue)) && (!isNaN(previousValue)) && (!isNaN(nextValue))){
         if ((currentValue > 0) && (previousValue>0)){
           if ((currentValue == minMax.max) && (nextValue == 0)){
             lastTest = true
           }
           if (currentValue == previousValue){
-            indexes.push((i + lineRange.rowIndex - 1));
+            if(currentRaw.trim() == previousRaw.trim()){
+              indexes.push((i + lineRange.rowIndex - 1));
+            }
+            
           }
         }
       }
