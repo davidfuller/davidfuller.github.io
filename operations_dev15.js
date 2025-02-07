@@ -6506,6 +6506,7 @@ function showAddRemove(){
 }
 
 async function findDuplicateLineNumbers(){
+  let indexes = [];
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem('Script');
     let lineRange = scriptSheet.getRangeByIndexes(firstDataRow - 1, lineIndex, lastDataRow - firstDataRow, 1);
@@ -6514,7 +6515,6 @@ async function findDuplicateLineNumbers(){
     lineValues = lineRange.values.map(x => x[0]);
     let minMax = await getLineNoMaxAndMin();
     let lastTest = false
-    let indexes = [];
     for (let i = 1; i < lineValues.length; i++){
       let currentRaw = lineValues[i];
       let previousRaw = lineValues[i - 1];
@@ -6542,7 +6542,7 @@ async function findDuplicateLineNumbers(){
     }
     console.log('indexes', indexes )
   }) 
-  
+  return indexes;
 }
 
 async function getCharacterList(){

@@ -72,6 +72,15 @@ async function doTheFullTest(){
   console.log('wallaDetails', wallaDetails);
   messages.push(addMessage((wallaDetails.wallaIssues + wallaDetails.cueColumnIssues) + ' Walla cues issues'));
 
+  //check cue numbers
+  messages.push(addMessage('Checking for duplicate cue numbers'))
+  let duplicateIndexes = jade_modules.operations.findDuplicateLineNumbers();
+  if (duplicateIndexes.length > 0){
+    messages.push(addMessage(duplicateIndexes.length + ' duplicate cue numbers at indexes: ' + duplicateIndexes.join(", ")));
+  } else {
+    messages.push(addMessage('No duplicate cue numbers'));
+  }
+
   await moveMessages();
 
   await insertMessages(1, messages);
