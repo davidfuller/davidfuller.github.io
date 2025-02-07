@@ -273,5 +273,8 @@ async function checkForActorConditionalFormatting(){
     let items = characterTextSearchRange.conditionalFormats.items
     await excel.sync()
     console.log('items', items);
+    items[0].load('custom');
+    await excel.sync()
+    console.log('custom', items[0].custom)
   })
 }
