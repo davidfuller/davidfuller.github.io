@@ -6528,6 +6528,7 @@ async function findDuplicateLineNumbers(){
             lastTest = true
           }
           if (currentValue == previousValue){
+            console.log('currentRaw', currentRaw, 'previousRaw', previousRaw);
             if(currentRaw.trim() == previousRaw.trim()){
               indexes.push((i + lineRange.rowIndex - 1));
             }
