@@ -175,7 +175,7 @@ const labelFont =
         }
     ],
     "fill": {
-        "color": "red", //"#FBE2D5",
+        "color": "#FBE2D5",
         "pattern": null,
         "patternColor": null,
         "patternTintAndShade": null,
