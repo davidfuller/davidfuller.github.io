@@ -326,10 +326,12 @@ async function checkForActorConditionalFormatting(){
       conditionalFormat.custom.format.font.color = myFormat.fontColor;
       conditionalFormat.custom.format.fill.color = myFormat.fillColor;
       let myBorders = conditionalFormat.custom.format.borders;
+      myBorders.load('count, items');
       await excel.sync();
+      console.log('myBorders count', myBorders.count, 'myBorders.items', myBorders.items)
       for (let border of myFormat.borders){
         console.log('myBorder', border);
-        let edge = new Excel.ConditionalRangeBorder
+        let edge = new ConditionalRangeBorder
         edge.sideIndex = border.sideIndex;
         edge.color = border.color;
         edge.style = border.
