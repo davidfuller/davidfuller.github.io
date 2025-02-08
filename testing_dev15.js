@@ -597,10 +597,15 @@ async function checkForActorConditionalFormatting(){
       const range = sheet.getRange(myFormat.name);
       //fill
       range.format.fill.color = myFormat.mainFontStyle.fill.color;
+      await excel.sync();
       range.format.fill.pattern = myFormat.mainFontStyle.fill.pattern;
+      await excel.sync();
       range.format.fill.patternColor = myFormat.mainFontStyle.fill.patternColor;
+      await excel.sync();
       range.format.fill.patternTintAndShade = myFormat.mainFontStyle.fill.patternTintAndShade;
+      await excel.sync();
       range.format.fill.tintAndShade = myFormat.mainFontStyle.fill.tintAndShade;
+      await excel.sync();
       
       range.conditionalFormats.clearAll();
       const conditionalFormat = range.conditionalFormats.add(Excel.ConditionalFormatType.custom);
