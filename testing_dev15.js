@@ -18,24 +18,24 @@ const myConditionalFormats = [
     fontColor: "#FBE2D5",
     borders: [
       {
-          "color": null,
+          "color": "#FBE2D5",
           "sideIndex": "EdgeTop",
-          "style": "None"
+          "style": "Continuous"
       },
       {
-          "color": null,
+          "color": "#FBE2D5",
           "sideIndex": "EdgeBottom",
-          "style": "None"
+          "style": "Continuous"
       },
       {
-          "color": null,
+          "color": "#FBE2D5",
           "sideIndex": "EdgeLeft",
-          "style": "None"
+          "style": "Continuous"
       },
       {
-          "color": null,
+          "color": "#FBE2D5",
           "sideIndex": "EdgeRight",
-          "style": "None"
+          "style": "Continuous"
       }
     ]
   }
@@ -334,6 +334,10 @@ async function checkForActorConditionalFormatting(){
         myEdge.load('sideIndex, color, style');
         await excel.sync();
         console.log('myEdge', myEdge.toJSON());
+        myEdge.color = border.color;
+        myEdge.style = border.style;
+        await excel.sync();
+        console.log('myEdge After', myEdge.toJSON());
       }
     }
   })
