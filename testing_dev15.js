@@ -8,11 +8,104 @@ const logRangeName = 'lgTable';
 const settingsSheetName = 'Settings';
 const versionRangeName = 'seVersion';
 const dateRangeName = 'seDate';
-const forActorSheetName = 'For Actors'
+const forActorSheetName = 'For Actors';
 
+const inputFont = 
+  {
+    "autoIndent": false,
+    "columnWidth": 264.75,
+    "horizontalAlignment": "General",
+    "indentLevel": 0,
+    "readingOrder": "Context",
+    "rowHeight": 15.75,
+    "shrinkToFit": false,
+    "textOrientation": 0,
+    "useStandardHeight": false,
+    "useStandardWidth": false,
+    "verticalAlignment": "Bottom",
+    "wrapText": false,
+    "borders": [
+        {
+            "color": "#000000",
+            "sideIndex": "EdgeTop",
+            "style": "Continuous",
+            "tintAndShade": 0,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "EdgeBottom",
+            "style": "Continuous",
+            "tintAndShade": 0,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "EdgeLeft",
+            "style": "Continuous",
+            "tintAndShade": 0,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "EdgeRight",
+            "style": "Continuous",
+            "tintAndShade": 0,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "InsideVertical",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "InsideHorizontal",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "DiagonalDown",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "DiagonalUp",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        }
+    ],
+    "fill": {
+        "color": "#FFFFFF",
+        "pattern": null,
+        "patternColor": null,
+        "patternTintAndShade": null,
+        "tintAndShade": null
+    },
+    "font": {
+        "bold": false,
+        "color": "#000000",
+        "italic": false,
+        "name": "Aptos Narrow",
+        "size": 11,
+        "strikethrough": false,
+        "subscript": false,
+        "superscript": false,
+        "tintAndShade": 0,
+        "underline": "None"
+    }
+  }
 const myConditionalFormats = [
   {
     name: 'faTextSearch',
+    mainFontStyle: inputFont,
     rule: '=$D$8 = "List Search"',
     doFillColor: true,
     fillColor: "#FBE2D5",
@@ -44,6 +137,7 @@ const myConditionalFormats = [
   },
   {
     name: 'faCharacterChoice',
+    mainFontStyle: inputFont,
     rule: '=$D$8 = "Text Search"',
     doFillColor: true,
     fillColor: "#FBE2D5",
@@ -393,7 +487,7 @@ async function moveMessages(){
 async function checkForActorConditionalFormatting(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(forActorSheetName);
-    let characterTextSearchRange = sheet.getRange('faTextSearch');
+    let characterTextSearchRange = sheet.getRange('faCharacterChoiceLabel');
     characterTextSearchRange.load('conditionalFormats, format/*, format/font, format/fill, format/borders');
     await excel.sync();
     console.log('conditional formats', characterTextSearchRange.conditionalFormats.toJSON());
