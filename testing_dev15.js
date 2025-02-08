@@ -75,7 +75,7 @@ const myConditionalFormats = [
   },
   {
     name: 'faCharacterChoiceLabel',
-    rule: '=$D$8 = "List Search"',
+    rule: '=$D$8 = "Text Search"',
     doFillColor: false,
     fillColor: "#FBE2D5",
     doFontColor: true,
@@ -106,7 +106,7 @@ const myConditionalFormats = [
   },
   {
     name: 'faTextChoiceLabel',
-    rule: '=$D$8 = "Text Search"',
+    rule: '=$D$8 = "List Search"',
     doFillColor: false,
     fillColor: "#FBE2D5",
     doFontColor: true,
