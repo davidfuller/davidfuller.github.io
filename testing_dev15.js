@@ -10,6 +10,37 @@ const versionRangeName = 'seVersion';
 const dateRangeName = 'seDate';
 const forActorSheetName = 'For Actors'
 
+const myConditionalFormats = [
+  {
+    name: 'faTextSearch',
+    rule: '=$D$8 = "List Search"',
+    fillColor: "#FBE2D5",
+    fontColor: "#FBE2D5",
+    borders: [
+      {
+          "color": null,
+          "sideIndex": "EdgeTop",
+          "style": "None"
+      },
+      {
+          "color": null,
+          "sideIndex": "EdgeBottom",
+          "style": "None"
+      },
+      {
+          "color": null,
+          "sideIndex": "EdgeLeft",
+          "style": "None"
+      },
+      {
+          "color": null,
+          "sideIndex": "EdgeRight",
+          "style": "None"
+      }
+    ]
+  }
+]
+
 async function doTheFullTest(){
   let messages = [];
   messages.push(addMessage('Start of test'));
@@ -284,5 +315,10 @@ async function checkForActorConditionalFormatting(){
     console.log('fill', items[0].custom.format.fill.toJSON());
     console.log('font', items[0].custom.format.font.toJSON());
     console.log('borders', items[0].custom.format.borders.toJSON());
+    for (let myFormat of myConditionalFormats){
+      console.log('Doing cell', myFormat.name);
+      const range = sheet.getRange(myFormat.name);
+      range.conditionalFormats.clearAll();
+    }
   })
 }
