@@ -14,8 +14,11 @@ const myConditionalFormats = [
   {
     name: 'faTextSearch',
     rule: '=$D$8 = "List Search"',
+    doFillColor: true,
     fillColor: "#FBE2D5",
+    doFontColor: true,
     fontColor: "#FBE2D5",
+    doBorders: true,
     borders: [
       {
           "color": "#FBE2D5",
@@ -42,8 +45,11 @@ const myConditionalFormats = [
   {
     name: 'faCharacterChoice',
     rule: '=$D$8 = "Text Search"',
+    doFillColor: true,
     fillColor: "#FBE2D5",
+    doFontColor: true,
     fontColor: "#FBE2D5",
+    doBorders: true,
     borders: [
       {
           "color": "#FBE2D5",
@@ -66,7 +72,38 @@ const myConditionalFormats = [
           "style": "Continuous"
       }
     ]
-  }
+  },
+  {
+    name: 'faCharacterChoiceLabel',
+    rule: '=$D$8 = "List Search"',
+    doFillColor: false,
+    fillColor: "#FBE2D5",
+    doFontColor: true,
+    fontColor: "#FBE2D5",
+    doBorders: false,
+    borders: [
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous"
+      }
+    ]
+  },
 ]
 
 async function doTheFullTest(){
@@ -351,21 +388,27 @@ async function checkForActorConditionalFormatting(){
       range.conditionalFormats.clearAll();
       const conditionalFormat = range.conditionalFormats.add(Excel.ConditionalFormatType.custom);
       conditionalFormat.custom.rule.formula = myFormat.rule;
-      conditionalFormat.custom.format.font.color = myFormat.fontColor;
-      conditionalFormat.custom.format.fill.color = myFormat.fillColor;
-      let myBorders = conditionalFormat.custom.format.borders;
-      myBorders.load('count, items');
-      await excel.sync();
-      console.log('myBorders count', myBorders.count, 'myBorders.items', myBorders.items)
-      for (let border of myFormat.borders){
-        let myEdge = myBorders.getItem(border.sideIndex);
-        myEdge.load('sideIndex, color, style');
+      if (myFormat,doFontColor){
+        conditionalFormat.custom.format.font.color = myFormat.fontColor;
+      }
+      if (myFormat,doFillColor){
+        conditionalFormat.custom.format.fill.color = myFormat.fillColor;
+      }
+      if (myFormat.doBorders){
+        let myBorders = conditionalFormat.custom.format.borders;
+        myBorders.load('count, items');
         await excel.sync();
-        console.log('myEdge', myEdge.toJSON());
-        myEdge.color = border.color;
-        myEdge.style = border.style;
-        await excel.sync();
-        console.log('myEdge After', myEdge.toJSON());
+        console.log('myBorders count', myBorders.count, 'myBorders.items', myBorders.items)
+        for (let border of myFormat.borders){
+          let myEdge = myBorders.getItem(border.sideIndex);
+          myEdge.load('sideIndex, color, style');
+          await excel.sync();
+          console.log('myEdge', myEdge.toJSON());
+          myEdge.color = border.color;
+          myEdge.style = border.style;
+          await excel.sync();
+          console.log('myEdge After', myEdge.toJSON());
+        }
       }
     }
   })
