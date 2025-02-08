@@ -304,17 +304,19 @@ async function checkForActorConditionalFormatting(){
     let items = characterTextSearchRange.conditionalFormats.items
     await excel.sync()
     console.log('items', items);
-    items[0].load('custom');
-    await excel.sync()
-    console.log('custom', items[0].custom)
-    items[0].custom.load('format, rule')
-    await excel.sync();
-    console.log('format', items[0].custom.format.toJSON(), 'rule', items[0].custom.rule.toJSON());
-    items[0].custom.format.load('fill, font, borders');
-    await excel.sync();
-    console.log('fill', items[0].custom.format.fill.toJSON());
-    console.log('font', items[0].custom.format.font.toJSON());
-    console.log('borders', items[0].custom.format.borders.toJSON());
+    if (items.length > 0){
+      items[0].load('custom');
+      await excel.sync()
+      console.log('custom', items[0].custom)
+      items[0].custom.load('format, rule')
+      await excel.sync();
+      console.log('format', items[0].custom.format.toJSON(), 'rule', items[0].custom.rule.toJSON());
+      items[0].custom.format.load('fill, font, borders');
+      await excel.sync();
+      console.log('fill', items[0].custom.format.fill.toJSON());
+      console.log('font', items[0].custom.format.font.toJSON());
+      console.log('borders', items[0].custom.format.borders.toJSON());
+    }
     for (let myFormat of myConditionalFormats){
       console.log('Doing cell', myFormat.name);
       const range = sheet.getRange(myFormat.name);
