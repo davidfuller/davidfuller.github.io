@@ -326,10 +326,12 @@ async function checkForActorConditionalFormatting(){
       conditionalFormat.custom.format.font.color = myFormat.fontColor;
       conditionalFormat.custom.format.fill.color = myFormat.fillColor;
       let myBorders = conditionalFormat.custom.format.borders;
+      await excel.sync();
       for (let border of myFormat.borders){
         let edge = myBorders.getItem(border.sideIndex);
         edge.color = border.color;
         edge.style = border.style
+        await excel.sync();
       }
     }
   })
