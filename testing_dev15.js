@@ -600,7 +600,7 @@ async function checkForActorConditionalFormatting(){
       await excel.sync();
       range.format.fill.pattern = myFormat.mainFontStyle.fill.pattern;
       await excel.sync();
-      range.format.fill.patternColor = null //myFormat.mainFontStyle.fill.patternColor;
+      range.format.fill.patternColor = "red" //null //myFormat.mainFontStyle.fill.patternColor;
       await excel.sync();
       range.format.fill.patternTintAndShade = myFormat.mainFontStyle.fill.patternTintAndShade;
       await excel.sync();
