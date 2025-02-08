@@ -97,8 +97,8 @@ const inputFont =
         "size": 11,
         "strikethrough": false,
         "subscript": false,
-        "superscript": false,
         "tintAndShade": 0,
+        "superscript": false,
         "underline": "None"
     }
   }
@@ -600,13 +600,13 @@ async function checkForActorConditionalFormatting(){
       await excel.sync();
       range.format.fill.pattern = myFormat.mainFontStyle.fill.pattern;
       await excel.sync();
-      range.format.fill.patternColor = myFormat.mainFontStyle.fill.patternColor;
+      range.format.fill.patternColor = null //myFormat.mainFontStyle.fill.patternColor;
       await excel.sync();
       range.format.fill.patternTintAndShade = myFormat.mainFontStyle.fill.patternTintAndShade;
       await excel.sync();
       range.format.fill.tintAndShade = myFormat.mainFontStyle.fill.tintAndShade;
       await excel.sync();
-      
+
       range.conditionalFormats.clearAll();
       const conditionalFormat = range.conditionalFormats.add(Excel.ConditionalFormatType.custom);
       conditionalFormat.custom.rule.formula = myFormat.rule;
