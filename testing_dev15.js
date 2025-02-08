@@ -394,10 +394,14 @@ async function checkForActorConditionalFormatting(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(forActorSheetName);
     let characterTextSearchRange = sheet.getRange('faTextSearch');
-    characterTextSearchRange.load('conditionalFormats, format');
+    characterTextSearchRange.load('conditionalFormats, format, format/font, format/fill, format/borders');
     await excel.sync();
     console.log('conditional formats', characterTextSearchRange.conditionalFormats.toJSON());
     console.log('format', characterTextSearchRange.format.toJSON());
+    console.log('format/font', characterTextSearchRange.format.font.toJSON());
+    console.log('format/fill', characterTextSearchRange.format.fill.toJSON());
+    console.log('format/borders', characterTextSearchRange.format.borders.toJSON());
+    
     await excel.sync();
     for (let myFormat of myConditionalFormats){
       console.log('Doing cell', myFormat.name);
