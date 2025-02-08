@@ -104,6 +104,37 @@ const myConditionalFormats = [
       }
     ]
   },
+  {
+    name: 'faTextChoiceLabel',
+    rule: '=$D$8 = "Text Search"',
+    doFillColor: false,
+    fillColor: "#FBE2D5",
+    doFontColor: true,
+    fontColor: "#FBE2D5",
+    doBorders: false,
+    borders: [
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous"
+      }
+    ]
+  }
 ]
 
 async function doTheFullTest(){
