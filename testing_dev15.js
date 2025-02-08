@@ -328,17 +328,12 @@ async function checkForActorConditionalFormatting(){
       let myBorders = conditionalFormat.custom.format.borders;
       myBorders.load('count, items');
       await excel.sync();
+      let myEdge = myBorders.getItem('EdgeTop');
+      myEdge.load('sideIndex, color, style');
+      await excel.sync();
       console.log('myBorders count', myBorders.count, 'myBorders.items', myBorders.items)
+      console.log('myEdge', myEdge.toJSON());
       for (let border of myFormat.borders){
-        console.log('myBorder', border);
-        let edge = new ConditionalRangeBorder
-        edge.sideIndex = border.sideIndex;
-        edge.color = border.color;
-        edge.style = border.
-        console.log('edge before', edge.toJSON());
-        myBorders.add(edge);
-        await excel.sync();
-        console.log('edge', myBorders.toJSON())
       }
     }
   })
