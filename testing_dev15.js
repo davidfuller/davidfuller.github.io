@@ -83,7 +83,7 @@ const inputFont =
         }
     ],
     "fill": {
-        "color": "#FFFFFF",
+        "color": "#FFFF00",
         "pattern": null,
         "patternColor": null,
         "patternTintAndShade": null,
@@ -595,6 +595,7 @@ async function checkForActorConditionalFormatting(){
       console.log('Doing cell', myFormat.name);
       console.log('mainFont', myFormat.mainFontStyle);
       const range = sheet.getRange(myFormat.name);
+      range.format.fill = myFormat.mainFontStyle.fill;
       range.conditionalFormats.clearAll();
       const conditionalFormat = range.conditionalFormats.add(Excel.ConditionalFormatType.custom);
       conditionalFormat.custom.rule.formula = myFormat.rule;
