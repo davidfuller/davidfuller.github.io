@@ -38,6 +38,34 @@ const myConditionalFormats = [
           "style": "Continuous"
       }
     ]
+  },
+  {
+    name: 'faCharacterChoice',
+    rule: '=$D$8 = "Text Search"',
+    fillColor: "#FBE2D5",
+    fontColor: "#FBE2D5",
+    borders: [
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous"
+      }
+    ]
   }
 ]
 
