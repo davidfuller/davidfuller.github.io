@@ -388,10 +388,10 @@ async function checkForActorConditionalFormatting(){
       range.conditionalFormats.clearAll();
       const conditionalFormat = range.conditionalFormats.add(Excel.ConditionalFormatType.custom);
       conditionalFormat.custom.rule.formula = myFormat.rule;
-      if (myFormat,doFontColor){
+      if (myFormat.doFontColor){
         conditionalFormat.custom.format.font.color = myFormat.fontColor;
       }
-      if (myFormat,doFillColor){
+      if (myFormat.doFillColor){
         conditionalFormat.custom.format.fill.color = myFormat.fillColor;
       }
       if (myFormat.doBorders){
