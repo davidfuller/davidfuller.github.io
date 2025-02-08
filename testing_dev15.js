@@ -102,6 +102,98 @@ const inputFont =
         "underline": "None"
     }
   }
+const labelFont = 
+  {
+    "autoIndent": false,
+    "columnWidth": 110.25,
+    "horizontalAlignment": "Right",
+    "indentLevel": 0,
+    "readingOrder": "Context",
+    "rowHeight": 15.75,
+    "shrinkToFit": false,
+    "textOrientation": 0,
+    "useStandardHeight": false,
+    "useStandardWidth": false,
+    "verticalAlignment": "Top",
+    "wrapText": false,
+    "borders": [
+        {
+            "color": "#000000",
+            "sideIndex": "EdgeTop",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "EdgeBottom",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#51154A",
+            "sideIndex": "EdgeLeft",
+            "style": "Continuous",
+            "tintAndShade": -0.499984740745262,
+            "weight": "Thin"
+        },
+        {
+            "color": "#51154A",
+            "sideIndex": "EdgeRight",
+            "style": "Continuous",
+            "tintAndShade": -0.499984740745262,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "InsideVertical",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "InsideHorizontal",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "DiagonalDown",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#000000",
+            "sideIndex": "DiagonalUp",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        }
+    ],
+    "fill": {
+        "color": "#FBE2D5",
+        "pattern": null,
+        "patternColor": null,
+        "patternTintAndShade": null,
+        "tintAndShade": 0.799981688894314
+    },
+    "font": {
+        "bold": true,
+        "color": "#51154A",
+        "italic": false,
+        "name": "Aptos Display",
+        "size": 12,
+        "strikethrough": false,
+        "subscript": false,
+        "superscript": false,
+        "tintAndShade": 0,
+        "underline": "None"
+    }
+  }
 const myConditionalFormats = [
   {
     name: 'faTextSearch',
@@ -169,6 +261,7 @@ const myConditionalFormats = [
   },
   {
     name: 'faCharacterChoiceLabel',
+    mainFontStyle: labelFont,
     rule: '=$D$8 = "Text Search"',
     doFillColor: false,
     fillColor: "#FBE2D5",
@@ -200,6 +293,7 @@ const myConditionalFormats = [
   },
   {
     name: 'faTextChoiceLabel',
+    mainFontStyle: labelFont,
     rule: '=$D$8 = "List Search"',
     doFillColor: false,
     fillColor: "#FBE2D5",
@@ -499,6 +593,7 @@ async function checkForActorConditionalFormatting(){
     await excel.sync();
     for (let myFormat of myConditionalFormats){
       console.log('Doing cell', myFormat.name);
+      console.log('mainFont', myFormat.mainFontStyle);
       const range = sheet.getRange(myFormat.name);
       range.conditionalFormats.clearAll();
       const conditionalFormat = range.conditionalFormats.add(Excel.ConditionalFormatType.custom);
