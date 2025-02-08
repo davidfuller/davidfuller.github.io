@@ -319,6 +319,10 @@ async function checkForActorConditionalFormatting(){
       console.log('Doing cell', myFormat.name);
       const range = sheet.getRange(myFormat.name);
       range.conditionalFormats.clearAll();
+      const conditionalFormat = range.conditionalFormats.add(Excel.ConditionalFormatType.custom);
+      conditionalFormat.custom.rule.formula = myFormat.rule;
+      conditionalFormat.custom.format.font.color = myFormat.fontColor;
+      conditionalFormat.custom.format.fill.color = myFormat.fillColor;
     }
   })
 }
