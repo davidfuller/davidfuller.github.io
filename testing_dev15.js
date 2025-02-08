@@ -329,11 +329,13 @@ async function checkForActorConditionalFormatting(){
       await excel.sync();
       for (let border of myFormat.borders){
         console.log('myBorder', border);
-        let edge = myBorders.getItem(border.sideIndex);
-        console.log('edge', edge.toJSON())
+        let edge = {}
+        edge.sideIndex = border.sideIndex;
         edge.color = border.color;
         edge.style = border.style
+        myBorders.push(edge);
         await excel.sync();
+        console.log('edge', myBorders.toJSON())
       }
     }
   })
