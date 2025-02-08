@@ -104,6 +104,37 @@ const myConditionalFormats = [
       }
     ]
   },
+  {
+    name: 'faTextChoiceLabel',
+    rule: '=$D$8 = "List Search"',
+    doFillColor: false,
+    fillColor: "#FBE2D5",
+    doFontColor: true,
+    fontColor: "#FBE2D5",
+    doBorders: false,
+    borders: [
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FBE2D5",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous"
+      }
+    ]
+  }
 ]
 
 async function doTheFullTest(){
@@ -363,25 +394,15 @@ async function checkForActorConditionalFormatting(){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(forActorSheetName);
     let characterTextSearchRange = sheet.getRange('faTextSearch');
-    characterTextSearchRange.load('conditionalFormats');
+    characterTextSearchRange.load('conditionalFormats, format, format/font, format/fill, format/borders');
     await excel.sync();
     console.log('conditional formats', characterTextSearchRange.conditionalFormats.toJSON());
-    let items = characterTextSearchRange.conditionalFormats.items
-    await excel.sync()
-    console.log('items', items);
-    if (items.length > 0){
-      items[0].load('custom');
-      await excel.sync()
-      console.log('custom', items[0].custom)
-      items[0].custom.load('format, rule')
-      await excel.sync();
-      console.log('format', items[0].custom.format.toJSON(), 'rule', items[0].custom.rule.toJSON());
-      items[0].custom.format.load('fill, font, borders');
-      await excel.sync();
-      console.log('fill', items[0].custom.format.fill.toJSON());
-      console.log('font', items[0].custom.format.font.toJSON());
-      console.log('borders', items[0].custom.format.borders.toJSON());
-    }
+    console.log('format', characterTextSearchRange.format.toJSON());
+    console.log('format/font', characterTextSearchRange.format.font.toJSON());
+    console.log('format/fill', characterTextSearchRange.format.fill.toJSON());
+    console.log('format/borders', characterTextSearchRange.format.borders.toJSON());
+    
+    await excel.sync();
     for (let myFormat of myConditionalFormats){
       console.log('Doing cell', myFormat.name);
       const range = sheet.getRange(myFormat.name);
@@ -398,12 +419,10 @@ async function checkForActorConditionalFormatting(){
         let myBorders = conditionalFormat.custom.format.borders;
         myBorders.load('count, items');
         await excel.sync();
-        console.log('myBorders count', myBorders.count, 'myBorders.items', myBorders.items)
         for (let border of myFormat.borders){
           let myEdge = myBorders.getItem(border.sideIndex);
           myEdge.load('sideIndex, color, style');
           await excel.sync();
-          console.log('myEdge', myEdge.toJSON());
           myEdge.color = border.color;
           myEdge.style = border.style;
           await excel.sync();
