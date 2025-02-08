@@ -179,7 +179,7 @@ const labelFont =
         "pattern": null,
         "patternColor": null,
         "patternTintAndShade": null,
-        "tintAndShade": 0.799981688894314
+        "tintAndShade": null //0.799981688894314
     },
     "font": {
         "bold": true,
