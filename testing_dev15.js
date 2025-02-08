@@ -323,6 +323,12 @@ async function checkForActorConditionalFormatting(){
       conditionalFormat.custom.rule.formula = myFormat.rule;
       conditionalFormat.custom.format.font.color = myFormat.fontColor;
       conditionalFormat.custom.format.fill.color = myFormat.fillColor;
+      let myBorders = conditionalFormat.custom.format.borders;
+      for (let border of myFormat.borders){
+        let edge = border.getItem(border.sideIndex);
+        edge.color = border.color;
+        edge.style = border.style
+      }
     }
   })
 }
