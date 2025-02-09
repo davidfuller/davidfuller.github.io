@@ -132,17 +132,17 @@ const labelFont =
             "weight": "Thin"
         },
         {
-            "color": "#51154A",
+            "color": "#000000",
             "sideIndex": "EdgeLeft",
-            "style": "Continuous",
-            "tintAndShade": -0.499984740745262,
+            "style": "None",
+            "tintAndShade": null,
             "weight": "Thin"
         },
         {
-            "color": "#51154A",
+            "color": "#000000",
             "sideIndex": "EdgeRight",
-            "style": "Continuous",
-            "tintAndShade": -0.499984740745262,
+            "style": "None",
+            "tintAndShade": null,
             "weight": "Thin"
         },
         {
