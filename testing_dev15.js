@@ -631,5 +631,21 @@ function doTheMainFont(range, style){
   range.format.fill.patternColor = style.fill.patternColor;
   range.format.fill.patternTintAndShade = style.fill.patternTintAndShade;
   range.format.fill.tintAndShade = style.fill.tintAndShade;
+  
+  range.format.autoIndent = style.autoIndent;
+  range.format.columnWidth = style.columnWidth;
+  range.format.horizontalAlignment = style.horizontalAlignment;
+  range.format.indentLevel = style.indentLevel;
+  range.format.readingOrder = style.readingOrder;
+  
+  range.format.rowHeight = style.rowHeight;
+  range.format.shrinkToFit = style.shrinkToFit;
+  range.format.useStandardHeight = style.useStandardHeight;
+  range.format.textOrientation = style.textOrientation;
+  range.format.useStandardWidth = style.useStandardWidth;
+    
+  range.format.verticalAlignment = style.verticalAlignment;
+  range.format.wrapText = style.wrapText;
+    
   return range;
 }
