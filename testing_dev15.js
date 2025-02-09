@@ -33,7 +33,7 @@ const inputFont =
             "weight": "Thin"
         },
         {
-            "color": "#51154A,
+            "color": "#51154A",
             "sideIndex": "EdgeBottom",
             "style": "Continuous",
             "tintAndShade": 0,
