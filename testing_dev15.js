@@ -118,56 +118,56 @@ const labelFont =
     "wrapText": false,
     "borders": [
         {
-            "color": "#000000",
+            "color": "#FBE2D5",
             "sideIndex": "EdgeTop",
             "style": "None",
             "tintAndShade": null,
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "#FBE2D5",
             "sideIndex": "EdgeBottom",
             "style": "None",
             "tintAndShade": null,
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "red",
             "sideIndex": "EdgeLeft",
             "style": "None",
             "tintAndShade": null,
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "red",
             "sideIndex": "EdgeRight",
             "style": "None",
             "tintAndShade": null,
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "blue",
             "sideIndex": "InsideVertical",
             "style": "None",
             "tintAndShade": null,
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "blue",
             "sideIndex": "InsideHorizontal",
             "style": "None",
             "tintAndShade": null,
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "green",
             "sideIndex": "DiagonalDown",
             "style": "None",
             "tintAndShade": null,
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "green",
             "sideIndex": "DiagonalUp",
             "style": "None",
             "tintAndShade": null,
