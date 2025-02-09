@@ -120,28 +120,28 @@ const labelFont =
         {
             "color": "#FBE2D5",
             "sideIndex": "EdgeTop",
-            "style": "None",
+            "style": "Continuous",
             "tintAndShade": null,
             "weight": "Thin"
         },
         {
             "color": "#FBE2D5",
             "sideIndex": "EdgeBottom",
-            "style": "None",
+            "style": "Continuous",
             "tintAndShade": null,
             "weight": "Thin"
         },
         {
             "color": "#000000",
             "sideIndex": "EdgeLeft",
-            "style": "None",
+            "style": "Continuous",
             "tintAndShade": null,
             "weight": "Thin"
         },
         {
             "color": "#000000",
             "sideIndex": "EdgeRight",
-            "style": "None",
+            "style": "Continuous",
             "tintAndShade": null,
             "weight": "Thin"
         },
