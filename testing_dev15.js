@@ -139,7 +139,7 @@ const labelFont =
             "weight": "Thin"
         },
         {
-            "color": "red",
+            "color": "#000000",
             "sideIndex": "EdgeRight",
             "style": "None",
             "tintAndShade": null,
