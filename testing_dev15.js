@@ -594,17 +594,9 @@ async function checkForActorConditionalFormatting(){
     for (let myFormat of myConditionalFormats){
       console.log('Doing cell', myFormat.name);
       console.log('mainFont', myFormat.mainFontStyle);
-      const range = sheet.getRange(myFormat.name);
+      let range = sheet.getRange(myFormat.name);
       //fill
-      range.format.fill.color = myFormat.mainFontStyle.fill.color;
-      await excel.sync();
-      range.format.fill.pattern = myFormat.mainFontStyle.fill.pattern;
-      await excel.sync();
-      range.format.fill.patternColor = myFormat.mainFontStyle.fill.patternColor;
-      await excel.sync();
-      range.format.fill.patternTintAndShade = myFormat.mainFontStyle.fill.patternTintAndShade;
-      await excel.sync();
-      range.format.fill.tintAndShade = myFormat.mainFontStyle.fill.tintAndShade;
+      range = doTheMainFont(range, myFormat.mainFontStyle);
       await excel.sync();
 
       range.conditionalFormats.clearAll();
@@ -632,4 +624,12 @@ async function checkForActorConditionalFormatting(){
       }
     }
   })
+}
+function doTheMainFont(range, style){
+  range.format.fill.color = style.fill.color;
+  range.format.fill.pattern = style.fill.pattern;
+  range.format.fill.patternColor = style.fill.patternColor;
+  range.format.fill.patternTintAndShade = style.fill.patternTintAndShade;
+  range.format.fill.tintAndShade = style.fill.tintAndShade;
+  return range;
 }
