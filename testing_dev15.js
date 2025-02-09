@@ -102,7 +102,99 @@ const inputFont =
         "underline": "None"
     }
   }
-const labelFont = 
+const labelFontText = 
+  {
+    "autoIndent": false,
+    "columnWidth": 110.25,
+    "horizontalAlignment": "Right",
+    "indentLevel": 0,
+    "readingOrder": "Context",
+    "rowHeight": 15.75,
+    "shrinkToFit": false,
+    "textOrientation": 0,
+    "useStandardHeight": false,
+    "useStandardWidth": false,
+    "verticalAlignment": "Top",
+    "wrapText": false,
+    "borders": [
+        {
+            "color": "#FBE2D5",
+            "sideIndex": "EdgeTop",
+            "style": "Continuous",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#FBE2D5",
+            "sideIndex": "EdgeBottom",
+            "style": "Continuous",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#FBE2D5",
+            "sideIndex": "EdgeLeft",
+            "style": "Continuous",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#51154A",
+            "sideIndex": "EdgeRight",
+            "style": "Continuous",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "blue",
+            "sideIndex": "InsideVertical",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "blue",
+            "sideIndex": "InsideHorizontal",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "green",
+            "sideIndex": "DiagonalDown",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "green",
+            "sideIndex": "DiagonalUp",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        }
+    ],
+    "fill": {
+        "color": "#FBE2D5",
+        "pattern": null,
+        "patternColor": "#FBE2D5",
+        "patternTintAndShade": null,
+        "tintAndShade": null //0.799981688894314
+    },
+    "font": {
+        "bold": true,
+        "color": "#51154A",
+        "italic": false,
+        "name": "Aptos Display",
+        "size": 12,
+        "strikethrough": false,
+        "subscript": false,
+        "superscript": false,
+        "tintAndShade": 0,
+        "underline": "None"
+    }
+  }
+const labelFontList = 
   {
     "autoIndent": false,
     "columnWidth": 110.25,
@@ -261,7 +353,7 @@ const myConditionalFormats = [
   },
   {
     name: 'faCharacterChoiceLabel',
-    mainFontStyle: labelFont,
+    mainFontStyle: labelFontList,
     rule: '=$D$8 = "Text Search"',
     doFillColor: false,
     fillColor: "#FBE2D5",
@@ -293,7 +385,7 @@ const myConditionalFormats = [
   },
   {
     name: 'faTextChoiceLabel',
-    mainFontStyle: labelFont,
+    mainFontStyle: labelFontText,
     rule: '=$D$8 = "List Search"',
     doFillColor: false,
     fillColor: "#FBE2D5",
