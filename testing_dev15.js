@@ -26,28 +26,28 @@ const inputFont =
     "wrapText": false,
     "borders": [
         {
-            "color": "#000000",
+            "color": "#51154A",
             "sideIndex": "EdgeTop",
             "style": "Continuous",
             "tintAndShade": 0,
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "#51154A,
             "sideIndex": "EdgeBottom",
             "style": "Continuous",
             "tintAndShade": 0,
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "#51154A",
             "sideIndex": "EdgeLeft",
             "style": "Continuous",
             "tintAndShade": 0,
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "#51154A",
             "sideIndex": "EdgeRight",
             "style": "Continuous",
             "tintAndShade": 0,
@@ -132,14 +132,14 @@ const labelFont =
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "#51154A",
             "sideIndex": "EdgeLeft",
             "style": "Continuous",
             "tintAndShade": null,
             "weight": "Thin"
         },
         {
-            "color": "#000000",
+            "color": "#51154A",
             "sideIndex": "EdgeRight",
             "style": "Continuous",
             "tintAndShade": null,
