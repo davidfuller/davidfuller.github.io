@@ -659,6 +659,14 @@ function doTheMainFont(range, style){
   range.format.font.superscript = style.font.superscript;
   range.format.font.underline = style.font.underline;
   
+  for (let border of style.borders){
+    let myBorder = range.format.borders.getItem(border.sideIndex);
+    myBorder.color = border.color;
+    myBorder.style = border.style;
+    myBorder.tintAndShade = border.tintAndShade;
+    myBorder.weight = border.weight;
+    
+  }
   
   return range;
 }
