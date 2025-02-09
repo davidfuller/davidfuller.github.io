@@ -646,6 +646,19 @@ function doTheMainFont(range, style){
     
   range.format.verticalAlignment = style.verticalAlignment;
   range.format.wrapText = style.wrapText;
-    
+  
+  range.format.font.bold = style.font.bold;
+  range.format.font.color = style.font.color;
+  range.format.font.italic = style.font.italic;
+  range.format.font.name = style.font.name;
+  range.format.font.size = style.font.size;
+  range.format.font.strikethrough = style.font.strikethrough;
+  range.format.font.subscript = style.font.subscript;
+  
+  range.format.font.tintAndShade = style.font.tintAndShade;
+  range.format.font.superscript = style.font.superscript;
+  range.format.font.underline = style.font.underline;
+  
+  
   return range;
 }
