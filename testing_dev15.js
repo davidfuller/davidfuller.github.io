@@ -811,14 +811,11 @@ async function getFontDetails(sheetName, rangeName){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(sheetName);
     let testRange = sheet.getRange(rangeName);
-    testRange.load('conditionalFormats/*, format/*, format/font, format/fill, format/borders');
+    testRange.load('conditionalFormats/*, conditionalFormats/font, conditionalFormats/fill, conditionalFormats/borders, format/*, format/font, format/fill, format/borders');
     await excel.sync();
     console.log('Range:', rangeName)
     console.log('conditional formats', testRange.conditionalFormats.toJSON());
     console.log('format', testRange.format.toJSON());
-    console.log('format/font', testRange.format.font.toJSON());
-    console.log('format/fill', testRange.format.fill.toJSON());
-    console.log('format/borders', testRange.format.borders.toJSON());
   })
    
 }
