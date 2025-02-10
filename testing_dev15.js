@@ -418,6 +418,259 @@ const myConditionalFormats = [
   }
 ]
 
+const schedulingLabelFontText = 
+{
+  "autoIndent": false,
+  "columnWidth": 121.5,
+  "horizontalAlignment": "Right",
+  "indentLevel": 0,
+  "readingOrder": "Context",
+  "rowHeight": 15.75,
+  "shrinkToFit": false,
+  "textOrientation": 0,
+  "useStandardHeight": false,
+  "useStandardWidth": false,
+  "verticalAlignment": "Top",
+  "wrapText": false,
+  "borders": [
+        {
+            "color": "#DAF2D0",
+            "sideIndex": "EdgeTop",
+            "style": "Continuous",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#DAF2D0",
+            "sideIndex": "EdgeBottom",
+            "style": "Continuous",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#DAF2D0",
+            "sideIndex": "EdgeLeft",
+            "style": "Continuous",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "#DAF2D0",
+            "sideIndex": "EdgeRight",
+            "style": "Continuous",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "blue",
+            "sideIndex": "InsideVertical",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "blue",
+            "sideIndex": "InsideHorizontal",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "green",
+            "sideIndex": "DiagonalDown",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        },
+        {
+            "color": "green",
+            "sideIndex": "DiagonalUp",
+            "style": "None",
+            "tintAndShade": null,
+            "weight": "Thin"
+        }
+    ],
+  "fill": {
+      "color": "#DAF2D0",
+      "pattern": null,
+      "patternColor": "#DAF2D0",
+      "patternTintAndShade": null,
+      "tintAndShade": null
+  },
+  "font": {
+      "bold": true,
+      "color": "#51154A",
+      "italic": false,
+      "name": "Aptos Display",
+      "size": 12,
+      "strikethrough": false,
+      "subscript": false,
+      "superscript": false,
+      "tintAndShade": 0,
+      "underline": "None"
+  }
+}
+
+const schedulingFontText =
+{
+  "autoIndent": false,
+  "columnWidth": 263.25,
+  "horizontalAlignment": "Left",
+  "indentLevel": 0,
+  "readingOrder": "Context",
+  "rowHeight": 15.75,
+  "shrinkToFit": false,
+  "textOrientation": 0,
+  "useStandardHeight": false,
+  "useStandardWidth": false,
+  "verticalAlignment": "Top",
+  "wrapText": true,
+  "borders": [
+      {
+          "color": "#51154A",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous",
+          "tintAndShade": 0,
+          "weight": "Thin"
+      },
+      {
+          "color": "#51154A",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous",
+          "tintAndShade": 0,
+          "weight": "Thin"
+      },
+      {
+          "color": "#51154A",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous",
+          "tintAndShade": 0,
+          "weight": "Thin"
+      },
+      {
+          "color": "#51154A",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous",
+          "tintAndShade": -0,
+          "weight": "Thin"
+      },
+      {
+          "color": "#000000",
+          "sideIndex": "InsideVertical",
+          "style": "None",
+          "tintAndShade": null,
+          "weight": "Thin"
+      },
+      {
+          "color": "#000000",
+          "sideIndex": "InsideHorizontal",
+          "style": "None",
+          "tintAndShade": null,
+          "weight": "Thin"
+      },
+      {
+          "color": "#000000",
+          "sideIndex": "DiagonalDown",
+          "style": "None",
+          "tintAndShade": null,
+          "weight": "Thin"
+      },
+      {
+          "color": "#000000",
+          "sideIndex": "DiagonalUp",
+          "style": "None",
+          "tintAndShade": null,
+          "weight": "Thin"
+      }
+  ],
+  "fill": {
+      "color": "#FFFFFF",
+      "pattern": null,
+      "patternColor": null,
+      "patternTintAndShade": null,
+      "tintAndShade": null
+  },
+  "font": {
+      "bold": false,
+      "color": "#000000",
+      "italic": false,
+      "name": "Aptos Narrow",
+      "size": 11,
+      "strikethrough": false,
+      "subscript": false,
+      "superscript": false,
+      "tintAndShade": 0,
+      "underline": "None"
+  }
+}
+   
+const mySchedulingConditionalFormats = [
+  {
+    name: 'fsTextSearchLabel',
+    mainFontStyle: schedulingLabelFontText,
+    rule: '=$D$8 = "List Search"',
+    doFillColor: true,
+    fillColor: "#DAF2D0",
+    doFontColor: true,
+    fontColor: "#DAF2D0",
+    doBorders: true,
+    borders: [
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous"
+      },
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous"
+      },
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous"
+      },
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous"
+      }
+    ]
+  },
+  {
+    name: 'fsTextSearch',
+    mainFontStyle: schedulingFontText,
+    rule: '=$D$8 = "List Search"',
+    doFillColor: true,
+    fillColor: "#DAF2D0",
+    doFontColor: true,
+    fontColor: "#DAF2D0",
+    doBorders: true,
+    borders: [
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous"
+      },
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous"
+      },
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous"
+      },
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous"
+      }
+     ]
+  }
+]
+
 async function doTheFullTest(){
   let messages = [];
   messages.push(addMessage('Start of test'));
@@ -723,16 +976,14 @@ async function checkForSchedulingConditionalFormatting(){
     const sheet = excel.workbook.worksheets.getItem(forSchedulingSheetName);
     await getFontDetails(forSchedulingSheetName, 'fsTextSearchLabel');
     await getFontDetails(forSchedulingSheetName, 'fsTextSearch');
-    /*
-    
-    for (let myFormat of myConditionalFormats){
+    for (let myFormat of mySchedulingConditionalFormats){
       console.log('Doing cell', myFormat.name);
       console.log('mainFont', myFormat.mainFontStyle);
       let range = sheet.getRange(myFormat.name);
       //fill
       range = doTheMainFont(range, myFormat.mainFontStyle);
       await excel.sync();
-
+      /* 
       range.conditionalFormats.clearAll();
       const conditionalFormat = range.conditionalFormats.add(Excel.ConditionalFormatType.custom);
       conditionalFormat.custom.rule.formula = myFormat.rule;
@@ -756,8 +1007,8 @@ async function checkForSchedulingConditionalFormatting(){
           console.log('myEdge After', myEdge.toJSON());
         }
       }
+        */
     }
-      */
   })
 }
 
@@ -814,8 +1065,8 @@ async function getFontDetails(sheetName, rangeName){
     testRange.load('conditionalFormats/*, conditionalFormats/custom/rule, conditionalFormats/custom/format/fill, conditionalFormats/custom/format/font, conditionalFormats/custom/format/borders, format/*, format/font, format/fill, format/borders');
     await excel.sync();
     console.log('Range:', rangeName)
-    console.log('conditional formats', testRange.conditionalFormats.toJSON());
     console.log('format', testRange.format.toJSON());
+    console.log('conditional formats', testRange.conditionalFormats.toJSON());
   })
    
 }
