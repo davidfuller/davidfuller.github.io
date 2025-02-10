@@ -983,7 +983,7 @@ async function checkForSchedulingConditionalFormatting(){
       //fill
       range = doTheMainFont(range, myFormat.mainFontStyle);
       await excel.sync();
-      /* 
+      
       range.conditionalFormats.clearAll();
       const conditionalFormat = range.conditionalFormats.add(Excel.ConditionalFormatType.custom);
       conditionalFormat.custom.rule.formula = myFormat.rule;
@@ -1007,7 +1007,6 @@ async function checkForSchedulingConditionalFormatting(){
           console.log('myEdge After', myEdge.toJSON());
         }
       }
-        */
     }
   })
 }
