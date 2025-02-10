@@ -1013,12 +1013,14 @@ async function checkForSchedulingConditionalFormatting(){
 }
 
 function doTheMainFont(range, style){
+  console.log('style', style)
   range.format.fill.color = style.fill.color;
+  /*
   range.format.fill.pattern = style.fill.pattern;
   range.format.fill.patternColor = style.fill.patternColor;
   range.format.fill.patternTintAndShade = style.fill.patternTintAndShade;
   range.format.fill.tintAndShade = style.fill.tintAndShade;
-  /*
+  
   range.format.autoIndent = style.autoIndent;
   range.format.columnWidth = style.columnWidth;
   range.format.horizontalAlignment = style.horizontalAlignment;
