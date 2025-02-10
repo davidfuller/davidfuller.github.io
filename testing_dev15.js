@@ -1018,7 +1018,6 @@ function doTheMainFont(range, style){
   
   range.format.fill.pattern = style.fill.pattern;
   range.format.fill.patternColor = style.fill.patternColor;
-  /*
   range.format.fill.patternTintAndShade = style.fill.patternTintAndShade;
   range.format.fill.tintAndShade = style.fill.tintAndShade;
   
@@ -1057,7 +1056,7 @@ function doTheMainFont(range, style){
     myBorder.weight = border.weight;
     
   }
-  */
+  
   return range;
 }
 
