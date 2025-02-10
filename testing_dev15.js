@@ -669,7 +669,6 @@ const mySchedulingConditionalFormats = [
       }
      ]
   },
-  ,
   {
     name: 'fsCharacterChoice',
     mainFontStyle: schedulingFontText,
