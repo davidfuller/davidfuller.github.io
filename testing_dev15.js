@@ -811,7 +811,7 @@ async function getFontDetails(sheetName, rangeName){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(sheetName);
     let testRange = sheet.getRange(rangeName);
-    testRange.load('conditionalFormats, format/*, format/font, format/fill, format/borders');
+    testRange.load('conditionalFormats/*, format/*, format/font, format/fill, format/borders');
     await excel.sync();
     console.log('Range:', rangeName)
     console.log('conditional formats', testRange.conditionalFormats.toJSON());
@@ -821,4 +821,13 @@ async function getFontDetails(sheetName, rangeName){
     console.log('format/borders', testRange.format.borders.toJSON());
   })
    
+}
+
+function showAdminForActor(){
+  let admin = tag('adminActor')
+  if (admin.style.display === 'block'){
+    admin.style.display = 'none';
+  } else {
+    admin.style.display = 'block';
+  }
 }
