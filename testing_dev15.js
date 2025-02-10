@@ -824,7 +824,7 @@ async function getFontDetails(sheetName, rangeName){
 }
 
 function showAdminForActor(){
-  let admin = tag('adminActor')
+  let admin = tag('admin-actor')
   if (admin.style.display === 'block'){
     admin.style.display = 'none';
   } else {
