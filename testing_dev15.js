@@ -586,7 +586,7 @@ const schedulingFontText =
   "fill": {
       "color": "#FFFFFF",
       "pattern": null,
-      "patternColor": null,
+      "patternColor": "#FFFFFF",
       "patternTintAndShade": null,
       "tintAndShade": null
   },
