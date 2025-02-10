@@ -321,7 +321,7 @@ async function mainHTML(){
   <div id="forSchedulingButtons">
     <button id='btnGetSchedulingInfo' class="scheduling-button" onclick="jade_modules.scheduling.getForSchedulingInfo()">Calculate for<br>scheduling information<br>for selected character</button>
     <button id="btnSchedulingGoToLine" class="scheduling-button" onclick="jade_modules.scheduling.schedulingGoToLine()">Goto first line of<br/>the selected scene</button>
-    <button id="btnConditionalFormattingForScheduling" class="scheduling-button" onclick="jade_modules.scheduling.checkForSchedulingConditionalFormatting()">Conditional Formatting</button>
+    <button id="btnConditionalFormattingForScheduling" class="scheduling-button" onclick="jade_modules.testing.checkForSchedulingConditionalFormatting()">Conditional Formatting</button>
     <label id='scheduling-wait'>Please wait...</label>
   </div>
 </div>
