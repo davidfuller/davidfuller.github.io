@@ -9,6 +9,7 @@ const settingsSheetName = 'Settings';
 const versionRangeName = 'seVersion';
 const dateRangeName = 'seDate';
 const forActorSheetName = 'For Actors';
+const forSchedulingSheetName = 'For Scheduling';
 
 const inputFont = 
   {
@@ -717,6 +718,49 @@ async function checkForActorConditionalFormatting(){
     }
   })
 }
+async function checkForSchedulingConditionalFormatting(){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(forSchedulingSheetName);
+    await getFontDetails(forSchedulingSheetName, 'fsTextSearchLabel');
+    await getFontDetails(forSchedulingSheetName, 'fsTextSearch');
+    /*
+    
+    for (let myFormat of myConditionalFormats){
+      console.log('Doing cell', myFormat.name);
+      console.log('mainFont', myFormat.mainFontStyle);
+      let range = sheet.getRange(myFormat.name);
+      //fill
+      range = doTheMainFont(range, myFormat.mainFontStyle);
+      await excel.sync();
+
+      range.conditionalFormats.clearAll();
+      const conditionalFormat = range.conditionalFormats.add(Excel.ConditionalFormatType.custom);
+      conditionalFormat.custom.rule.formula = myFormat.rule;
+      if (myFormat.doFontColor){
+        conditionalFormat.custom.format.font.color = myFormat.fontColor;
+      }
+      if (myFormat.doFillColor){
+        conditionalFormat.custom.format.fill.color = myFormat.fillColor;
+      }
+      if (myFormat.doBorders){
+        let myBorders = conditionalFormat.custom.format.borders;
+        myBorders.load('count, items');
+        await excel.sync();
+        for (let border of myFormat.borders){
+          let myEdge = myBorders.getItem(border.sideIndex);
+          myEdge.load('sideIndex, color, style');
+          await excel.sync();
+          myEdge.color = border.color;
+          myEdge.style = border.style;
+          await excel.sync();
+          console.log('myEdge After', myEdge.toJSON());
+        }
+      }
+    }
+      */
+  })
+}
+
 function doTheMainFont(range, style){
   range.format.fill.color = style.fill.color;
   range.format.fill.pattern = style.fill.pattern;
@@ -761,4 +805,20 @@ function doTheMainFont(range, style){
   }
   
   return range;
+}
+
+async function getFontDetails(sheetName, rangeName){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(sheetName);
+    let testRange = sheet.getRange(rangeName);
+    testRange.load('conditionalFormats, format/*, format/font, format/fill, format/borders');
+    await excel.sync();
+    console.log('Range:', rangeName)
+    console.log('conditional formats', testRange.conditionalFormats.toJSON());
+    console.log('format', testRange.format.toJSON());
+    console.log('format/font', testRange.format.font.toJSON());
+    console.log('format/fill', testRange.format.fill.toJSON());
+    console.log('format/borders', testRange.format.borders.toJSON());
+  })
+   
 }
