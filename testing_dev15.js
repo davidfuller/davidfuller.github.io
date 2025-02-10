@@ -1018,7 +1018,7 @@ function doTheMainFont(range, style){
   range.format.fill.patternColor = style.fill.patternColor;
   range.format.fill.patternTintAndShade = style.fill.patternTintAndShade;
   range.format.fill.tintAndShade = style.fill.tintAndShade;
-  
+  /*
   range.format.autoIndent = style.autoIndent;
   range.format.columnWidth = style.columnWidth;
   range.format.horizontalAlignment = style.horizontalAlignment;
@@ -1033,7 +1033,7 @@ function doTheMainFont(range, style){
     
   range.format.verticalAlignment = style.verticalAlignment;
   range.format.wrapText = style.wrapText;
-  /*
+  
   range.format.font.bold = style.font.bold;
   range.format.font.color = style.font.color;
   range.format.font.italic = style.font.italic;
