@@ -1033,7 +1033,7 @@ function doTheMainFont(range, style){
     
   range.format.verticalAlignment = style.verticalAlignment;
   range.format.wrapText = style.wrapText;
-  
+  /*
   range.format.font.bold = style.font.bold;
   range.format.font.color = style.font.color;
   range.format.font.italic = style.font.italic;
@@ -1045,7 +1045,7 @@ function doTheMainFont(range, style){
   range.format.font.tintAndShade = style.font.tintAndShade;
   range.format.font.superscript = style.font.superscript;
   range.format.font.underline = style.font.underline;
-  /*
+  
   for (let border of style.borders){
     let myBorder = range.format.borders.getItem(border.sideIndex);
     myBorder.color = border.color;
