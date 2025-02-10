@@ -638,6 +638,38 @@ const mySchedulingConditionalFormats = [
     ]
   },
   {
+    name: 'fsListSearchLabel',
+    mainFontStyle: schedulingLabelFontText,
+    rule: '=$D$8 = "Text Search"',
+    doFillColor: true,
+    fillColor: "#DAF2D0",
+    doFontColor: true,
+    fontColor: "#DAF2D0",
+    doBorders: true,
+    borders: [
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous"
+      },
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous"
+      },
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous"
+      },
+      {
+          "color": "#DAF2D0",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous"
+      }
+    ]
+  },
+  {
     name: 'fsTextSearch',
     mainFontStyle: schedulingFontText,
     rule: '=$D$8 = "List Search"',
