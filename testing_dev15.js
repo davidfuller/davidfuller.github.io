@@ -800,12 +800,20 @@ async function doTheFullTest(){
 
   //check cue numbers
   messages.push(addMessage('Checking for duplicate cue numbers'))
-  let duplicateIndexes = jade_modules.operations.findDuplicateLineNumbers();
+  let duplicateIndexes = await jade_modules.operations.findDuplicateLineNumbers();
   if (duplicateIndexes.length > 0){
     messages.push(addMessage(duplicateIndexes.length + ' duplicate cue numbers at indexes: ' + duplicateIndexes.join(", ")));
   } else {
     messages.push(addMessage('No duplicate cue numbers'));
   }
+
+  //conditional formatting actors
+  messages.push(addMessage('Conditional formatting For Actors'))
+  await checkForActorConditionalFormatting();
+
+  //conditional formatting scheduling
+  messages.push(addMessage('Conditional formatting For Scheduling'))
+  await checkForSchedulingConditionalFormatting();
 
   await moveMessages();
 
