@@ -1144,3 +1144,12 @@ function showAdminForActor(){
     admin.style.display = 'block';
   }
 }
+
+function showAdminForScheduling(){
+  let admin = tag('admin-scheduling')
+  if (admin.style.display === 'block'){
+    admin.style.display = 'none';
+  } else {
+    admin.style.display = 'block';
+  }
+}

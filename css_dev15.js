@@ -54,7 +54,7 @@ label {
   border-style: solid;
 }
 
-#admin, #comparison, #us-script, #admin-actor {
+#admin, #comparison, #us-script, #admin-actor, #admin-scheduling {
   display: none;
 }
 
@@ -540,7 +540,7 @@ label {
   top: 3px;
 }
 
-#show-hide, #show-hide-lock, #show-hide-filter, #show-hide-jump, #show-hide-columns, #show-hide-takes, #show-hide-add-remove, #show-hide-comparison , #show-hide-us-script, #show-hide-for-actor{
+#show-hide, #show-hide-lock, #show-hide-filter, #show-hide-jump, #show-hide-columns, #show-hide-takes, #show-hide-add-remove, #show-hide-comparison , #show-hide-us-script, #show-hide-for-actor, #show-hide-for-scheduling {
   margin-left: 5px;
   font-size: 10px;
   padding-left: 5px;
