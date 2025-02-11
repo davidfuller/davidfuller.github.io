@@ -3,7 +3,266 @@ const characterSheetName = 'Characters';
 const sceneSheetName = 'Scenes';
 const settingsSheetName = 'Settings';
 const allCharacterSheetName = 'All Characters'
-const codeVersion = '2.40';
+const codeVersion = '2.45';
+
+const nameFont = 
+{
+  "autoIndent": false,
+  "columnWidth": 216,
+  "horizontalAlignment": "Left",
+  "indentLevel": 0,
+  "readingOrder": "Context",
+  "rowHeight": 15.75,
+  "shrinkToFit": false,
+  "textOrientation": 0,
+  "useStandardHeight": false,
+  "useStandardWidth": false,
+  "verticalAlignment": "Center",
+  "wrapText": false,
+  
+  "borders": [
+      {
+          "color": "#424200",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous",
+          "tintAndShade": 0,
+          "weight": "Thin"
+      },
+      {
+          "color": "#424200",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous",
+          "tintAndShade": 0,
+          "weight": "Thin"
+      },
+      {
+          "color": "#424200",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous",
+          "tintAndShade": 0,
+          "weight": "Thin"
+      },
+      {
+          "color": "#424200",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous",
+          "tintAndShade": 0,
+          "weight": "Thin"
+      },
+      {
+          "color": "#000000",
+          "sideIndex": "InsideVertical",
+          "style": "None",
+          "tintAndShade": null,
+          "weight": "Thin"
+      },
+      {
+          "color": "#000000",
+          "sideIndex": "InsideHorizontal",
+          "style": "None",
+          "tintAndShade": null,
+          "weight": "Thin"
+      },
+      {
+          "color": "#000000",
+          "sideIndex": "DiagonalDown",
+          "style": "None",
+          "tintAndShade": null,
+          "weight": "Thin"
+      },
+      {
+          "color": "#000000",
+          "sideIndex": "DiagonalUp",
+          "style": "None",
+          "tintAndShade": null,
+          "weight": "Thin"
+      }
+  ],
+  "fill": {
+      "color": "#FFFFFF",
+      "pattern": null,
+      "patternColor": "#FFFFFF",
+      "patternTintAndShade": null,
+      "tintAndShade": null
+  },
+  "font": {
+      "bold": false,
+      "color": "#000000",
+      "italic": false,
+      "name": "Aptos Narrow",
+      "size": 12,
+      "strikethrough": false,
+      "subscript": false,
+      "superscript": false,
+      "tintAndShade": 0,
+      "underline": "None"
+  }
+}
+
+const labelFont = 
+{
+  "autoIndent": false,
+  "columnWidth": 149.25,
+  "horizontalAlignment": "Right",
+  "indentLevel": 0,
+  "readingOrder": "Context",
+  "rowHeight": 15.75,
+  "shrinkToFit": false,
+  "textOrientation": 0,
+  "useStandardHeight": false,
+  "useStandardWidth": false,
+  "verticalAlignment": "Center",
+  "wrapText": false,
+  
+  
+  "borders": [
+    {
+        "color": "#000000",
+        "sideIndex": "EdgeTop",
+        "style": "None",
+        "tintAndShade": null,
+        "weight": "Thin"
+    },
+    {
+        "color": "#000000",
+        "sideIndex": "EdgeBottom",
+        "style": "None",
+        "tintAndShade": null,
+        "weight": "Thin"
+    },
+    {
+        "color": "#000000",
+        "sideIndex": "EdgeLeft",
+        "style": "None",
+        "tintAndShade": null,
+        "weight": "Thin"
+    },
+    {
+        "color": "#424200",
+        "sideIndex": "EdgeRight",
+        "style": "Continuous",
+        "tintAndShade": 0,
+        "weight": "Thin"
+    },
+    {
+        "color": "#000000",
+        "sideIndex": "InsideVertical",
+        "style": "None",
+        "tintAndShade": null,
+        "weight": "Thin"
+    },
+    {
+        "color": "#000000",
+        "sideIndex": "InsideHorizontal",
+        "style": "None",
+        "tintAndShade": null,
+        "weight": "Thin"
+    },
+    {
+        "color": "#000000",
+        "sideIndex": "DiagonalDown",
+        "style": "None",
+        "tintAndShade": null,
+        "weight": "Thin"
+    },
+    {
+        "color": "#000000",
+        "sideIndex": "DiagonalUp",
+        "style": "None",
+        "tintAndShade": null,
+        "weight": "Thin"
+    }
+],
+  "fill": {
+      "color": "#FFFFB3",
+      "pattern": null,
+      "patternColor": "#FFFFB3",
+      "patternTintAndShade": null,
+      "tintAndShade": 0
+  },
+  "font": {
+      "bold": true,
+      "color": "#424200",
+      "italic": false,
+      "name": "Aptos Display",
+      "size": 12,
+      "strikethrough": false,
+      "subscript": false,
+      "superscript": false,
+      "tintAndShade": 0,
+      "underline": "None"
+  }
+}
+
+const myConditionalFormats = [
+  {
+    name: 'chCharacterName',
+    mainFontStyle: nameFont,
+    rule: '=$B$12 = "Text Search"',
+    doFillColor: true,
+    fillColor: "#FFFFB3",
+    doFontColor: true,
+    fontColor: "#FFFFB3",
+    doBorders: true,
+    borders: [
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous"
+      }
+    ]
+  },
+  {
+    name: 'chCharacterNameLabel',
+    mainFontStyle: labelFont,
+    rule: '=$B$12 = "Text Search"',
+    doFillColor: true,
+    fillColor: "#FFFFB3",
+    doFontColor: true,
+    fontColor: "#FFFFB3",
+    doBorders: true,
+    borders: [
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous"
+      }
+    ]
+  },
+]
+
+
+
 function auto_exec(){
   console.log('Hello');
 }
@@ -741,8 +1000,8 @@ async function checkConditionalFormatting(){
     const sheet = excel.workbook.worksheets.getItem(characterSheetName);
     await getFontDetails(characterSheetName, 'chCharacterNameLabel');
     await getFontDetails(characterSheetName, 'chCharacterName');
-    /*
-    for (let myFormat of mySchedulingConditionalFormats){
+    
+    for (let myFormat of myConditionalFormats){
       console.log('Doing cell', myFormat.name);
       console.log('mainFont', myFormat.mainFontStyle);
       let range = sheet.getRange(myFormat.name);
@@ -774,7 +1033,6 @@ async function checkConditionalFormatting(){
         }
       }
     }
-      */
   })
 }
 async function getFontDetails(sheetName, rangeName){
@@ -788,4 +1046,51 @@ async function getFontDetails(sheetName, rangeName){
     console.log('conditional formats', testRange.conditionalFormats.toJSON());
   })
    
+}
+function doTheMainFont(range, style){
+  console.log('style', style)
+  range.format.fill.color = style.fill.color;
+  
+  range.format.fill.pattern = style.fill.pattern;
+  range.format.fill.patternColor = style.fill.patternColor;
+  range.format.fill.patternTintAndShade = style.fill.patternTintAndShade;
+  range.format.fill.tintAndShade = style.fill.tintAndShade;
+  
+  range.format.autoIndent = style.autoIndent;
+  range.format.columnWidth = style.columnWidth;
+  range.format.horizontalAlignment = style.horizontalAlignment;
+  range.format.indentLevel = style.indentLevel;
+  range.format.readingOrder = style.readingOrder;
+  
+  range.format.rowHeight = style.rowHeight;
+  range.format.shrinkToFit = style.shrinkToFit;
+  range.format.useStandardHeight = style.useStandardHeight;
+  range.format.textOrientation = style.textOrientation;
+  range.format.useStandardWidth = style.useStandardWidth;
+    
+  range.format.verticalAlignment = style.verticalAlignment;
+  range.format.wrapText = style.wrapText;
+  
+  range.format.font.bold = style.font.bold;
+  range.format.font.color = style.font.color;
+  range.format.font.italic = style.font.italic;
+  range.format.font.name = style.font.name;
+  range.format.font.size = style.font.size;
+  range.format.font.strikethrough = style.font.strikethrough;
+  range.format.font.subscript = style.font.subscript;
+  
+  range.format.font.tintAndShade = style.font.tintAndShade;
+  range.format.font.superscript = style.font.superscript;
+  range.format.font.underline = style.font.underline;
+  
+  for (let border of style.borders){
+    let myBorder = range.format.borders.getItem(border.sideIndex);
+    myBorder.color = border.color;
+    myBorder.style = border.style;
+    myBorder.tintAndShade = border.tintAndShade;
+    myBorder.weight = border.weight;
+    
+  }
+  
+  return range;
 }
