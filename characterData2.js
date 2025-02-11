@@ -117,21 +117,21 @@ const labelFont =
   
   "borders": [
     {
-        "color": "#000000",
+        "color": "#FFFFB3",
         "sideIndex": "EdgeTop",
         "style": "None",
         "tintAndShade": null,
         "weight": "Thin"
     },
     {
-        "color": "#000000",
+        "color": "#FFFFB3",
         "sideIndex": "EdgeBottom",
         "style": "None",
         "tintAndShade": null,
         "weight": "Thin"
     },
     {
-        "color": "#000000",
+        "color": "#FFFFB3",
         "sideIndex": "EdgeLeft",
         "style": "None",
         "tintAndShade": null,
