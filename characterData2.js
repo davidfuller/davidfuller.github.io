@@ -228,6 +228,38 @@ const myConditionalFormats = [
     ]
   },
   {
+    name: 'chTextSearch',
+    mainFontStyle: nameFont,
+    rule: '=$B$12 = "List Search"',
+    doFillColor: true,
+    fillColor: "#FFFFB3",
+    doFontColor: true,
+    fontColor: "#FFFFB3",
+    doBorders: true,
+    borders: [
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous"
+      }
+    ]
+  },
+  {
     name: 'chCharacterNameLabel',
     mainFontStyle: labelFont,
     rule: '=$B$12 = "Text Search"',
@@ -259,6 +291,38 @@ const myConditionalFormats = [
       }
     ]
   },
+  {
+    name: 'chTextSearchLabel',
+    mainFontStyle: labelFont,
+    rule: '=$B$12 = "List Search"',
+    doFillColor: true,
+    fillColor: "#FFFFB3",
+    doFontColor: true,
+    fontColor: "#FFFFB3",
+    doBorders: true,
+    borders: [
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeTop",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeBottom",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeLeft",
+          "style": "Continuous"
+      },
+      {
+          "color": "#FFFFB3",
+          "sideIndex": "EdgeRight",
+          "style": "Continuous"
+      }
+    ]
+  }
 ]
 
 
