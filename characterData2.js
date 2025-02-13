@@ -484,6 +484,8 @@ async function showMain(){
     let versionString = 'Version ' + versionRange.values + ' Code: ' + codeVersion + ' Released: ' + dateRange.text;
     let versionInfo = tag('sheet-version')
     versionInfo.innerText = versionString;
+    let codeRange = settingsSheet.getRange('seCode');
+    codeRange.values = [[codeVersion]];
   })
 }
 
