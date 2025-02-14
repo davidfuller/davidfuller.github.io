@@ -1176,7 +1176,7 @@ async function doTheFullTest(){
   messages.push(addMessage('Gathering data from each book'));
   await gatherData();
   //Create Scene List
-  messages.push(addMessage('Create Secene List'));
+  messages.push(addMessage('Create Scene List'));
   await createSceneList();
   //Conditional Formatting
   messages.push(addMessage('Checking Conditional Formatting'));
