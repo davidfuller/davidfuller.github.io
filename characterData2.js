@@ -4,6 +4,10 @@ const sceneSheetName = 'Scenes';
 const settingsSheetName = 'Settings';
 const allCharacterSheetName = 'All Characters'
 const codeVersion = '2.45';
+const versionRangeName = 'seVersion';
+const dateRangeName = 'seDate';
+const logSheetName = 'log';
+const logRangeName = 'lgTable';
 
 const nameFont = 
 {
@@ -1159,4 +1163,151 @@ function doTheMainFont(range, style){
   }
   
   return range;
+}
+
+
+async function doTheFullTest(){
+  let messages = [];
+  messages.push(addMessage('Start of test'));
+  //Refresh the links
+  messages.push(addMessage('Refreshing links'));
+  await refreshLinks();
+  //Make the list
+  messages.push(addMessage('Gathering data from each book'));
+  await gatherData();
+  //Create Scene List
+  messages.push(addMessage('Create Secene List'));
+  await createSceneList();
+  //Conditional Formatting
+  messages.push(addMessage('Checking Conditional Formatting'));
+  await checkConditionalFormatting();
+  //Update settings
+  messages.push(addMessage('Updating settings in sheet'));
+  await upDateSettings();
+
+  //Add to log
+  await moveMessages();
+
+  await insertMessages(1, messages);
+  console.log('messages', messages);
+}
+
+function addMessage(message){
+  let result = {}
+  result.time = new Date();
+  result.message = message;
+  return result;
+}
+
+
+async function upDateSettings(){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(settingsSheetName);
+    const versionRange = sheet.getRange(versionRangeName);
+    const dateRange = sheet.getRange(dateRangeName);
+
+    versionRange.load('values');
+    await excel.sync();
+
+    let oldVersion = versionRange.values[0][0]
+    let digits = oldVersion.split('.');
+    console.log('oldVersion', oldVersion, 'digits', digits)
+    if (digits.length == 3){
+      if (!isNaN(parseInt(digits[2]))){
+        let newDigit = parseInt(digits[2]) + 1;
+        if (newDigit < 10) {
+          newDigit = '0' + newDigit
+        }
+        let newDigits = digits[0] + '.' + digits[1] + '.' + newDigit;
+        console.log('newDigits', newDigits);
+        versionRange.values = [[newDigits]];
+        await excel.sync();
+      }
+    }
+    let newDate = createSpreadsheetDate();
+    dateRange.values = [[jsDateToExcelDate(newDate)]];
+  })  
+}
+
+function createSpreadsheetDate(){
+  // If before 16:59 use today. After 17.00 uses tomorrow
+  //If Saturday or Sunday, use Monday
+  const currentTime = new Date();
+  let hour = currentTime.getHours();
+  let newDate;
+  if (hour < 16){
+    newDate = currentTime;
+  } else {
+    newDate = addDays(currentTime, 1);
+  }
+  console.log('newDate first', newDate);
+  let day = newDate.getDay();
+  if (day == 6){
+    //Saturday
+    newDate = addDays(newDate, 2);// Monday
+  }
+  if (day == 0){
+    //Sunday
+    newDate = addDays(newDate, 1);// Monday
+  }
+  console.log('newDate second', newDate);
+  return newDate;
+}
+
+function jsDateToExcelDate(jsDate){
+  //takes javascript a Date object to an excel number
+  let returnDateTime = 25569.0 + ((jsDate.getTime()-(jsDate.getTimezoneOffset() * 60 * 1000)) / (1000 * 60 * 60 * 24));
+  return returnDateTime
+}
+
+async function moveMessages(){
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(logSheetName);
+    const range = sheet.getRange(logRangeName);
+    range.load('rowIndex, rowCount, columnIndex');
+    await excel.sync();
+    for (let columnNo = 10; columnNo > 1; columnNo--){
+      //getColumnRange
+      let columnTarget = range.columnIndex + 2 * (columnNo - 1);
+      const targetRange = sheet.getRangeByIndexes(range.rowIndex, columnTarget, range.rowCount, 2);
+      const sourceRange = sheet.getRangeByIndexes(range.rowIndex, columnTarget - 2, range.rowCount, 2);
+      targetRange.load('address');
+      sourceRange.load('address');
+      await excel.sync();
+      console.log('target address:', targetRange.address, 'source address', sourceRange.address);
+      targetRange.copyFrom(sourceRange, "values");
+    }
+  })
+}
+async function insertMessages(columnNo, messages){
+  await Excel.run(async function(excel){
+    //getColumnRange
+    const sheet = excel.workbook.worksheets.getItem(logSheetName);
+    const range = sheet.getRange(logRangeName);
+    range.load('rowIndex, rowCount, columnIndex');
+    await excel.sync();
+
+    let column = range.columnIndex + 2 * (columnNo - 1);
+    const targetRange = sheet.getRangeByIndexes(range.rowIndex, column, range.rowCount, 2);
+    targetRange.load('address');
+    await excel.sync();
+
+    console.log('address:', targetRange.address);
+
+    //clearColumn
+    targetRange.clear('Contents')
+
+    //getTargetRange
+    const targetValueRange = sheet.getRangeByIndexes(range.rowIndex, column, messages.length, 2)
+    myValues = []
+    for (let i = 0; i < messages.length; i++){
+      console.log(i, messages[i]);
+      myValues[i] = [jsDateToExcelDate(messages[i].time), messages[i].message];
+    }
+    //insert Data
+    console.log('myValues', myValues);
+    targetValueRange.values = myValues;
+    sheet.activate();
+    await excel.sync();
+  })
 }
