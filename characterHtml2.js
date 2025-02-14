@@ -24,6 +24,7 @@ async function mainHTML(){
     <button id="btnRefresh" onclick="jade_modules.characterdata.refreshLinks()">Refresh links</button>
     <button id="btnCreateSceneListAdmin" onclick="jade_modules.characterdata.createSceneList()">Create Scene List</button><br/>
     <button id="btnConditionFormatting" onclick="jade_modules.characterdata.checkConditionalFormatting()">Conditional Formatting</button>
+    <button id="btnFullTest" onclick="jade_modules.characterdata.doTheFullTest()">Full Test</button>
     <label id="admin-wait-message">Please wait...</label>
   </div>
 </div>
