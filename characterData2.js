@@ -1311,3 +1311,8 @@ async function insertMessages(columnNo, messages){
     await excel.sync();
   })
 }
+function addDays(date, days) {
+  const newDate = new Date(date);
+  newDate.setDate(date.getDate() + days);
+  return newDate;
+}
