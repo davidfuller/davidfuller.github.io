@@ -827,6 +827,7 @@ function addMessage(message){
   let result = {}
   result.time = new Date();
   result.message = message;
+  console.log(result);
   return result;
 }
 
@@ -866,7 +867,7 @@ async function checkCharacters(){
       if (!foundSpace){
         if (thisValue.trim() == ''){
           foundSpace = true;
-          console.log('Found space at', i);
+          //console.log('Found space at', i);
         }
       } else if (thisValue.trim() != ''){
         issue = i

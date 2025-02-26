@@ -3543,13 +3543,13 @@ function errorHandlerFunction(e){
 async function handleSheetActivate(event){
   await Excel.run(async (excel) => {
     await excel.sync();
-    console.log('sheetActivate', event);
+    //console.log('sheetActivate', event);
     const thisWorkSheet = excel.workbook.worksheets.getActiveWorksheet();
     thisWorkSheet.load('name');
     await excel.sync();
-    console.log('Active worksheet', thisWorkSheet.name);
+    //console.log('Active worksheet', thisWorkSheet.name);
     const actorSheet = jade_modules.actormultiple.isActorSheet(thisWorkSheet.name);
-    console.log('Actor sheet', actorSheet)
+    //console.log('Actor sheet', actorSheet)
     if (actorSheet){
       await showActorScript(thisWorkSheet.name, false);
     }
@@ -5363,7 +5363,7 @@ async function getSceneWordCount(){
         }
       }
     }
-    console.log('sceneWordCount data:', myData);
+    //console.log('sceneWordCount data:', myData);
   })
   return myData; 
 }

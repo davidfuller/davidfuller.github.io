@@ -1052,7 +1052,7 @@ async function createSceneWordCountData(){
   let myWait = tag('character-wait');
   myWait.style.display = 'block';
   await Excel.run(async function(excel){
-    console.log('Starting');
+    //console.log('Starting');
     const characterListSheet = excel.workbook.worksheets.getItem(characterListName);
     let sceneWordCountRange = characterListSheet.getRange('clSceneWordCount');
     sceneWordCountRange.clear("Contents") ;
@@ -1064,7 +1064,7 @@ async function createSceneWordCountData(){
     for (let i = 0; i < countDetails.length; i++){
       display[i] = [ countDetails[i].scene, countDetails[i].wordCount];
     }
-    console.log(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount)
+    //console.log(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount)
     let displayRange = characterListSheet.getRangeByIndexes(sceneWordCountRange.rowIndex, sceneWordCountRange.columnIndex, display.length, sceneWordCountRange.columnCount);
     displayRange.values = display;
   })
