@@ -961,14 +961,19 @@ async function processCharacterListForWordAndScene(){
     await excel.sync();
     let myCharacters = characterRange.values.map(x => x[0]);
     //console.log('Characters: ', myCharacters, 'rowIndex: ', characterRange.rowIndex )
-    for (let i = 0; i < myCharacters.length; i ++){
-      doCount(i+1, myCharacters.length);
+    let actual = [];
+    for (let i = 0; i < myCharacters.length; i++){
       if (myCharacters[i] != ''){
-        let character = {name: myCharacters[i], type: choiceType.list};
-        let details = await getWordCountForCharacter(character);
-        let tempRange = characterListSheet.getRangeByIndexes(i + characterRange.rowIndex, detailsRange.columnIndex, 1, detailsRange.columnCount);
-        tempRange.values = [[details.sceneWordCount, details.lineWordCount, details.scenes]];
+        actual.push(i);
       }
+    }
+
+    for (let i = 0; i < actual.length; i ++){
+      doCount(i+1, actual.length);
+      let character = {name: myCharacters[actual[i]], type: choiceType.list};
+      let details = await getWordCountForCharacter(character);
+      let tempRange = characterListSheet.getRangeByIndexes(i + characterRange.rowIndex, detailsRange.columnIndex, 1, detailsRange.columnCount);
+      tempRange.values = [[details.sceneWordCount, details.lineWordCount, details.scenes]];
     }
     hideCount();
   })
