@@ -26,6 +26,7 @@ async function mainHTML(){
     <label id="scene-wait">Please wait...</label><br/>
     <button id="btnFullTest" onclick="jade_modules.testing.doTheFullTest()">Full Test</button>
     <button id='btnSceneCheck' onclick="jade_modules.operations.getLineNumberRanges(false)">Scene Number Check</button>
+    <label id="test-message"></label><br/>
     <button id='btnSceneCheckReplace' onclick="jade_modules.operations.getLineNumberRanges(true)">Scene Number Check with Replace</button>
     <button id='btnFindDuplicates' onclick="jade_modules.operations.findDuplicateLineNumbers()">Find Duplicates</button>
     <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button>

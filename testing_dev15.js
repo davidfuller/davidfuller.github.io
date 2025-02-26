@@ -823,11 +823,19 @@ async function doTheFullTest(){
 
 
 function addMessage(message){
+  displayMessage(message);
   let result = {}
   result.time = new Date();
   result.message = message;
   return result;
 }
+
+function displayMessage(message){
+  let testMessage = tag('test-message');
+  testMessage.style.display = 'block';
+  testMessage.innerText += message + '\n';
+}
+
 
 async function unHide(sheetName){
   await Excel.run(async function(excel){
