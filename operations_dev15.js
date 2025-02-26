@@ -7505,21 +7505,21 @@ async function getWallaCues(){
     }
     wallaCues.sort();
     wallaNumbers.sort((a,b) => a - b);
-    console.log('wallaCues', wallaCues, 'wallaNumbers', wallaNumbers);
+    //console.log('wallaCues', wallaCues, 'wallaNumbers', wallaNumbers);
     let current = wallaNumbers[0]
     let issues = 0;
     for (let i = 1; i < wallaNumbers.length; i++){
       if (wallaNumbers[i] != (current + 1)){
-        console.log('Issue with ', wallaNumbers[i], 'expecting', current + 1);
+        //console.log('Issue with ', wallaNumbers[i], 'expecting', current + 1);
         current = wallaNumbers[i];
         issues += 1;
       } else {
         current += 1;
       }
     }
-    console.log('issues', issues);
+    //console.log('issues', issues);
     let wallaInfo = tag('walla-check-cues');
-    console.log(wallaInfo.innerText);
+    //console.log(wallaInfo.innerText);
     let message = ''
     if (issues != 0){
       message +=  issues + 'issues: '
@@ -7574,19 +7574,19 @@ async function checkWallaInCueColumn(){
     }
     wallaCues.sort();
     wallaNumbers.sort((a,b) => a - b);
-    console.log('Cue col wallaCues', wallaCues, 'wallaNumbers', wallaNumbers);
+    //console.log('Cue col wallaCues', wallaCues, 'wallaNumbers', wallaNumbers);
     let current = wallaNumbers[0]
     
     for (let i = 1; i < wallaNumbers.length; i++){
       if (wallaNumbers[i] != (current + 1)){
-        console.log('Cue col: Issue with ', wallaNumbers[i], 'expecting', current + 1);
+        //console.log('Cue col: Issue with ', wallaNumbers[i], 'expecting', current + 1);
         current = wallaNumbers[i];
         issues += 1;
       } else {
         current += 1;
       }
     }
-    console.log('Cue col: issues', issues);
+    //console.log('Cue col: issues', issues);
     if (issues != 0){
       message +=  'Cue col: ' + issues + 'issues: '
     } else {

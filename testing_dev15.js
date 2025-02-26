@@ -795,7 +795,7 @@ async function doTheFullTest(){
   //checkWalla
   messages.push(addMessage('Checking Walla Cues'));
   let wallaDetails = await jade_modules.operations.getWallaCues();
-  console.log('wallaDetails', wallaDetails);
+  //console.log('wallaDetails', wallaDetails);
   messages.push(addMessage((wallaDetails.wallaIssues + wallaDetails.cueColumnIssues) + ' Walla cues issues'));
 
   //check cue numbers
@@ -935,7 +935,7 @@ function createSpreadsheetDate(){
   } else {
     newDate = addDays(currentTime, 1);
   }
-  console.log('newDate first', newDate);
+  //console.log('newDate first', newDate);
   let day = newDate.getDay();
   if (day == 6){
     //Saturday
@@ -945,7 +945,7 @@ function createSpreadsheetDate(){
     //Sunday
     newDate = addDays(newDate, 1);// Monday
   }
-  console.log('newDate second', newDate);
+  //console.log('newDate second', newDate);
   return newDate;
 }
 
@@ -968,7 +968,7 @@ async function upDateSettings(){
 
     let oldVersion = versionRange.values[0][0]
     let digits = oldVersion.split('.');
-    console.log('oldVersion', oldVersion, 'digits', digits)
+    //console.log('oldVersion', oldVersion, 'digits', digits)
     if (digits.length == 3){
       if (!isNaN(parseInt(digits[2]))){
         let newDigit = parseInt(digits[2]) + 1;
@@ -976,7 +976,7 @@ async function upDateSettings(){
           newDigit = '0' + newDigit
         }
         let newDigits = digits[0] + '.' + digits[1] + '.' + newDigit;
-        console.log('newDigits', newDigits);
+        //console.log('newDigits', newDigits);
         versionRange.values = [[newDigits]];
         await excel.sync();
       }
