@@ -976,13 +976,13 @@ async function processCharacterListForWordAndScene(){
 }
 
 function doCount(num, total){
-  let myCount = tag(test-count);
+  let myCount = tag('test-count');
   myCount.style.display = 'block';
   myCount.innerText = num + ' of ' + total;
 }
 
 function hideCount(){
-  let myCount = tag(test-count);
+  let myCount = tag('test-count');
   myCount.style.display = 'none';
 }
 
