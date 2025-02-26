@@ -1011,16 +1011,16 @@ async function checkForActorConditionalFormatting(){
     let characterTextSearchRange = sheet.getRange('faCharacterChoiceLabel');
     characterTextSearchRange.load('conditionalFormats, format/*, format/font, format/fill, format/borders');
     await excel.sync();
-    console.log('conditional formats', characterTextSearchRange.conditionalFormats.toJSON());
-    console.log('format', characterTextSearchRange.format.toJSON());
-    console.log('format/font', characterTextSearchRange.format.font.toJSON());
-    console.log('format/fill', characterTextSearchRange.format.fill.toJSON());
-    console.log('format/borders', characterTextSearchRange.format.borders.toJSON());
+    //console.log('conditional formats', characterTextSearchRange.conditionalFormats.toJSON());
+    //console.log('format', characterTextSearchRange.format.toJSON());
+    //console.log('format/font', characterTextSearchRange.format.font.toJSON());
+    //console.log('format/fill', characterTextSearchRange.format.fill.toJSON());
+    //console.log('format/borders', characterTextSearchRange.format.borders.toJSON());
     
     await excel.sync();
     for (let myFormat of myConditionalFormats){
-      console.log('Doing cell', myFormat.name);
-      console.log('mainFont', myFormat.mainFontStyle);
+      //console.log('Doing cell', myFormat.name);
+      //console.log('mainFont', myFormat.mainFontStyle);
       let range = sheet.getRange(myFormat.name);
       //fill
       range = doTheMainFont(range, myFormat.mainFontStyle);
@@ -1046,7 +1046,7 @@ async function checkForActorConditionalFormatting(){
           myEdge.color = border.color;
           myEdge.style = border.style;
           await excel.sync();
-          console.log('myEdge After', myEdge.toJSON());
+          //console.log('myEdge After', myEdge.toJSON());
         }
       }
     }
@@ -1146,9 +1146,9 @@ async function getFontDetails(sheetName, rangeName){
     let testRange = sheet.getRange(rangeName);
     testRange.load('conditionalFormats/*, conditionalFormats/custom/rule, conditionalFormats/custom/format/fill, conditionalFormats/custom/format/font, conditionalFormats/custom/format/borders, format/*, format/font, format/fill, format/borders');
     await excel.sync();
-    console.log('Range:', rangeName)
-    console.log('format', testRange.format.toJSON());
-    console.log('conditional formats', testRange.conditionalFormats.toJSON());
+    //console.log('Range:', rangeName)
+    //console.log('format', testRange.format.toJSON());
+    //console.log('conditional formats', testRange.conditionalFormats.toJSON());
   })
    
 }

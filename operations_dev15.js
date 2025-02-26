@@ -794,12 +794,12 @@ async function getLineNoMaxAndMin(){
     await excel.sync();
     max.load("values")
     await excel.sync();
-    console.log(min.values[0][0]);
-    console.log(max.values[0][0]);
+    //console.log(min.values[0][0]);
+    //console.log(max.values[0][0]);
     
     result.min = min.values[0][0];
     result.max = max.values[0][0];
-    console.log(result);
+    //console.log(result);
   })
   return result;
 }
@@ -6528,7 +6528,7 @@ async function findDuplicateLineNumbers(){
             lastTest = true
           }
           if (currentValue == previousValue){
-            console.log('currentRaw', currentRaw, 'previousRaw', previousRaw);
+            //console.log('currentRaw', currentRaw, 'previousRaw', previousRaw);
             if(currentRaw.toString().trim() == previousRaw.toString().trim()){
               indexes.push((i + lineRange.rowIndex - 1));
             }
@@ -6540,7 +6540,7 @@ async function findDuplicateLineNumbers(){
         break;
       }
     }
-    console.log('indexes', indexes )
+    //console.log('indexes', indexes )
   }) 
   return indexes;
 }
