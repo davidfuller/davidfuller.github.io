@@ -5439,7 +5439,7 @@ async function getDirectorDataV2(character){
       }
       myData.push(theData);    
     }
-    console.log('myData', myData);
+    //console.log('myData', myData);
     if (isProtected){
       await lockColumns();
     }
