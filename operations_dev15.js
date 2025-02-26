@@ -7349,7 +7349,7 @@ async function findAllWallaScripted(){
       }
     }
   })
-  console.log('indexes', indexes);
+  //console.log('indexes', indexes);
   return indexes;
 }
 
@@ -7559,7 +7559,7 @@ async function checkWallaInCueColumn(){
     let wallaNumbers = [];
     for (let i = 0; i < cueRange.values.length;i++){
       let thisValue = cueRange.values[i][0].toString();
-      console.log(thisValue)
+      //console.log(thisValue)
       let splitValues = thisValue.split('\n');
       for (let j = 0; j < splitValues.length; j++){
         let testValue = splitValues[j].trim();
