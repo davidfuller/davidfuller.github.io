@@ -993,7 +993,7 @@ function hideCount(){
 
 async function getWordCountForCharacter(characterName){
   let myData = await jade_modules.operations.getDirectorDataV2(characterName);
-  console.log('Scheduling myData', myData);
+  //console.log('Scheduling myData', myData);
     
   let dataArray = [];
   let totalSceneWordCount = 0;
@@ -1031,7 +1031,7 @@ async function getWordCountForCharacter(characterName){
           sceneArray[arrayIndex] = [];
           sceneArray[arrayIndex][0] = myData[i].sceneNumber;
           totalSceneWordCount += myData[i].sceneWordCount;
-          console.log(i, 'totalscene', totalSceneWordCount, 'sceneWordCount', myData[i].sceneWordCount, 'sceneNo', myData[i].sceneNumber);
+          //console.log(i, 'totalscene', totalSceneWordCount, 'sceneWordCount', myData[i].sceneWordCount, 'sceneNo', myData[i].sceneNumber);
           totalLineWordCount += myData[i].lineWordCount;
         } else {
           dataArray[myIndex].characterWordCount = dataArray[myIndex].characterWordCount + myData[i].lineWordCount;
