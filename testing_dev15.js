@@ -818,7 +818,7 @@ async function doTheFullTest(){
   await moveMessages();
 
   await insertMessages(1, messages);
-  console.log('messages', messages)
+  //console.log('messages', messages)
 }
 
 
