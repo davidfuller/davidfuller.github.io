@@ -893,7 +893,7 @@ async function insertMessages(columnNo, messages){
     targetRange.load('address');
     await excel.sync();
 
-    console.log('address:', targetRange.address);
+    //console.log('address:', targetRange.address);
 
     //clearColumn
     targetRange.clear('Contents')
@@ -902,11 +902,11 @@ async function insertMessages(columnNo, messages){
     const targetValueRange = sheet.getRangeByIndexes(range.rowIndex, column, messages.length, 2)
     myValues = []
     for (let i = 0; i < messages.length; i++){
-      console.log(i, messages[i]);
+      //console.log(i, messages[i]);
       myValues[i] = [jsDateToExcelDate(messages[i].time), messages[i].message];
     }
     //insert Data
-    console.log('myValues', myValues);
+    //console.log('myValues', myValues);
     targetValueRange.values = myValues;
     sheet.activate();
     await excel.sync();
@@ -999,7 +999,7 @@ async function moveMessages(){
       targetRange.load('address');
       sourceRange.load('address');
       await excel.sync();
-      console.log('target address:', targetRange.address, 'source address', sourceRange.address);
+      //console.log('target address:', targetRange.address, 'source address', sourceRange.address);
       targetRange.copyFrom(sourceRange, "values");
     }
   })
@@ -1058,8 +1058,8 @@ async function checkForSchedulingConditionalFormatting(){
     await getFontDetails(forSchedulingSheetName, 'fsTextSearchLabel');
     await getFontDetails(forSchedulingSheetName, 'fsTextSearch');
     for (let myFormat of mySchedulingConditionalFormats){
-      console.log('Doing cell', myFormat.name);
-      console.log('mainFont', myFormat.mainFontStyle);
+      //console.log('Doing cell', myFormat.name);
+      //console.log('mainFont', myFormat.mainFontStyle);
       let range = sheet.getRange(myFormat.name);
       //fill
       range = doTheMainFont(range, myFormat.mainFontStyle);
@@ -1085,7 +1085,7 @@ async function checkForSchedulingConditionalFormatting(){
           myEdge.color = border.color;
           myEdge.style = border.style;
           await excel.sync();
-          console.log('myEdge After', myEdge.toJSON());
+          //console.log('myEdge After', myEdge.toJSON());
         }
       }
     }
@@ -1093,7 +1093,7 @@ async function checkForSchedulingConditionalFormatting(){
 }
 
 function doTheMainFont(range, style){
-  console.log('style', style)
+  //console.log('style', style)
   range.format.fill.color = style.fill.color;
   
   range.format.fill.pattern = style.fill.pattern;
