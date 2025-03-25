@@ -7672,7 +7672,7 @@ async function workbookProtection(){
     let workbook = excel.workbook;
     workbook.load("protection/protected");
     await excel.sync();
-    myProtection = workbook.protection.protectedl
+    myProtection = workbook.protection.protected;
   })
   return myProtection;
 }
