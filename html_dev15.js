@@ -28,7 +28,7 @@ async function mainHTML(){
     <button id='btnSceneCheck' onclick="jade_modules.operations.getLineNumberRanges(false)">Scene Number Check</button>
     <label id="test-message"></label><br/>
     <label id="test-count"></label><br/>
-    <button id="workbook-protection" onclick="jade_modules.operations.displayWorkbookProtection">Workbook Protection</button>
+    <button id="workbook-protection" onclick="jade_modules.operations.displayWorkbookProtection()">Workbook Protection</button>
     <label id="workbook-protection-display"></label>
     <button id='btnSceneCheckReplace' onclick="jade_modules.operations.getLineNumberRanges(true)">Scene Number Check with Replace</button>
     <button id='btnFindDuplicates' onclick="jade_modules.operations.findDuplicateLineNumbers()">Find Duplicates</button>
