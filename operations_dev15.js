@@ -7678,7 +7678,9 @@ async function workbookProtection(){
 }
 
 async function displayWorkbookProtection(){
+  console.log("I'm in displayWorkbookProtection")
   const myProtection = await workbookProtection();
+  console.log('myProtection', myProtection)
   let myLabel = tag('workbook-protection-display');
   if (myProtection){
     myLabel.innerText = "Workbook protection on"
