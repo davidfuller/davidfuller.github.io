@@ -2,7 +2,7 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '15.07';
+const codeVersion = '15.08';
 //11.02 isProtected on applyTakeDetails
 //11.03 31-35 in walla and remove the clears
 //11.04 30-35 in walla
@@ -7664,4 +7664,25 @@ async function putWallaMinMaxInSettings(wallaFirstValue, wallaLastValue){
     wallaFirst.values = [[wallaFirstValue]];
     wallaLast.values = [[wallaLastValue]];
   })
+}
+
+async function workbookProtection(){
+  let myProtection;
+  await Excel.run(async function(excel){
+    let workbook = excel.workbook;
+    workbook.load("protection/protected");
+    await excel.sync();
+    myProtection = workbook.protection.protectedl
+  })
+  return myProtection;
+}
+
+async function displayWorkbookProtection(){
+  const myProtection = await workbookProtection();
+  let myLabel = tag('workbook-protection-display');
+  if (myProtection){
+    myLabel.innerText = "Workbook protection on"
+  } else {
+    myLabel.innerText = "Workbook protection off"
+  }
 }
