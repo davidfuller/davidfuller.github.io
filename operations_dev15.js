@@ -7694,7 +7694,7 @@ async function protectWorkbook(){
   if (!myProtection){
     await Excel.run(async function(excel){
       let workbook = excel.workbook;
-      workbook.protect();
+      workbook.protection.protect();
     })
   }
   await displayWorkbookProtection();
@@ -7704,7 +7704,7 @@ async function unProtectWorkbook(){
   if (myProtection){
     await Excel.run(async function(excel){
       let workbook = excel.workbook;
-      workbook.unprotect();
+      workbook.protection.unprotect();
     })
   }
   await displayWorkbookProtection();
