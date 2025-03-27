@@ -7688,3 +7688,24 @@ async function displayWorkbookProtection(){
     myLabel.innerText = "Workbook protection off"
   }
 }
+
+async function protectWorkbook(){
+  let myProtection = await workbookProtection();
+  if (!myProtection){
+    await Excel.run(async function(excel){
+      let workbook = excel.workbook;
+      workbook.protect();
+    })
+  }
+  await displayWorkbookProtection();
+}
+async function unProtectWorkbook(){
+  let myProtection = await workbookProtection();
+  if (myProtection){
+    await Excel.run(async function(excel){
+      let workbook = excel.workbook;
+      workbook.unprotect();
+    })
+  }
+  await displayWorkbookProtection();
+}
