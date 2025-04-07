@@ -3,7 +3,7 @@ const characterSheetName = 'Characters';
 const sceneSheetName = 'Scenes';
 const settingsSheetName = 'Settings';
 const allCharacterSheetName = 'All Characters'
-const codeVersion = '2.52';
+const codeVersion = '2.53';
 const versionRangeName = 'seVersion';
 const dateRangeName = 'seDate';
 const logSheetName = 'log';
@@ -1193,12 +1193,18 @@ async function doTheFullTest(){
 }
 
 function addMessage(message){
+  displayMessage(message);
   let result = {}
   result.time = new Date();
   result.message = message;
   return result;
 }
 
+function displayMessage(message){
+  let testMessage = tag('character - test-message');
+  testMessage.style.display = 'block';
+  testMessage.innerText += message + '\n';
+}
 
 async function upDateSettings(){
   await Excel.run(async function(excel){
