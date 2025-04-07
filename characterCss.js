@@ -164,6 +164,11 @@ h2 {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+#character-test-message {
+  display: none;
+  font-size: 15px;
+  margin-left: 5px;
+}
 
   `;
   Jade.set_css(css);
