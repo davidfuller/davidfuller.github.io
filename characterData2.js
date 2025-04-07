@@ -1201,7 +1201,7 @@ function addMessage(message){
 }
 
 function displayMessage(message){
-  let testMessage = tag('character - test-message');
+  let testMessage = tag('character-test-message');
   testMessage.style.display = 'block';
   testMessage.innerText += message + '\n';
 }
