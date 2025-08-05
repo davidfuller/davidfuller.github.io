@@ -3,6 +3,7 @@ function auto_exec(){
 
 const codeVersion = '01.01';
 const germanProcessingSheetName = 'German Processing'
+const openSpeachChar = '»';
 
 async function showMain(){
   let waitPage = tag('start-wait');
@@ -29,6 +30,18 @@ async function processGerman(){
     await excel.sync();
     originalTextRange.load('values');
     await excel.sync();
-    console.log(originalTextRange.values);
+    let germanText = originalTextRange.values.map(x => x[0]);
+    console.log(germanText);
+    for(i = 0; i < germanText.length; i++){
+      let startQuotes = locations(openSpeachChar, germanText[i])
+      console.log(i, ' - ', startQuotes)
+    }
+    
   })
+}
+
+function locations(substring,string){
+  var a=[],i=-1;
+  while((i=string.indexOf(substring,i+1)) >= 0) a.push(i);
+  return a;
 }
