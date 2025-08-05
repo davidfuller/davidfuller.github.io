@@ -52,7 +52,7 @@ async function processGerman(){
         } else {
           directCopy == false
           for (let speechPart = 0; speechPart < startQuotes.length; speechPart++ ){
-            if (endQuotes(speechPart) > startQuotes(speechPart)){
+            if (endQuotes[speechPart] > startQuotes[speechPart]){
               goodSpeech += 1;
             } else {
               wrongSpeech += 1;
