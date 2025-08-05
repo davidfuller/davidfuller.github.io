@@ -3,8 +3,8 @@ function auto_exec(){
 async function mainCSS(){
   const css =`
 body {
-  background-color: #d8dfe5;
-  color: #46656F;
+  background-color: #FFC2C2;
+  color: #700000;
 }
 button {
   margin-left: 5px;

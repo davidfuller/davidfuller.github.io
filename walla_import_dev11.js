@@ -153,7 +153,7 @@ async function parseSourceText(sourceText){
     Num of characters - count the characters
     walla original - All
 */
-function splitLine(theLine){
+function spliLine(theLine){
   //first split with '-'
   const textLines = ['lines', 'line']
   let firstLine;
