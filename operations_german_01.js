@@ -48,9 +48,9 @@ async function processGerman(){
       let unequalQuotes = 0;
       if (startQuotes.length == endQuotes.length){
         if (startQuotes.length == 0){
-          directCopy == true
+          directCopy = true
         } else {
-          directCopy == false
+          directCopy = false
           for (let speechPart = 0; speechPart < startQuotes.length; speechPart++ ){
             if (endQuotes[speechPart] > startQuotes[speechPart]){
               goodSpeech += 1;
@@ -60,7 +60,7 @@ async function processGerman(){
           }
         }
       } else {
-        directCopy = false
+        directCopy = false;
         unequalQuotes += 1;
       }
       result.directCopy = directCopy;
