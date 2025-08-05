@@ -51,10 +51,25 @@ async function processGerman(){
           directCopy = true
         } else {
           directCopy = false
+          let myStrings = []
+          let myIndex = 0;
           for (let speechPart = 0; speechPart < startQuotes.length; speechPart++ ){
             if (endQuotes[speechPart] > startQuotes[speechPart]){
               goodSpeech += 1;
-            } else {
+              if (speechPart == 0){
+                myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]);
+                myIndex += 1;
+                myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart], endQuotes[speechPart]);
+                myIndex += 1;
+              } else if (speechPart == (startQuotes.length - 1)){
+                myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart], endQuotes[speechPart]);
+                myIndex += 1;
+                myStrings[myIndex] = germanText[i].substring(endQuotes[speechPart]);
+              } else {
+                myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart], endQuotes[speechPart]);
+                myIndex += 1;
+              }
+           } else {
               wrongSpeech += 1;
             }
           }
@@ -73,6 +88,7 @@ async function processGerman(){
       totalWrong = totalWrong + wrongSpeech
       result.unequalQuotes = unequalQuotes
       totalUnequal = totalUnequal + unequalQuotes
+      result.lines = myStrings;
       results.push(result)
       console.log(i, ' - ', startQuotes, ',', endQuotes, ":", result )
     }
