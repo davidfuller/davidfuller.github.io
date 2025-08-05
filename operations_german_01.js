@@ -2,6 +2,8 @@ function auto_exec(){
 }
 
 const codeVersion = '01.01';
+const germanProcessingSheetName = 'German Processing'
+
 async function showMain(){
   let waitPage = tag('start-wait');
   let mainPage = tag('main-page');
@@ -21,5 +23,12 @@ async function showMainPage(){
 }
 
 async function processGerman(){
-  alert("Hello World")
+  await Excel.run(async function(excel){
+    procSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let originalTextRange = procSheet.getRange('gpOriginal');
+    await excel.sync();
+    originalTextRange.load('values');
+    await excel.sync();
+    console.log(originalTextRange.values);
+  })
 }
