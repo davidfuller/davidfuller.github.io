@@ -16,6 +16,8 @@ async function showMainPage(){
   const versionInfo = tag('sheet-version');
   let versionString = 'Version ' + ' Code: ' + codeVersion + ' Released: ' ;
   versionInfo.innerText = versionString;
+  const admin = tag('admin');
+  admin.style.display = 'block';
 }
 
 async function processGerman(){
