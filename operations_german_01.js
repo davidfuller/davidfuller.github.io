@@ -3,7 +3,8 @@ function auto_exec(){
 
 const codeVersion = '01.01';
 const germanProcessingSheetName = 'German Processing'
-const openSpeachChar = '»';
+const openSpeechChar = '»';
+const closeSpeechChar = '«'
 
 async function showMain(){
   let waitPage = tag('start-wait');
@@ -33,10 +34,10 @@ async function processGerman(){
     let germanText = originalTextRange.values.map(x => x[0]);
     console.log(germanText);
     for(i = 0; i < germanText.length; i++){
-      let startQuotes = locations(openSpeachChar, germanText[i])
-      console.log(i, ' - ', startQuotes)
+      let startQuotes = locations(openSpeechChar, germanText[i])
+      let endQuotes = locations(closeSpeechChar, germanText[i])
+      console.log(i, ' - ', startQuotes, ','. endQuotes)
     }
-    
   })
 }
 
