@@ -40,6 +40,7 @@ async function processGerman(){
     let totalUnequal = 0;
     for(let i = 0; i < germanText.length; i++){
       let result = {};
+      let myStrings = []
       let startQuotes = locations(openSpeechChar, germanText[i])
       let endQuotes = locations(closeSpeechChar, germanText[i])
       let directCopy;
@@ -51,7 +52,6 @@ async function processGerman(){
           directCopy = true
         } else {
           directCopy = false
-          let myStrings = []
           let myIndex = 0;
           for (let speechPart = 0; speechPart < startQuotes.length; speechPart++ ){
             if (endQuotes[speechPart] > startQuotes[speechPart]){
