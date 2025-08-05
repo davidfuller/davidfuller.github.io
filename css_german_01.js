@@ -16,8 +16,8 @@ button {
   border: none;
   width: fit-content;
   border-radius: 5px;
-  background-color: #46656F;
-  color: #fef3df;
+  background-color: #700000;
+  color: FFC2C2;
   font-size: 12px;
   cursor: pointer;
 }
