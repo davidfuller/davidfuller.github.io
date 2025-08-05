@@ -59,15 +59,11 @@ async function processGerman(){
               if (speechPart == 0){
                 myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]);
                 myIndex += 1;
-                myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart], endQuotes[speechPart]);
-                myIndex += 1;
-              } else if (speechPart == (startQuotes.length - 1)){
-                myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart], endQuotes[speechPart]);
-                myIndex += 1;
+              }
+              myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart], endQuotes[speechPart]);
+              myIndex += 1;
+              if (speechPart == (startQuotes.length - 1)){
                 myStrings[myIndex] = germanText[i].substring(endQuotes[speechPart]);
-              } else {
-                myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart], endQuotes[speechPart]);
-                myIndex += 1;
               }
            } else {
               wrongSpeech += 1;
