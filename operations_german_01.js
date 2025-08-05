@@ -77,7 +77,7 @@ async function processGerman(){
       console.log(i, ' - ', startQuotes, ',', endQuotes, ":", result )
     }
     console.log('Results')
-    console.log('Total Good', totalGood, 'Total Wrong', totalWrong, 'Total Unequal', totalUnequal)
+    console.log('Total Good', totalGood, 'Total Wrong', totalWrong, 'Total Unequal', totalUnequal, 'Total Direct Copy', totalDirectCopy)
   })
 }
 
