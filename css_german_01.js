@@ -17,7 +17,7 @@ button {
   width: fit-content;
   border-radius: 5px;
   background-color: #700000;
-  color: FFC2C2;
+  color: #FFC2C2;
   font-size: 12px;
   cursor: pointer;
 }
