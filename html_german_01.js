@@ -7,7 +7,11 @@ async function mainHTML(){
   <h1>Please wait...</h1>
 </div>
 <div id="main-page">
-<h1>Hello Fran and Tom</h1>  
+  <h1>Hello Fran and Tom</h1>
+  <div id="admin">
+    <label class="section-label">Admin</label><br/>
+    <button id='btnProcessGerman' onclick="jade_modules.operations.processGerman()">Process German</button>
+  </div>  
 </div>`;
   await Jade.open_canvas("Script-Controller", html, true);
   console.log('Canvas open');

@@ -18,3 +18,6 @@ async function showMainPage(){
   versionInfo.innerText = versionString;
 }
 
+async function processGerman(){
+  alert("Hello World")
+}
