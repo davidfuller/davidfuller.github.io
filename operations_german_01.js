@@ -36,7 +36,7 @@ async function processGerman(){
     for(i = 0; i < germanText.length; i++){
       let startQuotes = locations(openSpeechChar, germanText[i])
       let endQuotes = locations(closeSpeechChar, germanText[i])
-      console.log(i, ' - ', startQuotes, ','. endQuotes)
+      console.log(i, ' - ', startQuotes, ',', endQuotes)
     }
   })
 }
