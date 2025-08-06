@@ -31,7 +31,7 @@ async function processGerman(){
     await excel.sync();
     originalTextRange.load('values');
     await excel.sync();
-    let germanText = originalTextRange.values.map(x => x[0]);
+    let germanText = trimEmptyEnd(originalTextRange.values.map(x => x[0]));
     let results = []
     let totalDirectCopy = 0;
     let totalGood = 0;
@@ -137,10 +137,20 @@ async function fillRange(sheetName, rangeName, dataArray, doClear){
     myRange.clear("Contents")
   }
   await excel.sync();
+
   const destRange = mySheet.getRangeByIndexes(myRange.rowIndex, myRange.columnIndex, dataArray.length, 1)
   destRange.load('address');
   await excel.sync()
   console.log('address:', destRange.address)
 
  }) 
+}
+
+function trimEmptyEnd(dataArray){
+  for(let i = dataArray.length - 1; i < 0; i--){
+    if (dataArray[i] != ''){
+      return dataArray.slice(0, i);
+    }
+  }
+  return dataArray;
 }
