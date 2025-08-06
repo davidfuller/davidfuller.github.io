@@ -32,7 +32,6 @@ async function processGerman(){
     originalTextRange.load('values');
     await excel.sync();
     let germanText = originalTextRange.values.map(x => x[0]);
-    console.log(germanText);
     let results = []
     let totalDirectCopy = 0;
     let totalGood = 0;
@@ -41,6 +40,7 @@ async function processGerman(){
     for(let i = 0; i < germanText.length; i++){
       let result = {};
       let myStrings = []
+      let original = []
       let startQuotes = locations(openSpeechChar, germanText[i])
       let endQuotes = locations(closeSpeechChar, germanText[i])
       let directCopy;
@@ -50,6 +50,8 @@ async function processGerman(){
       if (startQuotes.length == endQuotes.length){
         if (startQuotes.length == 0){
           directCopy = true
+          myStrings[0] = germanText[i];
+          original[0] = germanText[i];
         } else {
           directCopy = false
           let myIndex = 0;
@@ -58,6 +60,7 @@ async function processGerman(){
               goodSpeech += 1;
               if (speechPart == 0){
                 myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]);
+                original[myIndex] = germanText[i]
                 myIndex += 1;
               }
               myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart], endQuotes[speechPart]);
@@ -67,6 +70,9 @@ async function processGerman(){
               }
            } else {
               wrongSpeech += 1;
+              myStrings[myIndex] = germanText[i];
+              original[myIndex] = germanText[i]
+              myIndex += 1;
             }
           }
         }
@@ -85,6 +91,7 @@ async function processGerman(){
       result.unequalQuotes = unequalQuotes
       totalUnequal = totalUnequal + unequalQuotes
       result.lines = myStrings;
+      result.original = original;
       results.push(result)
       console.log(i, ' - ', startQuotes, ',', endQuotes, ":", result )
     }
@@ -92,7 +99,6 @@ async function processGerman(){
     console.log('Total Good', totalGood, 'Total Wrong', totalWrong, 'Total Unequal', totalUnequal, 'Total Direct Copy', totalDirectCopy)
   })
 }
-
 
 function locations(substring,string){
   var a=[],i=-1;
