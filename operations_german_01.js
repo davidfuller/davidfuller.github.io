@@ -144,6 +144,7 @@ async function fillRange(sheetName, rangeName, dataArray, doClear){
   console.log('address:', destRange.address);
   let temp = []
   for (let i = 0; i < dataArray.length; i++){
+    temp[i] = [];
     temp[i][0] = dataArray[i]; 
   }
   console.log(temp)
