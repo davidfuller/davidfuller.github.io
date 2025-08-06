@@ -96,6 +96,7 @@ async function processGerman(){
       console.log(i, ' - ', startQuotes, ',', endQuotes, ":", result )
     }
     let resultLines = createLines(results);
+    await fillRange(germanProcessingSheetName, 'gpOriginal_Spaced', resultLines.original, true);
     console.log('Results')
     console.log('Total Good', totalGood, 'Total Wrong', totalWrong, 'Total Unequal', totalUnequal, 'Total Direct Copy', totalDirectCopy)
   })
@@ -125,4 +126,21 @@ function createLines(results){
   console.log('Original', originalLines);
   console.log('Processed', processedLines);
   return {original: originalLines, processed: processedLines}
+}
+
+async function fillRange(sheetName, rangeName, dataArray, doClear){
+ await Excel.run(async function(excel){
+  const mySheet = excel.workbook.worksheets.getItem(sheetName);
+  const myRange = mySheet.getRange(rangeName);
+  myRange.load("rowIndex, columnIndex");
+  if (doClear){
+    myRange.clear("Contents")
+  }
+  await excel.sync();
+  const destRange = mySheet.getRangeByIndexes(myRange.rowIndex, myRange.columnIndex, dataArray.length, 1)
+  destRange.load('address');
+  await excel.sync()
+  console.log('address:', destRange.address)
+
+ }) 
 }
