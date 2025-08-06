@@ -97,6 +97,7 @@ async function processGerman(){
     }
     let resultLines = createLines(results);
     await fillRange(germanProcessingSheetName, 'gpOriginal_Spaced', resultLines.original, true);
+    await fillRange(germanProcessingSheetName, 'gpProcessed', resultLines.processed, true);
     console.log('Results')
     console.log('Total Good', totalGood, 'Total Wrong', totalWrong, 'Total Unequal', totalUnequal, 'Total Direct Copy', totalDirectCopy)
   })
