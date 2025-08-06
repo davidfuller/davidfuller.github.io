@@ -140,18 +140,17 @@ async function fillRange(sheetName, rangeName, dataArray, doClear){
 
   const destRange = mySheet.getRangeByIndexes(myRange.rowIndex, myRange.columnIndex, dataArray.length, 1)
   destRange.load('address');
-  await excel.sync()
-  console.log('address:', destRange.address)
+  await excel.sync();
+  console.log('address:', destRange.address);
+  destRange.values = [dataArray];
+  await excel.sync();
 
  }) 
 }
 
 function trimEmptyEnd(dataArray){
-  console.log('dataArray', dataArray)
   for(let i = dataArray.length - 1; i >= 0; i--){
-    console.log(i, dataArray[i], dataArray[i].length)
     if (dataArray[i] != ''){
-      console.log('Found first non empty', i)
       return dataArray.slice(0, i);
     }
   }
