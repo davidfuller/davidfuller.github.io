@@ -5,6 +5,7 @@ const codeVersion = '01.01';
 const germanProcessingSheetName = 'German Processing'
 const openSpeechChar = '»';
 const closeSpeechChar = '«'
+const bannedOpeningChars = [',', '.'];
 
 async function showMain(){
   let waitPage = tag('start-wait');
@@ -69,11 +70,11 @@ async function processGerman(){
               myIndex += 1;
               if (speechPart == (startQuotes.length - 1)){
                 if (germanText[i].substring(endQuotes[speechPart]).trim().length > 1){
-                  myStrings[myIndex] = germanText[i].substring(endQuotes[speechPart] + 1).trim();
+                  myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1).trim());
                 }
               } else {
                 //The bit between the close quotes and the next open quotes
-                myStrings[myIndex] = germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart+1]).trim();
+                myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart+1]).trim());
                 myIndex += 1;
               }
            } else {
@@ -169,4 +170,20 @@ function trimEmptyEnd(dataArray){
     }
   }
   return dataArray;
+}
+
+function removedBannedOpeningCharacters(text){
+  let doAgain = true
+  let temp = text.trim();
+  for (let attempt = 0; attempt < 100; attempt++){
+    if (!doAgain){break;}
+    doAgain = false;
+    for (let i = 0; i < bannedOpeningChars.length; i++){
+      if (temp.substr(0,1) == bannedOpeningChars[i]){
+        temp = temp.substring(1).trim();
+        doAgain = true;
+      }
+    }
+  }
+  return temp;
 }
