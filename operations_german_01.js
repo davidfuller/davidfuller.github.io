@@ -50,8 +50,8 @@ async function processGerman(){
       if (startQuotes.length == endQuotes.length){
         if (startQuotes.length == 0){
           directCopy = true
-          myStrings[0] = germanText[i];
-          original[0] = germanText[i];
+          myStrings[0] = germanText[i].trim();
+          original[0] = germanText[i].trim();
         } else {
           directCopy = false
           let myIndex = 0;
@@ -59,19 +59,19 @@ async function processGerman(){
             if (endQuotes[speechPart] > startQuotes[speechPart]){
               goodSpeech += 1;
               if (speechPart == 0){
-                myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]);
-                original[myIndex] = germanText[i]
+                myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]).trim();
+                original[myIndex] = germanText[i].trim()
                 myIndex += 1;
               }
-              myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart], endQuotes[speechPart]);
+              myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart] + 1 , endQuotes[speechPart]).trim();
               myIndex += 1;
               if (speechPart == (startQuotes.length - 1)){
-                myStrings[myIndex] = germanText[i].substring(endQuotes[speechPart]);
+                myStrings[myIndex] = germanText[i].substring(endQuotes[speechPart]).trim();
               }
            } else {
               wrongSpeech += 1;
-              myStrings[myIndex] = germanText[i];
-              original[myIndex] = germanText[i]
+              myStrings[myIndex] = germanText[i].trim();
+              original[myIndex] = germanText[i].trim();
               myIndex += 1;
             }
           }
