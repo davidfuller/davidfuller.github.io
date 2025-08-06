@@ -142,7 +142,7 @@ async function fillRange(sheetName, rangeName, dataArray, doClear){
   destRange.load('address');
   await excel.sync();
   console.log('address:', destRange.address);
-  destRange.values = [dataArray[0]];
+  destRange.values = [[dataArray[0]]];
   await excel.sync();
  }) 
 }
