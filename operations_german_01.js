@@ -138,13 +138,12 @@ async function fillRange(sheetName, rangeName, dataArray, doClear){
   }
   await excel.sync();
 
-  const destRange = mySheet.getRangeByIndexes(myRange.rowIndex, myRange.columnIndex, dataArray.length, 1)
+  const destRange = mySheet.getRangeByIndexes(myRange.rowIndex, myRange.columnIndex, 1, 1)
   destRange.load('address');
   await excel.sync();
   console.log('address:', destRange.address);
-  destRange.values = [dataArray];
+  destRange.values = [dataArray[0]];
   await excel.sync();
-
  }) 
 }
 
