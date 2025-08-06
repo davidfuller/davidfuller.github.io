@@ -95,6 +95,7 @@ async function processGerman(){
       results.push(result)
       console.log(i, ' - ', startQuotes, ',', endQuotes, ":", result )
     }
+    let resultLines = createLines(results);
     console.log('Results')
     console.log('Total Good', totalGood, 'Total Wrong', totalWrong, 'Total Unequal', totalUnequal, 'Total Direct Copy', totalDirectCopy)
   })
@@ -104,4 +105,24 @@ function locations(substring,string){
   var a=[],i=-1;
   while((i=string.indexOf(substring,i+1)) >= 0) a.push(i);
   return a;
+}
+
+function createLines(results){
+  originalLines = [];
+  processedLines = [];
+  index = 0;
+  for (let i = 0; i < results.length; i++){
+    for (let line = 0; line < results[i].lines.length; line++){
+      if (line == 0){
+        originalLines[index] = results[i].original[0];
+      } else {
+        originalLines[index] = "";
+      }
+      processedLines[index] = results[i].lines[line]
+      index += 1;
+    }
+  }
+  console.log('Original', originalLines);
+  console.log('Processed', processedLines);
+  return {original: originalLines, processed: processedLines}
 }
