@@ -147,8 +147,10 @@ async function fillRange(sheetName, rangeName, dataArray, doClear){
 }
 
 function trimEmptyEnd(dataArray){
+  console.log('dataArray', dataArray)
   for(let i = dataArray.length - 1; i < 0; i--){
     if (dataArray[i] != ''){
+      console.log('Found first non empty', i)
       return dataArray.slice(0, i);
     }
   }
