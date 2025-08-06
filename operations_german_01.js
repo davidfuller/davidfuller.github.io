@@ -71,6 +71,10 @@ async function processGerman(){
                 if (germanText[i].substring(endQuotes[speechPart]).trim().length > 1){
                   myStrings[myIndex] = germanText[i].substring(endQuotes[speechPart] + 1).trim();
                 }
+              } else {
+                //The bit between the close quotes and the next open quotes
+                myStrings[myIndex] = germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart+1]).trim();
+                myIndex += 1;
               }
            } else {
               wrongSpeech += 1;
