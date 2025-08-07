@@ -12,6 +12,7 @@ async function mainHTML(){
     <label class="section-label">Admin</label><br/>
     <button id='btnProcessGerman' onclick="jade_modules.operations.processGerman()">Process German</button>
     <button id='btnLoadScript' onclick="jade_modules.preprocess.doTheCopy()">Do The Copy</button>
+    <button id='btnLoadUKScript' onclick="jade_modules.preprocess.getUKScript()">UK Script</button>
   </div>  
 </div>`;
   await Jade.open_canvas("Script-Controller", html, true);
