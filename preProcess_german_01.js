@@ -5,7 +5,7 @@ const originalTextProcessingName = 'gpLineAndText'
 
 const ukScriptSheetName = 'Script'
 const cueColumnIndex = 5;
-const firstRowIndex = 2;
+const firstRowIndex = 3;
 const lastRowCount = 10000;
 
 async function doTheCopy(){
@@ -27,10 +27,12 @@ async function doTheCopy(){
 }
 
 async function getUKScript(){
-  let lastRowIndex = await getLastCueRowIndex();
+  let lastRowIndex = await getUKData();
 }
 
-async function getLastCueRowIndex(){
+async function getUKData(){
+  let ukData = {}
+  ukData.cue = []
   await Excel.run(async function(excel){
     //get the sheets and ranges
     const ukScriptSheet = excel.workbook.worksheets.getItem(ukScriptSheetName);
@@ -38,6 +40,13 @@ async function getLastCueRowIndex(){
     cueRange.load('rowIndex, values');
     await excel.sync();
     console.log('rowIndex: ', cueRange.rowIndex);
-    console.log('Values: ', cueRange.values);
+    let cueValues = cueRange.values.map(x => x[0])
+    console.log(cueValues)
+    for (let i = 0; i < cueValues.length; i++){
+      if (!isNaN(parseInt(cueValues[i]))){
+        ukData.cue.push(parseInt(cueValues[i]))
+      }
+    }
+    console.log('ukData: ', ukData);
   })
 }
