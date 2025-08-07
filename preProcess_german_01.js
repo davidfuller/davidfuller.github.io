@@ -1,7 +1,7 @@
 const lockedOriginalSheetName = 'Locked Original'
 const germanProcessingSheetName = 'German Processing'
 const originalLineAndTextName = 'loLineAndText'
-const originalTextProcessingName = 'gpOriginal'
+const originalTextProcessingName = 'gpLineAndText'
 
 async function doTheCopy(){
 
