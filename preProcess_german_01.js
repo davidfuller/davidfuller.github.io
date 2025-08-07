@@ -5,6 +5,7 @@ const originalTextProcessingName = 'gpLineAndText'
 
 const ukScriptSheetName = 'Script'
 const cueColumnIndex = 5;
+const numberColumnIndex = 6;
 const firstRowIndex = 3;
 const lastRowCount = 10000;
 
@@ -31,20 +32,27 @@ async function getUKScript(){
 }
 
 async function getUKData(){
-  let ukData = {}
-  ukData.cue = []
+  let ukData = {};
+  ukData.cue = [];
+  ukData.index = [];
+  ukData.number = [];
   await Excel.run(async function(excel){
     //get the sheets and ranges
     const ukScriptSheet = excel.workbook.worksheets.getItem(ukScriptSheetName);
     let cueRange = ukScriptSheet.getRangeByIndexes(firstRowIndex, cueColumnIndex, lastRowCount, 1);
+    let numberRange = ukScriptSheet.getRangeByIndexes(firstRowIndex, numberColumnIndex, lastRowCount, 1);
     cueRange.load('rowIndex, values');
+    numberRange.load('values')
     await excel.sync();
     console.log('rowIndex: ', cueRange.rowIndex);
-    let cueValues = cueRange.values.map(x => x[0])
+    let cueValues = cueRange.values.map(x => x[0]);
+    let numberValues = numberRange.values.map(x => x[0]);
     console.log(cueValues)
     for (let i = 0; i < cueValues.length; i++){
       if (!isNaN(parseInt(cueValues[i]))){
         ukData.cue.push(parseInt(cueValues[i]))
+        ukData.index.push(i);
+        ukData.number.push(numberValues[i]);
       }
     }
     console.log('ukData: ', ukData);
