@@ -100,11 +100,13 @@ async function getUKData(){
     console.log(cueValues)
     for (let i = 0; i < cueValues.length; i++){
       if (!isNaN(parseInt(cueValues[i]))){
-        ukData.cue.push(parseInt(cueValues[i]))
-        ukData.index.push(i);
-        ukData.number.push(numberValues[i]);
-        ukData.character.push(characterValues[i]);
-        ukData.ukScript.push(ukScriptValues[i]);
+        if (!((characterValues[i].trim() == '') && (ukScriptValues[i] == ''))){
+          ukData.cue.push(parseInt(cueValues[i]))
+          ukData.index.push(i);
+          ukData.number.push(numberValues[i]);
+          ukData.character.push(characterValues[i]);
+          ukData.ukScript.push(ukScriptValues[i]);
+        }
       }
     }
     console.log('ukData: ', ukData);
