@@ -172,6 +172,12 @@ async function findThisBlock(){
       }
     }
     console.log('Found Row Index', foundRowIndex);
+
+    if (foundRowIndex > 0){
+      let rangeToSelect = gpProcessSheet.getRangeByIndexes(foundRowIndex, originalRange.columnIndex, 1, 1)
+      rangeToSelect.select();
+      await excel.sync();
+    }
    })
 
 }
