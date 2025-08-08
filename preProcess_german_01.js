@@ -20,6 +20,10 @@ const numberOffset = 1;
 const characterOffset = 2;
 const ukScriptOffset = 3;
 
+const textAreaProcessAddress = "process-address"
+const textAreaOriginalText = "original-text"
+const textAreaOReplaceText = "replace-text"
+
 async function doTheCopy(){
   await Excel.run(async function(excel){
     //get the sheets and ranges
@@ -158,10 +162,11 @@ async function findThisBlock(){
 
     //Get the text from that row in processed.
     let searchTextRange = gpProcessSheet.getRangeByIndexes(activeCell.rowIndex, processedRange.columnIndex, 1, 1);
-    searchTextRange.load('values');
+    searchTextRange.load('values, address');
     await excel.sync();
     let searchText = (searchTextRange.values[0][0]).toLowerCase();
     console.log('Search Text', searchText)
+    putInTextArea(textAreaProcessAddress, searchTextRange.address )
 
     originalTexts = originalRange.values.map((x => x[0]));
     let foundRowIndex = 0;
@@ -179,5 +184,9 @@ async function findThisBlock(){
       await excel.sync();
     }
    })
+}
 
+async function putInTextArea(textAreaID, text){
+  let textArea = tag(textAreaID);
+  textArea.value = text;
 }

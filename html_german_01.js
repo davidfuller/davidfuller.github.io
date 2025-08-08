@@ -14,6 +14,9 @@ async function mainHTML(){
     <button id='btnProcessGerman' onclick="jade_modules.operations.processGerman()">Process German</button>
     <button id='btnLoadUKScript' onclick="jade_modules.preprocess.getUKScript()">Load UK Script</button>
     <button id='btnFindInOriginal' onclick="jade_modules.preprocess.findThisBlock()">Find this text in Original</button>
+    <textarea id="process-address" cols="40" rows="1"></textarea>
+    <textarea id="original-text" cols="40" rows="8"></textarea>
+    <textarea id="replace-text" cols="40" rows="8"></textarea>
   </div>  
 </div>`;
   await Jade.open_canvas("Script-Controller", html, true);
