@@ -160,8 +160,18 @@ async function findThisBlock(){
     let searchTextRange = gpProcessSheet.getRangeByIndexes(activeCell.rowIndex, processedRange.columnIndex, 1, 1);
     searchTextRange.load('values');
     await excel.sync();
-    let searchText = searchTextRange.values[0][0];
+    let searchText = (searchTextRange.values[0][0]).toLowerCase();
     console.log('Search Text', searchText)
+
+    originalTexts = originalRange.values.map((x => x[0]));
+    let foundRowIndex = 0;
+    for (let i = 0; i < originalTexts.length; i++){
+      if (originalTexts[i].toLowerCase().includes(searchText)){
+        foundRowIndex = i + originalRange.rowIndex;
+        break;
+      }
+    }
+    console.log('Found Row Index', foundRowIndex);
    })
 
 }
