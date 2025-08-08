@@ -22,7 +22,7 @@ const ukScriptOffset = 3;
 
 const textAreaProcessAddress = "process-address"
 const textAreaOriginalText = "original-text"
-const textAreaOReplaceText = "replace-text"
+const textAreaReplaceText = "replace-text"
 
 async function doTheCopy(){
   await Excel.run(async function(excel){
@@ -167,13 +167,14 @@ async function findThisBlock(){
     let searchText = (searchTextRange.values[0][0]).toLowerCase();
     console.log('Search Text', searchText)
     putInTextArea(textAreaProcessAddress, searchTextRange.address )
-    putInTextArea(textAreaOReplaceText, searchText);
+    putInTextArea(textAreaOriginalText, searchText);
 
     originalTexts = originalRange.values.map((x => x[0]));
     let foundRowIndex = 0;
     for (let i = 0; i < originalTexts.length; i++){
       if (originalTexts[i].toLowerCase().includes(searchText)){
         foundRowIndex = i + originalRange.rowIndex;
+        putInTextArea(textAreaOriginalText, originalTexts[i]);
         break;
       }
     }
