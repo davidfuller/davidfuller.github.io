@@ -167,6 +167,7 @@ async function findThisBlock(){
     let searchText = (searchTextRange.values[0][0]).toLowerCase();
     console.log('Search Text', searchText)
     putInTextArea(textAreaProcessAddress, searchTextRange.address )
+    putInTextArea(textAreaOReplaceText, searchText);
 
     originalTexts = originalRange.values.map((x => x[0]));
     let foundRowIndex = 0;
@@ -186,7 +187,18 @@ async function findThisBlock(){
    })
 }
 
-async function putInTextArea(textAreaID, text){
+function putInTextArea(textAreaID, text){
   let textArea = tag(textAreaID);
   textArea.value = text;
+}
+async function returnToProcessedCell(){
+  let textArea = tag(textAreaProcessAddress);
+  let cellAddress = textArea.value;
+  console.log('cellAddress', cellAddress);
+  await Excel.run(async function(excel){
+    const gpProcessSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let toProcessedRange = gpProcessSheet.getRange(cellAddress);
+    toProcessedRange.select();
+    await excel.sync();
+  })
 }
