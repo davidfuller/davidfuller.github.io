@@ -2,6 +2,7 @@ const lockedOriginalSheetName = 'Locked Original'
 const germanProcessingSheetName = 'German Processing'
 const originalLineAndTextName = 'loLineAndText'
 const originalTextProcessingName = 'gpLineAndText'
+const ukScriptRangeName = 'gpLineCharacterAndUKScript'
 
 const ukScriptSheetName = 'Script'
 const cueColumnIndex = 5;
@@ -10,6 +11,12 @@ const characterColumnIndex = 7;
 const ukScriptColumnIndex = 10;
 const firstRowIndex = 3;
 const lastRowCount = 10000;
+
+//offsets wityhin the UK Script Range in German processing
+const cueOffset = 0;
+const numberOffset = 1;
+const characterOffset = 2;
+const ukScriptOffset = 3;
 
 async function doTheCopy(){
   await Excel.run(async function(excel){
@@ -30,10 +37,43 @@ async function doTheCopy(){
 }
 
 async function getUKScript(){
-  let lastRowIndex = await getUKData();
+  //get the data from the uk script sheet
+  let ukData = await getUKData();
+  //get the row and column indexes for the script part
+  let rowIndex
+  let columnIndex
+  let rowCount
+  await Excel.run(async function(excel){
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let ukScriptRange = gpSheet.getRange(ukScriptRangeName);
+    ukScriptRange.load('rowIndex, columnIndex, rowCount')
+    await excel.sync()
+    rowIndex = ukScriptRange.rowIndex
+    columnIndex = ukScriptRange.columnIndex
+    rowCount = ukScriptRange.rowCount
+  })
+  
+  //Fill in the cue
+  await fillRangeByIndexes(germanProcessingSheetName, rowIndex, columnIndex + cueOffset, rowCount, ukData.cue, true);
+  //Fill in the number
+  await fillRangeByIndexes(germanProcessingSheetName, rowIndex, columnIndex + numberOffset, rowCount, ukData.number, true);
+  //Fill in the character
+  await fillRangeByIndexes(germanProcessingSheetName, rowIndex, columnIndex + characterOffset, rowCount, ukData.character, true);
+  //Fill in the number
+  await fillRangeByIndexes(germanProcessingSheetName, rowIndex, columnIndex + ukScriptOffset, rowCount, ukData.ukScript, true);
+
 }
 
 async function getUKData(){
+  //The data is for the full length UK Script Sheet, but only the script. No scene, walla etc.
+  /*
+    The data is:
+      index       the rowIndex of the data
+      cue         the value in the cue column
+      number      the value in the number column
+      character   the name of the character (or narrator) *Incudes narrator(cut)
+      ukScript    The text of the script.
+  */
   let ukData = {};
   ukData.cue = [];
   ukData.index = [];
@@ -69,4 +109,30 @@ async function getUKData(){
     }
     console.log('ukData: ', ukData);
   })
+  return ukData;
+}
+
+async function fillRangeByIndexes(sheetName, rowIndex, columnIndex, rowCount, dataArray, doClear){
+ await Excel.run(async function(excel){
+  const mySheet = excel.workbook.worksheets.getItem(sheetName);
+  const myRange = mySheet.getRangeByIndexes(rowIndex, columnIndex, rowCount, 1);
+  myRange.load("rowIndex, columnIndex");
+  if (doClear){
+    myRange.clear("Contents")
+  }
+  await excel.sync();
+
+  const destRange = mySheet.getRangeByIndexes(myRange.rowIndex, myRange.columnIndex, dataArray.length, 1)
+  destRange.load('address');
+  await excel.sync();
+  console.log('address:', destRange.address);
+  let temp = []
+  for (let i = 0; i < dataArray.length; i++){
+    temp[i] = [];
+    temp[i][0] = dataArray[i]; 
+  }
+  console.log(temp)
+  destRange.values = temp;
+  await excel.sync();
+ }) 
 }
