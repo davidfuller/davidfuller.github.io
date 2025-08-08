@@ -10,9 +10,10 @@ async function mainHTML(){
   <h1>Hello Fran and Tom</h1>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
+    <button id='btnLoadScript' onclick="jade_modules.preprocess.doTheCopy()">Load German Original</button>
     <button id='btnProcessGerman' onclick="jade_modules.operations.processGerman()">Process German</button>
-    <button id='btnLoadScript' onclick="jade_modules.preprocess.doTheCopy()">Do The Copy</button>
-    <button id='btnLoadUKScript' onclick="jade_modules.preprocess.getUKScript()">UK Script</button>
+    <button id='btnLoadUKScript' onclick="jade_modules.preprocess.getUKScript()">Load UK Script</button>
+    <button id='btnFindInOriginal' onclick="jade_modules.preprocess.findThisBlock()">Find this text in Original</button>
   </div>  
 </div>`;
   await Jade.open_canvas("Script-Controller", html, true);

@@ -1,8 +1,10 @@
-const lockedOriginalSheetName = 'Locked Original'
-const germanProcessingSheetName = 'German Processing'
-const originalLineAndTextName = 'loLineAndText'
-const originalTextProcessingName = 'gpLineAndText'
-const ukScriptRangeName = 'gpLineCharacterAndUKScript'
+const lockedOriginalSheetName = 'Locked Original';
+const germanProcessingSheetName = 'German Processing';
+const originalLineAndTextName = 'loLineAndText';
+const originalTextProcessingName = 'gpLineAndText';
+const ukScriptRangeName = 'gpLineCharacterAndUKScript';
+const processedRangeName = 'gpProcessed';
+const originalRangeName = 'gpOriginal';
 
 const ukScriptSheetName = 'Script'
 const cueColumnIndex = 5;
@@ -137,4 +139,29 @@ async function fillRangeByIndexes(sheetName, rowIndex, columnIndex, rowCount, da
   destRange.values = temp;
   await excel.sync();
  }) 
+}
+
+async function findThisBlock(){
+  //Gets the cell of the active row in 'German Processed' column
+  //Finds that block in the 'German Original' column
+   await Excel.run(async function(excel){
+    const activeCell = excel.workbook.getActiveCell();
+    const gpProcessSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let processedRange = gpProcessSheet.getRange(processedRangeName);
+    let originalRange = gpProcessSheet.getRange(originalRangeName);
+
+    activeCell.load('rowIndex');
+    processedRange.load('columnIndex');
+    originalRange.load('rowIndex, columnIndex, values')
+
+    await excel.sync();
+
+    //Get the text from that row in processed.
+    let searchTextRange = gpProcessSheet.getRangeByIndexes(activeCell.rowIndex, processedRange.columnIndex, 1, 1);
+    searchTextRange.load('values');
+    await excel.sync();
+    let searchText = searchTextRange.values[0][0];
+    console.log('Search Text', searchText)
+   })
+
 }
