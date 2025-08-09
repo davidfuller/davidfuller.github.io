@@ -3,6 +3,10 @@ async function auto_exec() {}
 const replacementsSheetName = 'Replacements';
 const replacementsTableRangeName = 'reTable';
 
+const textInputSourceRow = "source-row";
+const textAreaOriginalText = "original-text";
+const textAreaReplaceText = "replace-text";
+
 async function appendData(rowIndex, searchText, replaceText) {
   //Finds the first empty row and adds the data
   await Excel.run(async function(excel) {
@@ -19,6 +23,7 @@ async function appendData(rowIndex, searchText, replaceText) {
         break;
       }
     }
+    console.log('emptyRowIndex', emptyRowIndex)
     let targetData = reSheet.getRangeByIndexes(emptyRowIndex, tableRange.columnIndex, 1, 3);
     targetData.load('values');
     await excel.sync();
@@ -30,6 +35,7 @@ async function appendData(rowIndex, searchText, replaceText) {
 }
 
 async function addToReplacements() {
+  console.log('My start')
   const sourceRowTextInput = tag(textInputSourceRow);
   const searchTextArea = tag(textAreaOriginalText);
   const replaceTextArea = tag(textAreaReplaceText);
