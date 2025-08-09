@@ -196,7 +196,7 @@ async function doAReplacement(rowIndex, searchText, replaceText){
     const procSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let originalTextRange = procSheet.getRange('gpOriginal');
     originalTextRange.load('columnIndex');
-    await excel.sync():
+    await excel.sync();
     let targetRange = procSheet.getRangeByIndexes(rowIndex, originalTextRange.columnIndex, 1, 1);
     targetRange.load('values');
     await excel.sync();
