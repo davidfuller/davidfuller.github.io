@@ -17,8 +17,8 @@ async function appendData(rowIndex, searchText, replaceText) {
     await excel.sync();
     //find the first empty row
     let emptyRowIndex = -1;
-    for (let i = 0; i < tableRange[0].length; i++) {
-      if (tableRange[0][i].trim() == '') {
+    for (let i = 0; i < tableRange.values[0].length; i++) {
+      if (tableRange.values[0][i].trim() == '') {
         emptyRowIndex = i + tableRange.rowIndex;
         break;
       }
