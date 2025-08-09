@@ -12,7 +12,7 @@ async function appendData(rowIndex, searchText, replaceText) {
   await Excel.run(async function(excel) {
     // get the table range
     const reSheet = excel.workbook.worksheets.getItem(replacementsSheetName);
-    let tableRange = reSheet.getRang(replacementsTableRangeName);
+    let tableRange = reSheet.getRange(replacementsTableRangeName);
     tableRange.load('rowIndex, columnIndex, values');
     await excel.sync();
     //find the first empty row
