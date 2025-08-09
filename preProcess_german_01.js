@@ -20,7 +20,8 @@ const numberOffset = 1;
 const characterOffset = 2;
 const ukScriptOffset = 3;
 
-const textAreaProcessAddress = "process-address"
+const textInputProcessAddress = "process-address";
+const textInputSourceRow = "source-row"
 const textAreaOriginalText = "original-text"
 const textAreaReplaceText = "replace-text"
 
@@ -166,7 +167,7 @@ async function findThisBlock(){
     await excel.sync();
     let searchText = (searchTextRange.values[0][0]).toLowerCase();
     console.log('Search Text', searchText)
-    putInTextArea(textAreaProcessAddress, searchTextRange.address )
+    putInTextArea(textInputProcessAddress, searchTextRange.address )
     putInTextArea(textAreaOriginalText, searchText);
 
     originalTexts = originalRange.values.map((x => x[0]));
@@ -175,6 +176,7 @@ async function findThisBlock(){
       if (originalTexts[i].toLowerCase().includes(searchText)){
         foundRowIndex = i + originalRange.rowIndex;
         putInTextArea(textAreaOriginalText, originalTexts[i]);
+        putInTextArea(textInputSourceRow, foundRowIndex);
         break;
       }
     }
@@ -193,7 +195,7 @@ function putInTextArea(textAreaID, text){
   textArea.value = text;
 }
 async function returnToProcessedCell(){
-  let textArea = tag(textAreaProcessAddress);
+  let textArea = tag(textInputProcessAddress);
   let cellAddress = textArea.value;
   console.log('cellAddress', cellAddress);
   await Excel.run(async function(excel){

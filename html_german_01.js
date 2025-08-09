@@ -15,7 +15,8 @@ async function mainHTML(){
     <button id='btnLoadUKScript' onclick="jade_modules.preprocess.getUKScript()">Load UK Script</button>
     <button id='btnFindInOriginal' onclick="jade_modules.preprocess.findThisBlock()">Find this text in Original</button>
     <button id='btnReturnProcessed' onclick="jade_modules.preprocess.returnToProcessedCell()">Return to processed cell</button><br/>
-    <input type="text" id="process-address" name="process-address"><br/>
+    <input type="text" id="process-address" name="process-address">
+    <input type="text" id="source-row" name="source-row">
     <label id="search-lable">Search</label><br/>
     <textarea id="original-text" cols="40" rows="8"></textarea><br/>
     <label id="replace-label">Replace</label><br/>
