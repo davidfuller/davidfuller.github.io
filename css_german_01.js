@@ -913,6 +913,10 @@ label {
   font-size: 12px;
   margin-left: 5px;
 }
+
+#process-address {
+  display: none;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')
