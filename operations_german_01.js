@@ -27,7 +27,7 @@ async function showMainPage(){
 
 async function processGerman(){
   await Excel.run(async function(excel){
-    procSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    const procSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let originalTextRange = procSheet.getRange('gpOriginal');
     await excel.sync();
     originalTextRange.load('values');
@@ -186,4 +186,23 @@ function removedBannedOpeningCharacters(text){
     }
   }
   return temp;
+}
+
+async function doAReplacement(rowIndex, searchText, replaceText){
+  // Gets the relevant cell/range (original column)
+  // replaces the text
+  // saves it
+  await Excel.run(async function(excel){
+    const procSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let originalTextRange = procSheet.getRange('gpOriginal');
+    originalTextRange.load('columnIndex');
+    await excel.sync():
+    let targetRange = procSheet.getRangeByIndexes(rowIndex, originalTextRange.columnIndex, 1, 1);
+    targetRange.load('values');
+    await excel.sync();
+    let targetText = targetRange.values[0][0];
+    targetText.replace(searchText, replaceText);
+    targetRange.values = [[targetText]];
+  })
+  
 }

@@ -22,7 +22,9 @@ async function mainHTML(){
     <label id="search-lable">Search</label><br/>
     <textarea id="original-text" cols="40" rows="8"></textarea><br/>
     <label id="replace-label">Replace</label><br/>
-    <textarea id="replace-text" cols="40" rows="8"></textarea>
+    <textarea id="replace-text" cols="40" rows="8"></textarea><br/>
+    <button id='btnDoTheReplacements' onclick="jade_modules.replacements.doTheReplacements()">Do The Replacements</button>
+    <br/>
   </div>  
 </div>`;
   await Jade.open_canvas("Script-Controller", html, true);
