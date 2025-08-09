@@ -21,12 +21,12 @@ const characterOffset = 2;
 const ukScriptOffset = 3;
 
 const textInputProcessAddress = "process-address";
-const textInputSourceRow = "source-row"
-const textAreaOriginalText = "original-text"
-const textAreaReplaceText = "replace-text"
+const textInputSourceRow = "source-row";
+const textAreaOriginalText = "original-text";
+const textAreaReplaceText = "replace-text";
 
-async function doTheCopy(){
-  await Excel.run(async function(excel){
+async function doTheCopy() {
+  await Excel.run(async function(excel) {
     //get the sheets and ranges
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let processingTextRange = gpSheet.getRange(originalTextProcessingName);
@@ -43,14 +43,14 @@ async function doTheCopy(){
   })
 }
 
-async function getUKScript(){
+async function getUKScript() {
   //get the data from the uk script sheet
   let ukData = await getUKData();
   //get the row and column indexes for the script part
   let rowIndex
   let columnIndex
   let rowCount
-  await Excel.run(async function(excel){
+  await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let ukScriptRange = gpSheet.getRange(ukScriptRangeName);
     ukScriptRange.load('rowIndex, columnIndex, rowCount')
@@ -59,7 +59,7 @@ async function getUKScript(){
     columnIndex = ukScriptRange.columnIndex
     rowCount = ukScriptRange.rowCount
   })
-  
+
   //Fill in the cue
   await fillRangeByIndexes(germanProcessingSheetName, rowIndex, columnIndex + cueOffset, rowCount, ukData.cue, true);
   //Fill in the number
@@ -71,7 +71,7 @@ async function getUKScript(){
 
 }
 
-async function getUKData(){
+async function getUKData() {
   //The data is for the full length UK Script Sheet, but only the script. No scene, walla etc.
   /*
     The data is:
@@ -87,7 +87,7 @@ async function getUKData(){
   ukData.number = [];
   ukData.character = [];
   ukData.ukScript = [];
-  await Excel.run(async function(excel){
+  await Excel.run(async function(excel) {
     //get the sheets and ranges
     const ukScriptSheet = excel.workbook.worksheets.getItem(ukScriptSheetName);
     let cueRange = ukScriptSheet.getRangeByIndexes(firstRowIndex, cueColumnIndex, lastRowCount, 1);
@@ -105,9 +105,9 @@ async function getUKData(){
     let characterValues = characterRange.values.map(x => x[0]);
     let ukScriptValues = ukScriptRange.values.map(x => x[0]);
     console.log(cueValues)
-    for (let i = 0; i < cueValues.length; i++){
-      if (!isNaN(parseInt(cueValues[i]))){
-        if (!((characterValues[i].trim() == '') && (ukScriptValues[i] == ''))){
+    for (let i = 0; i < cueValues.length; i++) {
+      if (!isNaN(parseInt(cueValues[i]))) {
+        if (!((characterValues[i].trim() == '') && (ukScriptValues[i] == ''))) {
           ukData.cue.push(parseInt(cueValues[i]))
           ukData.index.push(i);
           ukData.number.push(numberValues[i]);
@@ -121,35 +121,35 @@ async function getUKData(){
   return ukData;
 }
 
-async function fillRangeByIndexes(sheetName, rowIndex, columnIndex, rowCount, dataArray, doClear){
- await Excel.run(async function(excel){
-  const mySheet = excel.workbook.worksheets.getItem(sheetName);
-  const myRange = mySheet.getRangeByIndexes(rowIndex, columnIndex, rowCount, 1);
-  myRange.load("rowIndex, columnIndex");
-  if (doClear){
-    myRange.clear("Contents")
-  }
-  await excel.sync();
+async function fillRangeByIndexes(sheetName, rowIndex, columnIndex, rowCount, dataArray, doClear) {
+  await Excel.run(async function(excel) {
+    const mySheet = excel.workbook.worksheets.getItem(sheetName);
+    const myRange = mySheet.getRangeByIndexes(rowIndex, columnIndex, rowCount, 1);
+    myRange.load("rowIndex, columnIndex");
+    if (doClear) {
+      myRange.clear("Contents")
+    }
+    await excel.sync();
 
-  const destRange = mySheet.getRangeByIndexes(myRange.rowIndex, myRange.columnIndex, dataArray.length, 1)
-  destRange.load('address');
-  await excel.sync();
-  console.log('address:', destRange.address);
-  let temp = []
-  for (let i = 0; i < dataArray.length; i++){
-    temp[i] = [];
-    temp[i][0] = dataArray[i]; 
-  }
-  console.log(temp)
-  destRange.values = temp;
-  await excel.sync();
- }) 
+    const destRange = mySheet.getRangeByIndexes(myRange.rowIndex, myRange.columnIndex, dataArray.length, 1)
+    destRange.load('address');
+    await excel.sync();
+    console.log('address:', destRange.address);
+    let temp = []
+    for (let i = 0; i < dataArray.length; i++) {
+      temp[i] = [];
+      temp[i][0] = dataArray[i];
+    }
+    console.log(temp)
+    destRange.values = temp;
+    await excel.sync();
+  })
 }
 
-async function findThisBlock(){
+async function findThisBlock() {
   //Gets the cell of the active row in 'German Processed' column
   //Finds that block in the 'German Original' column
-   await Excel.run(async function(excel){
+  await Excel.run(async function(excel) {
     const activeCell = excel.workbook.getActiveCell();
     const gpProcessSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let processedRange = gpProcessSheet.getRange(processedRangeName);
@@ -167,13 +167,13 @@ async function findThisBlock(){
     await excel.sync();
     let searchText = (searchTextRange.values[0][0]).toLowerCase();
     console.log('Search Text', searchText)
-    putInTextArea(textInputProcessAddress, searchTextRange.address )
+    putInTextArea(textInputProcessAddress, searchTextRange.address)
     putInTextArea(textAreaOriginalText, searchText);
 
     originalTexts = originalRange.values.map((x => x[0]));
     let foundRowIndex = 0;
-    for (let i = 0; i < originalTexts.length; i++){
-      if (originalTexts[i].toLowerCase().includes(searchText)){
+    for (let i = 0; i < originalTexts.length; i++) {
+      if (originalTexts[i].toLowerCase().includes(searchText)) {
         foundRowIndex = i + originalRange.rowIndex;
         putInTextArea(textAreaOriginalText, originalTexts[i]);
         putInTextArea(textInputSourceRow, foundRowIndex);
@@ -182,23 +182,23 @@ async function findThisBlock(){
     }
     console.log('Found Row Index', foundRowIndex);
 
-    if (foundRowIndex > 0){
+    if (foundRowIndex > 0) {
       let rangeToSelect = gpProcessSheet.getRangeByIndexes(foundRowIndex, originalRange.columnIndex, 1, 1)
       rangeToSelect.select();
       await excel.sync();
     }
-   })
+  })
 }
 
-function putInTextArea(textAreaID, text){
+function putInTextArea(textAreaID, text) {
   let textArea = tag(textAreaID);
   textArea.value = text;
 }
-async function returnToProcessedCell(){
+async function returnToProcessedCell() {
   let textArea = tag(textInputProcessAddress);
   let cellAddress = textArea.value;
   console.log('cellAddress', cellAddress);
-  await Excel.run(async function(excel){
+  await Excel.run(async function(excel) {
     const gpProcessSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let toProcessedRange = gpProcessSheet.getRange(cellAddress);
     toProcessedRange.select();
