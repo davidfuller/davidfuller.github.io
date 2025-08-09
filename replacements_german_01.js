@@ -18,8 +18,8 @@ async function appendData(rowIndex, searchText, replaceText) {
     //find the first empty row
     let emptyRowIndex = -1;
     console.log('table range', tableRange.values);
-    for (let i = 0; i < tableRange.values[0].length; i++) {
-      if (tableRange.values[0][i].trim() == '') {
+    for (let i = 0; i < tableRange.values.length; i++) {
+      if (tableRange.values[i][0].trim() == '') {
         emptyRowIndex = i + tableRange.rowIndex;
         break;
       }
