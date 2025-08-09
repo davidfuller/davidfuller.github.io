@@ -25,8 +25,10 @@ async function appendData(rowIndex, searchText, replaceText) {
     }
     console.log('emptyRowIndex', emptyRowIndex)
     let targetData = reSheet.getRangeByIndexes(emptyRowIndex, tableRange.columnIndex, 1, 3);
-    targetData.load('values');
+    targetData.load('values, address');
     await excel.sync();
+    console.log('targetData', targetData.values);
+    console.log('address', targetData.address)
     targetData.values[0][0] = rowIndex;
     targetData.values[0][1] = searchText;
     targetData.values[0][2] = replaceText;
