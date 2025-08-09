@@ -16,7 +16,9 @@ async function mainHTML(){
     <button id='btnFindInOriginal' onclick="jade_modules.preprocess.findThisBlock()">Find this text in Original</button>
     <button id='btnReturnProcessed' onclick="jade_modules.preprocess.returnToProcessedCell()">Return to processed cell</button>
     <input type="text" id="process-address" name="process-address">
+    <label id="search-lable">Search</label><br/>
     <textarea id="original-text" cols="40" rows="8"></textarea>
+    <label id="replace-label">Replace</label><br/>
     <textarea id="replace-text" cols="40" rows="8"></textarea>
   </div>  
 </div>`;
