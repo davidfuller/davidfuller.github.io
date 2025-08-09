@@ -19,7 +19,7 @@ async function appendData(rowIndex, searchText, replaceText) {
     let emptyRowIndex = -1;
     console.log('table range', tableRange.values);
     for (let i = 0; i < tableRange.values.length; i++) {
-      if (tableRange.values[i][0].trim() == '') {
+      if (tableRange.values[i][0].toString().trim() == '') {
         emptyRowIndex = i + tableRange.rowIndex;
         break;
       }
