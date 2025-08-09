@@ -203,7 +203,7 @@ async function doAReplacement(rowIndex, searchText, replaceText){
     await excel.sync();
     let targetText = targetRange.values[0][0];
     console.log('Before', targetText);
-    targetText.replace(searchText, replaceText);
+    targetText = targetText.replace(searchText, replaceText);
     console.log('After', targetText)
     targetRange.values = [[targetText]];
     await excel.sync();
