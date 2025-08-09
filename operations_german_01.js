@@ -192,6 +192,7 @@ async function doAReplacement(rowIndex, searchText, replaceText){
   // Gets the relevant cell/range (original column)
   // replaces the text
   // saves it
+  console.log('rowIndex, searchText, replaceText', rowIndex, searchText, replaceText)
   await Excel.run(async function(excel){
     const procSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let originalTextRange = procSheet.getRange('gpOriginal');
