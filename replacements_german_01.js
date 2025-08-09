@@ -29,9 +29,8 @@ async function appendData(rowIndex, searchText, replaceText) {
     await excel.sync();
     console.log('targetData', targetData.values);
     console.log('address', targetData.address)
-    targetData.values[0][0] = rowIndex;
-    targetData.values[0][1] = searchText;
-    targetData.values[0][2] = replaceText;
+    let temp = [[rowIndex, searchText, replaceText]]
+    targetData.values = temp;
     await excel.sync();
   })
 }
