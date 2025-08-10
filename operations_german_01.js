@@ -64,7 +64,8 @@ async function processGerman(){
                 myStrings[myIndex] = germanText[i].substring(0, eols[eol]).trim();
                 myIndex += 1;
                 original[0] = germanText[i].trim()
-              } else if (eol == eols.length - 1){
+              } 
+              if (eol == eols.length - 1){
                 // last part
                 myStrings[myIndex] = germanText[i].substr(eols[eol]).trim();
                 myIndex += 1;   
