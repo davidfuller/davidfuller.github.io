@@ -110,6 +110,6 @@ function isolateQuotedBit() {
     }
   }
   
-  searchTextArea.value = result[i];
+  searchTextArea.value = result[0];
   
 }
