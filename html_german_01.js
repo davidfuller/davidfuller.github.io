@@ -7,7 +7,7 @@ async function mainHTML(){
   <h1>Please wait...</h1>
 </div>
 <div id="main-page">
-  <h1>Hello Fran and Tom</h1>
+  <h1>German Processing</h1>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
     <button id='btnLoadScript' onclick="jade_modules.preprocess.doTheCopy()">Load German Original</button>

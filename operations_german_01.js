@@ -67,11 +67,11 @@ async function processGerman(){
               } 
               if (eol == eols.length - 1){
                 // last part
-                myStrings[myIndex] = germanText[i].substr(eols[eol]).trim();
+                myStrings[myIndex] = germanText[i].substr(eols[eol] + 5).trim();
                 myIndex += 1;   
               } else {
                 // Between two eols
-                myStrings[myIndex] = germanText[i].substring(eols[eol], eols[eol]).trim();
+                myStrings[myIndex] = germanText[i].substring(eols[eol] + 5, eols[eol]).trim();
                 myIndex += 1;
               }
             }
