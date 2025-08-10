@@ -95,5 +95,21 @@ function copySearchReplacingDoubleQuotes(){
   let replaceText = searchText.replace(openSpeechChar, openSingleQuoteChar).replace(closeSpeechChar, closeSingleQuoteChar).trim();
   
   replaceTextArea.value = replaceText;
+}
 
+function isolateQuotedBit() {
+  const searchTextArea = tag(textAreaOriginalText);  
+  
+  let searchText = searchTextArea.value;
+  let openLocations = jade_modules.operations.locations(searchText, openSpeechChar);
+  let closeLocations = jade_modules.operations.locations(searchText, closeSpeechChar);
+  let result = [];
+  if ((openLocations.length > 0) && (openLocations.length == closeLocations.length)){
+    for (let i = 0; i < openLocations.length; i++) {
+      result[i] = searchText.substring(openLocations[i], closeLocations[i] + 1);
+    }
+  }
+  
+  searchTextArea.value = result[i];
+  
 }

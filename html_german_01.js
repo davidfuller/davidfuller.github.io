@@ -20,9 +20,10 @@ async function mainHTML(){
     <input type="text" id="process-address" name="process-address">
     <input type="text" id="source-row" name="source-row">
     <label id="search-label">Search</label><br/>
-    <button id='btnCopySearchReplacingDoubleQuotes' onclick="jade_modules.replacements.copySearchReplacingDoubleQuotes()">Copy Search and Replace Double Quotes</button>
+    <button id='btnIsolateQuotedBit' onclick="jade_modules.replacements.isolateQuotedBit()">Isolate Quote Bit</button>
     <textarea id="original-text" cols="40" rows="8"></textarea><br/>
     <label id="replace-label">Replace</label><br/>
+    <button id='btnCopySearchReplacingDoubleQuotes' onclick="jade_modules.replacements.copySearchReplacingDoubleQuotes()">Copy Search and Replace Double Quotes</button>
     <textarea id="replace-text" cols="40" rows="8"></textarea><br/>
     <button id='btnDoTheReplacements' onclick="jade_modules.replacements.doTheReplacements()">Do The Replacements</button>
     <button id='btnReplaceProcess' onclick="jade_modules.replacements.replacementsAndProcess()">Replace/Process</button>
