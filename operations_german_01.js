@@ -245,5 +245,5 @@ function getEols(eols, germanText){
       myIndex += 1;
     }
   }
-  return {myStrings = myStrings, original = original, myIndex = myIndex}
+  return {myStrings: myStrings, original: original, myIndex: myIndex}
 }
