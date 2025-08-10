@@ -101,8 +101,8 @@ function isolateQuotedBit() {
   const searchTextArea = tag(textAreaOriginalText);  
   
   let searchText = searchTextArea.value;
-  let openLocations = jade_modules.operations.locations(searchText, openSpeechChar);
-  let closeLocations = jade_modules.operations.locations(searchText, closeSpeechChar);
+  let openLocations = jade_modules.operations.locations(openSpeechChar, searchText);
+  let closeLocations = jade_modules.operations.locations(closeSpeechChar, searchText);
   let result = [];
   console.log('searchText', searchText);
   console.log('openLocations', openLocations);
