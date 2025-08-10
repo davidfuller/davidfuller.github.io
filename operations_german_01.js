@@ -5,6 +5,7 @@ const codeVersion = '01.01';
 const germanProcessingSheetName = 'German Processing'
 const openSpeechChar = '»';
 const closeSpeechChar = '«';
+const eolChar = '|eol|'
 const bannedOpeningChars = [',', '.'];
 
 async function showMain(){
@@ -42,20 +43,40 @@ async function processGerman(){
       let result = {};
       let myStrings = []
       let original = []
-      let startQuotes = locations(openSpeechChar, germanText[i])
+      let startQuotes = locations(openSpeechChar, germanText[i]);
+      let eols = location(eolChar, germanText[i]);
       let endQuotes = locations(closeSpeechChar, germanText[i])
       let directCopy;
       let goodSpeech = 0;
       let wrongSpeech = 0;
       let unequalQuotes = 0;
       if (startQuotes.length == endQuotes.length){
+        let myIndex = 0;
         if (startQuotes.length == 0){
-          directCopy = true
-          myStrings[0] = germanText[i].trim();
-          original[0] = germanText[i].trim();
+          if (eols.length == 0){
+            directCopy = true
+            myStrings[0] = germanText[i].trim();
+            original[0] = germanText[i].trim();
+          } else {
+            directCopy = false;
+            for (let eol = 0; eol < eols.length; eol++){
+              if (eol == 0){
+                myStrings[myIndex] = germanText[i].substring(0, eols[eol]).trim();
+                myIndex += 1;
+                original[0] = germanText[i].trim()
+              } else if (eol == eols.length - 1){
+                // last part
+                myStrings[myIndex] = germanText[i].substr(eols[eol]).trim();
+                myIndex += 1;   
+              } else {
+                // Between two eols
+                myStrings[myIndex] = germanText[i].substring(eols[eol], eols[eol]).trim();
+                myIndex += 1;
+              }
+            }
+          }
         } else {
           directCopy = false
-          let myIndex = 0;
           for (let speechPart = 0; speechPart < startQuotes.length; speechPart++ ){
             if (endQuotes[speechPart] > startQuotes[speechPart]){
               goodSpeech += 1;
@@ -64,7 +85,7 @@ async function processGerman(){
                   myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]).trim();
                   myIndex += 1;
                 }
-                original[0] = germanText[i].trim()
+                original[0] = germanText[i].trim();
               }
               myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart] + 1 , endQuotes[speechPart]).trim();
               myIndex += 1;
