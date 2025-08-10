@@ -59,22 +59,14 @@ async function processGerman(){
             original[0] = germanText[i].trim();
           } else {
             directCopy = false;
-            for (let eol = 0; eol < eols.length; eol++){
-              if (eol == 0){
-                myStrings[myIndex] = germanText[i].substring(0, eols[eol]).trim();
-                myIndex += 1;
-                original[0] = germanText[i].trim()
-              } 
-              if (eol == eols.length - 1){
-                // last part
-                myStrings[myIndex] = germanText[i].substr(eols[eol] + 5).trim();
-                myIndex += 1;   
-              } else {
-                // Between two eols
-                myStrings[myIndex] = germanText[i].substring(eols[eol] + 5, eols[eol + 1]).trim();
-                myIndex += 1;
-              }
+            myEols = getEols(eols, germanText[i]);
+            for (let index = 0; index < myEols.myStrings.length; index++){
+              myStrings[myIndex] = myEols.myStrings[index];
+              myIndex += 1;  
             }
+            for (let index = 0; index < myEols.original.length; index++){
+              original[index] = myEols.original[index];
+            } 
           }
         } else {
           directCopy = false
@@ -231,4 +223,27 @@ async function doAReplacement(rowIndex, searchText, replaceText){
     await excel.sync();
   })
   
+}
+
+function getEols(eols, germanText){
+  let myStrings = [];
+  let original = [];
+  let myIndex = 0;
+  for (let eol = 0; eol < eols.length; eol++){
+    if (eol == 0){
+      myStrings[myIndex] = germanText.substring(0, eols[eol]).trim();
+      myIndex += 1;
+      original[0] = germanText[i].trim()
+    } 
+    if (eol == eols.length - 1){
+      // last part
+      myStrings[myIndex] = germanText.substr(eols[eol] + eolChar.length).trim();
+      myIndex += 1;   
+    } else {
+      // Between two eols
+      myStrings[myIndex] = germanText.substring(eols[eol] + eolChar.length, eols[eol + 1]).trim();
+      myIndex += 1;
+    }
+  }
+  return {myStrings = myStrings, original = original, myIndex = myIndex}
 }
