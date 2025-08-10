@@ -7,6 +7,11 @@ const textInputSourceRow = "source-row";
 const textAreaOriginalText = "original-text";
 const textAreaReplaceText = "replace-text";
 
+const openSpeechChar = '»';
+const closeSpeechChar = '«';
+const openSingleQuoteChar = '›';
+const closeSingleQuoteChar = '‹';
+
 async function appendData(rowIndex, searchText, replaceText) {
   //Finds the first empty row and adds the data
   await Excel.run(async function(excel) {
@@ -80,5 +85,15 @@ async function doTheReplacements() {
 async function replacementsAndProcess(){
   await doTheReplacements();
   await jade_modules.operations.processGerman();
+}
+
+function copySearchReplacingDoubleQuotes(){
+  const searchTextArea = tag(textAreaOriginalText);
+  const replaceTextArea = tag(textAreaReplaceText);
   
+  let searchText = searchTextArea.value;
+  let replaceText = searchText.replace(openSpeechChar, openSingleQuoteChar).replace(closeSpeechChar, closeSingleQuoteChar).trim();
+  
+  replaceTextArea.value = replaceText;
+
 }

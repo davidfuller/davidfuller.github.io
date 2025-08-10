@@ -4,7 +4,7 @@ function auto_exec(){
 const codeVersion = '01.01';
 const germanProcessingSheetName = 'German Processing'
 const openSpeechChar = '»';
-const closeSpeechChar = '«'
+const closeSpeechChar = '«';
 const bannedOpeningChars = [',', '.'];
 
 async function showMain(){
