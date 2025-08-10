@@ -104,9 +104,14 @@ function isolateQuotedBit() {
   let openLocations = jade_modules.operations.locations(searchText, openSpeechChar);
   let closeLocations = jade_modules.operations.locations(searchText, closeSpeechChar);
   let result = [];
+  console.log('searchText', searchText);
+  console.log('openLocations', openLocations);
+  console.log('closeLocations', closeLocations);
+  
   if ((openLocations.length > 0) && (openLocations.length == closeLocations.length)){
     for (let i = 0; i < openLocations.length; i++) {
       result[i] = searchText.substring(openLocations[i], closeLocations[i] + 1);
+      console.log(i, result[i])
     }
   }
   
