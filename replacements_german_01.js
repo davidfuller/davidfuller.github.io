@@ -76,3 +76,9 @@ async function doTheReplacements() {
     }
   })
 }
+
+async function replacementsAndProcess(){
+  await doTheReplacements();
+  await jade_modules.operations.processGerman();
+  
+}

@@ -24,6 +24,7 @@ async function mainHTML(){
     <label id="replace-label">Replace</label><br/>
     <textarea id="replace-text" cols="40" rows="8"></textarea><br/>
     <button id='btnDoTheReplacements' onclick="jade_modules.replacements.doTheReplacements()">Do The Replacements</button>
+    <button id='btnReplaceProcess' onclick="jade_modules.replacements.replacementsAndProcess()">Replace/Process</button>
     <br/>
   </div>  
 </div>`;
