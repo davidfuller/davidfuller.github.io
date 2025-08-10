@@ -233,7 +233,7 @@ function getEols(eols, germanText){
     if (eol == 0){
       myStrings[myIndex] = germanText.substring(0, eols[eol]).trim();
       myIndex += 1;
-      original[0] = germanText[i].trim()
+      original[0] = germanText.trim()
     } 
     if (eol == eols.length - 1){
       // last part
