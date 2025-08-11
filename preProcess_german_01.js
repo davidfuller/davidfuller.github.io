@@ -291,3 +291,39 @@ function createJoinedText(textValues, joinIndexes, textRowIndex){
   console.log('joinedText', joinedText);
   return joinedText
 }
+async function findInLockedOriginal() {
+  //Gets the cell of the active row in 'German Processed' column
+  //Finds that block in the 'German Text' column of the Locked Origial
+  await Excel.run(async function(excel) {
+    const activeCell = excel.workbook.getActiveCell();
+    const gpProcessSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let processedRange = gpProcessSheet.getRange(processedRangeName);
+    
+    activeCell.load('rowIndex');
+    processedRange.load('columnIndex');
+    await excel.sync();
+
+    //Get the text from that row in processed.
+    let searchTextRange = gpProcessSheet.getRangeByIndexes(activeCell.rowIndex, processedRange.columnIndex, 1, 1);
+    searchTextRange.load('values, address');
+    await excel.sync();
+    
+    let searchText = (searchTextRange.values[0][0]).toLowerCase();
+    console.log('Search Text', searchText)
+
+    const lockedOriginalSheet =excel.workbook.worksheets.getItem(lockedOriginalSheetName);
+    let originalTextRange = lockedOriginalSheet.getRange(originalTextName);
+    originalTextRange.load('rowIndex, values, columnIndex')
+    await excel.sync();
+
+    let originalText = originalTextRange.values.map(x => x[0]);
+    for (i = 0; i < originalText.length; i++){
+      if (originalText[i].toLowerCase == searchText){
+        let selectedRowIndex = i + originalTextRange.rowIndex;
+        let selectRange = lockedOriginalSheet.getRangeByIndexes(selectedRowIndex, originalTextRange.columnIndex, 1, 1);
+        selectRange.select();
+        await excel.sync();
+      }
+    }
+  })
+}

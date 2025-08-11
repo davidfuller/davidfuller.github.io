@@ -15,8 +15,9 @@ async function mainHTML(){
     <button id='btnLoadUKScript' onclick="jade_modules.preprocess.getUKScript()">Load UK Script</button>
     <button id='btnFindInOriginal' onclick="jade_modules.preprocess.findThisBlock()">Find this text in Original</button>
     <button id='btnReturnProcessed' onclick="jade_modules.preprocess.returnToProcessedCell()">Return to processed cell</button>
-    <button id='btnAddToReplacements' onclick="jade_modules.replacements.addToReplacements()">Add to Replacements</button>
+    <button id='btnFindInLockedOriginal' onclick="jade_modules.preprocess.findInLockedOriginal()">Find In Original</button>
     <br/>
+    
     <input type="text" id="process-address" name="process-address">
     <input type="text" id="source-row" name="source-row">
     <label id="search-label">Search</label><br/>
@@ -26,6 +27,7 @@ async function mainHTML(){
     <label id="replace-label">Replace</label><br/>
     <button id='btnCopySearchReplacingDoubleQuotes' onclick="jade_modules.replacements.copySearchReplacingDoubleQuotes()">Copy Search and Replace Double Quotes</button>
     <textarea id="replace-text" cols="40" rows="8"></textarea><br/>
+    <button id='btnAddToReplacements' onclick="jade_modules.replacements.addToReplacements()">Add to Replacements</button>
     <button id='btnDoTheReplacements' onclick="jade_modules.replacements.doTheReplacements()">Do The Replacements</button>
     <button id='btnReplaceProcess' onclick="jade_modules.replacements.replacementsAndProcess()">Replace/Process</button>
     <br/>
