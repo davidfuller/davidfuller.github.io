@@ -197,7 +197,7 @@ async function fillRange(sheetName, rangeName, dataArray, doClear){
     myRange.clear("Contents")
   }
   await excel.sync();
-
+  console.log('parameters', myRange.rowIndex, myRange.columnIndex, dataArray.length, 1);
   const destRange = mySheet.getRangeByIndexes(myRange.rowIndex, myRange.columnIndex, dataArray.length, 1)
   destRange.load('address');
   await excel.sync();
