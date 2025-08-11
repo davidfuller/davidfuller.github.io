@@ -27,6 +27,7 @@ async function showMainPage(){
 }
 
 async function processGerman(){
+  let hasEols = false;
   await Excel.run(async function(excel){
     const procSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let originalTextRange = procSheet.getRange('gpOriginal');
@@ -45,6 +46,7 @@ async function processGerman(){
       let original = []
       let startQuotes = locations(openSpeechChar, germanText[i]);
       let eols = locations(eolChar, germanText[i]);
+      hasEols = eols.length > 0;
       let endQuotes = locations(closeSpeechChar, germanText[i]);
       let directCopy;
       let goodSpeech = 0;
@@ -71,12 +73,14 @@ async function processGerman(){
         } else {
           directCopy = false
           for (let speechPart = 0; speechPart < startQuotes.length; speechPart++ ){
+            if (hasEols){console.log('=================== speechpart', speechPart, startQuotes.length)}
             if (endQuotes[speechPart] > startQuotes[speechPart]){
               goodSpeech += 1;
               if (speechPart == 0){
                 if (startQuotes[speechPart] > 0){
                   let tempText = germanText[i].substring(0, startQuotes[speechPart]).trim();
                   let myEols = getEols(eols, tempText);
+                  if (hasEols){console.log('=================== eols', speechPart, myEols)}
                   if (myEols.myStrings.length == 0){
                     myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]).trim();
                     myIndex += 1;
@@ -91,6 +95,7 @@ async function processGerman(){
               }
               let tempText = germanText[i].substring(startQuotes[speechPart] + 1 , endQuotes[speechPart]).trim();
               let myEols = getEols(eols, tempText);
+              if (hasEols){console.log('=================== first tempText', speechPart, myEols, tempText)};
               if (myEols.myStrings.length == 0){
                 myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart] + 1 , endQuotes[speechPart]).trim();
                 myIndex += 1;
@@ -103,6 +108,7 @@ async function processGerman(){
               if (speechPart == (startQuotes.length - 1)){
                 if (germanText[i].substring(endQuotes[speechPart]).trim().length > 1){
                   let tempText = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1).trim());
+                  if (hasEols){console.log('=================== last tempText', speechPart, myEols, tempText)};
                   let myEols = getEols(eols, tempText);
                   if (myEols.myStrings.length == 0){
                     myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1).trim());
@@ -117,6 +123,7 @@ async function processGerman(){
                 //The bit between the close quotes and the next open quotes
                 let tempText = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart+1]).trim());
                 let myEols = getEols(eols, tempText);
+                if (hasEols){console.log('=================== middle tempText', speechPart, myEols, tempText)};
                 if (myEols.myStrings.length == 0){
                   myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart+1]).trim());
                   myIndex += 1;
