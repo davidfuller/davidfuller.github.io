@@ -62,6 +62,11 @@ async function doTheCopy() {
   hideMessage(loadMessageLabelName);
 }
 
+async function loadReplaceProcess(){
+  await doTheCopy();
+  await jade_modules.replacements.replacementsAndProcess();
+}
+
 function showMessage(controlName, message){
   let myControl = tag(controlName);
   myControl.innerText = message;
