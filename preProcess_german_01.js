@@ -1,10 +1,13 @@
 const lockedOriginalSheetName = 'Locked Original';
 const germanProcessingSheetName = 'German Processing';
 const originalLineAndTextName = 'loLineAndText';
+const originalLineName = 'loLineNos';
+const originalTextName = 'loText';
 const joinsRangeName = 'loJoins';
 const originalTextProcessingName = 'gpLineAndText';
 const ukScriptRangeName = 'gpLineCharacterAndUKScript';
 const processedRangeName = 'gpProcessed';
+const processedLineNoRangeName = 'gpLineNo';
 const originalRangeName = 'gpOriginal';
 
 const ukScriptSheetName = 'Script'
@@ -32,17 +35,25 @@ async function doTheCopy() {
     //get the sheets and ranges
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let processingTextRange = gpSheet.getRange(originalTextProcessingName);
+    let processingLineRange = gpSheet.getRange(processedLineNoRangeName);
     
     const origSheet = excel.workbook.worksheets.getItem(lockedOriginalSheetName);
-    let origTextRange = origSheet.getRange(originalLineAndTextName);
+    let origLineNoRange = origSheet.getRange(originalLineName);
+    let originalTextName = origSheet.getRange(originalTextName);
+    origTextRange.load('rowIndex, values');
     await excel.sync();
 
     //clear the processing range
     processingTextRange.clear('Contents')
+    //copy the line numbers
+    processingLineRange.copyFrom(origLineNoRange, 'values');
     await excel.sync();
-    //copy in the values
-    processingTextRange.copyFrom(origTextRange, 'values');
-    await excel.sync();
+
+    //Now do the joined tet
+    let textValues = origTextRange.values.map(x => x[0]);
+    let joinedValues = createJoinedText(textValues, joinsIndexes, origTextRange.rowIndex);
+    await jade_modules.operations.fillRange(germanProcessingSheetName, originalRangeName, joinedValues, true);
+
   })
 }
 
@@ -225,4 +236,56 @@ async function findJoins(){
   })
   console.log('Joins Row Indexes', indexes)
   return indexes;
+}
+async function createJoinedText(textValues, joinIndexes, textRowIndex){
+  //returns array with the relevant text joined
+  let joinedText = [];
+  let previousAJoin = false;
+  let nextIndex = 0;
+  let doThis = true;
+  for (let i = 0; i < textValues.length; i++){
+    thisRowIndex = i + textRowIndex;
+    if (previousAJoin){
+      if (thisRowIndex < nextIndex){
+        //Not there yet do nothing
+        doThis = false
+      } else {
+        doThis = true
+      }
+    }
+    if (doThis){
+      //Previous item was not a join
+      if (joinIndexes.includes(thisRowIndex)){
+        //Do a join
+        //Test to see how many joins....
+        let tempRowIndex = thisRowIndex + 1;
+        let done = true;
+        let lastOffset = 1;
+        do {
+          if (joinIndexes.includes(tempRowIndex)){
+            tempRowIndex += 1;
+            lastOffset += 1;
+            done = false;
+          } else {
+            done = true;
+          }
+        } while (!done);
+        let tempResult = ''
+        for (let offset = 0; offset <= lastOffset; offset++){
+          if (textValues?.[i + offset]){
+            tempResult = tempResult + ' ' + textValues[i + offset]
+          }
+        }
+        joinedText.push(tempResult.trim());
+        previousAJoin = true;
+        nextIndex = tempRowIndex + 1
+      } else {
+        //put in joinedText
+        joinedText.push(textValues[i]);
+        previousAJoin = false;
+      }
+    }
+  }
+  console.log('joinedText', joinedText);
+  return joinedText
 }
