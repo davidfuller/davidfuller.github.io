@@ -319,7 +319,7 @@ async function findInLockedOriginal() {
     let originalText = originalTextRange.values.map(x => x[0]);
     console.log('Original Text', originalText)
     for (i = 0; i < originalText.length; i++){
-      if (originalText[i].toLowerCase == searchText){
+      if ((originalText[i].toLowerCase).includes(searchText)){
         let selectedRowIndex = i + originalTextRange.rowIndex;
         lockedOriginalSheet.activate();
         let selectRange = lockedOriginalSheet.getRangeByIndexes(selectedRowIndex, originalTextRange.columnIndex, 1, 1);
