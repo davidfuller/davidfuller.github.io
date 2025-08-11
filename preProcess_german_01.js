@@ -255,6 +255,7 @@ async function createJoinedText(textValues, joinIndexes, textRowIndex){
     }
     if (doThis){
       //Previous item was not a join
+      console.log('joinIndexes', joinIndexes);
       if (joinIndexes.includes(thisRowIndex)){
         //Do a join
         //Test to see how many joins....
