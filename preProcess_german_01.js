@@ -54,6 +54,7 @@ async function doTheCopy() {
     let textValues = originalTextRange.values.map(x => x[0]);
     joinedValues = createJoinedText(textValues, joinsIndexes, originalTextRange.rowIndex);
   })
+  console.log('Joined Values in doTheCopy', joinedValues)
   await jade_modules.operations.fillRange(germanProcessingSheetName, originalRangeName, joinedValues, true);
 }
 
@@ -237,7 +238,7 @@ async function findJoins(){
   console.log('Joins Row Indexes', indexes)
   return indexes;
 }
-async function createJoinedText(textValues, joinIndexes, textRowIndex){
+function createJoinedText(textValues, joinIndexes, textRowIndex){
   //returns array with the relevant text joined
   let joinedText = [];
   let previousAJoin = false;
