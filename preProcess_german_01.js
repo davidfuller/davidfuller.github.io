@@ -31,6 +31,7 @@ const textAreaReplaceText = "replace-text";
 
 async function doTheCopy() {
   let joinsIndexes = await findJoins();
+  let joinedValues;
   await Excel.run(async function(excel) {
     //get the sheets and ranges
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
@@ -51,10 +52,9 @@ async function doTheCopy() {
 
     //Now do the joined tet
     let textValues = originalTextRange.values.map(x => x[0]);
-    let joinedValues = createJoinedText(textValues, joinsIndexes, originalTextRange.rowIndex);
-    await jade_modules.operations.fillRange(germanProcessingSheetName, originalRangeName, joinedValues, true);
-
+    joinedValues = createJoinedText(textValues, joinsIndexes, originalTextRange.rowIndex);
   })
+  await jade_modules.operations.fillRange(germanProcessingSheetName, originalRangeName, joinedValues, true);
 }
 
 async function getUKScript() {
