@@ -59,7 +59,7 @@ async function processGerman(){
             original[0] = germanText[i].trim();
           } else {
             directCopy = false;
-            myEols = getEols(eols, germanText[i]);
+            let myEols = getEols(eols, germanText[i]);
             for (let index = 0; index < myEols.myStrings.length; index++){
               myStrings[myIndex] = myEols.myStrings[index];
               myIndex += 1;  
@@ -75,21 +75,57 @@ async function processGerman(){
               goodSpeech += 1;
               if (speechPart == 0){
                 if (startQuotes[speechPart] > 0){
-                  myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]).trim();
-                  myIndex += 1;
+                  let tempText = germanText[i].substring(0, startQuotes[speechPart]).trim();
+                  let myEols = getEols(eols, tempText);
+                  if (myEols.myStrings.length == 0){
+                    myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]).trim();
+                    myIndex += 1;
+                  } else {
+                    for (let index = 0; index < myEols.myStrings.length; index++){
+                      myStrings[myIndex] = myEols.myStrings[index];
+                      myIndex += 1;  
+                    }
+                  }
                 }
                 original[0] = germanText[i].trim();
               }
-              myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart] + 1 , endQuotes[speechPart]).trim();
-              myIndex += 1;
+              let tempText = germanText[i].substring(startQuotes[speechPart] + 1 , endQuotes[speechPart]).trim();
+              let myEols = getEols(eols, tempText);
+              if (myEols.myStrings.length == 0){
+                myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart] + 1 , endQuotes[speechPart]).trim();
+                myIndex += 1;
+              } else {
+                for (let index = 0; index < myEols.myStrings.length; index++){
+                  myStrings[myIndex] = myEols.myStrings[index];
+                  myIndex += 1;  
+                }
+              }
               if (speechPart == (startQuotes.length - 1)){
                 if (germanText[i].substring(endQuotes[speechPart]).trim().length > 1){
-                  myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1).trim());
+                  let tempText = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1).trim());
+                  let myEols = getEols(eols, tempText);
+                  if (myEols.myStrings.length == 0){
+                    myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1).trim());
+                  } else {
+                    for (let index = 0; index < myEols.myStrings.length; index++){
+                      myStrings[myIndex] = myEols.myStrings[index];
+                      myIndex += 1;  
+                    }
+                  }
                 }
               } else {
                 //The bit between the close quotes and the next open quotes
-                myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart+1]).trim());
-                myIndex += 1;
+                let tempText = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart+1]).trim());
+                let myEols = getEols(eols, tempText);
+                if (myEols.myStrings.length == 0){
+                  myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart+1]).trim());
+                  myIndex += 1;
+                } else {
+                  for (let index = 0; index < myEols.myStrings.length; index++){
+                    myStrings[myIndex] = myEols.myStrings[index];
+                    myIndex += 1;  
+                  }
+                }
               }
            } else {
               wrongSpeech += 1;
