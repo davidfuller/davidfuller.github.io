@@ -8,6 +8,8 @@ const closeSpeechChar = '«';
 const eolChar = '|eol|'
 const bannedOpeningChars = [',', '.'];
 
+const loadMessageLabelName = 'load-message';
+
 async function showMain(){
   let waitPage = tag('start-wait');
   let mainPage = tag('main-page');
@@ -27,6 +29,7 @@ async function showMainPage(){
 }
 
 async function processGerman(){
+  jade_modules.preprocess.showMessage(loadMessageLabelName, 'Processing the german text');
   let hasEols = false;
   await Excel.run(async function(excel){
     const procSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
@@ -190,6 +193,7 @@ async function processGerman(){
     console.log('Results')
     console.log('Total Good', totalGood, 'Total Wrong', totalWrong, 'Total Unequal', totalUnequal, 'Total Direct Copy', totalDirectCopy)
   })
+  jade_modules.preprocess.hideMessage(loadMessageLabelName)
 }
 
 function locations(substring,string){

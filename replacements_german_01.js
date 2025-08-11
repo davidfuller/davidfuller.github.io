@@ -12,6 +12,8 @@ const closeSpeechChar = '«';
 const openSingleQuoteChar = '›';
 const closeSingleQuoteChar = '‹';
 
+const loadMessageLabelName = 'load-message';
+
 async function appendData(rowIndex, searchText, replaceText) {
   //Finds the first empty row and adds the data
   await Excel.run(async function(excel) {
@@ -58,6 +60,7 @@ async function addToReplacements() {
 
 
 async function doTheReplacements() {
+  jade_modules.preprocess.showMessage(loadMessageLabelName, 'Doing replacements');
   //Takes each row of table
   //If has valid rowIndex then do a replacement
   let rowIndex;
@@ -80,6 +83,7 @@ async function doTheReplacements() {
       }
     }
   })
+  jade_modules.preprocess.hideMessage(loadMessageLabelName);
 }
 
 async function replacementsAndProcess(){
