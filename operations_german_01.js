@@ -45,7 +45,7 @@ async function processGerman(){
       let original = []
       let startQuotes = locations(openSpeechChar, germanText[i]);
       let eols = locations(eolChar, germanText[i]);
-      let endQuotes = locations(closeSpeechChar, germanText[i])
+      let endQuotes = locations(closeSpeechChar, germanText[i]);
       let directCopy;
       let goodSpeech = 0;
       let wrongSpeech = 0;

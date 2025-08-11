@@ -1,6 +1,7 @@
 const lockedOriginalSheetName = 'Locked Original';
 const germanProcessingSheetName = 'German Processing';
 const originalLineAndTextName = 'loLineAndText';
+const joinsRangeName = 'loJoins';
 const originalTextProcessingName = 'gpLineAndText';
 const ukScriptRangeName = 'gpLineCharacterAndUKScript';
 const processedRangeName = 'gpProcessed';
@@ -26,10 +27,12 @@ const textAreaOriginalText = "original-text";
 const textAreaReplaceText = "replace-text";
 
 async function doTheCopy() {
+  let joinsIndexes = findJoins();
   await Excel.run(async function(excel) {
     //get the sheets and ranges
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let processingTextRange = gpSheet.getRange(originalTextProcessingName);
+    
     const origSheet = excel.workbook.worksheets.getItem(lockedOriginalSheetName);
     let origTextRange = origSheet.getRange(originalLineAndTextName);
     await excel.sync();
@@ -204,4 +207,22 @@ async function returnToProcessedCell() {
     toProcessedRange.select();
     await excel.sync();
   })
+}
+
+async function findJoins(){
+  let indexes = [];
+  await Excel.run(async function(excel) {
+    const origSheet = excel.workbook.worksheets.getItem(lockedOriginalSheetName);
+    let joinsRange = origSheet.getRange(joinsRangeName);
+    joinsRange.load('rowIndex, values');
+    await excel.sync();
+    let joinsText = joinsRange.values.map(x => x[0]);
+    for (let i = 0; i < joinsText.length; i++){
+      if (joinsText[i].toLowerCase() == 'join'){
+        indexes.push(joinsRange.rowIndex + i)
+      }
+    }
+  })
+  console.log('Joins Row Indexes', indexes)
+  return indexes;
 }
