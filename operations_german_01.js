@@ -108,8 +108,8 @@ async function processGerman(){
               if (speechPart == (startQuotes.length - 1)){
                 if (germanText[i].substring(endQuotes[speechPart]).trim().length > 1){
                   let tempText = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1).trim());
-                  if (hasEols){console.log('=================== last tempText', speechPart, myEols, tempText)};
                   let myEols = getEols(eols, tempText);
+                  if (hasEols){console.log('=================== last tempText', speechPart, myEols, tempText)};
                   if (myEols.myStrings.length == 0){
                     myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1).trim());
                   } else {
