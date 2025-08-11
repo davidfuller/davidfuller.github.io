@@ -39,8 +39,8 @@ async function doTheCopy() {
     
     const origSheet = excel.workbook.worksheets.getItem(lockedOriginalSheetName);
     let origLineNoRange = origSheet.getRange(originalLineName);
-    let originalTextName = origSheet.getRange(originalTextName);
-    origTextRange.load('rowIndex, values');
+    let originalTextRange = origSheet.getRange(originalTextName);
+    originalTextRange.load('rowIndex, values');
     await excel.sync();
 
     //clear the processing range
@@ -50,8 +50,8 @@ async function doTheCopy() {
     await excel.sync();
 
     //Now do the joined tet
-    let textValues = origTextRange.values.map(x => x[0]);
-    let joinedValues = createJoinedText(textValues, joinsIndexes, origTextRange.rowIndex);
+    let textValues = originalTextRange.values.map(x => x[0]);
+    let joinedValues = createJoinedText(textValues, joinsIndexes, originalTextRange.rowIndex);
     await jade_modules.operations.fillRange(germanProcessingSheetName, originalRangeName, joinedValues, true);
 
   })
