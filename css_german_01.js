@@ -914,7 +914,7 @@ label {
   margin-left: 5px;
 }
 
-#process-address, #source-row {
+#process-address, #source-row, #load-message {
   display: none;
 }
 `;

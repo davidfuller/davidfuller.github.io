@@ -29,7 +29,10 @@ const textInputSourceRow = "source-row";
 const textAreaOriginalText = "original-text";
 const textAreaReplaceText = "replace-text";
 
+const loadMessageLabelName = 'load-message';
+
 async function doTheCopy() {
+  showMessage(loadMessageLabelName, "Loading German Original");
   let joinsIndexes = await findJoins();
   let joinedValues;
   await Excel.run(async function(excel) {
@@ -56,6 +59,18 @@ async function doTheCopy() {
   })
   console.log('Joined Values in doTheCopy', joinedValues)
   await jade_modules.operations.fillRange(germanProcessingSheetName, originalRangeName, joinedValues, true);
+  hideMessage(loadMessageLabelName);
+}
+
+function showMessage(controlName, message){
+  let myControl = tag(controlName);
+  myControl.innerText = message;
+  myControl.style.display = 'block';
+}
+
+function hideMessage(controlName){
+  let myControl = tag(controlName);
+  myControl.style.display = 'none'; 
 }
 
 async function getUKScript() {
