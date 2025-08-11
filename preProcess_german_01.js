@@ -30,7 +30,7 @@ const textAreaOriginalText = "original-text";
 const textAreaReplaceText = "replace-text";
 
 async function doTheCopy() {
-  let joinsIndexes = findJoins();
+  let joinsIndexes = await findJoins();
   await Excel.run(async function(excel) {
     //get the sheets and ranges
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
