@@ -73,7 +73,7 @@ async function processGerman(){
         } else {
           directCopy = false
           for (let speechPart = 0; speechPart < startQuotes.length; speechPart++ ){
-            if (hasEols){console.log('=================== speechpart', speechPart, startQuotes.length)}
+            if (hasEols){console.log('=================== speechpart', speechPart, startQuotes.length, eols)}
             if (endQuotes[speechPart] > startQuotes[speechPart]){
               goodSpeech += 1;
               if (speechPart == 0){
