@@ -151,7 +151,7 @@ function insertEol(){
   console.log(insertCharPosition);
   let theText = searchTextArea.value;
   let before = theText.substring(0, insertCharPosition);
-  let after = theText.substring(insertCharPosition + 1);
+  let after = theText.substring(insertCharPosition);
   console.log('text', theText, 'Before', before, 'after', after );
   const replaceTextArea = tag(textAreaReplaceText);
   replaceTextArea.value = before + eolChar + after;
