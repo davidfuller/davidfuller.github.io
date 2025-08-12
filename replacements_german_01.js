@@ -134,7 +134,7 @@ function createMissingSearchAndReplace(){
   const replaceTextArea = tag(textAreaReplaceText);
   
   let searchText = searchTextArea.value;
-  let newSearchText = searchText.substr(missingTextSubstringLength);
+  let newSearchText = searchText.substr(-missingTextSubstringLength);
   searchTextArea.value = newSearchText;
   console.log(newSearchText.trim().slice(-1));
   if (newSearchText.trim().slice(-1) == closeSpeechChar){
