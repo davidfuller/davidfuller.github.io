@@ -317,3 +317,11 @@ function getEols(eols, germanText){
   }
   return {myStrings: myStrings, original: original, myIndex: myIndex}
 }
+function showJump(){
+  const jumpTag = tag('jump-buttons')
+  if (jumpTag.style.display == 'block'){
+    jumpTag.style.display = 'none';
+  } else {
+    jumpTag.style.display = 'block';
+  }
+}
