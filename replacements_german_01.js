@@ -11,8 +11,12 @@ const openSpeechChar = '»';
 const closeSpeechChar = '«';
 const openSingleQuoteChar = '›';
 const closeSingleQuoteChar = '‹';
+const eolChar = '|eol|'
 
 const loadMessageLabelName = 'load-message';
+
+const missingTextString = '[MISSING TEXT]'
+const missingTextSubstringLength = 40;
 
 async function appendData(rowIndex, searchText, replaceText) {
   //Finds the first empty row and adds the data
@@ -124,13 +128,18 @@ function isolateQuotedBit() {
 }
 
 function createMissingSearchAndReplace(){
-  // Takes last 40 chars of searchText and makes it searchText
+  // Takes last missingTextSubstringLength (40) chars of searchText and makes it searchText
   // Makes replaceTex equal searchText plus [MISSING TEXT]
   const searchTextArea = tag(textAreaOriginalText);
   const replaceTextArea = tag(textAreaReplaceText);
   
   let searchText = searchTextArea.value;
-  let newSearchText = searchText.substr(-40);
+  let newSearchText = searchText.substr(missingTextSubstringLength);
   searchTextArea.value = newSearchText;
-  replaceTextArea.value = newSearchText + '[MISSING TEXT]';
+  if (newSearchText.trim().slice(-1) == closeSpeechChar){
+    replaceTextArea.value = newSearchText + missingTextString;
+  } else {
+    replaceTextArea.value = newSearchText + eolChar +  missingTextString;
+  }
+  
 }
