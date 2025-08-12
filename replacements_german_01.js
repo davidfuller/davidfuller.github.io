@@ -143,5 +143,9 @@ function createMissingSearchAndReplace(){
   } else {
     replaceTextArea.value = newSearchText + eolChar +  missingTextString;
   }
-  
+}
+
+function insertEol(){
+  const searchTextArea = tag(textAreaOriginalText);
+  console.log(searchTextArea.selectionStart);
 }

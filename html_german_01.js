@@ -25,6 +25,7 @@ async function mainHTML(){
     <label id="search-label">Search</label><br/>
     <button id='btnIsolateQuotedBit' onclick="jade_modules.replacements.isolateQuotedBit()">Isolate Quote Bit</button>
     <button id='btnCreateMissingSearchAndReplace' onclick="jade_modules.replacements.createMissingSearchAndReplace()">Create Missing Text</button>
+    <button id='btnInsertEol' onclick="jade_modules.replacements.insertEol()">Create Missing Text</button>
     <textarea id="original-text" cols="40" rows="8"></textarea><br/>
     <label id="replace-label">Replace</label><br/>
     <button id='btnCopySearchReplacingDoubleQuotes' onclick="jade_modules.replacements.copySearchReplacingDoubleQuotes()">Copy Search and Replace Double Quotes</button>
