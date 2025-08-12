@@ -138,7 +138,6 @@ function createMissingSearchAndReplace(){
   searchTextArea.value = newSearchText;
   console.log(newSearchText.trim().slice(-1));
   if (newSearchText.trim().slice(-1) == closeSpeechChar){
-    console.loh("I'm here");
     replaceTextArea.value = newSearchText + missingTextString;
   } else {
     replaceTextArea.value = newSearchText + eolChar +  missingTextString;
