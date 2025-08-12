@@ -153,5 +153,6 @@ function insertEol(){
   let before = theText.substring(0, insertCharPosition);
   let after = theText.substring(insertCharPosition + 1);
   console.log('text', theText, 'Before', before, 'after', after );
-
+  const replaceTextArea = tag(textAreaReplaceText);
+  replaceTextArea.value = before + eolChar + after;
 }
