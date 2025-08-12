@@ -124,13 +124,13 @@ function isolateQuotedBit() {
 }
 
 function createMissingSearchAndReplace(){
-  // Takes last 10 chars of searchText and makes it searchText
+  // Takes last 40 chars of searchText and makes it searchText
   // Makes replaceTex equal searchText plus [MISSING TEXT]
   const searchTextArea = tag(textAreaOriginalText);
   const replaceTextArea = tag(textAreaReplaceText);
   
   let searchText = searchTextArea.value;
-  let newSearchText = searchText.substr(-10);
+  let newSearchText = searchText.substr(-40);
   searchTextArea.value = newSearchText;
   replaceTextArea.value = newSearchText + '[MISSING TEXT]';
 }
