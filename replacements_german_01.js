@@ -147,5 +147,11 @@ function createMissingSearchAndReplace(){
 
 function insertEol(){
   const searchTextArea = tag(textAreaOriginalText);
-  console.log(searchTextArea.selectionStart);
+  let insertCharPosition = searchTextArea.selectionEnd
+  console.log(insertCharPosition);
+  let theText = searchTextArea.value;
+  let before = theText.substring(0, insertCharPosition);
+  let after = theText.substring(insertCharPosition + 1);
+  console.log('text', theText, 'Before', before, 'after', after );
+
 }
