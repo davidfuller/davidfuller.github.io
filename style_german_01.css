@@ -78,13 +78,17 @@ label {
 }
 
 #admin,
-#processing,
 #comparison,
 #us-script,
 #admin-actor,
 #admin-scheduling {
   display: none;
 }
+
+#processing {
+  display: block
+}
+
 
 #btnGo,
 #btnGoLine,

@@ -54,10 +54,14 @@ label {
   border-style: solid;
 }
 
-#admin, #processing, #comparison, #us-script, #admin-actor, #admin-scheduling {
+#admin, #comparison, #us-script, #admin-actor, #admin-scheduling {
   display: none;
 }
 
+#processing {
+  display: block
+}
+  
 #btnGo, #btnGoLine, #btnGoChapter {
   width: fit-content;
   margin-left: 5px;
