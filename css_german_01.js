@@ -79,7 +79,7 @@ label {
 }
 #scene, #lineNo, #chapter, #add-chapter {
   width: 50px;
-  background-color: #d8dfe5;
+  background-color: #FFC2C2;
   color: #46656F;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
   border-width: 1px;
@@ -90,7 +90,7 @@ label {
 
 /*
 #chkAboveDetails {
-  background-color: #d8dfe5;
+  background-color: #FFC2C2;
   color: #46656F;
   border-width: 1px;
   border-radius: 5px;
@@ -99,7 +99,7 @@ label {
 }
 
 #lblAboveDetails {
-  background-color: #d8dfe5;
+  background-color: #FFC2C2;
   color: #46656F;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
   margin-left: 5px;
@@ -116,7 +116,7 @@ label {
 */
 #studio, #engineer, #studio-select, #engineer-select, #chapter-scene-select, #markup, #walla-scene, #chapter-compare-select, #character-select, #takes-select {
   width: 150px;
-  background-color: #d8dfe5;
+  background-color: #FFC2C2;
   color: #46656F;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
   border-width: 1px;
@@ -265,7 +265,7 @@ label {
   left: -4px;
   height: 8px;
   width: 8px;
-  background-color: #d8dfe5;
+  background-color: #FFC2C2;
   border: #46656F ;
   border-radius: 50%;
   border-width: 2px;
@@ -335,7 +335,7 @@ label {
   left: -4px;
   height: 8px;
   width: 8px;
-  background-color: #d8dfe5;
+  background-color: #FFC2C2;
   border: #46656F ;
   border-radius: 50%;
   border-width: 2px;
@@ -407,7 +407,7 @@ label {
   left: 1px;
   height: 10px;
   width: 10px;
-  background-color: #d8dfe5;
+  background-color: #FFC2C2;
   border: #46656F ;
   border-radius: 4px;
   border-width: 2px;
@@ -481,7 +481,7 @@ label {
   left: 1px;
   height: 10px;
   width: 10px;
-  background-color: #d8dfe5;
+  background-color: #FFC2C2;
   border: #46656F ;
   border-radius: 4px;
   border-width: 2px;
