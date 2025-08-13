@@ -61,7 +61,7 @@ label {
 #processing {
   display: block
 }
-  
+
 #btnGo, #btnGoLine, #btnGoChapter {
   width: fit-content;
   margin-left: 5px;
@@ -544,7 +544,8 @@ label {
   top: 3px;
 }
 
-#show-hide, #show-hide-lock, #show-hide-filter, #show-hide-jump, #show-hide-processing, #show-hide-columns, #show-hide-takes, #show-hide-add-remove, #show-hide-comparison , #show-hide-us-script, #show-hide-for-actor, #show-hide-for-scheduling {
+#show-hide, #show-hide-lock, #show-hide-filter, #show-hide-jump, #show-hide-processing, #show-hide-columns, #show-hide-takes, #show-hide-add-remove, #show-hide-comparison , 
+#show-hide-us-script, #show-hide-for-actor, #show-hide-for-scheduling, #show-hide-admin {
   margin-left: 5px;
   font-size: 10px;
   padding-left: 5px;

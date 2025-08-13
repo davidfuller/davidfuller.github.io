@@ -637,7 +637,8 @@ input~.checkmark4 {
 #show-hide-comparison,
 #show-hide-us-script,
 #show-hide-for-actor,
-#show-hide-for-scheduling {
+#show-hide-for-scheduling, 
+show-hide-admin {
   margin-left: 5px;
   font-size: 10px;
   padding-left: 5px;

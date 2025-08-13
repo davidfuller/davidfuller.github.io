@@ -28,7 +28,7 @@
     </div>
   </div>
   <div id="admin">
-    <label class="section-label">Admin</label><br/>
+    <label class="section-label" onclick="jade_modules.operations.showAdmin()">Admin</label><a id='show-hide-admin' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
     <button id='btnLoadScript' onclick="jade_modules.preprocess.doTheCopy()">Load German Original</button>
     <br/>
     <button id='btnProcessGerman' onclick="jade_modules.operations.processGerman()">Process German</button>
