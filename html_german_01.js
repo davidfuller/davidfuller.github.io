@@ -25,7 +25,6 @@ async function mainHTML(){
       <button id='btnDoTheReplacements' onclick="jade_modules.replacements.doTheReplacements()">Do The Replacements</button>
       <button id='btnReplaceProcess' onclick="jade_modules.replacements.replacementsAndProcess()">Replace/Process</button>
       <br/>
-    </div>
   </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
