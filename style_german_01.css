@@ -47,6 +47,7 @@ label {
 #showColumns,
 #jump,
 #admin,
+#processing,
 #forDirectorButtons,
 #forActorsButtons,
 #forSchedulingButtons,
@@ -77,6 +78,7 @@ label {
 }
 
 #admin,
+#processing,
 #comparison,
 #us-script,
 #admin-actor,
@@ -624,6 +626,7 @@ input~.checkmark4 {
 #show-hide-lock,
 #show-hide-filter,
 #show-hide-jump,
+#show-hide-processing,
 #show-hide-columns,
 #show-hide-takes,
 #show-hide-add-remove,

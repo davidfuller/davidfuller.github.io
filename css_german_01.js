@@ -39,7 +39,7 @@ label {
   font-size: 12px;
 }
 /* Section formatting */
-#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, 
+#firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #processing, #forDirectorButtons, #forActorsButtons, 
 #forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons, #scriptButtons, #director-nav-buttons, 
 #scheduling-nav-buttons, #walla-nav-buttons, #location-nav-buttons, #script-nav-buttons, #comparison, #us-script, #script-control, #multiActorButtons {
   margin-left: 15px;
@@ -54,7 +54,7 @@ label {
   border-style: solid;
 }
 
-#admin, #comparison, #us-script, #admin-actor, #admin-scheduling {
+#admin, #processing, #comparison, #us-script, #admin-actor, #admin-scheduling {
   display: none;
 }
 
@@ -540,7 +540,7 @@ label {
   top: 3px;
 }
 
-#show-hide, #show-hide-lock, #show-hide-filter, #show-hide-jump, #show-hide-columns, #show-hide-takes, #show-hide-add-remove, #show-hide-comparison , #show-hide-us-script, #show-hide-for-actor, #show-hide-for-scheduling {
+#show-hide, #show-hide-lock, #show-hide-filter, #show-hide-jump, #show-hide-processing, #show-hide-columns, #show-hide-takes, #show-hide-add-remove, #show-hide-comparison , #show-hide-us-script, #show-hide-for-actor, #show-hide-for-scheduling {
   margin-left: 5px;
   font-size: 10px;
   padding-left: 5px;
