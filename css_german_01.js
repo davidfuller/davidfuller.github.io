@@ -72,7 +72,7 @@ label {
   border: none;
   width: fit-content;
   border-radius: 4px;
-  background-color: #46656F;
+  background-color: #700000;
   color: #fef3df;
   font-size: 12px;
   cursor: pointer;
@@ -80,27 +80,27 @@ label {
 #scene, #lineNo, #chapter, #add-chapter {
   width: 50px;
   background-color: #FFC2C2;
-  color: #46656F;
+  color: #700000;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
   border-width: 1px;
   border-radius: 5px;
-  border-color: #46656F;
+  border-color: #700000;
   border-style: solid;
 }
 
 /*
 #chkAboveDetails {
   background-color: #FFC2C2;
-  color: #46656F;
+  color: #700000;
   border-width: 1px;
   border-radius: 5px;
-  border-color: #46656F;
+  border-color: #700000;
   border-style: solid;
 }
 
 #lblAboveDetails {
   background-color: #FFC2C2;
-  color: #46656F;
+  color: #700000;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
   margin-left: 5px;
   margin-bottom: 5px;
@@ -117,11 +117,11 @@ label {
 #studio, #engineer, #studio-select, #engineer-select, #chapter-scene-select, #markup, #walla-scene, #chapter-compare-select, #character-select, #takes-select {
   width: 150px;
   background-color: #FFC2C2;
-  color: #46656F;
+  color: #700000;
   font-family: 'Aptos Narrow', 'Arial Narrow'Arial, Helvetica, sans-serif;
   border-width: 1px;
   border-radius: 5px;
-  border-color: #46656F;
+  border-color: #700000;
   border-style: solid;
 }
 
@@ -189,7 +189,7 @@ label {
   border: none;
   width: fit-content;
   border-radius: 4px;
-  background-color: #46656F;
+  background-color: #700000;
   color: #fef3df;
   font-size: 12px;
   cursor: pointer;
@@ -205,7 +205,7 @@ label {
   width: 100px;
   height: 24px;
   border-radius: 4px;
-  background-color: #46656F;
+  background-color: #700000;
   color: #fef3df;
   font-size: 12px;
   cursor: pointer;
@@ -225,8 +225,8 @@ label {
   border: none;
   width: 130px;
   border-radius: 4px;
-  background-color: #46656F;
-  border-color: #46656F;
+  background-color: #700000;
+  border-color: #700000;
   color: #fef3df;
   font-size: 12px;
   cursor: pointer;
@@ -266,7 +266,7 @@ label {
   height: 8px;
   width: 8px;
   background-color: #FFC2C2;
-  border: #46656F ;
+  border: #700000 ;
   border-radius: 50%;
   border-width: 2px;
   border-style: solid;
@@ -274,12 +274,12 @@ label {
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #46656F7f;
+  background-color: #7000007f;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #46656F;
+  background-color: #700000;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -336,7 +336,7 @@ label {
   height: 8px;
   width: 8px;
   background-color: #FFC2C2;
-  border: #46656F ;
+  border: #700000 ;
   border-radius: 50%;
   border-width: 2px;
   border-style: solid;
@@ -344,12 +344,12 @@ label {
 
 /* On mouse-over, add a grey background color */
 .container2:hover input ~ .checkmark2 {
-  background-color: #46656F7f;
+  background-color: #7000007f;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container2 input:checked ~ .checkmark2 {
-  background-color: #46656F;
+  background-color: #700000;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -408,7 +408,7 @@ label {
   height: 10px;
   width: 10px;
   background-color: #FFC2C2;
-  border: #46656F ;
+  border: #700000 ;
   border-radius: 4px;
   border-width: 2px;
   border-style: solid;
@@ -416,12 +416,12 @@ label {
 
 /* On mouse-over, add a grey background color */
 .container3:hover, input ~ .checkmark3 {
-  background-color: #46656F7f;
+  background-color: #7000007f;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container3 input:checked ~ .checkmark3 {
-  background-color: #46656F;
+  background-color: #700000;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -482,19 +482,19 @@ label {
   height: 10px;
   width: 10px;
   background-color: #FFC2C2;
-  border: #46656F ;
+  border: #700000 ;
   border-radius: 4px;
   border-width: 2px;
   border-style: solid;
 }
 
 .container4:hover, input ~ .checkmark4 {
-  background-color: #46656F7f;
+  background-color: #7000007f;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container4 input:checked ~ .checkmark4 {
-  background-color: #46656F;
+  background-color: #700000;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -826,7 +826,7 @@ label {
   border: none;
   width: auto;
   border-radius: 4px;
-  background-color: #46656F;
+  background-color: #700000;
   color: #fef3df;
   font-size: 12px;
   cursor: pointer;
@@ -867,7 +867,7 @@ label {
   width: 80%; 
   background-color: white;
   border-radius: 5px;
-  border-color: #46656F;
+  border-color: #700000;
   border-style: solid;
   margin: auto;
   text-align: center;
