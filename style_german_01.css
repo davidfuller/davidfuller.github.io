@@ -1092,3 +1092,7 @@ show-hide-admin {
 #process-address, #source-row, #load-message {
   display: none;
 }
+
+#processing-group, #admin-group {
+  display: none;
+}

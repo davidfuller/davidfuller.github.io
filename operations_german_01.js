@@ -333,3 +333,12 @@ function showProcessing(){
     processingTag.style.display = 'block';
   }
 }
+
+function showAdmin(){
+  const processingTag = tag('admin-group')
+  if (processingTag.style.display == 'block'){
+    processingTag.style.display = 'none';
+  } else {
+    processingTag.style.display = 'block';
+  }
+}

@@ -922,7 +922,12 @@ label {
 #process-address, #source-row, #load-message {
   display: none;
 }
+
+#processing-group, #admin-group {
+  display: none;
+}
 `;
   Jade.set_css(css);
   console.log('CSS done')
 }
+
