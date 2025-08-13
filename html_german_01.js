@@ -8,20 +8,29 @@ async function mainHTML(){
 </div>
 <div id="main-page">
   <h1>German Processing</h1>
-  <div id="processing">
-    <label class="section-label" onclick="jade_modules.operations.showProcessing()">Processing</label><a id='show-hide-processing' onclick="jade_modules.operations.showProcessing()">Show/hide processing</a>
-    <div id="processing-group">
-      <button id='btnLoadReplaceProcess' onclick="jade_modules.preprocess.loadReplaceProcess()">Load/Replace/Process</button><br/>
-      <button id='btnLoadLoadOriginal' onclick="jade_modules.preprocess.loadOriginal()">Load Original</button> <br/> 
+  <div id="processing-group">
+      <button id='btnLoadReplaceProcess' onclick="jade_modules.preprocess.loadReplaceProcess()">Load/Replace/Process</button> <br/>
+      <label id="load-message"></label><br/>
+      <button id='btnLoadLoadOriginal' onclick="jade_modules.preprocess.loadOriginal()">Load Original</button> <br/>
+      <button id='btnFindInLockedOriginal' onclick="jade_modules.preprocess.findInLockedOriginal()">Find In Locked Original</button>
+      <label id="search-label">Search</label><br/>
+      <button id='btnIsolateQuotedBit' onclick="jade_modules.replacements.isolateQuotedBit()">Isolate Quote Bit</button>
+      <button id='btnCreateMissingSearchAndReplace' onclick="jade_modules.replacements.createMissingSearchAndReplace()">Create Missing Text</button>
+      <button id='btnInsertEol' onclick="jade_modules.replacements.insertEol()">Insert End of Line</button>
+      <textarea id="original-text" cols="40" rows="8"></textarea><br/>
+      <label id="replace-label">Replace</label><br/>
+      <button id='btnCopySearchReplacingDoubleQuotes' onclick="jade_modules.replacements.copySearchReplacingDoubleQuotes()">Copy Search and Replace Double Quotes</button>
+      <textarea id="replace-text" cols="40" rows="8"></textarea><br/>
+      <button id='btnAddToReplacements' onclick="jade_modules.replacements.addToReplacements()">Add to Replacements</button>
+      <button id='btnDoTheReplacements' onclick="jade_modules.replacements.doTheReplacements()">Do The Replacements</button>
+      <button id='btnReplaceProcess' onclick="jade_modules.replacements.replacementsAndProcess()">Replace/Process</button>
+      <br/>
     </div>
   </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
     <button id='btnLoadScript' onclick="jade_modules.preprocess.doTheCopy()">Load German Original</button>
     <br/>
-    <button id='btnLoadScript' onclick="jade_modules.preprocess.doTheCopy()">Load German Original</button>
-    <br/>
-    <label id="load-message"></label><br/>
     <button id='btnProcessGerman' onclick="jade_modules.operations.processGerman()">Process German</button>
     <button id='btnLoadUKScript' onclick="jade_modules.preprocess.getUKScript()">Load UK Script</button><br/>
     <button id='btnFindInOriginal' onclick="jade_modules.preprocess.findThisBlock(true, true)">Find this text in Original</button>
@@ -30,18 +39,6 @@ async function mainHTML(){
     <br/>
     <input type="text" id="process-address" name="process-address">
     <input type="text" id="source-row" name="source-row">
-    <label id="search-label">Search</label><br/>
-    <button id='btnIsolateQuotedBit' onclick="jade_modules.replacements.isolateQuotedBit()">Isolate Quote Bit</button>
-    <button id='btnCreateMissingSearchAndReplace' onclick="jade_modules.replacements.createMissingSearchAndReplace()">Create Missing Text</button>
-    <button id='btnInsertEol' onclick="jade_modules.replacements.insertEol()">Insert End of Line</button>
-    <textarea id="original-text" cols="40" rows="8"></textarea><br/>
-    <label id="replace-label">Replace</label><br/>
-    <button id='btnCopySearchReplacingDoubleQuotes' onclick="jade_modules.replacements.copySearchReplacingDoubleQuotes()">Copy Search and Replace Double Quotes</button>
-    <textarea id="replace-text" cols="40" rows="8"></textarea><br/>
-    <button id='btnAddToReplacements' onclick="jade_modules.replacements.addToReplacements()">Add to Replacements</button>
-    <button id='btnDoTheReplacements' onclick="jade_modules.replacements.doTheReplacements()">Do The Replacements</button>
-    <button id='btnReplaceProcess' onclick="jade_modules.replacements.replacementsAndProcess()">Replace/Process</button>
-    <br/>
   </div>  
   <div id="jump">
     <label class="section-label" onclick="jade_modules.operations.showJump()">Jump to scene</label><a id='show-hide-jump' onclick="jade_modules.operations.showJump()">Show/hide jumping</a>
