@@ -144,6 +144,12 @@ function createMissingSearchAndReplace(){
   }
 }
 
+function addExtraMissingText(){
+  const replaceTextArea = tag(textAreaReplaceText);
+  let replaceText = replaceTextArea,value;
+  replaceTextArea.value += eolChar + missingTextString;
+}
+
 function insertEol(){
   const searchTextArea = tag(textAreaOriginalText);
   let insertCharPosition = searchTextArea.selectionEnd
