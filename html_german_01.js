@@ -8,11 +8,13 @@ async function mainHTML(){
 </div>
 <div id="main-page">
   <h1>German Processing</h1>
-  <div id="processing-group">
+  <div id="processing">
+    <label class="section-label" onclick="jade_modules.operations.showProcessing()">Processing</label><a id='show-hide-processing' onclick="jade_modules.operations.showProcessing()">Show/hide processing</a>
+    <div id="processing-group">
       <button id='btnLoadReplaceProcess' onclick="jade_modules.preprocess.loadReplaceProcess()">Load/Replace/Process</button> <br/>
       <label id="load-message"></label><br/>
-      <button id='btnLoadLoadOriginal' onclick="jade_modules.preprocess.loadOriginal()">Load Original</button> <br/>
-      <button id='btnFindInLockedOriginal' onclick="jade_modules.preprocess.findInLockedOriginal()">Find In Locked Original</button>
+      <button id='btnLoadLoadOriginal' onclick="jade_modules.preprocess.loadOriginal()">Load German Block</button> <br/>
+      <button id='btnFindInLockedOriginal' onclick="jade_modules.preprocess.findInLockedOriginal()">Find In Locked Original</button><br/>
       <label id="search-label">Search</label><br/>
       <button id='btnIsolateQuotedBit' onclick="jade_modules.replacements.isolateQuotedBit()">Isolate Quote Bit</button>
       <button id='btnCreateMissingSearchAndReplace' onclick="jade_modules.replacements.createMissingSearchAndReplace()">Create Missing Text</button>
@@ -25,6 +27,7 @@ async function mainHTML(){
       <button id='btnDoTheReplacements' onclick="jade_modules.replacements.doTheReplacements()">Do The Replacements</button>
       <button id='btnReplaceProcess' onclick="jade_modules.replacements.replacementsAndProcess()">Replace/Process</button>
       <br/>
+    </div>
   </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
