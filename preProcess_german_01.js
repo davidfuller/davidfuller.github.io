@@ -181,16 +181,21 @@ async function fillRangeByIndexes(sheetName, rowIndex, columnIndex, rowCount, da
   })
 }
 
-async function findThisBlock() {
+async function loadOriginal(){
+  await findThisBlock(false, false)
+  await returnToProcessedCell();
+}
+async function findThisBlock(doSelect, germanProcessedStore) {
   //Gets the cell of the active row in 'German Processed' column
   //Finds that block in the 'German Original' column
+  //doSelect - causes the cell to be selected
   await Excel.run(async function(excel) {
     const activeCell = excel.workbook.getActiveCell();
     const gpProcessSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let processedRange = gpProcessSheet.getRange(processedRangeName);
     let originalRange = gpProcessSheet.getRange(originalRangeName);
 
-    activeCell.load('rowIndex');
+    activeCell.load('rowIndex, address');
     processedRange.load('columnIndex');
     originalRange.load('rowIndex, columnIndex, values')
 
@@ -202,7 +207,12 @@ async function findThisBlock() {
     await excel.sync();
     let searchText = (searchTextRange.values[0][0]).toLowerCase();
     console.log('Search Text', searchText)
-    putInTextArea(textInputProcessAddress, searchTextRange.address)
+    if (germanProcessedStore){
+      //put in the german column
+      putInTextArea(textInputProcessAddress, searchTextRange.address);
+    } else {
+      putInTextArea(textInputProcessAddress, activeCell.address);
+    }
     putInTextArea(textAreaOriginalText, searchText);
 
     originalTexts = originalRange.values.map((x => x[0]));
@@ -211,13 +221,14 @@ async function findThisBlock() {
       if (originalTexts[i].toLowerCase().includes(searchText)) {
         foundRowIndex = i + originalRange.rowIndex;
         putInTextArea(textAreaOriginalText, originalTexts[i]);
+
         putInTextArea(textInputSourceRow, foundRowIndex);
         break;
       }
     }
     console.log('Found Row Index', foundRowIndex);
 
-    if (foundRowIndex > 0) {
+    if ((foundRowIndex > 0) && (doSelect)) {
       let rangeToSelect = gpProcessSheet.getRangeByIndexes(foundRowIndex, originalRange.columnIndex, 1, 1)
       rangeToSelect.select();
       await excel.sync();

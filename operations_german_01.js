@@ -325,3 +325,11 @@ function showJump(){
     jumpTag.style.display = 'block';
   }
 }
+function showProcessing(){
+  const processingTag = tag('processing-group')
+  if (processingTag.style.display == 'block'){
+    processingTag.style.display = 'none';
+  } else {
+    processingTag.style.display = 'block';
+  }
+}

@@ -8,15 +8,23 @@ async function mainHTML(){
 </div>
 <div id="main-page">
   <h1>German Processing</h1>
+  <div id="processing">
+    <label class="section-label" onclick="jade_modules.operations.showProcessing()">Processing</label><a id='show-hide-processing' onclick="jade_modules.operations.showProcessing()">Show/hide processing</a>
+    <div id="processing-group">
+      <button id='btnLoadReplaceProcess' onclick="jade_modules.preprocess.loadReplaceProcess()">Load/Replace/Process</button><br/>
+      <button id='btnLoadLoadOriginal' onclick="jade_modules.preprocess.loadOriginal()">Load Original</button> <br/> 
+    </div>
+  </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
     <button id='btnLoadScript' onclick="jade_modules.preprocess.doTheCopy()">Load German Original</button>
-    <button id='btnLoadReplaceProcess' onclick="jade_modules.preprocess.loadReplaceProcess()">Load/Replace/Process</button>
+    <br/>
+    <button id='btnLoadScript' onclick="jade_modules.preprocess.doTheCopy()">Load German Original</button>
     <br/>
     <label id="load-message"></label><br/>
     <button id='btnProcessGerman' onclick="jade_modules.operations.processGerman()">Process German</button>
     <button id='btnLoadUKScript' onclick="jade_modules.preprocess.getUKScript()">Load UK Script</button><br/>
-    <button id='btnFindInOriginal' onclick="jade_modules.preprocess.findThisBlock()">Find this text in Original</button>
+    <button id='btnFindInOriginal' onclick="jade_modules.preprocess.findThisBlock(true, true)">Find this text in Original</button>
     <button id='btnReturnProcessed' onclick="jade_modules.preprocess.returnToProcessedCell()">Return to processed cell</button><br/>
     <button id='btnFindInLockedOriginal' onclick="jade_modules.preprocess.findInLockedOriginal()">Find In Locked Original</button>
     <br/>
