@@ -1,5 +1,4 @@
-function auto_exec(){
-}
+function auto_exec() {}
 
 const codeVersion = '01.01';
 const germanProcessingSheetName = 'German Processing'
@@ -10,28 +9,30 @@ const bannedOpeningChars = [',', '.'];
 
 const loadMessageLabelName = 'load-message';
 
-async function showMain(){
+const gpUkScriptName = 'gpUKScript'
+
+async function showMain() {
   let waitPage = tag('start-wait');
   let mainPage = tag('main-page');
   waitPage.style.display = 'none';
   mainPage.style.display = 'block';
   await showMainPage();
 }
-async function showMainPage(){
+async function showMainPage() {
   console.log('Showing Main Page')
   const mainPage = tag('main-page');
   mainPage.style.display = 'block';
   const versionInfo = tag('sheet-version');
-  let versionString = 'Version ' + ' Code: ' + codeVersion + ' Released: ' ;
+  let versionString = 'Version ' + ' Code: ' + codeVersion + ' Released: ';
   versionInfo.innerText = versionString;
   const admin = tag('admin');
   admin.style.display = 'block';
 }
 
-async function processGerman(){
+async function processGerman() {
   jade_modules.preprocess.showMessage(loadMessageLabelName, 'Processing the german text');
   let hasEols = false;
-  await Excel.run(async function(excel){
+  await Excel.run(async function(excel) {
     const procSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let originalTextRange = procSheet.getRange('gpOriginal');
     await excel.sync();
@@ -43,7 +44,7 @@ async function processGerman(){
     let totalGood = 0;
     let totalWrong = 0;
     let totalUnequal = 0;
-    for(let i = 0; i < germanText.length; i++){
+    for (let i = 0; i < germanText.length; i++) {
       let result = {};
       let myStrings = []
       let original = []
@@ -55,84 +56,84 @@ async function processGerman(){
       let goodSpeech = 0;
       let wrongSpeech = 0;
       let unequalQuotes = 0;
-      if (startQuotes.length == endQuotes.length){
+      if (startQuotes.length == endQuotes.length) {
         let myIndex = 0;
-        if (startQuotes.length == 0){
-          if (eols.length == 0){
+        if (startQuotes.length == 0) {
+          if (eols.length == 0) {
             directCopy = true
             myStrings[0] = germanText[i].trim();
             original[0] = germanText[i].trim();
           } else {
             directCopy = false;
             let myEols = getEols(eols, germanText[i]);
-            for (let index = 0; index < myEols.myStrings.length; index++){
+            for (let index = 0; index < myEols.myStrings.length; index++) {
               myStrings[myIndex] = myEols.myStrings[index];
-              myIndex += 1;  
+              myIndex += 1;
             }
-            for (let index = 0; index < myEols.original.length; index++){
+            for (let index = 0; index < myEols.original.length; index++) {
               original[index] = myEols.original[index];
-            } 
+            }
           }
         } else {
           directCopy = false
-          for (let speechPart = 0; speechPart < startQuotes.length; speechPart++ ){
-            if (hasEols){console.log('=================== speechpart', speechPart, startQuotes.length, eols)}
-            if (endQuotes[speechPart] > startQuotes[speechPart]){
+          for (let speechPart = 0; speechPart < startQuotes.length; speechPart++) {
+            if (hasEols) { console.log('=================== speechpart', speechPart, startQuotes.length, eols) }
+            if (endQuotes[speechPart] > startQuotes[speechPart]) {
               goodSpeech += 1;
-              if (speechPart == 0){
-                if (startQuotes[speechPart] > 0){
+              if (speechPart == 0) {
+                if (startQuotes[speechPart] > 0) {
                   let tempText = germanText[i].substring(0, startQuotes[speechPart]).trim();
                   let tempEols = locations(eolChar, tempText);
-                  if (tempEols.length > 0){
+                  if (tempEols.length > 0) {
                     let myEols = getEols(tempEols, tempText);
-                    if (hasEols){console.log('=================== eols', speechPart, myEols)}
-                    if (myEols.myStrings.length == 0){
+                    if (hasEols) { console.log('=================== eols', speechPart, myEols) }
+                    if (myEols.myStrings.length == 0) {
                       myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]).trim();
                       myIndex += 1;
                     } else {
-                      for (let index = 0; index < myEols.myStrings.length; index++){
+                      for (let index = 0; index < myEols.myStrings.length; index++) {
                         myStrings[myIndex] = myEols.myStrings[index];
-                        myIndex += 1;  
+                        myIndex += 1;
                       }
                     }
                   } else {
-                      myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]).trim();
-                      myIndex += 1;
+                    myStrings[myIndex] = germanText[i].substring(0, startQuotes[speechPart]).trim();
+                    myIndex += 1;
                   }
                 }
                 original[0] = germanText[i].trim();
               }
-              let tempText = germanText[i].substring(startQuotes[speechPart] + 1 , endQuotes[speechPart]).trim();
+              let tempText = germanText[i].substring(startQuotes[speechPart] + 1, endQuotes[speechPart]).trim();
               let tempEols = locations(eolChar, tempText);
-              if (tempEols.length > 0){
+              if (tempEols.length > 0) {
                 let myEols = getEols(tempEols, tempText);
-                if (hasEols){console.log('=================== first tempText', speechPart, myEols, tempText)};
-                if (myEols.myStrings.length == 0){
-                  myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart] + 1 , endQuotes[speechPart]).trim();
+                if (hasEols) { console.log('=================== first tempText', speechPart, myEols, tempText) };
+                if (myEols.myStrings.length == 0) {
+                  myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart] + 1, endQuotes[speechPart]).trim();
                   myIndex += 1;
                 } else {
-                  for (let index = 0; index < myEols.myStrings.length; index++){
+                  for (let index = 0; index < myEols.myStrings.length; index++) {
                     myStrings[myIndex] = myEols.myStrings[index];
-                    myIndex += 1;  
+                    myIndex += 1;
                   }
                 }
               } else {
-                  myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart] + 1 , endQuotes[speechPart]).trim();
-                  myIndex += 1;
+                myStrings[myIndex] = germanText[i].substring(startQuotes[speechPart] + 1, endQuotes[speechPart]).trim();
+                myIndex += 1;
               }
-              if (speechPart == (startQuotes.length - 1)){
-                if (germanText[i].substring(endQuotes[speechPart]).trim().length > 1){
+              if (speechPart == (startQuotes.length - 1)) {
+                if (germanText[i].substring(endQuotes[speechPart]).trim().length > 1) {
                   let tempText = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1).trim());
                   let tempEols = locations(eolChar, tempText);
-                  if (tempEols.length > 0){
+                  if (tempEols.length > 0) {
                     let myEols = getEols(tempEols, tempText);
-                    if (hasEols){console.log('=================== last tempText', speechPart, myEols, tempText)};
-                    if (myEols.myStrings.length == 0){
+                    if (hasEols) { console.log('=================== last tempText', speechPart, myEols, tempText) };
+                    if (myEols.myStrings.length == 0) {
                       myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1).trim());
                     } else {
-                      for (let index = 0; index < myEols.myStrings.length; index++){
+                      for (let index = 0; index < myEols.myStrings.length; index++) {
                         myStrings[myIndex] = myEols.myStrings[index];
-                        myIndex += 1;  
+                        myIndex += 1;
                       }
                     }
                   } else {
@@ -141,26 +142,26 @@ async function processGerman(){
                 }
               } else {
                 //The bit between the close quotes and the next open quotes
-                let tempText = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart+1]).trim());
+                let tempText = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart + 1]).trim());
                 let tempEols = locations(eolChar, tempText);
-                if (tempEols.length > 0){
+                if (tempEols.length > 0) {
                   let myEols = getEols(tempEols, tempText);
-                  if (hasEols){console.log('=================== middle tempText', speechPart, myEols, tempText)};
-                  if (myEols.myStrings.length == 0){
-                    myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart+1]).trim());
+                  if (hasEols) { console.log('=================== middle tempText', speechPart, myEols, tempText) };
+                  if (myEols.myStrings.length == 0) {
+                    myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart + 1]).trim());
                     myIndex += 1;
                   } else {
-                    for (let index = 0; index < myEols.myStrings.length; index++){
+                    for (let index = 0; index < myEols.myStrings.length; index++) {
                       myStrings[myIndex] = myEols.myStrings[index];
-                      myIndex += 1;  
+                      myIndex += 1;
                     }
                   }
                 } else {
-                  myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart+1]).trim());
+                  myStrings[myIndex] = removedBannedOpeningCharacters(germanText[i].substring(endQuotes[speechPart] + 1, startQuotes[speechPart + 1]).trim());
                   myIndex += 1;
                 }
               }
-           } else {
+            } else {
               wrongSpeech += 1;
               myStrings[myIndex] = germanText[i].trim();
               original[myIndex] = germanText[i].trim();
@@ -173,7 +174,7 @@ async function processGerman(){
         unequalQuotes += 1;
       }
       result.directCopy = directCopy;
-      if (directCopy){
+      if (directCopy) {
         totalDirectCopy += 1;
       }
       result.goodSpeech = goodSpeech;
@@ -185,7 +186,7 @@ async function processGerman(){
       result.lines = myStrings;
       result.original = original;
       results.push(result)
-      console.log(i, ' - ', startQuotes, ',', endQuotes, ":", result )
+      console.log(i, ' - ', startQuotes, ',', endQuotes, ":", result)
     }
     let resultLines = createLines(results);
     await fillRange(germanProcessingSheetName, 'gpOriginal_Spaced', resultLines.original, true);
@@ -196,19 +197,20 @@ async function processGerman(){
   jade_modules.preprocess.hideMessage(loadMessageLabelName)
 }
 
-function locations(substring,string){
-  var a=[],i=-1;
-  while((i=string.indexOf(substring,i+1)) >= 0) a.push(i);
+function locations(substring, string) {
+  var a = [],
+    i = -1;
+  while ((i = string.indexOf(substring, i + 1)) >= 0) a.push(i);
   return a;
 }
 
-function createLines(results){
+function createLines(results) {
   originalLines = [];
   processedLines = [];
   index = 0;
-  for (let i = 0; i < results.length; i++){
-    for (let line = 0; line < results[i].lines.length; line++){
-      if (line == 0){
+  for (let i = 0; i < results.length; i++) {
+    for (let line = 0; line < results[i].lines.length; line++) {
+      if (line == 0) {
         originalLines[index] = results[i].original[0];
       } else {
         originalLines[index] = "";
@@ -219,51 +221,51 @@ function createLines(results){
   }
   console.log('Original', originalLines);
   console.log('Processed', processedLines);
-  return {original: originalLines, processed: processedLines}
+  return { original: originalLines, processed: processedLines }
 }
 
-async function fillRange(sheetName, rangeName, dataArray, doClear){
- await Excel.run(async function(excel){
-  const mySheet = excel.workbook.worksheets.getItem(sheetName);
-  const myRange = mySheet.getRange(rangeName);
-  myRange.load("rowIndex, columnIndex");
-  if (doClear){
-    myRange.clear("Contents")
-  }
-  await excel.sync();
-  console.log('parameters', myRange.rowIndex, myRange.columnIndex, dataArray.length, 1);
-  const destRange = mySheet.getRangeByIndexes(myRange.rowIndex, myRange.columnIndex, dataArray.length, 1)
-  destRange.load('address');
-  await excel.sync();
-  console.log('address:', destRange.address);
-  let temp = []
-  for (let i = 0; i < dataArray.length; i++){
-    temp[i] = [];
-    temp[i][0] = dataArray[i]; 
-  }
-  console.log(temp)
-  destRange.values = temp;
-  await excel.sync();
- }) 
+async function fillRange(sheetName, rangeName, dataArray, doClear) {
+  await Excel.run(async function(excel) {
+    const mySheet = excel.workbook.worksheets.getItem(sheetName);
+    const myRange = mySheet.getRange(rangeName);
+    myRange.load("rowIndex, columnIndex");
+    if (doClear) {
+      myRange.clear("Contents")
+    }
+    await excel.sync();
+    console.log('parameters', myRange.rowIndex, myRange.columnIndex, dataArray.length, 1);
+    const destRange = mySheet.getRangeByIndexes(myRange.rowIndex, myRange.columnIndex, dataArray.length, 1)
+    destRange.load('address');
+    await excel.sync();
+    console.log('address:', destRange.address);
+    let temp = []
+    for (let i = 0; i < dataArray.length; i++) {
+      temp[i] = [];
+      temp[i][0] = dataArray[i];
+    }
+    console.log(temp)
+    destRange.values = temp;
+    await excel.sync();
+  })
 }
 
-function trimEmptyEnd(dataArray){
-  for(let i = dataArray.length - 1; i >= 0; i--){
-    if (dataArray[i] != ''){
+function trimEmptyEnd(dataArray) {
+  for (let i = dataArray.length - 1; i >= 0; i--) {
+    if (dataArray[i] != '') {
       return dataArray.slice(0, i + 1);
     }
   }
   return dataArray;
 }
 
-function removedBannedOpeningCharacters(text){
+function removedBannedOpeningCharacters(text) {
   let doAgain = true
   let temp = text.trim();
-  for (let attempt = 0; attempt < 100; attempt++){
-    if (!doAgain){break;}
+  for (let attempt = 0; attempt < 100; attempt++) {
+    if (!doAgain) { break; }
     doAgain = false;
-    for (let i = 0; i < bannedOpeningChars.length; i++){
-      if (temp.substr(0,1) == bannedOpeningChars[i]){
+    for (let i = 0; i < bannedOpeningChars.length; i++) {
+      if (temp.substr(0, 1) == bannedOpeningChars[i]) {
         temp = temp.substring(1).trim();
         doAgain = true;
       }
@@ -272,12 +274,12 @@ function removedBannedOpeningCharacters(text){
   return temp;
 }
 
-async function doAReplacement(rowIndex, searchText, replaceText){
+async function doAReplacement(rowIndex, searchText, replaceText) {
   // Gets the relevant cell/range (original column)
   // replaces the text
   // saves it
   console.log('rowIndex, searchText, replaceText', rowIndex, searchText, replaceText)
-  await Excel.run(async function(excel){
+  await Excel.run(async function(excel) {
     const procSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let originalTextRange = procSheet.getRange('gpOriginal');
     originalTextRange.load('columnIndex');
@@ -289,56 +291,97 @@ async function doAReplacement(rowIndex, searchText, replaceText){
     console.log('Before', targetText);
     targetText = targetText.replace(searchText, replaceText);
     console.log('After', targetText)
-    targetRange.values = [[targetText]];
+    targetRange.values = [
+      [targetText]
+    ];
     await excel.sync();
   })
-  
+
 }
 
-function getEols(eols, germanText){
+function getEols(eols, germanText) {
   let myStrings = [];
   let original = [];
   let myIndex = 0;
-  for (let eol = 0; eol < eols.length; eol++){
-    if (eol == 0){
+  for (let eol = 0; eol < eols.length; eol++) {
+    if (eol == 0) {
       myStrings[myIndex] = germanText.substring(0, eols[eol]).trim();
       myIndex += 1;
       original[0] = germanText.trim()
-    } 
-    if (eol == eols.length - 1){
+    }
+    if (eol == eols.length - 1) {
       // last part
       myStrings[myIndex] = germanText.substr(eols[eol] + eolChar.length).trim();
-      myIndex += 1;   
+      myIndex += 1;
     } else {
       // Between two eols
       myStrings[myIndex] = germanText.substring(eols[eol] + eolChar.length, eols[eol + 1]).trim();
       myIndex += 1;
     }
   }
-  return {myStrings: myStrings, original: original, myIndex: myIndex}
+  return { myStrings: myStrings, original: original, myIndex: myIndex }
 }
-function showJump(){
+
+function showJump() {
   const jumpTag = tag('jump-buttons')
-  if (jumpTag.style.display == 'block'){
+  if (jumpTag.style.display == 'block') {
     jumpTag.style.display = 'none';
   } else {
     jumpTag.style.display = 'block';
   }
 }
-function showProcessing(){
+
+function showProcessing() {
   const processingTag = tag('processing-group')
-  if (processingTag.style.display == 'block'){
+  if (processingTag.style.display == 'block') {
     processingTag.style.display = 'none';
   } else {
     processingTag.style.display = 'block';
   }
 }
 
-function showAdmin(){
+function showAdmin() {
   const processingTag = tag('admin-group')
-  if (processingTag.style.display == 'block'){
+  if (processingTag.style.display == 'block') {
     processingTag.style.display = 'none';
   } else {
     processingTag.style.display = 'block';
   }
+}
+
+async function getTargetChapter(){
+  let ctrlChapter = tag('chapter');
+  let chapter = parseInt(ctrlChapter.value);
+  if (!isNaN(chapter)){
+    await selectChapter(chapter);
+  }
+}
+
+async function selectChapter(chapterNumber) {
+  await Excel.run(async function(excel) {
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let ukScriptRange = gpSheet.getRange(gpUkScriptName);
+    ukScriptRange.load('rowIndex, columnIndex, values');
+    await excel.sync();
+    let ukScriptValues = ukScriptRange.values.map(x => x[0].trim().toLowerCase());
+    console.log('uk script', ukScriptValues);
+    let chapterText = 'chapter ' + number2words(chapterNumber);
+    let foundIndex = ukScriptValues.indexOf(chapterText);
+    let foundRowIndex = foundIndex + ukScriptRange.rowIndex
+    if (foundIndex > -1) {
+      let chapterRange = gpSheet.getRangeByIndexes(foundRowIndex, ukScriptRange.columnIndex, 1, 1);
+      chapterRange.select();
+      await excel.sync();
+    }
+  });
+}
+
+function number2words(n) {
+  const num = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" ");
+  const tens = "twenty thirty forty fifty sixty seventy eighty ninety".split(" ");
+  if (n < 20) return num[n];
+  var digit = n % 10;
+  if (n < 100) return tens[~~(n / 10) - 2] + (digit ? "-" + num[digit] : "");
+  if (n < 1000) return num[~~(n / 100)] + " hundred" + (n % 100 == 0 ? "" : " and " + number2words(n % 100));
+  return number2words(~~(n / 1000)) + " thousand" + (n % 1000 != 0 ? " " + number2words(n % 1000) : "");
 }
