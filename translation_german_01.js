@@ -79,6 +79,8 @@ async function compareTranslationwithCache(){
     await applyMachineTranslationFormula(exceptions[i].rowIndex);
   }
   //exceptions.length
+  //#CONNECT!
+  //3832
 }
 
 
