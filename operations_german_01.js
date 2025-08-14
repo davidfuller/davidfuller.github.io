@@ -13,6 +13,7 @@ const gpUkScriptName = 'gpUKScript'
 const gpUkCueName = 'gpUKCue';
 
 let chapterMinMaxDetails = {};
+let lineNoMinMaxDetails = {};
 
 async function showMain() {
   let waitPage = tag('start-wait');
@@ -28,6 +29,9 @@ async function calcAndDisplayMaxAndMin(){
   chapterMinMaxDetails = await calcChapterMinAndMax();
   let ctrlChapterMinMax = tag('min-and-max-chapter');
   ctrlChapterMinMax.innerText = chapterMinMaxDetails.min.toString() + '..' + chapterMinMaxDetails.max.toString();
+  lineNoMinMaxDetails = await calcLineNoMinAndMax();
+  let ctrlLineNoMinMax = tag('min-and-max-lineNo');
+  ctrlLineNoMinMax.innerText = lineNoMinMaxDetails.min.toString() + '..' + lineNoMinMaxDetails.max.toString();
 }
 
 
@@ -459,6 +463,26 @@ async function calcChapterMinAndMax(){
   console.log('chapterDetails', chapterDetails);
   console.log('minChapter', minChapter, 'maxChapter', maxChapter)
   return {min: minChapter, max: maxChapter, details: chapterDetails};
+}
+
+async function calcLineNoMinAndMax(){
+  let minLineNo = 100000;
+  let maxLineNo = 0;
+  await Excel.run(async function(excel) {
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let ukCueRange = gpSheet.getRange(gpUkScriptName);
+    ukCueRange.load('rowIndex, values');
+    await excel.sync();
+    let ukCueValues = ukScriptRange.values.map(x => parseInt(x[0]));
+    for (let i = 1; i < ukCueValues; i++){
+      if (!isNaN(ukCueValues[i])) {
+        if (ukCueValues[i] < minLineNo){minLineNo = ukCueValues[i]};
+        if (ukCueValues[i] > maxLineNo){manLineNo = ukCueValues[i]};
+      }
+    }
+  })
+  console.log('minLineNo', minLineNo, 'maxLineNo', maxLineNo)
+  return {min: minLineNo, max: maxLineNo};
 }
 
 function number2words(n) {
