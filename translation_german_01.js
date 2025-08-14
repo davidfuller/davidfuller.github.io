@@ -32,7 +32,7 @@ async function getMachineTranslationFormula(){
     let translationRange = gpSheet.getRange(gpMachineTranslationRangeName);
     translationRange.load("formulas, rowIndex")
     await excel.sync();
-    console.log('rowIndex', translationRange.rowInde, 'formulas', translationRange.formulas);
+    console.log('rowIndex', translationRange.rowIndex, 'formulas', translationRange.formulas);
   })
 };
 
