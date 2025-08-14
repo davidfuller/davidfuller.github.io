@@ -21,7 +21,6 @@ async function mainHTML(){
       <button id='btnInsertEol' onclick="jade_modules.replacements.insertEol()">Insert End of Line</button>
       <textarea id="original-text" cols="40" rows="8"></textarea><br/>
       <label id="replace-label">Replace</label><br/>
-      <button id='btnCopySearchReplacingDoubleQuotes' onclick="jade_modules.replacements.copySearchReplacingDoubleQuotes()">Copy Search and Replace Double Quotes</button>
       <button id='btnAddExtraMissingText' onclick="jade_modules.replacements.addExtraMissingText()">Add extra MISSING TEXT</button><br/>
       <textarea id="replace-text" cols="40" rows="8"></textarea><br/>
       <button id='btnAddToReplacementsProcess' onclick="jade_modules.replacements.addToReplacementsProcess()">Add to Replacements then Process</button>

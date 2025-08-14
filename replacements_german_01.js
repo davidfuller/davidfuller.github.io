@@ -130,7 +130,7 @@ function isolateQuotedBit() {
   }
   
   searchTextArea.value = result[0];
-  
+  copySearchReplacingDoubleQuotes();
 }
 
 function createMissingSearchAndReplace(){
