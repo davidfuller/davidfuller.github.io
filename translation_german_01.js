@@ -75,9 +75,10 @@ async function compareTranslationwithCache(){
     }
   })
   console.log('exceptions', exceptions);
-  for (let i = 0; i < exceptions.length; i++){
+  for (let i = 0; i < 10 ; i++){
     await applyMachineTranslationFormula(exceptions[i].rowIndex);
   }
+  //exceptions.length
 }
 
 
