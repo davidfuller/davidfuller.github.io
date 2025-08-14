@@ -19,6 +19,7 @@ async function showMain() {
   waitPage.style.display = 'none';
   mainPage.style.display = 'block';
   await showMainPage();
+  console/log('Here');
   await calcAndDisplayMaxAndMin();
 }
 
