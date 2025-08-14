@@ -55,6 +55,7 @@ async function applyMachineTranslationFormula(rowIndex){
 }
 
 async function compareTranslationwithCache(){
+  let exceptions = [];
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let translationRange = gpSheet.getRange(gpTranslationRangeName);
@@ -65,8 +66,15 @@ async function compareTranslationwithCache(){
     await excel.sync();
 
     let germanActual = translationRange.values.map(x => x[0]);
-    console.log ('germanActual', germanActual);
+    let germanCache = cacheRange.values.map(x => x[0]);
+    for (let i = 0; i < germanActual.length; i++){
+      if(germanActual[i] != germanCache[i]){
+        let temp = {index:i, actual: germanActual[i], cache: germanCache[i], rowindex: i + translationRange.rowIndex}
+        exceptions.push(temp);
+      }
+    }
   })
+  console.log('exceptions', exceptions);
 }
 
 
