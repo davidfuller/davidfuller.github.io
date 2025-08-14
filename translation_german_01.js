@@ -42,11 +42,14 @@ async function applyMachineTranslationFormula(rowIndex){
     let translationRange = gpSheet.getRange(gpMachineTranslationRangeName);
     translationRange.load("rowIndex, columnIndex")
     await excel.sync();
-    let formulatRange = gpSheet.getRangeByIndexes(rowIndex, translationRange.columnIndex, 1,1)
-    let newFromula = '=IF(G' + (rowIndex+1).toString() + ' <> 0,TRANSLATE(G' + (rowIndex+1).toString() + ',"de","en"),"")'
-    console.log('New formula', newFromula);
-    formulatRange.formulas = [[newFromula]];
+    let formulaRange = gpSheet.getRangeByIndexes(rowIndex, translationRange.columnIndex, 1,1)
+    let newFormula = '=IF(G' + (rowIndex+1).toString() + ' <> 0,TRANSLATE(G' + (rowIndex+1).toString() + ',"de","en"),"")'
+    console.log('New formula', newFormula);
+    formulaRange.formulas = [[newFormula]];
     await excel.sync();
+    formulaRange.load('values, address');
+    await excel.sync();
+    console.log('address', formulaRange.address, 'value', formulaRange.values);
   })
 }
 
