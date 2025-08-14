@@ -31,7 +31,9 @@ async function mainHTML(){
   <div id="admin">
     <label class="section-label" onclick="jade_modules.operations.showAdmin()">Admin</label><a id='show-hide-admin' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a><br/>
     <div id="admin-group">
-      <button id='btncopyValuesToCache' onclick="jade_modules.translation.copyValuesToCache()">Cache Machine Translations</button><br/>
+      <button id='btnCopyValuesToCache' onclick="jade_modules.translation.copyValuesToCache()">Cache Machine Translations</button><br/>
+      <button id='btnGetTranslationFormulas' onclick="jade_modules.translation.getMachineTranslationFormula()">Get Machine Translation Formula</button><br/>
+      <button id='btnFixMachineTranslationDisplay' onclick="jade_modules.translation.fixMachineTranslationDisplay()()">Fix Machine Translation</button><br/>
       <button id='btnLoadScript' onclick="jade_modules.preprocess.doTheCopy()">Load German Original</button><br/>
       <button id='btnProcessGerman' onclick="jade_modules.operations.processGerman()">Process German</button>
       <button id='btnLoadUKScript' onclick="jade_modules.preprocess.getUKScript()">Load UK Script</button><br/>

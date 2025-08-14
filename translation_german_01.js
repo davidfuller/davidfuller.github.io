@@ -1,6 +1,7 @@
 const germanProcessingSheetName = 'German Processing';
 const translationCacheSheetName = 'Translation Cache';
 const gpTranslationRangeName = 'gpTranslation';
+const gpMachineTranslationRangeName = 'gpMachineTranslation'
 const tcTranslationRangeName = 'tcTranslation';
 
 async function copyValuesToCache(){
@@ -15,3 +16,25 @@ async function copyValuesToCache(){
     await excel.sync()
   })
 }
+
+async function fixMachineTranslationDisplay(){
+  await Excel.run(async function(excel) {
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let translationRange = gpSheet.getRange(gpMachineTranslationRangeName);
+    translationRange.copyFrom(translationRange, 'values')
+    await excel.sync();
+  })
+};
+
+async function getMachineTranslationFormula(){
+  await Excel.run(async function(excel) {
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let translationRange = gpSheet.getRange(gpMachineTranslationRangeName);
+    translationRange.load("formulas")
+    await excel.sync();
+    console.log('formulas', translationRange.formulas);
+  })
+};
+
+
+
