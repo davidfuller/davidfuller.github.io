@@ -89,6 +89,7 @@ async function doTheReplacements() {
         rowIndex = parseInt(testRowIndex);
         searchText = tableRange.values[i][1];
         replaceText = tableRange.values[i][2];
+        jade_modules.preprocess.showMessage(loadMessageLabelName, 'Doing replacements:' + (i + 1).toString() + ' of ' + tableRange.values.length);
         await jade_modules.operations.doAReplacement(rowIndex, searchText, replaceText);
       }
     }
