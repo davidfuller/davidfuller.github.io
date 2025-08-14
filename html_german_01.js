@@ -12,7 +12,7 @@ async function mainHTML(){
     <label class="section-label" onclick="jade_modules.operations.showProcessing()">Processing</label><a id='show-hide-processing' onclick="jade_modules.operations.showProcessing()">Show/hide processing</a>
     <div id="processing-group">
       <button id='btnLoadReplaceProcess' onclick="jade_modules.preprocess.loadReplaceProcess()">Load/Replace/Process</button> <br/>
-      <label id="load-message"></label><br/>
+      <label id="load-message"></label>
       <button id='btnLoadLoadOriginal' onclick="jade_modules.preprocess.loadOriginal()">Load German Block</button> <br/>
       <button id='btnFindInLockedOriginal' onclick="jade_modules.preprocess.findInLockedOriginal()">Find In Locked Original</button><br/>
       <label id="search-label">Search</label><br/>
@@ -24,6 +24,7 @@ async function mainHTML(){
       <button id='btnCopySearchReplacingDoubleQuotes' onclick="jade_modules.replacements.copySearchReplacingDoubleQuotes()">Copy Search and Replace Double Quotes</button>
       <button id='btnAddExtraMissingText' onclick="jade_modules.replacements.addExtraMissingText()">Add extra MISSING TEXT</button><br/>
       <textarea id="replace-text" cols="40" rows="8"></textarea><br/>
+      <button id='btnAddToReplacementsProcess' onclick="jade_modules.replacements.addToReplacementsProcess()">Add to Replacements then Process</button>
       <button id='btnAddToReplacements' onclick="jade_modules.replacements.addToReplacements()">Add to Replacements</button>
       <br/>
     </div>

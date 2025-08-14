@@ -49,6 +49,11 @@ async function appendData(rowIndex, searchText, replaceText) {
   await sortReplacements();
 }
 
+async function addToReplacementsProcess(){
+  await addToReplacements();
+  await jade_modules.preprocess.loadReplaceProcess()
+}
+
 async function addToReplacements() {
   // Gets the details from the html and appends to the table  
   const sourceRowTextInput = tag(textInputSourceRow);
