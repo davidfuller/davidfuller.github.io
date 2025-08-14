@@ -26,7 +26,7 @@ async function showMain() {
 async function calcAndDisplayMaxAndMin(){
   chapterMinMaxDetails = await calcChapterMinAndMax();
   let ctrlChapterMinMax = tag('min-and-max-chapter');
-  ctrlChapterMinMax.innerText = chapterMinMaxDetails.min.tostring() + '..' + chapterMinMaxDetails.max.tostring();
+  ctrlChapterMinMax.innerText = chapterMinMaxDetails.min.toString() + '..' + chapterMinMaxDetails.max.toString();
 }
 
 
