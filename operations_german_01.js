@@ -473,7 +473,7 @@ async function calcLineNoMinAndMax(){
     let ukCueRange = gpSheet.getRange(gpUkScriptName);
     ukCueRange.load('rowIndex, values');
     await excel.sync();
-    let ukCueValues = ukScriptRange.values.map(x => parseInt(x[0]));
+    let ukCueValues = ukCueRange.values.map(x => parseInt(x[0]));
     for (let i = 1; i < ukCueValues; i++){
       if (!isNaN(ukCueValues[i])) {
         if (ukCueValues[i] < minLineNo){minLineNo = ukCueValues[i]};
