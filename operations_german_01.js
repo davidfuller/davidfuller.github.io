@@ -477,7 +477,7 @@ async function calcLineNoMinAndMax(){
     for (let i = 1; i < ukCueValues.length; i++){
       if (!isNaN(ukCueValues[i])) {
         if (ukCueValues[i] < minLineNo){minLineNo = ukCueValues[i]};
-        if (ukCueValues[i] > maxLineNo){manLineNo = ukCueValues[i]};
+        if (ukCueValues[i] > maxLineNo){maxLineNo = ukCueValues[i]};
       }
     }
   })
