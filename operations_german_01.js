@@ -11,13 +11,23 @@ const loadMessageLabelName = 'load-message';
 
 const gpUkScriptName = 'gpUKScript'
 
+let chapterMinMacDetails = {};
+
 async function showMain() {
   let waitPage = tag('start-wait');
   let mainPage = tag('main-page');
   waitPage.style.display = 'none';
   mainPage.style.display = 'block';
   await showMainPage();
+  await calcAndDisplayMaxAndMin();
 }
+
+async function calcAndDisplayMaxAndMin(){
+  chapterMinMacDetails = await calcChapterMinAndMax();
+}
+
+
+
 async function showMainPage() {
   console.log('Showing Main Page')
   const mainPage = tag('main-page');
@@ -408,8 +418,9 @@ async function calcChapterMinAndMax(){
       }
     }
   })
-  console.log('chapterDetails'. chapterDetails);
+  console.log('chapterDetails', chapterDetails);
   console.log('minChapter', minChapter, 'maxChapter', maxChapter)
+  return {min: minChapter, max: maxChapter, details: chapterDetails};
 }
 
 function number2words(n) {
