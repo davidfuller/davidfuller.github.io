@@ -10,6 +10,7 @@ const bannedOpeningChars = [',', '.'];
 const loadMessageLabelName = 'load-message';
 
 const gpUkScriptName = 'gpUKScript'
+const gpUkCueName = 'gpUKCue';
 
 let chapterMinMaxDetails = {};
 
@@ -370,7 +371,15 @@ async function getTargetChapter(){
   }
 }
 
-async function selectChapter(chapterNumber) {
+async function getTargetLineNo(){
+  let ctrlLineNo = tag('lineNo')
+  let lineNo = parseInt(ctrlLineNo.value);
+  if (!isNaN(lineNo)){
+    await selectLineNo(lineNo);
+  }
+}
+
+async function selectChapter(chapterNumber){
   let foundRowIndex = -1;
   for (let i = 0; i < chapterMinMaxDetails.details.length; i++){
     if (chapterMinMaxDetails.details[i].chapterNumber == chapterNumber){
@@ -389,6 +398,30 @@ async function selectChapter(chapterNumber) {
       await excel.sync();
     }
   });
+}
+
+async function selectLineNo(lineNo){
+  let foundRowIndex;
+  let rowIndex;
+  await Excel.run(async function(excel) {
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let ukCueRange = gpSheet.getRange(gpUkCueName);
+    ukCueRange.load('rowIndex, columnIndex, values');
+    await excel.sync();
+    ukCueValues = ukCueRange.values.map(x => parseInt(x[0]));
+    let lineNumber = parseInt(lineNo);
+    if (!isNaN(lineNumber)){
+      foundRowIndex = ukCueValues.indexOf(lineNumber);
+      rowIndex = foundRowIndex + ukCueRange.rowIndex
+      if (foundRowIndex > -1){
+        let selectRange = gpSheet.getRangeByIndexes(rowIndex, ukCueRange.columnIndex, 1, 1);
+        selectRange.select();
+        await excel.sync();
+      }
+    }
+    
+  })
+  
 
 }
 

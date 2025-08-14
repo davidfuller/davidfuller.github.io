@@ -53,10 +53,12 @@ async function mainHTML(){
       <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last chapter</button><br/>
       <div class="row">
         <div class="column-jump" id="column-jump-one">
+          <br/>
           <label id='jump-label-line-no' for="lineNo">Cue/line no</label><br/>
           <label id='jump-label-chapter' for="chapter">Chapter</label><br/>
         </div>
         <div class="column-jump" id="column-jump-two">
+          <br/>
           <input type="text" id="lineNo" name="lineNo">
           <button id='btnGoLine' onclick="jade_modules.operations.getTargetLineNo()">Go</button>
           <span id='min-and-max-lineNo'></span><br/>
