@@ -11,7 +11,7 @@ const loadMessageLabelName = 'load-message';
 
 const gpUkScriptName = 'gpUKScript'
 
-let chapterMinMacDetails = {};
+let chapterMinMaxDetails = {};
 
 async function showMain() {
   let waitPage = tag('start-wait');
@@ -24,7 +24,9 @@ async function showMain() {
 }
 
 async function calcAndDisplayMaxAndMin(){
-  chapterMinMacDetails = await calcChapterMinAndMax();
+  chapterMinMaxDetails = await calcChapterMinAndMax();
+  let ctrlChapterMinMax = tag('min-and-max-chapter');
+  ctrlChapterMinMax.innerText = chapterMinMaxDetails.min.tostring() + '..' + chapterMinMaxDetails.max.tostring();
 }
 
 
