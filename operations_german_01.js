@@ -374,10 +374,38 @@ async function selectChapter(chapterNumber) {
       await excel.sync();
     }
   });
+  await calcChapterMinAndMax();
 }
 
 async function calcChapterMinAndMax(){
-  
+  let chapterDetails = [];
+  let minChapter = 1000;
+  let maxChapter = 0;
+  await Excel.run(async function(excel) {
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let ukScriptRange = gpSheet.getRange(gpUkScriptName);
+    ukScriptRange.load('rowIndex, columnIndex, values');
+    await excel.sync();
+    let ukScriptValues = ukScriptRange.values.map(x => x[0].trim().toLowerCase());
+    for (let chapterNumber = 1; chapterNumber < 100; chapterNumber++){
+      let chapterText = 'chapter ' + number2words(chapterNumber);
+      let foundIndex = ukScriptValues.indexOf(chapterText);
+      let foundRowIndex = foundIndex + ukScriptRange.rowIndex
+      if (foundIndex > -1) {
+        if (chapterNumber < minChapter){minChapter = chapterNumber};
+        if (chapterNumber < maxChapter){maxChapter = chapterNumber};
+        let tempDetails = {};
+        tempDetails.chapterNumber = chapterNumber;
+        tempDetails.chapterText = chapterText;
+        tempDetails.rowIndex = foundRowIndex;
+        chapterDetails.push(tempDetails);
+      } else {
+        break;
+      }
+    }
+  })
+  console.log('chapterDetails'. chapterDetails);
+  console.log('minChapter', minChapter, 'maxChapter', maxChapter)
 }
 
 function number2words(n) {
