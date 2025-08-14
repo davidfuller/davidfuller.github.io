@@ -47,20 +47,16 @@ async function mainHTML(){
   <div id="jump">
     <label class="section-label" onclick="jade_modules.operations.showJump()">Jump to...</label><a id='show-hide-jump' onclick="jade_modules.operations.showJump()">Show/hide jumping</a>
     <div id="jump-buttons">
-      <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First scene</button>
-      <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev scene</button>
-      <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next scene</button>
-      <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last scene</button><br/>
+      <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First chapter</button>
+      <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev chapter</button>
+      <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next chapter</button>
+      <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last chapter</button><br/>
       <div class="row">
         <div class="column-jump" id="column-jump-one">
-          <label id='jump-label-scene' for="scene">Scene No</label><br/>
           <label id='jump-label-line-no' for="lineNo">Cue/line no</label><br/>
           <label id='jump-label-chapter' for="chapter">Chapter</label><br/>
         </div>
         <div class="column-jump" id="column-jump-two">
-          <input type="text" id="scene" name="scene">
-          <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button>
-          <span id='min-and-max'></span><br/>
           <input type="text" id="lineNo" name="lineNo">
           <button id='btnGoLine' onclick="jade_modules.operations.getTargetLineNo()">Go</button>
           <span id='min-and-max-lineNo'></span><br/>

@@ -371,23 +371,25 @@ async function getTargetChapter(){
 }
 
 async function selectChapter(chapterNumber) {
+  let foundRowIndex = -1;
+  for (let i = 0; i < chapterMinMaxDetails.details.length; i++){
+    if (chapterMinMaxDetails.details[i].chapterNumber == chapterNumber){
+      foundRowIndex = chapterMinMaxDetails.details[i].rowIndex
+    }
+  }
+
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let ukScriptRange = gpSheet.getRange(gpUkScriptName);
-    ukScriptRange.load('rowIndex, columnIndex, values');
+    ukScriptRange.load('rowIndex, columnIndex');
     await excel.sync();
-    let ukScriptValues = ukScriptRange.values.map(x => x[0].trim().toLowerCase());
-    console.log('uk script', ukScriptValues);
-    let chapterText = 'chapter ' + number2words(chapterNumber);
-    let foundIndex = ukScriptValues.indexOf(chapterText);
-    let foundRowIndex = foundIndex + ukScriptRange.rowIndex
-    if (foundIndex > -1) {
+    if (foundRowIndex > -1) {
       let chapterRange = gpSheet.getRangeByIndexes(foundRowIndex, ukScriptRange.columnIndex, 1, 1);
       chapterRange.select();
       await excel.sync();
     }
   });
-  await calcChapterMinAndMax();
+
 }
 
 async function calcChapterMinAndMax(){
