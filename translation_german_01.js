@@ -3,6 +3,7 @@ const translationCacheSheetName = 'Translation Cache';
 const gpTranslationRangeName = 'gpTranslation';
 const gpMachineTranslationRangeName = 'gpMachineTranslation'
 const tcTranslationRangeName = 'tcTranslation';
+const tcMachineTranslationRangeName = 'tcMachineTranslation'
 
 async function copyValuesToCache(){
   await Excel.run(async function(excel) {
@@ -53,6 +54,20 @@ async function applyMachineTranslationFormula(rowIndex){
   })
 }
 
+async function compareTranslationwithCache(){
+  await Excel.run(async function(excel) {
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let translationRange = gpSheet.getRange(gpTranslationRangeName);
+    translationRange.load('values, rowIndex');
+    const tcSheet = excel.workbook.worksheets.getItem(translationCacheSheetName);
+    let cacheRange = tcSheet.getRange(tcTranslationRangeName);
+    cacheRange.load('values, rowIndex');
+    await excel.sync();
+
+    let germanActual = translationRange.values.map(x => x[0]);
+    console.log ('germanActual', germanActual);
+  })
+}
 
 
 

@@ -35,6 +35,7 @@ async function mainHTML(){
       <button id='btnGetTranslationFormulas' onclick="jade_modules.translation.getMachineTranslationFormula()">Get Machine Translation Formula</button><br/>
       <button id='btnFixMachineTranslationDisplay' onclick="jade_modules.translation.fixMachineTranslationDisplay()">Fix Machine Translation</button><br/>
       <button id='btnApplyMachineTranslationFormula' onclick="jade_modules.translation.applyMachineTranslationFormula(13)">Apply formula</button><br/>
+      <button id='btnCompareWithCache' onclick="jade_modules.translation.compareTranslationwithCache()">Compare with Cache</button><br/>
       <button id='btnLoadScript' onclick="jade_modules.preprocess.doTheCopy()">Load German Original</button><br/>
       <button id='btnProcessGerman' onclick="jade_modules.operations.processGerman()">Process German</button>
       <button id='btnLoadUKScript' onclick="jade_modules.preprocess.getUKScript()">Load UK Script</button><br/>
