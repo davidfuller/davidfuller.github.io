@@ -69,7 +69,7 @@ async function compareTranslationwithCache(){
     let germanCache = cacheRange.values.map(x => x[0]);
     for (let i = 0; i < germanActual.length; i++){
       if(germanActual[i] != germanCache[i]){
-        let temp = {index:i, actual: germanActual[i], cache: germanCache[i], rowindex: i + translationRange.rowIndex}
+        let temp = {index:i, actual: germanActual[i], cache: germanCache[i], rowIndex: i + translationRange.rowIndex}
         exceptions.push(temp);
       }
     }
