@@ -389,16 +389,20 @@ async function calcChapterMinAndMax(){
     let ukScriptValues = ukScriptRange.values.map(x => x[0].trim().toLowerCase());
     for (let chapterNumber = 1; chapterNumber < 100; chapterNumber++){
       let chapterText = 'chapter ' + number2words(chapterNumber);
+      console.log('chapterText', chapterText)
       let foundIndex = ukScriptValues.indexOf(chapterText);
+      console.log('foundIndex', foundIndex)
       let foundRowIndex = foundIndex + ukScriptRange.rowIndex
       if (foundIndex > -1) {
         if (chapterNumber < minChapter){minChapter = chapterNumber};
-        if (chapterNumber < maxChapter){maxChapter = chapterNumber};
+        if (chapterNumber > maxChapter){maxChapter = chapterNumber};
         let tempDetails = {};
         tempDetails.chapterNumber = chapterNumber;
         tempDetails.chapterText = chapterText;
         tempDetails.rowIndex = foundRowIndex;
+        console.log('tempDetails', tempDetails);
         chapterDetails.push(tempDetails);
+        console.log('chapterDetails', chapterDetails);
       } else {
         break;
       }
