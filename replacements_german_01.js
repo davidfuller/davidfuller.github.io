@@ -45,7 +45,8 @@ async function appendData(rowIndex, searchText, replaceText) {
     ]
     targetData.values = temp;
     await excel.sync();
-  })
+  });
+  await sortReplacements();
 }
 
 async function addToReplacements() {
@@ -161,3 +162,21 @@ function insertEol(){
   const replaceTextArea = tag(textAreaReplaceText);
   replaceTextArea.value = before + eolChar + after;
 }
+
+async function sortReplacements(){
+  await Excel.run(async function(excel) {
+    // get the table range
+    const reSheet = excel.workbook.worksheets.getItem(replacementsSheetName);
+    let tableRange = reSheet.getRange(replacementsTableRangeName);
+    await excel.sync();
+    const sortFields = [
+      {
+        key: 0,
+        ascending: true
+      }
+    ]
+    tableRange.sort.apply(sortFields);
+    await excel.sync();
+  })  
+}
+
