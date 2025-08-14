@@ -30,9 +30,9 @@ async function getMachineTranslationFormula(){
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let translationRange = gpSheet.getRange(gpMachineTranslationRangeName);
-    translationRange.load("formulas")
+    translationRange.load("formulas, rowIndex")
     await excel.sync();
-    console.log('formulas', translationRange.formulas);
+    console.log('rowIndex', translationRange.rowInde, 'formulas', translationRange.formulas);
   })
 };
 
