@@ -115,7 +115,7 @@ async function machineTranslationValues(){
     let machineTranslationRange = gpSheet.getRange(gpMachineTranslationRangeName);
     machineTranslationRange.load('rowIndex, columnIndex');
     await excel.sync();
-    let rowIndex = machineTranslationRange.rowIndex
+    rowIndex = machineTranslationRange.rowIndex
     let valueRange = gpSheet.getRangeByIndexes(rowIndex, machineTranslationRange.columnIndex, usedCount, 1);
     valueRange.load('values');
     await excel.sync()
