@@ -85,7 +85,7 @@ async function compareTranslationwithCache(){
 }
 
 async function fillWithFormula(){
-  let usedCount = jade_modules.operations.getRowIndexLast(germanProcessingSheetName, gpProcessedRangeName);
+  let usedCount = jade_modules.operations.getUsedRowCount(germanProcessingSheetName, gpProcessedRangeName);
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let machineTranslationRange = gpSheet.getRange(gpMachineTranslationRangeName);
