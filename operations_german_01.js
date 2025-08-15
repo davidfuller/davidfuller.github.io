@@ -502,9 +502,10 @@ async function getUsedRowCount(sheetName, rangeName){
     const sheet = excel.workbook.worksheets.getItem(sheetName);
     let wholeRange = sheet.getRange(rangeName);
     let usedRange = wholeRange.getUsedRange(true);
-    usedRange.load('rowCount')
+    usedRange.load('rowCount, address')
     await excel.sync();
     rowCount = usedRange.rowCount;
+    console.log(usedRange.address, usedRange.rowCount);
   })
   return rowCount;
 }
