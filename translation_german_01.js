@@ -103,6 +103,7 @@ async function fillWithFormula(){
 }
 
 async function machineTranslationValues(){
+  let values;
   let usedCount = await jade_modules.operations.getUsedRowCount(germanProcessingSheetName, gpProcessedRangeName);
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
@@ -112,9 +113,24 @@ async function machineTranslationValues(){
     let valueRange = gpSheet.getRangeByIndexes(machineTranslationRange.rowIndex, machineTranslationRange.columnIndex, usedCount, 1);
     valueRange.load('values');
     await excel.sync()
-    console.log('Values', valueRange.values.map(x => x[0]));
+    values = valueRange.values.map(x => x[0])
+    console.log('Values', values);
   })
+  return values;
 }
 
+async function issueCells(){
+  let machineValues = await machineTranslationValues();
+  let theIssues = []
+  const issues = ['#CONNECT!', '#CALC!']
+  for (let i = 0; i < machineValues.length; i++){
+    for (let words = 0; words < issues.length; words++){
+      if(machineValues[i].includes(issues[words])){
+        theIssues.push({index: i, value: machineValues[i]});
+      }
+    }
+  }
+  console.log('issues', theIssues);
+}
 
 
