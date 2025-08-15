@@ -57,7 +57,7 @@ async function applyMachineTranslationFormula(rowIndex){
   })
 }
 
-async function compareTranslationwithCache(){
+async function compareTranslationwithCache(doFormulae){
   let exceptions = [];
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
@@ -78,11 +78,14 @@ async function compareTranslationwithCache(){
     }
   })
   console.log('exceptions', exceptions);
-  /**
-  for (let i = 0; i < exceptions.length ; i++){
-    await applyMachineTranslationFormula(exceptions[i].rowIndex);
+  
+  if (doFormulae){
+    for (let i = 0; i < exceptions.length ; i++){
+      await applyMachineTranslationFormula(exceptions[i].rowIndex);
+    }
   }
-  */
+
+  
   //exceptions.length
   //#CONNECT!
   //3832
