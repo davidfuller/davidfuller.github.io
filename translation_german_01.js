@@ -102,5 +102,19 @@ async function fillWithFormula(){
   })
 }
 
+async function machineTranslationValues(){
+  let usedCount = await jade_modules.operations.getUsedRowCount(germanProcessingSheetName, gpProcessedRangeName);
+  await Excel.run(async function(excel) {
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let machineTranslationRange = gpSheet.getRange(gpMachineTranslationRangeName);
+    machineTranslationRange.load('rowIndex, columnIndex');
+    await excel.sync();
+    let valueRange = gpSheet.getRangeByIndexes(machineTranslationRange.rowIndex, machineTranslationRange.columnIndex, usedCount, 1);
+    valueRange.load('values');
+    await excel.sync()
+    console.log('Values', valueRange.values.map(x => x[0]));
+  })
+}
+
 
 
