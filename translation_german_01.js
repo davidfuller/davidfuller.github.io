@@ -94,7 +94,10 @@ async function fillWithFormula(){
     machineTranslationRange.clear("Contents");
     await excel.sync();
     await applyMachineTranslationFormula(machineTranslationRange.rowIndex);
+    let topCell = gpSheet.getRangeByIndexes(machineTranslationRange.rowIndex, machineTranslationRange.columnIndex, 1, 1);
     let formulaRange = gpSheet.getRangeByIndexes(machineTranslationRange.rowIndex, machineTranslationRange.columnIndex, usedCount, 1);
+    await excel.sync();
+    topCell.autoFill(formulaRange, 'FillDefault');
     await excel.sync();
   })
 }
