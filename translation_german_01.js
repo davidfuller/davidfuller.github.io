@@ -129,8 +129,8 @@ async function issueCells(doFormulae){
   const issues = ['#CONNECT!', '#CALC!', '#BUSY']
   for (let i = 0; i < machineValues.values.length; i++){
     for (let words = 0; words < issues.length; words++){
-      if(machineValues[i].includes(issues[words])){
-        theIssues.push({index: i, value: machineValues[i], rowIndex: i + machineValues.rowIndex});
+      if(machineValues.values[i].includes(issues[words])){
+        theIssues.push({index: i, value: machineValues.values[i], rowIndex: i + machineValues.rowIndex});
       }
     }
   }
