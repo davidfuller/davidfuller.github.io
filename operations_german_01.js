@@ -494,3 +494,17 @@ function number2words(n) {
   if (n < 1000) return num[~~(n / 100)] + " hundred" + (n % 100 == 0 ? "" : " and " + number2words(n % 100));
   return number2words(~~(n / 1000)) + " thousand" + (n % 1000 != 0 ? " " + number2words(n % 1000) : "");
 }
+
+async function getUsedRowCount(sheetName, rangeName){
+  //Returns the rowIndex of the last cell
+  let rowCount
+  await Excel.run(async function(excel) {
+    const sheet = excel.workbook.worksheets.getItem(sheetName);
+    let wholeRange = sheet.getRange(rangeName);
+    let usedRange = wholeRange.getUsedRange(true);
+    usedRange.load('rowCount')
+    await excel.sync();
+    rowCount = usedRange.rowCount;
+  })
+  return rowCount;
+}

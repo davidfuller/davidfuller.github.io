@@ -2,6 +2,7 @@ const germanProcessingSheetName = 'German Processing';
 const translationCacheSheetName = 'Translation Cache';
 const gpTranslationRangeName = 'gpTranslation';
 const gpMachineTranslationRangeName = 'gpMachineTranslation'
+const gpProcessedRangeName = 'gpProcessed';
 const tcTranslationRangeName = 'tcTranslation';
 const tcMachineTranslationRangeName = 'tcMachineTranslation'
 
@@ -81,6 +82,17 @@ async function compareTranslationwithCache(){
   //exceptions.length
   //#CONNECT!
   //3832
+}
+
+async function fillWithFormula(){
+  let usedCount = jade_modules.operations.getRowIndexLast(germanProcessingSheetName, gpProcessedRangeName);
+  await Excel.run(async function(excel) {
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let machineTranslationRange = gpSheet.getRange(gpMachineTranslationRangeName);
+    machineTranslationRange.load('rowIndex, columnIndex');
+    machineTranslationRange.clear("Contents");
+    await excel.sync();
+  })
 }
 
 
