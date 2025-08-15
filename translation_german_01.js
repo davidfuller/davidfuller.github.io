@@ -92,6 +92,9 @@ async function fillWithFormula(){
     machineTranslationRange.load('rowIndex, columnIndex');
     machineTranslationRange.clear("Contents");
     await excel.sync();
+    await applyMachineTranslationFormula(machineTranslationRange.rowIndex);
+    let formulaRange = gpSheet.getRangeByIndexes(machineTranslationRange.rowIndex, machineTranslationRange.columnIndex, usedCount, 1);
+    await excel.sync();
   })
 }
 
