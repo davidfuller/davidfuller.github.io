@@ -33,7 +33,8 @@ async function mainHTML(){
     <div id="admin-group">
       <button id='btnApplyTransactionFormulaToAll' onclick="jade_modules.translation.fillWithFormula()">Formula All</button><br/>
       <button id='btnMachineTranslationValues' onclick="jade_modules.translation.machineTranslationValues()">Values</button><br/>
-      <button id='btnMachineTranslationIssueCells' onclick="jade_modules.translation.issueCells()">Issues</button><br/>
+      <button id='btnMachineTranslationIssueCells' onclick="jade_modules.translation.issueCells(false)">Issues</button><br/>
+      <button id='btnMachineTranslationIssueCellsWithFormula' onclick="jade_modules.translation.issueCells(true)">Issues Add Formulas</button><br/>
       <button id='btnCopyValuesToCache' onclick="jade_modules.translation.copyValuesToCache()">Cache Machine Translations</button><br/>
       <button id='btnGetTranslationFormulas' onclick="jade_modules.translation.getMachineTranslationFormula()">Get Machine Translation Formula</button><br/>
       <button id='btnFixMachineTranslationDisplay' onclick="jade_modules.translation.fixMachineTranslationDisplay()">Fix Machine Translation</button><br/>

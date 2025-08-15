@@ -106,33 +106,40 @@ async function fillWithFormula(){
 
 async function machineTranslationValues(){
   let values;
+  let rowIndex;
   let usedCount = await jade_modules.operations.getUsedRowCount(germanProcessingSheetName, gpProcessedRangeName);
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let machineTranslationRange = gpSheet.getRange(gpMachineTranslationRangeName);
     machineTranslationRange.load('rowIndex, columnIndex');
     await excel.sync();
-    let valueRange = gpSheet.getRangeByIndexes(machineTranslationRange.rowIndex, machineTranslationRange.columnIndex, usedCount, 1);
+    let rowIndex = machineTranslationRange.rowIndex
+    let valueRange = gpSheet.getRangeByIndexes(rowIndex, machineTranslationRange.columnIndex, usedCount, 1);
     valueRange.load('values');
     await excel.sync()
     values = valueRange.values.map(x => x[0])
     console.log('Values', values);
   })
-  return values;
+  return {values: values, rowIndex: rowIndex};
 }
 
-async function issueCells(){
+async function issueCells(doFormulae){
   let machineValues = await machineTranslationValues();
   let theIssues = []
   const issues = ['#CONNECT!', '#CALC!', '#BUSY']
-  for (let i = 0; i < machineValues.length; i++){
+  for (let i = 0; i < machineValues.values.length; i++){
     for (let words = 0; words < issues.length; words++){
       if(machineValues[i].includes(issues[words])){
-        theIssues.push({index: i, value: machineValues[i]});
+        theIssues.push({index: i, value: machineValues[i], rowIndex: i + machineValues.rowIndex});
       }
     }
   }
   console.log('issues', theIssues);
+  if (doFormulae){
+    for(let i = 0; i < theIssues.length; i++){
+      await applyMachineTranslationFormula(theIssues[i].rowIndex);
+    }
+  }
 }
 
 
