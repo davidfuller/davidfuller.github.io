@@ -122,7 +122,7 @@ async function machineTranslationValues(){
 async function issueCells(){
   let machineValues = await machineTranslationValues();
   let theIssues = []
-  const issues = ['#CONNECT!', '#CALC!']
+  const issues = ['#CONNECT!', '#CALC!', '#BUSY']
   for (let i = 0; i < machineValues.length; i++){
     for (let words = 0; words < issues.length; words++){
       if(machineValues[i].includes(issues[words])){
