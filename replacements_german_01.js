@@ -170,6 +170,15 @@ function insertEol(){
   replaceTextArea.value = before + eolChar + after;
 }
 
+function insertMoreEol(){
+  const replaceTextArea = tag(textAreaReplaceText);
+  let insertCharPosition = replaceTextArea.selectionEnd
+  let theText = replaceTextArea.value;
+  let before = theText.substring(0, insertCharPosition);
+  let after = theText.substring(insertCharPosition);
+  replaceTextArea.value = before + eolChar + after;
+}
+
 function insertExtra(){
   const searchTextArea = tag(textAreaOriginalText);
   let insertCharPosition = searchTextArea.selectionEnd
