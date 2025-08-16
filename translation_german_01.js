@@ -89,7 +89,7 @@ async function compareTranslationwithCache(doFormulae){
   }
 }
 
-async function fillMachineFormula(startRowindex){
+async function fillMachineFormula(startRowIndex){
   //Fills with formula from startRowIndex to bottom of GermanProcessed.
   let usedCount = await jade_modules.operations.getUsedRowCount(germanProcessingSheetName, gpProcessedRangeName);
   let lastRowIndex = usedCount.rowIndex + usedCount.rowCount - 1;
