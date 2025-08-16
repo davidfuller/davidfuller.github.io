@@ -497,15 +497,17 @@ function number2words(n) {
 
 async function getUsedRowCount(sheetName, rangeName){
   //Returns the rowIndex of the last cell
-  let rowCount
+  let rowCount;
+  let rowIndex;
   await Excel.run(async function(excel) {
     const sheet = excel.workbook.worksheets.getItem(sheetName);
     let wholeRange = sheet.getRange(rangeName);
     let usedRange = wholeRange.getUsedRange(true);
-    usedRange.load('rowCount, address')
+    usedRange.load('rowIndex, rowCount, address')
     await excel.sync();
     rowCount = usedRange.rowCount;
+    rowIndex = usedRange.rowIndex;
     console.log(usedRange.address, usedRange.rowCount);
   })
-  return rowCount;
+  return {rowIndex: rowIndex, rowCount: rowCount};
 }

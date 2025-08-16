@@ -102,7 +102,7 @@ async function fillWithFormula(){
     await excel.sync();
     await applyMachineTranslationFormula(machineTranslationRange.rowIndex);
     let topCell = gpSheet.getRangeByIndexes(machineTranslationRange.rowIndex, machineTranslationRange.columnIndex, 1, 1);
-    let formulaRange = gpSheet.getRangeByIndexes(machineTranslationRange.rowIndex, machineTranslationRange.columnIndex, usedCount, 1);
+    let formulaRange = gpSheet.getRangeByIndexes(machineTranslationRange.rowIndex, machineTranslationRange.columnIndex, usedCount.rowCount, 1);
     await excel.sync();
     topCell.autoFill(formulaRange, 'FillDefault');
     await excel.sync();
@@ -119,7 +119,7 @@ async function machineTranslationValues(){
     machineTranslationRange.load('rowIndex, columnIndex');
     await excel.sync();
     rowIndex = machineTranslationRange.rowIndex
-    let valueRange = gpSheet.getRangeByIndexes(rowIndex, machineTranslationRange.columnIndex, usedCount, 1);
+    let valueRange = gpSheet.getRangeByIndexes(rowIndex, machineTranslationRange.columnIndex, usedCount.rowCount, 1);
     valueRange.load('values');
     await excel.sync()
     values = valueRange.values.map(x => x[0])
