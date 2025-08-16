@@ -141,6 +141,16 @@ function copySearchToReplace(){
   replaceTextArea.value = searchTextArea.value;
 }
 
+function replaceAllDoubleQuotesWithSingles(){
+  const searchTextArea = tag(textAreaOriginalText);
+  const replaceTextArea = tag(textAreaReplaceText);
+  let searchText = searchTextArea.value;
+  let openRegex = new RegExp(openSpeechChar, 'g');
+  let closeRegex = new RegExp(closeSpeechChar, 'g');
+  let replaceText = searchText.replace(openRegex, openSingleQuoteChar).replace(closeRegex, closeSingleQuoteChar).trim();
+  replaceTextArea.value = searchTextArea.value;
+}
+
 function createMissingSearchAndReplace(){
   // Takes last missingTextSubstringLength (40) chars of searchText and makes it searchText
   // Makes replaceTex equal searchText plus [MISSING TEXT]
