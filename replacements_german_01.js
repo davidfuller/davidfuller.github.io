@@ -180,7 +180,7 @@ function insertExtra(){
   console.log('text', theText, 'Before', before, 'after', after );
   let closePosition = after.indexOf()
   let hasCloseQuote = after.includes(closeSpeechChar)
-  let newAfter = extraStart + after.replace(/«/g, closeSingleQuoteChar);
+  let newAfter = extraStart + after.replace(/«/g, closeSingleQuoteChar) + ']';
   if (hasCloseQuote){newAfter += closeSpeechChar};
   
   const replaceTextArea = tag(textAreaReplaceText);
