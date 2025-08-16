@@ -16,6 +16,7 @@ const eolChar = '|eol|'
 const loadMessageLabelName = 'load-message';
 
 const missingTextString = '[MISSING TEXT]'
+const extraStart = '[EXTRA:'
 const missingTextSubstringLength = 40;
 
 async function appendData(rowIndex, searchText, replaceText) {
@@ -169,6 +170,22 @@ function insertEol(){
   replaceTextArea.value = before + eolChar + after;
 }
 
+function insertExtra(){
+  const searchTextArea = tag(textAreaOriginalText);
+  let insertCharPosition = searchTextArea.selectionEnd
+  console.log(insertCharPosition);
+  let theText = searchTextArea.value;
+  let before = theText.substring(0, insertCharPosition);
+  let after = theText.substring(insertCharPosition);
+  console.log('text', theText, 'Before', before, 'after', after );
+  let closePosition = after.indexOf()
+  let hasCloseQuote = after.includes(closeSpeechChar)
+  let newAfter = extraStart + after.replace(/«/g, closeSingleQuoteChar);
+  if (hasCloseQuote){newAfter += closeSpeechChar};
+  
+  const replaceTextArea = tag(textAreaReplaceText);
+  replaceTextArea.value = before + newAfter;
+}
 async function sortReplacements(){
   await Excel.run(async function(excel) {
     // get the table range

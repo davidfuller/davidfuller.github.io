@@ -19,6 +19,7 @@ async function mainHTML(){
       <button id='btnIsolateQuotedBit' onclick="jade_modules.replacements.isolateQuotedBit()">Isolate Quote Bit</button>
       <button id='btnCreateMissingSearchAndReplace' onclick="jade_modules.replacements.createMissingSearchAndReplace()">Create Missing Text</button>
       <button id='btnInsertEol' onclick="jade_modules.replacements.insertEol()">Insert End of Line</button>
+      <button id='btnInsertExtra' onclick="jade_modules.replacements.insertExtra()">Insert [EXTRA:]</button>
       <textarea id="original-text" cols="40" rows="8"></textarea><br/>
       <label id="replace-label">Replace</label><br/>
       <button id='btnAddExtraMissingText' onclick="jade_modules.replacements.addExtraMissingText()">Add extra MISSING TEXT</button><br/>
@@ -33,7 +34,7 @@ async function mainHTML(){
     <div id="admin-group">
       <button id='btnApplyTransactionFormulaToAll' onclick="jade_modules.translation.fillWithFormula()">Formula All</button><br/>
       <button id='btnMachineTranslationValues' onclick="jade_modules.translation.machineTranslationValues()">Values</button><br/>
-      <button id='btnMachineTranslationIssueCells' onclick="jade_modules.translation.issueCells(false)">Issues</button><br/>
+      <button id='btnMachineTranslationIssueCells' onclick="jade_modules.translation.issueCells(false)">Calculation Issues</button><br/>
       <label id="issues-message"></label><br/>
       <button id='btnMachineTranslationIssueCellsWithFormula' onclick="jade_modules.translation.issueCells(true)">Issues Add Formulas</button><br/>
       <button id='btnCopyValuesToCache' onclick="jade_modules.translation.copyValuesToCache()">Cache Machine Translations</button><br/>
