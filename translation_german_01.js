@@ -79,16 +79,37 @@ async function compareTranslationwithCache(doFormulae){
   })
   console.log('exceptions', exceptions);
   
-  if (doFormulae){
+  if ((doFormulae) && (exceptions.length > 0)){
+    await fillMachineFormula(exceptions[0].rowIndex)
+    /**
     for (let i = 0; i < exceptions.length ; i++){
       await applyMachineTranslationFormula(exceptions[i].rowIndex);
     }
+    */
   }
+}
 
-  
-  //exceptions.length
-  //#CONNECT!
-  //3832
+async function fillMachineFormula(startRowindex){
+  //Fills with formula from startRowIndex to bottom of GermanProcessed.
+  let usedCount = await jade_modules.operations.getUsedRowCount(germanProcessingSheetName, gpProcessedRangeName);
+  let lastRowIndex = usedCount.rowIndex + usedCount.rowCount - 1;
+  let fillRowCount = lastRowIndex - startRowIndex + 1;
+  console.log('usedCount', usedCount, 'lastRowIndex', lastRowIndex);
+  await Excel.run(async function(excel) {
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let machineTranslationRange = gpSheet.getRange(gpMachineTranslationRangeName);
+    machineTranslationRange.load('rowIndex, columnIndex');
+    await excel.sync();
+    
+    let fillRange = gpSheet.getRangeByIndexes(startRowIndex, machineTranslationRange.columnIndex, fillRowCount, 1);
+    fillRange.clear("Contents");
+    await excel.sync();
+    await applyMachineTranslationFormula(startRowIndex);
+    let topCell = gpSheet.getRangeByIndexes(startRowIndex, machineTranslationRange.columnIndex, 1, 1);
+    await excel.sync();
+    topCell.autoFill(fillRange, 'FillDefault');
+    await excel.sync();
+  })
 }
 
 async function fillWithFormula(){
