@@ -148,7 +148,7 @@ function replaceAllDoubleQuotesWithSingles(){
   let openRegex = new RegExp(openSpeechChar, 'g');
   let closeRegex = new RegExp(closeSpeechChar, 'g');
   let replaceText = searchText.replace(openRegex, openSingleQuoteChar).replace(closeRegex, closeSingleQuoteChar).trim();
-  replaceTextArea.value = searchTextArea.value;
+  replaceTextArea.value = replaceText;
 }
 
 function createMissingSearchAndReplace(){
