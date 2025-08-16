@@ -162,12 +162,17 @@ async function issueCells(doFormulae){
     }
   }
   console.log('issues', theIssues);
-  showIssuesMessage(theIssues.length.toString() + ' calculation issues')
+  showIssuesMessage(theIssues.length.toString() + ' calculation issues');
+  if ((doFormulae) && (theIssues.length > 0)){
+    await fillMachineFormula(theIssues[0].rowIndex);
+  }
+  /**
   if (doFormulae){
     for(let i = 0; i < theIssues.length; i++){
       await applyMachineTranslationFormula(theIssues[i].rowIndex);
     }
   }
+  **/
 }
 
 function showIssuesMessage(message){
