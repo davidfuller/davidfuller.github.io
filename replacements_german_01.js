@@ -135,6 +135,12 @@ function isolateQuotedBit() {
   copySearchReplacingDoubleQuotes();
 }
 
+function copySearchToReplace(){
+  const searchTextArea = tag(textAreaOriginalText);
+  const replaceTextArea = tag(textAreaReplaceText);
+  replaceTextArea.value = searchTextArea.value;
+}
+
 function createMissingSearchAndReplace(){
   // Takes last missingTextSubstringLength (40) chars of searchText and makes it searchText
   // Makes replaceTex equal searchText plus [MISSING TEXT]
