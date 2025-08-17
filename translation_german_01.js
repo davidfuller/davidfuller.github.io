@@ -20,13 +20,24 @@ async function copyValuesToCache(){
 }
 
 async function fixMachineTranslationDisplay(){
+  showFixWait(true);
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let translationRange = gpSheet.getRange(gpMachineTranslationRangeName);
     translationRange.copyFrom(translationRange, 'values')
     await excel.sync();
   })
+  showFixWait(false);
 }
+function showFixWait(show){
+  let ctl = tag('fix-machine-message')
+  if (show){
+    ctl.style.display = 'block';
+  } else {
+    ctl.style.display = 'none';
+  }
+}
+
 
 async function getMachineTranslationFormula(){
   await Excel.run(async function(excel) {
