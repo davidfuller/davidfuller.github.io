@@ -7,6 +7,7 @@ const tcTranslationRangeName = 'tcTranslation';
 const tcMachineTranslationRangeName = 'tcMachineTranslation'
 
 async function copyValuesToCache(){
+  showCopyCacheWait(true)
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let translationRange = gpSheet.getRange(gpTranslationRangeName);
@@ -17,6 +18,7 @@ async function copyValuesToCache(){
     cacheRange.copyFrom(translationRange, 'values');
     await excel.sync()
   })
+  showCopyCacheWait(false)
 }
 
 async function fixMachineTranslationDisplay(){
@@ -37,6 +39,16 @@ function showFixWait(show){
     ctl.style.display = 'none';
   }
 }
+
+function showCopyCacheWait(show){
+  let ctl = tag('copy-cache-message')
+  if (show){
+    ctl.style.display = 'block';
+  } else {
+    ctl.style.display = 'none';
+  }
+}
+
 
 
 async function getMachineTranslationFormula(){

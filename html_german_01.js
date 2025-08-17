@@ -41,7 +41,7 @@ async function mainHTML(){
       <button id='btnMachineTranslationIssueCells' onclick="jade_modules.translation.issueCells(false)">Calculation Issues</button><br/>
       <label id="issues-message"></label><br/>
       <button id='btnMachineTranslationIssueCellsWithFormula' onclick="jade_modules.translation.issueCells(true)">Issues Add Formulas</button><br/>
-      <button id='btnCopyValuesToCache' onclick="jade_modules.translation.copyValuesToCache()">Cache Machine Translations</button><br/>
+      <button id='btnCopyValuesToCache' onclick="jade_modules.translation.copyValuesToCache()">Cache Machine Translations</button><label id="copy-cache-message">Please wait...</label><br/>
       <button id='btnGetTranslationFormulas' onclick="jade_modules.translation.getMachineTranslationFormula()">Get Machine Translation Formula</button><br/>
       <button id='btnFixMachineTranslationDisplay' onclick="jade_modules.translation.fixMachineTranslationDisplay()">Fix Machine Translation</button><label id="fix-machine-message">Please wait...</label><br/>
       <button id='btnApplyMachineTranslationFormula' onclick="jade_modules.translation.applyMachineTranslationFormula(13)">Apply formula</button><br/>

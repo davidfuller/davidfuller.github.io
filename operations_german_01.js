@@ -28,6 +28,7 @@ async function showMain() {
 
 function hideWaits(){
   jade_modules.translation.showFixWait(false);
+  jade_modules.translation.showCopyCacheWait(false);
 }
 
 async function calcAndDisplayMaxAndMin(){
