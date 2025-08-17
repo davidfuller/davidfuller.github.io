@@ -196,6 +196,7 @@ async function issueCells(doFormulae){
     }
   }
   **/
+  return theIssues.length;
 }
 
 function showIssuesMessage(message){
@@ -204,5 +205,13 @@ function showIssuesMessage(message){
   
 }
 
+async function issuesFixAndCopy(){
+  let numIssues = await issueCells(false);
+  if (numIssues == 0){
+    await fixMachineTranslationDisplay();
+    await copyValuesToCache();
+    
+  }
+}
 
 
