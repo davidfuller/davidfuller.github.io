@@ -181,6 +181,7 @@ async function machineTranslationValues(){
 }
 
 async function issueCells(doFormulae){
+  showIssuesMessage('Please wait...');
   let machineValues = await machineTranslationValues();
   console.log('machineValues', machineValues);
   let theIssues = []
