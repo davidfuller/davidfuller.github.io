@@ -161,6 +161,10 @@ function replaceDoubleQuotesInSelection(){
     let middlePart = text.substring(startPos, endPos);
     let endPart = text.substring(endPos);
     console.log('firstPart', firstPart, 'middlePart', middlePart, 'endPart', endPart);
+    let openRegex = new RegExp(openSpeechChar, 'g');
+    let closeRegex = new RegExp(closeSpeechChar, 'g');
+    let replaceText = middlePart.replace(openRegex, openSingleQuoteChar).replace(closeRegex, closeSingleQuoteChar);
+    replaceTextArea.value = firstPart + replaceText + endPart;
   }
   
 }
