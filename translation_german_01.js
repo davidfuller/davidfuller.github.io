@@ -8,6 +8,7 @@ const tcMachineTranslationRangeName = 'tcMachineTranslation'
 const loadMessageLabelName = 'load-message';
 
 async function copyValuesToCache(){
+  jade_modules.preprocess.showMessage(loadMessageLabelName, "Copying to cache");
   showCopyCacheWait(true)
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
@@ -19,11 +20,13 @@ async function copyValuesToCache(){
     cacheRange.copyFrom(translationRange, 'values');
     await excel.sync()
   })
-  showCopyCacheWait(false)
+  showCopyCacheWait(false);
+  jade_modules.preprocess.hideMessage(loadMessageLabelName);
 }
 
 async function fixMachineTranslationDisplay(){
   showFixWait(true);
+  jade_modules.preprocess.showMessage(loadMessageLabelName, "Fixing the machine translations");
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let translationRange = gpSheet.getRange(gpMachineTranslationRangeName);
@@ -31,6 +34,7 @@ async function fixMachineTranslationDisplay(){
     await excel.sync();
   })
   showFixWait(false);
+  jade_modules.preprocess.hideMessage(loadMessageLabelName);
 }
 function showFixWait(show){
   let ctl = tag('fix-machine-message')

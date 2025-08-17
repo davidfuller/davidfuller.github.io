@@ -12,7 +12,7 @@ async function mainHTML(){
     <label class="section-label" onclick="jade_modules.operations.showProcessing()">Processing</label><a id='show-hide-processing' onclick="jade_modules.operations.showProcessing()">Show/hide processing</a>
     <div id="processing-group">
       <button id="btnNewChapter" onclick="jade_modules.replacements.newChapter()">Load and Replace</button>
-      <button id='btnMachineTranslationIssueCellsWithFormula' onclick="jade_modules.translation.issueCells(true)">Issues Add Formulas</button><br/>
+      <button id="btnIssuesFixAndCopy" onclick="jade_modules.translation.issuesFixAndCopy()">Check, fix and cache</button>
       <label id="load-message"></label>
       <label id="issues-message"></label><br/>
       <button id='btnLoadLoadOriginal' onclick="jade_modules.preprocess.loadOriginal()">Load German Block</button> <br/>
@@ -43,6 +43,7 @@ async function mainHTML(){
       <button id="btnIssuesFixAndCopy" onclick="jade_modules.translation.issuesFixAndCopy()">Check, fix and cache</button>
       <button id='btnMachineTranslationIssueCells' onclick="jade_modules.translation.issueCells(false)">Calculation Issues</button><br/>
       <button id='btnCopyValuesToCache' onclick="jade_modules.translation.copyValuesToCache()">Cache Machine Translations</button><label id="copy-cache-message">Please wait...</label><br/>
+      <button id='btnMachineTranslationIssueCellsWithFormula' onclick="jade_modules.translation.issueCells(true)">Issues Add Formulas</button><br/>
       <button id='btnGetTranslationFormulas' onclick="jade_modules.translation.getMachineTranslationFormula()">Get Machine Translation Formula</button><br/>
       <button id='btnFixMachineTranslationDisplay' onclick="jade_modules.translation.fixMachineTranslationDisplay()">Fix Machine Translation</button><label id="fix-machine-message">Please wait...</label><br/>
       <button id='btnApplyMachineTranslationFormula' onclick="jade_modules.translation.applyMachineTranslationFormula(13)">Apply formula</button><br/>
