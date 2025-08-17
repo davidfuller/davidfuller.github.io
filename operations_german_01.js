@@ -480,6 +480,7 @@ async function calcLineNoMinAndMax(){
     ukCueRange.load('rowIndex, values');
     await excel.sync();
     let ukCueValues = ukCueRange.values.map(x => parseInt(x[0]));
+    console.log('ukCueValues', ukCueValues);
     for (let i = 1; i < ukCueValues.length; i++){
       if (!isNaN(ukCueValues[i])) {
         if (ukCueValues[i] < minLineNo){minLineNo = ukCueValues[i]};
