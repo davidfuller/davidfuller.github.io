@@ -476,7 +476,7 @@ async function calcLineNoMinAndMax(){
   let maxLineNo = 0;
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
-    let ukCueRange = gpSheet.getRange(gpUkScriptName);
+    let ukCueRange = gpSheet.getRange(gpUkCueName);
     ukCueRange.load('rowIndex, values');
     await excel.sync();
     let ukCueValues = ukCueRange.values.map(x => parseInt(x[0]));
