@@ -82,8 +82,12 @@ async function doTheReplacements() {
     // get the table range
     const reSheet = excel.workbook.worksheets.getItem(replacementsSheetName);
     let tableRange = reSheet.getRange(replacementsTableRangeName);
+    let usedRange = tableRange.getUsedRange(true);
     tableRange.load('values');
+    usedRange.load('rowCount')
     await excel.sync();
+    
+    let numReplacements = usedRange.rowCount
 
     for (let i = 0; i < tableRange.values.length; i++) {
       let testRowIndex = tableRange.values[i][0];
@@ -91,7 +95,7 @@ async function doTheReplacements() {
         rowIndex = parseInt(testRowIndex);
         searchText = tableRange.values[i][1];
         replaceText = tableRange.values[i][2];
-        jade_modules.preprocess.showMessage(loadMessageLabelName, 'Doing replacements:' + (i + 1).toString() + ' of ' + tableRange.values.length);
+        jade_modules.preprocess.showMessage(loadMessageLabelName, 'Doing replacements:' + (i + 1).toString() + ' of ' + numReplacements);
         await jade_modules.operations.doAReplacement(rowIndex, searchText, replaceText);
       }
     }
