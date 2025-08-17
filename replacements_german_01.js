@@ -52,7 +52,8 @@ async function appendData(rowIndex, searchText, replaceText) {
 
 async function addToReplacementsProcess(){
   await addToReplacements();
-  await jade_modules.preprocess.loadReplaceProcess()
+  await jade_modules.preprocess.loadReplaceProcess();
+  await jade_modules.translation.compareTranslationwithCache(true);
 }
 
 async function addToReplacements() {

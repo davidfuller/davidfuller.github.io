@@ -5,6 +5,7 @@ const gpMachineTranslationRangeName = 'gpMachineTranslation'
 const gpProcessedRangeName = 'gpProcessed';
 const tcTranslationRangeName = 'tcTranslation';
 const tcMachineTranslationRangeName = 'tcMachineTranslation'
+const loadMessageLabelName = 'load-message';
 
 async function copyValuesToCache(){
   showCopyCacheWait(true)
@@ -81,6 +82,12 @@ async function applyMachineTranslationFormula(rowIndex){
 }
 
 async function compareTranslationwithCache(doFormulae){
+  if (doFormulae){
+    jade_modules.preprocess.showMessage(loadMessageLabelName, "Checking cache and loading formulae");
+  } else {
+    jade_modules.preprocess.showMessage(loadMessageLabelName, "Checking cache");
+  }
+  
   let exceptions = [];
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
@@ -110,6 +117,7 @@ async function compareTranslationwithCache(doFormulae){
     }
     */
   }
+  jade_modules.preprocess.hideMessage(loadMessageLabelName);
 }
 
 async function fillMachineFormula(startRowIndex){
