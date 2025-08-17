@@ -23,6 +23,11 @@ async function showMain() {
   await showMainPage();
   console/log('Here');
   await calcAndDisplayMaxAndMin();
+  hideWaits();
+}
+
+function hideWaits(){
+  jade_modules.translations.showFixWait(false);
 }
 
 async function calcAndDisplayMaxAndMin(){
