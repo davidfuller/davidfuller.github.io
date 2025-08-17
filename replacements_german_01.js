@@ -151,6 +151,20 @@ function replaceAllDoubleQuotesWithSingles(){
   replaceTextArea.value = replaceText;
 }
 
+function replaceDoubleQuotesInSelection(){
+  const replaceTextArea = tag(textAreaReplaceText);
+  let text = replaceTextArea.value;
+  let startPos = replaceTextArea.selectionStart;
+  let endPos = replaceTextArea.selectionEnd;
+  if (endPos > startPos){
+    let firstPart = text.substring(0, startPos);
+    let middlePart = text.substring(startPos, endPos);
+    let endPart = text.substring(endPos);
+    console.log('firstPart', firstPart, 'middlePart', middlePart, 'endPart', endPart);
+  }
+  
+}
+
 function createMissingSearchAndReplace(){
   // Takes last missingTextSubstringLength (40) chars of searchText and makes it searchText
   // Makes replaceTex equal searchText plus [MISSING TEXT]
