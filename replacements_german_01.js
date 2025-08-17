@@ -56,6 +56,11 @@ async function addToReplacementsProcess(){
   await jade_modules.translation.compareTranslationwithCache(true);
 }
 
+async function newChapter(){
+  await jade_modules.preprocess.loadReplaceProcess();
+  await jade_modules.translation.compareTranslationwithCache(true);
+}
+
 async function addToReplacements() {
   // Gets the details from the html and appends to the table  
   const sourceRowTextInput = tag(textInputSourceRow);
