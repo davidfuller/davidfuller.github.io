@@ -13,7 +13,7 @@ async function mainHTML(){
     <div id="processing-group">
       <button id="btnNewChapter" onclick="jade_modules.replacements.newChapter()">Load and Replace</button>
       <button id="btnIssuesFixAndCopy" onclick="jade_modules.translation.issuesFixAndCopy()">Check, fix and cache</button>
-      <label id="load-message"></label>
+      <label id="load-message"></label><br/>
       <label id="issues-message"></label><br/>
       <button id='btnLoadLoadOriginal' onclick="jade_modules.preprocess.loadOriginal()">Load German Block</button> <br/>
       <button id='btnFindInLockedOriginal' onclick="jade_modules.preprocess.findInLockedOriginal()">Find In Locked Original</button><br/>
