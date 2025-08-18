@@ -18,7 +18,7 @@ async function mainHTML(){
       <button id='btnLoadLoadOriginal' onclick="jade_modules.preprocess.loadOriginal()">Load German Block</button> <br/>
       <button id='btnFindInLockedOriginal' onclick="jade_modules.preprocess.findInLockedOriginal()">Find In Locked Original</button><br/>
       <label id="search-label">Search</label><br/>
-      <button id='btnCopySearchToReplace' onclick="jade_modules.replacements.copySearchToReplace()()">Copy (Manual)</button>
+      <button id='btnCopySearchToReplace' onclick="jade_modules.replacements.copySearchToReplace()">Copy (Manual)</button>
       <button id='btnReplaceAllDoubleQuotesWithSingles' onclick="jade_modules.replacements.replaceAllDoubleQuotesWithSingles()">Replace Double Quote With Single</button>
       <button id='btnIsolateQuotedBit' onclick="jade_modules.replacements.isolateQuotedBit()">Isolate Quote Bit</button>
       <button id='btnCreateMissingSearchAndReplace' onclick="jade_modules.replacements.createMissingSearchAndReplace()">Create Missing Text</button>
