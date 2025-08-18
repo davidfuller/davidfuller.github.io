@@ -221,7 +221,7 @@ async function processGerman() {
     await fillRange(germanProcessingSheetName, 'gpProcessed', resultLines.processed, true);
     console.log('Results')
     console.log('Total Good', totalGood, 'Total Wrong', totalWrong, 'Total Unequal', totalUnequal, 'Total Direct Copy', totalDirectCopy)
-    console/log('The unequals', theUnequals);
+    console.log('The unequals', theUnequals);
   })
   jade_modules.preprocess.hideMessage(loadMessageLabelName)
 }
