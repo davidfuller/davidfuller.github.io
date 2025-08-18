@@ -18,6 +18,9 @@ const ukScriptColumnIndex = 10;
 const firstRowIndex = 3;
 const lastRowCount = 10000;
 
+const openSpeechChar = '»';
+const closeSpeechChar = '«';
+
 //offsets wityhin the UK Script Range in German processing
 const cueOffset = 0;
 const numberOffset = 1;
@@ -358,5 +361,31 @@ async function findInLockedOriginal() {
         await excel.sync();
       }
     }
+  })
+}
+
+
+async function putCloseQuotesAtEnd(){
+  //Takes the active cell from the Locked Original sheet.
+  //Makes a copy of it in column I
+  //Then adds « at the end of the row
+  let messageOffset = 4;
+  let copyOffset = 5;
+  let unequalMessage = 'Unequal quotes';
+  await Excel.run(async function(excel) {
+    const originalSheet = excel.workbook.worksheets.getItem(lockedOriginalSheetName);
+    const activeCell = excel.workbook.getActiveCell();
+    activeCell.load('rowIndex, columnIndex, rowCount, columnCount, values');
+    await excel.sync();
+
+    let backupCell = originalSheet.getRangeByIndexes(activeCell.rowIndex, activeCell.columnIndex + copyOffset, 1, 1);
+    let messageCell= originalSheet.getRangeByIndexes(activeCell.rowIndex, activeCell.columnIndex + messageOffset, 1, 1);
+    await excel.sync;
+
+    messageCell.values = [[unequalMessage]]
+    backupCell.copyFrom(activeCell, 'values');
+    let newValue = activeCell.values[0][0] + closeSpeechChar;
+    activeCell.values = [[newValue]];
+    await excel.sync();
   })
 }
