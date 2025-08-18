@@ -198,7 +198,7 @@ async function processGerman() {
         directCopy = false;
         unequalQuotes += 1;
         console.log('Unequal quotes in line ', i, startQuotes, endQuotes)
-        let tempUnequal = {i: i, rowIndex: originalTextRange.rowIndex + i, startQuotes: startQuotes, endQuotes};
+        let tempUnequal = {i: i, rowIndex: originalTextRange.rowIndex + i, startQuotes: startQuotes, endQuotes, text: germanText[i].trim() };
         theUnequals.push(tempUnequal);
       }
       result.directCopy = directCopy;
