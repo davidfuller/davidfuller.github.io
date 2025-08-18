@@ -60,7 +60,7 @@ async function processGerman() {
     const procSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let originalTextRange = procSheet.getRange('gpOriginal');
     await excel.sync();
-    originalTextRange.load('values');
+    originalTextRange.load('values, rowIndex');
     await excel.sync();
     let germanText = trimEmptyEnd(originalTextRange.values.map(x => x[0]));
     let results = []
@@ -68,6 +68,7 @@ async function processGerman() {
     let totalGood = 0;
     let totalWrong = 0;
     let totalUnequal = 0;
+    let theUnequals = [];
     for (let i = 0; i < germanText.length; i++) {
       let result = {};
       let myStrings = []
@@ -196,6 +197,9 @@ async function processGerman() {
       } else {
         directCopy = false;
         unequalQuotes += 1;
+        console.log('Unequal quotes in line ', i, startQuotes, endQuotes)
+        let tempUnequal = {i: i, rowIndex: originalTextRange.rowIndex + i, startQuotes: startQuotes, endQuotes};
+        theUnequals.push(tempUnequal);
       }
       result.directCopy = directCopy;
       if (directCopy) {
@@ -217,6 +221,7 @@ async function processGerman() {
     await fillRange(germanProcessingSheetName, 'gpProcessed', resultLines.processed, true);
     console.log('Results')
     console.log('Total Good', totalGood, 'Total Wrong', totalWrong, 'Total Unequal', totalUnequal, 'Total Direct Copy', totalDirectCopy)
+    console/log('The unequals', theUnequals);
   })
   jade_modules.preprocess.hideMessage(loadMessageLabelName)
 }
