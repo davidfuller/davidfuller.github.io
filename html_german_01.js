@@ -57,8 +57,9 @@ async function mainHTML(){
       <button id='btnFindInLockedOriginal' onclick="jade_modules.preprocess.findInLockedOriginal()">Find In Locked Original</button>
       <button id='btnLoadReplaceProcess' onclick="jade_modules.preprocess.loadReplaceProcess()">Load/Replace/Process</button>
       <button id='btnDoTheReplacements' onclick="jade_modules.replacements.doTheReplacements()">Do The Replacements</button>
-      <button id='btnReplaceProcess' onclick="jade_modules.replacements.replacementsAndProcess()">Replace/Process</button>
+      <button id='btnReplaceProcess' onclick="jade_modules.replacements.replacementsAndProcess()">Replace/Process</button><br/>
       <button id="btnPutCloseQuotesAtEnd" onclick="jade_modules.preprocess.putCloseQuotesAtEnd()">Put quotes at end</button>
+      <button id="btnPutOpenQuotesAtStart" onclick="jade_modules.preprocess.putOpenQuotesAtStart()">Put quotes at start</button>
       <br/>
       <input type="text" id="process-address" name="process-address">
       <input type="text" id="source-row" name="source-row">
