@@ -33,6 +33,33 @@
       <br/>
     </div>
   </div>
+  <div id="jump">
+    <label class="section-label" onclick="jade_modules.operations.showJump()">Jump to...</label><a id='show-hide-jump' onclick="jade_modules.operations.showJump()">Show/hide jumping</a>
+    <div id="jump-buttons">
+      <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First chapter</button>
+      <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev chapter</button>
+      <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next chapter</button>
+      <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last chapter</button><br/>
+      <div class="row">
+        <div class="column-jump" id="column-jump-one">
+          <label id='jump-label-scene' for="scene">Scene No</label><br/>
+          <label id='jump-label-line-no' for="lineNo">Cue/line no</label><br/>
+          <label id='jump-label-chapter' for="chapter">Chapter</label><br/>
+        </div>
+        <div class="column-jump" id="column-jump-two">
+          <input type="text" id="scene" name="scene">
+          <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button>
+          <span id='min-and-max'></span><br/>
+          <input type="text" id="lineNo" name="lineNo">
+          <button id='btnGoLine' onclick="jade_modules.operations.getTargetLineNo()">Go</button>
+          <span id='min-and-max-lineNo'></span><br/>
+          <input type="text" id="chapter" name="chapter">
+          <button id='btnGoChapter' onclick="jade_modules.operations.getTargetChapter()">Go</button>
+          <span id='min-and-max-chapter'></span><br/>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="admin">
     <label class="section-label" onclick="jade_modules.operations.showAdmin()">Admin</label><a id='show-hide-admin' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a><br/>
     <div id="admin-group">
@@ -62,31 +89,4 @@
       <input type="text" id="source-row" name="source-row">
     </div>
   </div>  
-  <div id="jump">
-    <label class="section-label" onclick="jade_modules.operations.showJump()">Jump to...</label><a id='show-hide-jump' onclick="jade_modules.operations.showJump()">Show/hide jumping</a>
-    <div id="jump-buttons">
-      <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First chapter</button>
-      <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev chapter</button>
-      <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next chapter</button>
-      <button id='btnLast' onclick="jade_modules.operations.lastScene()">Last chapter</button><br/>
-      <div class="row">
-        <div class="column-jump" id="column-jump-one">
-          <label id='jump-label-scene' for="scene">Scene No</label><br/>
-          <label id='jump-label-line-no' for="lineNo">Cue/line no</label><br/>
-          <label id='jump-label-chapter' for="chapter">Chapter</label><br/>
-        </div>
-        <div class="column-jump" id="column-jump-two">
-          <input type="text" id="scene" name="scene">
-          <button id='btnGo' onclick="jade_modules.operations.getTargetSceneNumber()">Go</button>
-          <span id='min-and-max'></span><br/>
-          <input type="text" id="lineNo" name="lineNo">
-          <button id='btnGoLine' onclick="jade_modules.operations.getTargetLineNo()">Go</button>
-          <span id='min-and-max-lineNo'></span><br/>
-          <input type="text" id="chapter" name="chapter">
-          <button id='btnGoChapter' onclick="jade_modules.operations.getTargetChapter()">Go</button>
-          <span id='min-and-max-chapter'></span><br/>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
