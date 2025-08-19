@@ -113,7 +113,7 @@ async function getUKScript() {
     ukCharacterRange.load('rowIndex, columnIndex,rowCount');
     ukScriptRange.load('rowIndex, columnIndex, rowCount');
     await excel.sync()
-    cueRowIndex = ukCueRange.rowindex;
+    cueRowIndex = ukCueRange.rowIndex;
     lineRowIndex = ukLineRange.rowIndex;
     characterRowIndex = ukCharacterRange.rowIndex;
     rowIndex = ukScriptRange.rowIndex;
@@ -134,7 +134,7 @@ async function getUKScript() {
   //Fill in the number
   await fillRangeByIndexes(germanProcessingSheetName, lineRowIndex, lineColumnIndex, lineRowCount, ukData.number, true);
   //Fill in the character
-  await fillRangeByIndexes(germanProcessingSheetName, characterRowIndex, characterColumnIndex, characterColumnIndex, ukData.character, true);
+  await fillRangeByIndexes(germanProcessingSheetName, characterRowIndex, characterColumnIndex, characterRowCount, ukData.character, true);
   //Fill in the number
   await fillRangeByIndexes(germanProcessingSheetName, rowIndex, columnIndex, rowCount, ukData.ukScript, true);
 
