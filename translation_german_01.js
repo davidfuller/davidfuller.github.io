@@ -1,10 +1,12 @@
 const germanProcessingSheetName = 'German Processing';
 const translationCacheSheetName = 'Translation Cache';
-const gpTranslationRangeName = 'gpTranslation';
+
 const gpMachineTranslationRangeName = 'gpMachineTranslation'
 const gpProcessedRangeName = 'gpProcessed';
-const tcTranslationRangeName = 'tcTranslation';
+
 const tcMachineTranslationRangeName = 'tcMachineTranslation'
+const tcGermanRangeName = 'tcGerman'
+
 const loadMessageLabelName = 'load-message';
 
 async function copyValuesToCache(){
@@ -12,12 +14,19 @@ async function copyValuesToCache(){
   showCopyCacheWait(true)
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
-    let translationRange = gpSheet.getRange(gpTranslationRangeName);
+
+    let processedRange  = gpSheet.getRange(gpProcessedRangeName);
+    let translationRange = gpSheet.getRange(gpMachineTranslationRangeName);
+
     const tcSheet = excel.workbook.worksheets.getItem(translationCacheSheetName);
-    let cacheRange = tcSheet.getRange(tcTranslationRangeName);
+    let germanRange = tcSheet.getRange(tcGermanRangeName);
+    let tcTranslationRange = tcSheet(tcMachineTranslationRangeName);
     await excel.sync()
-    cacheRange.clear('Contents');
-    cacheRange.copyFrom(translationRange, 'values');
+    germanRange.clear('Contents');
+    germanRange.copyFrom(processedRange, 'values');
+    tcTranslationRange.clear('Contents');
+    tcTranslationRange.copyFrom(translationRange, 'values')
+
     await excel.sync()
   })
   showCopyCacheWait(false);
@@ -95,18 +104,18 @@ async function compareTranslationwithCache(doFormulae){
   let exceptions = [];
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
-    let translationRange = gpSheet.getRange(gpTranslationRangeName);
-    translationRange.load('values, rowIndex');
+    let processedRange = gpSheet.getRange(gpProcessedRangeName);
+    processedRange.load('values, rowIndex');
     const tcSheet = excel.workbook.worksheets.getItem(translationCacheSheetName);
-    let cacheRange = tcSheet.getRange(tcTranslationRangeName);
+    let cacheRange = tcSheet.getRange(tcGermanRangeName);
     cacheRange.load('values, rowIndex');
     await excel.sync();
 
-    let germanActual = translationRange.values.map(x => x[0]);
+    let germanActual = processedRange.values.map(x => x[0]);
     let germanCache = cacheRange.values.map(x => x[0]);
     for (let i = 0; i < germanActual.length; i++){
       if(germanActual[i] != germanCache[i]){
-        let temp = {index:i, actual: germanActual[i], cache: germanCache[i], rowIndex: i + translationRange.rowIndex}
+        let temp = {index:i, actual: germanActual[i], cache: germanCache[i], rowIndex: i + processedRange.rowIndex}
         exceptions.push(temp);
       }
     }
@@ -115,11 +124,6 @@ async function compareTranslationwithCache(doFormulae){
   
   if ((doFormulae) && (exceptions.length > 0)){
     await fillMachineFormula(exceptions[0].rowIndex)
-    /**
-    for (let i = 0; i < exceptions.length ; i++){
-      await applyMachineTranslationFormula(exceptions[i].rowIndex);
-    }
-    */
   }
   jade_modules.preprocess.hideMessage(loadMessageLabelName);
 }
