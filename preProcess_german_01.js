@@ -5,7 +5,13 @@ const originalLineName = 'loLineNos';
 const originalTextName = 'loText';
 const joinsRangeName = 'loJoins';
 const originalTextProcessingName = 'gpLineAndText';
-const ukScriptRangeName = 'gpLineCharacterAndUKScript';
+
+
+const ukCueRangeName = 'gpUKCue';
+const ukLineRangeName = 'gpUKLine';
+const ukCharacterRangeName = 'gpUKCharacter';
+const ukScriptRangeName = 'gpUKScript';
+
 const processedRangeName = 'gpProcessed';
 const processedLineNoRangeName = 'gpLineNo';
 const originalRangeName = 'gpOriginal';
@@ -25,7 +31,6 @@ const closeSpeechChar = '«';
 const cueOffset = 0;
 const numberOffset = 1;
 const characterOffset = 2;
-const ukScriptOffset = 3;
 
 const textInputProcessAddress = "process-address";
 const textInputSourceRow = "source-row";
@@ -85,27 +90,53 @@ async function getUKScript() {
   //get the data from the uk script sheet
   let ukData = await getUKData();
   //get the row and column indexes for the script part
-  let rowIndex
-  let columnIndex
-  let rowCount
+  let rowIndex;
+  let cueRowIndex;
+  let lineRowIndex;
+  let characterRowIndex;
+  let columnIndex;
+  let cueColumnIndex;
+  let lineColumnIndex;
+  let characterColumnIndex;
+  let rowCount;
+  let cueRowCount;
+  let lineRowCount;
+  let characterRowCount;
   await Excel.run(async function(excel) {
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    let ukCueRange = gpSheet.getRange(ukCueRangeName);
+    let ukLineRange = gpSheet.getRange(ukLineRangeName);
+    let ukCharacterRange = gpSheet.getRange(ukCharacterRangeName);
     let ukScriptRange = gpSheet.getRange(ukScriptRangeName);
-    ukScriptRange.load('rowIndex, columnIndex, rowCount')
+    ukCueRange.load('rowIndex, columnIndex,rowCount');
+    ukLineRange.load('rowIndex, columnIndex,rowCount');
+    ukCharacterRange.load('rowIndex, columnIndex,rowCount');
+    ukScriptRange.load('rowIndex, columnIndex, rowCount');
     await excel.sync()
-    rowIndex = ukScriptRange.rowIndex
-    columnIndex = ukScriptRange.columnIndex
+    cueRowIndex = ukCueRange.rowindex;
+    lineRowIndex = ukLineRange.rowIndex;
+    characterRowIndex = ukCharacterRange.rowIndex;
+    rowIndex = ukScriptRange.rowIndex;
+
+    cueColumnIndex = ukCueRange.columnIndex;
+    lineColumnIndex = ukLineRange.columnIndex;
+    characterColumnIndex = ukCharacterRange.columnIndex;
+    columnIndex = ukScriptRange.columnIndex;
+
+    cueRowCount = ukCueRange.rowCount
+    lineRowCount = ukLineRange.rowCount;
+    characterRowCount = ukCharacterRange.rowCount;
     rowCount = ukScriptRange.rowCount
   })
 
   //Fill in the cue
-  await fillRangeByIndexes(germanProcessingSheetName, rowIndex, columnIndex + cueOffset, rowCount, ukData.cue, true);
+  await fillRangeByIndexes(germanProcessingSheetName, cueRowIndex, cueColumnIndex, cueRowCount, ukData.cue, true);
   //Fill in the number
-  await fillRangeByIndexes(germanProcessingSheetName, rowIndex, columnIndex + numberOffset, rowCount, ukData.number, true);
+  await fillRangeByIndexes(germanProcessingSheetName, lineRowIndex, lineColumnIndex, lineRowCount, ukData.number, true);
   //Fill in the character
-  await fillRangeByIndexes(germanProcessingSheetName, rowIndex, columnIndex + characterOffset, rowCount, ukData.character, true);
+  await fillRangeByIndexes(germanProcessingSheetName, characterRowIndex, characterColumnIndex, characterColumnIndex, ukData.character, true);
   //Fill in the number
-  await fillRangeByIndexes(germanProcessingSheetName, rowIndex, columnIndex + ukScriptOffset, rowCount, ukData.ukScript, true);
+  await fillRangeByIndexes(germanProcessingSheetName, rowIndex, columnIndex, rowCount, ukData.ukScript, true);
 
 }
 
