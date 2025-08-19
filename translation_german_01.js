@@ -20,7 +20,7 @@ async function copyValuesToCache(){
 
     const tcSheet = excel.workbook.worksheets.getItem(translationCacheSheetName);
     let germanRange = tcSheet.getRange(tcGermanRangeName);
-    let tcTranslationRange = tcSheet(tcMachineTranslationRangeName);
+    let tcTranslationRange = tcSheet.getRange(tcMachineTranslationRangeName);
     await excel.sync()
     germanRange.clear('Contents');
     germanRange.copyFrom(processedRange, 'values');
