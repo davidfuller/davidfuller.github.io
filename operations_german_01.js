@@ -389,6 +389,7 @@ async function getTargetChapter(){
 async function getTargetLineNo(){
   let ctrlLineNo = tag('lineNo')
   let lineNo = parseInt(ctrlLineNo.value);
+  console.log('lineNo', lineNo);
   if (!isNaN(lineNo)){
     await selectLineNo(lineNo);
   }
@@ -425,6 +426,8 @@ async function selectLineNo(lineNo){
     await excel.sync();
     ukCueValues = ukCueRange.values.map(x => parseInt(x[0]));
     let lineNumber = parseInt(lineNo);
+    console.log(lineNumber);
+    console.log(ukCueValues);
     if (!isNaN(lineNumber)){
       foundRowIndex = ukCueValues.indexOf(lineNumber);
       rowIndex = foundRowIndex + ukCueRange.rowIndex
@@ -434,7 +437,6 @@ async function selectLineNo(lineNo){
         await excel.sync();
       }
     }
-    
   })
   
 
