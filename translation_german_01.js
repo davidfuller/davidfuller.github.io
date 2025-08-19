@@ -82,7 +82,7 @@ async function applyMachineTranslationFormula(rowIndex){
     translationRange.load("rowIndex, columnIndex")
     await excel.sync();
     let formulaRange = gpSheet.getRangeByIndexes(rowIndex, translationRange.columnIndex, 1,1)
-    let newFormula = '=IF(G' + (rowIndex+1).toString() + ' <> 0,TRANSLATE(L' + (rowIndex+1).toString() + ',"de","en"),"")'
+    let newFormula = '=IF(L' + (rowIndex+1).toString() + ' <> 0,TRANSLATE(L' + (rowIndex+1).toString() + ',"de","en"),"")'
     console.log('New formula', newFormula);
     formulaRange.clear('Contents');
     await excel.sync();
