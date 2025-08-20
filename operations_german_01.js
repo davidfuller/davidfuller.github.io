@@ -539,6 +539,6 @@ async function showHideComments(){
     } else {
       commentsColumn.columnHidden = true;
     }
-    await exccel.sync();
+    await excel.sync();
   })
 }
