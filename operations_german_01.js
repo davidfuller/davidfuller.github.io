@@ -530,7 +530,7 @@ async function getUsedRowCount(sheetName, rangeName){
 
 async function showHideComments(){
   await Excel.run(async function(excel) {
-    const sheet = excel.workbook.worksheets.getItem(gpSheet);
+    const sheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     let commentsColumn = sheet.getRange(commentsColumnName);
     commentsColumn.load('columnHidden');
     await excel.sync()
