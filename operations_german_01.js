@@ -224,6 +224,7 @@ async function processGerman() {
     console.log('Results')
     console.log('Total Good', totalGood, 'Total Wrong', totalWrong, 'Total Unequal', totalUnequal, 'Total Direct Copy', totalDirectCopy)
     console.log('The unequals', theUnequals);
+    showUnequals(theUnequals);
   })
   jade_modules.preprocess.hideMessage(loadMessageLabelName)
 }
@@ -233,6 +234,23 @@ function locations(substring, string) {
     i = -1;
   while ((i = string.indexOf(substring, i + 1)) >= 0) a.push(i);
   return a;
+}
+
+function showUnequals(theUnequals){
+  ctlLabel = tag('unequals-label');
+  ctlTextArea = tag('theUnequals');
+  if (theUnequals.length == 0){
+    ctlLabel.style.display = 'none';
+    ctlTextArea.style.display = 'none';
+  } else {
+    ctlLabel.style.display = 'block';
+    ctlTextArea.style.display = 'block';
+    let string;
+    for (let i = 0; i < theUnequals.length; i++){
+      string += theUnequals[i].text + '\n\n';
+    }
+    ctlTextArea.innerText = string;
+  }
 }
 
 function createLines(results) {

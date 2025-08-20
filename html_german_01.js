@@ -33,6 +33,8 @@ async function mainHTML(){
       <button id='btnAddToReplacementsProcess' onclick="jade_modules.replacements.addToReplacementsProcess()">Add to Replacements then Process</button>
       <button id='btnAddToReplacements' onclick="jade_modules.replacements.addToReplacements()">Add to Replacements</button>
       <br/>
+      <label id="unequals-label">Quote mismatches</label><br/>
+      <textarea id="theUnequals" cols="40"></textarea><br>
     </div>
   </div>
   <div id="jump">
