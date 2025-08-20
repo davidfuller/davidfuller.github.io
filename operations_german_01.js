@@ -12,6 +12,8 @@ const loadMessageLabelName = 'load-message';
 const gpUkScriptName = 'gpUKScript'
 const gpUkCueName = 'gpUKCue';
 
+const commentsColumnName = 'K:K';
+
 let chapterMinMaxDetails = {};
 let lineNoMinMaxDetails = {};
 
@@ -524,4 +526,19 @@ async function getUsedRowCount(sheetName, rangeName){
     console.log(usedRange.address, usedRange.rowCount);
   })
   return {rowIndex: rowIndex, rowCount: rowCount};
+}
+
+async function showHideComments(){
+  await Excel.run(async function(excel) {
+    const sheet = excel.workbook.worksheets.getItem(gpSheet);
+    let commentsColumn = sheet.getRange(commentsColumnName);
+    commentsColumn.load('columnHidden');
+    await excel.sync()
+    if (commentsColumn.columnHidden){
+      commentsColumn.columnHidden = false;
+    } else {
+      commentsColumn.columnHidden = true;
+    }
+    await exccel.sync();
+  })
 }

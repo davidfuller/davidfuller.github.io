@@ -38,6 +38,7 @@ async function mainHTML(){
   <div id="jump">
     <label class="section-label" onclick="jade_modules.operations.showJump()">Jump to...</label><a id='show-hide-jump' onclick="jade_modules.operations.showJump()">Show/hide jumping</a>
     <div id="jump-buttons">
+      <button id='btnShowHideComments' onclick="jade_modules.operations.showHideComments()">Show/hide Comments</button><br/>
       <button id='btnFirst' onclick="jade_modules.operations.firstScene()">First chapter</button>
       <button id='btnPrev' onclick="jade_modules.operations.findScene(-1)">Prev chapter</button>
       <button id='btnNext' onclick="jade_modules.operations.findScene(1)">Next chapter</button>
