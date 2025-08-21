@@ -247,7 +247,7 @@ function showUnequals(theUnequals){
     ctlTextArea.style.display = 'block';
     let string = '';
     for (let i = 0; i < theUnequals.length; i++){
-      string += theUnequals[i].text + '\n\n';
+      string += theUnequals[i].text + '===================================';
     }
     ctlTextArea.innerText = string;
   }
