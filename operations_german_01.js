@@ -560,3 +560,22 @@ async function showHideComments(){
     await excel.sync();
   })
 }
+async function setUpEvents(){
+  lineNoInput = tag('lineNo');
+  chapterInput = tag('chapter');
+  
+  lineNoInput.addEventListener('keypress',async function(event){
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      await getTargetLineNo();
+    }
+  })
+  chapterInput.addEventListener('keypress',async function(event){
+    if (event.key === 'Enter'){
+      event.preventDefault();
+      await getTargetChapter();
+    }
+  })
+  console.log('Events set up')
+}
+
