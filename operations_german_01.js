@@ -579,3 +579,28 @@ async function setUpEvents(){
   console.log('Events set up')
 }
 
+function whatChapter(rowIndex){
+  let chapter = 0;
+  let exact = false;
+  for (let i; i < chapterMinMaxDetails.details.length - 1; i++) {
+    if ((rowIndex >= chapterMinMaxDetails.detail[i].rowIndex) && (rowIndex < chapterMinMaxDetails.details[i + 1])){
+      chapter = chapterMinMaxDetails[i].chapterNumber;
+      exact = rowIndex == chapterMinMaxDetails.detail[i].rowIndex;
+      break;
+    }
+  }
+  return {chapter: chapter, exact: exact};
+}
+
+async function firstChapter(){
+  await Excel.run(async function(excel) {
+    const activeCell = excel.workbook.getActiveCell();
+    const gpProcessSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    
+    activeCell.load('rowIndex, address');
+    await excel.sync();
+    let theChapter = whatChapter(activeCell.rowIndex);
+    console.log('theChapter', theChapter);
+  })
+}
+
