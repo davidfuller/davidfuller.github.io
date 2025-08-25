@@ -22,7 +22,7 @@ const numberColumnIndex = 6;
 const characterColumnIndex = 7;
 const ukScriptColumnIndex = 10;
 const firstRowIndex = 3;
-const lastRowCount = 10000;
+const lastRowCount = 20000;
 
 const openSpeechChar = '»';
 const closeSpeechChar = '«';
