@@ -3250,6 +3250,8 @@ async function showForDirector(){
   locationPage.style.display = 'none';
   const actorScriptPage = tag('script-page');
   actorScriptPage.style.display = 'none';
+  const germanPage = tag('german-page');
+  germanPage.style.display = 'none';
   styleScriptController('director');
   await Excel.run(async function(excel){
     let ForDirectorSheet = excel.workbook.worksheets.getItem(forDirectorName);
@@ -3273,6 +3275,8 @@ async function showWallaImportPage(){
   locationPage.style.display = 'none';
   const actorScriptPage = tag('script-page');
   actorScriptPage.style.display = 'none';
+  const germanPage = tag('german-page');
+  germanPage.style.display = 'none';
   styleScriptController('walla');
   await Excel.run(async function(excel){
     let wallaImportSheet = excel.workbook.worksheets.getItem(wallaImportName);
@@ -3297,6 +3301,8 @@ async function showActorScript(sheetName = actorScriptName, activateSheet = true
   locationPage.style.display = 'none';
   const actorScriptPage = tag('script-page');
   actorScriptPage.style.display = 'block';
+  const germanPage = tag('german-page');
+  germanPage.style.display = 'none';
   styleScriptController('actorScript');
   if (activateSheet){
     await Excel.run(async function(excel){
@@ -3323,6 +3329,8 @@ async function showMainPage(){
   const versionInfo = tag('sheet-version');
   const actorScriptPage = tag('script-page');
   actorScriptPage.style.display = 'none';
+  const germanPage = tag('german-page');
+  germanPage.style.display = 'none';
   styleScriptController('main')
   await Excel.run(async function(excel){
     scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -3367,6 +3375,8 @@ async function showForActorsPage(){
   locationPage.style.display = 'none';
   const actorScriptPage = tag('script-page');
   actorScriptPage.style.display = 'none';
+  const germanPage = tag('german-page');
+  germanPage.style.display = 'none';
   styleScriptController('actor');
   await Excel.run(async function(excel){
     let actorsSheet = excel.workbook.worksheets.getItem(forActorsName);
@@ -3378,7 +3388,6 @@ async function showForActorsPage(){
 
 function styleScriptController(theme){
   console.log('Theme', theme, screenColours[theme]);
-  console.log('screenColours', screenColours)
   const scriptController = tag('Script-Controller');
   scriptController.style.backgroundColor = screenColours[theme].background;
   scriptController.style.height = '100vh';
@@ -3402,6 +3411,8 @@ async function showForSchedulingPage(){
   locationPage.style.display = 'none';
   const actorScriptPage = tag('script-page');
   actorScriptPage.style.display = 'none';
+  const germanPage = tag('german-page');
+  germanPage.style.display = 'none';
   styleScriptController('scheduling');
   await Excel.run(async function(excel){
     let schedulingSheet = excel.workbook.worksheets.getItem(forSchedulingName);
@@ -3425,6 +3436,8 @@ async function showLocation(){
   locationWait.style.display = 'none';
   const actorScriptPage = tag('script-page');
   actorScriptPage.style.display = 'none';
+  const germanPage = tag('german-page');
+  germanPage.style.display = 'none';
   styleScriptController('location');
   await Excel.run(async function(excel){
     let locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
