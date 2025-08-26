@@ -421,7 +421,7 @@ async function mainHTML(){
     <button id="btnLocationPageScript" class="german-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
   </div>
   <div id="germanButtons">
-    <button id='btnAddNamesToScriptSheet' class="german-button" onclick="jade_modules.german.createScriptNames">Add names to script</button>
+    <button id='btnAddNamesToScriptSheet' class="german-button" onclick="jade_modules.german.createScriptNames()">Add names to script</button>
     <button id='btnGermanGoTo' class="german-button" onclick="jade_modules.scheduling.locationGoToLine()">Goto first line of<br/>of selected scene</button>
     <label id='german-wait'>Please wait...</label>
   </div>
