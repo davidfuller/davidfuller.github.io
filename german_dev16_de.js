@@ -23,7 +23,11 @@ async function createScriptNames(){
   console.log('createSciptNames')
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    scriptSheet.load('names');
+    let theNames = scriptSheet.names.load();
+    await excel.sync();
+    for (let i = 0; i < theNames.length; i++){
+      console.log(i, theNames[i].name);
+    }
     await excel.sync();
     console.log('After excel.sync()');
     console.log(scriptRangeNames);
