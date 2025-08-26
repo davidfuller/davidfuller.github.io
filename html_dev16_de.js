@@ -413,12 +413,12 @@ async function mainHTML(){
 <div id="german-page">
   <label id='german-label'>German</label><br/>
   <div id="german-nav-buttons">
-    <button id="btnMainPage" class="location-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
-    <button id="btnForDirectorPageLocation" class="location-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
-    <button id="btnForActorPage" class="location-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
-    <button id="btnForSchedulingPage" class="location-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
-    <button id="btnWallaImport" class="location-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button><br/>
-    <button id="btnLocationPageScript" class="script-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
+    <button id="btnMainPage" class="german-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+    <button id="btnForDirectorPageLocation" class="german-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
+    <button id="btnForActorPage" class="german-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
+    <button id="btnForSchedulingPage" class="german-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+    <button id="btnWallaImport" class="german-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
+    <button id="btnLocationPageScript" class="german-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
   </div>
   <div id="germanButtons">
     <button id='btnGetGermanInfo' class="german-button" onclick="jade_modules.scheduling.getLocationInfo()">Get info for<br/>location</button>
