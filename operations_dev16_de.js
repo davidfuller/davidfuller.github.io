@@ -3374,6 +3374,7 @@ async function showForActorsPage(){
 
 function styleScriptController(theme){
   console.log('Theme', theme, screenColours[theme]);
+  console.log('screenColours', screenColours)
   const scriptController = tag('Script-Controller');
   scriptController.style.backgroundColor = screenColours[theme].background;
   scriptController.style.height = '100vh';
