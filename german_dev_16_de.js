@@ -1,0 +1,36 @@
+function auto_exec(){}
+
+const germanProcessingSheetName = 'German Processing';
+const scriptSheetName = 'Script';
+
+const scriptRangeNames = [
+  { name: 'scUKCue',
+    range: 'F3:F30000'
+  },
+  { name: 'scUKNumber',
+    range: 'G3:G30000'
+  },
+
+]
+
+async function createScriptNames(){
+  await Excel.run(async function(excel){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    await excel.sync();
+    for (let i = 0; i < scriptRangeNames.length;i++){
+      let tempRange = workbook.names.getItemOrNullObject(scriptRangeNames[i].name);
+      await excel.sync();
+      if (tempRange.isNullObject()){
+        // add the name;
+        let newRange = scriptSheet.getRange(scriptRangeNames[i].range);
+        scriptSheet.names.add(scriptRangeNames[i].name, newRange);
+        await excel.sync();
+      }
+    }
+  })
+
+
+}
+
+
+
