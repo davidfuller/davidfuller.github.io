@@ -25,8 +25,9 @@ async function createScriptNames(){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let theNames = scriptSheet.names.load();
     await excel.sync();
-    for (let i = 0; i < theNames.length; i++){
-      console.log(i, theNames[i].name);
+    console.log(theNames.items.length);
+    for (let i = 0; i < theNames.items.length; i++){
+      console.log(i, theNames.items[i].name);
     }
     await excel.sync();
     console.log('After excel.sync()');
