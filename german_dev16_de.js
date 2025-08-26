@@ -10,6 +10,12 @@ const scriptRangeNames = [
   { name: 'scUKNumber',
     range: 'G3:G30000'
   },
+  { name: 'scUKCharacter',
+    range: 'H3:H30000'
+  },
+  { name: 'scUKScript',
+    range: 'K3:K30000'
+  }
 
 ]
 
