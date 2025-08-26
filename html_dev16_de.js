@@ -14,6 +14,7 @@ async function mainHTML(){
     <button id="btnForSchedulingPage" class="nav-button" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
     <button id="btnWallaImport" class="nav-button" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button>
     <button id="btnLocationPage" class="nav-button" onclick="jade_modules.operations.showLocation()">Location</button><br/>
+    <button id="btnGermanPage" class="nav-button" onclick="jade_modules.operations.showGerman()">German</button><br/>
     <a id='show-hide' onclick="jade_modules.operations.showAdmin()">Show/hide admin</a>
     <a id='show-hide-comparison' onclick="jade_modules.operations.showComparison()">Show/hide comparison</a>
     <a id='show-hide-us-script' onclick="jade_modules.operations.showUsScript()">Show/hide US Script</a>
@@ -407,6 +408,22 @@ async function mainHTML(){
     <label id='resize-wait'>Working... Please wait</label><br>
     <button id="btnIncreaseRowHeight" class="script-nav" onclick="jade_modules.actormultiple.actorScriptChangeHeight(10)">Increase Row Height</button>
     <button id="btnDecreaseRowHeight" class="script-nav" onclick="jade_modules.actormultiple.actorScriptChangeHeight(-10)">Decrease Row Height</button>
+  </div>
+</div>
+<div id="german-page">
+  <label id='german-label'>German</label><br/>
+  <div id="german-nav-buttons">
+    <button id="btnMainPage" class="location-nav" onclick="jade_modules.operations.showMainPage()">Main Page</button>
+    <button id="btnForDirectorPageLocation" class="location-nav" onclick="jade_modules.operations.showForDirector()">For Director</button>
+    <button id="btnForActorPage" class="location-nav" onclick="jade_modules.operations.showForActorsPage()">For Actors</button>
+    <button id="btnForSchedulingPage" class="location-nav" onclick="jade_modules.operations.showForSchedulingPage()">For Scheduling</button>
+    <button id="btnWallaImport" class="location-nav" onclick="jade_modules.operations.showWallaImportPage()">Walla Import</button><br/>
+    <button id="btnLocationPageScript" class="script-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
+  </div>
+  <div id="germanButtons">
+    <button id='btnGetGermanInfo' class="german-button" onclick="jade_modules.scheduling.getLocationInfo()">Get info for<br/>location</button>
+    <button id='btnGermanGoTo' class="german-button" onclick="jade_modules.scheduling.locationGoToLine()">Goto first line of<br/>of selected scene</button>
+    <label id='german-wait'>Please wait...</label>
   </div>
 </div>
   `;
