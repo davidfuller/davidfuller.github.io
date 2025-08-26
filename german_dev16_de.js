@@ -27,7 +27,7 @@ async function createScriptNames(){
     console.log('After excel.sync()');
     console.log(scriptRangeNames);
     for (let i = 0; i < scriptRangeNames.length;i++){
-      let tempRange = scriptSheet.getRangeOrNullObject(scriptRangeNames[i].name);
+      let tempRange = excel.workbook.names.getItemOrNullObject(scriptRangeNames[i].name).getRangeOrNullObject();
       await excel.sync();
       console.log(i, 'tempRange', tempRange);
       
