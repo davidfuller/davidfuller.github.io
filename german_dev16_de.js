@@ -23,7 +23,7 @@ async function createScriptNames(){
     for (let i = 0; i < scriptRangeNames.length;i++){
       let tempRange = excel.workbook.names.getItemOrNullObject(scriptRangeNames[i].name);
       await excel.sync();
-      if (tempRange.isNullObject{
+      if (tempRange.isNullObject){
         // add the name;
         let newRange = scriptSheet.getRange(scriptRangeNames[i].range);
         scriptSheet.names.add(scriptRangeNames[i].name, newRange);
