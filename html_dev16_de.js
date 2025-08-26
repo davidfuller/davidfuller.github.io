@@ -450,7 +450,7 @@ async function mainHTML(){
   await jade_modules.comparison.autoSelectChapter();
   await jade_modules.operations.fillCharacterAndTakesDropdowns();
 
-  console.log("I'm here data loaded. Dev 15");
+  console.log("I'm here data loaded. Dev 16");
 }
 
  
