@@ -31,8 +31,6 @@ async function createScriptNames(){
       }
     }
   })
-
-
 }
 
 
