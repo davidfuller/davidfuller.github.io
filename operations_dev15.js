@@ -105,6 +105,10 @@ let screenColours = {
   actorScript: {
     background: '#ffffff',
     fontColour: '#333333'
+  },
+  german: {
+    background: '#FFC2C2',
+    fontColour: '#700000'
   }
 }
 
