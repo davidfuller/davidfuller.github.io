@@ -42,7 +42,7 @@ async function createScriptNames(){
       if (tempRange.isNullObject){
         // add the name;
         let newRange = scriptSheet.getRange(scriptRangeNames[i].range);
-        scriptSheet.names.add(scriptRangeNames[i].name, newRange);
+        excel.workbook.names.add(scriptRangeNames[i].name, newRange);
         await excel.sync();
       }
     }
