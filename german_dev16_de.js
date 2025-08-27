@@ -20,35 +20,27 @@ const scriptRangeNames = [
 ]
 
 async function createScriptNames(){
-  console.log('createSciptNames')
+  let numAdded = 0;
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     
     //get the names in the workbook
     let theNames = excel.workbook.names.load();
     await excel.sync();
-    currentNames = theNames.items.map(x => x.name);
+    let currentNames = theNames.items.map(x => x.name);
     console.log('currentNames', currentNames)
 
-    /**
     for (let i = 0; i < scriptRangeNames.length;i++){
-      if (!theNames.items.includes())
-
-
-      let tempRange = excel.workbook.names.getItemOrNullObject(scriptRangeNames[i].name).getRangeOrNullObject();
-      tempRange.load('address');
-      await excel.sync();
-      console.log(i, 'tempRange', tempRange.address);
-      
-      if (tempRange.isNullObject){
-        // add the name;
+      if (!currentNames.includes(scriptRangeNames[i].name)){
+        // It doesn't currently exist... add it
         let newRange = scriptSheet.getRange(scriptRangeNames[i].range);
         excel.workbook.names.add(scriptRangeNames[i].name, newRange);
         await excel.sync();
+        let numAdded += 1;
       }
     }
-    */
   })
+  console.log('numAdded', numAdded)
 }
 
 
