@@ -27,12 +27,12 @@ const scriptRangeNames = [
   { name: 'scUKCueWorking',
     range: 'DA3:DA30000',
     heading: 'UK Cue (Working)',
-    formula: '=F3'
+    formula: '=IF(ISNUMBER(F3),F3,"")'
   },
   { name: 'scUKNumberWorking',
     range: 'DB3:DB30000',
     heading: 'UK No (Working)',
-    formula: '=G3'
+    formula: '=IF(ISNUMBER(G3),G3,"")'
   },
   { name: 'scUKCharacterWorking',
     range: 'DC3:DC30000',
