@@ -129,6 +129,16 @@ async function processTheGerman(){
   console.log('gpCharacterDetails', gpCharacterDetails);
   console.log('gpScriptDetails', gpScriptDetails);
 
+  //for (let i = 0; i < ukCharacterDetails.values.length; i++){
+  for (let i = 0; i < 30; i++){
+    let j = 0;
+    let maxJ = 50000
+    while ((!sameCueDetails(ukCueDetails, i, gpCueDetails,j)) & (j < maxJ)){
+      j++
+    }
+    console.log(i,j, ukCueDetails[i], gpCueDetails[j]);
+  }
+
 }
 
 async function getRangeDetails(sheetName, rangeName){
@@ -147,4 +157,9 @@ async function getRangeDetails(sheetName, rangeName){
   })
   return details;
 }
+
+function sameCueDetails(uk, i,  gp, j){
+  return uk.values[i] == gp.values[j]
+}
+
 
