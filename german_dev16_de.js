@@ -180,6 +180,7 @@ async function processTheGerman(){
 }
 
 async function getRangeDetails(sheetName, rangeName){
+  console.log('sheetName', sheetName, 'rangeName', rangeName)
   let details = {}
   await Excel.run(async function(excel){
     const theSheet = excel.workbook.worksheets.getItem(sheetName);
