@@ -6,35 +6,43 @@ const scriptSheetName = 'Script';
 const scriptRangeNames = [
   { name: 'scUKCue',
     range: 'F3:F30000',
-    heading: ''
+    heading: '',
+    formula: ''
   },
   { name: 'scUKNumber',
     range: 'G3:G30000',
-    heading: ''
+    heading: '',
+    formula: ''
   },
   { name: 'scUKCharacter',
     range: 'H3:H30000',
-    heading: ''
+    heading: '',
+    formula: ''
   },
   { name: 'scUKScript',
     range: 'K3:K30000',
-    heading: ''
+    heading: '',
+    formula: ''
   },
   { name: 'scUKCueWorking',
     range: 'DA3:DA30000',
-    heading: 'UK Cue (Working)'
+    heading: 'UK Cue (Working)',
+    formula: '=F3'
   },
   { name: 'scUKNumberWorking',
     range: 'DB3:DB30000',
-    heading: 'UK No (Working)'
+    heading: 'UK No (Working)',
+    formula: '=G3'
   },
   { name: 'scUKCharacterWorking',
     range: 'DC3:DC30000',
-    heading: 'UK Character (Working)'
+    heading: 'UK Character (Working)',
+    formula: '=H3'
   },
   { name: 'scUKScriptWorking',
     range: 'DD3:DD30000',
-    heading: 'UK Script (Working)'
+    heading: 'UK Script (Working)',
+    formula: '=K3'
   }
 
 ]
@@ -75,10 +83,13 @@ async function setUpNewColumns(){
         let headerRange = scriptSheet.getRangeByIndexes(tempRange.rowIndex - 1, tempRange.columnIndex, 1, 1);
         headerRange.values = [[scriptRangeNames[i].heading]];
         await excel.sync();
+        let topCell = scriptSheet.getRangeByIndexes(tempRange.rowIndex, tempRange.columnIndex, 1, 1);
+        topCell.formulas = [['=F3']];
+        await excel.sync();
       }
     }
   })
 }
-
+//topCell.autoFill(fillRange, 'FillDefault');
 
 
