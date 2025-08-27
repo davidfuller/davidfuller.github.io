@@ -36,7 +36,7 @@ async function createScriptNames(){
         let newRange = scriptSheet.getRange(scriptRangeNames[i].range);
         excel.workbook.names.add(scriptRangeNames[i].name, newRange);
         await excel.sync();
-        let numAdded += 1;
+        numAdded += 1;
       }
     }
   })
