@@ -3465,8 +3465,10 @@ async function showGerman(){
   germanPage.style.display = 'block';
   styleScriptController('german');
   await Excel.run(async function(excel){
-    let locationSheet = excel.workbook.worksheets.getItem(locationSheetName);
-    locationSheet.activate();
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    scriptSheet.activate();
+    let myTarget = scriptSheet.range('DE3');
+    myTarget.select();
   })
 }
 
