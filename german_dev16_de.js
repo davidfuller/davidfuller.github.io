@@ -136,6 +136,12 @@ async function processTheGerman(){
     while ((!sameCueDetails(ukCueDetails, i, gpCueDetails,j)) & (j < maxJ)){
       j++
     }
+
+    if (j < maxJ){
+      if (ukNumberDetails.values[i] == gpNumberDetails.values[j]){
+        console.log(i,j, 'Number match');
+      }
+    }
     console.log(i,j, ukCueDetails.values[i], gpCueDetails.values[j]);
   }
 
