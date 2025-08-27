@@ -126,8 +126,13 @@ async function processTheGerman(){
   let gpScriptDetails = await getRangeDetails(germanProcessingSheetName, 'gpUKScript');
 
   let scGermanProcessed = await getRangeDetails(scriptSheetName, 'scGermanProcessed');
+  await clearRangeContents(scriptSheetName, 'scGermanProcessed');
+  
   let scGermanComments = await getRangeDetails(scriptSheetName, 'scGermanComments');
+  await clearRangeContents(scriptSheetName, 'scGermanComments');
+  
   let scUKCheck = await getRangeDetails(scriptSheetName, 'scUKCheck');
+  await clearRangeContents(scriptSheetName, 'scUKCheck');
 
   let gpGermanProcessed = await getRangeDetails(germanProcessingSheetName, 'gpProcessed');
   let gpGermanComments = await getRangeDetails(germanProcessingSheetName, 'gpComments');
@@ -217,6 +222,15 @@ function sameCueDetails(uk, i,  gp, j){
     return false;
   }
   
+}
+async function clearRangeContents(sheetName, rangeName){
+  console.log('sheetName', sheetName, 'rangeName', rangeName)
+  await Excel.run(async function(excel){
+    const theSheet = excel.workbook.worksheets.getItem(sheetName);
+    let theRange = theSheet.getRange(rangeName);
+    theRange.clear('Contents');
+    await excel.sync();
+  })
 }
 
 
