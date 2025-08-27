@@ -168,6 +168,10 @@ async function processTheGerman(){
               console.log('German', germanProcessRange.values[0][0]);
               console.log('Comment', germanCommentRange.values[0][0]);
               console.log('UK Check', ukCheckRange.values[0][0]);
+              
+              let scGermanProcessedRange = scriptSheet.getRangeByIndexes(scRowIndex, scGermanProcessed.columnIndex, 1, 1);
+              scGermanProcessedRange.values = [[germanProcessRange.values[0][0]]];
+              await excel.sync(); 
             } else {
               console.log(i,j, '=====================> Failed on Script Match');
             }
