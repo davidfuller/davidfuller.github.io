@@ -23,17 +23,18 @@ async function createScriptNames(){
   console.log('createSciptNames')
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    
+    //get the names in the workbook
     let theNames = excel.workbook.names.load();
     await excel.sync();
-    console.log(theNames.items.length);
-    for (let i = 0; i < theNames.items.length; i++){
-      console.log(i, theNames.items[i].name);
-    }
-    await excel.sync();
-    console.log('After excel.sync()');
-    console.log(scriptRangeNames);
-    console.log(scriptSheet.names);
+    currentNames = theNames.items.map(x => x.name);
+    console.log('currentNames', currentNames)
+
+    /**
     for (let i = 0; i < scriptRangeNames.length;i++){
+      if (!theNames.items.includes())
+
+
       let tempRange = excel.workbook.names.getItemOrNullObject(scriptRangeNames[i].name).getRangeOrNullObject();
       tempRange.load('address');
       await excel.sync();
@@ -46,6 +47,7 @@ async function createScriptNames(){
         await excel.sync();
       }
     }
+    */
   })
 }
 
