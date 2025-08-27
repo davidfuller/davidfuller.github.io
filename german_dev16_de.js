@@ -136,7 +136,7 @@ async function processTheGerman(){
     while ((!sameCueDetails(ukCueDetails, i, gpCueDetails,j)) & (j < maxJ)){
       j++
     }
-    console.log(i,j, ukCueDetails[i], gpCueDetails[j]);
+    console.log(i,j, ukCueDetails.values[i], gpCueDetails.values[j]);
   }
 
 }
@@ -159,7 +159,12 @@ async function getRangeDetails(sheetName, rangeName){
 }
 
 function sameCueDetails(uk, i,  gp, j){
-  return uk.values[i] == gp.values[j]
+  if (uk.values[i] != ''){
+    return uk.values[i] == gp.values[j]
+  } else {
+    return false;
+  }
+  
 }
 
 
