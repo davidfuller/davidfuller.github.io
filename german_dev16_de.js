@@ -137,45 +137,50 @@ async function processTheGerman(){
   console.log('gpCharacterDetails', gpCharacterDetails);
   console.log('gpScriptDetails', gpScriptDetails);
 
-  //for (let i = 0; i < ukCharacterDetails.values.length; i++){
-  for (let i = 0; i < 30; i++){
-    let j = 0;
-    let maxJ = 50000
-    while ((!sameCueDetails(ukCueDetails, i, gpCueDetails,j)) & (j < maxJ)){
-      j++
-    }
-
-    if (j < maxJ){
-      if (ukNumberDetails.values[i] == gpNumberDetails.values[j]){
-        console.log(i,j, 'Number match');
-        if (ukCharacterDetails.values[i] == gpCharacterDetails.values[j]){
-          console.log(i,j, 'Character match');
-          if (ukScriptDetails.values[i] == gpScriptDetails.values[j]){
-            console.log(i,j, 'Script Match');
-            let gpRowIndex = j + gpCueDetails.rowIndex;
-            let scRowIndex = i + ukCueDetails.rowIndex
-            let germanProcessRange = germanProcessingSheetName.getRangeByIndexes(gpRowIndex, gpGermanProcessed.columnIndex, 1, 1);
-            let germanCommentRange = germanProcessingSheetName.getRangeByIndexes(gpRowIndex, gpGermanComments.columnIndex, 1, 1);
-            let ukCheckRange = germanProcessingSheetName.getRangeByIndexes(gpRowIndex, gpScriptDetails.columnIndex, 1, 1);
-            germanProcessRange.load('values');
-            germanCommentRange.load('values');
-            ukCheckRange.load('values');
-            await excel.sync();
-            console.log('German', germanProcessRange.values[0][0]);
-            console.log('Comment', germanCommentRange.values[0][0]);
-            console.log('UK Check', ukCheckRange.values[0][0]);
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
+    await excel.sync();
+    //for (let i = 0; i < ukCharacterDetails.values.length; i++){
+    for (let i = 0; i < 30; i++){
+      let j = 0;
+      let maxJ = 50000
+      while ((!sameCueDetails(ukCueDetails, i, gpCueDetails,j)) & (j < maxJ)){
+        j++
+      }
+  
+      if (j < maxJ){
+        if (ukNumberDetails.values[i] == gpNumberDetails.values[j]){
+          console.log(i,j, 'Number match');
+          if (ukCharacterDetails.values[i] == gpCharacterDetails.values[j]){
+            console.log(i,j, 'Character match');
+            if (ukScriptDetails.values[i] == gpScriptDetails.values[j]){
+              console.log(i,j, 'Script Match');
+              let gpRowIndex = j + gpCueDetails.rowIndex;
+              let scRowIndex = i + ukCueDetails.rowIndex
+              let germanProcessRange = gpSheet.getRangeByIndexes(gpRowIndex, gpGermanProcessed.columnIndex, 1, 1);
+              let germanCommentRange = gpSheet.getRangeByIndexes(gpRowIndex, gpGermanComments.columnIndex, 1, 1);
+              let ukCheckRange = gpSheet.getRangeByIndexes(gpRowIndex, gpScriptDetails.columnIndex, 1, 1);
+              germanProcessRange.load('values');
+              germanCommentRange.load('values');
+              ukCheckRange.load('values');
+              await excel.sync();
+              console.log('German', germanProcessRange.values[0][0]);
+              console.log('Comment', germanCommentRange.values[0][0]);
+              console.log('UK Check', ukCheckRange.values[0][0]);
+            } else {
+              console.log(i,j, '=====================> Failed on Script Match');
+            }
           } else {
-            console.log(i,j, '=====================> Failed on Script Match');
+            console.log(i,j, '=====================> Failed on Character Match');
           }
         } else {
-          console.log(i,j, '=====================> Failed on Character Match');
+          console.log(i,j, '=====================> Failed on Number Match');        
         }
-      } else {
-        console.log(i,j, '=====================> Failed on Number Match');        
       }
+      console.log(i,j, ukCueDetails.values[i], gpCueDetails.values[j]);
     }
-    console.log(i,j, ukCueDetails.values[i], gpCueDetails.values[j]);
-  }
+  })
 
 }
 
