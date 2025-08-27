@@ -140,6 +140,12 @@ async function processTheGerman(){
     if (j < maxJ){
       if (ukNumberDetails.values[i] == gpNumberDetails.values[j]){
         console.log(i,j, 'Number match');
+        if (ukCharacterDetails.values[i] == gpCharacterDetails.values[j]){
+          console.log(i,j, 'Character match');
+          if (ukScriptDetails.values[i] == gpScriptDetails.values[j]){
+            console.log(i,j, 'Script Match');
+          }
+        }
       }
     }
     console.log(i,j, ukCueDetails.values[i], gpCueDetails.values[j]);
