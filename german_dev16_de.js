@@ -83,9 +83,11 @@ async function setUpNewColumns(){
         let headerRange = scriptSheet.getRangeByIndexes(tempRange.rowIndex - 1, tempRange.columnIndex, 1, 1);
         headerRange.values = [[scriptRangeNames[i].heading]];
         await excel.sync();
-        let topCell = scriptSheet.getRangeByIndexes(tempRange.rowIndex, tempRange.columnIndex, 1, 1);
-        topCell.formulas = [['=F3']];
-        await excel.sync();
+        if (scriptRangeNames[i].formula != ''){
+          let topCell = scriptSheet.getRangeByIndexes(tempRange.rowIndex, tempRange.columnIndex, 1, 1);
+          topCell.formulas = [[scriptRangeNames[i].formula]];
+          await excel.sync();
+        }
       }
     }
   })
