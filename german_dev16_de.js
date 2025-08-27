@@ -116,14 +116,18 @@ async function processTheGerman(){
   let ukCharacterDetails = await getRangeDetails(scriptSheetName, 'scUKCharacterWorking');
   let ukScriptDetails = await getRangeDetails(scriptSheetName, 'scUKScriptWorking');
   console.log('ukCueDetails', ukCueDetails);
+  console.log('ukNumberDetails', ukNumberDetails);
   console.log('ukCharacterDetails', ukCharacterDetails);
   console.log('ukScriptDetails', ukScriptDetails);
 
   let gpCueDetails = await getRangeDetails(germanProcessingSheetName, 'gpUKCue');
+  let gpNumberDetails = await getRangeDetails(germanProcessingSheetName, 'gpUKLine');
+  let gpCharacterDetails = await getRangeDetails(germanProcessingSheetName, 'gpUKCharacter');
+  let gpScriptDetails = await getRangeDetails(germanProcessingSheetName, 'gpUKScript');
   console.log('gpCueDetails', gpCueDetails);
-
-
-
+  console.log('gpNumberDetails', gpNumberDetails);
+  console.log('gpCharacterDetails', gpCharacterDetails);
+  console.log('gpScriptDetails', gpScriptDetails);
 
 }
 
