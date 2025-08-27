@@ -148,6 +148,7 @@ async function processTheGerman(){
     await excel.sync();
     //for (let i = 0; i < ukCharacterDetails.values.length; i++){
     for (let i = 0; i < 30; i++){
+      germanMessage(true, 'Doing ' + i + ' of ' + ukCharacterDetails.values.length);
       let j = 0;
       let maxJ = 50000
       while ((!sameCueDetails(ukCueDetails, i, gpCueDetails,j)) & (j < maxJ)){
@@ -193,6 +194,7 @@ async function processTheGerman(){
       }
       console.log(i,j, ukCueDetails.values[i], gpCueDetails.values[j]);
     }
+    germanMessage(false, '');
   })
 
 }
@@ -231,6 +233,16 @@ async function clearRangeContents(sheetName, rangeName){
     theRange.clear('Contents');
     await excel.sync();
   })
+}
+
+function germanMessage(show, message){
+  let lblGerman = tag('german-wait')
+  if (show){
+    lblGerman.style.display = 'block';
+  } else {
+    lblGerman.style.display = 'none';
+  }
+  lblGerman.innerText = message;
 }
 
 
