@@ -37,12 +37,12 @@ const scriptRangeNames = [
   { name: 'scUKCharacterWorking',
     range: 'DC3:DC30000',
     heading: 'UK Character (Working)',
-    formula: '=H3'
+    formula: '=IF(H3=0,"",H3)'
   },
   { name: 'scUKScriptWorking',
     range: 'DD3:DD30000',
     heading: 'UK Script (Working)',
-    formula: '=K3'
+    formula: '=IF(K3=0,"",K3)'
   }
 
 ]
@@ -87,11 +87,13 @@ async function setUpNewColumns(){
           let topCell = scriptSheet.getRangeByIndexes(tempRange.rowIndex, tempRange.columnIndex, 1, 1);
           topCell.formulas = [[scriptRangeNames[i].formula]];
           await excel.sync();
+          topCell.autoFill(tempRange, 'FillDefault');
+          await excel.sync();
         }
       }
     }
   })
 }
-//topCell.autoFill(fillRange, 'FillDefault');
+
 
 
