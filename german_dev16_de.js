@@ -112,7 +112,12 @@ async function setUpNewColumns(){
 
 async function processTheGerman(){
   let ukCueDetails = await getRangeDetails(scriptSheetName, 'scUKCueWorking');
-  console.log('ukCueDetails', ukCueDetails)
+  let ukNumberDetails = await getRangeDetails(scriptSheetName, 'scUKNumberWorking');
+  let ukCharacterDetails = await getRangeDetails(scriptSheetName, 'scUKCharacterWorking');
+  let ukScriptDetails = await getRangeDetails(scriptSheetName, 'scUKScriptWorking');
+  console.log('ukCueDetails', ukCueDetails);
+  console.log('ukCharacterDetails', ukCharacterDetails);
+  console.log('ukScriptDetails', ukScriptDetails);
 }
 
 async function getRangeDetails(sheetName, rangeName){
