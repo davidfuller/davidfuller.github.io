@@ -3467,7 +3467,7 @@ async function showGerman(){
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     scriptSheet.activate();
-    let myTarget = scriptSheet.range('DE3');
+    let myTarget = scriptSheet.getRange('DE3');
     myTarget.select();
   })
 }
