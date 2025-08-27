@@ -37,7 +37,7 @@ label {
 /* Section formatting */
 #firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, 
 #forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons, #scriptButtons, #director-nav-buttons, 
-#scheduling-nav-buttons, #walla-nav-buttons, #location-nav-buttons, #script-nav-buttons, #comparison, #us-script, #script-control, #multiActorButtons {
+#scheduling-nav-buttons, #walla-nav-buttons, #location-nav-buttons, #script-nav-buttons, #comparison, #us-script, #script-control, #multiActorButtons, #german-nav-buttons {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;

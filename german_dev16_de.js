@@ -5,16 +5,36 @@ const scriptSheetName = 'Script';
 
 const scriptRangeNames = [
   { name: 'scUKCue',
-    range: 'F3:F30000'
+    range: 'F3:F30000',
+    heading: ''
   },
   { name: 'scUKNumber',
-    range: 'G3:G30000'
+    range: 'G3:G30000',
+    heading: ''
   },
   { name: 'scUKCharacter',
-    range: 'H3:H30000'
+    range: 'H3:H30000',
+    heading: ''
   },
   { name: 'scUKScript',
-    range: 'K3:K30000'
+    range: 'K3:K30000',
+    heading: ''
+  },
+  { name: 'scUKCueWorking',
+    range: 'DA3:DA30000',
+    heading: 'UK Cue (Working)'
+  },
+  { name: 'scUKNumberWorking',
+    range: 'DB3:DB30000',
+    heading: 'UK No (Working)'
+  },
+  { name: 'scUKCharacterWorking',
+    range: 'DC3:DC30000',
+    heading: 'UK Character (Working)'
+  },
+  { name: 'scUKScriptWorking',
+    range: 'DD3:DD30000',
+    heading: 'UK Script (Working)'
   }
 
 ]
@@ -41,6 +61,23 @@ async function createScriptNames(){
     }
   })
   console.log('numAdded', numAdded)
+}
+
+
+async function setUpNewColumns(){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    for (let i = 0; i < scriptRangeNames.length;i++){
+      if(scriptRangeNames[i].heading != ''){
+        let tempRange = scriptSheet.getRange(scriptRangeNames[i].name)
+        tempRange.load('rowIndex, columnIndex');
+        await excel.sync();
+        let headerRange = scriptSheet.getRangeByIndexes(tempRange.rowIndex - 1, tempRange.columnIndex, 1, 1);
+        headerRange.values = [[scriptRangeNames[i].heading]];
+        await excel.sync();
+      }
+    }
+  })
 }
 
 
