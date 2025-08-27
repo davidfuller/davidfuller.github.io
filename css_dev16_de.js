@@ -41,8 +41,7 @@ label {
 /* Section formatting */
 #firstButtons, #filterButtons, #dateStudioEngineer, #showTakes, #showColumns, #jump, #admin, #forDirectorButtons, #forActorsButtons, 
 #forSchedulingButtons, #wallaImportButtons, #locationButtons, #nav-buttons, #actor-nav-buttons, #scriptButtons, #director-nav-buttons, 
-#scheduling-nav-buttons, #walla-nav-buttons, #location-nav-buttons, #script-nav-buttons, #comparison, #us-script, #script-control, #multiActorButtons, #german-nav-buttons, #germanButtons { {
-
+#scheduling-nav-buttons, #walla-nav-buttons, #location-nav-buttons, #script-nav-buttons, #comparison, #us-script, #script-control, #multiActorButtons, #german-nav-buttons, #germanButtons {
   margin-left: 15px;
   margin-top: 10px;
   width: 370px;
@@ -54,6 +53,7 @@ label {
   border-color: #46656F;
   border-style: solid;
 }
+
 
 #admin, #comparison, #us-script, #admin-actor, #admin-scheduling {
   display: none;
