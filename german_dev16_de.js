@@ -43,6 +43,21 @@ const scriptRangeNames = [
     range: 'DD3:DD30000',
     heading: 'UK Script (Working)',
     formula: '=IF(K3=0,"",K3)'
+  },
+  { name: 'scGermanProcessed',
+    range: 'DE3:DE30000',
+    heading: 'German',
+    formula: ''
+  },
+  { name: 'scGermanComments',
+    range: 'DF3:DF30000',
+    heading: 'Comments',
+    formula: ''
+  },
+  { name: 'scUKCheck',
+    range: 'DG3:DG30000',
+    heading: 'UK Check',
+    formula: ''
   }
 
 ]
