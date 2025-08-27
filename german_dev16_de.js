@@ -127,7 +127,7 @@ async function processTheGerman(){
 
   let scGermanProcessed = await getRangeDetails(scriptSheetName, 'scGermanProcessed');
   let scGermanComments = await getRangeDetails(scriptSheetName, 'scGermanComments');
-  let scUKCheck = await getRangeDetails(scriptRangeNames, 'scUKCheck');
+  let scUKCheck = await getRangeDetails(scriptSheetName, 'scUKCheck');
 
   let gpGermanProcessed = await getRangeDetails(germanProcessingSheetName, 'gpProcessed');
   let gpGermanComments = await getRangeDetails(germanProcessingSheetName, 'gpComments');
