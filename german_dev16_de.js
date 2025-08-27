@@ -110,5 +110,25 @@ async function setUpNewColumns(){
   })
 }
 
+async function processTheGerman(){
+  let ukCueDetails = await getRangeDetails(scriptSheetName, 'scUKCueWorking');
+  console.log('ukCueDetails', ukCueDetails)
+}
 
+async function getRangeDetails(sheetName, rangeName){
+  let details = {}
+  await Excel.run(async function(excel){
+    const theSheet = excel.workbook.worksheets.getItem(sheetName);
+    let theRange = theSheet.getRange(rangeName);
+    theRange.load('rowIndex, columnIndex, rowCount, columnCount, values');
+    await excel.sync();
+    let theValues = theRange.values.map(x => x[0]);
+    details.rowIndex = theRange.rowIndex;
+    details.columnIndex = theRange.columnIndex;
+    details.rowCount = theRange.rowCount;
+    details.columnCount = theRange.columnCount;
+    details.values = theValues;
+  })
+  return details;
+}
 

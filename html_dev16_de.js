@@ -423,6 +423,7 @@ async function mainHTML(){
   <div id="germanButtons">
     <button id='btnAddNamesToScriptSheet' class="german-button" onclick="jade_modules.german.createScriptNames()">Add names to script</button>
     <button id='btnAddWorkingColumns' class="german-button" onclick="jade_modules.german.setUpNewColumns()">Set up columns</button>
+    <button id='btnProcessGerman' class="german-button" onclick="jade_modules.german.processTheGerman()">Process German</button>
     <label id='german-wait'>Please wait...</label>
   </div>
 </div>
