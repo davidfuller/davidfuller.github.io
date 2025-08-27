@@ -124,6 +124,14 @@ async function processTheGerman(){
   let gpNumberDetails = await getRangeDetails(germanProcessingSheetName, 'gpUKLine');
   let gpCharacterDetails = await getRangeDetails(germanProcessingSheetName, 'gpUKCharacter');
   let gpScriptDetails = await getRangeDetails(germanProcessingSheetName, 'gpUKScript');
+
+  let scGermanProcessed = await getRangeDetails(scriptSheetName, 'scGermanProcessed');
+  let scGermanComments = await getRangeDetails(scriptSheetName, 'scGermanComments');
+  let scUKCheck = await getRangeDetails(scriptRangeNames, 'scUKCheck');
+
+  let gpGermanProcessed = await getRangeDetails(germanProcessingSheetName, 'gpProcessed');
+  let gpGermanComments = await getRangeDetails(germanProcessingSheetName, 'gpComments');
+
   console.log('gpCueDetails', gpCueDetails);
   console.log('gpNumberDetails', gpNumberDetails);
   console.log('gpCharacterDetails', gpCharacterDetails);
@@ -144,8 +152,26 @@ async function processTheGerman(){
           console.log(i,j, 'Character match');
           if (ukScriptDetails.values[i] == gpScriptDetails.values[j]){
             console.log(i,j, 'Script Match');
+            let gpRowIndex = j + gpCueDetails.rowIndex;
+            let scRowIndex = i + ukCueDetails.rowIndex
+            let germanProcessRange = germanProcessingSheetName.getRangeByIndexes(gpRowIndex, gpGermanProcessed.columnIndex, 1, 1);
+            let germanCommentRange = germanProcessingSheetName.getRangeByIndexes(gpRowIndex, gpGermanComments.columnIndex, 1, 1);
+            let ukCheckRange = germanProcessingSheetName.getRangeByIndexes(gpRowIndex, gpScriptDetails.columnIndex, 1, 1);
+            germanProcessRange.load('values');
+            germanCommentRange.load('values');
+            ukCheckRange.load('values');
+            await excel.sync();
+            console.log('German', germanProcessRange.values[0][0]);
+            console.log('Comment', germanCommentRange.values[0][0]);
+            console.log('UK Check', ukCheckRange.values[0][0]);
+          } else {
+            console.log(i,j, '=====================> Failed on Script Match');
           }
+        } else {
+          console.log(i,j, '=====================> Failed on Character Match');
         }
+      } else {
+        console.log(i,j, '=====================> Failed on Number Match');        
       }
     }
     console.log(i,j, ukCueDetails.values[i], gpCueDetails.values[j]);
