@@ -276,7 +276,7 @@ async function changeUStoGermanColumns(){
     await excel.sync();
 
     let columnNames = columnDataRange.values.map(x => x[0]);
-    let columnIndexes = columnDataRange.values.maor(x => x[3]);
+    let columnIndexes = columnDataRange.values.map(x => x[3]);
 
     for (let index = 0; index < columnSwap.length; index++){
       for (let i = 0; i < columnNames.length; i++){
