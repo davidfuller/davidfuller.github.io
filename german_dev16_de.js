@@ -160,7 +160,7 @@ async function processTheGerman(){
           //console.log(i,j, 'Number match');
           if (ukCharacterDetails.values[i] == gpCharacterDetails.values[j]){
             //console.log(i,j, 'Character match');
-            if (ukScriptDetails.values[i] == gpScriptDetails.values[j]){
+            if (scriptEqual(ukScriptDetails.values[i], gpScriptDetails.values[j])){
               //console.log(i,j, 'Script Match');
               let gpRowIndex = j + gpCueDetails.rowIndex;
               let scRowIndex = i + ukCueDetails.rowIndex
@@ -197,6 +197,22 @@ async function processTheGerman(){
     germanMessage(false, '');
   })
 
+}
+
+function scriptEqual(uk, ge){
+  if (uk == ge){
+    return true;
+  } else if (uk.startsWith("'")){
+    if (uk.substring(1) == ge){
+      return true;
+    }
+  } else if (ge.startsWith("'")){
+    if (uk == ge.substring(1)){
+      return true;
+    }
+  } else {
+    return false;
+  }
 }
 
 async function getRangeDetails(sheetName, rangeName){
