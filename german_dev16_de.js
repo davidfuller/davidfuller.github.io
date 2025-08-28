@@ -147,7 +147,7 @@ async function processTheGerman(){
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     await excel.sync();
     //for (let i = 0; i < ukCharacterDetails.values.length; i++){
-    for (let i = 0; i < 1000; i++){
+    for (let i = 0; i < 2000; i++){
       germanMessage(true, 'Doing ' + i + ' of ' + ukCharacterDetails.values.length);
       let j = 0;
       let maxJ = 50000
@@ -157,11 +157,11 @@ async function processTheGerman(){
   
       if (j < maxJ){
         if (ukNumberDetails.values[i] == gpNumberDetails.values[j]){
-          console.log(i,j, 'Number match');
+          //console.log(i,j, 'Number match');
           if (ukCharacterDetails.values[i] == gpCharacterDetails.values[j]){
-            console.log(i,j, 'Character match');
+            //console.log(i,j, 'Character match');
             if (ukScriptDetails.values[i] == gpScriptDetails.values[j]){
-              console.log(i,j, 'Script Match');
+              //console.log(i,j, 'Script Match');
               let gpRowIndex = j + gpCueDetails.rowIndex;
               let scRowIndex = i + ukCueDetails.rowIndex
               let germanProcessRange = gpSheet.getRangeByIndexes(gpRowIndex, gpGermanProcessed.columnIndex, 1, 1);
@@ -171,9 +171,9 @@ async function processTheGerman(){
               germanCommentRange.load('values');
               ukCheckRange.load('values');
               await excel.sync();
-              console.log('German', germanProcessRange.values[0][0]);
-              console.log('Comment', germanCommentRange.values[0][0]);
-              console.log('UK Check', ukCheckRange.values[0][0]);
+              //console.log('German', germanProcessRange.values[0][0]);
+              //console.log('Comment', germanCommentRange.values[0][0]);
+              //console.log('UK Check', ukCheckRange.values[0][0]);
               
               let scGermanProcessedRange = scriptSheet.getRangeByIndexes(scRowIndex, scGermanProcessed.columnIndex, 1, 1);
               let scGermanCommentsRange = scriptSheet.getRangeByIndexes(scRowIndex, scGermanComments.columnIndex, 1, 1);
@@ -192,7 +192,7 @@ async function processTheGerman(){
           console.log(i,j, '=====================> Failed on Number Match');        
         }
       }
-      console.log(i,j, ukCueDetails.values[i], gpCueDetails.values[j]);
+      //console.log(i,j, ukCueDetails.values[i], gpCueDetails.values[j]);
     }
     germanMessage(false, '');
   })
