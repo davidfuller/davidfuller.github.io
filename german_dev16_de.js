@@ -146,8 +146,8 @@ async function processTheGerman(){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const gpSheet = excel.workbook.worksheets.getItem(germanProcessingSheetName);
     await excel.sync();
-    //for (let i = 0; i < ukCharacterDetails.values.length; i++){
-    for (let i = 0; i < 2000; i++){
+    for (let i = 0; i < ukCharacterDetails.values.length; i++){
+    //for (let i = 0; i < 2000; i++){
       germanMessage(true, 'Doing ' + i + ' of ' + ukCharacterDetails.values.length);
       let j = 0;
       let maxJ = 50000
