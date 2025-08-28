@@ -279,8 +279,8 @@ async function changeUStoGermanColumns(){
       for (let i = 0; i < columnNames.length; i++){
         if(columnSwap[index].us == columnNames[i]){
           console.log('Found', columnSwap[index].us, 'rowIndex', i + columnDataRange.rowIndex);
-          let theNameRange = setUpNewColumns.getRangeByIndexes(i + columnDataRange.rowIndex, columnDataRange.columnIndex, 1, 1);
-          let theWidthRange = setUpNewColumns.getRangeByIndexes(i + columnDataRange.rowIndex, columnDataRange.columnIndex + 4, 1, 1);
+          let theNameRange = settingsSheet.getRangeByIndexes(i + columnDataRange.rowIndex, columnDataRange.columnIndex, 1, 1);
+          let theWidthRange = settingsSheet.getRangeByIndexes(i + columnDataRange.rowIndex, columnDataRange.columnIndex + 4, 1, 1);
           theNameRange.values = [[columnSwap[index].german]];
           theWidthRange.values = [[columnSwap[index].width]];
         }
