@@ -288,6 +288,7 @@ async function changeUStoGermanColumns(){
           let theWidthRange = settingsSheet.getRangeByIndexes(i + columnDataRange.rowIndex, columnDataRange.columnIndex + 4, 1, 1);
           theNameRange.values = [[columnSwap[index].german]];
           theWidthRange.values = [[columnSwap[index].width]];
+          await excel.sync();
         }
       }
     }
