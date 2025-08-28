@@ -282,8 +282,10 @@ async function changeUStoGermanColumns(){
       for (let i = 0; i < columnNames.length; i++){
         if(columnSwap[index].us == columnNames[i]){
           console.log('Found', columnSwap[index].us, 'rowIndex', i + columnDataRange.rowIndex);
+          console.log('columnIndex', columnIndexes[i])
           columnHeaderRange = scriptSheet.getRangeByIndexes(1, columnIndexes[i], 1, 1)
-          columnHeaderRange.values = [[[columnSwap[index].german]]];
+          await excel.sync();
+          columnHeaderRange.values = [[columnSwap[index].german]];
           await excel.sync();
 
           let theNameRange = settingsSheet.getRangeByIndexes(i + columnDataRange.rowIndex, columnDataRange.columnIndex, 1, 1);
