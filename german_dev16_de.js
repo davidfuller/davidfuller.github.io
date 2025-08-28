@@ -2,6 +2,7 @@ function auto_exec(){}
 
 const germanProcessingSheetName = 'German Processing';
 const scriptSheetName = 'Script';
+const settingsSheetName = 'Settings';
 
 const scriptRangeNames = [
   { name: 'scUKCue',
@@ -261,4 +262,25 @@ function germanMessage(show, message){
   lblGerman.innerText = message;
 }
 
+const columnSwap =[
+  {us: 'US Cue', german: 'German Script', width: 50},
+  {us: 'US Script', german: 'German Comment', width: 30}
+]
 
+async function changeUStoGermanColumns(){
+  await Excel.run(async function(excel){
+    const settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
+    let columnDataRange = settingsSheet.getRange('columnData');
+    columnDataRange.load('rowIndex, columnIndex, values');
+    await excel.sync();
+
+    let columnNames = columnDataRange.values.map(x => x[0]);
+    for (let index = 0; index < columnSwap.length; index++){
+      for (let i = 0; i < columnNames.length; i++){
+        if(columnSwap[index].us == columnNames[i]){
+          console.log('Found', columnSwap[index].us, 'rowIndex', i + columnDataRange.rowIndex);
+        }
+      }
+    }
+  })
+}
