@@ -270,15 +270,20 @@ const columnSwap =[
 async function changeUStoGermanColumns(){
   await Excel.run(async function(excel){
     const settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let columnDataRange = settingsSheet.getRange('columnData');
     columnDataRange.load('rowIndex, columnIndex, values');
     await excel.sync();
 
     let columnNames = columnDataRange.values.map(x => x[0]);
+    let columnIndexes = columnDataRange.values.maor(x => x[3]);
+
     for (let index = 0; index < columnSwap.length; index++){
       for (let i = 0; i < columnNames.length; i++){
         if(columnSwap[index].us == columnNames[i]){
           console.log('Found', columnSwap[index].us, 'rowIndex', i + columnDataRange.rowIndex);
+          columnHeaderRange = scriptSheet.getRangeByIndexes(1, columnIndexes[i], 1, 1)
+          columnHeaderRange.values = [[[columnSwap[index].german]]];
           let theNameRange = settingsSheet.getRangeByIndexes(i + columnDataRange.rowIndex, columnDataRange.columnIndex, 1, 1);
           let theWidthRange = settingsSheet.getRangeByIndexes(i + columnDataRange.rowIndex, columnDataRange.columnIndex + 4, 1, 1);
           theNameRange.values = [[columnSwap[index].german]];
