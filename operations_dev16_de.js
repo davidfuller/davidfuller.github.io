@@ -45,8 +45,8 @@ let sceneBlockColumns = 9; //Can be changed in add scene block
 let wallaBlockColumns = 8;
 
 let sceneIndex, numberIndex, cueIndex, characterIndex, locationIndex, chapterIndex, lineIndex;
-let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex, ukRemoveFromEditIndex, usCueIndex;
-let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex, usScriptColumnIndex;
+let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex, ukRemoveFromEditIndex, geScriptIndex;
+let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex, geCommentIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
 let mySheetColumns, ukScriptIndex, otherNotesIndex, sceneWordCountCalcIndex, bookIndex, rowIndexIndex, lineWordCountIndex, sceneLineNumberRangeIndex, chapterCalculationIndex;
@@ -169,8 +169,11 @@ async function initialiseVariables(){
   lineIndex = findColumnIndex('Line');
   ukScriptIndex = findColumnIndex('UK script');
   otherNotesIndex = findColumnIndex('Other notes');
-  usCueIndex = findColumnIndex('US Cue');
-  usScriptColumnIndex = findColumnIndex('US Script');  
+  console.log('Before GS');
+  geScriptIndex = findColumnIndex('German Script');
+  console.log('Before GC')
+  geCommentIndex = findColumnIndex('German Comment');  
+  console.log('After GC')
   ukTakesIndex = findColumnIndex('UK No of takes');
   ukTakeNoIndex = findColumnIndex('UK Take No')
   ukDateIndex = findColumnIndex("UK Date Recorded");
@@ -3752,8 +3755,8 @@ async function doTheActualSceneBlock(chapterSceneID){
       let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
       await selectChapterCellAtRowIndex(excel, scriptSheet, addSelectList[chapterSceneID].rowIndex, (addSelectList[chapterSceneID].type == myTypes.scene))
       let cueColumnIndex = findColumnIndex('Cue');
-      let usScriptColumnIndex = findColumnIndex('US Script');
-      sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
+      let geCommentIndex = findColumnIndex('German Comment');
+      sceneBlockColumns =  geCommentIndex - cueColumnIndex + 1
       let theRowIndex = sceneListData.rowIndex
       let nextIndex = sceneListData.arrayIndex + 1;
       let previousIndex = sceneListData.arrayIndex - 1;
@@ -3764,7 +3767,7 @@ async function doTheActualSceneBlock(chapterSceneID){
       let previousRowType = typeCodeValues.typeCodes.values[previousIndex];
       //console.log('Found: rowIndex', theRowIndex, 'Next code:', nextRowType);
       let newRowIndex;
-      sceneBlockColumns =  usScriptColumnIndex - cueColumnIndex + 1
+      sceneBlockColumns =  geCommentIndex - cueColumnIndex + 1
       if (sceneListData.type == myTypes.scene){
         let sceneDataArray;
         if (previousRowType == myTypes.sceneBlock){
@@ -5076,7 +5079,7 @@ async function getRowIndeciesForScene(sceneNumber, usOnly){
     if (usOnly){
       let myRanges = [];
       for (let index of newIndexes){
-        let tempRange = scriptSheet.getRangeByIndexes(index, usCueIndex, 1, 1);
+        let tempRange = scriptSheet.getRangeByIndexes(index, geScriptIndex, 1, 1);
         tempRange.load('values, rowIndex');
         myRanges.push(tempRange);
       }
@@ -5269,8 +5272,8 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs, sheetName = ac
         characterRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, characterIndex, rowCount, 1);
         directionRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, stageDirectionWallaDescriptionIndex, rowCount, 1);
         if (doUs){
-          usScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, usScriptColumnIndex, rowCount, 1);
-          usCueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, usCueIndex, rowCount, 1);
+          usScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, geCommentIndex, rowCount, 1);
+          usCueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, geScriptIndex, rowCount, 1);
         } else {
           ukScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, ukScriptIndex, rowCount, 1);
         }
@@ -5430,7 +5433,7 @@ async function getDirectorDataV2(character){
     let ukDateRecordedRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, ukDateIndex, indexDetails.rowCount, 1); 
     let lineWordCountRange  = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, lineWordCountIndex, indexDetails.rowCount, 1); 
     let sceneWordCountRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, sceneWordCountCalcIndex, indexDetails.rowCount, 1); 
-    let usCueRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, usCueIndex, indexDetails.rowCount, 1);
+    let usCueRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, geScriptIndex, indexDetails.rowCount, 1);
     
     
     characterRange.load('values');
@@ -5613,7 +5616,7 @@ async function copyNewText(){
     const newTextSheet = excel.workbook.worksheets.getItem(newTextSheetName) ;
     let startRowIndexCurrent = 2;
     let rowCount = details.rowCount - (startRowIndexCurrent - details.rowIndex);
-    let columnCount = usScriptColumnIndex - cueIndex + 1;
+    let columnCount = geCommentIndex - cueIndex + 1;
     let currentRange = scriptSheet.getRangeByIndexes(startRowIndexCurrent, cueIndex, rowCount, columnCount);
     currentRange.columnHidden = false;
     await excel.sync();
@@ -6198,7 +6201,7 @@ async function doSomeFormatting(excel, theIndexes, sheet, columnCount, fillClear
   for (let i = 0; i < theIndexes.length; i++){
       lineRanges[i] = sheet.getRangeByIndexes(theIndexes[i], cueIndex, 1, columnCount);
       lineNoScriptLineRangeBefore[i] = sheet.getRangeByIndexes(theIndexes[i], cueIndex, 1, 5)
-      lineNoScriptLineRangeAfter[i] = sheet.getRangeByIndexes(theIndexes[i], usCueIndex, 1, 2)
+      lineNoScriptLineRangeAfter[i] = sheet.getRangeByIndexes(theIndexes[i], geScriptIndex, 1, 2)
       if (fillClear){
        lineRanges[i].format.fill.clear();
       } else {
@@ -7128,8 +7131,8 @@ async function clearUsCueAndScript(){
     await excel.sync();
     let startRowIndex = 2;
     let rowCount = usedRange.rowCount - (usedRange.rowIndex + startRowIndex)
-    console.log(startRowIndex, usCueIndex, rowCount, 2);
-    let usRange = scriptSheet.getRangeByIndexes(startRowIndex, usCueIndex, rowCount, 2);
+    console.log(startRowIndex, geScriptIndex, rowCount, 2);
+    let usRange = scriptSheet.getRangeByIndexes(startRowIndex, geScriptIndex, rowCount, 2);
     usRange.load('address, values, rowIndex')
     await excel.sync();
     console.log(usRange.address, usRange.values, usRange.rowIndex);
@@ -7137,7 +7140,7 @@ async function clearUsCueAndScript(){
       if ((usRange.values[i][0] !== '') || (usRange.values[i][1] !== '')){
         let rowIndex = i + usRange.rowIndex;
         console.log(i, rowIndex, ' not empty');
-        scriptSheet.getRangeByIndexes(rowIndex, usCueIndex, 1, 2).clear('Contents');
+        scriptSheet.getRangeByIndexes(rowIndex, geScriptIndex, 1, 2).clear('Contents');
         await excel.sync();
       }
     }
@@ -7158,18 +7161,18 @@ async function doTheCopy(copyDetails){
       sourceRange.load('address')
       await excel.sync()
       console.log('Source range:', i, sourceRange.address)
-      let destinationRange = scriptSheet.getRangeByIndexes(copyDetails[i].ukRowIndex, usCueIndex, 1, 1)
+      let destinationRange = scriptSheet.getRangeByIndexes(copyDetails[i].ukRowIndex, geScriptIndex, 1, 1)
       destinationRange.load('address')
       await excel.sync()
       console.log('Dest range:', i, destinationRange.address)
       destinationRange.copyFrom(sourceRange, 'All');
       await excel.sync()
       console.log('Copy 1 done');
-      sourceRange = usSheet.getRangeByIndexes(copyDetails[i].usRowIndex, copyDetails[i].usScriptColumnIndex, 1, 1);
+      sourceRange = usSheet.getRangeByIndexes(copyDetails[i].usRowIndex, copyDetails[i].geCommentIndex, 1, 1);
       sourceRange.load('address')
       await excel.sync()
       console.log('Source range 2:', i, sourceRange.address)
-      destinationRange = scriptSheet.getRangeByIndexes(copyDetails[i].ukRowIndex, usScriptColumnIndex, 1, 1);
+      destinationRange = scriptSheet.getRangeByIndexes(copyDetails[i].ukRowIndex, geCommentIndex, 1, 1);
       destinationRange.load('address')
       await excel.sync()
       console.log('Dest range 2:', i, destinationRange.address)
@@ -7359,7 +7362,7 @@ async function insertWallaScript(rowIndex, details, doSelect){
 async function formatWallaScripted(rowIndex){
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    const theRange = scriptSheet.getRangeByIndexes(rowIndex, cueIndex, 1, usScriptColumnIndex - cueIndex + 1);
+    const theRange = scriptSheet.getRangeByIndexes(rowIndex, cueIndex, 1, geCommentIndex - cueIndex + 1);
     theRange.format.font.name = 'Courier New';
     theRange.format.font.size = 12;
     theRange.format.fill.color = myFormats.green;
