@@ -319,7 +319,7 @@ async function copyToMainScript(){
     await clearRangeContents(scriptSheetName, 'scGermanScript');
     let commentSourceDetails = await getRangeDetails(scriptSheetName, 'scGermanComments');
     let commentDestinationDetails = await getRangeDetails(scriptSheetName, 'scGermanComment');
-    await clearRangeContents(scriptSheetName, 'scComment');
+    await clearRangeContents(scriptSheetName, 'scGermanComment');
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     for (let i = 0; i < 500; i++){
       germanMessage(true, 'Doing: ' + i + ' of ' + scriptSourceDetails.values.length);
