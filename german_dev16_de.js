@@ -59,6 +59,16 @@ const scriptRangeNames = [
     range: 'DG3:DG30000',
     heading: 'UK Check',
     formula: ''
+  },
+  { name: 'scGermanScript',
+    range: 'M3:M30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanComment',
+    range: 'N3:N30000',
+    heading: '',
+    formula: ''
   }
 
 ]
@@ -296,6 +306,26 @@ async function changeUStoGermanColumns(){
           theWidthRange.values = [[columnSwap[index].width]];
           await excel.sync();
         }
+      }
+    }
+  })
+}
+
+async function copyToMainScript(){
+  await Excel.run(async function(excel){
+    let scriptSourceDetails = await getRangeDetails(scriptSheetName, 'scGermanProcessed');
+    let scriptDestinationDetails = await getRangeDetails(scriptSheetName, 'scGermanScript');
+    await clearRangeContents(scriptSheetName, 'scGermanScript');
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    for (let i = 0; i < 100; i++){
+      germanMessage(true, 'Doing ' + i + ' of ' + scriptSourceDetails.values.length);
+      let theValue = scriptSourceDetails.values[i].trim()
+      if (theValue != ''){
+        theRowIndex = i + scriptSourceDetails.rowIndex;
+        let destRange = scriptSheet.getRangeByIndexes(theRowIndex, scriptDestinationDetails.columnIndex, 1, 1);
+        destRange.values = [[theValue]];
+        destRange.select()
+        await excel.sync();
       }
     }
   })
