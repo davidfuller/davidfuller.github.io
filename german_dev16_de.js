@@ -257,7 +257,8 @@ async function clearRangeContents(sheetName, rangeName){
   await Excel.run(async function(excel){
     const theSheet = excel.workbook.worksheets.getItem(sheetName);
     let theRange = theSheet.getRange(rangeName);
-    theRange.clear('Contents');
+    theRange.select();
+    //theRange.clear('Contents');
     await excel.sync();
   })
 }
