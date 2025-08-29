@@ -317,15 +317,23 @@ async function copyToMainScript(){
     let scriptSourceDetails = await getRangeDetails(scriptSheetName, 'scGermanProcessed');
     let scriptDestinationDetails = await getRangeDetails(scriptSheetName, 'scGermanScript');
     await clearRangeContents(scriptSheetName, 'scGermanScript');
+    let commentSourceDetails = await getRangeDetails(scriptSheetName, 'scGermanComments');
+    let commentDestinationDetails = await getRangeDetails(scriptSheetName, 'scGermanComment');
+    await clearRangeContents(scriptSheetName, 'scComment');
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    for (let i = 0; i < 100; i++){
-      germanMessage(true, 'Doing ' + i + ' of ' + scriptSourceDetails.values.length);
+    for (let i = 0; i < 500; i++){
+      germanMessage(true, 'Doing: ' + i + ' of ' + scriptSourceDetails.values.length);
       let theValue = scriptSourceDetails.values[i].trim()
+      let theComment = commentSourceDetails.values[i].trim()
       if (theValue != ''){
         theRowIndex = i + scriptSourceDetails.rowIndex;
         let destRange = scriptSheet.getRangeByIndexes(theRowIndex, scriptDestinationDetails.columnIndex, 1, 1);
         destRange.values = [[theValue]];
         destRange.select()
+        if (theComment != ''){
+          let destCommentRange = scriptSheet.getRangeByIndexes(theRowIndex, commentDestinationDetails.columnIndex, 1, 1);
+          destCommentRange.values = [[theComment]];
+        }
         await excel.sync();
       }
     }
