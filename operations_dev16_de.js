@@ -223,7 +223,12 @@ async function getMySheetColumns(){
 }
 
 function findColumnIndex(name){
-  return mySheetColumns.find((col) => col.name === name).index;
+  let result = mySheetColumns.find((col) => col.name === name);
+  if (result){
+    return result.index;
+  } else {
+    return -1;
+  }
 }
 
 function findColumnLetter(name){
