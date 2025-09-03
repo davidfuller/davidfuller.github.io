@@ -330,7 +330,7 @@ async function copyToMainScript(){
         let destRange = scriptSheet.getRangeByIndexes(theRowIndex, scriptDestinationDetails.columnIndex, 1, 1);
         destRange.values = [[theValue]];
         destRange.select()
-        if (theComment != ''){
+        if ((theComment != '') && (theComment.toLowerCase().trim() != 'or')){
           let destCommentRange = scriptSheet.getRangeByIndexes(theRowIndex, commentDestinationDetails.columnIndex, 1, 1);
           destCommentRange.values = [[theComment]];
         }
