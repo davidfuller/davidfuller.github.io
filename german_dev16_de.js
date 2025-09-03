@@ -336,7 +336,7 @@ async function copyToMainScript(){
           destCommentRange.values = [[theComment]];
           console.log('Comment', theComment)
         }
-        if (theComment.toLowerCase() == 'or'){
+        if (theComment.toLowerCase() == 'ok'){
           console.log('clear');
           destCommentRange.clear('Contents');
         }
