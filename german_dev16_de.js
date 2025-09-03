@@ -333,6 +333,7 @@ async function copyToMainScript(){
         let destCommentRange = scriptSheet.getRangeByIndexes(theRowIndex, commentDestinationDetails.columnIndex, 1, 1);
         if (theComment != ''){
           destCommentRange.values = [[theComment]];
+        }
         if (theComment.toLowerCase().trim() == 'or'){
           destCommentRange.clear('Contents');
         }
