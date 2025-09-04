@@ -140,14 +140,16 @@ async function fillMachineFormula(startRowIndex){
     machineTranslationRange.load('rowIndex, columnIndex');
     await excel.sync();
     console.log('arguements',startRowIndex, machineTranslationRange.columnIndex, fillRowCount)
-    let fillRange = gpSheet.getRangeByIndexes(startRowIndex, machineTranslationRange.columnIndex, fillRowCount, 1);
-    fillRange.clear("Contents");
-    await excel.sync();
-    await applyMachineTranslationFormula(startRowIndex);
-    let topCell = gpSheet.getRangeByIndexes(startRowIndex, machineTranslationRange.columnIndex, 1, 1);
-    await excel.sync();
-    topCell.autoFill(fillRange, 'FillDefault');
-    await excel.sync();
+    if (fillRowCount > 0){
+      let fillRange = gpSheet.getRangeByIndexes(startRowIndex, machineTranslationRange.columnIndex, fillRowCount, 1);
+      fillRange.clear("Contents");
+      await excel.sync();
+      await applyMachineTranslationFormula(startRowIndex);
+      let topCell = gpSheet.getRangeByIndexes(startRowIndex, machineTranslationRange.columnIndex, 1, 1);
+      await excel.sync();
+      topCell.autoFill(fillRange, 'FillDefault');
+      await excel.sync();
+    }
   })
 }
 
