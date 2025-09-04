@@ -139,7 +139,7 @@ async function fillMachineFormula(startRowIndex){
     let machineTranslationRange = gpSheet.getRange(gpMachineTranslationRangeName);
     machineTranslationRange.load('rowIndex, columnIndex');
     await excel.sync();
-    
+    console.log('arguements',startRowIndex, machineTranslationRange.columnIndex, fillRowCount)
     let fillRange = gpSheet.getRangeByIndexes(startRowIndex, machineTranslationRange.columnIndex, fillRowCount, 1);
     fillRange.clear("Contents");
     await excel.sync();
