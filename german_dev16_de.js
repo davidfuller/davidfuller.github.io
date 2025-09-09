@@ -278,6 +278,17 @@ const columnSwap =[
   {us: 'US Script', german: 'German Comment', width: 30}
 ]
 
+const takeColumnSwap =[
+  {uk: 'UK No of takes', german: 'German No of takes', width: 12},
+  {uk: 'UK Take No', german: 'German Take No', width: 12},
+  {uk: 'UK Broadcast Assistant Markup', german: 'German Broadcast Assistant Markup', width: 30},
+  {uk: 'UK Date Recorded', german: 'German Date Recorded', width: 12},
+  {uk: 'UK Studio', german: 'German Studio', width: 20},
+  {uk: 'UK Engineer', german: 'German Engineer', width: 20},
+  {uk: 'UK Retake Required', german: 'German Retake Required', width: 12},
+  {uk: 'UK Remove from Edit', german: 'German Remove from Edit', width: 12}
+]
+
 async function changeUStoGermanColumns(){
   await Excel.run(async function(excel){
     const settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
@@ -341,6 +352,40 @@ async function copyToMainScript(){
           destCommentRange.clear('Contents');
         }
         await excel.sync();
+      }
+    }
+  })
+}
+
+async function changeUKtoGermanTakes(){
+  await Excel.run(async function(excel){
+    const settingsSheet = excel.workbook.worksheets.getItem(settingsSheetName);
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let columnDataRange = settingsSheet.getRange('columnData');
+    columnDataRange.load('rowIndex, columnIndex, values');
+    await excel.sync();
+
+    let columnNames = columnDataRange.values.map(x => x[0]);
+    let columnIndexes = columnDataRange.values.map(x => x[3]);
+
+    for (let index = 0; index < takeColumnSwap.length; index++){
+      for (let i = 0; i < columnNames.length; i++){
+        if(takeColumnSwap[index].uk == columnNames[i]){
+          console.log('Found', takeColumnSwap[index].us, 'rowIndex', i + columnDataRange.rowIndex);
+          console.log('columnIndex', columnIndexes[i])
+          columnHeaderRange = scriptSheet.getRangeByIndexes(1, columnIndexes[i], 1, 1)
+          await excel.sync();
+          columnHeaderRange.values = [[takeColumnSwap[index].german]];
+          await excel.sync();
+
+          let theNameRange = settingsSheet.getRangeByIndexes(i + columnDataRange.rowIndex, columnDataRange.columnIndex, 1, 1);
+          theNameRange.values = [[takeColumnSwap[index].german]];
+          await excel.sync();
+
+          let theWidthRange = settingsSheet.getRangeByIndexes(i + columnDataRange.rowIndex, columnDataRange.columnIndex + 4, 1, 1);
+          theWidthRange.values = [[takeColumnSwap[index].width]];
+          await excel.sync();
+        }
       }
     }
   })

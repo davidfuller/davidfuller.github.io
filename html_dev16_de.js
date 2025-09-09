@@ -426,6 +426,7 @@ async function mainHTML(){
     <button id='btnProcessGerman' class="german-button" onclick="jade_modules.german.processTheGerman()">Process German</button>
     <button id='btnUStoGerman' class="german-button" onclick="jade_modules.german.changeUStoGermanColumns()">US to German</button>
     <button id='btnCopyToMain' class="german-button" onclick="jade_modules.german.copyToMainScript()">Copy To Main</button>
+    <button id='btnChangeToGermanTake' class="german-button" onclick="jade_modules.german.changeUKtoGermanTakes()">Change UK To German Takes</button>
     <label id='german-wait'>Please wait...</label>
   </div>
 </div>
