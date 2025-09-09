@@ -435,3 +435,7 @@ async function changeUKtoGermanTakes(){
     }
   })
 }
+
+async function clearTakeRanges(){
+  await clearRangeContents(scriptSheetName, 'scTotalTakes');
+}
