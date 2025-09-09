@@ -69,6 +69,51 @@ const scriptRangeNames = [
     range: 'N3:N30000',
     heading: '',
     formula: ''
+  },
+  { name: 'scTotalTakes',
+    range: 'U3:U30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanTakes',
+    range: 'V3:V30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanTakeNo',
+    range: 'W3:W30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanMarkup',
+    range: 'X3:X30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanDate',
+    range: 'Y3:Y30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanStudio',
+    range: 'Z3:Z30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanEngineer',
+    range: 'AA3:AA30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanRetake',
+    range: 'AB3:AB30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanRemove',
+    range: 'AC3:AC30000',
+    heading: '',
+    formula: ''
   }
 
 ]
