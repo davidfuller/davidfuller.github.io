@@ -6276,6 +6276,7 @@ async function gatherTakeInformation(doColour){
   await Excel.run(async function(excel){ 
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     const col = getColumnDetails();
+    console.log('details', details, 'cueIndex', cueIndex);
     let cueRange = scriptSheet.getRangeByIndexes(details.rowIndex, cueIndex, details.rowCount, 1);
     let takesRange = scriptSheet.getRangeByIndexes(details.rowIndex, col.columnIndex, details.rowCount, col.columnCount);
     cueRange.load('values, rowIndex');
