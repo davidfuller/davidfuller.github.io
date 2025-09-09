@@ -45,7 +45,7 @@ let sceneBlockColumns = 9; //Can be changed in add scene block
 let wallaBlockColumns = 8;
 
 let sceneIndex, numberIndex, cueIndex, characterIndex, locationIndex, chapterIndex, lineIndex;
-let totalTakesIndex, ukTakesIndex, ukTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex, ukRemoveFromEditIndex, geScriptIndex;
+let totalTakesIndex, germanTakesIndex, germanTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex, ukRemoveFromEditIndex, geScriptIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex, geCommentIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
@@ -174,8 +174,8 @@ async function initialiseVariables(){
   console.log('Before GC')
   geCommentIndex = findColumnIndex('German Comment');  
   console.log('After GC')
-  ukTakesIndex = findColumnIndex('UK No of takes');
-  ukTakeNoIndex = findColumnIndex('UK Take No')
+  germanTakesIndex = findColumnIndex('German No of takes');
+  germanTakeNoIndex = findColumnIndex('German Take No')
   ukDateIndex = findColumnIndex("UK Date Recorded");
   ukStudioIndex = findColumnIndex("UK Studio");
   ukEngineerIndex = findColumnIndex("UK Engineer");
@@ -1319,7 +1319,7 @@ async function addTakeDetails(country, doDate){
     let newLine;
     let newLineIndex;
     if (country == 'UK'){
-      takeNoIndex = ukTakeNoIndex;
+      takeNoIndex = germanTakeNoIndex;
       dateRecordedIndex = ukDateIndex;
       markUpIndex = ukMarkUpIndex;
       studioIndex = ukStudioIndex;
@@ -1443,7 +1443,7 @@ async function findDetailsForThisLine(){
     console.log(myIndecies);
 
     const totalTakesCell = scriptSheet.getRangeByIndexes(myIndecies[0], totalTakesIndex, 1, 1);
-    const ukTakesCell = scriptSheet.getRangeByIndexes(myIndecies[0], ukTakesIndex, 1, 1);
+    const ukTakesCell = scriptSheet.getRangeByIndexes(myIndecies[0], germanTakesIndex, 1, 1);
     const usTakesCell = scriptSheet.getRangeByIndexes(myIndecies[0], usTakesIndex, 1, 1);
     const wallaTakesCell = scriptSheet.getRangeByIndexes(myIndecies[0], wallaTakesIndex, 1, 1);
 
@@ -1521,7 +1521,7 @@ async function removeTake(country){
     if (country == 'UK'){
       markUpIndex = ukMarkUpIndex;
       engineerIndex = ukEngineerIndex;
-      takeNoIndex = ukTakeNoIndex;
+      takeNoIndex = germanTakeNoIndex;
       countryTakes = lineDetails.ukTakes;
     } else if (country == 'US'){
       markUpIndex = usMarkUpIndex;
@@ -1845,7 +1845,7 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
   let noOfTakesIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex;
 
   if (country == "UK"){
-    noOfTakesIndex = ukTakesIndex;
+    noOfTakesIndex = germanTakesIndex;
     dateRecordedIndex = ukDateIndex
     markUpIndex = ukMarkUpIndex;
     studioIndex = ukStudioIndex;
@@ -2114,7 +2114,7 @@ async function showFirstTakes(firstOnly){
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
     let takeNoRange;
-    takeNoRange = scriptSheet.getRangeByIndexes(details.rowIndex, ukTakeNoIndex, details.rowCount, 1);
+    takeNoRange = scriptSheet.getRangeByIndexes(details.rowIndex, germanTakeNoIndex, details.rowCount, 1);
     takeNoRange.load('values, rowIndex');
     await excel.sync();
     
@@ -2147,7 +2147,7 @@ async function showTakesOnly(){
     app.suspendScreenUpdatingUntilNextSync();
     app.suspendApiCalculationUntilNextSync();
     let takeNoRange;
-    takeNoRange = scriptSheet.getRangeByIndexes(details.rowIndex, ukTakeNoIndex, details.rowCount, 1);
+    takeNoRange = scriptSheet.getRangeByIndexes(details.rowIndex, germanTakeNoIndex, details.rowCount, 1);
     takeNoRange.load('values, rowIndex');
     await excel.sync();
     
@@ -5433,8 +5433,8 @@ async function getDirectorDataV2(character){
     let characterRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, characterIndex, indexDetails.rowCount, 1);
     let sceneRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, sceneIndex, indexDetails.rowCount, 1);
     let numberRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, numberIndex, indexDetails.rowCount, 1);
-    let ukNumTakesRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, ukTakesIndex, indexDetails.rowCount, 1);
-    let ukTakeNumRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, ukTakeNoIndex, indexDetails.rowCount, 1);
+    let ukNumTakesRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanTakesIndex, indexDetails.rowCount, 1);
+    let ukTakeNumRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanTakeNoIndex, indexDetails.rowCount, 1);
     let ukDateRecordedRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, ukDateIndex, indexDetails.rowCount, 1); 
     let lineWordCountRange  = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, lineWordCountIndex, indexDetails.rowCount, 1); 
     let sceneWordCountRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, sceneWordCountCalcIndex, indexDetails.rowCount, 1); 
@@ -6365,15 +6365,15 @@ const takeColours = [
 function getColumnDetails(){
   let columns = {}
   
-  if (ukTakesIndex > ukTakeNoIndex){
-    columns.columnIndex = ukTakeNoIndex;
-    columns.columnCount = ukTakesIndex - ukTakeNoIndex + 1;
+  if (germanTakesIndex > germanTakeNoIndex){
+    columns.columnIndex = germanTakeNoIndex;
+    columns.columnCount = germanTakesIndex - germanTakeNoIndex + 1;
   } else {
-    columns.columnIndex = ukTakesIndex;
-    columns.columnCount = ukTakeNoIndex - ukTakesIndex + 1; 
+    columns.columnIndex = germanTakesIndex;
+    columns.columnCount = germanTakeNoIndex - germanTakesIndex + 1; 
   }
-  columns.ukTakesArrayIndex = ukTakesIndex - columns.columnIndex;
-  columns.ukTakeNoArrayIndex = ukTakeNoIndex - columns.columnIndex;
+  columns.ukTakesArrayIndex = germanTakesIndex - columns.columnIndex;
+  columns.ukTakeNoArrayIndex = germanTakeNoIndex - columns.columnIndex;
 
   return columns;
 }
@@ -6964,12 +6964,12 @@ function addToRowDetails(details, rowIndex, rowCount){
 function takeDetailsColumnIndexes(country){
   let result = {};
   if (country == 'UK'){
-    result.takeNoIndex = ukTakeNoIndex;
+    result.takeNoIndex = germanTakeNoIndex;
     result.dateRecordedIndex = ukDateIndex;
     result.markUpIndex = ukMarkUpIndex;
     result.studioIndex = ukStudioIndex;
     result.engineerIndex = ukEngineerIndex;
-    result.takesIndex = ukTakesIndex;
+    result.takesIndex = germanTakesIndex;
   } else if (country == 'US'){
     result.takeNoIndex = usTakeNoIndex;
     result.dateRecordedIndex = usDateIndex;
