@@ -438,4 +438,15 @@ async function changeUKtoGermanTakes(){
 
 async function clearTakeRanges(){
   await clearRangeContents(scriptSheetName, 'scTotalTakes');
+  await clearRangeContents(scriptSheetName, 'scGermanTakes');
+
+  await clearRangeContents(scriptSheetName, 'scGermanTakeNo');
+  await clearRangeContents(scriptSheetName, 'scGermanMarkup');
+
+  await clearRangeContents(scriptSheetName, 'scGermanDate');
+  await clearRangeContents(scriptSheetName, 'scGermanStudio');
+
+  await clearRangeContents(scriptSheetName, 'scGermanEngineer');
+  await clearRangeContents(scriptSheetName, 'scGermanRetake');
+  await clearRangeContents(scriptSheetName, 'scGermanRemove');
 }
