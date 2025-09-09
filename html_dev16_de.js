@@ -427,7 +427,7 @@ async function mainHTML(){
     <button id='btnUStoGerman' class="german-button" onclick="jade_modules.german.changeUStoGermanColumns()">US to German</button>
     <button id='btnCopyToMain' class="german-button" onclick="jade_modules.german.copyToMainScript()">Copy To Main</button>
     <button id='btnChangeToGermanTake' class="german-button" onclick="jade_modules.german.changeUKtoGermanTakes()">Change UK To German Takes</button>
-    <button id='btnClearGermanTake' class="german-button" onclick="jade_modules.german.clearTakeRanges()">Change Clear Take Ranges</button>
+    <button id='btnClearGermanTake' class="german-button" onclick="jade_modules.german.clearTakeRanges()">Clear Take Ranges</button>
     <label id='german-wait'>Please wait...</label>
   </div>
 </div>

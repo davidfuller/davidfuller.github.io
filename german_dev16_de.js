@@ -303,7 +303,7 @@ async function clearRangeContents(sheetName, rangeName){
     const theSheet = excel.workbook.worksheets.getItem(sheetName);
     let theRange = theSheet.getRange(rangeName);
     theRange.select();
-    //theRange.clear('Contents');
+    theRange.clear('Contents');
     await excel.sync();
   })
 }
