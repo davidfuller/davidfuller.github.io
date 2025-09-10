@@ -419,7 +419,7 @@ async function mainHTML(){
     <button id="btnLocationPageScript" class="german-nav" onclick="jade_modules.operations.showLocation()">Location</button><br/>
   </div>
   <div id="germanButtons">
-    <button id='btnAddNamesToScriptSheet' class="german-button" onclick="jade_modules.german.createScriptNames()">Add names to script</button>
+    <button id='btnAddNamesToScriptSheet' class="german-button" onclick="jade_modules.german.createScriptNames(false)">Add names to script</button>
     <button id='btnAddWorkingColumns' class="german-button" onclick="jade_modules.german.setUpNewColumns()">Set up columns</button>
     <button id='btnProcessGerman' class="german-button" onclick="jade_modules.german.processTheGerman()">Process German</button>
     <button id='btnUStoGerman' class="german-button" onclick="jade_modules.german.changeUStoGermanColumns()">US to German</button>
@@ -427,6 +427,7 @@ async function mainHTML(){
     <button id='btnChangeToGermanTake' class="german-button" onclick="jade_modules.german.changeUKtoGermanTakes()">Change UK To German Takes</button>
     <button id='btnClearGermanTake' class="german-button" onclick="jade_modules.german.clearTakeRanges()">Clear Take Ranges</button>
     <button id='btnTranslateDirections' class="german-button" onclick="jade_modules.german.copyDirections()">Copy Directions</button>
+    <button id='btnAddNamesToScriptSheetAfterMove' class="german-button" onclick="jade_modules.german.createScriptNames(true)">Add names to script after move</button>
     <label id='german-wait'>Please wait...</label>
   </div>
 </div>

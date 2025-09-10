@@ -140,11 +140,27 @@ const scriptRangeNames = [
     heading: 'German Directions Copy',
     formula: ''
   }
-
-
 ]
 
-async function createScriptNames(){
+const scriptRangeNamesAfterMove = [
+  { name: 'scGermanCharacter',
+    range: 'O3:O30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanDirection',
+    range: 'P3:P30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanPresentCharacters',
+    range: 'Q3:Q30000',
+    heading: '',
+    formula: ''
+  }
+]
+
+async function createScriptNames(afterMove){
   let numAdded = 0;
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -155,12 +171,19 @@ async function createScriptNames(){
     let currentNames = theNames.items.map(x => x.name);
     console.log('currentNames', currentNames)
 
-    for (let i = 0; i < scriptRangeNames.length;i++){
-      console.log(i, scriptRangeNames[i].name);
-      if (!currentNames.includes(scriptRangeNames[i].name)){
+    let myNames;
+    if (afterMove){
+      myNames = scriptRangeNames;
+    } else {
+      myNames = scriptRangeNamesAfterMove;
+    }
+
+    for (let i = 0; i < myNames.length;i++){
+      console.log(i, myNames[i].name);
+      if (!currentNames.includes(myNames[i].name)){
         // It doesn't currently exist... add it
-        let newRange = scriptSheet.getRange(scriptRangeNames[i].range);
-        excel.workbook.names.add(scriptRangeNames[i].name, newRange);
+        let newRange = scriptSheet.getRange(myNames[i].range);
+        excel.workbook.names.add(myNames[i].name, newRange);
         await excel.sync();
         numAdded += 1;
       }
@@ -493,3 +516,7 @@ async function copyDirections(){
     await excel.sync();
   })
 }
+
+
+
+
