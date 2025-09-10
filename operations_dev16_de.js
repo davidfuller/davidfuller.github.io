@@ -44,7 +44,7 @@ const showTakesOffset = 20;
 let sceneBlockColumns = 9; //Can be changed in add scene block
 let wallaBlockColumns = 8;
 
-let sceneIndex, numberIndex, cueIndex, characterIndex, locationIndex, chapterIndex, lineIndex;
+let sceneIndex, numberIndex, cueIndex, characterIndex, locationIndex, chapterIndex, lineIndex, germanStageDirectionWallaDescriptionIndex, stageDirectionWallaDescriptionIndex;
 let totalTakesIndex, germanTakesIndex, germanTakeNoIndex, germanDateIndex, germanStudioIndex, germanEngineerIndex, germanMarkUpIndex, ukRemoveFromEditIndex, geScriptIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex, geCommentIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
@@ -163,6 +163,7 @@ async function initialiseVariables(){
   sceneLineNumberRangeIndex = findColumnIndex('Scene Line Number Range');
   cueIndex = findColumnIndex('Cue');
   stageDirectionWallaDescriptionIndex = findColumnIndex("Stage Direction/ Walla description") //J
+  germanStageDirectionWallaDescriptionIndex = findColumnIndex("German Direction/Walla description") //P
 
   characterIndex = findColumnIndex('Character');
   locationIndex = findColumnIndex('Location');
@@ -5285,7 +5286,7 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs, sheetName = ac
         }
         cueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, cueIndex, rowCount, 1);
         characterRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, characterIndex, rowCount, 1);
-        directionRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, stageDirectionWallaDescriptionIndex, rowCount, 1);
+        directionRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, germanStageDirectionWallaDescriptionIndex, rowCount, 1);
         if (doUs){
           usScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, geCommentIndex, rowCount, 1);
           usCueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, geScriptIndex, rowCount, 1);
