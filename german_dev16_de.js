@@ -173,9 +173,9 @@ async function createScriptNames(afterMove){
 
     let myNames;
     if (afterMove){
-      myNames = scriptRangeNames;
-    } else {
       myNames = scriptRangeNamesAfterMove;
+    } else {
+      myNames = scriptRangeNames;
     }
 
     for (let i = 0; i < myNames.length;i++){
