@@ -5268,7 +5268,7 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs, sheetName = ac
       }
     }
   }
-  let cueRange, characterRange, directionRange, ukScriptRange, usScriptRange, usCueRange;
+  let cueRange, characterRange, directionRange, geScriptRange, usScriptRange, usCueRange;
   console.log('Rangebound length', rangeBounds.length, rangeBounds);
   let rowIndexes = []
   let item = - 1;
@@ -5290,7 +5290,7 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs, sheetName = ac
           usScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, geCommentIndex, rowCount, 1);
           usCueRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, geScriptIndex, rowCount, 1);
         } else {
-          ukScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, ukScriptIndex, rowCount, 1);
+          geScriptRange = scriptSheet.getRangeByIndexes(rangeBounds[i].start, geScriptIndex, rowCount, 1);
         }
         
         console.log('start row', startRowIndex)
@@ -5312,7 +5312,7 @@ async function getActorScriptRanges(indexes, startRowIndex, doUs, sheetName = ac
           actorUsCueRange.copyFrom(usCueRange, 'Values', false, false);
           actorUsCueRange.copyFrom(usCueRange, 'Formats', false, false);
         } else {
-          actorScriptRange.copyFrom(ukScriptRange, 'All');
+          actorScriptRange.copyFrom(geScriptRange, 'All');
         }
         await excel.sync();
         startRowIndex = startRowIndex + rowCount;
@@ -7122,14 +7122,14 @@ async function findUsScriptCues(usDetails){
       cueRange.load('values');
       let characterRange = scriptSheet.getRangeByIndexes(row, characterIndex, 1, 1);
       characterRange.load('values');
-      let ukScriptRange = scriptSheet.getRangeByIndexes(row, ukScriptIndex, 1, 1);
-      ukScriptRange.load('values');
+      let geScriptRange = scriptSheet.getRangeByIndexes(row, ukScriptIndex, 1, 1);
+      geScriptRange.load('values');
       await excel.sync()
       let detail = {
         rowIndex: row,
         cue: cueRange.values[0][0],
         character: characterRange.values[0][0],
-        ukScript: ukScriptRange.values[0][0]
+        ukScript: geScriptRange.values[0][0]
       }
       details.push(detail)
     }
