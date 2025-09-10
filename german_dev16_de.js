@@ -130,7 +130,6 @@ const scriptRangeNames = [
     heading: 'German Directions',
     formula: '=IF(DJ3=0,"",TRANSLATE(DJ3,"en","de"))'
   },
-  ,
   { name: 'scEnglishStageDirectionsCopy',
     range: 'DL3:DL30000',
     heading: 'English Directions Copy',
