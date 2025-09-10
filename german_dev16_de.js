@@ -175,6 +175,7 @@ async function setUpNewColumns(){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     for (let i = 0; i < scriptRangeNames.length;i++){
       if(scriptRangeNames[i].heading != ''){
+        console.log(i, 'Doing heading', scriptRangeNames[i].heading)
         let tempRange = scriptSheet.getRange(scriptRangeNames[i].name)
         tempRange.load('rowIndex, columnIndex');
         await excel.sync();
@@ -182,6 +183,7 @@ async function setUpNewColumns(){
         headerRange.values = [[scriptRangeNames[i].heading]];
         await excel.sync();
         if (scriptRangeNames[i].formula != ''){
+          console.log(i, 'Doing formula', scriptRangeNames[i].formula)
           let topCell = scriptSheet.getRangeByIndexes(tempRange.rowIndex, tempRange.columnIndex, 1, 1);
           topCell.formulas = [[scriptRangeNames[i].formula]];
           await excel.sync();
