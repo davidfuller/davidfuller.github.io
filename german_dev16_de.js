@@ -517,6 +517,15 @@ async function copyDirections(){
   })
 }
 
+async function copyTranslatedDirection(){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let sourceGermanRange = scriptSheet.getRange('scGermanStageDirectionsCopy');
+    let destGermanRange = scriptSheet.getRange('scGermanDirection');
+    destGermanRange.copyFrom(sourceGermanRange, "values");
+    await excel.sync();
+  })
+}
 
 
 

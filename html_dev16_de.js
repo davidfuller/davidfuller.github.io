@@ -428,6 +428,7 @@ async function mainHTML(){
     <button id='btnClearGermanTake' class="german-button" onclick="jade_modules.german.clearTakeRanges()">Clear Take Ranges</button>
     <button id='btnTranslateDirections' class="german-button" onclick="jade_modules.german.copyDirections()">Copy Directions</button>
     <button id='btnAddNamesToScriptSheetAfterMove' class="german-button" onclick="jade_modules.german.createScriptNames(true)">Add names to script after move</button>
+    <button id='btnTranslateDirectionsFix' class="german-button" onclick="jade_modules.german.copyTranslatedDirection()">Copy German Directions</button>
     <label id='german-wait'>Please wait...</label>
   </div>
 </div>
