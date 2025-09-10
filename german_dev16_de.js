@@ -157,6 +157,7 @@ async function createScriptNames(){
     console.log('currentNames', currentNames)
 
     for (let i = 0; i < scriptRangeNames.length;i++){
+      console.log(i, scriptRangeNames[i].name);
       if (!currentNames.includes(scriptRangeNames[i].name)){
         // It doesn't currently exist... add it
         let newRange = scriptSheet.getRange(scriptRangeNames[i].range);
