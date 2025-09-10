@@ -2253,20 +2253,14 @@ async function showHideColumns(columnType){
         //await excel.sync();  
       }
     }
-    if (columnType == 'German Script'){
-      let germanIndex = range.values.findIndex(x => x[0] == 'German Script');
+    if ((columnType == 'German Script') || (columnType == 'German UK Script')){
+      let germanIndex = range.values.findIndex(x => x[0] == columnType);
       console.log(germanIndex);
       let hideGermanColumns = range.values[germanIndex][2].split(",")
       console.log(hideGermanColumns);
       for (let hide of hideGermanColumns){
         let hideGermanColumnsRange = scriptSheet.getRange(hide);
-        /*
-        hideUKColumnsRange.load('address');
-        await excel.sync();
-        console.log(hideUKColumnsRange.address);
-        */
         hideGermanColumnsRange.columnHidden = true;
-        //await excel.sync();  
       }
     }
     if (columnType == 'US Script'){
