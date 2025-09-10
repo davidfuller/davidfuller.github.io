@@ -479,3 +479,17 @@ async function clearTakeRanges(){
   await clearRangeContents(scriptSheetName, 'scGermanRetake');
   await clearRangeContents(scriptSheetName, 'scGermanRemove');
 }
+
+async function copyDirections(){
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let sourceUKRange = scriptSheet.getRange('scEnglishStageDirections');
+    let destUKRange = scriptSheet.getRange('scEnglishStageDirectionsCopy');
+    destUKRange.copyFrom(sourceUKRange, "values");
+    await excel.sync();
+    let sourceGermanRange = scriptSheet.getRange('scGermanStageDirections');
+    let destGermanRange = scriptSheet.getRange('scGermanStageDirectionsCopy');
+    destGermanRange.copyFrom(sourceGermanRange, "values");
+    await excel.sync();
+  })
+}
