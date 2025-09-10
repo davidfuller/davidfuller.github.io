@@ -45,7 +45,7 @@ let sceneBlockColumns = 9; //Can be changed in add scene block
 let wallaBlockColumns = 8;
 
 let sceneIndex, numberIndex, cueIndex, characterIndex, locationIndex, chapterIndex, lineIndex;
-let totalTakesIndex, germanTakesIndex, germanTakeNoIndex, ukDateIndex, ukStudioIndex, ukEngineerIndex, ukMarkUpIndex, ukRemoveFromEditIndex, geScriptIndex;
+let totalTakesIndex, germanTakesIndex, germanTakeNoIndex, germanDateIndex, germanStudioIndex, germanEngineerIndex, germanMarkUpIndex, ukRemoveFromEditIndex, geScriptIndex;
 let usTakesIndex, usTakeNoIndex, usDateIndex, usStudioIndex, usEngineerIndex, usMarkUpIndex, geCommentIndex;
 let wallaTakesIndex, wallaTakeNoIndex, wallaDateIndex, wallaStudioIndex, wallaEngineerIndex, wallaMarkUpIndex; 
 let wallaLineRangeIndex, numberOfPeoplePresentIndex, wallaOriginalIndex, wallaCueIndex, typeOfWallaIndex, typeCodeIndex;
@@ -176,10 +176,10 @@ async function initialiseVariables(){
   console.log('After GC')
   germanTakesIndex = findColumnIndex('German No of takes');
   germanTakeNoIndex = findColumnIndex('German Take No')
-  ukDateIndex = findColumnIndex("UK Date Recorded");
-  ukStudioIndex = findColumnIndex("UK Studio");
-  ukEngineerIndex = findColumnIndex("UK Engineer");
-  ukMarkUpIndex = findColumnIndex("UK Broadcast Assistant Markup");
+  germanDateIndex = findColumnIndex("German Date Recorded");
+  germanStudioIndex = findColumnIndex("German Studio");
+  germanEngineerIndex = findColumnIndex("German Engineer");
+  germanMarkUpIndex = findColumnIndex("German Broadcast Assistant Markup");
   ukRemoveFromEditIndex = findColumnIndex("UK Remove from Edit");
 
   usTakesIndex = findColumnIndex('US No of takes');
@@ -847,11 +847,11 @@ async function fill(country){
     const engineerText = tag("engineer-select").value;
     const markupText = tag('markup').value
     let dateIndex, studioIndex, engineerIndex, markUpIndex;
-    if (country == 'UK'){
-      markUpIndex = ukMarkUpIndex;
-      dateIndex = ukDateIndex;
-      studioIndex = ukStudioIndex;
-      engineerIndex = ukEngineerIndex;
+    if (country == 'German'){
+      markUpIndex = germanMarkUpIndex;
+      dateIndex = germanDateIndex;
+      studioIndex = germanStudioIndex;
+      engineerIndex = germanEngineerIndex;
     } else if ( country == 'US'){
       markUpIndex = usMarkUpIndex;
       dateIndex = usDateIndex;
@@ -1298,7 +1298,7 @@ async function addTakeDetails(country, doDate){
     doingTake = true;
   }
   let button;
-  if (country == 'UK'){
+  if (country == 'German'){
     button = tag('btnAddTakeUK');
   } else if (country == 'US'){
     button = tag('btnAddTakeUS');
@@ -1318,12 +1318,12 @@ async function addTakeDetails(country, doDate){
     let takeNoIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex, countryTakes;
     let newLine;
     let newLineIndex;
-    if (country == 'UK'){
+    if (country == 'German'){
       takeNoIndex = germanTakeNoIndex;
-      dateRecordedIndex = ukDateIndex;
-      markUpIndex = ukMarkUpIndex;
-      studioIndex = ukStudioIndex;
-      engineerIndex = ukEngineerIndex;
+      dateRecordedIndex = germanDateIndex;
+      markUpIndex = germanMarkUpIndex;
+      studioIndex = germanStudioIndex;
+      engineerIndex = germanEngineerIndex;
       countryTakes = lineDetails.ukTakes
       newLine = lineDetails.ukTakes + 1;
     } else if (country == 'US'){
@@ -1518,9 +1518,9 @@ async function removeTake(country){
         }
       }
     }
-    if (country == 'UK'){
-      markUpIndex = ukMarkUpIndex;
-      engineerIndex = ukEngineerIndex;
+    if (country == 'German'){
+      markUpIndex = germanMarkUpIndex;
+      engineerIndex = germanEngineerIndex;
       takeNoIndex = germanTakeNoIndex;
       countryTakes = lineDetails.ukTakes;
     } else if (country == 'US'){
@@ -1844,12 +1844,12 @@ async function doTakesAndNumTakes(currentRowIndex, country, doDate, doAdditional
   const numberColumn = findColumnLetter("Number");
   let noOfTakesIndex, dateRecordedIndex, markUpIndex, studioIndex, engineerIndex;
 
-  if (country == "UK"){
+  if (country == "German"){
     noOfTakesIndex = germanTakesIndex;
-    dateRecordedIndex = ukDateIndex
-    markUpIndex = ukMarkUpIndex;
-    studioIndex = ukStudioIndex;
-    engineerIndex = ukEngineerIndex;
+    dateRecordedIndex = germanDateIndex
+    markUpIndex = germanMarkUpIndex;
+    studioIndex = germanStudioIndex;
+    engineerIndex = germanEngineerIndex;
   }
   await Excel.run(async function(excel){ 
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
@@ -5445,7 +5445,7 @@ async function getDirectorDataV2(character){
     let numberRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, numberIndex, indexDetails.rowCount, 1);
     let ukNumTakesRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanTakesIndex, indexDetails.rowCount, 1);
     let ukTakeNumRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanTakeNoIndex, indexDetails.rowCount, 1);
-    let ukDateRecordedRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, ukDateIndex, indexDetails.rowCount, 1); 
+    let ukDateRecordedRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanDateIndex, indexDetails.rowCount, 1); 
     let lineWordCountRange  = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, lineWordCountIndex, indexDetails.rowCount, 1); 
     let sceneWordCountRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, sceneWordCountCalcIndex, indexDetails.rowCount, 1); 
     let usCueRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, geScriptIndex, indexDetails.rowCount, 1);
@@ -6450,7 +6450,7 @@ async function addMarkUpToSelected(doReplace){
       console.log('Row Indexes', rowIndexes);
 
       for (let i = 0; i < rowIndexes.length; i++){
-        let markupCell = scriptSheet.getRangeByIndexes(rowIndexes[i], ukMarkUpIndex, 1, 1)
+        let markupCell = scriptSheet.getRangeByIndexes(rowIndexes[i], germanMarkUpIndex, 1, 1)
         markupCell.load('values, address');
         await excel.sync();
         if (doReplace){
@@ -6974,12 +6974,12 @@ function addToRowDetails(details, rowIndex, rowCount){
 }
 function takeDetailsColumnIndexes(country){
   let result = {};
-  if (country == 'UK'){
+  if (country == 'German'){
     result.takeNoIndex = germanTakeNoIndex;
-    result.dateRecordedIndex = ukDateIndex;
-    result.markUpIndex = ukMarkUpIndex;
-    result.studioIndex = ukStudioIndex;
-    result.engineerIndex = ukEngineerIndex;
+    result.dateRecordedIndex = germanDateIndex;
+    result.markUpIndex = germanMarkUpIndex;
+    result.studioIndex = germanStudioIndex;
+    result.engineerIndex = germanEngineerIndex;
     result.takesIndex = germanTakesIndex;
   } else if (country == 'US'){
     result.takeNoIndex = usTakeNoIndex;
