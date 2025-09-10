@@ -114,7 +114,23 @@ const scriptRangeNames = [
     range: 'AC3:AC30000',
     heading: '',
     formula: ''
+  },
+  { name: 'scStageDirections',
+    range: 'J3:J30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scEnglishStageDirections',
+    range: 'DJ3:DJ30000',
+    heading: 'English Directions',
+    formula: '=IF(J3=0,"",J3)'
+  },
+  { name: 'scGermanStageDirections',
+    range: 'DK3:DK30000',
+    heading: 'German Directions',
+    formula: '=IF(DJ3=0,"",TRANSLATE(DJ3,"en","de"))'
   }
+
 
 ]
 
