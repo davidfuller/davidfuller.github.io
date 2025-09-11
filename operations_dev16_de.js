@@ -224,7 +224,6 @@ async function getMySheetColumns(){
 }
 
 function findColumnIndex(name){
-  console.log('name', name)
   let result = mySheetColumns.find((col) => col.name === name);
   if (result){
     return result.index;
@@ -234,6 +233,7 @@ function findColumnIndex(name){
 }
 
 function findColumnLetter(name){
+  console.log('name', name)
   return mySheetColumns.find((col) => col.name === name).column;
 }
 
