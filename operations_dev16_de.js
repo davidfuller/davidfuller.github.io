@@ -946,7 +946,7 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
   const endLineColumn = findColumnLetter("End Line"); //BW
   const numberColumn = findColumnLetter("Number"); //G
-  const ukTakeNoColumn = findColumnLetter("UK Take No"); //V
+  const ukTakeNoColumn = findColumnLetter("German Take No"); //V
   const UKScriptColumn = findColumnLetter("UK script"); //K
   const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
   const sceneColumn = findColumnLetter("Scene"); //CB
