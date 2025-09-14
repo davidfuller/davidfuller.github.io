@@ -467,7 +467,6 @@ async function copyToMainScript(){
           }
           await excel.sync();
         } else {
-          console.log('address', destRange.address, "Cell count", destRange.cellCount);
           destRange.clear('Contents');
           await excel.sync();
         }
