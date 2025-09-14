@@ -350,7 +350,7 @@ function sameCueDetails(uk, i,  gp, j){
   
 }
 async function clearRangeContents(sheetName, rangeName){
-  console.log('sheetName', sheetName, 'rangeName', rangeName)
+  console.log('sClear range heetName', sheetName, 'rangeName', rangeName)
   await Excel.run(async function(excel){
     const theSheet = excel.workbook.worksheets.getItem(sheetName);
     let theRange = theSheet.getRange(rangeName);
