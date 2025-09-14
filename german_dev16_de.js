@@ -438,6 +438,12 @@ async function copyToMainScript(){
       let destRange = scriptSheet.getRangeByIndexes(theRowIndex, scriptDestinationDetails.columnIndex, 1, 1);
       destRange.load('address, cellCount');
       await excel.sync();
+      destRange.select();
+      await excel.sync();
+      let tempSelect = excel.workbook.getSelectedRamge()
+      tempSelect.load('address, cellCount');
+      await excel.sync();
+      console.log('Selected cell', tempSelect.address, tempSelect.cellCount);
       if (theValue != ''){
         destRange.values = [[theValue]];
         destRange.select()
