@@ -350,7 +350,7 @@ function sameCueDetails(uk, i,  gp, j){
   
 }
 async function clearRangeContents(sheetName, rangeName){
-  console.log('sClear range heetName', sheetName, 'rangeName', rangeName)
+  console.log('Clear range sheetName', sheetName, 'rangeName', rangeName)
   await Excel.run(async function(excel){
     const theSheet = excel.workbook.worksheets.getItem(sheetName);
     let theRange = theSheet.getRange(rangeName);
@@ -436,6 +436,8 @@ async function copyToMainScript(){
       let theComment = commentSourceDetails.values[i].trim()
       let theRowIndex = i + scriptSourceDetails.rowIndex;
       let destRange = scriptSheet.getRangeByIndexes(theRowIndex, scriptDestinationDetails.columnIndex, 1, 1);
+      destRange.load('address');
+      await excel.sync();
       if (theValue != ''){
         destRange.values = [[theValue]];
         destRange.select()
@@ -451,6 +453,7 @@ async function copyToMainScript(){
         }
         await excel.sync();
       } else {
+        console.log('address', destRange.address);
         destRange.clear('Contents');
         await excel.sync();
       }
