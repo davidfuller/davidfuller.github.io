@@ -427,7 +427,7 @@ async function copyToMainScript(){
     //await clearRangeContents(scriptSheetName, 'scGermanScript');
     let commentSourceDetails = await getRangeDetails(scriptSheetName, 'scGermanComments');
     let commentDestinationDetails = await getRangeDetails(scriptSheetName, 'scGermanComment');
-    await clearRangeContents(scriptSheetName, 'scGermanComment');
+    //await clearRangeContents(scriptSheetName, 'scGermanComment');
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     //for (let i = 0; i < scriptSourceDetails.values.length; i++){
     for (let i = 0; i < 100; i++){
