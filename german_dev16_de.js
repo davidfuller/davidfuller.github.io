@@ -442,7 +442,8 @@ async function copyToMainScript(){
         let destCommentRange = scriptSheet.getRangeByIndexes(theRowIndex, commentDestinationDetails.columnIndex, 1, 1);
         if (theComment != ''){
           destCommentRange.values = [[theComment]];
-          console.log('Comment', theComment)
+          console.log('Comment', theComment);
+          await excel.sync();
         }
         if (theComment.toLowerCase() == 'ok'){
           console.log('clear');
@@ -451,6 +452,7 @@ async function copyToMainScript(){
         await excel.sync();
       } else {
         destRange.clear('Contents');
+        await excel.sync();
       }
     }
   })
