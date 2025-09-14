@@ -440,7 +440,7 @@ async function copyToMainScript(){
       await excel.sync();
       destRange.select();
       await excel.sync();
-      let tempSelect = excel.workbook.getSelectedRamge()
+      let tempSelect = excel.workbook.getSelectedRange()
       tempSelect.load('address, cellCount');
       await excel.sync();
       console.log('Selected cell', tempSelect.address, tempSelect.cellCount);
