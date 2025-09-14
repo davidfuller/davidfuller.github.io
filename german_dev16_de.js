@@ -445,8 +445,8 @@ async function copyToMainScript(){
     let commentDestinationDetails = await getRangeDetails(scriptSheetName, 'scGermanComment');
     //await clearRangeContents(scriptSheetName, 'scGermanComment');
     let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
-    for (let i = 0; i < scriptSourceDetails.values.length; i++){
-    //for (let i = 0; i < 100; i++){
+    //for (let i = 0; i < scriptSourceDetails.values.length; i++){
+    for (let i = 0; i < 100; i++){
       germanMessage(true, 'Doing: ' + i + ' of ' + scriptSourceDetails.values.length);
       let theValue = scriptSourceDetails.values[i].trim()
       let theComment = commentSourceDetails.values[i].trim()
@@ -456,15 +456,17 @@ async function copyToMainScript(){
         if (theValue != ''){
           destRange.values = [[theValue]];
           destRange.select()
-          let destCommentRange = scriptSheet.getRangeByIndexes(theRowIndex, commentDestinationDetails.columnIndex, 1, 1);
-          if (theComment != ''){
-            destCommentRange.values = [[theComment]];
-            console.log('Comment', theComment);
-            await excel.sync();
-          }
-          if (theComment.toLowerCase() == 'ok'){
-            console.log('clear');
-            destCommentRange.clear('Contents');
+          if (!await isCellMerged(scriptSheetName, theRowIndex, commentDestinationDetails.columnIndex)){
+            let destCommentRange = scriptSheet.getRangeByIndexes(theRowIndex, commentDestinationDetails.columnIndex, 1, 1);
+            if (theComment != ''){
+              destCommentRange.values = [[theComment]];
+              console.log('Comment', theComment);
+              await excel.sync();
+            }
+            if (theComment.toLowerCase() == 'ok'){
+              console.log('clear');
+              destCommentRange.clear('Contents');
+            }
           }
           await excel.sync();
         } else {
