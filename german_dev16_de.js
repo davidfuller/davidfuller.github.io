@@ -425,6 +425,7 @@ async function isCellMerged(sheetName, rowIndex, columnIndex){
   await Excel.run(async function(excel){
     const sheet = excel.workbook.worksheets.getItem(sheetName);
     let myRange = sheet.getRangeByIndexes(rowIndex, columnIndex, 1, 1);
+    myRange.select();
     await excel.sync();
     let tempSelect = excel.workbook.getSelectedRange()
     tempSelect.load('address, cellCount');
