@@ -436,7 +436,7 @@ async function copyToMainScript(){
       let theComment = commentSourceDetails.values[i].trim()
       let theRowIndex = i + scriptSourceDetails.rowIndex;
       let destRange = scriptSheet.getRangeByIndexes(theRowIndex, scriptDestinationDetails.columnIndex, 1, 1);
-      destRange.load('address');
+      destRange.load('address, cellCount');
       await excel.sync();
       if (theValue != ''){
         destRange.values = [[theValue]];
@@ -453,7 +453,7 @@ async function copyToMainScript(){
         }
         await excel.sync();
       } else {
-        console.log('address', destRange.address);
+        console.log('address', destRange.address, "Cell count", destRange.cellCount);
         destRange.clear('Contents');
         await excel.sync();
       }
