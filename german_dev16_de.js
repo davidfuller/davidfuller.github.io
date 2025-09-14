@@ -420,6 +420,21 @@ async function changeUStoGermanColumns(){
   })
 }
 
+async function isCellMerged(sheetName, rowIndex, columnIndex){
+  let result;
+  await Excel.run(async function(excel){
+    const sheet = excel.workbook.worksheets.getItem(sheetName);
+    let myRange = sheet.getRangeByIndexes(rowIndex, columnIndex, 1, 1);
+    await excel.sync();
+    let tempSelect = excel.workbook.getSelectedRange()
+    tempSelect.load('address, cellCount');
+    await excel.sync();
+    console.log('Selected cell', tempSelect.address, tempSelect.cellCount);
+    result = tempSelect.cellCount > 1;
+  })
+  return result;
+}
+
 async function copyToMainScript(){
   await Excel.run(async function(excel){
     let scriptSourceDetails = await getRangeDetails(scriptSheetName, 'scGermanProcessed');
@@ -435,33 +450,27 @@ async function copyToMainScript(){
       let theValue = scriptSourceDetails.values[i].trim()
       let theComment = commentSourceDetails.values[i].trim()
       let theRowIndex = i + scriptSourceDetails.rowIndex;
-      let destRange = scriptSheet.getRangeByIndexes(theRowIndex, scriptDestinationDetails.columnIndex, 1, 1);
-      destRange.load('address, cellCount');
-      await excel.sync();
-      destRange.select();
-      await excel.sync();
-      let tempSelect = excel.workbook.getSelectedRange()
-      tempSelect.load('address, cellCount');
-      await excel.sync();
-      console.log('Selected cell', tempSelect.address, tempSelect.cellCount);
-      if (theValue != ''){
-        destRange.values = [[theValue]];
-        destRange.select()
-        let destCommentRange = scriptSheet.getRangeByIndexes(theRowIndex, commentDestinationDetails.columnIndex, 1, 1);
-        if (theComment != ''){
-          destCommentRange.values = [[theComment]];
-          console.log('Comment', theComment);
+      if (!await isCellMerged(scriptSheetName, theRowIndex, scriptDestinationDetails.columnIndex)){
+        let destRange = scriptSheet.getRangeByIndexes(theRowIndex, scriptDestinationDetails.columnIndex, 1, 1);
+        if (theValue != ''){
+          destRange.values = [[theValue]];
+          destRange.select()
+          let destCommentRange = scriptSheet.getRangeByIndexes(theRowIndex, commentDestinationDetails.columnIndex, 1, 1);
+          if (theComment != ''){
+            destCommentRange.values = [[theComment]];
+            console.log('Comment', theComment);
+            await excel.sync();
+          }
+          if (theComment.toLowerCase() == 'ok'){
+            console.log('clear');
+            destCommentRange.clear('Contents');
+          }
+          await excel.sync();
+        } else {
+          console.log('address', destRange.address, "Cell count", destRange.cellCount);
+          destRange.clear('Contents');
           await excel.sync();
         }
-        if (theComment.toLowerCase() == 'ok'){
-          console.log('clear');
-          destCommentRange.clear('Contents');
-        }
-        await excel.sync();
-      } else {
-        console.log('address', destRange.address, "Cell count", destRange.cellCount);
-        destRange.clear('Contents');
-        await excel.sync();
       }
     }
   })
