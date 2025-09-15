@@ -565,10 +565,10 @@ async function copyFormatting(sheetName, sourceRangeName, destRangeName, theType
           let destRange = sheet.getRangeByIndexes(theRowIndex, scriptDestinationDetails.columnIndex, 1, 1);
           let sourceRange = sheet.getRangeByIndexes(theRowIndex, scriptSourceDetails.columnIndex, 1, 1);
           destRange.copyFrom(sourceRange, 'Formats');
+          await excel.sync();
         }
       }
     }  
-    
   })
   germanMessage(false, '');
   
