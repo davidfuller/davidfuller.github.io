@@ -577,7 +577,8 @@ async function germanFormats(theType){
   if (theType == 'script'){
     await copyFormatting(scriptSheetName, 'scUKScript', 'scGermanScript', theType);
   } else if (theType == 'directions'){
-    await copyFormatting(scriptSheetName, 'scStageDirections', 'scGermanDirection', theType);
-    
+    await copyFormatting(scriptSheetName, 'scStageDirections', 'scGermanDirection', theType); 
+  } else if (theType == 'character'){
+    await copyFormatting(scriptSheetName, 'scUKCharacter', 'scGermanCharacter', theType); 
   }
 }

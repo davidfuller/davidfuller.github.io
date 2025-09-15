@@ -431,6 +431,7 @@ async function mainHTML(){
     <button id='btnTranslateDirectionsFix' class="german-button" onclick="jade_modules.german.copyTranslatedDirection()">Copy German Directions</button>
     <button id="btnFormatGermanScript" class="german-button" onclick="jade_modules.german.germanFormats('script')">Script formatting</button>
     <button id="btnFormatGermanDirections" class="german-button" onclick="jade_modules.german.germanFormats('directions')">Directions formatting</button>
+    <button id="btnFormatGermanCharacter" class="german-button" onclick="jade_modules.german.germanFormats('character')">Character formatting</button>
     <label id='german-wait'>Please wait...</label>
   </div>
 </div>
