@@ -551,5 +551,30 @@ async function copyTranslatedDirection(){
   })
 }
 
-
-
+async function copyFormatting(sheetName, sourceRangeName, destRangeName, theType){
+  let scriptSourceDetails = await getRangeDetails(scriptSheetName, sourceRangeName);
+  let scriptDestinationDetails = await getRangeDetails(scriptSheetName, destRangeName);
+  await Excel.run(async function(excel){
+    let sheet = excel.workbook.worksheets.getItem(sheetName);
+    for (let i = 0; i < scriptSourceDetails.values.length; i++){
+    //for (let i = 0; i < 100; i++){
+      germanMessage(true, 'Doing ' + theType + ': ' + i + ' of ' + scriptSourceDetails.values.length);
+      let theRowIndex = i + scriptSourceDetails.rowIndex;
+      if (!await isCellMerged(sheetName, theRowIndex, scriptSourceDetails.columnIndex)){
+        if (!await isCellMerged(sheetName, theRowIndex, scriptDestinationDetails.columnIndex)){
+          let destRange = sheet.getRangeByIndexes(theRowIndex, scriptDestinationDetails.columnIndex, 1, 1);
+          let sourceRange = sheet.getRangeByIndexes(theRowIndex, scriptSourceDetails.columnIndex, 1, 1);
+          destRange.copyFrom(sourceRange, 'Formats');
+        }
+      }
+    }  
+    
+  })
+  germanMessage(false, '');
+  
+}
+async function germanFormats(theType){
+  if (theType = 'script'){
+    await copyFormatting(scriptSheetName, 'scUKScript', 'scGermanScript', theType)
+  }  
+}
