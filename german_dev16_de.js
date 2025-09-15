@@ -574,7 +574,10 @@ async function copyFormatting(sheetName, sourceRangeName, destRangeName, theType
   
 }
 async function germanFormats(theType){
-  if (theType = 'script'){
-    await copyFormatting(scriptSheetName, 'scUKScript', 'scGermanScript', theType)
-  }  
+  if (theType == 'script'){
+    await copyFormatting(scriptSheetName, 'scUKScript', 'scGermanScript', theType);
+  } else if (theType == 'directions'){
+    await copyFormatting(scriptSheetName, 'scStageDirections', 'scGermanDirection', theType);
+    
+  }
 }
