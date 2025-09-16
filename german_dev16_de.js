@@ -157,6 +157,11 @@ const scriptRangeNamesAfterMove = [
     range: 'Q3:Q30000',
     heading: '',
     formula: ''
+  },
+  { name: 'scUKPresentCharacters',
+    range: 'I3:I30000',
+    heading: '',
+    formula: ''
   }
 ]
 
@@ -580,5 +585,7 @@ async function germanFormats(theType){
     await copyFormatting(scriptSheetName, 'scStageDirections', 'scGermanDirection', theType); 
   } else if (theType == 'character'){
     await copyFormatting(scriptSheetName, 'scUKCharacter', 'scGermanCharacter', theType); 
+  } else if (theType == 'present'){
+    await copyFormatting(scriptSheetName, 'scUKPresentCharacters', 'scGermanPresentCharacters', theType);
   }
 }
