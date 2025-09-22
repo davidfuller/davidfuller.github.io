@@ -559,9 +559,15 @@ async function copyTranslatedDirection(){
 async function copyFormatting(sheetName, sourceRangeName, destRangeName, theType){
   let scriptSourceDetails = await getRangeDetails(scriptSheetName, sourceRangeName);
   let scriptDestinationDetails = await getRangeDetails(scriptSheetName, destRangeName);
+  let startIndexText = tag('startIndex');
+  let startIndex = parseInt(startIndexText.value);
+  if (isNaN(startIndex)){
+    startIndex = 0;
+  }
+  console.log('startIndex', startIndex);
   await Excel.run(async function(excel){
     let sheet = excel.workbook.worksheets.getItem(sheetName);
-    for (let i = 0; i < scriptSourceDetails.values.length; i++){
+    for (let i = startIndex; i < scriptSourceDetails.values.length; i++){
     //for (let i = 0; i < 100; i++){
       germanMessage(true, 'Doing ' + theType + ': ' + i + ' of ' + scriptSourceDetails.values.length);
       let theRowIndex = i + scriptSourceDetails.rowIndex;
