@@ -404,6 +404,7 @@ async function actorGoToLine(){
       let lineNumber = parseInt(lineNumberCell.values[0][0])
       console.log('lineNumber', lineNumber);
       if (!isNaN(lineNumber)){
+        console.log("I'm here")
         let rowIndex = await jade_modules.operations.findLineNo(lineNumber);
         const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
         let columnIndex = await jade_modules.operations.findColumnIndex('German Script');
