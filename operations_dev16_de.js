@@ -946,8 +946,9 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
   const positionEndSqaureBracketColumn = findColumnLetter("Position ]"); //BV
   const endLineColumn = findColumnLetter("End Line"); //BW
   const numberColumn = findColumnLetter("Number"); //G
-  const ukTakeNoColumn = findColumnLetter("German Take No"); //V
+  const germanTakeNoColumn = findColumnLetter("German Take No"); //V
   const UKScriptColumn = findColumnLetter("UK script"); //K
+  const germanScriptColumn = findColumnLetter("German Script"); //M
   const sceneBordersColumn = findColumnLetter("Scene Borders"); //CH
   const sceneColumn = findColumnLetter("Scene"); //CB
   const wordCountToThisLineColumn = findColumnLetter("Word count to this line"); //CB
@@ -994,7 +995,7 @@ function getColumnFormulae(firstRow, firstRestRow, lastRow){
     {
       columnName: "Line Word Count", //CA
       formulaFirst:  0,
-      formulaRest: '=IF(NOT(OR(' + ukTakeNoColumn + firstRestRow + '="",' + ukTakeNoColumn + firstRestRow + '=1)), 0, LEN(TRIM(' + UKScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + UKScriptColumn + firstRestRow + ', " ", "")) + 1)'
+      formulaRest: '=IF(NOT(OR(' + germanTakeNoColumn + firstRestRow + '="",' + germanTakeNoColumn + firstRestRow + '=1)), 0, LEN(TRIM(' + germanScriptColumn + firstRestRow + ')) - LEN(SUBSTITUTE(' + germanScriptColumn + firstRestRow + ', " ", "")) + 1)'
     },
     {
       columnName: "Scene", //CB
@@ -5445,9 +5446,10 @@ async function getDirectorDataV2(character){
     let characterRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, characterIndex, indexDetails.rowCount, 1);
     let sceneRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, sceneIndex, indexDetails.rowCount, 1);
     let numberRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, numberIndex, indexDetails.rowCount, 1);
-    let ukNumTakesRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanTakesIndex, indexDetails.rowCount, 1);
-    let ukTakeNumRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanTakeNoIndex, indexDetails.rowCount, 1);
-    let ukDateRecordedRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanDateIndex, indexDetails.rowCount, 1); 
+    let germanNumTakesRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanTakesIndex, indexDetails.rowCount, 1);
+    let germanTakeNumRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanTakeNoIndex, indexDetails.rowCount, 1);
+    let germanDateRecordedRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanDateIndex, indexDetails.rowCount, 1); 
+    let germanMarkUpRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, germanMarkUpIndex, indexDetails.rowCount, 1);
     let lineWordCountRange  = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, lineWordCountIndex, indexDetails.rowCount, 1); 
     let sceneWordCountRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, sceneWordCountCalcIndex, indexDetails.rowCount, 1); 
     let usCueRange = scriptSheet.getRangeByIndexes(indexDetails.rowIndex, geScriptIndex, indexDetails.rowCount, 1);
@@ -5456,9 +5458,10 @@ async function getDirectorDataV2(character){
     characterRange.load('values');
     sceneRange.load('values');
     numberRange.load('values');
-    ukNumTakesRange.load('values');
-    ukTakeNumRange.load('values');
-    ukDateRecordedRange.load('values');
+    germanNumTakesRange.load('values');
+    germanTakeNumRange.load('values');
+    germanDateRecordedRange.load('values');
+    germanMarkUpRange.load('values');
     lineWordCountRange.load('values');
     sceneWordCountRange.load('values');
     usCueRange.load('values');
@@ -5495,9 +5498,10 @@ async function getDirectorDataV2(character){
         character: characterRange.values[uniqueIndexes[i]][0],
         sceneNumber: sceneRange.values[uniqueIndexes[i]][0],
         lineNumber: numberRange.values[uniqueIndexes[i]][0],
-        ukNumTakes: ukNumTakesRange.values[uniqueIndexes[i]][0],
-        ukTakeNum: ukTakeNumRange.values[uniqueIndexes[i]][0],
-        ukDateRecorded: ukDateRecordedRange.values[uniqueIndexes[i]][0],
+        germanNumTakes: germanNumTakesRange.values[uniqueIndexes[i]][0],
+        germanTakeNum: germanTakeNumRange.values[uniqueIndexes[i]][0],
+        germanDateRecorded: germanDateRecordedRange.values[uniqueIndexes[i]][0],
+        germanMarkUp: germanMarkUpRange.values[uniqueIndexes[i]][0],
         lineWordCount: lineWordCountRange.values[uniqueIndexes[i]][0],
         sceneWordCount: sceneWordCountRange.values[uniqueIndexes[i]][0],
         usCue: usCueRange.values[uniqueIndexes[i]][0],

@@ -91,7 +91,7 @@ async function getDirectorInfo(){
     for (i = 0; i < dataRange.rowCount; i++){
       let thisRow = new Array(5).fill("");
       if (i < myData.length){
-        thisRow = [myData[i].sceneNumber, myData[i].lineNumber, myData[i].ukNumTakes, myData[i].ukTakeNum, myData[i].ukDateRecorded];
+        thisRow = [myData[i].sceneNumber, myData[i].lineNumber, myData[i].germanNumTakes, myData[i].germanTakeNum, myData[i].germanDateRecorded];
       }
       dataArray.push(thisRow);
     }
