@@ -435,6 +435,7 @@ async function mainHTML(){
     <button id="btnFormatGermanPresent" class="german-button" onclick="jade_modules.german.germanFormats('present')">Present formatting</button>
     <label id='start-index'>Start Index</label>
     <input type="text" id="startIndex" name="startIndex">
+    <button id="btnChangeTakeRangeNames" class="german-button" onclick="jade_modules.german.changeTakeRangeNames()">Change Take Names</button>
     <label id='german-wait'>Please wait...</label>
   </div>
 </div>

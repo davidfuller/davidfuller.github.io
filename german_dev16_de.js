@@ -165,6 +165,83 @@ const scriptRangeNamesAfterMove = [
   }
 ]
 
+const takeRangesAfterMove =[
+  { name: 'scTotalTakes',
+    range: 'X3:X30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanTakes',
+    range: 'Y3:Y30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanTakeNo',
+    range: 'Z3:Z30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanMarkup',
+    range: 'AA3:AA30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanDate',
+    range: 'AB3:AB30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanStudio',
+    range: 'AC3:AC30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanEngineer',
+    range: 'AD3:AD30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanRetake',
+    range: 'AE3:AE30000',
+    heading: '',
+    formula: ''
+  },
+  { name: 'scGermanRemove',
+    range: 'AF3:AF30000',
+    heading: '',
+    formula: ''
+  }
+]
+
+async function changeTakeRangeNames(){
+  let numAdded = 0;
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let theNames = excel.workbook.names.load();
+    await excel.sync();
+    let currentNames = theNames.items.map(x => x.name);
+    console.log('currentNames', currentNames)
+    let myNames = takeRangesAfterMove;
+    for (let i = 0; i < myNames.length;i++){
+      console.log(i, myNames[i].name);
+      if (currentNames.includes(myNames[i].name)){
+        // we need to delete it
+        let deleteName = excel.workbook.names.getItemOrNullObject(myNames[i].name);
+        deleteName.load();
+        await excel.sync();
+        if (deleteName.value){
+          deleteName.delete();
+        }
+      }
+      let newRange = scriptSheet.getRange(myNames[i].range);
+      excel.workbook.names.add(myNames[i].name, newRange);
+      await excel.sync();
+      numAdded += 1;
+    }
+  })
+  console.log('numAdded', numAdded)
+  }
+
 async function createScriptNames(afterMove){
   let numAdded = 0;
   await Excel.run(async function(excel){
