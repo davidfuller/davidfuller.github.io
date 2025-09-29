@@ -2,7 +2,7 @@ function auto_exec(){
 }
 
 let doingTake = false;
-const codeVersion = '15.08';
+const codeVersion = '16.02';
 //11.02 isProtected on applyTakeDetails
 //11.03 31-35 in walla and remove the clears
 //11.04 30-35 in walla
