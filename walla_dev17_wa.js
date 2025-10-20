@@ -60,3 +60,30 @@ async function sourceSheets(){
   console.log('sourceSheets', sourceSheets)
   return sourceSheets
 }
+async function findCues(){
+  let results = [];
+  let minMax = await minMaxCueValues();
+  let sourceSheetNames = await sourceSheets();
+  for (let i = 0; i < sourceSheetNames.length; i++){
+    await Excel.run(async function(excel){
+      const thisSheet = excel.workbook.worksheets.getItem(sourceSheetNames[i]);
+      let firstColumnRange = thisSheet.getRangeByIndexes(1, 1, 100, 1);
+      firstColumnRange.load('values');
+      await excel.sync();
+      let theValues = firstColumnRange.values.map(x => x[0])
+      for (let j = 0; j < theValues.length; j++){
+        theNumber = parseInt(theValues[j]);
+        if (!isNaN(theNumber)){
+          if ((theNumber >= minMax.min) && (theNumber <= minMax.max)){
+            let temp = {};
+            temp.cue = theNumber;
+            temp.sheetName = sourceSheetNames[i];
+            results,push(temp)
+          }  
+        }
+      }
+    })
+  }
+  console.log('results', results);
+  return results;
+}
