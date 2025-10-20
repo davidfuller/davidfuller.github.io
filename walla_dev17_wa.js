@@ -85,6 +85,7 @@ async function findCues(){
       }
     })
   }
+  results.sort((a, b) => b.cue - a.cue);
   console.log('results', results);
   return results;
 }
