@@ -128,7 +128,7 @@ async function showMain(){
   let mainPage = tag('main-page');
   waitPage.style.display = 'none';
   mainPage.style.display = 'block';
-  await showMainPage();
+  //await showMainPage();
 }
 
 async function getColumnData(sheetName, rangeName){

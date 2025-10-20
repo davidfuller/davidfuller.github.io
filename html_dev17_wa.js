@@ -20,6 +20,7 @@ async function mainHTML(){
 
   await Jade.open_canvas("Script-Controller", html, true);
   console.log('Canvas open');
+  await jade_modules.operations.showMain();
   console.log("I'm here data loaded. Dev 17");
 }
 
