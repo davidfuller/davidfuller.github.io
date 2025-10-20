@@ -71,6 +71,7 @@ async function findCues(){
       firstColumnRange.load('values');
       await excel.sync();
       let theValues = firstColumnRange.values.map(x => x[0])
+      console.log(sourceSheetNames[i], 'theValues', theValues);
       for (let j = 0; j < theValues.length; j++){
         theNumber = parseInt(theValues[j]);
         if (!isNaN(theNumber)){
@@ -78,7 +79,7 @@ async function findCues(){
             let temp = {};
             temp.cue = theNumber;
             temp.sheetName = sourceSheetNames[i];
-            results,push(temp)
+            results.push(temp)
           }  
         }
       }
