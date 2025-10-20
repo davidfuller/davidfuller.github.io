@@ -23,7 +23,7 @@ async function minMaxCueValues(){
   let maxCueValue = 0;
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem('Script');
-    let cueRange = scriptSheet.getRangeByIndexes(cueRangeAddress);
+    let cueRange = scriptSheet.getRange(cueRangeAddress);
     cueRange.load('values')
     await excel.sync();
     let theValues = cueRange.values.map(x => x[0]);
