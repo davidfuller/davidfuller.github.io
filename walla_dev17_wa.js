@@ -16,3 +16,30 @@ async function getUsedCueRange(){
  console.log('Cue Range:', cueRangeAddress);
  return cueRangeAddress;
 }
+
+async function minMaxCueValues(){
+  let cueRangeAddress = await getUsedCueRange();
+  let minCueValue = 100000;
+  let maxCueValue = 0;
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem('Script');
+    let cueRange = scriptSheet.getRangeByIndexes(cueRangeAddress);
+    cueRange.load('values')
+    await excel.sync();
+    let theValues = cueRange.values.map(x => x[0]);
+    for (let i = 0; i < theValues.length; i++){
+      let testValue = parseInt(theValues[i])
+      if (!isNaN(testValue)){
+        if (testValue > maxCueValue){
+          maxCueValue = testValue;
+        }
+        if (testValue < minCueValue){
+          minCueValue = testValue;
+        }
+      }
+    }
+  })
+  let result = {min: minCueValue, max: maxCueValue}
+  console.log('Result', result)
+  return result
+}
