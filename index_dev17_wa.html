@@ -9,58 +9,7 @@
   </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
-    <button id='btnFormula' onclick="jade_modules.operations.theFormulas()">Formula</button>
-    <label id="formula-wait">Please wait...</label>
-    <button id='btnSceneCalc' onclick="jade_modules.operations.fillSceneNumber()">Scene Number</button>
-    <label id="scene-wait">Please wait...</label><br/>
-    <button id="btnFullTest" onclick="jade_modules.testing.doTheFullTest()">Full Test</button>
-    <button id='btnSceneCheck' onclick="jade_modules.operations.getLineNumberRanges(false)">Scene Number Check</button>
-    <label id="test-message"></label><br/>
-    <label id="test-count"></label><br/>
-    <button id="workbook-protection" onclick="jade_modules.operations.displayWorkbookProtection()">Workbook Protection</button>
-    <button id='btnSceneCheckReplace' onclick="jade_modules.operations.getLineNumberRanges(true)">Scene Number Check with Replace</button>
-    <button id='btnFindDuplicates' onclick="jade_modules.operations.findDuplicateLineNumbers()">Find Duplicates</button>
-    <button id='btnDefaultColumn' onclick="jade_modules.operations.setDefaultColumnWidths()">Default Columns Widths</button>
-    <button id='btnLoadCharacters' onclick="jade_modules.scheduling.loadReduceAndSortCharacters()">Load characters</button>
-    <button id="btnAddHandler" onclick="jade_modules.operations.registerExcelEvents()">Register events</button>
-    <label id="walla-cues-wait">Please wait...</label>
-    <button id="btnWallaCues" onclick="jade_modules.operations.calculateWallaCues()">Create Walla Cues</button>
-    <button id="btnCalculateType" onclick="jade_modules.operations.createTypeCodes()">Create Type codes</button><br/>
-    <button id="btnDeleteSceneWalla" onclick="jade_modules.operations.deleteAllSceneAndWallaBlocks()">Delete all Scene and Walla blocks</button><br/>
-    <button id="btnChangeFills" onclick="jade_modules.operations.fillColorLinesAndScriptedWalla()">Change fill for<br/>lines and scripted walla</button>
-    <label id="character-wait">Please wait...</label>
-    <button id="btnProcessCharacterListForWordAndScene" onclick="jade_modules.scheduling.processCharacterListForWordAndScene()">Character Word Count</button>
-    <button id="btnAddScneWordCount" onclick="jade_modules.scheduling.createSceneWordCountData()">Add Scene Word Count<br/>to Character List</button>
-    <button id="btnCheckScenes" onclick="jade_modules.operations.checkAllTheSceneBreaks()">Check all the<br/>scene breaks</button>
-    <button id="btnCheckCopyScenes" onclick="jade_modules.operations.copyTextV2(false, true)">Check the new text V2</button>
-    <button id="btnCheckCopyScenesNoComparison" onclick="jade_modules.operations.copyTextV2(false, false)">Check the new text V2<br/>No comparison report</button>
-    <button id="btnCopyScenes" onclick="jade_modules.operations.copyTextV2(true, false)">Copy the new text V2</button>
-    <button id="btnDeleteFX" onclick="jade_modules.operations.deleteAllFX()">Delete all FX</button>
-    <button id="btnReconcileLocation" onclick="jade_modules.operations.reconcileLocations(false)">Reconcile locations<br/>no correction</button>
-    <button id="btnReconcileLocationCorrection" onclick="jade_modules.operations.reconcileLocations(true)">Reconcile locations<br/>WITH correction</button>
-    <button id="btnAutoSceneBlock" onclick="jade_modules.operations.autoSceneBlockCreation()">Auto scene block</button>
-    <button id="btnLoadNewSheetCharacters" onclick="jade_modules.operations.loadNewSheetCharacters()">Load new sheet characters</button>
-    <button id="btnNewCharacters" onclick="jade_modules.operations.newCharacters()">Missing characters</button>
-    <div class="row">
-      <div class="column" id="column-add-one">
-        <button id="btnAddSceneBlock" onclick="jade_modules.operations.addSceneBlock()">Add scene block</button>
-        <label for="chapter-scene-select">Chapter/Scene</label><br/>
-        <label id='scene-add-wait'>Please wait...</label><br/>
-        <button id="btnAddWallaBlockNamed" onclick="jade_modules.operations.getSceneWallaInformation(1)">Add walla block (Named)</button>
-        <button id="btnAddWallaBlockUnnamed" onclick="jade_modules.operations.getSceneWallaInformation(2)">Add walla block (Un-named)</button>
-        <button id="btnAddWallaBlockGeneral" onclick="jade_modules.operations.getSceneWallaInformation(3)">Add walla block (General)</button>
-        <label for="walla-scene">Scene</label><br/>
-      </div>
-      <div class="column" id="column-add-two">
-        <select id="chapter-scene-select"><option value="">Please select</option></select>
-        <button id='btnGoChapterScene' onclick="jade_modules.operations.goSceneChapter()">Go</button>
-        <button id="btnRefreshList" onclick="jade_modules.operations.fillChapterAndScene()">Refresh List</button>
-        <br/>
-        <input type="text" id="walla-scene" name="walla-scene">
-        <button id='btnGoWallaScene' onclick="jade_modules.operations.goWallaScene()">Go</button>
-      </div>
-    </div>
-    <button id="btnFindDuplicateCues" onclick="jade_modules.operations.fundDuplicateCues()"">Find Duplicate Cues</button>
+    <button id='btnFormula' onclick="jade_modules.operations.theTest()">Test</button>
   </div>
 </div>
   
