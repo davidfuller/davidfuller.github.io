@@ -67,7 +67,7 @@ async function findCues(){
   for (let i = 0; i < sourceSheetNames.length; i++){
     await Excel.run(async function(excel){
       const thisSheet = excel.workbook.worksheets.getItem(sourceSheetNames[i]);
-      let firstColumnRange = thisSheet.getRangeByIndexes(1, 1, 100, 1);
+      let firstColumnRange = thisSheet.getRangeByIndexes(0, 0, 100, 1);
       firstColumnRange.load('values');
       await excel.sync();
       let theValues = firstColumnRange.values.map(x => x[0])
