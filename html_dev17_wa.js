@@ -13,7 +13,7 @@ async function mainHTML(){
   </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
-    <button id='btnFormula' onclick="jade_modules.operations.theTest()">Test</button>
+    <button id='btnFormula' onclick="jade_modules.walla.getUsedCueRange()">Test</button>
   </div>
 </div>
   `;
