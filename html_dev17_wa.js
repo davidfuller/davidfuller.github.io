@@ -13,7 +13,8 @@ async function mainHTML(){
   </div>
   <div id="admin">
     <label class="section-label">Admin</label><br/>
-    <button id='btnFormula' onclick="jade_modules.walla.minMaxCueValues()">Test</button>
+    <button id='btnCueValues' onclick="jade_modules.walla.minMaxCueValues()">Test</button>
+    <button id='btnSourceSheets' onclick="jade_modules.walla.sourceSheets()">Source Sheets</button>
   </div>
 </div>
   `;
