@@ -85,7 +85,7 @@ async function findCues(){
             temp.cue = theNumber;
             temp.sheetName = sourceSheetNames[i];
             temp.context = contextText
-            temp.rowIndex = firstColumnRange + j;
+            temp.rowIndex = firstColumnRange.rowIndex + j;
             results.push(temp)
             contextText = '';
           }  
