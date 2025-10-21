@@ -64,6 +64,7 @@ async function findCues(){
   let results = [];
   let minMax = await minMaxCueValues();
   let sourceSheetNames = await sourceSheets();
+  let contextText = '';
   for (let i = 0; i < sourceSheetNames.length; i++){
     await Excel.run(async function(excel){
       const thisSheet = excel.workbook.worksheets.getItem(sourceSheetNames[i]);
@@ -73,13 +74,19 @@ async function findCues(){
       let theValues = firstColumnRange.values.map(x => x[0])
       console.log(sourceSheetNames[i], 'theValues', theValues);
       for (let j = 0; j < theValues.length; j++){
+        let tempContext = extractContext(theValues[j]);
+        if (tempContext != ''){
+          contextText = tempContext;
+        }
         theNumber = parseInt(theValues[j]);
         if (!isNaN(theNumber)){
           if ((theNumber >= minMax.min) && (theNumber <= minMax.max)){
             let temp = {};
             temp.cue = theNumber;
             temp.sheetName = sourceSheetNames[i];
+            temp.context = contextText
             results.push(temp)
+            contextText = '';
           }  
         }
       }
@@ -88,4 +95,13 @@ async function findCues(){
   results.sort((a, b) => b.cue - a.cue);
   console.log('results', results);
   return results;
+}
+
+function extractContext(text){
+  let position = text.toLowerCase().indexOf('context');
+  let context = '';
+  if (position != -1){
+    context = text.substring(position + 8).trim();
+  }
+  return context;
 }
