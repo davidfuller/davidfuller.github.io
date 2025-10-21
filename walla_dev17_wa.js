@@ -99,7 +99,7 @@ async function findCues(){
 
 function extractContext(text){
   console.log('text', text)
-  let position = text.toStrring().toLowerCase().indexOf('context');
+  let position = text.toString().toLowerCase().indexOf('context');
   let context = '';
   if (position != -1){
     context = text.substring(position + 8).trim();
