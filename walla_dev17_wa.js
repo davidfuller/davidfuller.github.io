@@ -69,7 +69,7 @@ async function findCues(){
     await Excel.run(async function(excel){
       const thisSheet = excel.workbook.worksheets.getItem(sourceSheetNames[i]);
       let firstColumnRange = thisSheet.getRangeByIndexes(0, 0, 100, 1);
-      firstColumnRange.load('values');
+      firstColumnRange.load('values, rowIndex');
       await excel.sync();
       let theValues = firstColumnRange.values.map(x => x[0])
       console.log(sourceSheetNames[i], 'theValues', theValues);
@@ -85,6 +85,7 @@ async function findCues(){
             temp.cue = theNumber;
             temp.sheetName = sourceSheetNames[i];
             temp.context = contextText
+            temp.rowIndex = firstColumnRange + j;
             results.push(temp)
             contextText = '';
           }  
