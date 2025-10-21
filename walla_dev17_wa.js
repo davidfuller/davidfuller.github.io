@@ -98,6 +98,7 @@ async function findCues(){
 }
 
 function extractContext(text){
+  console.log('text', text)
   let position = text.toLowerCase().indexOf('context');
   let context = '';
   if (position != -1){
