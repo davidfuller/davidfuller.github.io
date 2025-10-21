@@ -92,7 +92,7 @@ async function findCues(){
       }
     })
   }
-  results.sort((a, b) => b.cue - a.cue);
+  results.sort((a, b) => a.cue - b.cue);
   console.log('results', results);
   return results;
 }
