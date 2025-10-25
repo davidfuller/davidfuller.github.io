@@ -6,7 +6,7 @@ const maxRowCount = 50000;
 async function getUsedCueRange(){
   let cueRangeAddress = '';
   await Excel.run(async function(excel){
-    const scriptSheet = excel.workbook.worksheets.getItem('Script');
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let fullCueRange = scriptSheet.getRangeByIndexes(startRow, cueColumnIndex, maxRowCount, 1);
     let cueRange = fullCueRange.getUsedRange();
     cueRange.load('address');
@@ -116,3 +116,31 @@ function extractContext(text){
   }
   return context;
 }
+
+async function findCueIndex(cue){
+  const cueRangeAddress = await getUsedCueRange();
+  let cueRowIndex = -1;
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let cueRange = scriptSheet.getRange(cueRangeAddress);
+    cueRange.load('values, rowIndex');
+    await excel.sync();
+    let cueValues = cueRange.values.map(x => x[0]);
+    let myIndex = cueValues.indexOf(cue);
+    if (myIndex != -1){
+      cueRowIndex = myIndex + cueRange.rowIndex;
+    }
+  })
+  return cuewRowIndex;
+}
+
+async function gatherData(){
+  let results = await findCues();
+  for (let result of results){
+    result.rowIndex = await findCueIndex(result.cue);
+    conole.log('cue:', result.cue, 'rowIndex', result.rowIndex);
+  }
+  console.log('reults', results);
+  return results;
+}
+  
