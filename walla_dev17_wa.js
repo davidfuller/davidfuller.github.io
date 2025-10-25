@@ -2,7 +2,7 @@ const scriptSheetName = 'Script';
 const cueColumnIndex = 5;
 const characterColumnIndex = 7;
 const ukScriptColumnIndex = 10;
-const germanScriptColumIndex = 11;
+const germanScriptColumnIndex = 12;
 
 const startRow = 1;
 const maxRowCount = 50000;
@@ -160,7 +160,7 @@ async function scriptData(rowIndex){
     characterRange.load('values');
     let ukScriptRange = scriptSheet.getRangeByIndexes(rowIndex, ukScriptColumnIndex, 1, 1);
     ukScriptRange.load('values');
-    let germanScriptRange = scriptSheet.getRangeByIndexes(rowIndex, germanScriptColumIndex, 1, 1);
+    let germanScriptRange = scriptSheet.getRangeByIndexes(rowIndex, germanScriptColumnIndex, 1, 1);
     germanScriptRange.load('values');
     await excel.sync();
     data.character = characterRange.values[0][0];
