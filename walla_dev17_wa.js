@@ -1,5 +1,9 @@
 const scriptSheetName = 'Script';
 const cueColumnIndex = 5;
+const characterColumnIndex = 7;
+const ukScriptColumnIndex = 10;
+const germanScriptColumIndex = 11;
+
 const startRow = 1;
 const maxRowCount = 50000;
 
@@ -86,7 +90,7 @@ async function findCues(){
             let temp = {};
             temp.cue = theNumber;
             temp.sheetName = sourceSheetNames[i];
-            temp.context = contextText
+            temp.context = contextText;
             temp.rowIndex = firstColumnRange.rowIndex + j;
             let characterRange = thisSheet.getRangeByIndexes(temp.rowIndex, characterColumnIndex, 1, 1);
             let scriptRange = thisSheet.getRangeByIndexes(temp.rowIndex, scriptColumnIndex, 1, 1);
@@ -139,8 +143,30 @@ async function gatherData(){
   for (let result of results){
     result.rowIndex = await findCueIndex(result.cue);
     console.log('cue:', result.cue, 'rowIndex', result.rowIndex);
+    if (result.rowIndex != -1){
+      result.scriptData = await scriptData(result.rowIndex);
+      console.log('scriptData', result.scriptData);
+    }
   }
   console.log('reults', results);
   return results;
+}
+
+async function scriptData(rowIndex){
+  let data = {};
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let characterRange = scriptSheet.getRangeByIndexes(rowIndex, characterColumnIndex, 1, 1);
+    characterRange.load('values');
+    let ukScriptRange = scriptSheet.getRangeByIndexes(rowIndex, ukScriptColumnIndex, 1, 1);
+    ukScriptRange.load('values');
+    let germanScriptRange = scriptSheet.getRangeByIndexes(rowIndex, germanScriptColumIndex, 1, 1);
+    germanScriptRange.load('values');
+    await excel.sync();
+    data.character = characterRange.values[0][0];
+    data.ukScript = ukScriptRange.values[0][0];
+    data.germanScript = germanScriptRange.values[0][0];    
+   })
+   return data;
 }
   
