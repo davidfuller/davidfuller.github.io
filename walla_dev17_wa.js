@@ -138,7 +138,7 @@ async function gatherData(){
   let results = await findCues();
   for (let result of results){
     result.rowIndex = await findCueIndex(result.cue);
-    conole.log('cue:', result.cue, 'rowIndex', result.rowIndex);
+    console.log('cue:', result.cue, 'rowIndex', result.rowIndex);
   }
   console.log('reults', results);
   return results;
