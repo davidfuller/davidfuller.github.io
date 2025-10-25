@@ -45,7 +45,7 @@ async function minMaxCueValues(){
 }
 
 async function sourceSheets(){
-  sourceSheets = []
+  let sourceSheetNames = []
   await Excel.run(async function(excel){
     const worksheets = excel.workbook.worksheets;
     worksheets.load('items')
@@ -53,12 +53,12 @@ async function sourceSheets(){
     for (let i = 0; i < worksheets.items.length; i++){
       console.log(worksheets.items[i].name);
       if (worksheets.items[i].name.startsWith('Table')){
-        sourceSheets.push(worksheets.items[i].name)
+        sourceSheetNames.push(worksheets.items[i].name)
       }
     }
   })
-  console.log('sourceSheets', sourceSheets)
-  return sourceSheets
+  console.log('sourceSheetNames', sourceSheetNames)
+  return sourceSheetNames
 }
 async function findCues(){
   let results = [];
