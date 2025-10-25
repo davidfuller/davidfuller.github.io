@@ -131,7 +131,7 @@ async function findCueIndex(cue){
       cueRowIndex = myIndex + cueRange.rowIndex;
     }
   })
-  return cuewRowIndex;
+  return cueRowIndex;
 }
 
 async function gatherData(){
