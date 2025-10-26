@@ -146,7 +146,7 @@ async function gatherData(){
     if (result.rowIndex != -1){
       result.scriptData = await scriptData(result.rowIndex);
       console.log('scriptData', result.scriptData);
-      result.wallaNextData = wallaNextRows(result.rowIndex);
+      result.wallaNextData = await wallaNextRows(result.rowIndex);
     }
   }
   console.log('results', results);
