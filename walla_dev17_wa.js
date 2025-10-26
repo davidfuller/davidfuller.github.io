@@ -231,4 +231,16 @@ async function bookNumber(){
   })
   return bookNo;
 }
+
+async function clearGermanScriptedWalla(){
+  await Excel.run(async function(excel){
+    let wallaSheet = excel.workbook.worksheets.getItem(germanScriptedWallaName);
+    let wallaRange = wallaSheet.getRangeByIndexes(startRow, germanWallaColumns.bookNo, maxRowCount, germanWallaColumns.numColumns);
+    let usedWallaRange = wallaRange.getUsedRange();
+    usedWallaRange.load('address, rowIndex, rowCount');
+    usedWallaRange.clear('Contents');
+    await excel.sync();
+    console.log('Address', usedWallaRange.address, usedWallaRange.rowIndex, usedWallaRange.rowCount);
+  })
+}
   

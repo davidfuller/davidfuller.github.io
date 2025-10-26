@@ -17,6 +17,7 @@ async function mainHTML(){
     <button id='btnSourceSheets' onclick="jade_modules.walla.sourceSheets()">Source Sheets</button>
     <button id='btnFindCues' onclick="jade_modules.walla.findCues()">Find Cues</button>
     <button id='btnGatherData' onclick="jade_modules.walla.gatherData()">Gather Data</button>
+    <button id="btnClearUsedWallaRange" onclick="jade_modules.walla.clearGermanScriptedWalla()">Clear Walla</button>
   </div>
 </div>
   `;
