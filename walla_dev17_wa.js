@@ -7,6 +7,20 @@ const germanScriptColumnIndex = 12;
 const startRow = 1;
 const maxRowCount = 50000;
 
+
+const germanWallaColumns = {
+  book: 0,
+  cue: 1,
+  character: 2,
+  ukScript: 3,
+  germanScript: 4,
+  germanWallaMachineTranslation: 5,
+  context: 6,
+  numColumns: 7
+};
+
+const germanScriptedWallaName = 'German Scripted Walla';
+
 async function getUsedCueRange(){
   let cueRangeAddress = '';
   await Excel.run(async function(excel){
@@ -88,6 +102,7 @@ async function findCues(){
         if (!isNaN(theNumber)){
           if ((theNumber >= minMax.min) && (theNumber <= minMax.max)){
             let temp = {};
+            temp.bookNo = await bookNumber();
             temp.cue = theNumber;
             temp.sheetName = sourceSheetNames[i];
             temp.context = contextText;
@@ -198,5 +213,22 @@ async function cueValue(rowIndex){
     cueValue = cueRange.values[0][0];
   })
   return cueValue;
+}
+
+async function bookNumber(){
+  let bookNo = -1;
+  let rangeName = 'CK3';
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let bookRange = scriptSheet.getRange(rangeName);
+    bookRange.load('values');
+    await excel.sync();
+    let temp = bookRange.values[0][0]
+    let bookValue = parseInt(temp.replace('Book ',''));
+    if (!isNaN(bookValue)){
+      bookNo = bookValue;
+    }
+  })
+  return bookNo;
 }
   
