@@ -238,7 +238,7 @@ async function clearGermanScriptedWalla(){
     await excel.sync();
     let wallaRange = wallaSheet.getRangeByIndexes(startRow, germanWallaColumns.bookNo, maxRowCount, germanWallaColumns.numColumns);
     await excel.sync();
-    let usedWallaRange = wallaRange.getUsedRange();
+    let usedWallaRange = wallaRange.getUsedRange(true);
     usedWallaRange.load('address, rowIndex, rowCount');
     await excel.sync();
     usedWallaRange.clear('Contents');
