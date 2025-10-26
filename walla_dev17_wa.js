@@ -287,7 +287,7 @@ async function appendRow(result){
     let germanScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.germanScript, 1, 1);
     germanScriptRange.values =[[result.scriptData.germanScript]];
     await excel.sync();
-    for (let i = 0; i < result.wallaNextData; i++){
+    for (let i = 0; i < result.wallaNextData.length; i++){
       rowIndex += 1;
       let bookRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.book, 1, 1);
       bookRange.values = [[result.bookNo]];
