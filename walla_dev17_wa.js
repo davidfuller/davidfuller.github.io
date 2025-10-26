@@ -146,9 +146,10 @@ async function gatherData(){
     if (result.rowIndex != -1){
       result.scriptData = await scriptData(result.rowIndex);
       console.log('scriptData', result.scriptData);
+      result.wallaNextData = wallaNextRows(result.rowIndex);
     }
   }
-  console.log('reults', results);
+  console.log('results', results);
   return results;
 }
 
@@ -168,5 +169,34 @@ async function scriptData(rowIndex){
     data.germanScript = germanScriptRange.values[0][0];    
    })
    return data;
+}
+
+async function wallaNextRows(scriptRowIndex){
+  let data = [];
+  let rowIndex = scriptRowIndex + 1;
+  let myCueValue = await cueValue(rowIndex)
+  let cueString = myCueValue.toString().toLowerCase().trim();
+  while (cueString.startsWith('w')){
+    let temp = scriptData(rowIndex);
+    temp.rowIndex = rowIndex;
+    data.push(temp);
+    rowIndex += 1;
+    myCueValue = await cueValue(rowIndex)
+    cueString = myCueValue.toString().toLowerCase().trim();
+  }
+  console.log('next walla data', data) ;
+  return data;
+}
+
+async function cueValue(rowIndex){
+  let cueValue;
+  await Excel.run(async function(excel){
+    const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
+    let cueRange = scriptSheet.getRangeByIndexes(rowIndex, cueColumnIndex, 1, 1);
+    cueRange.load('values');
+    await excel.sync()
+    cueValue = cueRange.values[0][0];
+  })
+  return cueValue;
 }
   
