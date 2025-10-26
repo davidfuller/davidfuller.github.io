@@ -162,6 +162,7 @@ async function gatherData(){
       result.scriptData = await scriptData(result.rowIndex);
       console.log('scriptData', result.scriptData);
       result.wallaNextData = await wallaNextRows(result.rowIndex);
+      await appendRow(result);
     }
   }
   console.log('results', results);
@@ -264,6 +265,23 @@ async function clearGermanScriptedWalla(){
       wallaRange.clear('Contents');
     })
   }
+}
+
+async function appendRow(result){
+  let used = await getGermanScriptedWallaUsedRange();
+  let rowIndex = startRow
+  if (!used.empty){
+    rowIndex = used.rowIndex + used.rowCount
+  }
+  await Excel.run(async function(excel){
+    let wallaSheet = excel.workbook.worksheets.getItem(germanScriptedWallaName);
+    let bookRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.book, 1, 1);
+    bookRange.values = [[result.bookNo]];
+    let cueRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.cue, 1, 1);
+    cueRange.values =[[result.cue]];
+    let characterRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.character, 1, 1);
+    cueRange.values =[[result.character]];
+  }) 
 }
       
   
