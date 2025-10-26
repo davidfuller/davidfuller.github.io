@@ -235,15 +235,17 @@ async function bookNumber(){
 async function clearGermanScriptedWalla(){
   await Excel.run(async function(excel){
     let wallaSheet = excel.workbook.worksheets.getItem(germanScriptedWallaName);
-    await excel.sync();
     let wallaRange = wallaSheet.getRangeByIndexes(startRow, germanWallaColumns.bookNo, maxRowCount, germanWallaColumns.numColumns);
+    let usedWallaRange = wallaRange.getUsedRangeOrNullObject(true);
     await excel.sync();
-    let usedWallaRange = wallaRange.getUsedRange(true);
-    usedWallaRange.load('address, rowIndex, rowCount');
-    await excel.sync();
-    usedWallaRange.clear('Contents');
-    await excel.sync();
-    console.log('Address', usedWallaRange.address, usedWallaRange.rowIndex, usedWallaRange.rowCount);
+    if (!usedWallaRange.isNullObject){
+      usedWallaRange.load('address, rowIndex, rowCount');
+      usedWallaRange.clear('Contents');
+      await excel.sync();
+      console.log('Address', usedWallaRange.address, usedWallaRange.rowIndex, usedWallaRange.rowCount);
+    } else {
+      console.log('Empty')
+    }
   })
 }
   
