@@ -177,7 +177,7 @@ async function wallaNextRows(scriptRowIndex){
   let myCueValue = await cueValue(rowIndex)
   let cueString = myCueValue.toString().toLowerCase().trim();
   while (cueString.startsWith('w')){
-    let temp = scriptData(rowIndex);
+    let temp = await scriptData(rowIndex);
     temp.rowIndex = rowIndex;
     data.push(temp);
     rowIndex += 1;
