@@ -280,7 +280,7 @@ async function appendRow(result){
     let cueRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.cue, 1, 1);
     cueRange.values =[[result.cue]];
     let characterRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.character, 1, 1);
-    cueRange.values =[[result.character]];
+    characterRange.values =[[result.character]];
   }) 
 }
       
