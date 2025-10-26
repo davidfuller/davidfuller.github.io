@@ -232,7 +232,8 @@ async function bookNumber(){
   return bookNo;
 }
 
-async function clearGermanScriptedWalla(){
+async function getGermanScriptedWallaUsedRange(){
+  let used = {}
   await Excel.run(async function(excel){
     let wallaSheet = excel.workbook.worksheets.getItem(germanScriptedWallaName);
     let wallaRange = wallaSheet.getRangeByIndexes(startRow, germanWallaColumns.bookNo, maxRowCount, germanWallaColumns.numColumns);
@@ -240,12 +241,29 @@ async function clearGermanScriptedWalla(){
     await excel.sync();
     if (!usedWallaRange.isNullObject){
       usedWallaRange.load('address, rowIndex, rowCount');
-      usedWallaRange.clear('Contents');
       await excel.sync();
       console.log('Address', usedWallaRange.address, usedWallaRange.rowIndex, usedWallaRange.rowCount);
+      used.address = usedWallaRange.address;
+      used.rowIndex = usedWallaRange.rowIndex;
+      used.rowCount = usedWallaRange.rowCount;
+      used.empty = false;
     } else {
       console.log('Empty')
+      used.empty = true;
     }
   })
+  return used;
 }
+
+async function clearGermanScriptedWalla(){
+  let used = await getGermanScriptedWallaUsedRange();
+  if (!used.empty){
+    await Excel.run(async function(excel){
+      let wallaSheet = excel.workbook.worksheets.getItem(germanScriptedWallaName);
+      let wallaRange = wallaSheet.getRange(used.address);
+      wallaRange.clear('Contents');
+    })
+  }
+}
+      
   
