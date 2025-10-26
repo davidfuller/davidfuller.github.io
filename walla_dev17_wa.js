@@ -195,6 +195,7 @@ async function wallaNextRows(scriptRowIndex){
   while (cueString.startsWith('w')){
     let temp = await scriptData(rowIndex);
     temp.rowIndex = rowIndex;
+    temp.cue = myCueValue.toString().trim();
     data.push(temp);
     rowIndex += 1;
     myCueValue = await cueValue(rowIndex)
@@ -285,7 +286,18 @@ async function appendRow(result){
     ukScriptRange.values =[[result.scriptData.ukScript]];
     let germanScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.germanScript, 1, 1);
     germanScriptRange.values =[[result.scriptData.germanScript]];
-
+    await excel.sync();
+    for (let i = 0; i < result.wallaNextData; i++){
+      rowIndex += 1;
+      let bookRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.book, 1, 1);
+      bookRange.values = [[result.bookNo]];
+      let cueRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.cue, 1, 1);
+      cueRange.values =[[result.wallaNextData[i].cue]];
+      let characterRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.character, 1, 1);
+      characterRange.values =[[result.wallaNextData[i].character]];
+      let ukScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.ukScript, 1, 1);
+      ukScriptRange.values =[[result.wallaNextData[i].ukScript]];
+    }
   }) 
 }
       
