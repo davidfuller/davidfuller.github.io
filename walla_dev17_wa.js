@@ -281,6 +281,11 @@ async function appendRow(result){
     cueRange.values =[[result.cue]];
     let characterRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.character, 1, 1);
     characterRange.values =[[result.character]];
+    let ukScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.ukScript, 1, 1);
+    ukScriptRange.values =[[result.scriptData.ukScript]];
+    let germanScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.germanScript, 1, 1);
+    germanScriptRange.values =[[result.scriptData.germanScript]];
+
   }) 
 }
       
