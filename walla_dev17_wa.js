@@ -296,8 +296,14 @@ async function appendRow(result){
     let germanScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.germanScript, 1, 1);
     let sourceGermanScriptRange = scriptSheet.getRange(result.scriptData.germanScript.address);
     copyValuesAndFormats(sourceGermanScriptRange, germanScriptRange);
-   // germanScriptRange.values =[[result.scriptData.germanScript.value]];
+    // germanScriptRange.values =[[result.scriptData.germanScript.value]];
+
+    let germanMachineRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.germanWallaMachineTranslation, 1, 1);
+    let contextRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.context, 1, 1);
+    copyFormats(sourceUkScriptRange, germanMachineRange);
+    copyFormats(sourceUkScriptRange, contextRange);
     await excel.sync();
+
     for (let i = 0; i < result.wallaNextData.length; i++){
       rowIndex += 1;
       let bookRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.book, 1, 1);
