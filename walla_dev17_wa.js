@@ -338,7 +338,8 @@ async function appendRow(result){
       copyFormats(sourceUkScriptRange, contextRange);
 
       contextRange.values = [[result.context]]
-      germanMachineRange.formulas = [['=TRANSLATE(' + ukScriptRange + ', "de", "en")']]
+      let formulaString = '=TRANSLATE(' + ukScriptRange + ', "de", "en")'
+      germanMachineRange.formulas = [[formulaString]]
       await excel.sync();
     }
   }) 
