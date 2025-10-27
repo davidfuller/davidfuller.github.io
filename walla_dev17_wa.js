@@ -6,6 +6,7 @@ const germanScriptColumnIndex = 12;
 
 const startRow = 1;
 const maxRowCount = 50000;
+const maxRowindexTableSheets = 100;
 
 
 const germanWallaColumns = {
@@ -86,9 +87,11 @@ async function findCues(){
   const characterColumnIndex = 1;
   const scriptColumnIndex = 2;
   for (let i = 0; i < sourceSheetNames.length; i++){
+    thisSheetResults = []
     await Excel.run(async function(excel){
       const thisSheet = excel.workbook.worksheets.getItem(sourceSheetNames[i]);
-      let firstColumnRange = thisSheet.getRangeByIndexes(0, 0, 100, 1);
+      let firstColumnRange = thisSheet.getRangeByIndexes(0, 0, maxRowindexTableSheets, 1);
+      let thisSheetWallaTextRowIndexes = [];
       firstColumnRange.load('values, rowIndex');
       await excel.sync();
       let theValues = firstColumnRange.values.map(x => x[0])
@@ -107,6 +110,7 @@ async function findCues(){
             temp.sheetName = sourceSheetNames[i];
             temp.context = contextText;
             temp.sourceRowIndex = firstColumnRange.rowIndex + j;
+            thisSheetWallaTextRowIndexes.push(temp.sourceRowIndex);
             console.log('temp sourceRowIndex', temp.sourceRowIndex);
             let characterRange = thisSheet.getRangeByIndexes(temp.sourceRowIndex, characterColumnIndex, 1, 1);
             let scriptRange = thisSheet.getRangeByIndexes(temp.sourceRowIndex, scriptColumnIndex, 1, 1);
@@ -115,10 +119,29 @@ async function findCues(){
             await excel.sync();
             temp.character = characterRange.values[0][0];
             temp.script = scriptRange.values[0][0];
-            results.push(temp)
+            thisSheetResults.push(temp)
             contextText = '';
           }  
         }
+      }
+      for (let k = 0; k < thisSheetResults.length; k++){
+        let possibleWallaText = []
+        let firstIndex = thisSheetResults[k].rowIndex + 1;
+        let lastIndex = maxRowindexTableSheets
+        if (k + 1 < thisSheetResults){
+          lastIndex = thisSheetResults[k + 1] - 1
+        }
+        console.log('Sheet', thisSheetResults[k].sheetName, 'first/last', firstIndex, lastIndex);
+        for (let index = firstIndex; index <= lastIndex; index++){
+          myValue = theValues[index].toString().trim();
+          if (myValue != ''){
+            possibleWallaText.push(myValue);
+          }
+        }
+        thisSheetResults[k].possibleWallaText = possibleWallaText
+      }
+      for (mySheet of thisSheetResults){
+        results.push(mySheet)
       }
     })
   }
