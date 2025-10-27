@@ -191,30 +191,31 @@ async function wallaNextRows(scriptRowIndex){
   let data = [];
   let rowIndex = scriptRowIndex + 1;
   let myCueValue = await cueValue(rowIndex)
-  let cueString = myCueValue.toString().toLowerCase().trim();
+  let cueString = myCueValue.value.toString().toLowerCase().trim();
   while (cueString.startsWith('w')){
     let temp = await scriptData(rowIndex);
     temp.rowIndex = rowIndex;
-    temp.cue = myCueValue.toString().trim();
+    temp.cue = myCueValue.value.toString().trim();
+    temp.address = myCueValue.address;
     data.push(temp);
     rowIndex += 1;
     myCueValue = await cueValue(rowIndex)
-    cueString = myCueValue.toString().toLowerCase().trim();
+    cueString = myCueValue.value.toString().toLowerCase().trim();
   }
   console.log('next walla data', data) ;
   return data;
 }
 
 async function cueValue(rowIndex){
-  let cueValue;
+  let myCueValue;
   await Excel.run(async function(excel){
     const scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let cueRange = scriptSheet.getRangeByIndexes(rowIndex, cueColumnIndex, 1, 1);
-    cueRange.load('values');
+    cueRange.load('values, address');
     await excel.sync()
-    cueValue = cueRange.values[0][0];
+    myCueValue = {value: cueRange.values[0][0], address: cueRange.address};
   })
-  return cueValue;
+  return myCueValue;
 }
 
 async function bookNumber(){
@@ -280,7 +281,10 @@ async function appendRow(result){
     let bookRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.book, 1, 1);
     bookRange.values = [[result.bookNo]];
     let cueRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.cue, 1, 1);
-    cueRange.values =[[result.cue]];
+    let sourceCueRange = scriptSheet.getRangeByIndexes(result.rowIndex, cueColumnIndex, 1, 1);
+    copyValuesAndFormats(sourceCueRange, cueRange);
+    bookRange.copyFrom(sourceCueRange, 'Formats');
+    //cueRange.values =[[result.cue]];
     let characterRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.character, 1, 1);
     let sourceCharacterRange = scriptSheet.getRange(result.scriptData.character.address);
     copyValuesAndFormats(sourceCharacterRange, characterRange);
