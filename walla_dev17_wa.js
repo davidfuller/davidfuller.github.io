@@ -334,6 +334,7 @@ async function appendRow(result){
     copyFormats(sourceUkScriptRange, contextRange);
     await excel.sync();
 
+    let wallaCharacters = [];
     for (let i = 0; i < result.wallaNextData.length; i++){
       rowIndex += 1;
       let bookRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.book, 1, 1);
@@ -347,7 +348,7 @@ async function appendRow(result){
       let characterRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.character, 1, 1);
       let sourceCharacterRange = scriptSheet.getRange(result.wallaNextData[i].character.address);
       copyValuesAndFormats(sourceCharacterRange, characterRange);
-      //characterRange.values =[[result.wallaNextData[i].character.value]];
+      wallaCharacters.push({character: result.wallaNextData[i].character.value, rowIndex: rowIndex});
       let ukScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.ukScript, 1, 1);
       ukScriptRange.load('address')
 
@@ -372,6 +373,7 @@ async function appendRow(result){
       germanMachineRange.formulas = [[formulaString]]
       await excel.sync();
     }
+    let characterText = extractWallaScript(wallaCharacters, result.possibleWallaText)
   }) 
 }
       
@@ -381,5 +383,26 @@ function copyValuesAndFormats(sourceRange, destRange){
 }
 function copyFormats(sourceRange, destRange){
   destRange.copyFrom(sourceRange, 'Formats');
+}
+
+function extractWallaScript(characters, possibleWallaText){
+  let trimmedCharacters = []
+  for (let character of characters){
+    let temp = character.character.trim().toLowerCase()
+    trimmedCharacters.push({character: temp.replaceAll(':', '').trim(), rowIndex: character.rowIndex})
+  }
+  console.log('trimmed characters', trimmedCharacters)
+  let stats = []
+  for (let possible of possibleWallaText){
+    let num = 0;
+    for (let trimmed of trimmedCharacters){
+      if (possible.toLowerCase().includes(trimmed.character)){
+        num += 1;
+      }
+    }
+    stats.push({text: possible, num: num})
+  }
+
+  console.log('stats', stats)
 }
 
