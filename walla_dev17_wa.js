@@ -283,7 +283,7 @@ async function appendRow(result){
     cueRange.values =[[result.cue]];
     let characterRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.character, 1, 1);
     let sourceCharacterRange = scriptSheet.getRange(result.scriptData.character.address);
-    copyValuesAndFormats(characterRange, sourceCharacterRange);
+    await copyValuesAndFormats(excel, characterRange, sourceCharacterRange);
     //characterRange.values =[[result.character.value]];
     let ukScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.ukScript, 1, 1);
     ukScriptRange.values =[[result.scriptData.ukScript.value]];
@@ -304,7 +304,8 @@ async function appendRow(result){
   }) 
 }
       
-function copyValuesAndFormats(sourceRange, destRange){
+async function copyValuesAndFormats(excel, sourceRange, destRange){
   destRange.copyFrom(sourceRange, 'Values');
   destRange.copyFrom(sourceRange, 'Formats');
+  await excel.sync();
 }
