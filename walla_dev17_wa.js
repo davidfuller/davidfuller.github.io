@@ -305,6 +305,7 @@ async function appendRow(result){
       let cueRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.cue, 1, 1);
       let sourceCueRange = scriptSheet.getRangeByIndexes(result.wallaNextData[i].rowIndex, cueColumnIndex, 1, 1);
       copyValuesAndFormats(sourceCueRange, cueRange);
+      copyFormats(sourceCueRange, bookRange);
       bookRange.copyFrom(sourceCueRange, 'Formats');
       //cueRange.values =[[result.wallaNextData[i].cue]];
       let characterRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.character, 1, 1);
@@ -315,6 +316,13 @@ async function appendRow(result){
       let sourceUkScriptRange = scriptSheet.getRange(result.wallaNextData[i].ukScript.address);
       copyValuesAndFormats(sourceUkScriptRange, ukScriptRange);
       //ukScriptRange.values =[[result.wallaNextData[i].ukScript.value]];
+
+      let germanScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.germanScript, 1, 1);
+      let germanMachineRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.germanWallaMachineTranslation, 1, 1);
+      let contextRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.context, 1, 1);
+      copyFormats(sourceUkScriptRange, germanScriptRange);
+      copyFormats(sourceUkScriptRange, germanMachineRange);
+      copyFormats(sourceUkScriptRange, contextRange);
       await excel.sync();
     }
   }) 
@@ -324,3 +332,7 @@ function copyValuesAndFormats(sourceRange, destRange){
   destRange.copyFrom(sourceRange, 'Values');
   destRange.copyFrom(sourceRange, 'Formats');
 }
+function copyFormats(sourceRange, destRange){
+  destRange.copyFrom(sourceRange, 'Formats');
+}
+
