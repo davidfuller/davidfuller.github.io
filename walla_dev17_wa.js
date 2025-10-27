@@ -319,16 +319,24 @@ async function appendRow(result){
       copyValuesAndFormats(sourceCharacterRange, characterRange);
       //characterRange.values =[[result.wallaNextData[i].character.value]];
       let ukScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.ukScript, 1, 1);
+      ukScriptRange.load('address')
+
       let sourceUkScriptRange = scriptSheet.getRange(result.wallaNextData[i].ukScript.address);
       copyValuesAndFormats(sourceUkScriptRange, ukScriptRange);
       //ukScriptRange.values =[[result.wallaNextData[i].ukScript.value]];
 
       let germanScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.germanScript, 1, 1);
       let germanMachineRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.germanWallaMachineTranslation, 1, 1);
+      germanMachineRange.load('address')
+      await excel.sync();
+      console.log('German Machine Range Address', germanMachineRange.address, 'UK Script address', ukScriptRange.address);
+
       let contextRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.context, 1, 1);
       copyFormats(sourceUkScriptRange, germanScriptRange);
       copyFormats(sourceUkScriptRange, germanMachineRange);
       copyFormats(sourceUkScriptRange, contextRange);
+
+      contextRange.values = [[result.context]]
       await excel.sync();
     }
   }) 
