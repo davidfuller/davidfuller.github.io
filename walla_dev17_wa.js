@@ -339,6 +339,7 @@ async function appendRow(result){
 
       contextRange.values = [[result.context]]
       let formulaString = '=TRANSLATE(' + ukScriptRange + ', "de", "en")'
+      console.log('formulastring', formulaString)
       germanMachineRange.formulas = [[formulaString]]
       await excel.sync();
     }
