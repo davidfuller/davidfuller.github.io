@@ -265,6 +265,7 @@ async function clearGermanScriptedWalla(){
       let wallaSheet = excel.workbook.worksheets.getItem(germanScriptedWallaName);
       let wallaRange = wallaSheet.getRange(used.address);
       wallaRange.clear('Contents');
+      wallaRange.clear('Formats');
     })
   }
 }
