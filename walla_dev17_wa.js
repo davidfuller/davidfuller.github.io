@@ -126,7 +126,7 @@ async function findCues(){
       }
       for (let k = 0; k < thisSheetResults.length; k++){
         let possibleWallaText = []
-        let firstIndex = thisSheetResults[k].rowIndex + 1;
+        let firstIndex = thisSheetResults[k].sourceRowIndex + 1;
         let lastIndex = maxRowindexTableSheets
         if (k + 1 < thisSheetResults){
           lastIndex = thisSheetResults[k + 1] - 1
