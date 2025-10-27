@@ -132,7 +132,9 @@ async function findCues(){
           lastIndex = thisSheetResults[k + 1] - 1
         }
         console.log('Sheet', thisSheetResults[k].sheetName, 'first/last', firstIndex, lastIndex);
+        console.log('theValues', theValues);
         for (let index = firstIndex; index <= lastIndex; index++){
+          console.log('index', index);
           myValue = theValues[index].toString().trim();
           if (myValue != ''){
             possibleWallaText.push(myValue);
