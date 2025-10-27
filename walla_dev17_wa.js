@@ -294,7 +294,9 @@ async function appendRow(result){
     copyValuesAndFormats(sourceUkScriptRange, ukScriptRange);
     //ukScriptRange.values =[[result.scriptData.ukScript.value]];
     let germanScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.germanScript, 1, 1);
-    germanScriptRange.values =[[result.scriptData.germanScript.value]];
+    let sourceGermanScriptRange = scriptSheet.getRange(result.scriptData.germanScript.address);
+    copyValuesAndFormats(sourceGermanScriptRange, germanScriptRange);
+   // germanScriptRange.values =[[result.scriptData.germanScript.value]];
     await excel.sync();
     for (let i = 0; i < result.wallaNextData.length; i++){
       rowIndex += 1;
