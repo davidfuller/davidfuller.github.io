@@ -106,10 +106,10 @@ async function findCues(){
             temp.cue = theNumber;
             temp.sheetName = sourceSheetNames[i];
             temp.context = contextText;
-            temp.rowIndex = firstColumnRange.rowIndex + j;
-            console.log('temp rowIndex', temp.rowIndex);
-            let characterRange = thisSheet.getRangeByIndexes(temp.rowIndex, characterColumnIndex, 1, 1);
-            let scriptRange = thisSheet.getRangeByIndexes(temp.rowIndex, scriptColumnIndex, 1, 1);
+            temp.sourceRowIndex = firstColumnRange.rowIndex + j;
+            console.log('temp sourceRowIndex', temp.sourceRowIndex);
+            let characterRange = thisSheet.getRangeByIndexes(temp.sourceRowIndex, characterColumnIndex, 1, 1);
+            let scriptRange = thisSheet.getRangeByIndexes(temp.sourceRowIndex, scriptColumnIndex, 1, 1);
             characterRange.load('values');
             scriptRange.load('values');
             await excel.sync();
