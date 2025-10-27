@@ -182,7 +182,7 @@ async function scriptData(rowIndex){
     await excel.sync();
     data.character = {value: characterRange.values[0][0], address: characterRange.address};
     data.ukScript = {value: ukScriptRange.values[0][0], address: ukScriptRange.address};
-    data.germanScript = {value: germanScriptRange.values[0][0], address: germanScriptRange};    
+    data.germanScript = {value: germanScriptRange.values[0][0], address: germanScriptRange.address};    
    })
    return data;
 }
