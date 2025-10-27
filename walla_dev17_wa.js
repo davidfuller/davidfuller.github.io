@@ -126,10 +126,13 @@ async function findCues(){
       }
       for (let k = 0; k < thisSheetResults.length; k++){
         let possibleWallaText = []
-        let firstIndex = thisSheetResults[k].sourceRowIndex + 1;
+        let firstIndex = thisSheetResults[k].sourceRowIndex + 1 - firstColumnRange.rowIndex;
         let lastIndex = maxRowindexTableSheets
         if (k + 1 < thisSheetResults){
-          lastIndex = thisSheetResults[k + 1] - 1
+          lastIndex = thisSheetResults[k + 1].sourceRowIndex - 1 - firstColumnRange.rowIndex;
+        }
+        if (lastIndex >= theValues.length){
+          lastIndex = theValues.length - 1;
         }
         console.log('Sheet', thisSheetResults[k].sheetName, 'first/last', firstIndex, lastIndex);
         console.log('theValues', theValues);
