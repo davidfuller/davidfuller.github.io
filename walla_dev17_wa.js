@@ -92,7 +92,7 @@ async function findCues(){
       firstColumnRange.load('values, rowIndex');
       await excel.sync();
       let theValues = firstColumnRange.values.map(x => x[0])
-      console.log(sourceSheetNames[i], 'theValues', theValues);
+      console.log(sourceSheetNames[i], 'theValues', theValues, 'rowIndex', firstColumnRange.rowIndex);
       for (let j = 0; j < theValues.length; j++){
         let tempContext = extractContext(theValues[j]);
         if (tempContext != ''){
@@ -107,6 +107,7 @@ async function findCues(){
             temp.sheetName = sourceSheetNames[i];
             temp.context = contextText;
             temp.rowIndex = firstColumnRange.rowIndex + j;
+            console.log('temp rowIndex', temp.rowIndex);
             let characterRange = thisSheet.getRangeByIndexes(temp.rowIndex, characterColumnIndex, 1, 1);
             let scriptRange = thisSheet.getRangeByIndexes(temp.rowIndex, scriptColumnIndex, 1, 1);
             characterRange.load('values');
