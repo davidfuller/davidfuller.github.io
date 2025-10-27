@@ -275,13 +275,17 @@ async function appendRow(result){
     rowIndex = used.rowIndex + used.rowCount
   }
   await Excel.run(async function(excel){
+    let scriptSheet = excel.workbook.worksheets.getItem(scriptSheetName);
     let wallaSheet = excel.workbook.worksheets.getItem(germanScriptedWallaName);
     let bookRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.book, 1, 1);
     bookRange.values = [[result.bookNo]];
     let cueRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.cue, 1, 1);
     cueRange.values =[[result.cue]];
     let characterRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.character, 1, 1);
-    characterRange.values =[[result.character.value]];
+    let sourceCharacterRange = scriptSheet.getRange(result.scriptData.character.address);
+    characterRange.copyFrom(sourceCharacterRange, Excel.RangeCopyType.values);
+    characterRange.copyFrom(sourceCharacterRange, Excel.RangeCopyType.formats);
+    //characterRange.values =[[result.character.value]];
     let ukScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.ukScript, 1, 1);
     ukScriptRange.values =[[result.scriptData.ukScript.value]];
     let germanScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.germanScript, 1, 1);
