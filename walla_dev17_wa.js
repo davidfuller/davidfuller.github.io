@@ -303,11 +303,19 @@ async function appendRow(result){
       let bookRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.book, 1, 1);
       bookRange.values = [[result.bookNo]];
       let cueRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.cue, 1, 1);
-      cueRange.values =[[result.wallaNextData[i].cue]];
+      let sourceCueRange = scriptSheet.getRangeByIndexes(result.wallaNextData[i].rowIndex, cueColumnIndex, 1, 1);
+      copyValuesAndFormats(sourceCueRange, cueRange);
+      bookRange.copyFrom(sourceCueRange, 'Formats');
+      //cueRange.values =[[result.wallaNextData[i].cue]];
       let characterRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.character, 1, 1);
-      characterRange.values =[[result.wallaNextData[i].character.value]];
+      let sourceCharacterRange = scriptSheet.getRange(result.wallaNextData[i].character.address);
+      copyValuesAndFormats(sourceCharacterRange, characterRange);
+      //characterRange.values =[[result.wallaNextData[i].character.value]];
       let ukScriptRange = wallaSheet.getRangeByIndexes(rowIndex, germanWallaColumns.ukScript, 1, 1);
-      ukScriptRange.values =[[result.wallaNextData[i].ukScript.value]];
+      let sourceUkScriptRange = scriptSheet.getRange(result.wallaNextData[i].ukScript.address);
+      copyValuesAndFormats(sourceUkScriptRange, ukScriptRange);
+      //ukScriptRange.values =[[result.wallaNextData[i].ukScript.value]];
+      await excel.sync();
     }
   }) 
 }
