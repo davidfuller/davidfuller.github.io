@@ -374,6 +374,11 @@ async function appendRow(result){
       await excel.sync();
     }
     let characterText = extractWallaScript(wallaCharacters, result.possibleWallaText)
+    for (let walla of characterText){
+      let ukScriptRange = wallaSheet.getRangeByIndexes(walla.rowIndex, germanWallaColumns.ukScript, 1, 1);
+      ukScriptRange.values = [[walla.script]];
+      await excel.sync();
+    }
   }) 
 }
       
