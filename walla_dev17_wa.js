@@ -412,21 +412,35 @@ function extractWallaScript(characters, possibleWallaText){
   }
 
   console.log('stats', stats, 'totalNum', totalNum);
-
-  for (let stat of stats){
-    if (stat.num == 1){
-      for (let trimmed of trimmedCharacters){
-        if (stat.text.toLowerCase().includes(trimmed.character)){
-          let reg = new RegExp(trimmed.character,"ig");
-          console.log('Before', stat.text, 'Regex', reg);
-          let theText = stat.text.replaceAll(reg, '');
-          theText = theText.replaceAll(':','').trim();
-          console.log('script', theText, 'rowIndex', trimmed.rowIndex);
-          extractedScript.push({script: theText, rowIndex: trimmed.rowIndex})
+  if (totalNum == 0){
+    let wallaReg = new RegExp('walla', "i");
+    let result = [];
+    for (let stat of stats){
+      if (!wallaReg.test(stat.text)){
+        result.push(stat.text);
+      }
+    }
+    theTest = result.join('\n').trim();
+    for (let character of characters){
+      extractedScript.push({script: theText, character: rowIndex});
+    }
+  } else {
+    for (let stat of stats){
+      if (stat.num == 1){
+        for (let trimmed of trimmedCharacters){
+          if (stat.text.toLowerCase().includes(trimmed.character)){
+            let reg = new RegExp(trimmed.character,"ig");
+            console.log('Before', stat.text, 'Regex', reg);
+            let theText = stat.text.replaceAll(reg, '');
+            theText = theText.replaceAll(':','').trim();
+            console.log('script', theText, 'rowIndex', trimmed.rowIndex);
+            extractedScript.push({script: theText, rowIndex: trimmed.rowIndex})
+          }
         }
       }
     }
   }
+  
   console.log('extractedScript', extractedScript);
   return extractedScript;
 }
