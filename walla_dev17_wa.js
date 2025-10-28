@@ -442,7 +442,7 @@ function extractWallaScript(characters, possibleWallaText){
           let characterReg = new RegExp(trimmed, 'i');
           let position = characterReg.exec(stat.text);
           console.log('trimmed', trimmed);
-          console.log('position', position);
+          console.log('position', position.index);
         }
       }
     }
