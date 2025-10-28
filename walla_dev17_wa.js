@@ -404,5 +404,16 @@ function extractWallaScript(characters, possibleWallaText){
   }
 
   console.log('stats', stats)
+  for (let stat of stats){
+    if (stat.num == 1){
+      for (let trimmed of trimmedCharacters){
+        if (stat.text.toLowerCase().includes(trimmed.character)){
+          let reg = new RegExp(trimmed,"ig")
+          let theText = replaceAll(reg, '').trim();
+          console.log('script', theText, 'rowIndex', trimmed.rowIndex);
+        }
+      }
+    }
+  }
 }
 
