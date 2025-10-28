@@ -387,6 +387,7 @@ function copyFormats(sourceRange, destRange){
 
 function extractWallaScript(characters, possibleWallaText){
   let trimmedCharacters = []
+  let extractedScript = [];
   for (let character of characters){
     let temp = character.character.trim().toLowerCase()
     trimmedCharacters.push({character: temp.replaceAll(':', '').trim(), rowIndex: character.rowIndex})
@@ -410,11 +411,15 @@ function extractWallaScript(characters, possibleWallaText){
         if (stat.text.toLowerCase().includes(trimmed.character)){
           let reg = new RegExp(trimmed.character,"ig");
           console.log('Before', stat.text, 'Regex', reg);
-          let theText = stat.text.replaceAll(reg, '').trim();
+          let theText = stat.text.replaceAll(reg, '');
+          theText = theText.replaceAll(':','').trim();
           console.log('script', theText, 'rowIndex', trimmed.rowIndex);
+          extractedScript.push({script: theText, rowIndex: trimmed.rowIndex})
         }
       }
     }
   }
+  console.log('extractedScript', extractedScript);
+  return extractedScript;
 }
 
