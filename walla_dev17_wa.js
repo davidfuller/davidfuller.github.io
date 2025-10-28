@@ -456,6 +456,7 @@ function extractWallaScript(characters, possibleWallaText){
             theText = theText.replace(':','').trim();
             console.log('Extracted text', theText);
           } else if (positions.length >= i + 1){
+            console.log('positions', positions, 'i', i);
             let start = positions[i].length + positions[i].position
             let end = positions[i+1].position;
             console.log('start', start, 'end', end);
