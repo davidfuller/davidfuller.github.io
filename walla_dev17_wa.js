@@ -437,6 +437,13 @@ function extractWallaScript(characters, possibleWallaText){
             extractedScript.push({script: theText, rowIndex: trimmed.rowIndex})
           }
         }
+      } else if (stat.num > 1){
+        for (let trimmed of trimmedCharacters){
+          let characterReg = new RegExp(trimmed, 'i');
+          let position = characterReg.exec(stat.text);
+          console.log('trimmed', trimmed);
+          console.log('position', position);
+        }
       }
     }
   }
