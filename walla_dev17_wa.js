@@ -408,7 +408,7 @@ function extractWallaScript(characters, possibleWallaText){
     if (stat.num == 1){
       for (let trimmed of trimmedCharacters){
         if (stat.text.toLowerCase().includes(trimmed.character)){
-          let reg = new RegExp(trimmed.text,"ig");
+          let reg = new RegExp(trimmed.character,"ig");
           console.log('Before', stat.text, 'Regex', reg);
           let theText = stat.text.replaceAll(reg, '').trim();
           console.log('script', theText, 'rowIndex', trimmed.rowIndex);
