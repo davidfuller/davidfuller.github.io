@@ -422,7 +422,7 @@ function extractWallaScript(characters, possibleWallaText){
     }
     let theText = result.join('\n').trim();
     for (let character of characters){
-      extractedScript.push({script: theText, character: rowIndex});
+      extractedScript.push({script: theText, rowIndex: character.rowIndex});
     }
   } else {
     for (let stat of stats){
