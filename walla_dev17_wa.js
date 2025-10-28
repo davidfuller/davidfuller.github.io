@@ -440,7 +440,7 @@ function extractWallaScript(characters, possibleWallaText){
       } else if (stat.num > 1){
         for (let trimmed of trimmedCharacters){
           let characterReg = new RegExp(trimmed, 'i');
-          let position = characterReg.exec(stat.text);
+          let position = stat.text.search(characterReg);
           console.log('trimmed', trimmed);
           console.log('position', position.index);
         }
