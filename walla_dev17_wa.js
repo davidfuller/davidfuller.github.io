@@ -438,13 +438,20 @@ function extractWallaScript(characters, possibleWallaText){
           }
         }
       } else if (stat.num > 1){
+        let positions = []
         for (let trimmed of trimmedCharacters){
           let characterReg = new RegExp(trimmed.character, 'i');
-          console.log('reg', characterReg);
-          console.log('stat.text', stat.text);
           let position = stat.text.search(characterReg);
-          console.log('trimmed', trimmed);
-          console.log('position', position);
+          positions.push(position)
+        }
+        for (let i = 0; i < positions.length; i++){
+          if ((i == 0) && (positions.length > 1)){
+            let start = trimmed.character.length + positions[0]
+            let end = positions[1];
+            let theText = stat.text.substring(start, end);
+            theText = theText.replace(':','').trim();
+            console.log('Extracted text', theText);
+          }
         }
       }
     }
