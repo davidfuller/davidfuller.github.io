@@ -426,18 +426,19 @@ function extractWallaScript(characters, possibleWallaText){
     }
   } else {
     for (let stat of stats){
-      if (stat.num == 1){
-        for (let trimmed of trimmedCharacters){
-          if (stat.text.toLowerCase().includes(trimmed.character)){
-            let reg = new RegExp(trimmed.character,"ig");
-            console.log('Before', stat.text, 'Regex', reg);
-            let theText = stat.text.replaceAll(reg, '');
-            theText = theText.replaceAll(':','').trim();
-            console.log('script', theText, 'rowIndex', trimmed.rowIndex);
-            extractedScript.push({script: theText, rowIndex: trimmed.rowIndex})
-          }
-        }
-      } else if (stat.num > 1){
+      //if (stat.num == 1){
+      //  for (let trimmed of trimmedCharacters){
+      //    if (stat.text.toLowerCase().includes(trimmed.character)){
+      //      let reg = new RegExp(trimmed.character,"ig");
+      //     console.log('Before', stat.text, 'Regex', reg);
+      //      let theText = stat.text.replaceAll(reg, '');
+      //      theText = theText.replaceAll(':','').trim();
+      //      console.log('script', theText, 'rowIndex', trimmed.rowIndex);
+      //      extractedScript.push({script: theText, rowIndex: trimmed.rowIndex})
+      //    }
+      //  }
+      //} else if (stat.num > 1){
+        if (stat.num > 0){
         let positions = []
         for (let trimmed of trimmedCharacters){
           let characterReg = new RegExp(trimmed.character, 'i');
