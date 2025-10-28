@@ -442,7 +442,7 @@ function extractWallaScript(characters, possibleWallaText){
         for (let trimmed of trimmedCharacters){
           let characterReg = new RegExp(trimmed.character, 'i');
           let position = stat.text.search(characterReg);
-          positions.push({character: trimmed.character, position: position, length: trimmed.character.length})
+          positions.push({character: trimmed.character, position: position, length: trimmed.character.length, rowIndex: trimmed.rowIndex})
         }
         positions.sort((a, b) => a.position - b.position);
         console.log('positions', positions);
@@ -455,6 +455,7 @@ function extractWallaScript(characters, possibleWallaText){
             let theText = stat.text.substring(start, end);
             theText = theText.replace(':','').trim();
             console.log('Extracted text', theText);
+            extractedScript.push({script: theText, rowIndex: positions[i].rowIndex})
           } else if (positions.length > (i + 1)){
             console.log('positions', positions, 'i', i);
             let start = positions[i].length + positions[i].position
@@ -464,6 +465,7 @@ function extractWallaScript(characters, possibleWallaText){
             let theText = stat.text.substring(start, end);
             theText = theText.replace(':','').trim();
             console.log('Extracted text', theText);
+            extractedScript.push({script: theText, rowIndex: positions[i].rowIndex})
           } else {
             let start = positions[i].length + positions[i].position
             console.log('start', start);
@@ -471,6 +473,7 @@ function extractWallaScript(characters, possibleWallaText){
             let theText = stat.text.substring(start);
             theText = theText.replace(':','').trim();
             console.log('Extracted text', theText);
+            extractedScript.push({script: theText, rowIndex: positions[i].rowIndex})
           }
         }
       }
