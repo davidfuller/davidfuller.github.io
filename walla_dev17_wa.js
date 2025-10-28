@@ -442,12 +442,12 @@ function extractWallaScript(characters, possibleWallaText){
         for (let trimmed of trimmedCharacters){
           let characterReg = new RegExp(trimmed.character, 'i');
           let position = stat.text.search(characterReg);
-          positions.push(position)
+          positions.push({character: trimmed.character, position: position, length: trimmed.character.length})
         }
         for (let i = 0; i < positions.length; i++){
           if ((i == 0) && (positions.length > 1)){
-            let start = trimmed.character.length + positions[0]
-            let end = positions[1];
+            let start = positions[0].length + positions[0].position
+            let end = positions[1].position;
             let theText = stat.text.substring(start, end);
             theText = theText.replace(':','').trim();
             console.log('Extracted text', theText);
