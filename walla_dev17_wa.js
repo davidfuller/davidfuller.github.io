@@ -8,6 +8,8 @@ const startRow = 1;
 const maxRowCount = 50000;
 const maxRowindexTableSheets = 100;
 
+const ignoreIfStartsWith = ['sc'];
+
 
 const germanWallaColumns = {
   book: 0,
@@ -416,8 +418,27 @@ function extractWallaScript(characters, possibleWallaText){
     let wallaReg = new RegExp('walla', "i");
     let result = [];
     for (let stat of stats){
-      if (!wallaReg.test(stat.text)){
-        result.push(stat.text);
+      let doIt = true;
+      for (let ignore of ignoreIfStartsWith){
+        if (stat.text.startsWith(ignore)){
+          doIt = false;
+        }
+      }
+      if (doIt){
+        let positions = [];
+        let wallaReg = new RegExp('walla', 'i');
+        let position = stat.text.search(wallaReg);
+        if (position > -1){
+          let start = 'walla'.length + position
+          console.log('start', start);
+          console.log('stat.text', stat.text);
+          let theText = stat.text.substring(start);
+          theText = theText.replace(':','').trim();
+          console.log('Extracted text', theText);
+          result.push(theText);
+        } else {
+          result.push(stat.text.trim())
+        }
       }
     }
     let theText = result.join('\n').trim();
