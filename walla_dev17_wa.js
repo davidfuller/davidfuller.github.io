@@ -444,6 +444,7 @@ function extractWallaScript(characters, possibleWallaText){
           let position = stat.text.search(characterReg);
           positions.push({character: trimmed.character, position: position, length: trimmed.character.length})
         }
+        positions.sort((a, b) => a.position - b.position);
         console.log('positions', positions);
         for (let i = 0; i < positions.length; i++){
           if ((i == 0) && (positions.length > 1)){
