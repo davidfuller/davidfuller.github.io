@@ -420,7 +420,7 @@ function extractWallaScript(characters, possibleWallaText){
         result.push(stat.text);
       }
     }
-    theTest = result.join('\n').trim();
+    let theText = result.join('\n').trim();
     for (let character of characters){
       extractedScript.push({script: theText, character: rowIndex});
     }
