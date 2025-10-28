@@ -368,7 +368,7 @@ async function appendRow(result){
       copyFormats(sourceUkScriptRange, contextRange);
 
       contextRange.values = [[result.context]]
-      let formulaString = '=TRANSLATE(' + ukScriptRange.address + ', "de", "en")'
+      let formulaString = '=TRANSLATE(' + ukScriptRange.address + ', "en", "de")'
       console.log('formulastring', formulaString)
       germanMachineRange.formulas = [[formulaString]]
       await excel.sync();
@@ -399,17 +399,20 @@ function extractWallaScript(characters, possibleWallaText){
   }
   console.log('trimmed characters', trimmedCharacters)
   let stats = []
+  let totalNum = 0;
   for (let possible of possibleWallaText){
     let num = 0;
     for (let trimmed of trimmedCharacters){
       if (possible.toLowerCase().includes(trimmed.character)){
         num += 1;
+        totalNum += 1;
       }
     }
-    stats.push({text: possible, num: num})
+    stats.push({text: possible, num: num});
   }
 
-  console.log('stats', stats)
+  console.log('stats', stats, 'totalNum', totalNum);
+
   for (let stat of stats){
     if (stat.num == 1){
       for (let trimmed of trimmedCharacters){
