@@ -455,6 +455,21 @@ function extractWallaScript(characters, possibleWallaText){
             let theText = stat.text.substring(start, end);
             theText = theText.replace(':','').trim();
             console.log('Extracted text', theText);
+          } else if (positions.length >= i + 1){
+            let start = positions[i].length + positions[i].position
+            let end = positions[i+1].position;
+            console.log('start', start, 'end', end);
+            console.log('stat.text', stat.text);
+            let theText = stat.text.substring(start, end);
+            theText = theText.replace(':','').trim();
+            console.log('Extracted text', theText);
+          } else {
+            let start = positions[i].length + positions[i].position
+            console.log('start', start);
+            console.log('stat.text', stat.text);
+            let theText = stat.text.substring(start);
+            theText = theText.replace(':','').trim();
+            console.log('Extracted text', theText);
           }
         }
       }
