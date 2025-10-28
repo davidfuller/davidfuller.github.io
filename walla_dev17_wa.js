@@ -438,12 +438,14 @@ function extractWallaScript(characters, possibleWallaText){
       //    }
       //  }
       //} else if (stat.num > 1){
-        if (stat.num > 0){
+      if (stat.num > 0){
         let positions = []
         for (let trimmed of trimmedCharacters){
           let characterReg = new RegExp(trimmed.character, 'i');
           let position = stat.text.search(characterReg);
-          positions.push({character: trimmed.character, position: position, length: trimmed.character.length, rowIndex: trimmed.rowIndex})
+          if (position > -1){
+            positions.push({character: trimmed.character, position: position, length: trimmed.character.length, rowIndex: trimmed.rowIndex})
+          }
         }
         positions.sort((a, b) => a.position - b.position);
         console.log('positions', positions);
